@@ -59,7 +59,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 ##Download
 
-Download the ArcGIS Pro SDK from the [ArcGIS Pro Beta Community](http://pro.arcgis.com/en/pro-app/).
+Download the ArcGIS Pro SDK from the ArcGIS Pro Beta Community. You can access the beta community from [this link](http://pro.arcgis.com/en/pro-app/beta/sdk/).
 
 ##Installing ArcGIS Pro SDK
 
