@@ -174,7 +174,7 @@ Since this is the first release of ArcGIS Pro 1.1 SDK, there is technically no n
 
 The following are known issues or limitations with the ArcGIS Pro 1.1 SDK Beta release. Where one is available, a workaround is described. 
 
-##### Config.daml not Updated by New Item Template
+#####1. Config.daml not Updated by New Item Template
 * You have edited your Config.daml file by hand in Visual Studio
 * You have **not** saved your changes
 * Config.daml is the **active** tab in Visual Studio
@@ -187,21 +187,65 @@ The following are known issues or limitations with the ArcGIS Pro 1.1 SDK Beta r
 * *If it still doesn't show the update, locate the Config.daml file on disk and copy and paste the contents of the file on disk into the Visual Studio Config.daml editing window.
 * Save your edits
 
-##### Install Issue if Locale is other Than English
+#####2. Install Issue if Locale is other Than English
 * ArcGIS Pro SDK templates and utilities cannot be installed if your locale is not English. Change your locale to English and then run the vsix packages.
  
-#####API Reference guide TOC Display issues on some desktops
+#####3. API Reference guide TOC Display issues on some desktops
 * When you browse to the [API Reference guide](http://pro.arcgis.com/en/pro-app/beta/sdk/api-reference/) on some desktop machines, you will see the TOC like this image below:  
 ![TOC-issue.png](../../wiki/images/Home/TOC-issue.png "ArcGIS Pro API Reference guide TOC")  
 * The TOC layout has adapted to a touch device. In that mode, the TOC, search, Index etc. are available from the icons on the toolbar at the top of the page. We have noticed this mainly on the Chrome browser which sometimes identifies a device as touch capable if you have a touchscreen laptop or are running on a Virtual Machine. 
 
-#####Add-in is not loaded by Pro when you "build" it in Visual Studio
+#####4. Add-in is not loaded by Pro when you "build" it in Visual Studio
 * You have deleted the add-in file (*.esriAddinX file) from the `C:\Users\<UserName>\Documents\ArcGIS\AddIns\ArcGISPro` folder.
 * Without making any code changes, you "Build" the add-in project in Visual Studio and launch ArcGIS Pro or click the "Start" button in Visual Studio to launch the debugger.
 * Your add-in does not load in ArcGIS Pro.
 
 **Workaround**
 * From Visual Studio's Build menu, click the Rebuild Solution menu item. This will create the add-in file (*.esriAddinX file) under `C:\Users\<UserName>\Documents\ArcGIS\AddIns\ArcGISPro` folder. When you launch ArcGIS Pro, your add-in will now load.
+
+#####5. Controls do not Work in ArcGIS Pro after the Add-in Project's Namespace and/or Assembly is Changed  
+
+* You changed **_one or more_** of the following:
+    * You changed the Assembly name and/or Default namespace in your project Application properties within Visual Studio
+    * You changed the namespace in your add-in Module and/or add-in class files.
+
+When ArcGIS Pro loads your add-in, one or more of the controls defined in your add-in **do not work**. For example, a new button in your add-in is unresponsive when you click it and becomes permanently disabled.
+
+**Fix**  
+One or more of the following conditions may need to be fixed:  
+* The **defaultAssembly** and **defaultNamespace** attributes on the root ```ArcGIS``` daml element within your Config.daml **must be changed** to match any changes you made to the corresponding Visual Studio project Application properties.
+
+```xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<ArcGIS defaultAssembly="MyRenamedAssembly.dll" defaultNamespace="MyRenamedAssembly" xmlns="..." xmlns:xsi="..." xsi:schemaLocation="...">
+  <AddInInfo id="...
+....
+
+```
+
+* If the namespace of an add-in class (in the code file) does **not** match the ```defaultNamespace``` attribute of the ```<ArcGIS>``` element in the Config.daml, you **must fully qualify** the ```className``` attribute of its daml element (with "namespace.classname") in Config.daml.
+
+For example: Assume this is the class file of a button. Note the ```namespace```.
+```C#
+
+namespace MyRenamedAssembly.Addins {
+     class Button1 : Button
+    {
+        protected override void OnClick() {
+```
+
+Assume this is the Config.daml. Note the ```<ArcGIS defaultNamespace```
+```xml
+
+<!-- the defaultNamespace is MyRenamedAssembly -->
+<ArcGIS defaultAssembly="MyRenamedAssembly.dll" defaultNamespace="MyRenamedAssembly" xmlns="...
+
+    <!-- the button className attribute is fully qualified -->
+   <button .... className="MyRenamedAssembly.Addins.Button1" ... />
+```
+
+* Rebuild the add-in project
 
 ##Resources
 
@@ -244,7 +288,7 @@ A copy of the license is available in the repository's [license.txt](./License.t
 <p align = center><img src="https://github.com/Esri/arcgis-pro-sdk/wiki/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" >
 <b> ArcGIS Pro 1.1 SDK for Microsoft .NET Framework (Beta)</b>
 </p>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/beta/sdk" target="_blank">ArcGIS Pro SDK</a> | <a href="http://pro.arcgis.com/en/pro-app/beta/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](https://github.com/Esri/arcgis-pro-sdk/wiki#system-requirements) | [Download](https://github.com/Esri/arcgis-pro-sdk/wiki#download) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/beta/sdk" target="_blank">ArcGIS Pro SDK</a> | <a href="http://pro.arcgis.com/en/pro-app/beta/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#download) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
 
 
 
