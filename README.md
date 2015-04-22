@@ -253,7 +253,7 @@ Assume this is the Config.daml. Note the ```<ArcGIS defaultNamespace```
 * [arcgis-pro-sdk-community-samples](../../../arcgis-pro-sdk-community-samples)
 * <a href="http://pro.arcgis.com/en/pro-app/beta/sdk/" target="_blank">ArcGIS Pro SDK (pro.arcgis.com)</a>
 * [FAQ](../../wiki/FAQ)
-* [ArcGIS Pro SDK Icons]()  
+* [ArcGIS Pro SDK Icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.1.0.3068_(Beta))  
 ![Image-of-icons.png](../../wiki/images/Home/Image-of-icons.png "ArcGIS Pro SDK Icons")
 
 ##Contributing
