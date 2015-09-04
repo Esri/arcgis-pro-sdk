@@ -164,6 +164,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 
 ####Supported IDEs
 
+* Visual Studio 2015 (Professional, Enterprise, and Community Editions)
 * Visual Studio 2013 (Professional, Premium, Ultimate, and Community Editions) 
 
 ##Download
@@ -171,7 +172,7 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 ArcGIS Pro SDK for .NET can be downloaded and installed using either one of the following options:
 
 * Download and install from within Visual Studio
-* Download from MyEsri.com
+* Download from MyEsri.com (Visual Studio 2013 only)
 
 Read the [Installing ArcGIS Pro SDK for .NET](#installing-arcgis-pro-sdk-for-net) section below for more information.
 
@@ -230,6 +231,8 @@ Note: After installation, the **Extensions and Updates** dialog box can be used 
 See [ProGuide: Build your first add-in](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Build-Your-First-Add-in) to learn how to create add-ins to customize and extend ArcGIS Pro.   
 
 ###Install from My Esri download
+
+Note: Visual Studio 2013 only.
 
 You can also download ArcGIS Pro SDK for .NET from My Esri (http://my.esri.com). The content of the ArcGISProSDK.msi file is identical to the content of the proapp-sdk-templates.vsix and proapp-sdk-utilities.vsix files. Install using either the VSIX method or the msi **but not both.** 
 
@@ -411,6 +414,10 @@ Note: Static string resource properties and image resources included within the 
 ###ArcGIS Pro 1.1 SDK for .NET
 
 These release notes describe details of the ArcGIS Pro 1.1 SDK for .NET release. Here you will find information about functionality available in the release and known issues and limitations.
+
+####What's new
+
+Support for Visual Studio 2015 is now available for download from within Visual Studio.
 
 ####Known issues
 
