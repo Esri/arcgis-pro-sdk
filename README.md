@@ -21,6 +21,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [ArcGIS Pro SDK for .NET templates](#arcgis-pro-sdk-for-net-templates)
   * [ArcGIS Pro SDK for .NET utilities](#arcgis-pro-sdk-for-net-utilities)
 * [Getting started](#getting-started) 
+* [ProSnippets](#prosnippets)  
 * [ArcGIS Pro API](#arcgis-pro-api)
   * [Core](#core)
   * [Extensions](#extensions)
@@ -354,6 +355,10 @@ Pro Generate DAML Ids utility| Converts all of the ArcGIS Pro Desktop Applicatio
 
 ## Getting started
 See [ProGuide: Build your first add-in](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Build-Your-First-Add-in) for step-by-step instructions on creating a basic button that appears on the ArcGIS Pro ribbon.
+
+## ProSnippets
+
+ProSnippets are ready-made snippets of code you can quickly insert into your ArcGIS Pro add-in. [List of available ProSnippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets).
 
 ##ArcGIS Pro API
 
