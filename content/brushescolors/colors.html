@@ -1,0 +1,219 @@
+<!-- //this is what a comment looks like -->
+<!DOCTYPE html>
+<!--[if lt IE 9]>  
+<html class="ie lt-ie9 ie8"> 
+<![endif]--><!--[if IE 9]>     
+<html class="ie ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html><!--<![endif]-->
+    <head>	<!-- Set encoding -->	
+        <meta charset="utf-8">	<!-- Always force latest IE rendering engine or request Chrome Frame -->	
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">	
+        <meta name="viewport" content="width=device-width, user-scalable=no">	
+        <title>Esri Colors</title>		<!-- Link to favicon -->	
+        <link rel="shortcut icon" type="image/x-icon" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/images/favicon.ico" />	<!-- stylesheets -->	
+		<!--<link rel="stylesheet" href="http://fast.fonts.net/cssapi/3706abc4-0756-424b-b07b-1748122f85d8.css" type="text/css" />	
+        <link rel="stylesheet" href="http://esri.github.io/calcite-web/assets/css/all.css" /> 	
+        <link href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/css/calcite-web.min.css" rel="stylesheet" type="text/css" />	<link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/css/site.css">    <!--<script type="text/javascript" src="http://jsdev.arcgis.com/3.14/"></script>-->	
+		<link rel="stylesheet" href="css/all.css">
+		<link rel="stylesheet" href="css/site.css"> 
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/knockout-3.2.0.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/jquery-1.11.0.min.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/lodash/lodash.2.4.1.min.js"></script>	
+       <!-- <script src="http://webnode.esri.com/tools/js/patterns_site_support.js"></script>		-->
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/js/treeBuilder.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/craydent-1.7.37.js"></script>	
+       <!-- <script src="http://webopsoktaportal.esri.com/js/okta-secured-page.js"></script>	-->
+       <!-- <script>		var patternsAPI = 'http://webnode.esri.com/3012/Patterns/';// 		var floatNav = $ {// 			this.PAGE.floatNav// 		} || false;	</script>	-->
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/js/calcite-web.min.js" id="calcite-script"></script>	<!--<script src="http://webnode.esri.com/tools/patterns-page-initializer.js"></script>-->	<!--Esri Modal. Remove after encorporation into Calcite Web-->    
+        <link href="http://webapps-cdn.esri.com/GlobalComponents/EsriModal/EsriModal.css" rel="stylesheet" type="text/css" />			
+        <script src="http://webapps-cdn.esri.com/GlobalComponents/EsriModal/EsriModal.js"></script>	
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/site.js"></script>
+    </head>
+    <body>    
+        <!--<script>		document.write('<iframe src="http://webnode.esri.com/tools/sessionify.html?'+OKTAHelper.currentSessionInfo.Id+'" style="display:none"></iframe>');	</script> -->	<!--Drawers     	-->	
+        <div class="drawer drawer-left js-drawer" data-drawer="top-nav">		<!-- <nav class="drawer-nav" role="navigation" aria-labelledby="topnavdrawerleft"> -->		<nav class="drawer-nav" role="navigation">			
+            <aside class="side-nav">				
+            <h2 class="side-nav-title padding-leader-half padding-trailer-half text-large">Esri Colors</h2>				
+            			
+        </aside>		
+        </nav>	
+        </div>		
+        <div class="drawer drawer-right js-drawer" data-drawer="right">		<!-- <nav class="drawer-nav" role="navigation" aria-labelledby="topnavdrawerright"> -->		
+            <nav class="drawer-nav" role="navigation">			
+                <aside class="side-nav">				
+                    <h2 class="side-nav-title padding-leader-half padding-trailer-half text-large">Esri Colors</h2>				
+                   		
+                </aside>		
+            </nav>	
+        </div>	
+        <div class="wrapper padding-trailer-3">		
+            <div id="main-header">			<!-- Top Nav Pattern-->		
+                <header class="top-nav">			
+                    <div class="grid-container">				
+                        <div class="column-24">						
+                            <div class="tablet-hide">							
+                                <a href="https://github.com/Esri/arcgis-pro-sdk/wiki" class="top-nav-title">ArcGIS Pro SDK</a							
+                                					
+                            </div>						
+                            <!-- Site Search Pattern-->						
+                            <!-- Sign in / User Menu Patterns-->						
+                            <!--<div class="tablet-show">							
+                                <a href="https://github.com/Esri/arcgis-pro-sdk/wiki" class="icon-ui-menu top-nav-title js-drawer-toggle" data-drawer="top-nav">ArcGIS Pro Colors</a>						
+                            </div>	-->				
+                        </div>							
+                    </div>		
+                </header>		
+                <!-- Expanded Search -->		
+                	
+                <!-- Hoisted Header -->		
+                <header class="moved-header"></header>		
+                <!-- Secondary Nav Pattern -->		
+                <header class="sub-nav">		    
+                    <div class="grid-container">    	        
+                        <nav class="sub-nav-list">    		    	
+                            <ul>		                                  
+                            </ul>    	    	
+                        </nav>    		
+                    </div>    	
+                </header>        
+                <!-- Third Nav Pattern / children-->		                        						
+                <!-- Breadcrumbs -->		
+                <!--		<header class="sub-nav"><div class="grid-container"> 0 -- </div>    		</header>		-->		
+            </div>		
+            <!-- content of each page will go here -->			
+            <div id="colors-page" data-bind="css: theme">	
+                <div class="screen-size"></div>	
+                <div class="grid-container leader-1">		
+                <!--	Begin Side Menu-->				
+                   <!-- <aside id="main-side-nav" class="js-sticky side-nav column-4 tablet-hide" data-top="120">			
+                        <!--<nav>				
+                            <h4 class="side-nav-title">Colors</h4>				
+                            <a href="#overview" class="side-nav-link">Overview</a>				
+                            <span data-bind="foreach: allColors">					
+                                <a data-bind="text: listName, attr: { href : '#'+listName }" class="side-nav-link"></a>				
+                            </span>			
+                        </nav>	    
+                       <a href="https://github.com/Esri/arcgis-pro-sdk/wiki" class="btn btn-clear leader-1" style="position: absolute;">Back to ArcGIS Pro SDK</a>		
+                    </aside> -->
+                    <!--		End Side Menu-->		
+                    <!--Begin Main Content Area-->		
+                    <a name="overview"></a>		
+                    <main class="column-19 phone-column-6 tablet-column-12 pre-1 content-face">			
+
+							<h1><a name="colors">Esri Colors</a></h1>
+							
+							<br>
+						<div style="background-color: #f8f8f8; font-family: Courier">
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Language:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C# and Visual Basic <br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Subject:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Framework<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Contributor:&nbsp;&nbsp;&nbsp;ArcGIS Pro SDK Team <arcgisprosdk@esri.com><br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Organization:&nbsp;&nbsp;Esri, http://www.esri.com<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12/30/2016<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;ArcGIS Pro:&nbsp;&nbsp;&nbsp;&nbsp;1.4<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Visual Studio:&nbsp;2013, 2015<br/><br/></div>
+						
+						 <br/>
+						<p>This page lists the XAML colors that can be used in ArcGIS Pro to style your add-in's UI elements.  Light theme colors are shown.</p>
+							
+							<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a ></a>					 
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #0079C1;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Color_Blue</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#0079C1</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #7FBBDF;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Color_Blue3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#7FBBDF</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #00BB95;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Color_BlueDark</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#00BB95</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #6C6D70;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Color_Gray145</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#6C6D70</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+									<div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #FFA500;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Color_Orange</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#FFA500</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>                               
+                            </div>				
+							
+							
+                    </main>		<!--End Main Content Area-->	
+                </div>
+            </div><!-- Inline Modal -->
+            <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/libs/jquery.gridder.js"></script>
+            <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/colors.js"></script>	
+        </div>	<!-- /wrapper -->	<!-- Footer Pattern -->	
+        <footer class="footer header-light">		
+            <div style="width:100%; text-align:center;" >			
+                			
+                    <img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="ArcGIS Pro SDK for Microsoft .NET Framework" height = "20" width = "20" align="top"  >
+<a href="http://github.com/esri/arcgis-pro-sdk" target="_blank">Home</a> | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference" target="_blank">API Reference</a> | <a href="https://github.com/Esri/arcgis-pro-sdk/wiki#requirements" target="_blank">Requirements</a> | <a href="https://github.com/Esri/arcgis-pro-sdk/wiki#installing-arcgis-pro-sdk-for-net" target="_blank">Download</a> | <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a> </div>	<br/> 		
+                <!--<nav class="column-6">				
+                    <h6>ArcGIS Pro Colors</h6>				
+                    <nav class="column-6">							
+                    </nav>			
+                    <nav class="column-6">							
+                    </nav>			
+                    <nav class="column-6">				
+                        <a class="esri-logo-footer" href="http://esri.com">Esri</a>				
+                        <section class="footer-social-nav">					
+                            <a class="icon-twitter" href="https://twitter.com/Esri/"></a>					
+                            <a class="icon-facebook" href="https://www.facebook.com/esrigis/"></a>					
+                            <a class="icon-github" href="http://esri.github.com/"></a>					
+                            <a class="icon-email" href="http://www.esri.com/about-esri/contact/"></a>				
+                        </section>			
+                    </nav>			
+                    <div class="column-24">				
+                        <p>					(c) Copyright <script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script> 					Environmental Systems Research Institute, Inc.	                <!--| Environment:--> 				</p>			
+                    	
+                   <!-- </div>	-->
+                </footer>	<script>		$(function () {			if (typeof pat != 'undefined' && !pat.noCalcite) {				calcite.init();				logit('Calcite Loaded');			}		});		</script>	</body></html>

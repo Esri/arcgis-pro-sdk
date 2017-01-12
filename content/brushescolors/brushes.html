@@ -1,0 +1,991 @@
+<!-- //this is what a comment looks like -->
+<!DOCTYPE html>
+<!--[if lt IE 9]>  
+<html class="ie lt-ie9 ie8"> 
+<![endif]--><!--[if IE 9]>     
+<html class="ie ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html><!--<![endif]-->
+    <head>	<!-- Set encoding -->	
+        <meta charset="utf-8">	<!-- Always force latest IE rendering engine or request Chrome Frame -->	
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">	
+        <meta name="viewport" content="width=device-width, user-scalable=no">	
+        <title>Esri Brushes</title>		<!-- Link to favicon -->	
+        <link rel="shortcut icon" type="image/x-icon" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/images/favicon.ico" />	<!-- stylesheets -->	
+		<!--<link rel="stylesheet" href="http://fast.fonts.net/cssapi/3706abc4-0756-424b-b07b-1748122f85d8.css" type="text/css" />	
+        <link rel="stylesheet" href="http://esri.github.io/calcite-web/assets/css/all.css" /> 	
+        <link href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/css/calcite-web.min.css" rel="stylesheet" type="text/css" />	-->
+		<link rel="stylesheet" href="css/site.css">    <!--<script type="text/javascript" src="http://jsdev.arcgis.com/3.14/"></script>-->	
+		<link rel="stylesheet" href="css/all.css"> 
+		<!--<link rel="stylesheet" href="css/calcite-web.min.css"> -->
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/knockout-3.2.0.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/jquery-1.11.0.min.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/lodash/lodash.2.4.1.min.js"></script>	
+        <!--<script src="http://webnode.esri.com/tools/js/patterns_site_support.js"></script>		-->
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/js/treeBuilder.js"></script>	
+        <script src="http://webapps-cdn.esri.com/CDN/jslibs/craydent-1.7.37.js"></script>	
+        <!-- <script src="http://webopsoktaportal.esri.com/js/okta-secured-page.js"></script>	-->
+        <!-- <script>		var patternsAPI = 'http://webnode.esri.com/3012/Patterns/';// 		var floatNav = $ {// 			this.PAGE.floatNav// 		} || false;	</script>	-->
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.0.0-beta.7/js/calcite-web.min.js" id="calcite-script"></script>	<!--<script src="http://webnode.esri.com/tools/patterns-page-initializer.js"></script>-->	<!--Esri Modal. Remove after encorporation into Calcite Web-->    
+       <!-- <link href="http://webapps-cdn.esri.com/GlobalComponents/EsriModal/EsriModal.css" rel="stylesheet" type="text/css" />-->			
+        <script src="http://webapps-cdn.esri.com/GlobalComponents/EsriModal/EsriModal.js"></script>	
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/site.js"></script>
+    </head>
+    <body>    
+        <!--<script>		document.write('<iframe src="http://webnode.esri.com/tools/sessionify.html?'+OKTAHelper.currentSessionInfo.Id+'" style="display:none"></iframe>');	</script> -->	<!--Drawers     	-->	
+        <div class="drawer drawer-left js-drawer" data-drawer="top-nav">		<!-- <nav class="drawer-nav" role="navigation" aria-labelledby="topnavdrawerleft"> -->		<nav class="drawer-nav" role="navigation">			
+            <aside class="side-nav">				
+            <h2 class="side-nav-title padding-leader-half padding-trailer-half text-large">Esri Brushes</h2>				
+            			
+        </aside>		
+        </nav>	
+        </div>		
+        <div class="drawer drawer-right js-drawer" data-drawer="right">		<!-- <nav class="drawer-nav" role="navigation" aria-labelledby="topnavdrawerright"> -->		
+            <nav class="drawer-nav" role="navigation">			
+                <aside class="side-nav">				
+                    <h2 class="side-nav-title padding-leader-half padding-trailer-half text-large">Esri Brushes</h2>				
+                   		
+                </aside>		
+            </nav>	
+        </div>	
+        <div class="wrapper padding-trailer-3">		
+            <div id="main-header">			<!-- Top Nav Pattern-->		
+                <header class="top-nav">			
+                    <div class="grid-container">				
+                        <div class="column-24">						
+                            <div class="tablet-hide">							
+                                <a href="https://github.com/Esri/arcgis-pro-sdk/wiki" class="top-nav-title">ArcGIS Pro SDK</a>							
+                                					
+                            </div>						
+                            <!-- Site Search Pattern-->						
+                            <!-- Sign in / User Menu Patterns						
+                            <div class="tablet-show">							
+                                <a href="https://github.com/Esri/arcgis-pro-sdk" class="icon-ui-menu top-nav-title js-drawer-toggle" data-drawer="top-nav">ArcGIS Pro SDK/a>	-->					
+                            </div>					
+                        </div>							
+                    </div>		
+                </header>		
+                <!-- Expanded Search -->		
+                	
+                <!-- Hoisted Header -->		
+                <header class="moved-header"></header>		
+                <!-- Secondary Nav Pattern -->		
+                <header class="sub-nav">		    
+                    <div class="grid-container">    	        
+                        <nav class="sub-nav-list">    		    	
+                            <ul>		                                  
+                            </ul>    	    	
+                        </nav>    		
+                    </div>    	
+                </header>        
+                <!-- Third Nav Pattern / children-->		                        						
+                <!-- Breadcrumbs -->		
+                <!--		<header class="sub-nav"><div class="grid-container"> 0 -- </div>    		</header>		-->		
+            </div>		
+            <!-- content of each page will go here -->			
+            <div id="colors-page" data-bind="css: theme">	
+                <div class="screen-size"></div>	
+                <div class="grid-container leader-1">		
+                <!--	Begin Side Menu-->				
+                    <!--<aside id="main-side-nav" class="js-sticky side-nav column-4 tablet-hide" data-top="120">			
+                        <nav>
+							
+                            <span data-bind="foreach: allColors">					
+                                <a data-bind="text: listName, attr: { href : '#'+listName }" class="side-nav-link"></a>				
+                            </span>			
+                        </nav>		    
+                       <a href="https://github.com/Esri/arcgis-pro-sdk/wiki" class="btn btn-clear leader-1" style="position: absolute;">Back to ArcGIS Pro SDK</a>	
+                    </aside>	-->	
+                    <!--		End Side Menu-->		
+                    <!--Begin Main Content Area-->		
+                   <!-- <a name="overview"></a>		-->
+                    <main class="column-19 phone-column-6 tablet-column-12 pre-1 content-face">		
+                        <A name="brushes"> <h1>Esri Brushes</h1></A>	
+						
+						<br>
+						<div style="background-color: #f8f8f8; font-family: Courier">
+						<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Language:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C# and Visual Basic <br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Subject:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Framework<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Contributor:&nbsp;&nbsp;&nbsp;ArcGIS Pro SDK Team <arcgisprosdk@esri.com><br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Organization:&nbsp;&nbsp;Esri, http://www.esri.com<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12/30/2016<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;ArcGIS Pro:&nbsp;&nbsp;&nbsp;&nbsp;1.4<br/>
+						&nbsp;&nbsp;&nbsp;&nbsp;Visual Studio:&nbsp;2013, 2015<br/><br/></div>
+						
+						 <br/>
+						<p>This page lists the XAML brushes that can be used in ArcGIS Pro to style your add-in's UI elements.  Light theme brushes are shown.</p>
+                        <!--Begin NPC Content-->			                        
+                        
+						<ul>						
+							<li><a href="#gray">Gray</a></li>					
+ 						    <li><a href="#blue">Blue</a></li>
+                            <li><a href="#red">Red</a></li>	
+							<li><a href="#yellow">Yellow</a></li>
+							<li><a href="#green">Green</a></li>
+							<li><a href="#orange">Orange</h4></a></li>
+							<li><a href="#purple">Purple</h4></a></li>
+							<li><a href="#brown">Brown</a></li>						
+						</ul>
+						
+                        <!--			Begin Results-->			
+                        <div >				
+                            <div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+					
+                            <a name="gray">    <h3>Gray</h3> </a>
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #ffffff;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray_White</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#ffffff</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+									<div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #FFF2F2F2;">
+                                                <div class="left">
+                                                    <span class="left">Esri_WindowGray</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#FFF2F2F2</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #FFF2F2F2;">
+                                                <div class="left">
+                                                    <span class="left">Esri_WindowStartPage</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#FFF2F2F2</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #f7f8f8;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray100</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#f7f8f8</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+								
+                                <ul class="column-9">
+								   <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #f2f3f3;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray105</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#f2f3f3</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #efeeef;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray110</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#efeeef</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #e5e6e7;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray115</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#e5e6e7</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #e0e0df;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray120</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#e0e0df</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                            
+                            <div class="list-colors">
+                                <ul class="column-9">
+								     <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #cbcbcb;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray125</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#cbcbcb</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #a6a8ab;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray130</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#a6a8ab</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #929497;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray_135</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#929497</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #7f8183;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray140</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#7f8183</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+								</ul>
+								
+								
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #6c6d70;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray145</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#6c6d70</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #57585a;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray150</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#57585a</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>                                
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #4c4c4c;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray155</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#4c4c4c</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #323232;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Gray160</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#323232</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>																											 
+                                </ul>
+                            </div>
+                                			
+
+                            <div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a ></a>					
+                              <a name="blue">      <h3>Blue</h3> </a>
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #E1F0FB;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#E1F0FB</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #D1E9F9;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#D1E9F9</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #7FBBDF;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#7FBBDF</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #1C92D9;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#1C92D9</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #C5E5F9;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue5</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#C5E5F9</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #AADBFA;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue6</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#AADBFA</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #90CDF2;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue7</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#90CDF2</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #2794D9;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue8</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#2794D9</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                            </div>
+                            
+                            <div class="list-colors">
+                                <ul class="column-9">                                                                
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #6CB4E2;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue9</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#6CB4E2</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                               
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #56A5D8;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue10</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#56A5D8</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item bright" style="background-color: #BCDAED;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue11</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#BCDAED</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+									 <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #FF297EC5;">
+                                                <div class="left">
+                                                    <span class="left">Esri_BlueBackstageHeader</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#FF297EC5</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                           
+                                <ul class="column-9">    
+                            <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #0079C1;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Blue</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#0079C1</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+									<div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #005E95;">
+                                                <div class="left">
+                                                    <span class="left">Esri_BlueDark</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#005E95</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div> 
+									<div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #0079C1;">
+                                                <div class="left">
+                                                    <span class="left">Esri_NotificationBlue</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#0079C1</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div> 
+									<div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F7F8F8;">
+                                                <div class="left">
+                                                    <span class="left">Esri_NotificationBackground</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F7F8F8</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>  	 									
+									</ul>
+                            </div>			
+                        </div>			                       												
+						<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="red"><h3>Red</h3></a>
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F3DED7;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F3DED7</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #E4A793;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#E4A793</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #C86A4A;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#C86A4A</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #C6542D;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#C6542D</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #FFCCBA;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red5</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#FFCCBA</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #D94C1D;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Red6</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#D94C1D</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>                                   
+                                </ul>
+                            </div>
+                            
+                           
+						<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="yellow" ><h3>Yellow</h3></a>					                                
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F3EDC7;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F3EDC7</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #EFE397;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#EFE397</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #E4D154;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#E4D154</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #D8C34B;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#D8C34B</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F4DA6E;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow5</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F4DA6E</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #A68D00;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Yellow6</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#A68D00</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>                                   
+                                </ul>
+                            </div>
+						
+						<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="green" ><h3>Green</h3></a>					                                
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #DCEDDA;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Green1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#DCEDDA</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #9BC19C;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Green2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#9BC19C</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #67A966;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Green3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#67A966</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #5A9359;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Green4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#5A9359</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #257824;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Green5</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#257824</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>                                                                  
+                                </ul>
+                            </div>
+						
+								<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="orange"><h3>Orange</h3></a>					                                
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F6CA92;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Orange1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F6CA92</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #F6CA92;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Orange2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#F6CA92</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #EDA959;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Orange3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#EDA959</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #EDA959;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Orange4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#EDA959</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>                               
+                            </div>				
+						<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="purple"><h3>Purple</h3></a>					                                
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #E5E1EF;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Purple1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#E5E1EF</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #C4BCDC;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Purple2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#C4BCDC</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #9081BC;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Purple3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#9081BC</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #7B6CA7;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Purple4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#7B6CA7</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                </ul>                               
+                            </div>	
+							<div class="column-19 gridder">					
+                                <hr id="hr-colors">					
+                                <a name="brown" ><h3>Brown</h3></a>					                                
+                            <div class="list-colors">
+                                <ul class="column-9">
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #E8DDD3;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Brown1</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#E8DDD3</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #D2B38F;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Brown2</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#D2B38F</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #B78A54;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Brown3</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#B78A54</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+                                    <div class="light_theme">
+                                        <li class="item-wrapper gridder-list">
+                                            <div class="item dark" style="background-color: #A57946;">
+                                                <div class="left">
+                                                    <span class="left">Esri_Brown4</span>
+                                                </div>
+                                                <div class="right">
+                                                    <span class="right">#6C6D70</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </div>
+									
+                                </ul>                               
+                            </div>
+										
+							
+							
+                   </main>		<!--End Main Content Area-->	
+                </div>
+            </div><!-- Inline Modal -->
+            <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/libs/jquery.gridder.js"></script>
+            <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/site/dev/js/colors.js"></script>	
+        </div>	<!-- /wrapper -->	<!-- Footer Pattern -->	
+        <footer class="footer header-light">		
+            <div style="width:100%; text-align:center;" >			
+                			
+                    <img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="ArcGIS Pro SDK for Microsoft .NET Framework" height = "20" width = "20" align="top"  >
+<a href="http://github.com/esri/arcgis-pro-sdk" target="_blank">Home</a> | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference" target="_blank">API Reference</a> | <a href="https://github.com/Esri/arcgis-pro-sdk/wiki#requirements" target="_blank">Requirements</a> | <a href="https://github.com/Esri/arcgis-pro-sdk/wiki#installing-arcgis-pro-sdk-for-net" target="_blank">Download</a> | <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a> </div>	<br/> 			
+                   <!-- <nav class="column-6">							
+                    </nav>			
+                    <nav class="column-6">							
+                    </nav>		-->	
+                    <!--<nav class="column-6">				
+                        <a class="esri-logo-footer" href="http://esri.com">Esri</a>				
+                        <section class="footer-social-nav">					
+                            <a class="icon-twitter" href="https://twitter.com/Esri/"></a>					
+                            <a class="icon-facebook" href="https://www.facebook.com/esrigis/"></a>					
+                            <a class="icon-github" href="http://esri.github.com/"></a>					
+                            <a class="icon-email" href="http://www.esri.com/about-esri/contact/"></a>				
+                        </section>			
+                    </nav>			
+                    <div class="column-24">				
+                        <p>					(c) Copyright <script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script> 					Environmental Systems Research Institute, Inc.	                <!--| Environment:--> 				<!--</p>	-->		
+                    <!--</div>-->	
+                    	
+                </footer>	<script>		$(function () {			if (typeof pat != 'undefined' && !pat.noCalcite) {				calcite.init();				logit('Calcite Loaded');			}		});		</script>	</body></html>
