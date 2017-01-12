@@ -68,8 +68,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProGuide: Style Guide](../../wiki/proguide-style-guide)
 * [ProGuide: Applying custom styles](../../wiki/ProGuide-Applying-Custom-Styles)
-* [Esri Brushes](http://ArcGIS.github.io/arcgis-pro-sdk/content/brushescolors/brushes.html)
-* [Esri Colors](http://ArcGIS.github.io/arcgis-pro-sdk/content/brushescolors/colors.html)
+* [Esri Brushes](http://Esri.github.io/arcgis-pro-sdk/content/brushescolors/brushes.html)
+* [Esri Colors](http://Esri.github.io/arcgis-pro-sdk/content/brushescolors/colors.html)
 
 -------------------------
 
