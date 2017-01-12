@@ -40,8 +40,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [Pro Guide: Your first add-in](../../wiki/ProGuide-Build-Your-First-Add-in)
 * [ProConcept: Localization](../../wiki/ProConcept-Localization)
 * [ProGuide: Content and image resources](../../wiki/ProGuide-content-and-image-resources)
-* [ProGuide: Diagnosing ArcGIS Pro Add-ins](../wiki/ProGuide-Diagnosing-ArcGIS-Pro-Add-ins)
-* [ProGuide: Installation and Upgrade](../wiki/ProGuide-Installation-and-Upgrade)
+* [ProGuide: Diagnosing ArcGIS Pro Add-ins](../../wiki/ProGuide-Diagnosing-ArcGIS-Pro-Add-ins)
+* [ProGuide: Installation and Upgrade](../../wiki/ProGuide-Installation-and-Upgrade)
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Configurations**
