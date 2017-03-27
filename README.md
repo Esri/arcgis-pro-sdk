@@ -408,10 +408,6 @@ limitations under the License.
 
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
-[](Esri Tags: ArcGIS-Pro-SDK)
-[](Esri Language: C-Sharp)​
-
-
 <p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" >
 <b> ArcGIS Pro 1.4 SDK for Microsoft .NET Framework</b>
 </p>
