@@ -4,9 +4,9 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 <a href="http://pro.arcgis.com/en/pro-app/sdk/" target="_blank">View it live</a>
 
-###Table of Contents
+### Table of Contents
 
-####Developing with ArcGIS Pro
+#### Developing with ArcGIS Pro
 
 * [Requirements](#requirements)
 * [Installing ArcGIS Pro SDK for .NET](#installing-arcgis-pro-sdk-for-net)
@@ -25,7 +25,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
 
-####Framework
+#### Framework
 
 * [ProSnippets: Framework](../../wiki/ProSnippets-Framework)
 * [ProConcepts: Framework](../../wiki/ProConcepts-Framework)
@@ -73,26 +73,26 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 -------------------------
 
-###Content
+### Content
 
 * [ProSnippets: Content](../../wiki/ProSnippets-content)
 
 --------------------------
 
-###CoreHost
+### CoreHost
 
 * [ProSnippets: CoreHost](../../wiki/ProSnippets-CoreHost)
 * [ProConcepts: CoreHost](../../wiki/proconcepts-CoreHost)
 
 --------------------------
 
-###DataReviewer
+### DataReviewer
 
 * [ProConcepts: DataReviewer](../../wiki/proconcepts-DataReviewer)
 
 --------------------------
 
-###Editing
+### Editing
 
 * [ProSnippets: Editing](../../wiki/ProSnippets-Editing)
 * [ProConcepts: Editing](../../wiki/ProConcepts-Editing)
@@ -100,14 +100,14 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 --------------------------
 
-###Geodatabase
+### Geodatabase
 
 * [ProSnippets: Geodatabase](../../wiki/ProSnippets-Geodatabase)
 * [ProConcepts: Geodatabase](../../wiki/ProConcepts-Geodatabase)
 
 --------------------------
 
-###Geometry
+### Geometry
 
 * [ProSnippets: Geometry](../../wiki/ProSnippets-Geometry)
 * [ProConcepts: Geometry](../../wiki/ProConcepts-Geometry)
@@ -119,27 +119,27 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 --------------------------
 
-###Geoprocessing
+### Geoprocessing
 
 * [ProSnippets: Geoprocessing](../../wiki/ProSnippets-Geoprocessing)
 * [ProConcepts: Geoprocessing](../../wiki/ProConcepts-Geoprocessing)
 
 --------------------------
 
-###Layouts
+### Layouts
 
 * [ProSnippets: Layouts](../../wiki/ProSnippets-Layouts)
 
 --------------------------
 
-###Map Authoring
+### Map Authoring
 
 * [ProSnippets: Map Authoring](../../wiki/ProSnippets-MapAuthoring)
 * [ProConcepts: Map Authoring](../../wiki/ProConcepts-Map-Authoring)
  
 --------------------------
 
-###Map Exploration
+### Map Exploration
 
 * [ProSnippets: Map Exploration](../../wiki/ProSnippets-MapExploration)
 * [ProConcept: Map Exploration](../../wiki/ProConcepts-Map-Exploration)
@@ -155,51 +155,51 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 --------------------------
 
-###Sharing
+### Sharing
 
 * [ProSnippets: Sharing](../../wiki/ProSnippets-sharing)
 
 --------------------------
 
-###Tasks
+### Tasks
 
 * [ProSnippets: Tasks](../../wiki/ProSnippets-Tasks)
 * [ProConcepts: Tasks](../../wiki/ProConcepts-Tasks)
 
 --------------------------
 
-###Workflow Manager
+### Workflow Manager
 
 * [ProSnippets: Workflow Manager](../../wiki/ProSnippets-Workflow-Manager)
 * [ProConcept: Workflow Manager](../../wiki/ProConcepts-Workflow-Manager)
 
 --------------------------
 
-##Requirements
+## Requirements
 The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here.
 
-####ArcGIS Pro
+#### ArcGIS Pro
 
 * ArcGIS Pro 1.4
 
-####Supported platforms
+#### Supported platforms
 
 * Windows 10 (Home, Pro, Enterprise) (64 bit [EM64T])
 * Windows 8.1 Basic, Professional, and Enterprise (64 bit [EM64T]) 
 * Windows 7 SP1 Ultimate, Enterprise, Professional, and Home Premium (64 bit [EM64T]) 
 
-####Supported .NET framework
+#### Supported .NET framework
 
 * Microsoft .NET Framework 4.6.1 Developer Pack 
 
-####Supported IDEs
+#### Supported IDEs
 
 * Visual Studio 2015 (Professional, Enterprise, and Community Editions)
 * Visual Studio 2013 (Professional, Premium, Ultimate, and Community Editions)
  
 Note: [ArcGIS Pro system requirements](http://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
-##Installing ArcGIS Pro SDK for .NET
+## Installing ArcGIS Pro SDK for .NET
 
 ArcGIS Pro SDK for .NET can be downloaded and installed using either one of the following options:
 
@@ -218,7 +218,7 @@ The following table summarizes the functionality of each .vsix file included in 
 | ArcGIS Pro SDK for .NET (Utilities)  | proapp-sdk-utilities.vsix  | A collection of utilities to help create ArcGIS Pro add-ins|
 
 
-####ArcGIS Pro SDK for .NET templates 
+#### ArcGIS Pro SDK for .NET templates 
 Package: proapp-sdk-templates.vsix  
 
 ArcGIS Pro SDK for .NET provides the following project and item templates:
@@ -265,7 +265,7 @@ See [ProGuide: Build your first add-in](https://github.com/Esri/arcgis-pro-sdk/w
 
 ProSnippets are ready-made snippets of code you can quickly insert into your ArcGIS Pro add-in. [List of available ProSnippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets).
 
-##ArcGIS Pro API
+## ArcGIS Pro API
 
 The ArcGIS Pro APIs are managed .NET assemblies. Intermediary assemblies containing .NET metadata or PIAs (Primary Interop Assemblies) are not required.
 
@@ -275,7 +275,7 @@ Add any of the ArcGIS Pro managed assemblies that comprise its API as references
 
 A complete list of the ArcGIS Pro assemblies in the public API is provided below:
 
-###Core
+### Core
 
 Core assemblies are located in the {ArcGIS Pro Installation folder}\bin.
 
@@ -286,7 +286,7 @@ ArcGIS.CoreHost.dll | Provides Host.Initialize to initialize ArcGIS.Core.dll for
 ArcGIS.Desktop.Framework.dll        | Provides the application framework to include add-in contracts, DAML support, and base classes. This assembly must be referenced by every add-in.
 
 
-###Extensions
+### Extensions
 
 Major subsystems within ArcGIS Pro are organized into units called extensions. Extension assemblies are located in the {ArcGIS Pro Installation folder}\bin\Extensions folder in their own individual subfolder. 
 Extension subfolder names are logically named for the unit of functionality they represent, for example, Mapping, Editing, Layout, and so on.
@@ -324,29 +324,29 @@ There are extension assemblies in {ArcGIS Pro Installation folder}\bin\Extension
 
 Note: Static string resource properties and image resources included within the public API assemblies are for Esri internal use only. They are not intended for use in third-party add-ins.
 
-##Release notes 
+## Release notes 
 
-###ArcGIS Pro 1.4 SDK for .NET
+### ArcGIS Pro 1.4 SDK for .NET
 
 These release notes describe details of the ArcGIS Pro 1.4 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
-####What's new
+#### What's new
 
 The following functionality is available at the ArcGIS Pro 1.4 SDK for .NET release:
 
-#####1. Configurations.
+##### 1. Configurations.
 
 The [Managed Configuration](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Configurations-Manager) is a brand new add-in pattern and template for customizing the Pro UI/UX at start-up. Managed Configurations are implemented by overriding the new `ArcGIS.Desktop.Framework.Contracts.ConfigurationManager` class. A step by step ProGuide on customizing Pro with a [Managed Configuration](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Configurations-Manager) is also available.
 
-#####2. Light and Dark Theme
+##### 2. Light and Dark Theme
 
 With the new light and dark theme capability at Pro 1.4, the SDK provides the ability to [style your add-ins and configurations](https://github.com/esri/arcgis-pro-sdk/wiki/proguide-style-guide) for whichever theme you choose. Styling your add-ins and configurations for Windows' High Contrast mode (for vision impaired users) is also supported.
 
-#####3. API Enhancements
+##### 3. API Enhancements
 
 Pro API enhancements include support for geodatabase joins, database SQL syntax, horizontal/vertical datums, new UI controls. For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 1.4](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
-#####4. SDK Resources
+##### 4. SDK Resources
 
 There are many new ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
 
@@ -356,7 +356,7 @@ There are many new ProConcepts, ProGuide, ProSnippets, and samples to help you g
   * [ProGuide Applying Custom Styles](https://github.com/esri/arcgis-pro-sdk/wiki/proguide-applying-custom-styles)
   * [ProConcepts Advanced Topics](https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-Advanced-Topics)
 
-#####5. Other
+##### 5. Other
 
 **Deprecation Notice:** Tool and Sketch tool item templates are no longer available. 
 
@@ -366,12 +366,12 @@ Please use the Map tool item template. Refer to the new ProGuides for Map Tools 
 
 Starting with ArcGIS Pro SDK 1.4 it is now possible to configure a build server to compile add-ins and configurations without a full installation of ArcGIS Pro. Please refer to [Configure build server to build add-ins and configurations](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Advanced-Topics#configure-build-server-to-build-add-ins-and-configurations)
 
-##Previous versions
+## Previous versions
 * [ArcGIS Pro 1.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.3.0.5861)
 * [ArcGIS Pro 1.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.2.0.5023)
 * [ArcGIS Pro 1.1 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.1.0.3318)
 
-##Resources
+## Resources
 
 * [API Reference online](http://pro.arcgis.com/en/pro-app/sdk/api-reference)
 * <a href="http://pro.arcgis.com/en/pro-app/sdk/" target="_blank">ArcGIS Pro SDK for .NET (pro.arcgis.com)</a>
@@ -383,11 +383,11 @@ Starting with ArcGIS Pro SDK 1.4 it is now possible to configure a build server 
 
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons.png "ArcGIS Pro SDK Icons")
 
-##Contributing
+## Contributing
 
 Esri welcomes contributions from anyone and everyone. For more information, see our [guidelines for contributing](https://github.com/esri/contributing).
 
-##Issues
+## Issues
 
 Find a bug or want to request a new feature? Let us know by submitting an issue.
 
