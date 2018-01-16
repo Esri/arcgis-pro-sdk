@@ -1,14 +1,8 @@
-## ArcGIS Pro 2.0 SDK for .NET
+## ArcGIS Pro 2.1 SDK for .NET
 
 Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based on the add-in and configurations extensibility pattern. Leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to write integrated 2D/3D add-ins using Pro’s new APIs.
 
 <a href="http://pro.arcgis.com/en/pro-app/sdk/" target="_blank">View it live</a>
-
-### Breaking Changes at 2.0
-
-ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier add-ins and configurations must be recompiled against ArcGIS Pro 2.0 assemblies to work with ArcGIS Pro 2.0. There are additional changes that will be required to migrate your add-ins and configurations beyond recompilation. Please consult the [ProConcepts 2.0 Migration Guide](../../wiki/ProConcepts-2.0-Migration-Guide) for more details.
-<br/>
-<br/>
 
 ### Table of Contents
 
@@ -20,22 +14,17 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
   * [ArcGIS Pro SDK for .NET templates](#arcgis-pro-sdk-for-net-templates)
   * [ArcGIS Pro SDK for .NET utilities](#arcgis-pro-sdk-for-net-utilities)
 * [Getting started](#getting-started) 
+* [ProConcepts: Migrating to ArcGIS Pro](../../wiki/ProConcepts-Migrating-to-ArcGIS-Pro)
 * [ProSnippets](#prosnippets)  
 * [ArcGIS Pro API](#arcgis-pro-api)
   * [Core](#core)
   * [Extensions](#extensions)
   * [Extensions with no public API](#extensions-with-no-public-api)
 * [Release notes](#release-notes)
-  * [ArcGIS Pro 2.0 SDK for .NET](#arcgis-pro-20-sdk-for-net-1)
+  * [ArcGIS Pro 2.1 SDK for .NET](#arcgis-pro-21-sdk-for-net-1)
        * [What's New](#whats-new)
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
-
-&nbsp;&nbsp;&nbsp;&nbsp;**2.0 Migration**
-
-* [ProSnippets: 2.0 Migration](../../wiki/ProSnippets-Migrating-to-2.0)
-* [ProSnippets: 2.0 Migration Samples](../../wiki/ProSnippets-2.0-Migration-Samples)
-* [ProConcepts: 2.0 Migration](../../wiki/ProConcepts-2.0-Migration-Guide)
 
 #### Framework
 
@@ -109,6 +98,8 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
 * [ProConcepts: Editing](../../wiki/ProConcepts-Editing)
 * [ProGuide: Editing Tool](../../wiki/ProGuide-Editing-Tool)
 * [ProGuide: Construction Tools with Options](../../wiki/ProGuide-Construction-Tools-with-Options)
+* [ProGuide: Annotation Construction Tools](../../wiki/ProGuide-Annotation-Construction-Tools)
+* [ProGuide: Annotation Editing Tools](../../wiki/ProGuide-Annotation-Editing-Tools)
 
 --------------------------
 
@@ -141,15 +132,21 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
 ### Layouts
 
 * [ProSnippets: Layouts](../../wiki/ProSnippets-Layouts)
+* [ProConcepts: Layouts](../../wiki/ProConcepts-Layouts)
 
 --------------------------
 
 ### Map Authoring
 
 * [ProSnippets: Map Authoring](../../wiki/ProSnippets-MapAuthoring)
-* [ProSnippets: Symbology](../../wiki/ProSnippets-Symbology)
+* [ProSnippets: Annotation](../../wiki/ProSnippets-Annotation)
+* [ProSnippets: Labeling](../../wiki/ProSnippets-Labeling)
 * [ProSnippets: Renderers](../../wiki/ProSnippets-Renderer)
+* [ProSnippets: Symbology](../../wiki/ProSnippets-Symbology)
+* [ProSnippets: Text Symbols](../../ProSnippets-TextSymbols)
 * [ProConcepts: Map Authoring](../../wiki/ProConcepts-Map-Authoring)
+* [ProConcepts: Annotation](../../wiki/ProConcepts-Annotation)
+* [ProGuide: Geocoding](../../wiki/ProGuide-Geocoding)
  
 --------------------------
 
@@ -181,6 +178,7 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
 ### Sharing
 
 * [ProSnippets: Sharing](../../wiki/ProSnippets-sharing)
+* [ProConcepts: Portal](../../wiki/ProConcepts-Portal)
 
 --------------------------
 
@@ -191,9 +189,17 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
 
 --------------------------
 
+### Utility Network
+
+* [ProSnippets: Utility Network](../../wiki/ProSnippets-UtilityNetwork)
+* [ProConcepts: Utility Network](../../wiki/ProConcepts-Utility-Network)
+* [Object Model Diagram](http://Esri.github.io/arcgis-pro-sdk/content/OMDs/Utility-Network-Object-Model-Diagram.pdf)
+
+--------------------------
+
 ### Workflow Manager
 
-* [ProSnippets: Workflow Manager](../../wiki/ProSnippets-Workflow-Manager)
+* [ProSnippets: Workflow Manager](../../wiki/ProSnippets-WorkflowManager)
 * [ProConcept: Workflow Manager](../../wiki/ProConcepts-Workflow-Manager)
 
 --------------------------
@@ -207,18 +213,24 @@ ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier
 * [FAQ](http://github.com/Esri/arcgis-pro-sdk/wiki/FAQ)
 * [ArcGIS Pro SDK icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.0.0.8933)
 
+&nbsp;&nbsp;&nbsp;&nbsp;**2.0 Migration**
+
+* [ProSnippets: 2.0 Migration](../../wiki/ProSnippets-Migrating-to-2.0)
+* [ProSnippets: 2.0 Migration Samples](../../wiki/ProSnippets-2.0-Migration-Samples)
+* [ProConcepts: 2.0 Migration](../../wiki/ProConcepts-2.0-Migration-Guide)
+
 ## Requirements
 The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here.
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.0
+* ArcGIS Pro 2.1
 
 #### Supported platforms
 
-* Windows 10 (Home, Pro, Enterprise) (64 bit [EM64T])
-* Windows 8.1 Professional, and Enterprise (64 bit [EM64T]) 
-* Windows 7 SP1 Ultimate, Enterprise and Professional (64 bit [EM64T]) 
+* Windows 10 (Home, Pro, Enterprise) (64 bit)
+* Windows 8.1 (Pro, and Enterprise) (64 bit) 
+* Windows 7 SP1 (Ultimate, Professional and Enterprise) (64 bit) 
 
 #### Supported .NET framework
 
@@ -314,7 +326,7 @@ Core assemblies are located in the {ArcGIS Pro Installation folder}\bin.
 
 Assembly           | Description
 ------------------------| -------------
-ArcGIS.Core.dll        | Provides CIM, Geodatabase, and Geometry APIs.
+ArcGIS.Core.dll        | Provides CIM, Geodatabase, Geometry and Utility Network APIs.
 ArcGIS.CoreHost.dll | Provides Host.Initialize to initialize ArcGIS.Core.dll for stand-alone use.
 ArcGIS.Desktop.Framework.dll        | Provides the application framework to include add-in contracts, DAML support, and base classes. This assembly must be referenced by every add-in.
 
@@ -342,10 +354,19 @@ ArcGIS.Desktop.Workflow.dll       | Provides functionality to create, configure,
 There are extension assemblies in {ArcGIS Pro Installation folder}\bin\Extensions subfolders) that do not have a public API. They are currently for Esri internal use only.
 
 * ArcGIS.Desktop.Analyst3D.dll
+* ArcGIS.Desktop.Aviation.dll
+* ArcGIS.Desktop.BusinessAnalyst.Common.dll
+* ArcGIS.Desktop.BusinessAnalyst.DataBrowser.dll
+* ArcGIS.Desktop.BusinessAnalyst.DataCollection.dll
+* ArcGIS.Desktop.BusinessAnalyst.dll
+* ArcGIS.Desktop.BusinessAnalyst.GPControls.dll
+* ArcGIS.Desktop.BusinessAnalyst.MvvmUtils.dll
+* ArcGIS.Desktop.BusinessAnalyst.WpfCommon.dll
 * ArcGIS.Desktop.Charts.dll
 * ArcGIS.Desktop.DataSourcesRaster.dll
 * ArcGIS.Desktop.DefenseMapping.dll
 * ArcGIS.Desktop.Editing.PushPull.dll
+* ArcGIS.Desktop.FullMotionVideo.dll
 * ArcGIS.Desktop.GAWizard.dll
 * ArcGIS.Desktop.Geostatistics.dll
 * ArcGIS.Desktop.LocationReferencing.dll
@@ -355,48 +376,54 @@ There are extension assemblies in {ArcGIS Pro Installation folder}\bin\Extension
 * ArcGIS.Desktop.NetworkAnalysis.Transportation.dll
 * ArcGIS.Desktop.Search.dll
 * ArcGIS.Desktop.Sharing.dll
+* ArcGIS.Desktop.TerritoryDesign.dll
 
 Note: Static string resource properties and image resources included within the public API assemblies are for Esri internal use only. They are not intended for use in third-party add-ins.
 
 ## Release notes 
 
-### ArcGIS Pro 2.0 SDK for .NET
+### ArcGIS Pro 2.1 SDK for .NET
 
-These release notes describe details of the ArcGIS Pro 2.0 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
+These release notes describe details of the ArcGIS Pro 2.1 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
 #### What's new
 
-The following functionality is available at the ArcGIS Pro 2.0 SDK for .NET release:
+The following functionality is available at the ArcGIS Pro 2.1 SDK for .NET release:
 
-##### 1. Breaking Changes at 2.0
+#### 1. API Enhancements  
 
-ArcGIS Pro 2.0 is a breaking change release. This means that all 1.4 and earlier add-ins and configurations must be recompiled against ArcGIS Pro 2.0 assemblies to work with ArcGIS Pro 2.0. There are additional changes that will be required to migrate your add-ins and configurations beyond recompilation. Please consult the [ProConcepts 2.0 Migration Guide](../../wiki/proConcepts-2.0-migration-guide) for more details.
+**Annotation API:**<br/>
+* Create and edit annotation features
+* Assign and manage annotation geometries<br/>
 
-##### 2. Map Pane Impersonation Item Template
+**Content API:**<br/>
+* Working with Metadata
+* Portal API enhancements
 
-The [Map Pane Impersonation](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Map-Pane-Impersonation) is a new item template for customizing the Pro UI/UX. A custom Map pane can be created to impersonate any active Map Pane. This is done by overriding the new `ArcGIS.Desktop.Mapping.TOCMapPaneProviderPane` class. The new map pane you create will allow  you to interact with the TOC that displays the layers in the active map pane that is being impersonated. [ImpersonateMapPane sample](https://github.com/Esri/arcgis-pro-sdk-community-samples/tree/master/Framework/ImpersonateMapPane)
+**Layout API:**<br/>
+* Create new layouts from scratch with dynamic settings
+* Author layout element types
+* Interact with layout views and manage element selections<br/>
 
-##### 3. API Enhancements
+**Utility Network API:**<br/>
+* Create custom utility network traces
+* Develop tools for utility-focused workflows
 
-Pro API enhancements include support for Raster, Geodatabase, Mapping, Geometry, Content Management, and Editing. For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.0](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.1](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
-##### 4. SDK Resources
+#### 2. SDK Resources
 
 There are many new ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
 
-* The [ProConcepts 2.0 Migration Guide](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-2.0-Migration-Guide) which details the different breaking changes as well as the step-by-step migration procedure
-* The [ProSnippets 2.0 Migration](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-Migrating-to-2.0) with examples of before and after code changes.
-* The [FAQ](https://github.com/Esri/arcgis-pro-sdk/wiki/FAQ) has a new migration section to answer most common questions on add-in and configuration migration
-* The API Changes section of the [What’s New for Developers 2.0](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
-* The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-Migrating-to-2.0) are all changed to reflect 2.0 API usage.
-* The [ArcGIS Pro Style Guide](https://github.com/Esri/arcgis-pro-sdk/wiki/proguide-style-guide) contains all the new WPF styles, brushes, and colors
-
-
-##### 5. Other
-
-TO DO: Anything to add in the "Other" section?
+* The [ProConcepts: Annotation](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Annotation) which goes over the fine-grained Annotation API.
+* The [ProConcepts: Layouts](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Layouts) which goes over managing layouts, layout elements and working with layout views. This includes creating new layouts and layout elements, modifying existing elements, managing selections, and layout view control and navigation.
+* The [ProConcepts: Utility Network](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Utility-Network) which goes over the comprehensive framework of functionality in ArcGIS for modeling utility systems such as electric, gas, water, storm water, wastewater, and telecommunications.
+* The [ProGuide: Annotation Construction Tools](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Annotation-Construction-Tools) and [ProGuide: Annotation Editing Tools](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Annotation-Editing-Tools).
+* The API Changes section of the [What’s New for Developers 2.1](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
+* The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
 
 ## Previous versions
+* [ArcGIS Pro 2.0 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.0.0.8933)
 * [ArcGIS Pro 1.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.4.0.7198)
 * [ArcGIS Pro 1.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.3.0.5861)
 * [ArcGIS Pro 1.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.2.0.5023)
