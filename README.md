@@ -96,6 +96,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProSnippets: Editing](../../wiki/ProSnippets-Editing)
 * [ProConcepts: Editing](../../wiki/ProConcepts-Editing)
+* [ProConcepts: Annotation Editing](../../wiki/ProConcepts-Editing-Annotation)
 * [ProGuide: Editing Tool](../../wiki/ProGuide-Editing-Tool)
 * [ProGuide: Construction Tools with Options](../../wiki/ProGuide-Construction-Tools-with-Options)
 * [ProGuide: Annotation Construction Tools](../../wiki/ProGuide-Annotation-Construction-Tools)
