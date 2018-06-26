@@ -1,4 +1,4 @@
-## ArcGIS Pro 2.1 SDK for .NET
+## ArcGIS Pro 2.2 SDK for .NET
 
 Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based on the add-in and configurations extensibility pattern. Leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to write integrated 2D/3D add-ins using Pro’s new APIs.
 
@@ -21,7 +21,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [Extensions](#extensions)
   * [Extensions with no public API](#extensions-with-no-public-api)
 * [Release notes](#release-notes)
-  * [ArcGIS Pro 2.1 SDK for .NET](#arcgis-pro-21-sdk-for-net-1)
+  * [ArcGIS Pro 2.2 SDK for .NET](#arcgis-pro-22-sdk-for-net-1)
        * [What's New](#whats-new)
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
@@ -31,7 +31,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProSnippets: Framework](../../wiki/ProSnippets-Framework)
 * [ProConcepts: Framework](../../wiki/ProConcepts-Framework)
 * [ProConcepts: Advanced topics](../../wiki/ProConcepts-Advanced-Topics)
-* [ProGuide: Commandlines switches for ArcGISPro.exe](../../wiki/ProGuide-Command-lines-switches-for-ArcGISPro.exe)
+* [ProGuide: Command line switches for ArcGISPro.exe](../../wiki/ProGuide-Command-line-switches-for-ArcGISPro.exe)
 * [ProGuide: Licensing](../../wiki/ProGuide-License-Your-Add-in)
 * [ProGuide: Digital signatures](../../wiki/ProGuide-Digitally-signed-add-ins-and-configurations)
 
@@ -383,53 +383,56 @@ Note: Static string resource properties and image resources included within the 
 
 ## Release notes 
 
-### ArcGIS Pro 2.1 SDK for .NET
+### ArcGIS Pro 2.2 SDK for .NET
 
-These release notes describe details of the ArcGIS Pro 2.1 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
+These release notes describe details of the ArcGIS Pro 2.2 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
 #### What's new
 
-The following functionality is available at the ArcGIS Pro 2.1 SDK for .NET release:
+The following functionality is available at the ArcGIS Pro 2.2 SDK for .NET release:
 
 #### 1. API Enhancements  
 
-**Annotation API:**<br/>
-* Create and edit annotation features
-* Assign and manage annotation geometries<br/>
-
 **Content API:**<br/>
-* Working with Metadata
-* Portal API enhancements
+* Additional Item methods for metadata access and management
 
-**Layout API:**<br/>
-* Create new layouts from scratch with dynamic settings
-* Author layout element types
-* Interact with layout views and manage element selections<br/>
+**Editing API:**<br/>
+* Additional support for annotation editing and split operations
+
+**Geodatabase API:**<br/>
+* Table methods for sorting and calculating statistics
+
+**Geometry API:**<br/>
+* Performance improvements for buffering and use of relational operators
 
 **Utility Network API:**<br/>
-* Create custom utility network traces
-* Develop tools for utility-focused workflows
+* Support for ValidateNetworkTopology, Tier groups, access to network system tables
 
-For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.1](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.2
+](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
 #### 2. SDK Resources
 
-There are many new ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
+There are many ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
 
-* The [ProConcepts: Annotation](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Annotation) which goes over the fine-grained Annotation API.
-* The [ProConcepts: Layouts](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Layouts) which goes over managing layouts, layout elements and working with layout views. This includes creating new layouts and layout elements, modifying existing elements, managing selections, and layout view control and navigation.
-* The [ProConcepts: Utility Network](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Utility-Network) which goes over the comprehensive framework of functionality in ArcGIS for modeling utility systems such as electric, gas, water, storm water, wastewater, and telecommunications.
-* The [ProGuide: Annotation Construction Tools](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Annotation-Construction-Tools) and [ProGuide: Annotation Editing Tools](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Annotation-Editing-Tools).
-* The API Changes section of the [What’s New for Developers 2.1](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
+Updates to the SDK Resources include:
+
+* [ProConcepts: Framework](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Framework)
+* [ProConcepts: Editing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Editing)
+* [ProConcepts: Geodatabase](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Geodatabase)
+* [ProConcepts: Geometry](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Geometry)
+* [ProConcepts: Utility Network](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Utility-Network)
 * The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
+* The API Changes section of the [What’s New for Developers 2.2](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
 
 ## Previous versions
+
+* [ArcGIS Pro 2.1 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.1.0.10257)
 * [ArcGIS Pro 2.0 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.0.0.8933)
 * [ArcGIS Pro 1.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.4.0.7198)
 * [ArcGIS Pro 1.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.3.0.5861)
 * [ArcGIS Pro 1.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.2.0.5023)
 * [ArcGIS Pro 1.1 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.1.0.3318)
-
 
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons.png "ArcGIS Pro SDK Icons")
 
@@ -442,7 +445,7 @@ Esri welcomes contributions from anyone and everyone. For more information, see 
 Find a bug or want to request a new feature? Let us know by submitting an issue.
 
 ## Licensing
-Copyright 2017 Esri
+Copyright 2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -459,7 +462,7 @@ limitations under the License.
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
 
-<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.0 SDK for Microsoft .NET Framework</b></p>
+<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.2 SDK for Microsoft .NET Framework</b></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#installing-arcgis-pro-sdk-for-net) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
 

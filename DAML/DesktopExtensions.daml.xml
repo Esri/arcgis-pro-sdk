@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArcGIS defaultAssembly="ArcGIS.Desktop.Extensions.dll" defaultNamespace="ArcGIS.Desktop.Extensions"
+        xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/ArcGIS/bin/ArcGIS.Desktop.Framework.xsd">
+
+  <categories>
+  </categories>
+
+  <conditions>
+  </conditions>
+
+  <modules>
+
+    <insertModule id="esri_desktopextensions_DesktopExtensionsModule" caption="Extensions" className="DesktopExtensionsModule">
+
+      <groups>
+      </groups>
+
+      <controls>
+      </controls>
+    </insertModule>
+  </modules>
+  
+  
+</ArcGIS>

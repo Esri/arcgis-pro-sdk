@@ -1,1 +1,0 @@
-This file is required by Git in order to put an empty folder in place.   

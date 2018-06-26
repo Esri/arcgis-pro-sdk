@@ -1,0 +1,993 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArcGIS defaultAssembly="ArcGIS.Desktop.Workflow.dll" defaultNamespace="ArcGIS.Desktop.Workflow" 
+        xmlns="http://schemas.esri.com/DADF/Registry" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
+
+  <dependencies>
+    <dependency name="ADMapping.daml"/>
+    <dependency name="Editing.daml" />
+	<dependency name="ADGeoDatabase.daml" />
+    <dependency name="TaskAssistant.daml" />
+    <dependency name="ADSharing.daml" />
+  </dependencies>
+
+  <products>
+    <insertProduct id="esri_product_workflow" caption="Workflow Manager" description="ArcGIS Workflow Manager Extension" code="40,200" />
+  </products>
+  
+  <categories>
+    <updateCategory refID="esri_core_projectContainers">
+      <insertComponent id="WorkflowConnectionContainer" className="ArcGIS.Desktop.Internal.Workflow.WorkflowConnectionContainer">
+        <content type="WorkflowConnection" displayName="Workflows" contextMenuID="esri_workflow_workflowFolderContextMenu"/>
+      </insertComponent>
+    </updateCategory>
+    <updateCategory refID="esri_itemInfoType">
+      <insertComponent id="esri_itemInfoType_WorkflowProjectItem" className="ArcGIS.Desktop.Internal.Workflow.WorkflowConnectionItem" containerType="WorkflowConnection">
+        <content>
+          <supportedTypeIDs>
+            <type id="WorkflowConnection"  contextMenuID="esri_workflow_workflowConnectionContextMenu"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+    </updateCategory>
+    
+    <insertCategory id="esri_workflow_userConfigurationViews">
+      <component id="esri_workflow_userProfileView" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserProfileViewModel">
+        <content L_name = "User Profile" buttonTooltipHeader="User Profile" buttonTooltip = "Update current user's profile and add new users."
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User32.png">
+        </content>
+      </component>
+      <component id="esri_workflow_userGroupsView" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserGroupsViewModel">
+        <content L_name = "Groups" buttonTooltipHeader="Add Users to Groups" buttonTooltip = "Add users to workflow groups."
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Group_B32.png">
+        </content>
+      </component>
+    </insertCategory>    
+  </categories>
+
+  <modules>
+    <insertModule id="workflow_module" caption="Workflow Manager" className="WorkflowModule" autoLoad="false"
+                  productID="esri_product_workflow">
+      <tabs>
+        <!-- Core Tabs for Workflow View -->
+        <tab id="esri_workflow_viewTab" caption="View" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_sharing_noValidPaneShareTab" keytip="V">
+          <group refID="esri_workflow_dockWindows" />
+        </tab>
+        <tab id="esri_workflow_analysisTab" caption="Analysis" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_viewTab" keytip="A">
+          <group refID="esri_geoprocessing_analysisTools"/>
+          <group refID="esri_geoprocessing_analysis2"/>
+        </tab>
+        <tab id="esri_workflow_insertTab" caption="Insert" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_analysisTab" keytip="N">
+          <group refID="esri_core_projectData"/>
+          <group refID="esri_core_favoritesData"/>
+        </tab>
+        <tab id="esri_workflow_homeTab" caption="Workflow" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_insertTab" keytip="W">
+          <group refID="esri_core_clipboardGroup" />
+          <group refID="esri_workflow_navigateGroup" placeWith="esri_core_clipboardGroup" insert="after" />
+          <group refID="esri_workflow_selectionGroup" />
+          <group refID="esri_workflow_createJobGroup" />
+          <group refID="esri_workflow_actionsGroup" />
+          <group refID="esri_workflow_offlineGroup" />
+          <!--<group refID="esri_workflow_notificationsGroup" />-->
+        </tab>
+
+        <!-- Core Tabs for Job View -->
+        <tab id="esri_workflow_jobViewTab" caption="View" condition="esri_workflow_jobView" insert="before" placeWith="esri_sharing_noValidPaneShareTab" keytip="V">
+          <group refID="esri_workflow_dockWindows" />
+        </tab>
+        <tab id="esri_workflow_jobAnalysisTab" caption="Analysis" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobViewTab" keytip="A">
+          <group refID="esri_geoprocessing_analysisTools"/>
+          <group refID="esri_geoprocessing_analysis2"/>
+        </tab>
+        <tab id="esri_workflow_jobInsertTab" caption="Insert" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobAnalysisTab" keytip="N">
+          <group refID="esri_core_projectData"/>
+          <group refID="esri_core_favoritesData"/>
+        </tab>
+        <tab id="esri_workflow_jobHomeTab" caption="Job" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobInsertTab" keytip="B">
+          <group refID="esri_core_clipboardGroup" />
+          <group refID="esri_workflow_jobWorkflowViewGroup" />
+          <group refID="esri_workflow_jobAssignGroup" />
+          <group refID="esri_workflow_jobWorkflowExecutionGroup" />
+          <group refID="esri_workflow_jobManageGroup"/>
+          <group refID="esri_workflow_jobGroup" />
+        </tab>
+        
+        <!-- Modal tab for defining LOI -->
+        <tab id="esri_workflow_defineAOITab" caption="Define LOI" condition="esri_workflow_defineAOICondition" insert="after" tabGroupID="esri_workflow_workflowTabGroup" keytip="DA">
+          <group refID="esri_mapping_navigateGroup" />
+          <group refID="esri_mapping_mapGroup" />
+          <group refID="esri_workflow_aoiSelectionGroup" />
+          <group refID="esri_mapping_inquiryGroup" />
+          <group refID="esri_workflow_defineAOIDrawGroup" />
+          <group refID="esri_workflow_defineAOICloseGroup"/>
+        </tab>
+        
+        <!-- Workflow Map Tab-->
+        <tab id="esri_workflow_mapPaneTab" caption="Workflow" condition="esri_workflow_mapPaneCondition" insert="after" keytip="W">
+          <group refID="esri_workflow_exportGroup"/>
+          <group refID="esri_workflow_defineJobLocation"/>
+          <group refID="esri_workflow_createJobGroup"/>
+        </tab>
+      </tabs>
+
+      <tabGroups>
+        <tabGroup caption="Workflow" id="esri_workflow_workflowTabGroup">
+          <color A="255" R="144" G="129" B="188" />
+          <!--purple-->
+          <borderColor A="0" R="229" G="255" B="239" />
+          <!--indigo-->
+        </tabGroup>
+      </tabGroups>
+
+      <groups>
+        <!-- Workflow DB Connection Group -->
+        <group id="esri_workflow_workflowDBConnectionGroup" caption="DB Connection">
+          <button refID="esri_mapping_databaseConnectionButton" size="large" />
+        </group>
+
+        <!-- Workflow HOME Tab Groups -->
+        <group id="esri_workflow_navigateGroup" caption="Navigate">
+          <!-- WMX navigate group should be the same as mapping navigate group except with bookmarks removed -->
+          <tool refID="esri_mapping_exploreSplitButton" size="large" />
+          <button refID="esri_mapping_zoomFullButton" size="small" />
+          <button refID="esri_mapping_fixedZoomInButton" size="small" />
+          <button refID="esri_mapping_prevExtentButton" size="small" />
+          <button refID="esri_mapping_zoomToSelectionButton" size="small" />
+          <button refID="esri_mapping_fixedZoomOutButton" size="small" />
+          <button refID="esri_mapping_nextExtentButton" size="small" />
+        </group>
+        <group id="esri_workflow_selectionGroup" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+        </group>
+        <group id="esri_workflow_createJobGroup" caption="Create Jobs"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobCreate16.png">
+          <gallery refID="esri_workflow_createJobGallery" inline="true" size="large" />
+        </group>
+        <group id="esri_workflow_actionsGroup" caption="Actions"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job16.png">
+          <button refID="esri_workflow_openJobPropertiesDockPaneButton" size="large" />
+          <!--<menu refID="esri_workflow_jobRelationshipMenu" size="large" />-->
+          <button refID="esri_workflow_closeJobButton" size="large" />
+          <!--<menu refID="esri_workflow_exportMenu" size="large" />-->
+          <button refID="esri_workflow_exportCSVButton" size="large" />
+          <toolPalette refID="esri_workflow_deleteJobsPalette"/>
+        </group>
+        <group id="esri_workflow_offlineGroup" caption="Offline" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline16.png">
+          <button refID="esri_workflow_takeJobsOfflineButton" size="large" />
+          <button refID="esri_workflow_bringJobsOnlineButton" size="large" />
+        </group>
+        <!--<group id="esri_workflow_notificationsGroup" caption="Notifications">
+          <button refID="esri_workflow_subscribeToNotificationsButton" size="large" />
+        </group>-->
+        <!-- Workflow VIEW Tab Groups -->
+        <group id="esri_workflow_dockWindows" caption="Windows">
+          <button refID="esri_core_viewsPalette" size="large" />
+          <button refID="esri_core_showContentsDockPane" size="large" />
+          <button refID="esri_geoprocessing_pythonButton" size="large" />
+          <button refID="esri_geoprocessing_modelBuilderButton" size="large" />
+          <button refID="esri_tasks_ShowTasks" size="large" />
+          <button refID="esri_workflow_workflowViewPalette" size="large" />
+        </group>
+        
+        <!-- Job view HOME groups -->
+        <group id="esri_workflow_job_selectionGroup" caption="Selection"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+          <!--<tool refid="esri_mapping_selectByRectangleTool" size="large" />-->
+        </group>
+        <group id="esri_workflow_jobAssignGroup" caption="Assign"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UserArrow16.png">
+          <button refID="esri_workflow_assignToCurrentUser" size="large" />
+        </group>
+        <group id="esri_workflow_jobWorkflowExecutionGroup" caption="Workflow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRun16.png">
+          <button refID="esri_workflow_executionExecute" size="large" />
+          <button refID="esri_workflow_executionMarkAsComplete" size="large" />
+        </group>
+        <group id="esri_workflow_jobGroup" caption="Job"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline16.png">
+          <button refID="esri_workflow_jobRefresh" size="large" />
+          <button refID="esri_workflow_jobPropertiesSave" size="large" />
+          <button refID="esri_workflow_takeJobOfflineButton" size="large" />
+          <button refID="esri_workflow_bringJobOnlineButton" size="large" />
+          <button refID="esri_workflow_cloneJobButton" size="large" />
+        </group>
+        <group id="esri_workflow_jobManageGroup" caption="Manage" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip16.png">
+          <gallery refID="esri_workflow_jobModifyAttachments" inline="false" size="large" />
+        </group>
+        <group id="esri_workflow_jobWorkflowViewGroup" caption="View" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-16.png" >
+          <button refID="esri_workflow_canvas_zoomToCurStepButton" size="large" />
+          <button refID="esri_workflow_canvas_fitToWindowButton" size="large" />
+          <button refID="esri_workflow_canvas_zoomInButton" size="small" />
+          <button refID="esri_workflow_canvas_zoomOutButton" size="small" />
+          <button refID="esri_workflow_canvas_panButton" size="small" />          
+        </group>
+
+        <group id="esri_workflow_defineAOIDrawGroup" caption="Draw LOI" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png">
+          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large"/>
+          <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
+          <button refID="esri_workflow_clearAOI" size="large" />
+          <toolbar refID="esri_workflow_bufferToolbar" separator="true" />
+        </group>
+
+        <group id="esri_workflow_aoiSelectionGroup" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+          <button refID="esri_geoprocessing_selectByAttributeButton" size="large" />
+          <button refID="esri_geoprocessing_selectByLocationButton" size="large" />
+          <button refID="esri_mapping_clearSelectionButton" size="middle" />
+          <button refID="esri_editing_DelSelFeaturesBtn" size="middle" />
+        </group>
+        
+        <group id="esri_workflow_defineAOICloseGroup" caption="Close" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply16.png">
+          <button refID="esri_workflow_defineAOISaveAndClose" size="large" />
+          <button refID="esri_workflow_defineAOIClose" size="large" />
+        </group>
+        
+        <!-- Workflow Map Pane Groups -->
+        <group id="esri_workflow_exportGroup" caption="Export">
+          <button refID="esri_workflow_exportMap" size="large"/>
+        </group>
+
+        <group id="esri_workflow_defineJobLocation" caption="Define Job Location">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+          <button refID="esri_geoprocessing_selectByAttributeButton" size="large" />
+          <button refID="esri_mapping_clearSelectionButton" size="middle" />
+          <checkBox refID="esri_workflow_mergeCheckBox" size="middle"/>
+        </group>
+      </groups>
+
+      <toolbars>
+        <toolbar id="esri_workflow_bufferToolbar">
+          <group>
+            <checkBox refID="esri_workflow_bufferCheckBox" size="small" />
+          </group>
+          <group >
+            <editBox refID="esri_workflow_bufferDistanceEditBox" size="small" />
+            <comboBox refID ="esri_workflow_bufferUnitsComboBox" size="small" />
+          </group>
+        </toolbar>
+      </toolbars>
+
+      <controls>
+        <!-- Workflow Connection button -->
+        <button id="esri_workflow_workflowConnectionButton" className="workflow_module:ConnectToWorkflowAsync" caption="Add Workflow Connection" extendedCaption="Insert Connection"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
+                condition="esri_workflow_canAddWorkflowConnectionCondition" keytip="WC">
+          <tooltip heading="">
+            Add a connection to a Workflow Manager database to the project.
+            <disabledText>Only one workflow connection can be added per project.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionContextMenuButton" className="workflow_module:ConnectToWorkflowAsync" caption="Add Workflow Connection" extendedCaption="Add Workflow Connection - Context Menu"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
+                condition="esri_workflow_canAddWorkflowConnectionCondition">
+          <tooltip heading="">
+            Add a connection to a Workflow Manager database to the project.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionOnlineButton" className="workflow_module:ConnectToOnlineWorkflow" caption="Add Workflow Server Connection"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
+                condition="esri_workflow_canAddOnlineWorkflowConnectionCondition" keytip="WC">
+          <tooltip heading="">
+            Add a connection to a Workflow server to the project.
+            <disabledText>Only one workflow connection can be openend at a time.</disabledText>
+          </tooltip>
+        </button>
+        
+        <!-- Workflow Jobs buttons (Home Tab, Jobs Group) -->
+        <button id="esri_workflow_openJobPropertiesDockPaneButton" className="WorkflowPane.Ribbon.OpenJobPropertiesDockPaneButton" 
+               caption="Job Properties" extendedCaption="Open Job Properties pane" keytip="JP"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job32.png"
+               condition="esri_workflow_workflowPane">
+          <tooltip heading="Job Properties">
+            Show the Job Properties pane.
+
+You can update multiple job properties at once.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_openWorkerDockPaneButton" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkerDockPaneButton"
+               caption="Workflow Pane" extendedCaption="Open Workflow pane" keytip="WP" condition="esri_workflow_workflowConnectionExistsState"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowPane16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowPane32.png">
+          <tooltip heading="Workflow Pane">
+            Show the Workflow pane with jobs assigned to you and your group.
+            <disabledText>No workflow connection in project</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowView" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkflowViewButton" 
+                caption="Workflow View" extendedCaption="Open Workflow View" keytip="WV"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkFlowConnection32.png"
+                condition="esri_workflow_isNotServerConnection">
+          <tooltip>
+            Show the Workflow view with jobs in a list and map based on selected criteria.
+            <disabledText>No workflow connection in project</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_closeJobButton" className="WorkflowPane.Ribbon.CloseJobButton" caption="Close" keytip="CJ" extendedCaption="Close Job"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClose16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClose32.png"
+               condition="esri_workflow_CloseJobEnabledCondition">
+          <tooltip>
+            Close workflow job(s).
+            <disabledText>Current user does not have the Close Job privilege.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_exportCSVButton" className="esri_workflow_workflowPane:ExportCSV" caption="Export to CSV"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png" 
+               condition="esri_workflow_ExportCSVEnabledCondition" keytip="XC">
+          <tooltip>
+            Export workflow job(s) to a CSV file.
+            <disabledText>
+              Job can only be exported when the query is active.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_exportJobButton" className="esri_workflow_workflowPane:ExportJob" caption="Export Job"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="EJ"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+          <tooltip>
+            Export workflow job(s) to a JXL file.
+            <disabledText>Not available yet.<!--Current user does not have the Export Job privilege.--></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_exportQueryResultsButton" className="esri_workflow_workflowPane:ExportQuery" caption="Export Query"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="EQ"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+          <tooltip>
+            Export query results to a CSV file.
+            <disabledText>Not available yet.<!--Current user does not have the Export Query Results privilege.--></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_exportReportButton" className="esri_workflow_workflowPane:Report" caption="Export Report" extendedCaption="Export Job Report"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="ER"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+          <tooltip>
+            Export report results to an HTML file.
+            <disabledText>Not available yet.<!--Current user does not have the Export Query Results privilege.--></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_jobParentChildRelationshipButton" className="esri_workflow_workflowPane:ViewJobParentChildRelationship" caption="Parent Child Relationship"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="P"><!--esri_workflow_workflowPane">-->
+          <tooltip>
+            View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_jobDependentOnRelationshipButton" className="esri_workflow_workflowPane:ViewJobDependentOn" caption="Dependent On"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="DO"><!--esri_workflow_workflowPane">-->
+          <tooltip>
+            View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_jobDependentToRelationshipButton" className="esri_workflow_workflowPane:ViewJobDependentTo" caption="Dependent To"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
+               condition="esri_workflow_unimplementedCondition" keytip="DT"><!--esri_workflow_workflowPane">-->
+          <tooltip>
+            View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_takeJobsOfflineButton" className="WorkflowPane.Ribbon.TakeJobsOfflineButton" caption="Take Offline" keytip="TO" extendedCaption="Take Multiple Jobs Offline"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline32.png"
+               loadOnClick="false" condition="esri_workflow_onlineCondition">
+          <tooltip>
+            Take jobs offline.
+            <disabledText>Already in offline mode.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_bringJobsOnlineButton" className="WorkflowPane.Ribbon.BringJobsOnlineButton" caption="Bring Online" keytip="BO" extendedCaption="Bring Multiple Jobs Online"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobBringOnline16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobBringOnline32.png"
+               loadOnClick="false" condition="esri_workflow_onlineCondition">
+          <tooltip>
+            Bring jobs back online.
+            <disabledText>Unable to bring jobs online while in offline mode</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_deleteJobsButton" className="WorkflowPane.Ribbon.DeleteJobButton" caption="Delete Jobs" keytip="DJ" extendedCaption="Delete Multiple Jobs"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJob16.png"
+                       largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJob32.png"
+                       loadOnClick="false" condition="esri_workflow_DeleteJobsEnabledCondition">
+          <tooltip>
+            Delete workflow job(s)
+            <disabledText>Current user does not have the Delete Jobs privilege or unable to delete job(s) while in offline mode</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_deleteVersionsButton" className="WorkflowPane.Ribbon.DeleteVersionButton" caption="Delete Version" keytip="DV" extendedCaption="Delete Multiple Job Versions"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJobVersion16.png"
+                       largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJobVersion32.png"
+                       loadOnClick="false" condition="esri_workflow_DeleteVersionEnabledCondition">
+          <tooltip>
+            Delete workflow job version(s)
+            <disabledText>Current user does not have the Delete Versions privilege or unable to delete version(s) while in offline mode</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_deleteMapsButton" className="WorkflowPane.Ribbon.DeleteMapButton" caption="Delete Map" keytip="DM" extendedCaption="Delete Multiple Job Maps"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJobMap16.png"
+                       largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteJobMap32.png"
+                       loadOnClick="false" condition="esri_workflow_workflowDeleteMXDUserPrivilegeCondition">
+          <tooltip>
+            Delete workflow job map(s)
+            <disabledText>Current user does not have the Delete MXDs privilege</disabledText>
+          </tooltip>
+        </button>
+        
+        <!-- Workflow Notification buttons (Home Tab, Notifications Group) -->
+        <button id="esri_workflow_subscribeToNotificationsButton" className="esri_workflow_workflowPane:SubscribeToNotifications" caption="Subscribe" keytip="SB"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmailUser16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmailUser32.png"
+               condition="esri_workflow_unimplementedCondition"><!--esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition">-->
+          <tooltip>
+            Subscribe to workflow notifications.
+            <disabledText>Not available yet.<!--Current user does not have the Subscribe to Notifications privilege.--></disabledText>
+          </tooltip>
+        </button>
+        <!-- Workflow Context Menu buttons-->
+        <button id="esri_workflow_workflowConnectionContextMenuRemoveButton" className="esri_core_module:RemoveProjectItem" caption="Remove" condition="esri_worklflow_jobNotExecutingCondition" extendedCaption="Remove Selected Workflow Connection - Context Menu"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+          <tooltip>Remove workflow connection from the project</tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionContextMenuOpenButton" className="workflow_module:OpenWorkflow" caption="Open Workflow Connection" extendedCaption="Open Selected Workflow Connection - Context Menu"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png">
+          <tooltip>Open the workflow connection</tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionContextMenuDataWorkspaceLoginButton" className="workflow_module:SetDWLogin" caption="Update Data Workspace Login" extendedCaption="Data Workspace Login - Context Menu"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseConnection16.png" condition="esri_workflow_workflowIndividualDataWorkspaceCondition">
+          <tooltip>
+            Update individual login for a data workspace
+            <disabledText>No data workspace with an individual login configured</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionContextMenuAddUserToGroupButton" className="workflow_module:OpenUserConfiguration" caption="Update Users and Groups" extendedCaption="Add User to Workflow Groups - Context Menu"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" condition="esri_workflow_workflowConnectionOnlineAndAdminUserCondition">
+          <tooltip>
+            Update the current user's profile and add the user to workflow groups.
+            <disabledText>The current user does not have the AdministratorAccess privilege or an online Workflow connection is not available.</disabledText>
+          </tooltip>
+        </button>
+
+        <!-- Job View - HOME tab - Assign group -->
+        <button id="esri_workflow_assignToCurrentUser" className="JobPane.Ribbon.AssignJobButton" caption="Current User" keytip="CU"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UserArrow16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UserArrow32.png" condition="esri_workflow_assignJobToSelfCondition">
+          <tooltip heading="Assign to Current User">
+            Assign job to current user
+            <disabledText>Job is already assigned to the current user, or the current user does not have privileges to assign the job.</disabledText>
+          </tooltip>
+        </button>
+        <!-- Job View - HOME tab - Workflow group -->
+        <button id="esri_workflow_executionExecute" className="JobPane.Ribbon.ExecuteStepButton" caption="Execute Step" keytip="X" loadOnClick="false" extendedCaption="Execute Job Step"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRun16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRun32.png">
+          <tooltip heading="Execute Step">
+            Execute the current workflow step
+          </tooltip>
+        </button>
+        <button id="esri_workflow_executionMarkAsComplete" className="JobPane.Ribbon.CompleteStepButton" caption="Mark Step Complete" keytip="MSC" loadOnClick="false" extendedCaption="Mark Job Step Complete"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark32.png">
+          <tooltip heading="Mark Step Complete">
+            Mark the workflow step as complete
+          </tooltip>
+        </button>
+        
+        <button id="esri_workflow_jobRefresh" className="JobPane.Ribbon.RefreshJob" caption="Refresh" keytip="R" extendedCaption="Refresh Job"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh32.png">
+          <tooltip heading="Refresh Job">
+            Refresh the current job
+            <disabledText>There is no current job</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_takeJobOfflineButton" className="JobPane.Ribbon.TakeJobOfflineButton" caption="Take Offline" keytip="TO" extendedCaption="Take Job Offline" loadOnClick="false"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobTakeOffline32.png">
+          <tooltip>
+            Take jobs offline.
+            <!-- disabledText set in the button class -->
+          </tooltip>
+        </button>
+        <button id="esri_workflow_bringJobOnlineButton" className="JobPane.Ribbon.BringJobOnlineButton" caption="Bring Online" keytip="BO" extendedCaption="Bring Job Online" loadOnClick="false"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobBringOnline16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobBringOnline32.png">
+          <tooltip>
+            Bring jobs back online.
+            <!-- disabledText set in the button class -->
+          </tooltip>
+        </button>
+        <button id="esri_workflow_cloneJobButton" className="JobPane.Ribbon.CloneJobButton" caption="Clone Job" keytip="CO" extendedCaption="Clone Job"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClone16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClone32.png"
+                loadOnClick="false">
+          <tooltip>
+            Clone the current job
+            <disabledText>There is no current job</disabledText><!-- Should not happen -->
+          </tooltip>
+        </button>
+        
+        
+        <!-- Define AOI Close Group -->
+        <button id="esri_workflow_clearAOI" className="DefineAOI.Ribbon.ClearAOIButton" caption="Clear LOI" extendedCaption="Clear Jobs Location of Interest" keytip="CL"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionClearSelected16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionClearSelected32.png">
+          <tooltip heading="Clear LOI">
+            Clear the Location of Interest
+          </tooltip>
+        </button>
+        <button id="esri_workflow_defineAOIClose" className="DefineAOI.Ribbon.CloseAOIButton" caption="Close" extendedCaption="Cancel Defining Job Location of Interest" keytip="CE"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCancel16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCancel32.png">
+          <tooltip heading="Define LOI">
+            Close the map and discard changes to Location of Interest
+          </tooltip>
+        </button>
+        <button id="esri_workflow_defineAOISaveAndClose" className="DefineAOI.Ribbon.SaveAndCloseAOIButton" caption="Save and Close" keytip="SC"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply32.png">
+          <tooltip heading="Define LOI">
+            Save changes to the Location of Interest and close the map
+          </tooltip>
+        </button>
+
+        <checkBox id="esri_workflow_bufferCheckBox" className="DefineAOI.Ribbon.BufferCheckbox" caption="Buffer Points/Lines" loadOnClick="false">
+          <tooltip heading="">
+            Buffer points/lines to be saved as polygons
+          </tooltip>
+        </checkBox>
+
+        <checkBox id="esri_workflow_mergeCheckBox" className="ArcGIS.Desktop.Internal.Workflow.MapPane.Ribbon.MergeCheckbox" caption="Merge Features" loadOnClick="false">
+          <tooltip heading="">
+            Merge features into a single LOI
+          </tooltip>
+        </checkBox>
+
+        <editBox id="esri_workflow_bufferDistanceEditBox" className="DefineAOI.Ribbon.BufferDistanceEditBox" dataType="double" format="F4" caption="Buffer Distance"
+                 showHelp="true" sizeString="0000000.0000" condition="esri_workflow_defineAOIBufferState">
+          <tooltip heading="Distance">
+            The number of units to create the buffer
+          </tooltip>
+        </editBox>
+        
+        <comboBox id="esri_workflow_bufferUnitsComboBox" className="DefineAOI.Ribbon.BufferUnitsComboBox" loadOnClick="false" caption="Buffer Units"
+                  isEditable="false" resizable="false" showHelp="true" sizeString="0000" condition="esri_workflow_defineAOIBufferState">
+          <tooltip heading="Distance Unit">
+            Select the unit measurement to be used to buffer points/lines
+          </tooltip>
+        </comboBox>
+
+        <!-- Workflow Diagram Context Menu button -->
+        <button id="esri_workflow_workflowDiagramContextMenuRunButton" className="JobPane.JobPanels.RunStepButton" caption="Execute Step" loadOnClick="false" extendedCaption="Executed Selected Step - Context Menu"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRun16.png">
+          <tooltip heading="">
+            Execute the current workflow step
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowDiagramContextMenuCheckButton" className="JobPane.JobPanels.CheckAsDoneButton" caption="Mark Step Complete" loadOnClick="false" extendedCaption="Mark Selected Step Complete - Context Menu"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png">
+          <tooltip heading="">
+            Mark the workflow step as complete
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowDiagramContextMenuSetCurrentButton" className="JobPane.JobPanels.SetAsCurrentButton" caption="Set as Current Step" loadOnClick="false" extendedCaption="Set Selected Step as Current Step - Context Menu">
+          <tooltip heading="">
+            Set as Current Step.
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowDiagramContextMenuOpenStepHelp" className="JobPane.JobPanels.OpenStepHelpButton" caption="Open Step Help" loadOnClick="false" extendedCaption="Open Step Help For Selected Step - Context Menu"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HelpSystemBlue16.png">
+          <tooltip heading="">
+            Open Step Help.
+          </tooltip>
+        </button>
+        <!-- Add Task Assistant File Context Menu button -->
+        <button id="esri_workflow_addTaskFileContextMenuButton" className="workflow_module:AddTaskFileAsync" caption="Workflow Manager"
+                condition="esri_workflow_canAddTaskFileCondition">
+          <tooltip>
+            Add the task item to the Workflow Manager repository.
+            <disabledText>Not connected to a Workflow repository, or the current user does not have privileges to add tasks to the Workflow Manager repository.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_createAttachment" caption="New Attachment..." keytip="N" className="JobPane.Ribbon.NewAttachment"  loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClipNew32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClipNew16.png" >
+          <tooltip heading="New Attachment">
+            Add a new attachment to the current job<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_manageAttachments" caption="Manage Attachments" keytip="M" className="JobPane.Ribbon.ManageAttachments"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip16.png" loadOnClick="false">
+          <tooltip heading="Manage Attachment">
+            Manage attachments from a dockable window.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_createJobContextMenuFavorite" caption="Add to Favorites" keytip="A" className="WorkflowPane.Ribbon.AddToFavorites"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarAdd32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarAdd16.png" loadOnClick="false">
+          <tooltip heading="Add to Favorites">
+            Add Job Type to list of favorites
+          </tooltip>
+        </button>
+        <button id="esri_workflow_createJobContextMenuUnfavorite" caption="Remove from Favorites" keytip="R" className="WorkflowPane.Ribbon.RemoveFromFavorites"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarRemove32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarRemove16.png" loadOnClick="false">
+          <tooltip heading="Remove from Favorites">
+            Remove Job Type from list of favorites
+          </tooltip>
+        </button>
+        <button id="esri_workflow_createJobsGP" caption="Advanced..." extendedCaption="Create Workflow Manager Jobs Advanced" className="WorkflowPane.Ribbon.OpenCreateJobsGP">
+          <tooltip heading="Create Jobs Advanced">
+            Open the Create New Jobs GP tool to provide more advanced options
+          </tooltip>
+        </button>
+        
+        <!-- Job View - Workflow View button-->
+        <button id="esri_workflow_canvas_fitToWindowButton" caption="Fit To Window" keytip="FTW" className="JobPane.Ribbon.FitToWindowButton" extendedCaption="Fit Workflow Diagram To Window"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent32.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
+          <tooltip heading="Fit to window">
+            Fit workflow diagram to window so you can see all steps.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_canvas_zoomToCurStepButton" caption="Zoom to Current Step" keytip="ZC" className="JobPane.Ribbon.ZoomToCurStepButton" extendedCaption="Zoom Workflow Diagram To Current Step"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-32.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
+          <tooltip heading="Zoom to current step">
+            Zoom to current step.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_canvas_zoomInButton" caption="Zoom in" keytip="ZI" className="JobPane.Ribbon.ZoomInButton" extendedCaption="Zoom In Workflow Diagram"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomIn_B_16.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
+          <tooltip heading="Zoom in">
+            Zoom in on the workflow diagram.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_canvas_zoomOutButton" caption="Zoom out" keytip="ZO" className="JobPane.Ribbon.ZoomOutButton" extendedCaption="Zoom Out Workflow Diagram"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
+          <tooltip heading="Zoom out">
+            Zoom out from the workflow diagram.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_canvas_panButton" caption="Pan" keytip="PA" className="JobPane.Ribbon.PanButton" extendedCaption="Pan Workflow Diagram"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanTool_B_16.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
+          <tooltip heading="Pan">
+            Pan in the workflow diagram.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
+          </tooltip>
+        </button>
+        
+        <!-- Workflow Map Pane Buttons -->
+        <button id="esri_workflow_exportMap" caption="Map" keytip="EM" className="ArcGIS.Desktop.Internal.Workflow.MapPane.Ribbon.ExportMapButton" extendedCaption="Export Map to Database"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportWorkflowMap16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportWorkflowMap32.png"
+                condition="esri_workflow_ExportMapCondition">
+          <tooltip heading="Export Map">
+            Export Map to Workflow Manager Database.
+          </tooltip>
+        </button>
+      </controls>
+
+      <galleries>
+        <gallery id="esri_workflow_createJobGallery" className="WorkflowPane.Ribbon.CreateJobGalleryViewModel" caption="New Job" keytip="NJ"
+                 itemsInRow="5" itemWidth="110" itemHeight="56"
+                 showItemCaption="true" showItemCaptionBelow="true" resizable="true" showGroup="true"
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Workflow;component/WorkflowPane/Ribbon/GalleryTemplates.xaml"
+                 templateID="JobTypeItemTemplate"
+                 loadingMessage="Loading..."
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobCreate16.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobCreate32.png"
+                 condition="esri_workflow_workflowCreateJobUserPrivilegeCondition">
+          <tooltip>
+            Create new workflow job(s).
+            <disabledText>Current user does not have the Create Job privilege.</disabledText>
+          </tooltip>
+          <button refID="esri_workflow_createJobsGP" />
+        </gallery>
+        <gallery id="esri_workflow_jobModifyAttachments" className="JobPane.Ribbon.ModifyAttachmentGalleryViewModel" caption="Attachments" keytip="ATT"
+                 itemsInRow="1" itemWidth="200" itemHeight="40" showItemCaption="true" resizable="true" showGroup="true"
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Workflow;component/WorkflowPane/Ribbon/GalleryTemplates.xaml"
+                 templateID="attachmentItemTemplate" loadingMessage="Loading..."
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip16.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip32.png">
+          <button refID="esri_workflow_createAttachment" />
+          <button refID="esri_workflow_manageAttachments" />
+        </gallery>
+      </galleries>
+
+      <menus>
+        <menu id="esri_workflow_workflowConnectionContextMenu" caption="WorkflowConnection">
+          <button refID="esri_workflow_workflowConnectionContextMenuOpenButton" />
+          <button refID="esri_workflow_workflowConnectionContextMenuDataWorkspaceLoginButton" />
+          <button refID="esri_workflow_workflowConnectionContextMenuAddUserToGroupButton" />
+          <button refID="esri_core_rename" />
+          <button refID="esri_workflow_workflowConnectionContextMenuRemoveButton" separator="true" />
+        </menu>
+        <menu id="esri_workflow_workflowFolderContextMenu" caption="WorkflowConnections">
+          <button refID="esri_workflow_workflowConnectionContextMenuButton"/>
+        </menu>
+        <menu id="esri_workflow_exportMenu" caption="Export" keytip="EX"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png" >
+          <tooltip>
+            <disabledText>Not available yet.</disabledText>
+          </tooltip>
+          <button refID="esri_workflow_exportJobButton" />
+          <button refID="esri_workflow_exportQueryResultsButton" />
+          <button refID="esri_workflow_exportReportButton" />
+        </menu>
+        <!--<menu id="esri_workflow_jobRelationshipMenu" caption="View Related" keytip="R"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png" >
+          <tooltip>
+            <disabledText>Not available yet.</disabledText>
+          </tooltip>
+          <button refID="esri_workflow_jobParentChildRelationshipButton" />
+          <button refID="esri_workflow_jobDependentOnRelationshipButton" />
+          <button refID="esri_workflow_jobDependentToRelationshipButton" />
+        </menu>-->
+        <menu id="esri_workflow_workflowDiagramContextMenu" caption="WorkflowStepAction">
+          <button refID="esri_workflow_workflowDiagramContextMenuRunButton" />
+          <button refID="esri_workflow_workflowDiagramContextMenuCheckButton" />
+          <button refID="esri_workflow_workflowDiagramContextMenuSetCurrentButton" />
+          <button refID="esri_workflow_workflowDiagramContextMenuOpenStepHelp"/>
+          
+        </menu>
+        <menu id="esri_workflow_createJobContextMenu" caption="CreateJob">
+          <button refID="esri_workflow_createJobContextMenuFavorite" />
+        </menu>
+        <menu id="esri_workflow_createJobFavContextMenu" caption="CreateJobFavorite">
+          <button refID="esri_workflow_createJobContextMenuUnfavorite" />
+        </menu>
+      </menus>
+      
+      <palettes>
+        <toolPalette id="esri_workflow_deleteJobsPalette" itemsInRow="1" showItemCaption="true" caption="Delete" extendedCaption="Delete jobdata palette" keytip="DJP">
+          <tool refID="esri_workflow_deleteJobsButton" />
+          <tool refID="esri_workflow_deleteVersionsButton" />
+          <tool refID="esri_workflow_deleteMapsButton" />
+        </toolPalette>
+        <toolPalette id="esri_workflow_workflowViewPalette" itemsInRow="1" showItemCaption="true" caption="Workflow Manager" extendedCaption="Workflow Manager palette" keytip="WVP">
+          <tool refID="esri_workflow_openWorkerDockPaneButton" />
+          <tool refID="esri_workflow_workflowView" />
+        </toolPalette>
+      </palettes>
+      
+      <panes>
+        <!-- Workflow view caption is blank to start off with, but will be populated with the workflow repository name when workflow is opened-->
+        <pane id="esri_workflow_workflowPane" caption=" " className="WorkflowPaneViewModel" 
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png" isClosable="true" 
+              defaultTab="esri_workflow_homeTab">
+          <content className="WorkflowPaneView" />
+        </pane>
+        <!-- Job view caption is blank to start off with, but will be populated with the job name when job is loaded-->
+        <pane id="esri_workflow_jobView" caption=" " className="JobViewModel"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job16.png" isClosable="true"
+              defaultTab="esri_workflow_jobHomeTab">
+          <content className="JobView" />
+        </pane>        
+      </panes>
+
+      <dockPanes>
+        <dockPane id="esri_workflow_attachmentsDockPane" caption="Job Attachments" className="AttachmentsDockPaneViewModel"
+          dock="group" condition="esri_workflow_jobView" dockWith="esri_core_projectDockPane"
+          keytip="Attachments" initiallyVisible="false" delayLoadMessage="Manage job attachments in the project">
+          <content className="AttachmentsDockPane" />
+        </dockPane>
+        <dockPane id="esri_workflow_jobPropertiesDockPane" caption="Job Properties" className="WorkflowPane.JobPropertiesDockPaneViewModel" 
+          dock="group" condition="esri_workflow_workflowPane" dockWith="esri_core_projectDockPane"
+          keytip="Job Properties" initiallyVisible="false" delayLoadMessage="Open the Workflow view to get started.">
+          <content className="WorkflowPane.JobPropertiesDockPane" />
+        </dockPane>
+        <dockPane id="esri_workflow_userConfigurationDockPane" caption="Update Users and Groups" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserConfigurationDockPaneViewModel"
+          dock="group" condition="esri_workflow_workflowConnectionOnlineAndAdminUserCondition" dockWith="esri_core_projectDockPane"
+          keytip="Update Users and Groups" initiallyVisible="false" delayLoadMessage="Open an online Workflow connection and give the current user the AdministratorAccess privilege to get started.">
+          <content className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserConfigurationDockPane" />
+        </dockPane>
+        <dockPane id="esri_workflow_workerDockPane" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.WorkerDockPaneViewModel"
+          dock="group" dockWith="esri_core_projectDockPane"
+          keytip="Workflow" initiallyVisible="false" >
+          <content className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.WorkerDockPane" />
+        </dockPane>
+      </dockPanes>
+    </insertModule>
+
+    <updateModule refID="esri_geodatabase_module">
+      <menus>
+        <updateMenu refID="esri_geodatabase_insertMenu">
+          <insertButton refID="esri_workflow_workflowConnectionButton" separator="true" />
+        </updateMenu>
+      </menus>
+    </updateModule>
+
+    <updateModule refID="esri_taskassistant_TaskAssistantModule">
+      <menus>
+        <updateMenu refID="esri_tasks_ShareProjectItemContextMenu">
+          <insertButton refID="esri_workflow_addTaskFileContextMenuButton" separator="false" placeWith="esri_tasks_SendProjectTaskItemToFile" />
+        </updateMenu>
+      </menus>
+    </updateModule>
+    
+    <updateModule refID="esri_core_module">
+    <groups>
+      <updateGroup refID="esri_core_dockWindows">
+        <insertButton refID="esri_workflow_workflowViewPalette" />
+      </updateGroup>
+    </groups>
+  </updateModule>
+  </modules>
+
+  <conditions>
+    <insertCondition id="esri_workflow_mapPaneCondition" caption="In a map pane">
+      <and>
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_workflow_workflowConnectionExistsState"/>
+        <not>
+          <state id="esri_workflow_defineAOIState"/>
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_ExportMapCondition" caption="Map not open by step">
+      <and>
+        <not>
+          <state id="esri_workflow_wmxStepState"/>
+        </not>
+        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_canAddOnlineWorkflowConnectionCondition" caption="A Workflow Connection can be opened">
+      <and>
+        <not>
+          <state id="esri_workflow_workflowConnectionExistsState" />
+        </not>
+        <state id="esri_core_isSignedIn" />
+        <state id="esri_mapping_openProjectState"/>
+        <state id="esri_workflow_allowOnlineConnections"/> <!-- Temporary restriction to only allow if registry key enables it -->
+      </and>
+    </insertCondition>
+	<insertCondition id="esri_workflow_canAddWorkflowConnectionCondition" caption="A Workflow Connection can be added">
+      <and>
+        <not>
+          <state id="esri_workflow_workflowConnectionExistsState" />
+        </not>
+        <state id="esri_mapping_openProjectState"/>
+      </and>
+    </insertCondition>
+    
+    <insertCondition id="esri_workflow_workflowConnectionExistsState" caption="A Workflow Connection exists">
+      <state id="esri_workflow_workflowConnectionExistsState" />
+    </insertCondition>
+    
+    <insertCondition id="esri_workflow_canAddTaskFileCondition" caption="A Task item can be added to the Workflow Repository">
+      <and>
+        <state id="esri_workflow_workflowConnectionExistsState" />
+        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+        <!-- TODO: Use open project or task item loaded condition? -->
+        <state id="esri_mapping_openProjectState" />
+        <!--<state id="esri_taskassistant_IsTaskFileLoaded" />-->
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_workflow_workflowConnectionOnlineAndAdminUserCondition" caption="A Workflow Connection is online and the user is an administrator">
+      <and>
+        <state id="esri_workflow_workflowConnectionExistsState" />
+        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+        <state id="esri_mapping_openProjectState" />
+        <state id="esri_workflow_onlineState" />
+      </and>
+    </insertCondition>
+
+    <!-- TODO Revisit using isEnabled property on buttons as alternative to using conditions -->
+    <!-- Conditions for User Privileges -->
+    <!-- CreateJob, AssignAnyJob, ExportJobs, CloseJob, CanSubscribeToNotifications -->
+    <insertCondition id="esri_workflow_isNotServerConnection" caption="Pro is connected to server">
+      <and>
+        <state id="esri_workflow_workflowConnectionExistsState" />
+        <not>
+          <state id="esri_workflow_isServerConnectionState" />
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowAdministratorUserPrivilegeCondition" caption="User has administrator privileges">
+      <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowIndividualDataWorkspaceCondition" caption="Configuration has an individual data workspace">
+      <and>
+        <state id="esri_workflow_workflowIndividualDataWorkspaceState" />
+        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowCreateJobUserPrivilegeCondition" caption="A Worflow job can be created">
+      <state id="esri_workflow_workflowCreateJobUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowAssignAnyJobUserPrivilegeCondition" caption="A Worflow job can be assigned">
+      <state id="esri_workflow_workflowAssignAnyJobUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowExportJobsUserPrivilegeCondition" caption="A Worflow job can be exported">
+      <state id="esri_workflow_workflowExportJobsUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowCloseJobUserPrivilegeCondition" caption="A Worflow job can be closed">
+      <state id="esri_workflow_workflowCloseJobUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition" caption="A Worflow user can subscribe to notifications">
+      <state id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_updateJobPropertiesCondition" caption="A Workflow user can update job properties">
+      <state id="esri_workflow_workflowUpdatePropertiesUserPrivilegeState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowManageAOICondition" caption="A Workflow user can update the LOI">
+      <state id="esri_workflow_workflowManagerAOIUserPrivilegeState"/>
+    </insertCondition>
+
+    <insertCondition id ="esri_workflow_CloseJobEnabledCondition">
+      <and>
+        <state id ="esri_workflow_CloseJobEnabledState" />
+        <state id="esri_workflow_workflowCloseJobUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id ="esri_workflow_ExportCSVEnabledCondition">
+      <state id ="esri_workflow_ExportCSVEnabledState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_defineAOICondition" caption="A Workflow user is defining an LOI">
+      <state id="esri_workflow_defineAOIState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_defineAOIBufferCondition" caption="A Workflow user is buffering points/lines while defining an LOI">
+      <state id="esri_workflow_defineAOIBufferState" />
+    </insertCondition>
+    <insertCondition id="esri_workflow_unimplementedCondition" caption="Unimplemented functionality that should always be disabled">
+      <state id="esri_workflow_unimplementedState"/>
+    </insertCondition>
+    <insertCondition id="esri_workflow_assignJobToSelfCondition" caption="The user can assign the job to themself">
+      <state id="esri_workflow_assignJobToSelfState"/>
+    </insertCondition>
+    <insertCondition id="esri_worklflow_jobNotExecutingCondition" caption="A job is executing">
+      <not>
+        <state id="esri_workflow_jobExecutingState"/>
+      </not>
+    </insertCondition>
+    <insertCondition id="esri_workflow_takeOfflineCondition" caption="Connected to an online workflow repository and user can take jobs offline">
+      <and>
+        <state id="esri_workflow_onlineState" />
+        <state id="esri_workflow_workflowCanTakeJobsOfflineUserPrivilegeState" />
+      </and>      
+    </insertCondition>
+    <insertCondition id="esri_workflow_onlineCondition" caption="Connected to an online workflow repository">
+      <state id="esri_workflow_onlineState"/>
+    </insertCondition>
+    <insertCondition id="esri_workflow_inWorkflowTabCondition" caption="The user can use workflow diagram navigation tool">
+      <state id="esri_workflow_inWorkflowTabState"/>
+    </insertCondition>
+    <insertCondition id="esri_workflow_DeleteJobsEnabledCondition" caption="A Worflow job can be deleted">
+      <and>
+        <state id="esri_workflow_onlineState"/>
+        <state id="esri_workflow_workflowDeleteJobsUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_DeleteVersionEnabledCondition" caption="A Worflow job version can be deleted">
+      <and>
+        <state id="esri_workflow_onlineState"/>
+        <state id="esri_workflow_workflowDeleteVersionUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_workflowDeleteMXDUserPrivilegeCondition" caption="A Worflow job map can be deleted">
+      <state id="esri_workflow_workflowDeleteMXDUserPrivilegeState" />
+    </insertCondition> 
+  </conditions>
+</ArcGIS>

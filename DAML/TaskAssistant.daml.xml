@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArcGIS defaultAssembly="ArcGIS.Desktop.TaskAssistant.dll" defaultNamespace="ArcGIS.Desktop.TaskAssistant"
+        xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
+  <dependencies>
+    <dependency name="ADSharing.daml" />
+  </dependencies>
+
+  <accelerators>
+    <insertAccelerator refID="esri_tasks_RunStep" flags="Alt" key="X" />
+    <insertAccelerator refID="esri_tasks_MoveToNextStep" flags="Alt" key="C" />
+    <insertAccelerator refID="esri_tasks_SkipStep" flags="Alt" key="S" />
+  </accelerators>
+  
+  <categories>
+    <!--<updateCategory refID="esri_browseDialogFilters">
+      <insertComponent id="esri_browseDialogFilters_geodatabases_add_withGDBFolder" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
+          <filter refID="esri_browseDialogFilters_databases_add" />
+        </content>
+      </insertComponent>
+    </updateCategory>-->
+    
+    <updateCategory refID="esri_core_projectContainers">
+      <insertComponent id="esri_tasks_TaskContainer" className="ArcGIS.Desktop.Internal.TaskAssistant.TaskContainer">
+        <content type="Task" displayName="Tasks" contextMenu="esri_task_insertMenu" />
+      </insertComponent>
+    </updateCategory>
+
+    <updateCategory refID="esri_itemInfoType">
+      <insertComponent id="esri_tasks_TaskProjectItem" className="ArcGIS.Desktop.TaskAssistant.TaskProjectItem" containerType="Task">
+        <content>
+          <supportedTypeIDs>
+            <type id="file_esriTask" contextMenuID="TaskAssistantFileItemContextMenu" />
+            <type id="taskItem" contextMenuID="TaskAssistantProjectItemContextMenu" />
+          </supportedTypeIDs>
+        </content>
+      </insertComponent> 
+    </updateCategory>
+
+    <updateCategory refID="esri_tasks_embeddableControls">
+      <insertComponent id="esri_taskassistant_GpEmbedded" className="ArcGIS.Desktop.Internal.TaskAssistant.GpEmbeddedViewModel">
+        <content className="ArcGIS.Desktop.Internal.TaskAssistant.GpEmbeddedView" />
+      </insertComponent>
+    </updateCategory>
+
+    <!--list of commands that recording is to ignore-->
+    <insertCategory id="esri_tasks_recordingCommandSkipList">
+      <component id="esri_geoprocessing_selectByAttributeButton"/>
+      <component id="esri_geoprocessing_selectByLocationButton"/>
+      <component id="esri_geoprocessing_toolsButton"/>
+      <component id="esri_editing_ShowEditFeaturesBtn"/>
+      <component id="esri_geoprocessing_tableCalculateFieldButton"/>
+      <component id="esri_geoprocessing_tableAddGeometryAttributesButton"/>
+      <component id="esri_geoprocessing_tableSummarizeButton"/>
+      <component id="esri_projectGDBItemRename"/>
+      <component id="esri_geoprocessing_openToolHistory"/>
+      <component id="esri_geoprocessing_tableAddJoinButton"/>
+      <component id="esri_geoprocessing_tableRemoveJoinButton"/>
+      <component id="esri_geoprocessing_tableAddRelateButton"/>
+      <component id="esri_geoprocessing_tableRemoveRelateButton"/>
+      <component id="esri_core_undoButton"/>
+      <component id="esri_core_redoButton"/>
+      <component id="esri_mapping_syncCenterAndScaleButton"/>
+      <component id="esri_mapping_syncCenterButton"/>
+    </insertCategory>
+
+    <!--list of commands (and associated dock panes) that participate in the auto panecleanup-->
+    <insertCategory id="esri_tasks_paneCleanupList">
+      <component id="esri_core_showProjectDockPane" >
+        <content pane="esri_core_projectDockPane"/>
+      </component>
+      <component id="esri_core_showContentsDockPane" >
+        <content pane="esri_core_contentsDockPane"/>
+      </component>
+      <!--<component id="esri_core_showProjectView" >                      view not dockpane
+        <content pane="esri_core_resourcesView"/>
+      </component>-->
+      <!--<component id="esri_mapping_selectedLayerDomainsViewButton" >     view not dockpane
+        <content pane="esri_mapping_domainsPane"/>
+      </component>
+      <component id="esri_mapping_selectedLayerFieldsViewButton" >           view not dockpane
+        <content pane="esri_mapping_fieldsPane"/>
+      </component>
+      <component id="esri_mapping_selectedLayerSubtypesViewButton" >         view not dockpane
+        <content pane="esri_mapping_subtypesPane"/>
+      </component>-->
+      <component id="esri_editing_ShowAttributes" >
+        <content pane="esri_editing_AttributesDockPane"/>
+      </component>
+      <component id="esri_editing_ShowCreateFeaturesBtn" >
+        <content pane="esri_editing_CreateFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ShowEditFeaturesBtn" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ShowManageTemplatesBtn" >
+        <content pane="esri_editing_ManageTemplatesDockPane"/>
+      </component>
+      <component id="esri_mapping_showLocateDockPane" >
+        <content pane="esri_mapping_locateDockPane"/>
+      </component>
+      <component id="esri_mapping_showRasterProcessDockPaneButton" >
+        <content pane="esri_mapping_rasterProcessDockPane"/>
+      </component>
+      <component id="esri_mapping_showLayerSymbologyDockPane" >
+        <content pane="esri_mapping_symbologyDockPane"/>
+      </component>
+      <component id="esri_mapping_selectedLayerSymbologyButton" >
+        <content pane="esri_mapping_symbologyDockPane"/>
+      </component>
+      <component id="esri_mapping_showBookmarksWindow" >
+        <content pane="esri_mapping_bookmarksManagerDockPane"/>
+      </component>
+      <component id="esri_mapping_labelClassExpressionButton" >
+        <content pane="esri_mapping_labelClassDockPane"/>
+      </component>
+      <component id="esri_mapping_designPopupsButton" >
+        <content pane="esri_mapping_popupsDockPane"/>
+      </component>
+      <component id="esri_sharing_PackagingProjectPaneBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_sharing_PackagingMapPaneBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_sharing_PackagingLayersPaneBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_sharing_SharingAsWebMapPaneBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_sharing_SaveAsMapFileBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_workflow_workflowConnectionContextMenu" >
+        <content pane="esri_workflow_workflowPane"/>
+      </component>
+      <!--<component id="esri_workflow_jobContextMenu" >               view not dockpane
+        <content pane="esri_workflow_jobView"/>
+      </component>-->
+    </insertCategory>
+  </categories>
+
+  <conditions>
+    <insertCondition id="esri_tasks_disabledCondition" caption="Disabled condition">
+      <state id="esri_taskassistant_state" />
+    </insertCondition>
+    <!--locked = when WMX autostarts a task and wants the Task UI disabled-->
+    <!--<insertCondition id="esri_taskassistant_lockedCondition" caption ="Autostart a task and disable task UI (task context menus and burger buttons only)">   
+      <state id="esri_taskassistant_locked" />
+    </insertCondition>-->
+    <!--Is Task pane in design mode-->
+    <insertCondition id="esri_tasks_DesignerEnabledCondition" caption="Task pane is in Design mode">
+      <state id="esri_taskassistant_DesignerEnabled" />
+    </insertCondition>
+    <insertCondition id="esri_tasks_ExecuteOnlyCondition" caption="Task pane is in Execute mode">
+      <and>
+        <state id="esri_mapping_openProjectState" />
+        <not>
+          <state id="esri_taskassistant_DesignerEnabled" />
+        </not>
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not>
+      </and>
+    </insertCondition>       
+    <insertCondition id="esri_tasks_HasProjectTasksCondition" caption="Are there task items associated with the current project">
+      <and>
+        <state id="esri_taskassistant_hasProjectTaskFiles" />
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not>
+      </and>     
+    </insertCondition>
+    <insertCondition id="esri_tasks_IsTaskFileLoadedCondition" caption="Is there a task item currently loaded">
+      <and>
+        <state id="esri_taskassistant_IsTaskFileLoaded" />
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_tasks_openProjectCondition" caption="Is there an open project">
+      <and>
+        <state id="esri_mapping_openProjectState" />
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not> 
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_tasks_IsTaskFileLoadedExecuteOnlyCondition" caption="Is there a task item currently loaded (and not in Design mode)">
+      <and>
+        <state id="esri_taskassistant_IsTaskFileLoaded" />
+        <not>
+          <state id="esri_taskassistant_locked" />
+        </not>
+        <not>
+          <state id="esri_taskassistant_DesignerEnabled" />
+        </not>
+      </and>
+    </insertCondition>
+  </conditions>
+  
+  <modules>
+    <updateModule refID="esri_core_module">
+      <groups>
+        <updateGroup refID="esri_core_dockWindows">
+          <insertButton refID="esri_tasks_ShowTasks" size="large" />
+        </updateGroup>
+        <updateGroup refID="esri_core_projectData">
+          <insertButtonPalette refID="esri_task_insertMenu" placeWith="esri_geodatabase_addFolderConnectionButton" insert="after" size="middle"/>
+        </updateGroup>
+      </groups>
+    </updateModule>
+        
+    <!--<updateModule refID="esri_layouts">
+      <groups>
+        <updateGroup refID="esri_layouts_dockWindows">
+          <insertButton refID="esri_tasks_ShowTasks" size="large" />
+        </updateGroup>
+      </groups>
+    </updateModule>-->
+
+    <insertModule id="esri_taskassistant_TaskAssistantModule" caption="Tasks" className="TaskAssistantModule">
+      <dockPanes>
+        <dockPane id="esri_taskassistant_TaskAssistantDockPane" caption="Tasks" 
+                  className="ArcGIS.Desktop.Internal.TaskAssistant.TaskAssistantViewModel" 
+                  dock="group" 
+                  dockWith="esri_core_contentsDockPane"
+                  hasHelp="true" helpContextID="120000982"                  
+                  initiallyVisible="false">
+          <content className="ArcGIS.Desktop.Internal.TaskAssistant.TaskAssistantView"/>
+        </dockPane>
+        <dockPane id="esri_taskassistant_TaskDesignerDockPane" caption="Task Designer"
+                  className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.DesignerViewModel"  
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  hasHelp="true" helpContextID="120000983"                  
+                  initiallyVisible="false">
+          <content className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.DesignerView"/>
+        </dockPane>
+      </dockPanes>
+      
+      <controls>
+        <!--ribbon buttons-->
+        <button id="esri_tasks_ShowTasks" caption="Tasks" keytip="T" className="esri_taskassistant_TaskAssistantModule:ShowTaskAssistant" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant16.png" helpContextID="">
+          <tooltip heading="Tasks">Show the Tasks pane. 
+          
+Tasks are a set of preconfigured steps that guide you through a workflow. You can run tasks and configure task steps. Tasks can be used to implement best practice workflows, show correct workflows and improve overall software efficiency.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_SaveAsTaskFile" caption="Task File" extendedCaption="Save as Task File" keytip="TF" className="esri_taskassistant_TaskAssistantModule:SaveTaskItemAsTaskFile" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskFile32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskFile16.png"  condition="esri_tasks_IsTaskFileLoadedExecuteOnlyCondition">
+          <tooltip heading="Create a Task File">Save the current task item as a task file (.esriTasks).<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <!--project pane Project Container context menuItems-->
+        <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="N">                
+          <tooltip heading="">Add a new task item to the project. A task item contains a set of tasks.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ImportTaskFile" caption="Import And Open..." extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">                
+          <tooltip heading="">Import an esri task file (.esriTasks) and add it as a task item to the project.<disabledText></disabledText></tooltip>
+        </button>
+        
+        <!--project pane Project Item context menuItems-->
+        <button id="esri_tasks_OpenProjectTaskItem" caption="Open" extendedCaption="Open a task item." className="ArcGIS.Desktop.Internal.TaskAssistant.OpenTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png" condition="esri_tasks_openProjectCondition" loadOnClick="false" helpContextID="">
+          <tooltip heading="">View the task item.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_EditProjectTaskItem" caption="Edit In Designer" extendedCaption="Edit the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.EditTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditTaskItemInDesigner16.png" condition="esri_tasks_openProjectCondition" loadOnClick="false" helpContextID="">
+          <tooltip heading="">Edit the task item.<disabledText></disabledText></tooltip>
+        </button>
+        <!--condition="esri_tasks_executeOnlyCondition"-->
+        <button id="esri_tasks_UpdateProjectTaskItem" caption="Check For Updates" className="ArcGIS.Desktop.Internal.TaskAssistant.UpdateTaskFileContextCommand" condition="esri_tasks_disabledCondition" helpContextID="">
+          <tooltip heading="">Check for updates to the task item.<disabledText>Not available yet</disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_RemoveProjectTaskItem" caption="Delete" extendedCaption="Delete the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.RemoveTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
+          <tooltip heading="">Delete the task item.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ProjectTaskItemProperties" caption="Properties" extendedCaption="View the properties of the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.TaskItemPropertiesContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
+          <tooltip heading="">View the properties of the task item.<disabledText></disabledText></tooltip>
+        </button>
+        <!--Sharing-->
+        <button id="esri_tasks_SendProjectTaskItemToMail" caption="Email" extendedCaption="Export the task item to email." className="ArcGIS.Desktop.Internal.TaskAssistant.SendToMailContextCommand" condition="esri_tasks_ExecuteOnlyCondition" loadOnClick="false">
+          <tooltip heading="">Export the task item to a task file and attach it to an open email.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_SendProjectTaskItemToFile" caption="Save As..."  extendedCaption="Export the task item to a file on disk." className="ArcGIS.Desktop.Internal.TaskAssistant.SendToFileContextCommand" condition="esri_tasks_ExecuteOnlyCondition" loadOnClick="false">
+          <tooltip heading="">Save the task item as a task file (.esriTasks).<disabledText></disabledText></tooltip>
+        </button>
+
+        <!--project pane File Item context menuItems (from folder connection)-->
+        <button id="esri_tasks_ImportOpenTaskFile" caption="Import And Open" extendedCaption="esri Task file" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportOpenTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="">
+          <tooltip heading="">Import an esri task file (.esriTasks) and add it as a task item to the project.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_tasks_ProjectTaskFileProperties" caption="Properties" extendedCaption="View the properties of the esri Task File." className="ArcGIS.Desktop.Internal.TaskAssistant.TaskFilePropertiesContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_tasks_openProjectCondition" helpContextID="">
+          <tooltip heading="">View the properties of the esri Task File.<disabledText></disabledText></tooltip>
+        </button>
+        
+        <!--burger button items-->
+        <button id="esri_tasks_Designer" caption="Edit In Designer" extendedCaption="Edit the loaded task item." className="ArcGIS.Desktop.Internal.TaskAssistant.DesignerContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditTaskItemInDesigner16.png" condition="esri_tasks_IsTaskFileLoadedCondition">
+          <tooltip heading="">Edit the properties of the selected task item, task group, task or step.<disabledText></disabledText></tooltip>
+        </button>       
+        <button id="esri_tasks_ExitDesigner" caption="Exit Designer"  className="ArcGIS.Desktop.Internal.TaskAssistant.ExitDesignerContextCommand" condition="esri_tasks_openProjectCondition">
+          <tooltip heading="">Exit Designer.<disabledText></disabledText></tooltip>
+        </button>
+
+        <!--designer context menu / toolbar -->
+        <button id="esri_tasks_NewTaskGroup" caption="Task Group" extendedCaption="Create a new Task Group" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.NewTaskGroupContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskGroupNew16.png">
+          <tooltip heading="">New Task Group.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_NewTask" caption="Task" extendedCaption="Create a new Task" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.NewTaskContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskNewTask16.png">
+          <tooltip heading="">New Task.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_NewStep" caption="Step" extendedCaption="Create a new Step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.NewStepContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskNewStep16.png">
+          <tooltip heading="">New Step.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_NewPalette" caption="Create Palette" extendedCaption="Create a new Palette" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.NewPaletteContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskNewPalette16.png">
+          <tooltip heading="">New Palette.<disabledText></disabledText></tooltip>
+        </button>        
+        <button id="esri_tasks_NewPaletteStep" caption="Step in Palette" extendedCaption="Create a new Step in Palette" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.NewPaletteStepContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskNewStepInPalette16.png">
+          <tooltip heading="">New Step in Palette.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_OpenItem" caption="Open" extendedCaption="Open a task or task group." className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.OpenItemContextCommand" loadOnClick="false" >
+          <tooltip heading="">Open a task or task group.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_Cut" caption="Cut" extendedCaption="Cut a task group, task or step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.CutItemContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png" >
+          <tooltip heading="">Cut.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_Copy" caption="Copy" extendedCaption="Copy a task group, task or step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.CopyItemContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png" >
+          <tooltip heading="">Copy.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_Paste" caption="Paste" extendedCaption="Copy a task group, task or step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.PasteItemContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+          <tooltip heading="">Paste.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_Rename" caption="Rename" extendedCaption="Rename a task group, task or step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.RenameItemContextCommand" loadOnClick="false" >
+          <tooltip heading="">Rename.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_Delete" caption="Delete" extendedCaption="Delete a task group, task or step" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.DeleteItemContextCommand" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+          <tooltip heading="">Delete.<disabledText></disabledText></tooltip>
+        </button>
+
+        <!-- designer contents tab context menu-->
+        <button id="esri_tasks_ContentsVisible" caption="Visible" extendedCaption="Tasks" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetVisibleContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer the only visible layer.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ContentsSelectable" caption="Selectable" extendedCaption="Tasks" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetSelectableContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer the only selectable layer.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ContentsEditable" caption="Editable" extendedCaption="Tasks"  className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetEditableContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer or table the only editable layer or table.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ContentsSnappable" caption="Snappable" extendedCaption="Tasks" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetSnappableContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer the only snappable layer.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ContentsSelected" caption="Selected" extendedCaption="Tasks" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetSelectedContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer or table the only selected layer or table.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_tasks_ContentsLabelled" caption="Labelled" extendedCaption="Tasks" className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.SetLabelledContextCommand" loadOnClick="false">
+          <tooltip heading="">Make this layer the only labelled layer.<disabledText></disabledText></tooltip>
+        </button>        
+
+        <!--application accelerator commands-->
+        <button id="esri_tasks_SkipStep" caption="Skip Step"  className="ArcGIS.Desktop.Internal.TaskAssistant.SkipStepCommand" loadOnClick="false">
+          <tooltip heading="">
+            Skip the current step.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_tasks_RunStep" caption="Run Step"  className="ArcGIS.Desktop.Internal.TaskAssistant.RunStepCommand" loadOnClick="false">
+          <tooltip heading="">
+            Run the current step.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <!--auto proceed to advance to next step-->
+        <button id="esri_tasks_MoveToNextStep" caption="Move to Next Step"  className="ArcGIS.Desktop.Internal.TaskAssistant.MoveToNextStepCommand" loadOnClick="true">
+          <tooltip heading="">
+            Proceed to the next step.<disabledText></disabledText>
+          </tooltip>
+        </button>
+      </controls>
+      
+      <menus>
+        <menu id="esri_task_insertMenu" caption="Task" extendedCaption="Ribbon add task items menu" keytip="TA" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png">
+          <tooltip heading="Task">Add task items to your project.</tooltip>
+          <button refID="esri_tasks_NewProjectTaskItem" />
+          <button refID="esri_tasks_ImportTaskFile" separator="true" />
+        </menu>
+
+        <menu id="TaskAssistantFileContainerContextMenu" caption="Tasks Container">
+          <button refID="esri_tasks_NewProjectTaskItem" />
+          <button refID="esri_tasks_ImportTaskFile" separator="true" />
+        </menu>        
+        <menu id="TaskAssistantProjectItemContextMenu" caption="Task Item">
+          <button refID="esri_tasks_OpenProjectTaskItem" />
+          <button refID="esri_tasks_EditProjectTaskItem" />
+          <button refID="esri_tasks_UpdateProjectTaskItem"  separator="true"/>
+          <menu refID="esri_tasks_ShareProjectItemContextMenu" inline="false" />
+          <button refID="esri_tasks_RemoveProjectTaskItem" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+        </menu>
+        
+        <menu id="TaskAssistantFileItemContextMenu" caption="Task File" extendedCaption="Task File context menu">
+          <button refID="esri_tasks_ImportOpenTaskFile" />
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_tasks_ProjectTaskFileProperties" separator="true"/>
+        </menu>
+
+        <menu id="esri_taskassistant_BurgerMenu" caption="Task Options" contextMenu="true">
+          <button refID="esri_tasks_Designer"/>
+        </menu>
+
+        <menu id="esri_taskassistant_DesignerBurgerMenu" caption="Task Designer Options" contextMenu="true">
+          <button refID="esri_tasks_ExitDesigner"/>
+        </menu>
+
+        <menu id="esri_tasks_NewContextMenu" caption="New" extendedCaption="Context menu for creating new task group, task, step in Task pane during design" contextMenu="true">
+          <button refID="esri_tasks_NewTaskGroup"/>
+          <button refID="esri_tasks_NewTask"/>
+          <button refID="esri_tasks_NewStep"/>
+          <button refID="esri_tasks_NewPaletteStep"/>
+        </menu>
+
+        <menu id="esri_tasks_ShareProjectItemContextMenu" caption="Export To File" contextMenu="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport32.png" >
+          <button refID="esri_tasks_SendProjectTaskItemToMail"/>
+          <button refID="esri_tasks_SendProjectTaskItemToFile"/>
+        </menu>
+       
+        <menu id="esri_taskassistant_DesignerContextMenu" caption="Designer Options" contextMenu="true">
+          <button refID="esri_tasks_OpenItem"/>
+          <menu refID="esri_tasks_NewContextMenu" inline="false" />
+          <button refID="esri_tasks_NewPalette"/>
+          <button refID="esri_tasks_Cut" separator="true"/>
+          <button refID="esri_tasks_Copy"/>
+          <button refID="esri_tasks_Paste"/>
+          <button refID="esri_tasks_Rename" separator="true"/>
+          <button refID="esri_tasks_Delete"/>
+        </menu>        
+        
+        <menu id="esri_taskassistant_ContextMenu" caption="Options" contextMenu="true">
+          <button refID="esri_tasks_Designer"/>  
+        </menu>
+        
+        <menu id="esri_tasks_ContentsContextMenu" caption="Only make this" extendedCaption="Context menu for contents tab in Tasks designer pane" contextMenu="true">
+          <button refID="esri_tasks_ContentsVisible"/>
+          <button refID="esri_tasks_ContentsSelectable"/>
+          <button refID="esri_tasks_ContentsEditable"/>
+          <button refID="esri_tasks_ContentsSnappable"/>
+          <button refID="esri_tasks_ContentsSelected"/>
+          <button refID="esri_tasks_ContentsLabelled"/>
+        </menu>
+        
+        <menu id="esri_taskassistant_DesignerContentsContextMenu" caption="Contents" extendedCaption="Context menu for contents tab in Tasks designer pane" contextMenu="true">
+          <menu refID="esri_tasks_ContentsContextMenu" inline="false" />
+        </menu>
+      </menus>
+    </insertModule>
+  </modules>
+ 
+  <propertySheets>
+    <insertSheet id="esri_tasks_propertySheet" caption="Task Item Properties" pageHeight="400" pageWidth="640" resizable="true">
+      <page id ="esri_tasks_generalTaskFileProperties" className ="ArcGIS.Desktop.Internal.TaskAssistant.GeneralPropertiesPageViewModel" caption ="General">
+        <content className="ArcGIS.Desktop.Internal.TaskAssistant.GeneralPropertiesPageView"/>
+      </page>
+    </insertSheet>
+
+    <updateSheet refID="esri_core_optionsPropertySheet">
+      <insertPage id="esri_tasks_PropertyPageProjectSettings"
+                  caption="Tasks"
+                  className="ArcGIS.Desktop.Internal.TaskAssistant.ProjectSettingsViewModel"
+                  group="Project">
+        <content className="ArcGIS.Desktop.Internal.TaskAssistant.ProjectSettingsView" />
+      </insertPage>      
+    </updateSheet>
+  </propertySheets>
+</ArcGIS>
+
