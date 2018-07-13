@@ -183,6 +183,24 @@ namespace Snippets
 
         #endregion
 
+        #region Set a Layer's field visibility
+        private static void FieldVisibility()
+        {
+            var layer = MapView.Active.Map.GetLayersAsFlattenedList().First();
+            QueuedTask.Run(() =>
+            {
+                if (layer is IDisplayTable)
+                {
+                    var descriptions = ((IDisplayTable)layer).GetFieldDescriptions();
+                    foreach (var description in descriptions)
+                    {
+                        description.IsVisible = true;
+                    }
+                }
+            });
+        }
+        #endregion
+
         private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
         {
             QueuedTask.Run(() => {
