@@ -5,3 +5,4 @@
 *.suo
 .vs/
 .vs/
+/Examples/obj
