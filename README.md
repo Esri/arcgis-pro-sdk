@@ -47,7 +47,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 &nbsp;&nbsp;&nbsp;&nbsp;**Configurations**
 
 * [ProConcepts: Configurations Manager](../../wiki/ProConcepts-Configurations)
-* [ProGuide: Configurations Manager](../../wiki/ProGuide-Configurations-Manager)
+* [ProGuide: Configurations Manager](../../wiki/ProGuide-Configurations)
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Customization**
