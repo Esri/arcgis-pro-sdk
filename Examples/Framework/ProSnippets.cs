@@ -311,6 +311,7 @@ namespace Framework.Snippets {
     }
 
         #endregion
+
         private void GetButtonTooltipHeading()
         {
             #region Get a button's tooltip heading
@@ -318,9 +319,7 @@ namespace Framework.Snippets {
             IPlugInWrapper wrapper = FrameworkApplication.GetPlugInWrapper("button_id_from daml");
             var buttonTooltipHeading = wrapper.TooltipHeading;
             #endregion
-
         }
-
 
         #region Subscribe to Active Tool Changed Event
         private void SubscribeEvent()
@@ -518,7 +517,7 @@ namespace Framework.Snippets {
             return QueuedTask.Run(() =>
             {
                 //assign the screen coordinate clicked point to the MapTool base class' OverlayControlLocation property.
-                this.OverlayControlLocation = e.ClientPoint;
+                this.OverlayControlPositionRatio = e.ClientPoint;
 
             });
         }

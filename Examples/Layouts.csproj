@@ -151,6 +151,7 @@
     <Compile Include="Layouts\LayoutProjectItemClass.cs" />
     <Compile Include="Layouts\LayoutViewClass.cs" />
     <Compile Include="Layouts\MapFrameClass.cs" />
+    <Compile Include="Layouts\MapSeries.cs" />
     <Compile Include="Layouts\MapSurroundClass.cs" />
     <Compile Include="Layouts\MethodSnippets.cs" />
     <Compile Include="Layouts\PictureElementClass.cs" />

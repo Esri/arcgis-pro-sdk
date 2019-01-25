@@ -26,61 +26,6 @@
   </products>
 
   <conditions>
-    <!-- Georef 3d Edit Condition Should show up here when we got a 3d scene, ill try and do it now-->
-    <insertCondition id="esri_cad_3dGeoreferenceCondition" caption="Selected map has an active georeferencing edit session.">
-      <and>
-        <state id="esri_mapping_mapPane"/>
-        <or>
-        <state id="esri_mapping_mapViewingMode3DPerspectiveState" />
-        <state id="esri_mapping_mapViewingMode3DGlobeState" />
-        </or>
-        <state id="esri_cad_activeGeorefSessionState"/>
-      </and>
-    </insertCondition>
-    <insertCondition id="esri_cad_3dMapCondition" caption="Map Pane View is a 3D map">
-      <and>
-        <state id="esri_mapping_mapPane" />
-        <or>
-          <state id="esri_mapping_mapViewingMode3DPerspectiveState"/>
-          <state id="esri_mapping_mapViewingMode3DGlobeState"/>
-        </or>
-      </and>
-    </insertCondition>
-
-    <insertCondition id="esri_cad_2dMapCondition" caption="Map Pane View is a 2D map">
-      <and>
-        <state id="esri_mapping_mapPane" />
-        <not>
-          <or>
-            <state id="esri_mapping_mapViewingMode3DPerspectiveState"/>
-            <state id="esri_mapping_mapViewingMode3DGlobeState"/>
-          </or>
-        </not>
-      </and>
-    </insertCondition>
-    <!-- Georef 3d Edit Condition -->
-
-
-    <!--- BimBuilding Conditions-->
-    <insertCondition id="esri_geoprocessing_onlyBimLayerSelectedCondition">
-      <and>
-        <state id="esri_mapping_bimLayerSelectedState"/>
-        <not>
-          <state id="esri_mapping_multipleLayersSelectedState" />
-        </not>
-      </and>
-    </insertCondition>
-    
-    <insertCondition id="esri_geoprocessing_onlyBimCompositeLayerSelectedCondition">
-      <and>
-        <state id="esri_mapping_bimCompositeLayerSelectedState"/>
-        <not>
-          <state id="esri_mapping_multipleLayersSelectedState" />
-        </not>
-      </and>
-    </insertCondition>
-    <!--- BimBuilding Conditions-->
-
     <insertCondition id="esri_geoprocessing_EditingScriptToolCondition">
       <state id="esri_geoprocessing_EditingScriptTool" />
     </insertCondition>
@@ -101,6 +46,11 @@
     <insertCondition id="esri_geoprocessing_mb_usegridrouter">
       <state id="esri_geoprocessing_mb_use_gridrouter" />
     </insertCondition>
+
+    <insertCondition id="esri_geoprocessing_container">
+      <state id="esri_geoprocessing_container"/>
+    </insertCondition>
+                     
   </conditions>
 
   <categories>
@@ -172,7 +122,104 @@
           <tool name="geocoding.GeocodeLocationsFromTable"/>
           <tool name="geocoding.GeocodeAddresses"/>
           <tool name="geocoding.ReverseGeocode"/>
-          <tool name="analysis.Enrich"/>
+        </content>
+      </component>
+      <component id="icon_overlay_parallelproc_type">
+        <content>
+          <!--always show 'parallel processing' category icon -->
+          <tool name="stats.SpatiallyConstrainedMultivariateClustering"/>
+          <tool name="sa.Reclassify"/>
+          <tool name="sa.Sink"/>
+          <tool name="sa.StreamLink"/>
+          <tool name="sa.Viewshed2"/>
+          <tool name="sa.Watershed"/>
+          <tool name="sa.WeightedOverlay"/>
+          <tool name="sa.WeightedSum"/>
+          <tool name="sa.ZonalStatistics"/>
+          <tool name="sa.ZonalStatisticsAsTable"/>
+	  <!--
+          Euc tools parallel support got pulled
+	  <tool name="sa.EucAllocation"/>
+          <tool name="sa.EucDirection"/>
+          <tool name="sa.EucDistance"/>
+          -->
+          <tool name="sa.Fill"/>
+          <tool name="sa.FlowAccumulation"/>
+          <tool name="sa.FlowDirection"/>
+          <tool name="sa.FlowDistance"/>
+          <tool name="sa.Nibble"/>
+          <tool name="sa.PathAllocation"/>
+          <tool name="sa.PathBackLink"/>
+          <tool name="sa.PathDistance"/>
+          <tool name="sa.CostAllocation"/>
+          <tool name="sa.CostBackLink"/>
+          <tool name="sa.CostDistance"/>
+          <tool name="stpm.LocalOutlierAnalysis"/>
+          <tool name="locref.RemoveCenterlineOverlaps"/>
+          <tool name="ia.WeightedSum"/>
+          <tool name="ia.ZonalStatistics"/>
+          <tool name="ga.ArealInterpolationLayerToPolygons"/>
+          <tool name="ga.CrossValidation"/>
+          <tool name="ga.DensifySamplingNetwork"/>
+          <tool name="ga.DiffusionInterpolationWithBarriers"/>
+          <tool name="ga.EBKRegressionPrediction"/>
+          <tool name="ga.EmpiricalBayesianKriging"/>
+	  <tool name="ga.EmpiricalBayesianKriging3D"/>
+          <tool name="ga.GACreateGeostatisticalLayer"/>
+          <tool name="ga.GALayerToContour"/>
+          <tool name="ga.GALayerToGrid"/>
+          <tool name="ga.GALayerToPoints"/>
+          <tool name="ga.GALayerToRasters"/>
+          <tool name="ga.GAMovingWindowKriging"/>
+          <tool name="ga.GaussianGeostatisticalSimulations"/>
+          <tool name="ga.GenerateSubsetPolygons"/>
+          <tool name="ga.GlobalPolynomialInterpolation"/>
+          <tool name="ga.IDW"/>
+          <tool name="ga.KernelInterpolationWithBarriers"/>
+          <tool name="ga.LocalPolynomialInterpolation"/>
+          <tool name="ga.RadialBasisFunctions"/>
+          <tool name="management.SplitRaster"/>
+          <tool name="management.SynchronizeMosaicDataset"/>
+          <tool name="management.ImportTileCache"/>
+          <tool name="management.InterpolateFromPointCloud"/>
+          <tool name="management.ManageTileCache"/>
+          <tool name="management.MatchControlPoints"/>
+          <tool name="management.RegisterRaster"/>
+          <tool name="management.ExportMosaicDatasetItems"/>
+          <tool name="management.ExportTileCache"/>
+          <tool name="management.GeneratePointCloud"/>
+          <tool name="management.GenerateRasterCollection"/>
+          <tool name="management.GenerateRasterFromRasterFunction"/>
+          <tool name="management.GenerateTableFromRasterFunction"/>
+          <tool name="management.BuildFootprints"/>
+          <tool name="management.BuildMosaicDatasetItemCache"/>
+          <tool name="management.BuildOverviews"/>
+          <tool name="management.BuildPyramindsandStatistics"/>
+          <tool name="management.BuildSeamlines"/>
+          <tool name="management.ColorBalanceMosaicDataset"/>
+          <tool name="management.ComputeCameraModel"/>
+          <tool name="management.ComputeControlPoints"/>
+          <tool name="management.ComputeTiePoints"/>
+          <tool name="management.CopyRaster"/>
+          <tool name="management.AddRastersToMosaicDataset"/>
+          <tool name="management.AnalyzeMosaicDataset"/>
+          <tool name="conversion.MultipatchToRaster"/>
+          <tool name="analysis.Erase"/>
+          <tool name="analysis.GraphicBuffer"/>
+          <tool name="analysis.Identity"/>
+          <tool name="analysis.Intersect"/>
+          <tool name="analysis.PairwiseBuffer"/>
+          <tool name="analysis.PairwiseDissolve"/>
+          <tool name="analysis.PairwiseIntersect"/>
+          <tool name="analysis.Split"/>
+          <tool name="analysis.Union"/>
+          <tool name="analysis.Update"/>
+          <tool name="analysis.Clip"/>
+          <tool name="3d.Viewshed2"/>
+          <tool name="3d.Reclassify"/>
+          <tool name="3d.RegularizeBuildingFootprint"/>
+          <tool name="3d.Intervisibility"/>
+          <tool name="3d.ClassifyLasBuilding"/>
         </content>
       </component>
     </insertCategory>
@@ -192,6 +239,7 @@
           <tool name="agolservices.SolveLocationAllocation"/>
           <tool name="agolservices.SolveVehicleRoutingProblem"/>
           <tool name="analysis.SummarizeNearby"/>
+	        <tool name="analysis.Enrich"/>
         </content>
       </component>
       <!--
@@ -212,8 +260,19 @@
       </component>
     </insertCategory>
 
-      <!-- browse dialog filters -->
+    <!-- browse dialog filters -->
     <updateCategory refID="esri_browseDialogFilters">
+      <insertComponent id="esri_browseDialogFilters_modelTools" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Tools" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB, GP, ServerConnection">
+          <allow>
+            <type id="tool_model" />
+            <type id="tool_script" />
+            <type id="tool_model" />
+            <type id="tool" />
+          </allow>
+        </content>
+      </insertComponent>
+  
       <insertComponent id="esri_browseDialogFilters_gpcomposite" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
         <content displayName="All supported">
           <deny>
@@ -224,7 +283,10 @@
             <type id="database_excel" />
 
             <type id="toolbox" />
-
+            <type id="toolbox_pyt" />
+            <type id="toolbox_fgdb" />
+            <type id="toolbox_egdb" />
+            
             <type id="dataset_fgdb" />
             <type id="dataset_egdb" />
 
@@ -357,6 +419,7 @@
             <type id="portal_url_sceneservice_Polygon" />
             <type id="portal_url_sceneservice_IntegratedMesh" />
             <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
           </deny>
         </content>
       </insertComponent>
@@ -468,54 +531,6 @@
         </content>
       </insertComponent>
 
-      <!-- Custom CAD Georef SaveAs Filter -->
-      <insertComponent id="esri_browseDialogFilters_cad_worldFiles" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="World Files (WLD)" exclude="esri_browsePlaces_Online" include="FolderConnection">
-          <allow>
-            <type id="file_wld" />
-            <type id="cad_dataset_dxf" />
-            <type id="cad_dataset_dwg" />
-            <type id="cad_dataset_dgn" />
-          </allow>
-          <deny>
-            <type id="database_fgdb" />
-            <type id="database_sqlite" />
-            <type id="database_excel" />
-
-            <type id="raster_product" />
-            <type id="raster_afr" />
-            <type id="raster_file_general" />
-
-            <type id="toolbox" />
-            <type id="toolbox_pyt" />
-          </deny>
-        </content>
-      </insertComponent>
-
-      <!-- Custom CAD 3D Georef SaveAs Filter -->
-      <insertComponent id="esri_browseDialogFilters_cad_worldFiles3D" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="World File 3D (WLD3)" exclude="esri_browsePlaces_Online" include="FolderConnection">
-          <allow>
-            <type id="file_wld3" />
-            <type id="cad_dataset_dxf" />
-            <type id="cad_dataset_dwg" />
-            <type id="cad_dataset_dgn" />
-          </allow>
-          <deny>
-            <type id="database_fgdb" />
-            <type id="database_sqlite" />
-            <type id="database_excel" />
-
-            <type id="raster_product" />
-            <type id="raster_afr" />
-            <type id="raster_file_general" />
-
-            <type id="toolbox" />
-            <type id="toolbox_pyt" />
-          </deny>
-        </content>
-      </insertComponent>
-
     </updateCategory>
 
     <insertCategory id="gpDataTypeFilters">
@@ -524,6 +539,9 @@
       </component>
       <component id="DEAddressLocator">
         <content filter="esri_browseDialogFilters_locators_allTypes" />
+      </component>
+      <component id="DEBimFileWorkspace">
+        <content filter="esri_browseDialogFilters_revit_workspace" />
       </component>
       <component id="DECadastralFabric">
         <content filter="esri_browseDialogFilters_geodatabaseItems_cadastralFabric" />
@@ -819,21 +837,22 @@
     <insertCategory id="esri_gpDefaultGalleryTools">
       <component id="_gpDefaultGalleryTools">
         <content>
-          <tool group="Overlay Data" name="analysis.SpatialJoin"/>
-          <tool group="Overlay Data" name="analysis.Clip"/>
-          <tool group="Overlay Data" name="analysis.Intersect"/>
-          <tool group="Overlay Data" name="analysis.Union"/>
-          <tool group="Determine Proximity" name="analysis.Buffer"/>
-          <tool group="Determine Proximity" name="analysis.Near"/>
-          <tool group="Determine Proximity" name="analysis.GenerateNearTable"/>
           <tool group="Summarize Data" name="analysis.SummarizeNearby"/>
           <tool group="Summarize Data" name="analysis.SummarizeWithin"/>
           <tool group="Summarize Data" name="analysis.Statistics"/>
-          <tool group="Analyze Patterns" name="ga.EmpiricalBayesianKriging"/>
-          <tool group="Analyze Patterns" name="sa.KernelDensity"/>
-          <tool group="Analyze Patterns" name="stats.OptimizedHotSpotAnalysis"/>
-          <tool group="Find Locations" name="stats.SimilaritySearch"/>
-          <tool group="Enrich Data" name="analysis.EnrichLayer"/>
+	  <tool group="Enrich Data" name="analysis.Enrich"/>
+          <tool group="Overlay Data" name="analysis.Clip"/>
+          <tool group="Overlay Data" name="analysis.Intersect"/>
+          <tool group="Overlay Data" name="analysis.Union"/>
+	  <tool group="Overlay Data" name="analysis.SpatialJoin"/>
+	  <tool group="Analyze Patterns" name="sa.KernelDensity"/>
+	  <tool group="Analyze Patterns" name="stats.OptimizedHotSpotAnalysis"/>
+	  <tool group="Analyze Patterns" name="stats.OptimizedOutlierAnalysis"/>
+	  <tool group="Analyze Patterns" name="stats.SpatiallyConstrainedMultivariateClustering"/>
+	  <tool group="Analyze Patterns" name="ga.EmpiricalBayesianKriging"/>
+          <tool group="Determine Proximity" name="analysis.Buffer"/>
+          <tool group="Determine Proximity" name="analysis.Near"/>
+          <tool group="Determine Proximity" name="analysis.GenerateNearTable"/>
           <tool group="Manage Data" name="management.AddField"/>
           <tool group="Manage Data" name="management.CalculateField"/>
           <tool group="Manage Data" name="management.Dissolve"/>
@@ -881,7 +900,15 @@
   <modules>
     <insertModule id="esri_geoprocessing_module" className="GeoprocessingModule" caption="Geoprocessing" description="Geoprocessing" autoLoad="false">
       <tabs>
-		  <tab id="esri_geoprocessing_MBDiagramTab1" caption="Diagram" condition="esri_geoprocessing_modelBuilderPane" keytip="MB" tabGroupID="esri_geoprocessing_MBTabGroup">
+
+        <tab id="esri_geoprocessing_GPContainer" caption="Geoprocessing" keytip="G" condition="esri_geoprocessing_container" tabGroupID="esri_geoprocessing_GPTabGroup">
+          <group refID="esri_core_clipboardGroup"/>
+          <group refID="esri_core_organize"/>
+          <group refID="esri_geoprocessing_container_ProjectGroup"/>
+          <group refID="esri_geoprocessing_container_CreateGroup"/>
+        </tab>
+        
+		  <tab id="esri_geoprocessing_MBDiagramTab1" caption="Diagram" condition="esri_geoprocessing_modelBuilderPane" keytip="MD" tabGroupID="esri_geoprocessing_MBTabGroup">
 			  <group refID="esri_modelbuilder_spacingGroup"/>
 			  <group refID="esri_modelbuilder_linkGroup" />
 			  <group refID="esri_modelbuilder_orientationGroup"/>
@@ -905,48 +932,24 @@
         </tab>
         <!--<tab id="esri_core_analysisTab" caption="Analysis" condition="esri_geoprocessing_modelBuilderPane" /> -->
         <tab id="esri_geoprocessing_MBAnalysisTab" caption="Analysis" condition="esri_geoprocessing_modelBuilderPane" keytip="A">
-          <group refID="esri_geoprocessing_analysisTools"/>
-            <insertGroup refID="esri_geoprocessing_portal" />
-          <group refID="esri_geoprocessing_analysis2"/>
-          <group refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
+          <insertGroup refID="esri_geoprocessing_analysisTools"/>
+          <insertGroup refID="esri_geoprocessing_portal" />
+          <insertGroup refID="esri_geoprocessing_analysis2"/>
+          <insertGroup refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
+          <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </tab>
         <tab id="esri_geoprocessing_MBViewTab" caption="View" condition="esri_geoprocessing_modelBuilderPane" keytip="V">
           <group refID="esri_core_dockWindows" />
         </tab>
 
-        <!-- Bim Building Tab -->
-        <tab id="esri_geoprocessing_BimContextualTab" caption="Manage" condition="esri_geoprocessing_onlyBimLayerSelectedCondition" tabGroupID="esri_geoprocessing_bimLayerTabGroup" keytip="BL">
-          <group refID="esri_cad_2DGeoreferencingGroup"/>
-          <group refID="esri_cad_3DGeoreferencingGroup"/>
-          <group refID="esri_mapping_selectionGroup"/>
-          <group refID="esri_geoprocessing_bimToolsGroup"/>
-        </tab>
-        <tab id="esri_geoprocessing_BimCompositeContextualTab" caption="Manage" condition="esri_geoprocessing_onlyBimCompositeLayerSelectedCondition" tabGroupID="esri_geoprocessing_bimLayerTabGroup" keytip="BL">
-          <group refID="esri_cad_2DGeoreferencingGroup"/>
-          <group refID="esri_cad_3DGeoreferencingGroup"/>
-        </tab>
-
-        <!-- Bim Building Tab -->
-
-        <!-- Cad 3d Georeference/Georeferencing -->
-        <tab id="esri_cad_3dgeoreferenceTab" caption="Georeference" condition="esri_cad_3dGeoreferenceCondition" placeWith="esri_mapping_homeTab" insert="before" keytip="3DG">
-          <group refID="esri_georeferencing_PrepareGroup" />
-          <group refID="esri_georeferencing_SaveGroup" />
-          <group refID="esri_georeferencing_CloseGroup" />
-        </tab>
-        <!-- Cad 3d Georeference/Georeferencing -->
       </tabs>
 
       <tabGroups>
-
-        <!-- Bim Building Tab -->
-        <tabGroup caption="Building" id="esri_geoprocessing_bimLayerTabGroup">
-          <color A="255" R="108" G="180" B="226" />
-          <borderColor A="0" R="137" G="181" B="241" />
+        <tabGroup id="esri_geoprocessing_GPTabGroup" caption="Manage">
+          <color A="255" R="104" G="170" B="103" />
+          <borderColor A="0" R="211" G="234" B="249" />
         </tabGroup>
-        <!-- Bim Building Tab -->
         
-          
         <tabGroup caption="ModelBuilder" id="esri_geoprocessing_MBTabGroup" >
           <!--<color A="255" R="238" G="170" B="90" />
           <borderColor A="0" R="251" G="226" B="195" />-->
@@ -956,7 +959,26 @@
 
       </tabGroups>
       
+      <subgroups>
+        <subgroup id="esri_gp_container_ProjectSubGroup" size="MediumThenSmallWhenSmall">
+           <button refID="esri_geoprocessing_addToolboxButton"/>
+          <button refID="esri_geoprocessing_newToolboxButton"/>
+          <button refID="esri_geoprocessing_newPythonToolboxButton"/>
+        </subgroup>
+      </subgroups>
+      
       <groups>
+        <group id="esri_geoprocessing_container_ProjectGroup" caption="Project">
+          <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" size="large"/>
+          <subgroup refID="esri_gp_container_ProjectSubGroup"/>
+        </group>
+        
+        <group id="esri_geoprocessing_container_CreateGroup" caption="Create">
+          <button refID="esri_geoprocessing_Add_ModelTool" size="large" />
+          <button refID="esri_geoprocessing_Add_ScriptTool" size="large" />
+          <button refID="esri_geoprocessing_Add_Toolset" size="large"/>
+        </group>
+        
         <group id="esri_modelbuilder_labelTextFormatGroup" caption="Text"  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolGroup16.png">
           <toolbar refID="esri_modelbuilder_labelTextFontToolBar" />
         </group>
@@ -969,7 +991,7 @@
           <button refID="esri_geoprocessing_pythonButton" size="large" />
           <button refID="esri_geoprocessing_modelBuilderButton" size="large" />
           <button refID="esri_geoprocessing_environmentsButton" size="large" />
-          <button refID="esri_geoprocessing_toolsButton" size="large" />
+          <splitButton refID="esri_geoprocessing_toolsButton" size="large" />       
           <customControl refID="esri_geoprocessingAnalysisButton_readytouse"/>
         </group>
         <group id="esri_geoprocessing_portal" caption="Portal" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png">
@@ -1014,7 +1036,7 @@
           <button refID="esri_modelbuilder_panButton" size="middle" />
         </group>
         <group id="esri_modelbuilder_insertGroup" caption="Insert" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox16.png">
-          <button refID="esri_geoprocessing_toolsButton" size="large" />
+          <button refID="esri_geoprocessing_toolsSplitButton" size="large" />
           <buttonPalette refID="esri_modelbuilder_createModelVariableButton" size="large" />
           <menu refID="esri_modelbuilder_iteratorPalette" size="large" />
           <buttonPalette refID="esri_modelbuilder_utilitiesPalette" size="large" />
@@ -1036,7 +1058,7 @@
         </group>
 
 		    <group id="esri_modelbuilder_spacingGroup" caption="Spacing" sizePriorities="medium" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" condition="esri_geoprocessing_modelBuilderPane">
-			      <labelControl refID="esri_modelbuilder_elementLabel"  size="small"/>
+            <labelControl refID="esri_modelbuilder_elementLabel"  size="small"/>
 			      <labelControl refID="esri_modelbuilder_levelLabel"  size="small"/>
 			      <labelControl refID="esri_modelbuilder_subGraphLabel"  size="small"/>
 			      <customControl refID="esri_modelbuilder_elementSlider" size="small"/>
@@ -1059,6 +1081,7 @@
         </group>
 
         <group id="esri_modelbuilder_layoutGroup" caption="Layout" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" condition="esri_geoprocessing_modelBuilderPane">
+          <button refID="esri_modelbuilder_autoLayoutButton"/>
           <labelControl refID="esri_modelbuilder_subGraphPlacementLabel" />
           <labelControl refID="esri_modelbuilder_groupGraphPlacementLabel"/>
           <comboBox refID="esri_modelbuilder_subGraphPlacement" size="small"/>
@@ -1076,46 +1099,9 @@
 			  <button refID="esri_modelbuilder_saveButton" size="large" />
 		  </group>-->
 
-        <!-- CAD Group Defnition -->
-        
-        <!-- CAD Context ToolBar Groups-->
         <group id="esri_geoprocessing_cadToolsGroup" caption="Tools" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" >
           <gallery refID="esri_cadToolsGallery" inline="true"/>
         </group>
-        <group id="esri_cad_2DGeoreferencingGroup" caption="Alignment" condition="esri_cad_2dMapCondition">
-          <button refID="esri_geoprocessing_cadDefineProjection2dButton"/>
-          <button refID="esri_datasourcesraster_georefBimCadStartButton"/>
-        </group>
-        <group id="esri_cad_3DGeoreferencingGroup" caption="Alignment" condition="esri_cad_3dMapCondition">
-          <button refID="esri_geoprocessing_cadDefineProjectionButton"/>
-          <button refID="esri_cad_GeorefStartButton" />
-        </group>
-        <!-- CAD Context ToolBar-->
-        
-        <!-- Cad 3d Georeferencing -->
-        <group id="esri_georeferencing_PrepareGroup" caption="Prepare" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolGroup16.png">
-          <button refID="esri_mapping_showLocateDockPane" size="middle"/>
-          <button refID="esri_georeferencing_SetMapSRSButton" size="middle" />
-          <button refID="esri_georeferencing_LoadControlPointsButton" size="middle"/>
-          <button refID="esri_georeferencing_MoveToDisplayButton" size="Large"/>
-          <button refID="esri_georeferencing_ElevateToGroundButton" size="Large"/>
-          <button refID="esri_georeferencing_MoveButton" size="middle"/>
-          <button refID="esri_georeferencing_ScaleButton" size="middle"/>
-          <button refID="esri_georeferencing_RotateButton" size="middle"/>
-          <button refID="esri_georeferencing_ResetButton" size="large" />
-        </group>
-        <group id="esri_georeferencing_SaveGroup" caption="Save">
-          <button refID="esri_georeferencing_SaveButton" size="Large"/>
-          <button refID="esri_georeferencing_SaveToWorkspaceButton" size="middle"/>
-          <button refID="esri_georeferencing_SaveAsButton" size="middle"/>
-        </group>
-        <group id="esri_georeferencing_CloseGroup" caption="Close">
-          <button refID="esri_georeferencing_CloseSessionButton" />
-        </group>
-        <!-- Cad 3d Georeferencing -->
-        <!-- CAD GROUP Definition -->
-      
-        <!-- Bim Group Definitions-->
         
         <!-- Bim Tool Gallery Group -->
         <group id="esri_geoprocessing_bimToolsGroup" caption="Tools" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" >
@@ -1123,7 +1109,6 @@
         </group>
         <!-- Bim Tool Gallery Group -->
         
-        <!-- Bim Group Definitions-->
       </groups>
 
   
@@ -1148,13 +1133,13 @@
       </toolbars>
       <controls>
 		  
-		  <checkBox id="esri_modelbuilder_enforceLinkFlow" className="MBLinkStatusEnforceLinkFlow" isChecked="{Binding Settings.EnforceLinkFlow}" keytip="ELF" caption="Enforce Link Flow" loadOnClick="false"   >
+		  <checkBox id="esri_modelbuilder_enforceLinkFlow" className="MBLinkStatusEnforceLinkFlow" isChecked="{Binding Settings.EnforceLinkFlow}" keytip="LF" caption="Enforce Link Flow" loadOnClick="false"   >
 			  <tooltip heading="Enforce Link Flow">
 				  Checked - The layout attempts to force all links to point to the same direction. If the arranged graph contains cycles, some of the links will still point backward.
 				  <disabledText></disabledText>
 			  </tooltip>
 		  </checkBox>
-		  <checkBox id="esri_modelbuilder_straightenLongLinks" className="MBLinkStatusStraightenLongLinks" keytip="SL" caption="Straighten Long Links" loadOnClick="false" >
+		  <checkBox id="esri_modelbuilder_straightenLongLinks" className="MBLinkStatusStraightenLongLinks" keytip="LL" caption="Straighten Long Links" loadOnClick="false" >
 			  <tooltip heading="Straighten Long Links">
                Checked - The layout strives to straighten links that cross more than one layer of the graph. Because of the additional horizontal alignment constraints, the arranged graph usually occupies a larger area than when this setting is unchecked or False.
 			   <disabledText></disabledText>
@@ -1181,7 +1166,7 @@
 			  </tooltip>
 		  </checkBox>
 
-        <customControl id="esri_modelbuilder_gridRouterSettings" caption="Grid Size" className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.GridRouterSettingsViewModel" extendedCaption="Set the value is used to set the size of the routing grid." loadOnClick="false" disableIfBusy="false">
+        <customControl id="esri_modelbuilder_gridRouterSettings" caption="Grid Size" keytip="GS" className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.GridRouterSettingsViewModel" extendedCaption="Set the value is used to set the size of the routing grid." loadOnClick="false" disableIfBusy="false">
           <content className="ArcGIS.Desktop.GeoProcessing.Controls.GridRouterSettingsControl"/>
           <tooltip heading="Grid Size">
             The value is used to set the size of the routing grid. A smaller grid size will generate better results, but might slow layout performance depending on the number of nodes, connectors and the size of the model.<disabledText></disabledText>
@@ -1191,7 +1176,7 @@
         
 
 		  <labelControl id="esri_modelbuilder_elementLabel" caption="Element" hasTwoLines="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier32.png" /> 
-		  <customControl id="esri_modelbuilder_elementSlider" caption="Element" extendedCaption="Set distance between tools, variables, connectors and groups." 
+		  <customControl id="esri_modelbuilder_elementSlider" caption="Element" keytip="ES" extendedCaption="Set distance between tools, variables, connectors and groups." 
 			   className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.ElementSlider" loadOnClick="false" disableIfBusy="false" >
         
 			  <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
@@ -1201,7 +1186,7 @@
 		  </customControl>
 		 
 		  <labelControl id="esri_modelbuilder_levelLabel" caption="Level" hasTwoLines="false" />
-      <customControl id="esri_modelbuilder_levelSlider" caption="Level" extendedCaption="Set distance between stacked tools, variables and groups in the same graph."
+      <customControl id="esri_modelbuilder_levelSlider" caption="Level" keytip="LS" extendedCaption="Set distance between stacked tools, variables and groups in the same graph."
          className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.LevelSlider" loadOnClick="false" disableIfBusy="false">
          <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
           <tooltip heading="Level Distance">
@@ -1210,7 +1195,7 @@
         </customControl>
       
 		  <labelControl id="esri_modelbuilder_subGraphLabel" caption="Sub-Graph" hasTwoLines="false" />
-        <customControl id="esri_modelbuilder_subGraphSlider" caption="Element" extendedCaption="Set distance between unconnected graphs."
+        <customControl id="esri_modelbuilder_subGraphSlider" caption="Element" keytip="SS" extendedCaption="Set distance between unconnected graphs."
           className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.SubGraphSlider" loadOnClick="false" disableIfBusy="false" >
           <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
           <tooltip heading="Sub-Graph Distance">
@@ -1218,44 +1203,44 @@
           </tooltip>
         </customControl>
       
-      <button id="esri_modelbuilder_bezierLinkTypeButton" hidden="true" caption="Bezier" extendedCaption="Link Type" keytip="BZ" className="esri_geoprocessing_module:Commands.SetLinkShapeBezier" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier32.png" condition="esri_geoprocessing_modelBuilderPane" >
+      <button id="esri_modelbuilder_bezierLinkTypeButton" hidden="true" caption="Bezier" keytip="B" extendedCaption="Link Type" className="esri_geoprocessing_module:Commands.SetLinkShapeBezier" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier32.png" condition="esri_geoprocessing_modelBuilderPane" >
           <tooltip heading="Bezier" >
             The shape of the connector used while drawing, or after Auto Layout is applied. The connector segments will be Bezier curves.
             <disabledText></disabledText>
           </tooltip>
         </button>
-		  <button id="esri_modelbuilder_cascadeLinkTypeButton" hidden="true" caption="Cascade" extendedCaption="Link Type" keytip="CC" className="esri_geoprocessing_module:Commands.SetLinkShapeCascading" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade32.png" condition="esri_geoprocessing_modelBuilderPane">
+		  <button id="esri_modelbuilder_cascadeLinkTypeButton" hidden="true" caption="Cascade" keytip="c" extendedCaption="Link Type" className="esri_geoprocessing_module:Commands.SetLinkShapeCascading" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade32.png" condition="esri_geoprocessing_modelBuilderPane">
 			  <tooltip heading="Cascade" >
 				  The connector segments will be horizontal and vertical lines, each one orthagonal to its adjacent segments.
 				  <disabledText></disabledText>
 			  </tooltip>
 		  </button>
-		  <button id="esri_modelbuilder_polylineLinkTypeButton" hidden="true" caption="Polyline" extendedCaption="Link Type" keytip="PL" className="esri_geoprocessing_module:Commands.SetLinkShapePolyline" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline32.png" condition="esri_geoprocessing_modelBuilderPane">
+		  <button id="esri_modelbuilder_polylineLinkTypeButton" hidden="true" caption="Polyline" keytip="P" extendedCaption="Link Type" className="esri_geoprocessing_module:Commands.SetLinkShapePolyline" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline32.png" condition="esri_geoprocessing_modelBuilderPane">
 			  <tooltip heading="Polyline" >
 				  The connector segments will be straight lines.
 				  <disabledText></disabledText>
 			  </tooltip>
 		  </button>
-		  <button id="esri_modelbuilder_splineLinkTypeButton" hidden="true" caption="Spline" extendedCaption="Link Type" keytip="SP" className="esri_geoprocessing_module:Commands.SetLinkShapeBezier" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkSpline16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkSpline32.png" condition="esri_geoprocessing_modelBuilderPane">
+		  <button id="esri_modelbuilder_splineLinkTypeButton" hidden="true" caption="Spline" keytip="S" extendedCaption="Link Type" className="esri_geoprocessing_module:Commands.SetLinkShapeBezier" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkSpline16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkSpline32.png" condition="esri_geoprocessing_modelBuilderPane">
 			  <tooltip heading="Spline" >
 				  The connector segments will be curves forming an interpolating spline that passes through all control points.
 				  <disabledText></disabledText>
 			  </tooltip>
 		  </button>
 
-      <checkBox id="esri_modelbuilder_FlipOrientation" hidden="true" caption="Flip Orientation" extendedCaption="Flip Orientation" keytip="HF" className="MBOrientationFlipOrientation" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipHorizontal16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipHorizontal32.png" condition="esri_geoprocessing_modelBuilderPane">
+      <checkBox id="esri_modelbuilder_FlipOrientation" hidden="true" caption="Flip Orientation" extendedCaption="Flip Orientation" keytip="OF" className="MBOrientationFlipOrientation" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipHorizontal16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipHorizontal32.png" condition="esri_geoprocessing_modelBuilderPane">
         <tooltip heading="Flip Orientation" >
-          Flip Orientation along with Flip Direction results in Left to Right, Top to Bottom, Right to Left and Bottom to Top layout.
+          Flip Orientation along with Reverse Direction results in Left to Right, Top to Bottom, Right to Left and Bottom to Top layout.
           <disabledText></disabledText>
         </tooltip>
       </checkBox>
-      <checkBox id="esri_modelbuilder_ReverserDirection" hidden="true" caption="Reverse Direction" extendedCaption="Reverse Direction" keytip="VF" className="MBOrientationReverseDirection" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipVertical16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipVertical32.png" condition="esri_geoprocessing_modelBuilderPane">
+      <checkBox id="esri_modelbuilder_ReverserDirection" hidden="true" caption="Reverse Direction" extendedCaption="Reverse Direction" keytip="RD" className="MBOrientationReverseDirection" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipVertical16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipVertical32.png" condition="esri_geoprocessing_modelBuilderPane">
         <tooltip heading="Reverse Direction" >
-          Flip Direction along with the Flip Orientation results in Left to Right, Top to Bottom, Right to Left and Bottom to Top layout.
+          Reverse Direction along with the Flip Orientation results in Left to Right, Top to Bottom, Right to Left and Bottom to Top layout.
           <disabledText></disabledText>
         </tooltip>
       </checkBox>
-      <checkBox id="esri_modelbuilder_FlipTextDirection" hidden="true" caption="Flip Flow Direction" extendedCaption="Flip Flow Direction" keytip="FT" className="MBOrientationFlipTextDirection" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipText32.png" condition="esri_geoprocessing_modelBuilderPane">
+      <checkBox id="esri_modelbuilder_FlipTextDirection" hidden="true" caption="Flip Flow Direction" extendedCaption="Flip Flow Direction" keytip="FD" className="MBOrientationFlipTextDirection" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFlipText32.png" condition="esri_geoprocessing_modelBuilderPane">
         <tooltip heading="Flip Flow Direction" >
           Checked - The layout's flow and text direction will be set in a Right to Left reading pattern.
           <disabledText></disabledText>
@@ -1263,80 +1248,77 @@
       </checkBox>
         
 		  <labelControl id="esri_modelbuilder_subGraphPlacementLabel" caption="Sub-Graph" hasTwoLines="false" />
-		  <comboBox id="esri_modelbuilder_subGraphPlacement" className="ArcGIS.Desktop.GeoProcessing.MBSubGraph" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
+		  <comboBox id="esri_modelbuilder_subGraphPlacement" keytip="SL" className="ArcGIS.Desktop.GeoProcessing.MBSubGraph" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
 			  <tooltip heading="Sub-Graph">
 				  The layout of independent graphs in a model.<disabledText></disabledText>
 			  </tooltip>
 		  </comboBox>
 		  <labelControl id="esri_modelbuilder_groupGraphPlacementLabel" caption="Group-Graph" hasTwoLines="false" />
-		  <comboBox id="esri_modelbuilder_groupGraphPlacement" className="ArcGIS.Desktop.GeoProcessing.MBSubGraphInGroups" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
-			  <tooltip heading="Sub-Graph (in group)" >
+		  <comboBox id="esri_modelbuilder_groupGraphPlacement" keytip="GL" className="ArcGIS.Desktop.GeoProcessing.MBSubGraphInGroups" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
+			  <tooltip heading="Group-Graph (in group)" >
 				  The layout of independent graphs within a group in a model.<disabledText></disabledText>
 			  </tooltip>
 		  </comboBox>
-        <customControl id="esri_modelbuilder_labelTextColorGallery" caption="" extendedCaption="Text color of the layout elements." className="Commands+TextColorPickerViewModel" loadOnClick="false">
+        <customControl id="esri_modelbuilder_labelTextColorGallery" keytip="TC" caption="" extendedCaption="Text color of the layout elements." className="Commands+TextColorPickerViewModel" loadOnClick="false">
           <content assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" className="ArcGIS.Desktop.Internal.Mapping.Symbology.ColorPicker" />
           <tooltip heading="Text Color">
             Change the text color of the selected layout elements.<disabledText></disabledText>
           </tooltip>
         </customControl>
-        <comboBox id="esri_modelbuilder_labelTextFontFamilyComboBox" className="Commands+FontFamilyChoices" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
+        <comboBox id="esri_modelbuilder_labelTextFontFamilyComboBox" keytip="FT" className="Commands+FontFamilyChoices" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
           <tooltip heading="Text Symbol Font">
             Choose the font name for the current label.<disabledText></disabledText>
           </tooltip>
         </comboBox>
-          <comboBox id="esri_modelbuilder_labelTextFontSizeComboBox" caption="Font Size" extendedCaption="Choose font size for an element in the layout." className="Commands+FontFamilySizes" condition="esri_geoprocessing_modelBuilderPane" textSearchEnabled="false" noEdit="false" resizable="false" itemWidth="40" rows="20" helpContextID="" loadOnClick="false">
+          <comboBox id="esri_modelbuilder_labelTextFontSizeComboBox" caption="Font Size" keytip="FS" extendedCaption="Choose font size for an element in the layout." className="Commands+FontFamilySizes" condition="esri_geoprocessing_modelBuilderPane" textSearchEnabled="false" noEdit="false" resizable="false" itemWidth="40" rows="20" helpContextID="" loadOnClick="false">
             <tooltip heading="Label Font Size">
               Choose a font size for the selected elements.<disabledText></disabledText>
             </tooltip>
           </comboBox>
-          <button id="esri_modelbuilder_labelTextIncreaseSizeButton" caption="Grow Font" extendedCaption="Increase font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeIncrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolIncreaseSize16.png" loadOnClick="false" helpContextID="">
+          <button id="esri_modelbuilder_labelTextIncreaseSizeButton" caption="Grow Font" keytip="GF" extendedCaption="Increase font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeIncrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolIncreaseSize16.png" loadOnClick="false" helpContextID="">
             <tooltip heading="Increase Font Size">
               Increase the font size of the selected elements.<disabledText></disabledText>
             </tooltip>
           </button>
-          <button id="esri_modelbuilder_labelTextDecreaseSizeButton" caption="Shrink Font" extendedCaption="Decrease font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeDecrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolDecreaseSize16.png" loadOnClick="false" helpContextID="">
+          <button id="esri_modelbuilder_labelTextDecreaseSizeButton" caption="Shrink Font" keytip="SF" extendedCaption="Decrease font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeDecrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolDecreaseSize16.png" loadOnClick="false" helpContextID="">
             <tooltip heading="Decrease Font Size">
               Decrease the font size of the selected elements.<disabledText></disabledText>
             </tooltip>
           </button>
-          <button id="esri_modelbuilder_labelTextItalicButton" caption="Italics" extendedCaption="Apply italic formatting to a layout element." className="FontItalicButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolItalic16.png" loadOnClick="false" helpContextID="">
+          <button id="esri_modelbuilder_labelTextItalicButton" caption="Italics" keytip="I" extendedCaption="Apply italic formatting to a layout element." className="FontItalicButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolItalic16.png" loadOnClick="false" helpContextID="">
             <tooltip heading="Italics">
               Apply italic formatting to the selected elements.<disabledText>Available if the current font has a italic style.</disabledText>
             </tooltip>
           </button>
-          <button id="esri_modelbuilder_labelTextBoldButton" caption="Bold" extendedCaption="Apply bold formatting to a layout element." className="FontBoldButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolBold16.png" loadOnClick="false" helpContextID="">
+          <button id="esri_modelbuilder_labelTextBoldButton" caption="Bold" keytip="B" extendedCaption="Apply bold formatting to a layout element." className="FontBoldButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolBold16.png" loadOnClick="false" helpContextID="">
             <tooltip heading="Bold">
               Apply bold formatting to the selected elements.<disabledText>Available if the current font has a bold style.</disabledText>
             </tooltip>
           </button>
-          <button id="esri_modelbuilder_labelTextUnderlineButton" caption="Underline" extendedCaption="Apply underline formatting to a layout element." className="FontUnderlineButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolUnderline16.png" loadOnClick="false" helpContextID="">
+          <button id="esri_modelbuilder_labelTextUnderlineButton" caption="Underline" keytip="U" extendedCaption="Apply underline formatting to a layout element." className="FontUnderlineButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolUnderline16.png" loadOnClick="false" helpContextID="">
             <tooltip heading="Underline">
               Apply underline formatting to the selected elements.<disabledText></disabledText>
             </tooltip>
           </button>
-        <button id="esri_modelbuilder_labelTextILeftJustification" caption="Left" extendedCaption="Apply Left Justification formatting to a layout element." className="FontLeftJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignLeft16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_modelbuilder_labelTextILeftJustification" caption="Left" keytip="LJ" extendedCaption="Apply Left Justification formatting to a layout element." className="FontLeftJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignLeft16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Left Justification">
             Apply Left Justification formatting to the selected elements.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_labelTextCenterJustification" caption="Center" extendedCaption="Apply Center Justification formatting to a layout element." className="FontCenterJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignHorizontalCenter16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_modelbuilder_labelTextCenterJustification" caption="Center" keytip="CJ" extendedCaption="Apply Center Justification formatting to a layout element." className="FontCenterJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignHorizontalCenter16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Center Justification">
             Apply Center Justification formatting to the selected elements.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_labelTextRightJustification" caption="Right" extendedCaption="Apply Right Justification formatting to a layout element." className="FontRightJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignRight16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_modelbuilder_labelTextRightJustification" caption="Right" keytip="RJ" extendedCaption="Apply Right Justification formatting to a layout element." className="FontRightJustifyButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolTextAlignRight16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Right Justification">
             Apply Right Justification formatting to the selected elements.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_addToolboxButton" className="esri_geoprocessing_module:Commands.AddToolbox" caption="Add Toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxAdd16.png" helpContextID="" keytip="A">
+        <button id="esri_geoprocessing_addToolboxButton" className="esri_geoprocessing_module:Commands.AddToolbox" caption="Add Toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolBoxAdd16.png" helpContextID="" keytip="AT">
           <tooltip heading="">Add an existing toolbox to the project. The project saves a reference to the toolbox.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_geoprocessing_addToolboxFromFolderButton" hidden="true" className="esri_geoprocessing_module:Commands.AddToolboxFromFolder" caption="Add To Project" extendedCaption="Geoprocessing toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" helpContextID="">
-          <tooltip heading="Add Toolbox">Add a toolbox to the project. The project saves a reference to the toolbox.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_geoprocessing_newToolboxButton" className="esri_geoprocessing_module:Commands.NewToolbox" caption="New Toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew16.png" helpContextID="" keytip="N">
+        <button id="esri_geoprocessing_newToolboxButton" className="esri_geoprocessing_module:Commands.NewToolbox" caption="New Toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew16.png" helpContextID="" keytip="TB">
           <tooltip heading="">Create a new toolbox on the local computer or a shared folder on the network, or in a geodatabase. The project saves a reference to the toolbox.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_geoprocessing_newToolboxButtonNoDlg" className="esri_geoprocessing_module:Commands.NewToolbox" caption="New Toolbox" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew16.png" helpContextID="" keytip="N">
@@ -1347,7 +1329,7 @@
             Create a new Python toolbox on the local computer or a shared folder on the network. The project saves a reference to the toolbox.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_modelBuilderButton" className="esri_geoprocessing_module:Commands.NewModel" caption="ModelBuilder" keytip="MB" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel16.png" helpContextID="">
+        <button id="esri_geoprocessing_modelBuilderButton" className="esri_geoprocessing_module:Commands.NewModel" caption="ModelBuilder" keytip="NM" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel16.png" helpContextID="">
           <tooltip heading="ModelBuilder">Create a new blank geoprocessing model and open it in ModelBuilder.
 
 A model is a geoprocessing workflow represented as a diagram that strings together a sequence of tools, using the output of one tool as the input to another tool. You create, edit, and manage models in ModelBuilder.<disabledText>Not available yet.</disabledText></tooltip>
@@ -1365,6 +1347,18 @@ A Python command line is available in this pane. You can execute geoprocessing t
 
 You can search for a specific tool, see a list of favorite and recently run tools, and explore all tools and toolboxes that are included in ArcGIS Pro.<disabledText></disabledText></tooltip>
         </button>
+
+        <customControl id="esri_geoprocessing_toolsSearch" keytip="TS" caption="Tools" 
+                       className="ArcGIS.Desktop.GeoProcessing.ToolSearcherViewModel" 
+                       disableIfBusy="false" loadOnClick="true"
+                       assembly="Extensions\Geoprocessing\ArcGIS.Desktop.GeoProcessing.dll" helpContextID="">
+         <content className="ArcGIS.Desktop.GeoProcessing.ToolSearcherView"/>
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </customControl>
+     
+        
         <button id="esri_geoprocessing_toolsButtonFromGallery" hidden="true" className="esri_geoprocessing_module:Commands.ShowTools" caption="More Tools..." keytip="MT" extendedCaption="Open Geoprocessing pane" helpContextID="">
           <tooltip heading="Geoprocessing">Show the Geoprocessing pane.
 
@@ -1515,11 +1509,12 @@ Common environments include: extent, output coordinate system, cell size, and ra
         Remove the toolbox from the project. The project's reference to the toolbox is removed. The toolbox is not deleted.<disabledText></disabledText>
       </tooltip>
     </button>
-    <button id="esri_geoprocessing_Toolbox_MakeDefaultButton" hidden="true" 
+    <button id="esri_geoprocessing_Toolbox_MakeDefaultButton" hidden="true" keytip="H" 
             className="esri_geoprocessing_module:Commands.SetDefaultToolboxButton" loadOnClick="false"
             caption="Make Default" extendedCaption="Geoprocessing Toolbox" 
             condition="esri_projectItem_DefaultToolboxSelectedCondition" 
             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png" 
+            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_32.png" 
             helpContextID="">
       <tooltip heading="">
         Make this toolbox the default toolbox for the project that is currently open.<disabledText></disabledText>
@@ -1586,24 +1581,28 @@ Common environments include: extent, output coordinate system, cell size, and ra
           <tooltip heading="Remove All Relates">Remove all relates from the current table.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_geoprocessing_Add_ScriptTool" hidden="true" 
-                caption="Script" extendedCaption="New Script Tool" 
+                caption="Script" keytip="NS" extendedCaption="New Script Tool" 
                 className="esri_geoprocessing_module:Commands.OnNewScript" loadOnClick="false"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript32.png"
                 helpContextID="">
-          <tooltip heading="New Script">Create a new Script tool in the toolbox.<disabledText></disabledText></tooltip>
+          <tooltip heading="New Script">Create a new script tool in the toolbox.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_geoprocessing_Add_ModelTool" hidden="true" 
-                caption="Model" extendedCaption="New Model Tool" loadOnClick="false"
+                caption="Model" keytip="NM" extendedCaption="New Model Tool" loadOnClick="false"
                 className="esri_geoprocessing_module:Commands.OnNewModel" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel32.png"
                 helpContextID="">
           <tooltip heading="New Model">
-            Create a new Model in the toolbox.<disabledText></disabledText>
+            Create a new model in the toolbox.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_Add_Toolset" hidden="true" caption="Toolset" extendedCaption="New Toolset" 
+        <button id="esri_geoprocessing_Add_Toolset" hidden="true" caption="Toolset" keytip="NT" extendedCaption="New Toolset" 
                 className="esri_geoprocessing_module:Commands.OnNewToolset" loadOnClick="false"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolset16.png" helpContextID="">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolset16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolset32.png"
+                helpContextID="">
           <tooltip heading="New Toolset">Create a new toolset in the toolbox.<disabledText></disabledText></tooltip>
         </button>
 
@@ -1617,7 +1616,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           <tooltip heading="Summary Table">Create a summary table grouped by the values in the current field. If any of the rows in the table are currently selected, only the values of the selected rows will be calculated.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_geoprocessing_tableDisplayXYDataButton" caption="Display XY Data" className="esri_geoprocessing_module:Commands.TableDisplayXYData" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddXYEvent16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddXYEvent32.png" helpContextID="" condition="esri_mapping_singleStandaloneTableSelectedCondition">
-          <tooltip heading="">Adds a new point layer based on x,y values from the highlighted table.</tooltip>
+          <tooltip heading="">Creates a point feature class based on x,y values from the highlighted table.</tooltip>
         </button>
 
         <button id="esri_geoprocessing_tableExportTableButton" caption="Export Table" extendedCaption="Selected standalone table" className="esri_geoprocessing_module:Commands.TableExportTable" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportTable16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportTable32.png" helpContextID="" keytip="ET" loadOnClick="false">
@@ -1653,7 +1652,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Export model to script.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_exportReportButton" hidden="true" caption="Export Report" extendedCaption="ModelBuilder" keytip="ER" className="esri_geoprocessing_module:Commands.ExportModelReport" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LabelingTextSymbolTabFormatting16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LabelingTextSymbolTabFormatting32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_exportReportButton" hidden="true" caption="Export Report" extendedCaption="ModelBuilder" keytip="ER" className="esri_geoprocessing_module:Commands.ExportModelReport" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LabelingTextSymbolTabFormatting16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LabelingTextSymbolTabFormatting24.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Export Report">
             Export model to report.<disabledText></disabledText>
           </tooltip>
@@ -1679,7 +1678,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>esri_modelbuilder_ungroupButton
         </button>
         <button id="esri_modelbuilder_fitToWindowButton" caption="Fit To Window" extendedCaption="ModelBuilder" keytip="FTW" className="esri_geoprocessing_module:Commands.FitToWindow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Fit to window">
+          <tooltip heading="Fit to Window">
             Fit model diagram to window so you can see all model elements.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -1704,18 +1703,33 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
         <button id="esri_modelbuilder_zoomInButton" caption="Zoom in" extendedCaption="ModelBuilder" keytip="ZI" className="esri_geoprocessing_module:Commands.ZoomIn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomIn_B_16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Zoom in">
+          <tooltip heading="Zoom In">
             Zoom in on the model.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_zoomOutButton" caption="Zoom out" extendedCaption="ModelBuilder" keytip="ZO" className="esri_geoprocessing_module:Commands.ZoomOut" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Zoom out">
+          <tooltip heading="Zoom Out">
             Zoom out from the model.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_autoLayoutButton" caption="Auto Layout" extendedCaption="ModelBuilder" keytip="AL" className="esri_geoprocessing_module:Commands.AutoLayout" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Auto layout">
+          <tooltip heading="Auto Layout">
             Automatically arrange the elements in a model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_autoLayoutDiagramButton" caption="Auto Layout Diagram" extendedCaption="ModelBuilder" keytip="AL" className="esri_geoprocessing_module:Commands.AutoLayout" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Auto Layout Diagram">
+            Automatically arrange the elements in a model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_RouteAllGroupLinksButton" caption="Route Group Links" extendedCaption="ModelBuilder" keytip="RGL" className="esri_geoprocessing_module:Commands.RouteAllGroupLinks" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Route Group Links">
+            Automatically routes the links in a group.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_RouteAllLinksButton" caption="Route All Links" extendedCaption="ModelBuilder" keytip="RAL" className="esri_geoprocessing_module:Commands.RouteAllLinks" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkCascade32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Route All Links">
+            Automatically routes the links in a model.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelBuilder_editToolProperties" caption="Properties" extendedCaption="ModelBuilder model" keytip="PP" className="esri_geoprocessing_module:Commands.OnEditModelToolProperties" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
@@ -1723,13 +1737,13 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Open model tool properties<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_environmentsButton" caption="Environments" extendedCaption="ModelBuilder" keytip="E" className="esri_geoprocessing_module:Commands.ShowModelEnvironments" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingEnvironmentSettings16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingEnvironmentSettings32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_environmentsButton" caption="Environments" extendedCaption="ModelBuilder" keytip="ME" className="esri_geoprocessing_module:Commands.ShowModelEnvironments" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingEnvironmentSettings16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingEnvironmentSettings32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Environments">
             Specify the environment settings geoprocessing tools should use.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_reportViewButton" caption="Report" extendedCaption="ModelBuilder Report" keytip="R" className="esri_geoprocessing_module:Commands.ShowModelReportView" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Open_report16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Open_report32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_reportViewButton" caption="Report" extendedCaption="ModelBuilder Report" keytip="MR" className="esri_geoprocessing_module:Commands.ShowModelReportView" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Open_report16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Open_report32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Report">
             Show ModelBuilder Report.<disabledText></disabledText>
           </tooltip>
@@ -1771,9 +1785,9 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Copy selected model elements.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_cutConnectionButton" hidden="true" caption="Cut" extendedCaption="ModelBuilder" keytip="X" className="esri_geoprocessing_module:Commands.CutConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Cut">
-            Cut selected connections.<disabledText></disabledText>
+        <button id="esri_modelbuilder_cutConnectionButton" hidden="true" caption="Remove" extendedCaption="ModelBuilder" keytip="X" className="esri_geoprocessing_module:Commands.CutConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Remove">
+            Remove selected connections.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_validateButton" caption="Validate" extendedCaption="ModelBuilder" keytip="VT" className="esri_geoprocessing_module:Commands.ValidateModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
@@ -1852,27 +1866,27 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createModelVariableButton" caption="Variable" extendedCaption="ModelBuilder" keytip="VB" className="esri_geoprocessing_module:Commands.CreateModelVariable" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderVariable16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderVariable32.png" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Create variable">
+          <tooltip heading="Create Variable">
             Variables are names that store values which can be changed. These values can be layers, dataset paths, numbers, strings, or many other things.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createVariableButton" hidden="true" caption="Create Variable..." extendedCaption="ModelBuilder" keytip="VB" className="esri_geoprocessing_module:Commands.CreateVariableElement" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderVariable16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderVariable32.png" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Create variable">
+          <tooltip heading="Create Variable">
             Variables are names that store values which can be changed. These values can be layers, dataset paths, numbers, strings, or many other things.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createModelLabelButton" caption="Label" extendedCaption="ModelBuilder" keytip="LB" className="esri_geoprocessing_module:Commands.CreateModelLabel" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling32.png" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Create label">
+          <tooltip heading="Create Label">
             Add a free-standing label to the model.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createLabelButton" hidden="true" caption="Create Label" extendedCaption="ModelBuilder" keytip="LB" className="esri_geoprocessing_module:Commands.CreateLabelElement" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling32.png" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Create label">
+          <tooltip heading="Create Label">
             Add and link a label to a model element. The label will move with the element.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createElementLabelButton" hidden="true" caption="Create Label" extendedCaption="ModelBuilder" keytip="LB" className="esri_geoprocessing_module:Commands.CreateElementLabel" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapRibbonLabeling32.png" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Create label">
+          <tooltip heading="Create Label">
             Create label.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -2034,7 +2048,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_NewModelButton" className="esri_geoprocessing_module:Commands.NewModel" caption="New" keytip="MB" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" helpContextID="">
+        <button id="esri_modelbuilder_NewModelButton" className="esri_geoprocessing_module:Commands.NewModel" caption="New" keytip="NM" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" helpContextID="">
           <tooltip heading="New Model">
             Create a new blank geoprocessing model.
 
@@ -2071,8 +2085,8 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_geoprocessing_saveAsToolbox105" hidden="true" caption="10.5 Toolbox..." className="esri_geoprocessing_module:Commands.OnSaveAsToolbox105" helpContextID="">
-                    <tooltip heading="10.5 Toolbox">
+        <button id="esri_geoprocessing_saveAsToolbox105" hidden="true" caption="10.5/10.6 Toolbox..." className="esri_geoprocessing_module:Commands.OnSaveAsToolbox105" helpContextID="">
+                    <tooltip heading="10.5/10.6 Toolbox">
                         Save as a toolbox that you can use in ArcGIS 10.5 and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>            
           </tooltip>         
         </button>
@@ -2130,7 +2144,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Adds a new Group to the current Group.
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_AutoLayoutGroup" className="esri_geoprocessing_module:Commands.AutoLayoutGroup" hidden="true" caption="Auto Layout" extendedCaption="ModelBuilder" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout32.png" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_AutoLayoutGroup" className="esri_geoprocessing_module:Commands.AutoLayoutGroup" hidden="true" caption="Auto Layout Group" extendedCaption="ModelBuilder" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout32.png" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="AutoLayout">
             AutoLayout the Group elements.
           </tooltip>
@@ -2189,101 +2203,9 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <button id="esri_geoprocessing_cadDefineProjectionButton" keytip="DP" caption="Define Projection" className="esri_geoprocessing_module:CadCommands.DefineProjection"
                         largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox_management.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox_management.png">
           <tooltip heading="Define Projection">
-            Opens the GP Tool Define Projection to change the spatial reference of the CAD File<disabledText></disabledText>
+            Opens the GP Tool Define Projection to change the spatial reference of the data source<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_cadDefineProjection2dButton" keytip="DP" caption="Define Projection" className="esri_geoprocessing_module:CadCommands.DefineProjection"
-                        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox_management.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox_management.png">
-          <tooltip heading="Define Projection">
-            Opens the GP Tool Define Projection to change the spatial reference of the CAD File<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <!-- Cad 3d Georeference Controls -->
-        <button id="esri_georeferencing_CloseSessionButton"  keytip="CGR" caption="Close Georeference" className="esri_geoprocessing_module:GeoreferencingCommands.CloseSession" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close16.png">
-          <tooltip heading="Close the Georeference Tab">Close the current georeferencing edit session.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_cad_GeorefStartButton" keytip="SG" caption ="Georeference" className="esri_geoprocessing_module:GeoreferencingCommands.StartGeorefenceSession" loadOnClick="false"
-                        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CadGeoreferencing-32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CadGeoreferencing-16.png">
-          <tooltip heading="Start Georeferencing">
-            Start 3D georeferencing the currently selected layer.<disabledText>This operation is enabled when both of the following are true: a valid layer is selected within the Contents pane, and there are no other active georeferencing sessions within this map.</disabledText>
-          </tooltip>
-        </button>
-        
-        <!-- Cad 3d Georeference Prep Controls -->
-        <button id="esri_georeferencing_SetMapSRSButton"  keytip="SRS" caption="Set SRS" className="esri_geoprocessing_module:GeoreferencingCommands.SetSRS" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CoordinateSystem32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CoordinateSystem16.png">
-          <tooltip heading="Set Coordinate System">
-            Set the coordinate system of the map.<disabledText>This operation is only possible when no control points exist in the georeferencing session.</disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_georeferencing_LoadControlPointsButton"  keytip="I" caption="Import" className="esri_geoprocessing_module:GeoreferencingCommands.ImportControlPoints" loadOnClick="false"
-                        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png">
-          <tooltip heading="Import Control Points">
-            Import control points<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_georeferencing_MoveToDisplayButton"  keytip="MD" caption="Move To Display" className="esri_geoprocessing_module:GeoreferencingCommands.MoveToDisplay" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/RasterGeoRefFitDisplay32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/RasterGeoRefFitDisplay16.png">
-          <tooltip heading="Move To Display">
-            Center the source layer in the current view.<disabledText>This operation is only possible when no control points exist in the current georeferencing session and the coordinate system of the map matches the coordinate system of the raster that you are georeferencing. Click the Set SRS tool to set the coordinate system of the map to be the same.</disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_georeferencing_ElevateToGroundButton"  keytip="FD" caption="Elevate To Ground" className="esri_geoprocessing_module:GeoreferencingCommands.ElevateToGround" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGroupToGround32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGroupToGround16.png">
-          <tooltip heading="Elevate To Ground">
-            Fit the source layer to the current display extent and elevate the drawing to the top of the elevation surface.<disabledText>This operation is only possible when no control points exist in the current georeferencing session and the coordinate system of the map matches the coordinate system of the raster that you are georeferencing. Click the Set SRS tool to set the coordinate system of the map to be the same.</disabledText>
-          </tooltip>
-        </button>
-        <tool id="esri_georeferencing_MoveButton"  keytip="MO" caption="Move" className="Georeferencing.MoveTool" loadOnClick="false"
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingMoveTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingMoveTool16.png">
-          <tooltip heading="Move">
-            Move the source layer to shift the data into its correct location.<disabledText>This operation is only possible when no control points exist in the georeferencing session.</disabledText>
-          </tooltip>
-        </tool>
-        <tool id="esri_georeferencing_ScaleButton" keytip="SC" caption="Scale" className="Georeferencing.ScaleTool" loadOnClick="false"
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingScaleTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingScaleTool16.png">
-          <tooltip heading="Scale">
-            Resize the source layer to bring the data to its correct dimension.<disabledText>This operation is only possible when no control points exist in the georeferencing session.</disabledText>
-          </tooltip>
-        </tool>
-        <tool id="esri_georeferencing_RotateButton" keytip="RO" caption="Rotate" className="Georeferencing.RotateTool" loadOnClick="false" 
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingRotateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/EditingRotateTool16.png">
-          <tooltip heading="Rotate">
-            Rotate the source layer to orient the data in its correct direction.<disabledText>This operation is only possible when no control points exist in the georeferencing session.</disabledText></tooltip>
-        </tool>
-        <button id="esri_georeferencing_ResetButton" keytip="RST" caption="Reset" className="esri_geoprocessing_module:GeoreferencingCommands.Reset" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_16.png">
-          <tooltip heading="Reset">
-            Reset transformations and the set the layer back to its original location.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <!-- Cad 3d Georeference Prep Controls -->
-        
-        <!-- Cad 3d Georeference Save Controls -->
-        <button id="esri_georeferencing_SaveButton" keytip="SA" caption="Save" className="esri_geoprocessing_module:GeoreferencingCommands.Save" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave16.png">
-          <tooltip heading="Save">
-            Save the current georeferencing information to a 3D world file for the current drawing.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_georeferencing_SaveToWorkspaceButton" keytip="STW" caption="Save To Worksapce" className="esri_geoprocessing_module:GeoreferencingCommands.SaveToWorkspace" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_16.png">
-          <tooltip heading="Save to Workspace">
-            Save as universal 3D world file.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_georeferencing_SaveAsButton" keytip="SN" caption="Save As New" className="esri_geoprocessing_module:GeoreferencingCommands.SaveAs" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_16.png">
-          <tooltip heading="Save as New">
-            Save as a new 3D world file.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <!-- Cad 3d Georeference Save Controls -->
-        
-        <!-- Cad 3d Georeference Controls -->
-        
-        <!-- CAD Controls -->
       </controls>
 
       <panes>
@@ -2292,10 +2214,6 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </pane>
         <pane id="esri_geoprocessing_MBReportPane" caption="ModelReport" className="ModelBuilderReportViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel16.png" isClosable="true" defaultTab="esri_geoprocessing_MBHomeTab">
           <content className="ModelBuilderReportView" />
-        </pane>
-        <pane id="esri_geoprocessing_georeferencing_ControlLinkTablePane" caption="Control Point Table" className="ArcGIS.Desktop.GeoProcessing.ControlLinkTableViewModel"
-                  isClosable="true" isDropTarget="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/RasterGeoRefControlPointTable16.png">
-          <content className="ArcGIS.Desktop.GeoProcessing.ControlLinkTable" />
         </pane>
       </panes>
 
@@ -2322,7 +2240,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <tool refID="esri_mapping_selectByTraceTool"/>
         </toolPalette>
 
-        <toolPalette  id="esri_modelbuilder_linkShapeToolPalette" caption="Link Shape" keytip="LS" dropDown="true" showItemCaption="true" itemsInRow="1" menuStyle="true"
+        <toolPalette  id="esri_modelbuilder_linkShapeToolPalette" caption="Link Shape" keytip="LT" dropDown="true" showItemCaption="true" itemsInRow="1" menuStyle="true"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline16.png"
           largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkPolyline32.png">
           <tooltip heading="Link Shape">
@@ -2416,11 +2334,12 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <menu id="esri_geoprocessing_ToolboxProjectItemMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
           <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" />
-          <button refID="esri_projectItemServerConnectionRefreshItemAsync" separator="true"/>
+          <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_core_rename"/>
           <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
           <button refID="esri_geoprocessing_pasteTool" separator="true" />
           <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
@@ -2429,9 +2348,9 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <menu id="esri_geoprocessing_ToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
           <!-- separator line should not appear here -->
-          <button refID="esri_geoprocessing_addToolboxFromFolderButton" />
+          <button refID="esri_core_addToProject" />
           <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_projectItemServerConnectionRefreshItemAsync" />
+          <button refID="esri_core_refresh" />
           <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
           <button refID="esri_geoprocessing_pasteTool" separator="true" />
           <button refID="esri_geoprocessing_deleteToolbox" separator="true" />
@@ -2443,18 +2362,19 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_geoprocessing_editPythonToolbox" />
           <button refID="esri_geoprocessing_checkPythonToolboxSyntax" />
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
-          <button refID="esri_projectItemServerConnectionRefreshItemAsync" separator="true" />
+          <button refID="esri_core_refresh" separator="true" />
           <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_PythonToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
-          <button refID="esri_geoprocessing_addToolboxFromFolderButton" />
+          <button refID="esri_core_addToProject" />
           <button refID="esri_geoprocessing_editPythonToolbox"/>
           <button refID="esri_geoprocessing_checkPythonToolboxSyntax" />
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
-          <button refID="esri_projectItemServerConnectionRefreshItemAsync" separator="true"/>
+          <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_geoprocessing_deleteToolbox" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2462,8 +2382,8 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </menu>
 
         <menu id="esri_geoprocessing_ServerToolboxMenu" hidden="true" caption="GP Server Toolbox Project Item" contextMenu="true">
-          <button refID="esri_projectItemServerConnectionRefreshItemAsync"/>
-          <button refID="esri_geoprocessing_addToolboxFromFolderButton" separator="true"/>
+          <button refID="esri_core_refresh"/>
+          <button refID="esri_core_addToProject" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_ToolsetMenu" hidden="true" caption="Toolset menu" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu"/>
@@ -2844,17 +2764,21 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <menu id="esri_modelbuilder_modelMenu" hidden="true" caption="Model">
           <tooltip heading="Model">
             Edit model properties.<disabledText></disabledText>
-          </tooltip>
-          <button refID="esri_modelbuilder_panButton"/>
+          </tooltip>     
           <button refID="esri_modelbuilder_createVariableButton"  separator="true"/>
           <button refID="esri_modelbuilder_createLabelButton"/>
+          <button refID="esri_modelbuilder_validateButton" separator="true" />
+          <button refID="esri_modelbuilder_runModelButton" />
           <button refID="esri_modelbuilder_groupButton" separator ="true"/>
           <button refID="esri_modelbuilder_groupExpandAll" />
           <button refID="esri_modelbuilder_groupCollapseAll"/>
+          <button refID="esri_modelbuilder_autoLayoutDiagramButton" separator="true"/>
+          <button refID="esri_modelbuilder_RouteAllLinksButton"/>
           <button refID="esri_modelbuilder_cutElementsButton" separator="true"/>
           <button refID="esri_modelbuilder_copyElementsButton"/>
           <button refID="esri_modelbuilder_pasteElementsButton"/>
           <button refID="esri_modelbuilder_selectAllButton" />
+          <button refID="esri_modelbuilder_panButton"  separator="true"/>
           <!--<button refID="esri_modelbuilder_undoModelButton" separator="true"/>-->
           <!--<button refID="esri_modelbuilder_redoModelButton"/>-->
         </menu>
@@ -2908,11 +2832,12 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <tooltip heading="Group Menu">
             ModelBuilder Group.<disabledText></disabledText>
           </tooltip>
-          <button refID="esri_modelbuilder_AutoLayoutGroup" />
           <button refID="esri_modelbuilder_AddSubGroup" separator="true"/>
           <button refID="esri_modelbuilder_renameGroup" />
           <button refID="esri_modelbuilder_dissolveGroup" />
           <button refID="esri_modelbuilder_exportGroupToModel" separator="true"/>
+          <button refID="esri_modelbuilder_AutoLayoutGroup" separator="true" />
+          <button refID="esri_modelbuilder_RouteAllGroupLinksButton" />
           <button refID="esri_modelbuilder_cutElementsButton" separator="true"/>
           <button refID="esri_modelbuilder_copyElementsButton" />
           <button refID="esri_modelbuilder_pasteElementsButton"/>
@@ -2956,6 +2881,13 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <button refID="esri_modelbuilder_saveAsButton"/>
       </splitButton>
       </splitButtons>-->
+      <splitButtons>
+        <splitButton id="esri_geoprocessing_toolsSplitButton" keytip="RF" extendedCaption="Search Tools">
+          <button refID="esri_geoprocessing_toolsButton" />
+          <!--<gallery refID="esri_geoprocessingToolSearchGallery" />-->
+          <customControl refID="esri_geoprocessing_toolsSearch" />
+        </splitButton>
+      </splitButtons>
       <galleries>
           <gallery id="esri_geoprocessingGallery" className="FavoritesGalleryViewModel" caption="Analysis Gallery" keytip="GG"
                    itemsInRow="7" itemWidth="76" itemHeight="62"
@@ -3036,7 +2968,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertButton refID="esri_geoprocessing_pythonButton" />
         </updateGroup>
         <updateGroup refID="esri_core_projectData">
-          <insertButtonPalette refID="esri_geoprocessing_insertMenu" placeWith="esri_mapping_importMapButton" insert="after" size="middle"/>
+          <insertButtonPalette refID="esri_geoprocessing_insertMenu" placeWith="esri_geodatabase_insertMenu" insert="after" size="middle"/>
         </updateGroup>
       </groups>
     </updateModule>
@@ -3051,10 +2983,14 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </updateTab>
 
+        <!-- Cad Tool Gallery -->
         <updateTab refID="esri_mapping_featureLayerCadTab">
-          <insertGroup refID="esri_cad_2DGeoreferencingGroup"/>
-          <insertGroup refID="esri_cad_3DGeoreferencingGroup"/>
           <insertGroup refID="esri_geoprocessing_cadToolsGroup"/>
+        </updateTab>
+        
+        <!-- BIM Tool Gallery -->
+        <updateTab refID="esri_mapping_BimContextualTab">
+          <insertGroup refID="esri_geoprocessing_bimToolsGroup"/>
         </updateTab>
       </tabs>
       <groups>
@@ -3080,24 +3016,33 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <updateGroup refID="esri_mapping_streamLayerSymbology">
           <insertButton refID="esri_geoprocessing_importSymbologyButton" size="middle"/>
         </updateGroup>
+
+        <!--Cad Define Projection Button -->
+        <updateGroup refID="esri_mapping_georeference_GeoreferenceGroup">
+          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_mapping_georeferenceing_StartSessionButton"/>
+        </updateGroup>
+        <!--Define Projection 2D Button -->
+        <updateGroup refID="esri_mapping_georeference_RasterGeoreferenceGroup">
+          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_datasourcesraster_georefBimCadStartButton"/>
+        </updateGroup>
       </groups>
 
       <menus>
         <updateMenu refID="esri_mapping_layerContextMenu">
-          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_mapping_designViewMenu" separator="true"/>
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
         </updateMenu>
         
         <updateMenu refID="esri_mapping_subtypeValueLayerContextMenu">
-          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_mapping_designViewMenu" separator="true"/>
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
         </updateMenu>
 
         <updateMenu refID="esri_mapping_standaloneTableContextMenu">
-          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_mapping_designViewMenu" separator="true"/>
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
           <insertButton refID="esri_geoprocessing_tableDisplayXYDataButton" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_JoinsRelatesMenu" separator="true"/>
           <insertButton refID="esri_geoprocessing_tableGeocodeAddresses" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_tableDisplayXYDataButton" separator="false"/>
         </updateMenu>
         <updateMenu refID="esri_mapping_rasterLayerContextMenu">
-          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="before" placeWith="esri_mapping_zoomToSelectedLayersButton" separator="true"/>
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
         </updateMenu>
       </menus>
       <palettes>

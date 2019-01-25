@@ -39,7 +39,7 @@
     </updateCategory>
 
     <updateCategory refID="esri_itemInfoType">
-      <insertComponent id="esri_dataReviewer_SessionResults" className="ArcGIS.Desktop.DataReviewer.ReviewerResultsProjectItem">
+      <insertComponent id="esri_dataReviewer_SessionResults" className="ArcGIS.Desktop.DataReviewer.ReviewerResultsProjectItem" containerType="DataReviewerResources">
         <content>
           <supportedTypeIDs>
             <type id="SessionResults" contextMenuID="esri_dataReviewer_ReviewResultsContextMenu" />
@@ -53,7 +53,7 @@
           </supportedTypeIDs>
         </content>
       </insertComponent>
-      <insertComponent id="esri_itemInfoType_dataReviewer_BatchJobProjectItem" className="ArcGIS.Desktop.DataReviewer.ReviewerBatchJobProjectItem">
+      <insertComponent id="esri_itemInfoType_dataReviewer_BatchJobProjectItem" className="ArcGIS.Desktop.DataReviewer.ReviewerBatchJobProjectItem" containerType="DataReviewerBatchJobs">
         <content>
           <supportedTypeIDs>
             <type id="file_datareviewer_batchjob" contextMenuID="esri_dataReviewer_BatchJobsContextMenu" />
@@ -405,13 +405,13 @@
           <tooltip heading="Add Data Reviewer Batch Jobs">Add existing Batch Jobs to the project.</tooltip>
         </button>
         <!-- Review Results context menu buttons-->
-        <button id="esri_dataReviewer_ReviewResults_AddSession" caption="Add Session..." extendedCaption = "Add Reviewer Sessions to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_AddSession" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
+        <button id="esri_dataReviewer_ReviewResults_AddSession" caption="Add Session" keytip="A" extendedCaption = "Add Reviewer Sessions to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_AddSession" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
           <tooltip heading="Add Session">
             Add an existing Reviewer session to the project. This allows you to view the results in the Reviewer Results pane. You can add more than one session to the connection, but can only view the results for one session at a time.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_NewSession" caption="New Session..." extendedCaption = "Create a new Reviewer Session to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_NewSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew16.png">
+        <button id="esri_dataReviewer_ReviewResults_NewSession" caption="New Session" keytip="S" extendedCaption = "Create a new Reviewer Session to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_NewSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew16.png">
           <tooltip heading="New Session">
             Create a new Reviewer session to the project.
             <disabledText></disabledText>
@@ -748,7 +748,7 @@
     <updateModule refID="esri_editing_EditingModule">
       <tabs>
         <updateTab refID="esri_editing_EditingTab">
-          <insertGroup refID="esri_dataReviewer_DataReviewerGroup" placeWith="esri_editing_elevationGroup" insert="after"></insertGroup>
+          <insertGroup refID="esri_dataReviewer_DataReviewerGroup"></insertGroup>
         </updateTab>
       </tabs>
     </updateModule>

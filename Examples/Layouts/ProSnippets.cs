@@ -31,6 +31,7 @@ using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Geometry;
+using ArcGIS.Core.Data;
 
 namespace ProSnippetsTasks
 {
@@ -38,9 +39,9 @@ namespace ProSnippetsTasks
   {
     async public void snippets_ProjectItems()
     {
-      #region Reference layout project items
-
-      //A layout project item is an item that appears in the Layouts folder in the Catalog pane
+      #region Reference layout project items and their associated layout
+      //Reference layout project items and their associated layout.
+      //A layout project item is an item that appears in the Layouts folder in the Catalog pane.
 
       //Reference all the layout project items
       IEnumerable<LayoutProjectItem> layouts = Project.Current.GetItems<LayoutProjectItem>();
@@ -50,17 +51,25 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Open a layout project item in a new view
-      //A layout project item may be in a project but it may not be open in a view and/or active        
-      //First get the layout associated with the layout project item
-      Layout layout = layoutItem.GetLayout();
-      //Open a new pane
-      ILayoutPane iNewLayoutPane = await ProApp.Panes.CreateLayoutPaneAsync(layout);
-      #endregion
-      
-      #region Activate an already open layout view
-      //A layout view may exist but it may not be active
+      //Open a layout project item in a new view.
+      //A layout project item may exist but it may not be open in a view. 
 
-      //Iterate through each pane in the application and check to see if the layout is already open and if so, activate it
+      //Reference a layout project item by name
+      LayoutProjectItem someLytItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
+
+      //Get the layout associated with the layout project item
+      Layout layout = await QueuedTask.Run(() => someLytItem.GetLayout());  //Worker thread
+
+      //Create the new pane
+      ILayoutPane iNewLayoutPane = await ProApp.Panes.CreateLayoutPaneAsync(layout); //GUI thread
+      #endregion
+
+      #region Activate an already open layout view
+      //Activate an already open layout view.
+      //A layout view may be open but it may not be active.
+
+      //Find the pane that references the layout and activate it. 
+      //Note - there can be multiple panes referencing the same layout.
       foreach (var pane in ProApp.Panes)
       {
         var layoutPane = pane as ILayoutPane;
@@ -74,35 +83,53 @@ namespace ProSnippetsTasks
       }
       #endregion
 
-
-
       #region Reference the active layout view
-      //First check to see if the current, active view is a layout view.  If it is, use it
+      //Reference the active layout view.
+
+      //Confirm if the current, active view is a layout view.  If it is, do something.
       LayoutView activeLayoutView = LayoutView.Active;
       if (activeLayoutView != null)
       {
-        // use activeLayoutView
+        // do something
       }
       #endregion
 
+      #region Import a pagx into a project
+      //Import a pagx into a project.
 
+      //Create a layout project item from importing a pagx file
+      IProjectItem pagx = ItemFactory.Instance.Create(@"C:\Temp\Layout.pagx") as IProjectItem;
+      Project.Current.AddItem(pagx);
+      #endregion
+
+      #region Remove a layout project item
+      //Remove a layout project item.
+
+      //Remove the layout fro the project
+      Project.Current.RemoveItem(layoutItem);
+      #endregion
 
       #region Create a new, basic layout and open it
-      //Create a new layout project item layout in the project
+      //Create a new, basic layout and open it.
+
+      //Create layout with minimum set of parameters on the worker thread
       Layout newLayout = await QueuedTask.Run<Layout>(() =>
       {
         newLayout = LayoutFactory.Instance.CreateLayout(8.5, 11, LinearUnit.Inches);
         newLayout.SetName("New 8.5x11 Layout");
         return newLayout;
       });
+      
       //Open new layout on the GUI thread
       await ProApp.Panes.CreateLayoutPaneAsync(newLayout);
       #endregion
 
-
-
       #region Create a new layout using a modified CIM and open it
-      //Create a new layout project item layout in the project
+      //Create a new layout using a modified CIM and open it.
+      //The CIM exposes additional members that may not be available through the managed API.  
+      //In this example, optional guides are added.
+
+      //Create a new CIMLayout on the worker thread
       Layout newCIMLayout = await QueuedTask.Run<Layout>(() =>
       {
         //Set up a CIM page
@@ -150,53 +177,67 @@ namespace ProSnippetsTasks
         };
         newPage.Guides = guideList.ToArray();
 
-        //Create a new page
+        //Construct the new layout using the customized cim definitions
         newCIMLayout = LayoutFactory.Instance.CreateLayout(newPage);
         newCIMLayout.SetName("New 8.5x11 Layout");
         return newCIMLayout;
       });
+
       //Open new layout on the GUI thread
       await ProApp.Panes.CreateLayoutPaneAsync(newCIMLayout);
       #endregion
-    
-	
 
-	    #region Import a pagx into a project
-      //Create a layout project item from importing a pagx file
-      IProjectItem pagx = ItemFactory.Instance.Create(@"C:\Temp\Layout.pagx") as IProjectItem;
-      Project.Current.AddItem(pagx);
+      #region Change the layout page size
+      //Change the layout page size.
+
+      //Reference the layout project item
+      LayoutProjectItem lytItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
+      if (layoutItem != null)
+      {
+        await QueuedTask.Run(() =>
+        {
+          //Get the layout
+          Layout lyt = lytItem.GetLayout();
+          if (layout != null)
+          {
+            //Change properties
+            CIMPage page = layout.GetPage();
+            page.Width = 8.5;
+            page.Height = 11;
+
+            //Apply the changes to the layout
+            layout.SetPage(page);
+          }
+        });
+      }
       #endregion
-
-
-      #region Remove a layout project item
-      //Remove a layout from the project completely
-      Project.Current.RemoveItem(layoutItem);
-      #endregion
-
     }
 
-    public void snippets_CreateLayoutElements()
+    async public void snippets_CreateLayoutElements()
     {
       LayoutView layoutView = LayoutView.Active;
       Layout layout = layoutView.Layout;
 
       #region Create point graphic with symbology
-
       //Create a simple 2D point graphic and apply an existing point style item as the symbology.
-      //An alternative simple symbol is also provided below.  This would completely elminate the 4 lines of code that reference a style.
 
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D point geometry  
         Coordinate2D coord2D = new Coordinate2D(2.0, 10.0);
 
-        //Reference a point symbol in a style
+        //(optionally) Reference a point symbol in a style
         StyleProjectItem ptStylePrjItm = Project.Current.GetItems<StyleProjectItem>().FirstOrDefault(item => item.Name == "ArcGIS 2D");
         SymbolStyleItem ptSymStyleItm = ptStylePrjItm.SearchSymbols(StyleItemType.PointSymbol, "City Hall")[0];
         CIMPointSymbol pointSym = ptSymStyleItm.Symbol as CIMPointSymbol;
         pointSym.SetSize(50);
 
         //Set symbolology, create and add element to layout
+
+        //An alternative simple symbol is also commented out below.  This would elminate the four 
+        //optional lines of code above that reference a style.
+
         //CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB, 25.0, SimpleMarkerStyle.Star);  //Alternative simple symbol
         GraphicElement ptElm = LayoutElementFactory.Instance.CreatePointGraphicElement(layout, coord2D, pointSym);
         ptElm.SetName("New Point");
@@ -204,12 +245,11 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Create line graphic with symbology
-
       //Create a simple 2D line graphic and apply an existing line style item as the symbology.
-      //An alternative simple symbol is also provided below.  This would completely elminate the 4 lines of code that reference a style.
 
-      QueuedTask.Run(() =>
-      { 
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
+      {
         //Build 2d line geometry
         List<Coordinate2D> plCoords = new List<Coordinate2D>();
         plCoords.Add(new Coordinate2D(1, 8.5));
@@ -218,13 +258,17 @@ namespace ProSnippetsTasks
         plCoords.Add(new Coordinate2D(3, 8.5));
         Polyline linePl = PolylineBuilder.CreatePolyline(plCoords);
 
-        //Reference a line symbol in a style
+        //(optionally) Reference a line symbol in a style
         StyleProjectItem lnStylePrjItm = Project.Current.GetItems<StyleProjectItem>().FirstOrDefault(item => item.Name == "ArcGIS 2D");
         SymbolStyleItem lnSymStyleItm = lnStylePrjItm.SearchSymbols(StyleItemType.LineSymbol, "Line with 2 Markers")[0];
         CIMLineSymbol lineSym = lnSymStyleItm.Symbol as CIMLineSymbol;
         lineSym.SetSize(20);
 
         //Set symbolology, create and add element to layout
+
+        //An alternative simple symbol is also commented out below.  This would elminate the four 
+        //optional lines of code above that reference a style.
+
         //CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.BlueRGB, 4.0, SimpleLineStyle.Solid);  //Alternative simple symbol
         GraphicElement lineElm = LayoutElementFactory.Instance.CreateLineGraphicElement(layout, linePl, lineSym);
         lineElm.SetName("New Line");
@@ -232,10 +276,10 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Create rectangle graphic with simple symbology
-
       //Create a simple 2D rectangle graphic and apply simple fill and outline symbols.
 
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D envelope geometry
         Coordinate2D rec_ll = new Coordinate2D(1.0, 4.75);
@@ -251,10 +295,10 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Create text element with basic font properties
-     
-      //Create a simple point text element and assign basic symbology as well as basic text settings.
+      //Create a simple point text element and assign basic symbology and text settings.
 
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D point geometry
         Coordinate2D coord2D = new Coordinate2D(3.5, 10);
@@ -274,10 +318,10 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Create rectangle text with more advanced symbol settings
+      //Create rectangle text with background and border symbology.  
 
-      //Create rectangle text with background and border symbology.  Also notice how formatting tags are using within the text string.
-
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D polygon geometry
         List<Coordinate2D> plyCoords = new List<Coordinate2D>();
@@ -290,6 +334,7 @@ namespace ProSnippetsTasks
         Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
 
         //Set symbolology, create and add element to layout
+        //Also notice how formatting tags are using within the text string.
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.GreyRGB, 10, "Arial", "Regular");
         string text = "Some Text String that is really long and is <BOL>forced to wrap to other lines</BOL> so that we can see the effects." as String;
         GraphicElement polyTxtElm = LayoutElementFactory.Instance.CreatePolygonParagraphGraphicElement(layout, poly, text, sym);
@@ -305,10 +350,10 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Create a new picture element with advanced symbol settings
-
       //Create a picture element and also set background and border symbology.
 
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D envelope geometry
         Coordinate2D pic_ll = new Coordinate2D(6, 1);
@@ -329,15 +374,16 @@ namespace ProSnippetsTasks
         cimPicGra.Frame.ShadowSymbol = new CIMSymbolReference();
         cimPicGra.Frame.ShadowSymbol.Symbol = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.BlackRGB, SimpleFillStyle.Solid);
 
+        //Update the element
         picElm.SetGraphic(picGra);
       });
       #endregion
 
       #region Create a map frame and zoom to a bookmark
+      //Create a map frame and set its camera by zooming to the extent of an existing bookmark.
 
-      //Create a map frame and also sets its extent by zooming the the extent of an existing bookmark.
-
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D envelope geometry
         Coordinate2D mf_ll = new Coordinate2D(6.0, 8.5);
@@ -356,11 +402,43 @@ namespace ProSnippetsTasks
       });
       #endregion
 
-      #region Create a legend for a specifc map frame
+      #region Apply a background color to a MapFrame element
+      //Apply a background color to the map frame element using the CIM.
 
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Get the layout
+        var myLayout = Project.Current.GetItems<LayoutProjectItem>()?.First().GetLayout();
+        if (myLayout == null) return;
+
+        //Get the map frame in the layout
+        MapFrame mapFrame = myLayout.FindElement("New Map Frame") as MapFrame;
+        if (mapFrame == null)
+        {
+          ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Map frame not found", "WARNING");
+          return;
+        }
+
+        //Get the map frame's definition in order to modify the background.
+        var mapFrameDefn = mapFrame.GetDefinition() as CIMMapFrame;
+
+        //Construct the polygon symbol to use to create a background
+        var polySymbol = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.BlueRGB, SimpleFillStyle.Solid);
+
+        //Set the background
+        mapFrameDefn.GraphicFrame.BackgroundSymbol = polySymbol.MakeSymbolReference();
+
+        //Set the map frame definition
+        mapFrame.SetDefinition(mapFrameDefn);
+      });
+      #endregion
+
+      #region Create a legend for a specific map frame
       //Create a legend for an associated map frame.
 
-      QueuedTask.Run(() =>
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Build 2D envelope geometry
         Coordinate2D leg_ll = new Coordinate2D(6, 2.5);
@@ -379,173 +457,163 @@ namespace ProSnippetsTasks
       });
       #endregion
 
-      #region Creating group elements
+      #region Creating empty group elements
       //Create an empty group element at the root level of the contents pane
-      //Note: call within QueuedTask.Run()
-      GroupElement grp1 = LayoutElementFactory.Instance.CreateGroupElement(layout);
-      grp1.SetName("Group");
+
+      //Create on worker thread
+      await QueuedTask.Run(() =>
+      {
+        GroupElement grp1 = LayoutElementFactory.Instance.CreateGroupElement(layout);
+        grp1.SetName("Group");
+      });
+
+      // *** or ***
 
       //Create a group element inside another group element
-      //Note: call within QueuedTask.Run()
-      GroupElement grp2 = LayoutElementFactory.Instance.CreateGroupElement(grp1);
-      grp2.SetName("Group in Group");
-      #endregion Creating group elements
 
+      //Find an existing group element
+      GroupElement existingGroup = layout.FindElement("Group") as GroupElement;
+      
+      //Create on worker thread
+      await QueuedTask.Run(() =>
       {
-        #region Create scale bar
-        Coordinate2D llScalebar = new Coordinate2D(6, 2.5);
-        MapFrame mapframe = layout.FindElement("New Map Frame") as MapFrame;
-        //Note: call within QueuedTask.Run()
-        LayoutElementFactory.Instance.CreateScaleBar(layout, llScalebar, mapframe);
-        #endregion
-      }
-        #region How to search for scale bars in a style
-        var arcgis_2d = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
-        QueuedTask.Run(() => {
-            var scaleBarItems = arcgis_2d.SearchScaleBars("Double Alternating Scale Bar");
-        });
+        GroupElement grp2 = LayoutElementFactory.Instance.CreateGroupElement(existingGroup);
+        grp2.SetName("Group in Group");
+      });
+      #endregion
 
-        #endregion
+      #region Create a group element with elements
+      //Create a group with a list of elements at the root level of the contents pane.
 
-        #region How to add a scale bar from a style to a layout
-        var arcgis_2dStyle = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
-            QueuedTask.Run(() =>
-        {
-            //Imperial Double Alternating Scale Bar
-            //Metric Double Alternating Scale Bar
-            //or just use empty string to list them all...
-            var scaleBarItem = arcgis_2d.SearchScaleBars("Double Alternating Scale Bar").FirstOrDefault();
-            Coordinate2D coord2D = new Coordinate2D(10.0, 7.0);
-            MapFrame myMapFrame = layout.FindElement("Map Frame") as MapFrame;
-            LayoutElementFactory.Instance.CreateScaleBar(layout, coord2D, myMapFrame, scaleBarItem);
-        });
-        #endregion
+      //Find an existing elements
+      Element scaleBar = layout.FindElement("Scale Bar") as Element;
+      Element northArrow = layout.FindElement("North Arrow") as Element;
+      Element legend = layout.FindElement("Legend") as Element;
 
-        #region Create NorthArrow
-        Coordinate2D llNorthArrow = new Coordinate2D(6, 2.5);
-        MapFrame mf = layout.FindElement("New Map Frame") as MapFrame;
-        //Note: call within QueuedTask.Run()
-        var northArrow = LayoutElementFactory.Instance.CreateNorthArrow(layout, llNorthArrow, mf);
-        #endregion
-     
-        #region How to search for North Arrows in a style
-        var arcgis_2dStyles = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
-        QueuedTask.Run(() => {
-            var scaleBarItems = arcgis_2dStyles.SearchNorthArrows("ArcGIS North 13");
-        });
-            #endregion
+      //Construct a list and add the elements
+      List<Element> elmList = new List<Element>
+      {
+        scaleBar,
+        northArrow,
+        legend
+      };
 
-            #region How to add a North Arrow from a style to a layout
-            var arcgis2dStyles = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
-            QueuedTask.Run(() => {
-                var northArrowStyleItem = arcgis2dStyles.SearchNorthArrows("ArcGIS North 13").FirstOrDefault();
-                Coordinate2D nArrow = new Coordinate2D(6, 2.5);
-                MapFrame newFrame = layout.FindElement("New Map Frame") as MapFrame;
-                //Note: call within QueuedTask.Run()
-                var newNorthArrow = LayoutElementFactory.Instance.CreateNorthArrow(layout, nArrow, newFrame, northArrowStyleItem);
-            });
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        GroupElement groupWithListOfElementsAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmList);
+        groupWithListOfElementsAtRoot.SetName("Group with list of elements at root");
+      });
 
-            #endregion
 
-            #region Create dynamic text
-            var title = @"<dyn type = ""page"" property = ""name"" />";
-        Coordinate2D llTitle = new Coordinate2D(6, 2.5);
-        //Note: call within QueuedTask.Run()
-        var titleGraphics = LayoutElementFactory.Instance.CreatePointTextGraphicElement(layout, llTitle, null) as TextElement;
+      // *** or ***
+
+
+      //Create a group using a list of element names at the root level of the contents pane.
+
+      //List of element names
+      var elmNameList = new[] { "Table Frame", "Chart Frame" };
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        GroupElement groupWithListOfElementNamesAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmNameList);
+        groupWithListOfElementNamesAtRoot.SetName("Group with list of element names at root");
+      });
+      #endregion
+
+      #region Create a scale bar using a style
+      //Create a scale bar using a style.
+
+      //Search for a style project item by name
+      StyleProjectItem arcgis_2dStyle = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
+
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference the specific scale bar by name 
+        ScaleBarStyleItem scaleBarItem = arcgis_2dStyle.SearchScaleBars("Double Alternating Scale Bar").FirstOrDefault();
+
+        //Reference the map frame and define the location
+        MapFrame myMapFrame = layout.FindElement("Map Frame") as MapFrame;
+        Coordinate2D coord2D = new Coordinate2D(10.0, 7.0);
+
+        //Construct the scale bar
+        LayoutElementFactory.Instance.CreateScaleBar(layout, coord2D, myMapFrame, scaleBarItem);
+      });
+      #endregion
+
+      #region Create a north arrow using a style
+      //Create a north arrow using a style.
+
+      //Search for a style project item by name
+      StyleProjectItem arcgis2dStyles = Project.Current.GetItems<StyleProjectItem>().First(si => si.Name == "ArcGIS 2D");
+      
+      //Construct on the worker thread
+      await QueuedTask.Run(() => 
+      {
+        NorthArrowStyleItem naStyleItem = arcgis2dStyles.SearchNorthArrows("ArcGIS North 13").FirstOrDefault();
+
+        //Reference the map frame and define the location
+        MapFrame newFrame = layout.FindElement("New Map Frame") as MapFrame;
+        Coordinate2D nArrow = new Coordinate2D(6, 2.5);
+        
+        //Construct the north arrow
+        var newNorthArrow = LayoutElementFactory.Instance.CreateNorthArrow(layout, nArrow, newFrame, naStyleItem);
+      });
+      #endregion
+
+      #region Create a dynamic text element
+      //Create a dynamic text element.
+
+      //Set the string with tags and the location
+      String title = @"<dyn type = ""page"" property = ""name"" />";
+      Coordinate2D llTitle = new Coordinate2D(6, 2.5);
+
+      //Construct element on worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Create with default text properties
+        TextElement titleGraphics = LayoutElementFactory.Instance.CreatePointTextGraphicElement(layout, llTitle, null) as TextElement;
+
+        //Modify the text properties
         titleGraphics.SetTextProperties(new TextProperties(title, "Arial", 24, "Bold"));
-        #endregion
- 
-
-        #region Create dynamic table
-
-        QueuedTask.Run(() =>
-        {
-          //Build 2D envelope geometry
-          Coordinate2D tab_ll = new Coordinate2D(6, 2.5);
-          Coordinate2D tab_ur = new Coordinate2D(12, 6.5);
-          Envelope tab_env = EnvelopeBuilder.CreateEnvelope(tab_ll, tab_ur);
-          MapFrame mapFrame = layout.FindElement("New Map Frame") as MapFrame;
-          // get the layer
-          MapProjectItem mapPrjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map"));
-          Map theMap = mapPrjItem?.GetMap();
-          var lyrs = theMap?.FindLayers("Inspection Point Layer", true);
-          if (lyrs?.Count > 0) {
-            Layer lyr = lyrs[0];
-            var table1 = LayoutElementFactory.Instance.CreateTableFrame(layout, tab_env, mapFrame, lyr, new string[] { "No", "Type", "Description" });
-          }
-        });        
-        #endregion
-    }
-
-    public void snippets_CIMChanges()
-    {
-      #region Change layout page size
-
-      //Get the project item
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
-      if (layoutItem != null)
-      {
-        QueuedTask.Run(() =>
-          {
-            //Get the layout
-            Layout layout = layoutItem.GetLayout();
-            if (layout != null)
-            {
-              //Change properties
-              CIMPage page = layout.GetPage();
-              page.Width = 8.5;
-              page.Height = 11;
-              layout.SetPage(page);
-            }
-          });
-      }
+      });
       #endregion
-    }
 
-    public void snippets_CIMSpatialMapSeries()
-    {
-      #region Create a Spatial Map Series for a Layout
+      #region Create a table frame
+      //Create a table frame.
 
-      //Get the project item
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
-      if (layoutItem != null)
+      //Construct on the worker thread
+      await QueuedTask.Run(() =>
       {
-        QueuedTask.Run(() =>
-        {
-          //Get the layout
-          Layout layout = layoutItem.GetLayout();
-          if (layout != null)
-          {
-            // Define CIMSpatialMapSeries in CIMLayout
-            CIMLayout layCIM = layout.GetDefinition();
+        //Build 2D envelope geometry
+        Coordinate2D rec_ll = new Coordinate2D(1.0, 3.5);
+        Coordinate2D rec_ur = new Coordinate2D(7.5, 4.5);
+        Envelope rec_env = EnvelopeBuilder.CreateEnvelope(rec_ll, rec_ur);
 
-            layCIM.MapSeries = new CIMSpatialMapSeries();
-            CIMSpatialMapSeries ms = layCIM.MapSeries as CIMSpatialMapSeries;
-            ms.Enabled = true;
-            ms.MapFrameName = "Railroad Map Frame";
-            ms.StartingPageNumber = 1;
-            ms.CurrentPageID = 1;
-            ms.IndexLayerURI = "CIMPATH=map/railroadmaps.xml";
-            ms.NameField = "ServiceAreaName";
-            ms.SortField = "SeqId";
-            ms.RotationField = "Angle";
-            ms.SortAscending = true;
-            ms.ScaleRounding = 1000;
-            ms.ExtentOptions = ExtentFitType.BestFit;
-            ms.MarginType = ArcGIS.Core.CIM.UnitType.Percent;
-            ms.Margin = 2;
+        //Reference map frame and layer
+        MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+        Map m = mf.Map;
+        FeatureLayer lyr = m.FindLayers("GreatLakes").First() as FeatureLayer;
 
-            layout.SetDefinition(layCIM);
-          }
-        });
-      }
-      #endregion
+        //Build fields list
+        var fields = new[] { "NAME", "Shape_Area", "Shape_Length" };
+
+        //Construct the table frame
+        TableFrame tabFrame = LayoutElementFactory.Instance.CreateTableFrame(layout, rec_env, mf, lyr, fields);
+      });
+      #endregion        
     }
+
+    
 
     public void snippets_elements()
     {
       #region Find an element on a layout
-      // Reference a layoutitem in a project by name
+      //Find and element on a layout.
+
+      // Reference a layout project item by name
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
       if (layoutItem != null)
       {
@@ -567,6 +635,9 @@ namespace ProSnippetsTasks
 
       Element element = null;
       #region Update element properties
+      //Update an element's properties.
+
+      //Performed on worker thread
       QueuedTask.Run(() =>
       {
         // update an element's name
@@ -575,9 +646,11 @@ namespace ProSnippetsTasks
         // update and element's visibility
         element.SetVisible(true);
       });
-      #endregion
+      #endregion 
       {
         #region Get element selection count
+        //Get element's selection count.
+
         //Count the number of selected elements on the active layout view
         LayoutView activeLayoutView = LayoutView.Active;
         if (activeLayoutView != null)
@@ -589,23 +662,32 @@ namespace ProSnippetsTasks
       }
       {
         #region Set element selection
-        //The the active layout view's selection to include 2 rectangle elements
+        //Set the active layout view's selection to include 2 rectangle elements.
+
+        //Reference the active view 
         LayoutView activeLayoutView = LayoutView.Active;
         if (activeLayoutView != null)
         {
+
+          //Perform on the worker thread
           QueuedTask.Run(() =>
           {
+
+            //Reference the layout
             Layout lyt = activeLayoutView.Layout;
 
+            //Reference the two rectangle elements
             Element rec = lyt.FindElement("Rectangle");
             Element rec2 = lyt.FindElement("Rectangle 2");
 
+            //Construct a list and add the elements
             List<Element> elmList = new List<Element>
             {
               rec,
               rec2
             };
 
+            //Set the selection
             activeLayoutView.SelectElements(elmList);
           });
         }
@@ -613,7 +695,9 @@ namespace ProSnippetsTasks
       }
       {
         #region Clear the layout selection
-        //If the a layout view is active, the clear its selection
+        //Clear the layout selection.
+
+        //If the a layout view is active, clear its selection
         LayoutView activeLayoutView = LayoutView.Active;
         if (activeLayoutView != null)
         {          
@@ -624,7 +708,9 @@ namespace ProSnippetsTasks
       Layout aLayout = null;
       Element elm = null;
       #region Delete an element or elements on a layout
+      //Delete an element or elements on a layout.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         //Delete a specific element on a layout
@@ -636,41 +722,52 @@ namespace ProSnippetsTasks
         //Or delete all elements on a layout
         aLayout.DeleteElements(item => true);
       });
-            #endregion
-            #region Set Halo property of North Arrow
-            //Assuming the selected item is a north arrow
-            var northArrow = LayoutView.Active.GetSelectedElements().First();
-            QueuedTask.Run(() =>
-            {
-                //Get definition of north arrow...
-                var cim = northArrow.GetDefinition() as CIMMarkerNorthArrow;
-                //this halo symbol is 50% transparent, no outline (i.e. 0 width)
-                //First construct a polygon symbol to use in the Halo
-                //Polygon symbol will need a fill and a stroke
-                var polyFill = SymbolFactory.Instance.ConstructSolidFill(ColorFactory.Instance.CreateRGBColor(0, 0, 0, 50));
-                var polyStroke = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 0);
-                var haloPoly = SymbolFactory.Instance.ConstructPolygonSymbol(polyFill, polyStroke);
-                //Set the north arrow defintion of HaloSymbol and HaloSize 
-                ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSymbol = haloPoly;
-                ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSize = 3;//size of the halo
-                                                                      //set it back
-                northArrow.SetDefinition(cim);
-            });
-            #endregion
+      #endregion
+      
+      #region Set halo property of north arrow
+      //Set the CIM halo properties of a north arrow.
 
-        }
+      //Reference the first selected element (assumption is it is a north arrow)
+      Element northArrow = LayoutView.Active.GetSelectedElements().First();
 
-        public void snippets_UpdateElements()
+      //Perform on the worker thread
+      QueuedTask.Run(() =>
+      {
+        //Get definition of north arrow...
+        var cim = northArrow.GetDefinition() as CIMMarkerNorthArrow;
+        
+        //this halo symbol is 50% transparent, no outline (i.e. 0 width)
+        //First construct a polygon symbol to use in the Halo
+        //Polygon symbol will need a fill and a stroke
+        var polyFill = SymbolFactory.Instance.ConstructSolidFill(ColorFactory.Instance.CreateRGBColor(0, 0, 0, 50));
+        var polyStroke = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 0);
+        var haloPoly = SymbolFactory.Instance.ConstructPolygonSymbol(polyFill, polyStroke);
+        
+        //Set the north arrow defintion of HaloSymbol and HaloSize 
+        ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSymbol = haloPoly;
+        ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSize = 3;//size of the halo
+          
+        //Apply the CIM changes back to the element
+        northArrow.SetDefinition(cim);
+      });
+      #endregion
+
+    }
+
+    public void snippets_UpdateElements()
     {
       double x = 0;
       double y = 0;
 
-      #region Update Text Element properties
+      #region Update text element properties
+      //Update text element properties for an existing text element.
 
       // Reference a layoutitem in a project by name
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
       if (layoutItem != null)
       {
+
+        //Perform on the worker thread
         QueuedTask.Run(() =>
         {
           // Reference and load the layout associated with the layout item
@@ -696,7 +793,9 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Update a picture element
+      //Update a picture element.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         // Reference and load the layout associated with the layout item
@@ -713,7 +812,9 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Update a map surround
+      //Update a map surround.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         // Reference and load the layout associated with the layout item
@@ -734,11 +835,10 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Lock an element
-
       // The Locked property is displayed in the TOC as a lock symbol next to each element.  
-      // If locked the element can't be selected in the layout using the graphic 
-      // selection tools.
+      // If locked the element can't be selected in the layout using the graphic selection tools.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         // Reference and load the layout associated with the layout item
@@ -760,7 +860,9 @@ namespace ProSnippetsTasks
       #endregion
 
       #region Update an elements transparency
+      //Update an element's transparency using the CIM.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         // Reference and load the layout associated with the layout item
@@ -783,19 +885,21 @@ namespace ProSnippetsTasks
       double xOffset = 0;
       double yOffset = 0;
       #region Clone an element
+      //Clone a layout graphic element and apply an offset.
 
+      //Perform on the worker thread
       QueuedTask.Run(() =>
       {
         // Reference and load the layout associated with the layout item
         Layout layout = layoutItem.GetLayout();
         if (layout != null)
         {
-          // Reference a element by name
+          // Reference a graphic element by name
           GraphicElement graphicElement = layout.FindElement("MyElement") as GraphicElement;
           if (graphicElement != null)
           {
 
-            // clone and set the new x,y
+            //Clone and set the new x,y
             GraphicElement cloneElement = graphicElement.Clone("Clone");
             cloneElement.SetX(cloneElement.GetX() + xOffset);
             cloneElement.SetY(cloneElement.GetY() + yOffset);
@@ -805,238 +909,337 @@ namespace ProSnippetsTasks
       #endregion
     }
 
-    public void snippets_MapFrame()
+    async public void snippets_MapFrame()
     {
-      #region Access map frame and map bookmarks from Layout
+      Layout layout = LayoutView.Active.Layout;
 
-      // Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
-      if (layoutItem != null)
+      #region Change the map associated with a map frame
+      //Change the map associated with a map frame
+
+      //Reference a map frame on a layout
+      MapFrame mfrm = layout.FindElement("Map Frame") as MapFrame;
+
+      //Peform on worker thread
+      await QueuedTask.Run(() =>
       {
-        QueuedTask.Run(() =>
+        //Reference map from the project item 
+        Map map = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(m => m.Name.Equals("Map1")).GetMap();
+
+        //Set the map to the map frame
+        mfrm.SetMap(map);
+      });
+
+      #endregion
+
+      #region Change map frame camera settings
+      //Change a map frame's camera settings.
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference MapFrame
+        MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+
+        //Reference the camera associated with the map frame and change the scale
+        Camera cam = mf.Camera;
+        cam.Scale = 100000;
+
+        //Set the map frame extent based on the new camera info
+        mf.SetCamera(cam);
+      });
+      #endregion
+
+      #region Zoom map frame to extent of a single layer
+      //Zoom map frame to the extent of a single layer.
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference MapFrame
+        MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+
+        //Reference map and layer
+        Map m = mf.Map;
+        FeatureLayer lyr = m.FindLayers("GreatLakes").First() as FeatureLayer;
+
+        //Set the map frame extent to all features in the layer
+        mf.SetCamera(lyr, false);
+      });
+      #endregion
+
+      #region Change map frame extent to selected features in multiple layers
+      //Change the extent of a map frame to the selected features multiple layers.
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference MapFrame
+        MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+
+        //Reference map, layers and create layer list
+        Map m = mf.Map;
+        FeatureLayer fl_1 = m.FindLayers("GreatLakes").First() as FeatureLayer;
+        FeatureLayer fl_2 = m.FindLayers("States_WithRegions").First() as FeatureLayer;
+        var layers = new[] { fl_1, fl_2 };
+        //IEnumerable<Layer> layers = m.Layers;  //This creates a list of ALL layers in map.
+
+        //Set the map frame extent to the selected features in the list of layers
+        mf.SetCamera(layers, true);
+      });
+      #endregion
+
+      #region Change map frame extent to single feature with 15 percent buffer
+      //Change map frame extent to single feature with 10 percent buffer
+
+      //Process on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference the mapframe and its associated map
+        MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+        Map m = mf.Map;
+
+        //Reference a feature layer and build a query (to return a single feature)
+        FeatureLayer fl = m.FindLayers("GreatLakes").First() as FeatureLayer;
+        QueryFilter qf = new QueryFilter();
+        string whereClause = "NAME = 'Lake Erie'";
+        qf.WhereClause = whereClause;
+
+        //Zoom to the feature
+        using (ArcGIS.Core.Data.RowCursor rowCursor = fl.Search(qf))
         {
-          // Reference and load the layout associated with the layout item
-          Layout layout = layoutItem.GetLayout();
-          if (layout == null)
-            return;
+          while (rowCursor.MoveNext())
+          {
+            //Get the shape from the row and set extent
+            ArcGIS.Core.Data.Feature feature = rowCursor.Current as ArcGIS.Core.Data.Feature;
+            Polygon polygon = feature.GetShape() as Polygon;
+            Envelope env = polygon.Extent as Envelope;
+            mf.SetCamera(env);
 
-          // Reference a mapframe by name
-          MapFrame mf = layout.Elements.FirstOrDefault(item => item.Name.Equals("MapFrame")) as MapFrame;
-          if (mf == null)
-            return;
+            //Zoom out 15 percent
+            Camera cam = mf.Camera;
+            cam.Scale = cam.Scale * 1.15;
+            mf.SetCamera(cam);
+          }
+        }
+      });
+      #endregion
+    }
 
-          // get the map and the bookmarks
-          Bookmark bookmark = mf.Map.GetBookmarks().FirstOrDefault(b => b.Name == "Great Lakes");
-          if (bookmark == null)
-            return;
+    async public void snippets_MapSeries()
+    {
+      Layout layout = LayoutView.Active.Layout;
 
-          // Set up a PDF format and set its properties
-          PDFFormat PDF = new PDFFormat();
-          String path = String.Format(@"C:\Temp\{0}.pdf", bookmark.Name);
-          PDF.OutputFileName = path;
+      #region Modify an existing map series
+      //Modify the currently active map series and changes its sort field and page number field.
 
-          // Zoom to the bookmark 
-          mf.SetCamera(bookmark);
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        SpatialMapSeries SMS = layout.MapSeries as SpatialMapSeries; //cast as spatial map seris for additional members
+        SMS.SortField = "State_Name";
+        SMS.SortAscending = true;
+        SMS.PageNumberField = "PageNum";
 
-          // Export to PDF
-          if (PDF.ValidateOutputFilePath())
-              mf.Export(PDF);
-        });
+        //Overwrite the current map series with these new settings
+        layout.SetMapSeries(SMS); 
+      });
+      #endregion
+
+      #region Create a new spatial map series
+      // This example create a new spatial map series and then applies it to the active layout. This will automatically 
+      // overwrite an existing map series if one is already present.
+
+      //Reference map frame and index layer
+      MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+      Map m = mf.Map;
+      BasicFeatureLayer indexLyr = m.FindLayers("Countries").FirstOrDefault() as BasicFeatureLayer;
+
+      //Construct map series on worker thread
+      await QueuedTask.Run(() =>
+      {
+        //SpatialMapSeries constructor - required parameters
+        SpatialMapSeries SMS = MapSeries.CreateSpatialMapSeries(layout, mf, indexLyr, "Name");
+        
+        //Set optional, non-default values
+        SMS.CategoryField = "Continent";
+        SMS.SortField = "Population";
+        SMS.ExtentOptions = ExtentFitType.BestFit;
+        SMS.MarginType = ArcGIS.Core.CIM.UnitType.PageUnits;
+        SMS.MarginUnits = ArcGIS.Core.Geometry.LinearUnit.Centimeters;
+        SMS.Margin = 1;
+        SMS.ScaleRounding = 1000;
+        layout.SetMapSeries(SMS);  //Overwrite existing map series.
+      });
+      #endregion
+    }
+
+    async public void snippets_StandardExport()
+    {
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
+      Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
+      String filePath = null;
+
+      #region Export a layout to PDF
+      //Export a single page layout to PDF.
+
+      //Create a PDF format with appropriate settings
+      //BMP, EMF, EPS, GIF, JPEG, PNG, SVG, TGA, and TFF formats are also available for export
+      PDFFormat PDF = new PDFFormat()
+      {
+        OutputFileName = filePath,
+        Resolution = 300,
+        DoCompressVectorGraphics = true,
+        DoEmbedFonts = true,
+        HasGeoRefInfo = true,
+        ImageCompression = ImageCompression.Adaptive,
+        ImageQuality = ImageQuality.Best,
+        LayersAndAttributes = LayersAndAttributes.LayersAndAttributes
+      };
+
+      //Check to see if the path is valid and export
+      if (PDF.ValidateOutputFilePath())
+      {
+        await QueuedTask.Run(() => layout.Export(PDF));  //Export the layout to PDF on the worker thread
       }
       #endregion
 
-    }
+      #region Export a map frame to JPG
+      //Export a map frame to JPG.
 
-    public void snippets_exportLayout()
-    {
-      #region Export a layout
-
-      // Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
-      if (layoutItem != null)
+      //Create JPEG format with appropriate settings
+      //BMP, EMF, EPS, GIF, PDF, PNG, SVG, TGA, and TFF formats are also available for export
+      JPEGFormat JPG = new JPEGFormat()
       {
-        QueuedTask.Run(() =>
-        {
-          Layout layout = layoutItem.GetLayout();
-          if (layout == null)
-            return;
+        HasWorldFile = true,
+        Resolution = 300,
+        OutputFileName = filePath,
+        JPEGColorMode = JPEGColorMode.TwentyFourBitTrueColor,
+        Height = 800,
+        Width = 1200
+      };
 
-          // Create BMP format with appropriate settings
-          BMPFormat BMP = new BMPFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.bmp"
-          };
+      //Reference the map frame
+      MapFrame mf = layout.FindElement("MyMapFrame") as MapFrame;
+
+      //Export on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Check to see if the path is valid and export
+        if (JPG.ValidateOutputFilePath())
+        {
+          mf.Export(JPG);  //Export the map frame to JPG
+        }
+      });
+      #endregion
+
+      #region Export the map view associated with a map frame to BMP
+      //Export the map view associated with a map frame to BMP.
+
+      //Create BMP format with appropriate settings
+      //EMF, EPS, GIF, JPEG, PDF, PNG, SVG, TGA, and TFF formats are also available for export
+      BMPFormat BMP = new BMPFormat()
+      {
+        Resolution = 300,
+        Height = 500,
+        Width = 800,
+        HasWorldFile = true,
+        OutputFileName = filePath
+      };
+
+      //Reference the active layout view
+      LayoutView lytView = LayoutView.Active;
+
+      //Reference the map frame and its map view
+      MapFrame mf_bmp = layout.FindElement("Map Frame") as MapFrame;
+      MapView mv_bmp = mf_bmp.GetMapView(lytView);
+
+      if (mv_bmp != null)
+      {
+        //Export on the worker thread
+        await QueuedTask.Run(() =>
+        {
+
+          //Check to see if the path is valid and export
           if (BMP.ValidateOutputFilePath())
           {
-            layout.Export(BMP);
-          }
-
-          // Create EMF format with appropriate settings
-          EMFFormat EMF = new EMFFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.emf"
-          };
-          if (EMF.ValidateOutputFilePath())
-          {
-            layout.Export(EMF);
-          }
-
-          // create eps format with appropriate settings
-          EPSFormat EPS = new EPSFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.eps"
-          };
-          if (EPS.ValidateOutputFilePath())
-          {
-            layout.Export(EPS);
-          }
-
-          // Create GIF format with appropriate settings
-          GIFFormat GIF = new GIFFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.gif"
-          };
-          if (GIF.ValidateOutputFilePath())
-          {
-            layout.Export(GIF);
-          }
-
-          // Create JPEG format with appropriate settings
-          JPEGFormat JPEG = new JPEGFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.jpg"
-          };
-          if (JPEG.ValidateOutputFilePath())
-          {
-            layout.Export(JPEG);
-          }
-
-          // Create PDF format with appropriate settings
-          PDFFormat PDF = new PDFFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.pdf"
-          };
-          if (PDF.ValidateOutputFilePath())
-          {
-            layout.Export(PDF);
-          }
-
-          // Create PNG format with appropriate settings
-          PNGFormat PNG = new PNGFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.png"
-          };
-          if (PNG.ValidateOutputFilePath())
-          {
-            layout.Export(PNG);
-          }
-
-          // Create SVG format with appropriate settings
-          SVGFormat SVG = new SVGFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.svg"
-          };
-          if (SVG.ValidateOutputFilePath())
-          {
-            layout.Export(SVG);
-          }
-
-          // Create TGA format with appropriate settings
-          TGAFormat TGA = new TGAFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.tga"
-          };
-          if (TGA.ValidateOutputFilePath())
-          {
-            layout.Export(TGA);
-          }
-
-          // Create TIFF format with appropriate settings
-          TIFFFormat TIFF = new TIFFFormat()
-          {
-            Resolution = 300,
-            OutputFileName = @"C:\temp\Layout.tif"
-          };
-          if (TIFF.ValidateOutputFilePath())
-          {
-            layout.Export(TIFF);
+            mv_bmp.Export(BMP);  //Export to BMP
           }
         });
       }
       #endregion
     }
 
-    public void snippets_Export()
+    async public void snippets_Export()
     {
-      #region Export a map frame 
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
+      Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
+      String filePath = null;
 
-      // Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
-      if (layoutItem != null)
+      #region Export a map series to single PDF
+      //Export a map series with multiple pages to a single PDF.
+
+      //Create PDF format with appropriate settings
+      PDFFormat MS_PDF = new PDFFormat()
       {
-        QueuedTask.Run(() =>
+        OutputFileName = filePath,
+        Resolution = 300,
+        DoCompressVectorGraphics = true,
+        DoEmbedFonts = true,
+        HasGeoRefInfo = true,
+        ImageCompression = ImageCompression.Adaptive,
+        ImageQuality = ImageQuality.Best,
+        LayersAndAttributes = LayersAndAttributes.LayersAndAttributes
+      };
+
+      //Set up map series export options
+      MapSeriesExportOptions MS_ExportOptions = new MapSeriesExportOptions()
+      {
+        ExportPages = ExportPages.Custom,  //Provide a specific list of pages
+        CustomPages = "1-3, 5",  //Only used if ExportPages.Custom is set
+        ExportFileOptions = ExportFileOptions.ExportAsSinglePDF,  //Export all pages to a single, multi-page PDF
+        ShowSelectedSymbology = false  //Do no show selection symbology in the output
+      };
+
+      //Export on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Check to see if the path is valid and export
+        if (MS_PDF.ValidateOutputFilePath())
         {
-          // get the layout 
-          Layout layout = layoutItem.GetLayout();
-          if (layout == null)
-            return;
-
-          // get the map frame
-          MapFrame mf = layout.FindElement("MyMapFrame") as MapFrame;
-
-          if (mf != null)
-          {
-            // Create BMP format with appropriate settings
-            BMPFormat BMP = new BMPFormat()
-            {
-              HasWorldFile = true,
-              Resolution = 300,
-              OutputFileName = @"C:\temp\MapFrame.bmp"
-            };
-            if (BMP.ValidateOutputFilePath())
-            {
-              mf.Export(BMP);
-            }
-
-            // emf, eps, gif, jpeg, pdf, png, svg, tga, tiff formats are also available for export
-          }
-        });
-      }
-
+          layout.Export(MS_PDF, MS_ExportOptions);  //Export to PDF
+        }
+      });
       #endregion
 
-      #region Export the active Mapview
-      QueuedTask.Run(() =>
+      #region Export a map series to individual TIFF files
+      //Export each page of a map series to an individual TIFF file.
+
+      //Create TIFF format with appropriate settings
+      TIFFFormat TIFF = new TIFFFormat()
       {
-        MapView activeMapView = MapView.Active;
-        if (activeMapView != null)
+        OutputFileName = filePath,
+        Resolution = 300,
+        ColorMode = ColorMode.TwentyFourBitTrueColor,
+        HasGeoTiffTags = true,
+        HasWorldFile = true,
+        TIFFImageCompression = TIFFImageCompression.LZW
+      };
+
+      //Set up map series export options
+      MapSeriesExportOptions MSExportOptions_TIFF = new MapSeriesExportOptions()
+      {
+        ExportPages = ExportPages.All,  //All pages
+        ExportFileOptions = ExportFileOptions.ExportMultipleNames,  //Export each page to an individual file using page name as a suffix.
+        ShowSelectedSymbology = true  //Include selection symbology in the output
+      };
+
+      //Export on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Check to see if the path is valid and export
+        if (TIFF.ValidateOutputFilePath())
         {
-          //Create BMP format with appropriate settings
-          BMPFormat bmp = new BMPFormat()
-          {
-            Resolution = 300,
-            Height = 500,
-            Width = 800,
-            HasWorldFile = true,
-            OutputFileName = @"C:\temp\MapView.bmp"
-          };
-
-          //Export active map view
-          if (bmp.ValidateOutputFilePath())
-          {
-            activeMapView.Export(bmp);
-          }
-
-          // emf, eps, gif, jpeg, pdf, png, svg, tga, tiff formats also available for export
+          layout.Export(TIFF, MSExportOptions_TIFF);  //Export to TIFF
         }
       });
       #endregion

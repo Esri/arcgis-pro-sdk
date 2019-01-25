@@ -31,9 +31,10 @@ namespace SDKExamples
       try
       {
         // TODO - substitute your own .esriTasks file to be opened
-        System.Guid guid = await TaskAssistantModule.OpenTaskAsync(@"c:\Tasks\Get Started.esriTasks");
-        
-        // TODO - retain the guid returned for use with CloseTaskAsync 
+        string taskFile = @"c:\Tasks\Get Started.esriTasks";
+        System.Guid guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
+
+        // TODO - retain the guid returned for use with CloseTaskAsync
       }
       catch (OpenTaskException e)
       {

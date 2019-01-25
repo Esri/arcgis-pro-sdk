@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using ArcGIS.Desktop.TaskAssistant;
 using ArcGIS.Desktop.TaskAssistant.Events;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
 
 namespace ProSnippetsTasks 
 {
@@ -46,7 +47,8 @@ namespace ProSnippetsTasks
       try
       {
         // TODO - substitute your own .esriTasks file to be opened
-        System.Guid guid = await TaskAssistantModule.OpenTaskAsync(@"c:\Tasks\Get Started.esriTasks");
+        string taskFile = @"c:\Tasks\Get Started.esriTasks";
+        System.Guid guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
 
         // TODO - retain the guid returned for use with CloseTaskAsync
       }
@@ -107,7 +109,8 @@ namespace ProSnippetsTasks
       try
       {
         // export the task item to the c:\Temp folder
-        string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, @"c:\temp");
+        string exportFolder = @"c:\temp";
+        string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, exportFolder);
         ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Task saved to " + fileName);
       }
       catch (ExportTaskException e)
@@ -117,9 +120,60 @@ namespace ProSnippetsTasks
       #endregion Export a Task Item
     }
 
-    public async void GetTaskItemInfo()
+    public async void GetTaskItemInfo_ProjectItem()
     {
-      #region Get Task Item Information (.esriTasks file)
+      #region Get Task Information (TaskProjectItem)
+
+      var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
+      // if there isn't a project task item, return
+      if (taskItem == null)
+        return;
+
+      string message = await QueuedTask.Run(async () =>
+      {
+        bool isOpen = taskItem.IsOpen;
+        Guid taskGuid = taskItem.TaskItemGuid;
+
+        string msg = "";
+        try
+        {
+          TaskItemInfo taskItemInfo = await taskItem.GetTaskItemInfoAsync();
+
+          msg = "Name : " + taskItemInfo.Name;
+          msg += "\r\n" + "Description : " + taskItemInfo.Description;
+          msg += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
+          msg += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
+
+          // iterate the tasks in the task item
+          IEnumerable<TaskInfo> taskInfos = taskItemInfo.GetTasks();
+          foreach (TaskInfo taskInfo in taskInfos)
+          {
+            string name = taskInfo.Name;
+            Guid guid = taskInfo.Guid;
+
+            // do something 
+          }
+        }
+        catch (OpenTaskException e)
+        {
+          // exception thrown if task file doesn't exist or has incorrect format
+          msg = e.Message;
+        }
+        catch (TaskFileVersionException e)
+        {
+          // exception thrown if task file does not support returning task information
+          msg = e.Message;
+        }
+        return msg;
+      });
+
+      ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
+      #endregion
+    }
+
+    public async void GetTaskItemInfo_EsriTasksFile()
+    { 
+      #region Get Task Information (.esriTasks file)
 
       // TODO - substitute your own .esriTasks file
       string taskFile = @"c:\Tasks\Get Started.esriTasks";
@@ -134,17 +188,17 @@ namespace ProSnippetsTasks
         message += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
         message += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
 
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Item Information");
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
       }
       catch (OpenTaskException e)
       {
         // exception thrown if task file doesn't exist or has incorrect format
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
       }
       catch (TaskFileVersionException e)
       {
         // exception thrown if task file does not support returning task information
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
       }
       #endregion Get Task item information
     }
@@ -194,42 +248,42 @@ namespace ProSnippetsTasks
     #region Subscribe to Task Events
     public void TaskEvents()
     {
-        TaskStartedEvent.Subscribe(OnTaskStarted);
-        TaskEndedEvent.Subscribe(OnTaskCompletedOrCancelled);
+      TaskStartedEvent.Subscribe(OnTaskStarted);
+      TaskEndedEvent.Subscribe(OnTaskCompletedOrCancelled);
     }
 
     private void OnTaskStarted(TaskStartedEventArgs args)
     {
-        string userName = args.UserID;    // ArcGIS Online signed in userName.  If not signed in to ArcGIS Online then returns the name of the user logged in to the Windows OS.
-        string projectName = args.ProjectName;
+      string userName = args.UserID;    // ArcGIS Online signed in userName.  If not signed in to ArcGIS Online then returns the name of the user logged in to the Windows OS.
+      string projectName = args.ProjectName;
 
-        Guid taskItemGuid = args.TaskItemGuid;
-        string taskItemName = args.TaskItemName;
-        string taskItemVersion = args.TaskItemVersion;
+      Guid taskItemGuid = args.TaskItemGuid;
+      string taskItemName = args.TaskItemName;
+      string taskItemVersion = args.TaskItemVersion;
 
-        Guid taskGuid = args.TaskGuid;
-        string taskName = args.TaskName;
+      Guid taskGuid = args.TaskGuid;
+      string taskName = args.TaskName;
 
-        DateTime startTime = args.StartTime;
+      DateTime startTime = args.StartTime;
     }
 
     private void OnTaskCompletedOrCancelled(TaskEndedEventArgs args)
     {
-        string userName = args.UserID;    // ArcGIS Online signed in userName.  If not signed in to ArcGIS Online then returns the name of the user logged in to the Windows OS.
-        string projectName = args.ProjectName;
+      string userName = args.UserID;    // ArcGIS Online signed in userName.  If not signed in to ArcGIS Online then returns the name of the user logged in to the Windows OS.
+      string projectName = args.ProjectName;
 
-        Guid taskItemGuid = args.TaskItemGuid;
-        string taskItemName = args.TaskItemName;
-        string taskItemVersion = args.TaskItemVersion;
+      Guid taskItemGuid = args.TaskItemGuid;
+      string taskItemName = args.TaskItemName;
+      string taskItemVersion = args.TaskItemVersion;
 
-        Guid taskGuid = args.TaskGuid;
-        string taskName = args.TaskName;
+      Guid taskGuid = args.TaskGuid;
+      string taskName = args.TaskName;
 
-        DateTime startTime = args.StartTime;
-        DateTime endTime = args.EndTime;
-        double duration = args.Duration;
+      DateTime startTime = args.StartTime;
+      DateTime endTime = args.EndTime;
+      double duration = args.Duration;
 
-        bool completed = args.Completed;    // completed or cancelled
+      bool completed = args.Completed;    // completed or cancelled
     }
       #endregion
   }

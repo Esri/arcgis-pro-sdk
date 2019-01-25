@@ -120,12 +120,11 @@ namespace UtilityNetworkProSnippets
     {
       // Get the table from the element
       using (Table table = utilityNetwork.GetTable(element.NetworkSource))
-      using (TableDefinition tableDefinition = table.GetDefinition())
       {
         // Create a query filter to fetch the appropriate row
         QueryFilter queryFilter = new QueryFilter()
         {
-          WhereClause = String.Format("{0} = '{1}'", tableDefinition.GetGlobalIDField(), element.GlobalID.ToString().ToUpper())
+          ObjectIDs = new List<long>() { element.ObjectID }
         };
 
         // Fetch and return the row
@@ -162,12 +161,7 @@ namespace UtilityNetworkProSnippets
 
       using (SubnetworkManager subnetworkManager = utilityNetwork.GetSubnetworkManager())
       {
-        IReadOnlyList<Subnetwork> subnetworks = subnetworkManager.GetSubnetworks(tier, SubnetworkStates.Dirty | SubnetworkStates.DirtyAndDeleted);
-
-        foreach (Subnetwork subnetwork in subnetworks)
-        {
-          subnetwork.Update();
-        }
+        subnetworkManager.UpdateAllSubnetworks(tier, true);
 
         mapView.Redraw(true);
       }
@@ -271,7 +265,7 @@ namespace UtilityNetworkProSnippets
       using (NetworkAttribute shapeLengthNetworkAttribute = utilityNetworkDefinition.GetNetworkAttribute("Shape length"))
       {
         // Create a function that adds up shape length
-        Function lengthFunction = new Add(shapeLengthNetworkAttribute);
+        Add lengthFunction = new Add(shapeLengthNetworkAttribute);
 
         // Create a function barrier that stops traversal after 1000 feet
         FunctionBarrier distanceBarrier = new FunctionBarrier(lengthFunction, Operator.GreaterThan, 1000.0);

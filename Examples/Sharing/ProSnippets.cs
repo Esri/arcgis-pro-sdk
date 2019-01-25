@@ -71,7 +71,7 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
-      #region ArcGISPortalManager:Listen for the Portal Events
+      #region ArcGISPortalManager: Listen for the Portal Events
 
       ArcGIS.Desktop.Core.Events.ActivePortalChangedEvent.Subscribe((args) =>
       {

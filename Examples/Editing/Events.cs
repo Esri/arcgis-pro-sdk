@@ -21,7 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ArcGIS.Core.Data;
+using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
 using ArcGIS.Desktop.Editing.Events;
 using ArcGIS.Desktop.Framework;
@@ -65,16 +66,95 @@ namespace EditingSDKExamples
         var layerTable = featLayer.GetTable();
 
         //subscribe to row events
-        var rowCreateToken = RowCreatedEvent.Subscribe(onRowEvent, layerTable);
-        var rowChangeToken = RowChangedEvent.Subscribe(onRowEvent, layerTable);
-        var rowDeleteToken = RowDeletedEvent.Subscribe(onRowEvent, layerTable);
+        var rowCreateToken = RowCreatedEvent.Subscribe(OnRowCreated, layerTable);
+        var rowChangeToken = RowChangedEvent.Subscribe(OnRowChanged, layerTable);
+        var rowDeleteToken = RowDeletedEvent.Subscribe(OnRowDeleted, layerTable);
       });
     }
 
-    protected void onRowEvent(RowChangedEventArgs args)
+    protected void OnRowCreated(RowChangedEventArgs args)
     {
-      Console.WriteLine("RowChangedEvent " + args.EditType.ToString());
+      // RowEvent callbacks are always called on the QueuedTask so there is no need 
+      // to wrap your code within a QueuedTask.Run lambda.
+
+      // update a separate table when a row is created
+      // You MUST use the ArcGIS.Core.Data API to edit the table. Do NOT
+      // use a new edit operation in the RowEvent callbacks
+      try
+      {
+        // update Notes table with information about the new feature
+        var geoDatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(Project.Current.DefaultGeodatabasePath)));
+        var table = geoDatabase.OpenDataset<Table>("Notes");
+        var tableDefinition = table.GetDefinition();
+        using (var rowbuff = table.CreateRowBuffer())
+        {
+          // add a description
+          rowbuff["Description"] = "OID: " + args.Row.GetObjectID().ToString() + " " + DateTime.Now.ToShortTimeString();
+          table.CreateRow(rowbuff);
+        }
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show($@"Error in OnRowCreated for OID: {args.Row.GetObjectID()} : {e.ToString()}");
+      }
+    }
+
+
+    private Guid _currentRowChangedGuid = Guid.Empty;
+
+    protected void OnRowChanged(RowChangedEventArgs args)
+    {
+      // RowEvent callbacks are always called on the QueuedTask so there is no need 
+      // to wrap your code within a QueuedTask.Run lambda.
+
+      var row = args.Row;
+
+      // check for re-entry  (only if row.Store is called)
+      if (_currentRowChangedGuid == args.Guid)
+        return;
+
+      var fldIdx = row.FindField("POLICE_DISTRICT");
+      if (fldIdx != -1)
+      {
+        //Validate any change to “police district”
+        //   cancel the edit if validation on the field fails
+        if (row.HasValueChanged(fldIdx))
+        {
+          if (FailsValidation(row["POLICE_DISTRICT"].ToString()))
+          {
+            //Cancel edits with invalid “police district” values
+            args.CancelEdit($"Police district {row["POLICE_DISTRICT"]} is invalid");
+          }
+        }
+
+        // update the description field
+        row["Description"] = "Row Changed";
+
+        //  this update with cause another OnRowChanged event to occur
+        //  keep track of the row guid to avoid recursion
+        _currentRowChangedGuid = args.Guid;
+        row.Store();
+        _currentRowChangedGuid = Guid.Empty;
+      }
+    }
+
+    protected void OnRowDeleted(RowChangedEventArgs args)
+    {
+      var row = args.Row;
+
+      // cancel the delete if the feature is in Police District 5
+
+      var fldIdx = row.FindField("POLICE_DISTRICT");
+      if (fldIdx != -1)
+      {
+        var value = row[fldIdx].ToString();
+        if (value == "5")
+          args.CancelEdit();
+      }
     }
     #endregion
+
+    private bool FailsValidation(string s) => true;
+
   }
 }

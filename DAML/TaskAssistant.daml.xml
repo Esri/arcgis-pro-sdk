@@ -22,7 +22,7 @@
     </updateCategory>-->
     
     <updateCategory refID="esri_core_projectContainers">
-      <insertComponent id="esri_tasks_TaskContainer" className="ArcGIS.Desktop.Internal.TaskAssistant.TaskContainer">
+      <insertComponent id="esri_tasks_TaskContainer" className="ArcGIS.Desktop.Internal.TaskAssistant.TaskContainer" insert="after" placeWith="esri_geodatabase_serverConnectionContainer">
         <content type="Task" displayName="Tasks" contextMenu="esri_task_insertMenu" />
       </insertComponent>
     </updateCategory>
@@ -255,11 +255,11 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         </button>
         
         <!--project pane Project Container context menuItems-->
-        <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="N">                
-          <tooltip heading="">Add a new task item to the project. A task item contains a set of tasks.<disabledText></disabledText></tooltip>
+        <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="TI">                
+          <tooltip heading="">Create a new task item in the project. A task item contains a set of tasks. The new task item is saved within the project.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_tasks_ImportTaskFile" caption="Import And Open..." extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">                
-          <tooltip heading="">Import an esri task file (.esriTasks) and add it as a task item to the project.<disabledText></disabledText></tooltip>
+        <button id="esri_tasks_ImportTaskFile" caption="Import And Open Task" extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">                
+          <tooltip heading="">Import a task file and add it as a task item to the project. A copy of the task item is saved within the project. Future changes to the task file are not reflected in the project.<disabledText></disabledText></tooltip>
         </button>
         
         <!--project pane Project Item context menuItems-->

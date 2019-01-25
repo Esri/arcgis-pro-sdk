@@ -24,33 +24,33 @@ using System.Threading.Tasks;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 
-namespace Layout_HelpExamples
-{
-  #region FindLayout
-  //This example references a layout by name using GetLayout on the LayoutProjectItem.
+//namespace Layout_HelpExamples
+//{
+//  #region FindLayout
+//  //This example references a layout by name using GetLayout on the LayoutProjectItem.
 
-  //Added references
-  using ArcGIS.Desktop.Core;
-  using ArcGIS.Desktop.Layouts;
-  using ArcGIS.Desktop.Framework.Threading.Tasks;  
+//  //Added references
+//  using ArcGIS.Desktop.Core;
+//  using ArcGIS.Desktop.Layouts;
+//  using ArcGIS.Desktop.Framework.Threading.Tasks;  
 
-  public class FindLayoutExample
-  {
-    public static Task<Layout> FindLayoutAsync(string LayoutName)
-    {
-      //Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals(LayoutName));
+//  public class FindLayoutExample
+//  {
+//    public static Task<Layout> FindLayoutAsync(string LayoutName)
+//    {
+//      //Reference a layoutitem in a project by name
+//      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals(LayoutName));
 
-      //Check for layoutItem
-      if (layoutItem == null)
-        return Task.FromResult<Layout>(null);
+//      //Check for layoutItem
+//      if (layoutItem == null)
+//        return Task.FromResult<Layout>(null);
 
-      //Reference and load the layout associated with the layout item
-      return QueuedTask.Run(() => layoutItem.GetLayout());
-    }
-  }
-  #endregion FindLayout
-}
+//      //Reference and load the layout associated with the layout item
+//      return QueuedTask.Run(() => layoutItem.GetLayout());
+//    }
+//  }
+//  #endregion FindLayout
+//}
 
 namespace Layout_HelpExamples
 {
@@ -86,12 +86,12 @@ namespace Layout_HelpExamples
   {
     async protected override void OnClick()
     {
-      //ReferenceLayout
-      Layout lyt1 = await FindLayoutExample.FindLayoutAsync("Layout Name");
-      if (lyt1 == null)
-        System.Windows.MessageBox.Show("Layout Not Found");
-      else
-        System.Windows.MessageBox.Show("Found: " + lyt1.Name);
+      ////ReferenceLayout
+      //Layout lyt1 = await FindLayoutExample.FindLayoutAsync("Layout Name");
+      //if (lyt1 == null)
+      //  System.Windows.MessageBox.Show("Layout Not Found");
+      //else
+      //  System.Windows.MessageBox.Show("Found: " + lyt1.Name);
 
       //DeleteLayout
       bool b1 = await DeleteLayoutExample.DeleteLayoutAsync("Layout");

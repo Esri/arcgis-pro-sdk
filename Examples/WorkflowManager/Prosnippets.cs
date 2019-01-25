@@ -103,7 +103,23 @@ namespace WorkflowManagerProSnippets
 			#endregion
 		}
 
-		public static async Task CloseJobAsync(IReadOnlyList<string> jobIdsToClose)
+        public static async Task GetJobAsync(Map map)
+        {
+            #region How to get a job associated with a map
+
+            // Get a job associated with the map
+            var wfCon = await WorkflowModule.ConnectAsync();
+            var jobManager = wfCon.GetManager<JobsManager>();
+            var job = jobManager.GetJob(map);
+            if (job != null)
+            {
+                // Job found, do something with the job
+                var jobId = job.ID;
+            }
+            #endregion
+        }
+
+        public static async Task CloseJobAsync(IReadOnlyList<string> jobIdsToClose)
 		{
 			#region How to close a job
 

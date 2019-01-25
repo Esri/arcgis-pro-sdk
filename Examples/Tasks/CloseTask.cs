@@ -30,7 +30,7 @@ namespace TasksAPI
   {
     public void MainMethodCode()
     {
-      // find the project task item which is open
+      // find the first project task item which is open
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault(t => t.IsOpen == true);
       // if there isn't a project task item, return
       if (taskItem == null)

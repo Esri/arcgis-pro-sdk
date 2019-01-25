@@ -27,7 +27,7 @@
        </tabGroups>
 
        <tabs>
-         <tab id="esri_networkanalysis_utility_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_utility_TabGroup" condition="esri_mapping_utilityNetworkLayerSelectedCondition" keytip="UN">
+         <tab id="esri_networkanalysis_utility_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_utility_TabGroup" condition="esri_mapping_utilityNetworkCondition" keytip="UN">
            <group refID="esri_networkanalysis_utility_Validate_Group" />
            <group refID="esri_networkanalysis_utility_Associations_Group" />
            <group refID="esri_networkanalysis_utility_Tools_Group"/>
@@ -331,7 +331,7 @@
         <!-- esri_networkanalysis_utility_SourceManagement_Group -->
 
         <button id="esri_networkanalysis_utility_ViewSubnetworks_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.Tools.ViewSubnetworksButton" 
-                caption="View" loadOnClick="false" condition="esri_mapping_utilityNetworkLayerSelectedCondition" 
+                caption="View" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition" 
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewSubnetworks32.png" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewSubnetworks16.png"
                 helpContextID=""
@@ -342,7 +342,7 @@
         </button>
 
         <button id="esri_networkanalysis_utility_FindSubnetworks_Btn" className="esri_networkanalysis_utility_module:ShowFindSubnetworksWindow"
-                caption="Find" loadOnClick="false" condition="esri_mapping_utilityNetworkLayerSelectedCondition"
+                caption="Find" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png"
                 helpContextID=""
@@ -412,7 +412,7 @@
         <button id="esri_networkanalysis_utility_ZoomTo_NetworkElement" className="Tools.ZoomToNetworkElement" caption="Zoom" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomIn32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomIn16.png" helpContextID="">
           <tooltip heading="">Zoom to the network object position on the geographic map.<disabledText></disabledText></tooltip>
         </button>
-         <button id="esri_networkanalysis_utility_Flash_NetworkElement" className="Tools.FlashNetworkElement" caption="Flash feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Flash32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Flash16.png" helpContextID="">
+         <button id="esri_networkanalysis_utility_Flash_NetworkElement" className="Tools.FlashNetworkElement" caption="Flash feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png" helpContextID="">
           <tooltip heading="">Flash the feature associated with the network object.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_networkanalysis_utility_Select_NetworkElement" className="Tools.SelectNetworkElement" caption="Select feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew16.png" helpContextID="">
@@ -506,7 +506,7 @@
         </button>
         <button id="esri_networkanalysis_ShowModifyConnectionBtn"
                  caption="Terminal Connections" extendedCaption="Show Modify Terminal Connection pane."
-                 condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+                 condition="esri_networkanalysis_utility_TerminalConnections_Condition"
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection32.png"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection16.png"
                  className="esri_networkanalysis_utility_module:ShowModifyTerminalConnectionWindow"
@@ -606,7 +606,7 @@
       <page id="esri_networkDiagrams_optionsPropertyPage" caption="Network Diagrams" className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsViewModel" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll">
         <content className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsView" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll"/>
       </page>
-      <page id="esri_networkanalysis_optionsPropertyPage" caption="Associations" className="AssociationsViewModel"
+      <page id="esri_networkanalysis_optionsPropertyPage" caption="Associations" className="AssociationsViewModel" condition="esri_networkanalysis_utility_ViewAssociations_Condition"
                   insert="after">
         <content className="AssociationsView"/>
       </page>
@@ -614,15 +614,29 @@
   </propertySheets>
   
   <conditions>
+    <insertCondition id="esri_networkanalysis_utility_TerminalConnections_Condition" caption="Geographic map is active and utility network layer is selected">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <and>
+            <state id="esri_mapping_layerSelectedState"/>
+            <not>
+              <state id="esri_mapping_mapMemberSelectedIsVersionedState" />
+            </not>
+          </and>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
-        <state id="esri_mapping_utilityNetworkLayerFeatureServiceLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkFeatureService" />
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_DisplayContent_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
         <not>
           <state id="esri_networkanalysis_utility_active_container_state" />
         </not>
@@ -630,31 +644,31 @@
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
         <not>
-          <state id="esri_mapping_utilityNetworkLayerFeatureServiceLayerSelectedState" />
+          <state id="esri_map_utilityNetworkFeatureService" />
         </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
-        <state id="esri_mapping_utilityNetworkLayerFeatureServiceLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkFeatureService" />
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
-        <state id="esri_mapping_utilityNetworkLayerFeatureServiceLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkFeatureService" />
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_OpenContainer_Condition" caption="Utility network layer is active and a selection exists">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
         <not>
-            <state id="esri_networkanalysis_utility_active_container_state" />      
+          <state id="esri_networkanalysis_utility_active_container_state" />      
         </not>
-        <state id="esri_mapping_utilityNetworkLayerFeatureServiceLayerSelectedState" />
+        <state id="esri_map_utilityNetworkFeatureService" />
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_Container_Activated_Condition" caption="Utility network layer has an active container">
@@ -671,14 +685,14 @@
 
     <insertCondition id="esri_networkanalysis_utility_PropagateSelection_Condition" caption="Utility network layer is active and a selection exists">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
         <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
       </and>
     </insertCondition>    
     
     <insertCondition id="esri_networkanalysis_utility_ViewAssociations_Condition" caption="Utility network layer is active and the map scale is valid.">
       <and>
-        <state id="esri_mapping_utilityNetworkLayerSelectedState" />
+        <state id="esri_map_utilityNetwork" />
       </and>
     </insertCondition>
   </conditions>

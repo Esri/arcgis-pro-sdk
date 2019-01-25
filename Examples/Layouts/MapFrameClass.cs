@@ -24,45 +24,103 @@ using System.Threading.Tasks;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 
+//Added references
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
+using ArcGIS.Desktop.Mapping;
+using ArcGIS.Core.Geometry;
+
 namespace Layout_HelpExamples
 {
-  #region MapFrameExample1
-  //This example sets a map frame's extent to a bookmark.
-
-  //Added references
-  using ArcGIS.Desktop.Core;                         //Project
-  using ArcGIS.Desktop.Framework.Threading.Tasks;    //QueuedTask
-  using ArcGIS.Desktop.Layouts;                      //Layout class
-  using ArcGIS.Desktop.Mapping;                      //Bookmark
-
-  public class MapFrame_ZoomToBookmarksExample
+  public class MapFrameClassSamples
   {
-    public static Task<bool> ZoomToBookmarksAsync(string LayoutName, string MFName, string BkmkName)
+    async public static void MethodSnippets()
     {
-      //Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals(LayoutName));
+      Layout layout = LayoutView.Active.Layout;
 
-      return QueuedTask.Run<bool>(() =>
+      #region MapFrame_Export
+      //See ProSnippets.cs "Export a map frame to JPG"
+      #endregion MapFrame_Export
+
+
+      #region MapFrame_GetMapView
+      //see ProSnippets "Export the map view associated with a map frame to BMP"
+      #endregion MapFrame_GetMapView
+
+
+      #region MapFrame_SetCamera_Camera
+      // see ProSnippets "Change map frames camera settings"
+      #endregion MapFrame_SetCamera_Camera
+
+
+      #region MapFrame_SetCamera_Bookmark
+      //Set the extent of a map frame to a bookmark.
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
       {
-        //Reference and load the layout associated with the layout item
-        Layout lyt = layoutItem.GetLayout();
+        //Reference MapFrame
+        MapFrame mf_bk = layout.FindElement("Map Frame") as MapFrame;
 
-        //Reference a mapframe by name
-        MapFrame mfElm = lyt.Elements.FirstOrDefault(item => item.Name.Equals(MFName)) as MapFrame;
+        //Reference a bookmark that belongs to a map associated with the map frame
+        Map m = mf_bk.Map;
+        Bookmark bk = m.GetBookmarks().FirstOrDefault(item => item.Name.Equals("Lakes"));
 
-        //Set the map frame's extent to a bookmark
-        Bookmark bookmark = mfElm.Map.GetBookmarks().FirstOrDefault(b => b.Name == BkmkName);
-        mfElm.SetCamera(bookmark);
-
-        return true;
+        //Set the map frame extent using the bookmark
+        mf_bk.SetCamera(bk);
       });
+      #endregion MapFrame_SetCamera_Bookmark
+
+
+      #region MapFrame_SetCamera_Envelope
+      //Set the extent of a map frame to the envelope of a feature.
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference MapFrame
+        MapFrame mf_env = layout.FindElement("Map Frame") as MapFrame;
+
+        //Get map and a layer of interest
+        Map m = mf_env.Map;
+        //Get the specific layer you want from the map and its extent
+        FeatureLayer lyr = m.FindLayers("GreatLakes").First() as FeatureLayer;
+        Envelope lyrEnv = lyr.QueryExtent();
+
+        //Set the map frame extent to the feature layer's extent / envelope
+        mf_env.SetCamera(lyrEnv);  //Note - you could have also used the lyr as an overload option
+      });
+      #endregion MapFrame_SetCamera_Envelope
+
+
+      #region MapFrame_SetCamera_Layer
+      //See ProSnppets "Zoom map frame to extent of a single layer"
+      #endregion MapFrame_SetCamera_Layer
+
+
+      #region MapFrame_SetCamera_Layers
+      //See ProSnippets "Change map frame extent to selected features in multiple layers"
+      #endregion MapFrame_SetCamera_Layers
+
+      MapFrame mf = null;
+      Map map = null;
+      #region MapFrame_SetMap
+      //Set the map that is associated with a map frame.
+
+      //Perform on worker thread
+      await QueuedTask.Run(() =>
+      {
+        mf.SetMap(map);
+      });
+
+      #endregion
+
+      #region MapFrame_SetName
+      //See ProSnppets "Zoom map frame to extent of a single layer"
+      #endregion MapFrame_SetName
+
     }
   }
-  #endregion
-
-  #region MapFrameExample2
-    //Next example goes here
-  #endregion
-
-
 }
+
+

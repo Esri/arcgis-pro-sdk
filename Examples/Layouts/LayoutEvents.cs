@@ -45,18 +45,9 @@ namespace LayoutEvents
     {
       LayoutView lytView = LayoutView.Active;
       await ProApp.Panes.CreateLayoutPaneAsync(lytView.Layout);
-      #region ActiveLayoutViewChangedEvent
-      ArcGIS.Desktop.Layouts.Events.ActiveLayoutViewChangedEvent.Subscribe((args) =>
-      {
-        System.Windows.MessageBox.Show("ActiveLayoutViewChangedEvent:" +
-          Environment.NewLine +
-          "   arg Layoutview: " + args.LayoutView.Layout.Name +
-          Environment.NewLine +
-          "   arg Type: " + args.Type.ToString());
-      });
-      #endregion ActiveLayoutViewChangedEvent
-
       #region ActivateMapFrameEvent
+      //Report the event args when a map frame is activated or deactivated.
+
       ArcGIS.Desktop.Layouts.Events.ActivateMapFrameEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("ActiveMapFrameEvent:" +
@@ -69,7 +60,60 @@ namespace LayoutEvents
       });
       #endregion ActivateMapFrameEvent
 
+      #region ActiveLayoutViewChangedEvent
+      //Report the event args when a the layout view has changed.
+
+      ArcGIS.Desktop.Layouts.Events.ActiveLayoutViewChangedEvent.Subscribe((args) =>
+      {
+        System.Windows.MessageBox.Show("ActiveLayoutViewChangedEvent:" +
+          Environment.NewLine +
+          "   arg Layoutview: " + args.LayoutView.Layout.Name +
+          Environment.NewLine +
+          "   arg Type: " + args.Type.ToString());
+      });
+      #endregion ActiveLayoutViewChangedEvent
+
+      #region ElementAddedEvent
+      //Report the event args when an element is added to the layout.
+
+      ArcGIS.Desktop.Layouts.Events.ElementAddedEvent.Subscribe((args) => 
+      {
+        var elements = args.Elements;
+        string elemNames = "null";
+        if (elements != null && elements.Count() > 0)
+        {
+          elemNames = string.Join(",", elements.Select(e => e.Name).ToList());
+        }
+        System.Windows.MessageBox.Show("ElementAddedEvent:" +
+        Environment.NewLine +
+        "   arg Elements: " + elemNames.ToString() +
+        Environment.NewLine +
+        "   arg Layout: " + args.Layout.Name);
+      });
+      #endregion ElementAddedEvent
+
+      #region ElementRemovedEvent
+      //Report the event args when an element is removed from the layout.
+
+      ArcGIS.Desktop.Layouts.Events.ElementRemovedEvent.Subscribe((args) => 
+      {
+        var elements = args.Elements;
+        string elemNames = "null";
+        if (elements != null && elements.Count() > 0)
+        {
+          elemNames = string.Join(",", elements.Select(e => e.Name).ToList());
+        }
+        System.Windows.MessageBox.Show("ElementRemovedEvent:" +
+        Environment.NewLine +
+        "   arg Elements: " + elemNames.ToString() +
+        Environment.NewLine +
+        "   arg Layout: " + args.Layout.Name);
+      });
+      #endregion ElementRemovedEvent
+
       #region ElementsPlacementChangedEvent
+      //Report the event args when an element's placement properties are changed.
+
       ArcGIS.Desktop.Layouts.Events.ElementsPlacementChangedEvent.Subscribe((args) => 
       {
         var elements = args.Elements;
@@ -86,7 +130,28 @@ namespace LayoutEvents
       });
       #endregion ElementsPlacementChangedEvent
 
+      #region ElementStyleChangedEvent
+      //Report the event args when an element's style is changed.
+
+      ArcGIS.Desktop.Layouts.Events.ElementStyleChangedEvent.Subscribe((args) => 
+      {
+        var elements = args.Elements;
+        string elemNames = "null";
+        if (elements != null && elements.Count() > 0)
+        {
+          elemNames = string.Join(",", elements.Select(e => e.Name).ToList());
+        }
+        System.Windows.MessageBox.Show("ElementStyleChangedEvent:" +
+        Environment.NewLine +
+        "   arg Elements: " + elemNames.ToString() +
+        Environment.NewLine +
+        "   arg Layout: " + args.Layout.Name);
+      });
+      #endregion ElementStyleChangedEvent
+
       #region ElementsUpdatedEvent
+      //Report the event args when an element has been updated.
+
       ArcGIS.Desktop.Layouts.Events.ElementsUpdatedEvent.Subscribe((args) => 
       {
         var elements = args.Elements;
@@ -103,7 +168,20 @@ namespace LayoutEvents
       });
       #endregion ElementsUpdatedEvent
 
+      #region LayoutAddedEvent
+      //Report the event args when a layout is added.
+
+      ArcGIS.Desktop.Layouts.Events.LayoutAddedEvent.Subscribe((args) =>
+      {
+        System.Windows.MessageBox.Show("LayoutAddedEvent:" +
+          Environment.NewLine +
+          "   arg Layout: " + args.Layout.Name);
+      });
+      #endregion LayoutAddedEvent
+
       #region LayoutChangedEvent
+      //Report the event args when a layout is changed.
+
       ArcGIS.Desktop.Layouts.Events.LayoutChangedEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("LayoutChangedEvent:" +
@@ -113,6 +191,8 @@ namespace LayoutEvents
       #endregion LayoutChangedEvent
 
       #region LayoutClosedEvent
+      //Report the event args when a layout is closed.
+
       ArcGIS.Desktop.Layouts.Events.LayoutClosedEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("LayoutClosedEvent:" +
@@ -122,6 +202,8 @@ namespace LayoutEvents
       #endregion LayoutClosedEvent
 
       #region LayoutClosingEvent
+      //Report the event args when a layout is closing.
+
       ArcGIS.Desktop.Layouts.Events.LayoutClosingEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("LayoutClosingEvent:" +
@@ -132,7 +214,46 @@ namespace LayoutEvents
       });
       #endregion LayoutClosingEvent
 
+      #region LayoutPauseDrawingChangedEvent
+      //Report the event args when a layout's paused state is changed.
+
+      ArcGIS.Desktop.Layouts.Events.LayoutPauseDrawingChangedEvent.Subscribe((args) =>
+      {
+        System.Windows.MessageBox.Show("LayoutPauseDrawingChangedEvent:" +
+          Environment.NewLine +
+          "   arg Layoutview: " + args.LayoutView.Layout.Name +
+          Environment.NewLine +
+          "   arg Type: " + args.Paused.ToString());
+      });
+      #endregion LayoutPauseDrawingChangedEvent
+
+      #region LayoutRemovedEvent
+      //Report the event args when a layout is removed.
+
+      ArcGIS.Desktop.Layouts.Events.LayoutRemovedEvent.Subscribe((args) =>
+      {
+        System.Windows.MessageBox.Show("LayoutViewEvent:" +
+        Environment.NewLine +
+        "   arg Layout: " + args.Layout.Name);
+      });
+      #endregion LayoutRemovedEvent
+
+      #region LayoutRemovingEvent
+      //Report the event args when a layout is about to be removed.
+
+      ArcGIS.Desktop.Layouts.Events.LayoutRemovingEvent.Subscribe((args) =>
+      {
+        if (args.LayoutPath == "CIMPATH=layout.xml")
+        {
+          args.Cancel = true;
+        }
+        return Task.FromResult(0);
+      });
+      #endregion LayoutRemovingEvent
+
       #region LayoutSelectionChangedEvent
+      //Report the event args when a layout's selection has changed.
+
       ArcGIS.Desktop.Layouts.Events.LayoutSelectionChangedEvent.Subscribe((args) => {
         var elements = args.Elements;
         string elemNames = "null";
@@ -148,16 +269,9 @@ namespace LayoutEvents
       });
       #endregion LayoutSelectionChangedEvent
 
-      #region LayoutRemovedEvent
-      ArcGIS.Desktop.Layouts.Events.LayoutRemovedEvent.Subscribe((args) =>
-      {
-        System.Windows.MessageBox.Show("LayoutViewEvent:" +
-        Environment.NewLine +
-        "   arg Layout: " + args.Layout.Name);
-      });
-      #endregion LayoutRemovedEvent
-
       #region LayoutViewEvent
+      //Report the event args for the different types of layout view events.
+
       ArcGIS.Desktop.Layouts.Events.LayoutViewEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("LayoutViewEvent:" +
@@ -169,6 +283,8 @@ namespace LayoutEvents
       #endregion LayoutViewEvent
 
       #region MapSeriesEvent
+      //Report the event args when the map series properties have changed.
+
       ArcGIS.Desktop.Layouts.Events.MapSeriesEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("MapSeriesEvent:" +
@@ -183,7 +299,9 @@ namespace LayoutEvents
       });
       #endregion MapSeriesEvent
 
-      #region PageChangedEvent   
+      #region PageChangedEvent
+      //Report the event args when a layout page properties are changed.
+
       ArcGIS.Desktop.Layouts.Events.PageChangedEvent.Subscribe((args) =>
       {
         System.Windows.MessageBox.Show("PageChangedEvent:" +
@@ -196,8 +314,6 @@ namespace LayoutEvents
       });
       #endregion PageChangedEvent
 
-      
-      //return Task.FromResult(0);
     }
 
     private void AddEntry(string eventName, string entry) {
@@ -235,9 +351,7 @@ namespace LayoutEvents
       }
     }
 
-    /// <summary>
-    /// Show the DockPane.
-    /// </summary>
+    // Show the DockPane.
     internal static void Show()
     {
       DockPane pane = FrameworkApplication.DockPaneManager.Find(_dockPaneID);
@@ -248,9 +362,7 @@ namespace LayoutEvents
     }
   }
 
-  /// <summary>
-  /// Button implementation to show the DockPane.
-  /// </summary>
+  // Button implementation to show the DockPane.
 	internal class LayoutEventSpy_ShowButton : Button
   {
     protected override void OnClick()

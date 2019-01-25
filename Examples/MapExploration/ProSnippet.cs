@@ -183,24 +183,6 @@ namespace Snippets
 
         #endregion
 
-        #region Set a Layer's field visibility
-        private static void FieldVisibility()
-        {
-            var layer = MapView.Active.Map.GetLayersAsFlattenedList().First();
-            QueuedTask.Run(() =>
-            {
-                if (layer is IDisplayTable)
-                {
-                    var descriptions = ((IDisplayTable)layer).GetFieldDescriptions();
-                    foreach (var description in descriptions)
-                    {
-                        description.IsVisible = true;
-                    }
-                }
-            });
-        }
-        #endregion
-
         private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
         {
             QueuedTask.Run(() => {
@@ -534,7 +516,7 @@ namespace Snippets
 
         #endregion
 
-        #region Create a tool to identify the featutes that intersect the sketch geometry
+        #region Create a tool to identify the features that intersect the sketch geometry
 
         internal class CustomIdentify : MapTool
         {
@@ -638,6 +620,23 @@ namespace Snippets
             {
                 return base.OnSketchCompleteAsync(geometry);
             }
+        }
+
+        private static void Masking()
+        {
+            QueuedTask.Run(() => {
+                #region Mask feature
+                //Get the layer to be masked
+                var lineLyrToBeMasked = MapView.Active.Map.Layers.FirstOrDefault(lyr => lyr.Name == "TestLine") as FeatureLayer;
+                //Get the layer's definition
+                var lyrDefn = lineLyrToBeMasked.GetDefinition();
+                //Create an array of Masking layers (polygon only)
+                //Set the LayerMasks property of the Masked layer
+                lyrDefn.LayerMasks = new string[] { "CIMPATH=map3/testpoly.xml" };
+                //Re-set the Masked layer's defintion
+                lineLyrToBeMasked.SetDefinition(lyrDefn);
+                #endregion
+            });
         }
     }
 }

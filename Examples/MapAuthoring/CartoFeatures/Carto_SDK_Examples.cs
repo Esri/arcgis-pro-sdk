@@ -106,6 +106,15 @@ namespace Carto_SDK_Examples
         return mapSurroundItem.MapSurround;
       });
       #endregion
+
+      #region Get dimension style from DimensionStyleStyleItem
+      DimensionStyleStyleItem dimensionStyleStyleItem = null;
+      CIMDimensionStyle dimensionStyle = await QueuedTask.Run<CIMDimensionStyle>(() =>
+      {
+        return dimensionStyleStyleItem.DimensionStyle;
+      });
+      #endregion
+
     }
 
 

@@ -24,57 +24,97 @@ using System.Threading.Tasks;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 
+//Added references
+using ArcGIS.Desktop.Core;                         //Project
+using ArcGIS.Desktop.Layouts;                      //Layout class
+using ArcGIS.Desktop.Framework.Threading.Tasks;    //QueuedTask
+
 namespace Layout_HelpExamples
 {
-  #region TextElementExample
-  //Added references
-  using ArcGIS.Desktop.Core;                         //Project
-  using ArcGIS.Desktop.Layouts;                      //Layout class
-  using ArcGIS.Desktop.Framework.Threading.Tasks;    //QueuedTask
-
-  public class TextElementExample
+  internal class TextElementClass : Button
   {
-    public static Task<bool> UpdateLayoutTextAsync(string LayoutName, string TextElementName, double X, double Y, int FontSize, string FontName, string TextString)
+    async protected override void OnClick()
     {
-      //Reference a layoutitem in a project by name
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals(LayoutName));
-      if (layoutItem == null)
-        return Task.FromResult(false);
+      TextElementClassExamples.MethodSnippets();
+    }
+  }
 
-      return QueuedTask.Run<bool>(() =>
+  public class TextElementClassExamples
+  {
+    async public static void MethodSnippets()
+    {
+      #region TextElement_SetTextProperties
+      //see Prosnippets.cs: "Update text element properties"
+      #endregion
+
+      #region TextProperties_Constuctor
+      //see Prosnippets.cs: "Update text element properties"
+      #endregion
+    }
+
+    async public static void TextPropertiesExample()
+    {
+      #region Modify existing text element properties
+      //Modify the text properties for an existing text element.
+
+      //Reference a layoutitem in a project by name
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout"));
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
       {
         //Reference and load the layout associated with the layout item
         Layout lyt = layoutItem.GetLayout();
 
         //Reference a text element by name
-        TextElement txtElm = lyt.FindElement(TextElementName) as TextElement;
-        if (txtElm == null)
-          return false;
+        TextElement txtElm = lyt.FindElement("Title") as TextElement;
 
         //Change placement
-        txtElm.SetX(X);
-        txtElm.SetY(Y);
+        txtElm.SetX(4.25);
+        txtElm.SetY(8);
 
         //Change TextProperties
         TextProperties txt_prop = txtElm.TextProperties;
-        txt_prop.FontSize = FontSize;           //e.g., FontSize = 48
-        txt_prop.Font = FontName;               //e.g., FontName = "Times New Roman"
-        txt_prop.Text = TextString;             //e.g., TextString = "Some new text";
+        txt_prop.FontSize = 48;
+        txt_prop.Font = "Times New Roman";
+        txt_prop.Text = "Some new text";
         txtElm.SetTextProperties(txt_prop);
-
-        return true;
       });
-    }
-  }
-  #endregion TextElementExample
+      #endregion
 
-  internal class TextElementClass : Button
-  {
-    async protected override void OnClick()
-    {
-      bool x = await TextElementExample.UpdateLayoutTextAsync("Layout Name", "Text", 3, 4, 48, "Times New Roman", "Some new text");
-      if (x == false)
-        System.Windows.MessageBox.Show("Object Not found");
     }
+    async public static void TextPropertiesExample2() //TODO fis duplicated item above because of inconsistent region name use in TextElement.cs file in layout solution.
+    {
+      #region Modify existing text properties
+      //Modify the text properties for an existing text element.
+
+      //Reference a layoutitem in a project by name
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout"));
+
+      //Perform on the worker thread
+      await QueuedTask.Run(() =>
+      {
+        //Reference and load the layout associated with the layout item
+        Layout lyt = layoutItem.GetLayout();
+
+        //Reference a text element by name
+        TextElement txtElm = lyt.FindElement("Title") as TextElement;
+
+        //Change placement
+        txtElm.SetX(4.25);
+        txtElm.SetY(8);
+
+        //Change TextProperties
+        TextProperties txt_prop = txtElm.TextProperties;
+        txt_prop.FontSize = 48;
+        txt_prop.Font = "Times New Roman";
+        txt_prop.Text = "Some new text";
+        txtElm.SetTextProperties(txt_prop);
+      });
+      #endregion
+
+    }
+
   }
+
 }

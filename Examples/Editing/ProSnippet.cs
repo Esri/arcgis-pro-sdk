@@ -248,13 +248,13 @@ namespace EditingSDKExamples
 
       var cutFeatures = new EditOperation();
       cutFeatures.Name = "Cut Features";
-      cutFeatures.Cut(featureLayer, oid, cutLine);
+      cutFeatures.Split(featureLayer, oid, cutLine);
 
       //Cut all the selected features in the active view
       //Select using a polygon (for example)
       var kvps = MapView.Active.SelectFeatures(polygon).Select(
             k => new KeyValuePair<MapMember, List<long>>(k.Key as MapMember, k.Value));
-      cutFeatures.Cut(kvps, cutLine);
+      cutFeatures.Split(kvps, cutLine);
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
@@ -604,7 +604,7 @@ namespace EditingSDKExamples
       var clipCutPlanarizeFeatures = new EditOperation();
       clipCutPlanarizeFeatures.Name = "Clip, Cut, and Planarize Features";
       clipCutPlanarizeFeatures.Clip(featureLayer, oid, clipPoly);
-      clipCutPlanarizeFeatures.Cut(featureLayer, oid, cutLine);
+      clipCutPlanarizeFeatures.Split(featureLayer, oid, cutLine);
       clipCutPlanarizeFeatures.Planarize(featureLayer, new List<long>() { oid});
 
       //Note: An edit operation is a single transaction. 

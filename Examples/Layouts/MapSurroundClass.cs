@@ -28,6 +28,9 @@ using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Core;                         //Project
 using ArcGIS.Desktop.Layouts;                      //Layout class
 using ArcGIS.Desktop.Framework.Threading.Tasks;    //QueuedTask
+using ArcGIS.Core.Geometry;
+using ArcGIS.Desktop.Mapping;
+using ArcGIS.Core.CIM;
 
 namespace Layout_HelpExamples
 {
@@ -78,4 +81,69 @@ namespace Layout_HelpExamples
         System.Windows.MessageBox.Show("Object Not found");
     }
   }
+}
+
+public class TableFrameClassSamples
+{
+
+  async public static void CreateNew()
+  {
+    #region TableFrame_CreateNew
+    //Create a new table frame on the active layout.
+
+    Layout layout = LayoutView.Active.Layout;
+
+    //Perform on the worker thread
+    await QueuedTask.Run(() =>
+    {
+      //Build 2D envelope geometry
+      Coordinate2D rec_ll = new Coordinate2D(1.0, 3.5);
+      Coordinate2D rec_ur = new Coordinate2D(7.5, 4.5);
+      Envelope rec_env = EnvelopeBuilder.CreateEnvelope(rec_ll, rec_ur);
+
+      //Reference map frame
+      MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
+
+      //Reference layer
+      Map m = mf.Map;
+      FeatureLayer lyr = m.FindLayers("GreatLakes").First() as FeatureLayer;
+
+      //Build fields list
+      var fields = new[] { "NAME", "Shape_Area", "Shape_Length" };
+
+      //Construct the table frame
+      TableFrame tabFrame = LayoutElementFactory.Instance.CreateTableFrame(layout, rec_env, mf, lyr, fields);
+    });
+    #endregion TableFrame_CreateNew
+
+  }
+
+
+
+
+  async public static void ModifyExisting()
+  {
+    #region TableFrame_ModifyExisting 
+    //Modify an existing tableframe using CIM properties.
+
+    //Reference the active layout
+    Layout layout = LayoutView.Active.Layout;
+
+    //Perform on the worker thread
+    await QueuedTask.Run(() =>
+    {
+      //Reference table frame
+      TableFrame TF = layout.FindElement("Table Frame") as TableFrame;
+
+      //Modify CIM properties
+      CIMTableFrame cimTF = TF.GetDefinition() as CIMTableFrame;
+      cimTF.Alternate1RowBackgroundCount = 1;
+      cimTF.Alternate2RowBackgroundCount = 1;
+
+      //Apply the changes
+      TF.SetDefinition(cimTF);
+    });
+    #endregion TableFrame_ModifyExisting
+  }
+
 }

@@ -23,12 +23,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ArcGIS.Desktop.TaskAssistant;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
 
 namespace TasksAPI
 {
   public class ProjectItem_GetTaskItemInfo
   {
-    public void Method1Code()
+    public async Task Method1Code()
     {
       // find the first task item in the project
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -36,40 +37,45 @@ namespace TasksAPI
       if (taskItem == null)
         return;
 
-      try
+      string message = await QueuedTask.Run(async () =>
       {
         bool isOpen = taskItem.IsOpen;
         Guid taskGuid = taskItem.TaskItemGuid;
 
-        TaskItemInfo taskItemInfo = taskItem.GetTaskItemInfo();
-        
-        string message = "Name : " + taskItemInfo.Name;
-        message += "\r\n" + "Description : " + taskItemInfo.Description;
-        message += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
-        message += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
-
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Item Information");
-
-        // iterate the tasks in the task item
-        IEnumerable<TaskInfo> taskInfos = taskItemInfo.GetTasks();
-        foreach (TaskInfo taskInfo in taskInfos)
+        string msg = "";
+        try
         {
-          string name = taskInfo.Name;
-          Guid guid = taskInfo.Guid;
+          TaskItemInfo taskItemInfo = await taskItem.GetTaskItemInfoAsync();
 
-          // do something 
+          msg = "Name : " + taskItemInfo.Name;
+          msg += "\r\n" + "Description : " + taskItemInfo.Description;
+          msg += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
+          msg += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
+
+          // iterate the tasks in the task item
+          IEnumerable<TaskInfo> taskInfos = taskItemInfo.GetTasks();
+          foreach (TaskInfo taskInfo in taskInfos)
+          {
+            string name = taskInfo.Name;
+            Guid guid = taskInfo.Guid;
+
+            // do something 
+          }
         }
-      }
-      catch (OpenTaskException e)
-      {
-        // exception thrown if task file doesn't exist or has incorrect format
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Item Information");
-      }
-      catch (TaskFileVersionException e)
-      {
-        // exception thrown if task file does not support returning task information
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Item Information");
-      }
+        catch (OpenTaskException e)
+        {
+          // exception thrown if task file doesn't exist or has incorrect format
+          msg = e.Message;
+        }
+        catch (TaskFileVersionException e)
+        {
+          // exception thrown if task file does not support returning task information
+          msg = e.Message;
+        }
+        return msg;
+      });
+
+      ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
     }
   }
 }

@@ -37,7 +37,8 @@ namespace SDKExamples
       try
       {
         // export the task item to the c:\Temp folder
-        string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, "c:\\temp");
+        string exportFolder = @"c:\temp";
+        string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, exportFolder);
         ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Task saved to " + fileName);
       }
       catch (ExportTaskException e)

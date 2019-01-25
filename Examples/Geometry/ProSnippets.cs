@@ -31,10 +31,10 @@ namespace ProSnippetsGeometry {
 
       public void SpatialReference()
       {
-        #region Construct a SpatialReference - from a Well Known ID
+      #region Construct a SpatialReference - from a well-known ID
 
-        // methods need to run on the MCT
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      // methods need to run on the MCT
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // use the builder constructor
           SpatialReference sr3857 = null;
@@ -70,14 +70,14 @@ namespace ProSnippetsGeometry {
         bool isProjected = wgs84.IsProjected;     // false
         bool isGeographic = wgs84.IsGeographic;   // true
 
-        #endregion
+      #endregion
 
-        #region Construct a SpatialReference with a vertical coordinate system - from Well Known IDs
+      #region Construct a SpatialReference with a vertical coordinate system - from well-known IDs
 
-        // see a list of vertical coordinate systems at http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Vertical_coordinate_systems/02r3000000rn000000/
+      // see a list of vertical coordinate systems at http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Vertical_coordinate_systems/02r3000000rn000000/
 
-        // methods need to run on the MCT
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      // methods need to run on the MCT
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // use the builder constructor
           // 4326 = GCS_WGS_1984
@@ -87,10 +87,10 @@ namespace ProSnippetsGeometry {
             SpatialReference sr = sb.ToSpatialReference();
 
             // spatialReferenceBuilder properties
-            int wkid = sb.Wkid;
-            string wkt = sb.Wkt;
-            string name = sb.Name;
-            int vcsWkid = sb.VcsWkid;
+            int wkid = sb.Wkid;             // wkid = 4326
+            string wkt = sb.Wkt;          
+            string name = sb.Name;          // name = GCS_WGS_1984
+            int vcsWkid = sb.VcsWkid;       // vcsWkid = 115700
             string vcsWkt = sb.VcsWkt;
           }
 
@@ -100,7 +100,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Construct a SpatialReference with a verical coordinate system - from a string 
+        #region Construct a SpatialReference with a vertical coordinate system - from a string 
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -116,13 +116,33 @@ namespace ProSnippetsGeometry {
             int vert_wkid = sr.VcsWkid;     // vert_wkid = 0
             string vert_wkt = sr.VcsWkt;    // vert_wkt = custom_vWkt
 
-            bool hasVcs = sr.HasVcs;
+            bool hasVcs = sr.HasVcs;        // hasVcs = true
           }
 
           // or use the convenience method
           SpatialReference sr_4326 = SpatialReferenceBuilder.CreateSpatialReference(4326, custom_vWkt);
         });
 
+      #endregion
+
+        #region Construct a SpatialReference with a custom PCS - from a string
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          // Custom PCS, Predefined GCS
+          string wkt = "PROJCS[\"WebMercatorMile\",GEOGCS[\"GCS_WGS_1984\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Mercator_Auxiliary_Sphere\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",0.0],PARAMETER[\"Standard_Parallel_1\",0.0],PARAMETER[\"Auxiliary_Sphere_Type\",0.0],UNIT[\"Mile\",1609.344000614692]]";
+
+          SpatialReference sr = SpatialReferenceBuilder.CreateSpatialReference(wkt);
+          // sr.Wkt = wkt
+          // sr.Wkid = 0
+          // sr.VcsWkid = 0
+          // sr.GcsWkid = 4326
+
+          var gcs = sr.Gcs;
+          // gcs.Wkid = 4326
+          // gcs.IsGeographic = true
+          // sr.GcsWkt = gcs.Wkt
+        });
         #endregion
 
         #region SpatialReference Properties
@@ -184,29 +204,93 @@ namespace ProSnippetsGeometry {
           }
         });
 
-      #endregion
+        #endregion
 
         #region Import and Export Spatial Reference
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
-          SpatialReferenceBuilder sb = new SpatialReferenceBuilder(4326, 6916);
-          SpatialReference sr = sb.ToSpatialReference();
+          using (SpatialReferenceBuilder sb = new SpatialReferenceBuilder(4326, 6916))
+          {
+            SpatialReference sr = sb.ToSpatialReference();
 
-          string xml = sr.ToXML();
-          SpatialReference importedSR = SpatialReferenceBuilder.FromXML(xml);
-          // importedSR.Wkid = 4326
-          // importedSR.VcsWkid = 6916
+            string xml = sr.ToXML();
+            SpatialReference importedSR = SpatialReferenceBuilder.FromXML(xml);
+            // importedSR.Wkid = 4326
+            // importedSR.VcsWkid = 6916
 
-          string json = sr.ToJson();
-          importedSR = SpatialReferenceBuilder.FromJson(json);
-          // importedSR.Wkid = 4326
-          // importedSR.VcsWkid = 6916
+            string json = sr.ToJson();
+            importedSR = SpatialReferenceBuilder.FromJson(json);
+            // importedSR.Wkid = 4326
+            // importedSR.VcsWkid = 6916
+          }
+        });
 
+      #endregion
+
+        #region Determine grid convergence for a SpatialReference at a given point
+
+        Coordinate2D coordinate = new Coordinate2D(10, 30);
+        double angle = SpatialReferences.WGS84.ConvergenceAngle(coordinate);
+        // angle = 0
+
+
+        SpatialReference srUTM30N = SpatialReferenceBuilder.CreateSpatialReference(32630);
+        coordinate.X = 500000;
+        coordinate.Y = 550000;
+        angle = srUTM30N.ConvergenceAngle(coordinate);
+        // angle = 0
+
+        MapPoint pointWGS84 = MapPointBuilder.CreateMapPoint(10, 50, SpatialReferences.WGS84);
+        MapPoint pointUTM30N = GeometryEngine.Instance.Project(pointWGS84, srUTM30N) as MapPoint;
+
+        coordinate = (Coordinate2D)pointUTM30N;
+        // get convergence angle and convert to degrees
+        angle = srUTM30N.ConvergenceAngle(coordinate) * 180 / Math.PI;
+            // angle = 10.03
+
+        #endregion
+        #region Datum
+        var cimMapDefinition = MapView.Active.Map.GetDefinition();
+        // use if map's sr does not have a vertical coordinate system
+        var datumTransformations = cimMapDefinition.DatumTransforms;
+        // use if map's sr has a vertical coordinate system
+        var hvDatumTransformations = cimMapDefinition.HVDatumTransforms;  
+        #endregion
+
+        #region SpatialReference Datum and datum properties
+
+            // methods need to run on the MCT
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          // get datum of a spatial reference
+          SpatialReference sr = SpatialReferences.WGS84;
+          Datum datum = sr.Datum;
+          // datum.Name = "D_WGS_1984"
+          // datum.Wkid = 6326
+          // datum.SpheroidName = "WGS_1984"
+          // datum.SpheroidWkid = 7030
+          // datum.SpheroidFlattening = 0.0033528106647474805
+          // datum.SpheroidSemiMajorAxis = 6378137.0
+          // datum.SpheroidSemiMinorAxis = 6356752.3142451793
+          
+          // Custom WKT
+          string wkt = "PROJCS[\"Wyoming_State_Pl_NAD_1927\",GEOGCS[\"GCS_North_American_1927\",DATUM[\"D_North_American_1927_Perry\",SPHEROID[\"Clarke_1866_Chase\",6378210.0,250.0]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"false_easting\",500000.0],PARAMETER[\"false_northing\",0.0],PARAMETER[\"central_meridian\",-107.3333333],PARAMETER[\"scale_factor\",0.9999412],PARAMETER[\"latitude_of_origin\",40.66666667],UNIT[\"Foot_US\",0.3048006096012192]]";
+          sr = SpatialReferenceBuilder.CreateSpatialReference(wkt);
+          datum = sr.Datum;
+
+          // datum.Name = "D_North_American_1927_Perry"
+          // datum.Wkid = 0
+          // datum.SpheroidName = "Clarke_1866_Chase"
+          // datum.SpheroidWkid = 0
+          // datum.SpheroidFlattening = 0.004
+          // datum.SpheroidSemiMajorAxis = 6378210.0
+          // datum.SpheroidSemiMinorAxis = 6352697.16
         });
 
         #endregion
+
       }
 
       public void Coordinate3D()
@@ -463,31 +547,31 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
-        private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
-        {
-            QueuedTask.Run(() => {
-                #region Zoom to a specified point
-                //Note: Run within QueuedTask
-                //Create a point
-                var pt = MapPointBuilder.CreateMapPoint(x, y, SpatialReferenceBuilder.CreateSpatialReference(4326));
-                //Buffer it - for purpose of zoom
-                var poly = GeometryEngine.Instance.Buffer(pt, buffer_size);
+      private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
+      {
+          QueuedTask.Run(() => {
+              #region Zoom to a specified point
+              //Note: Run within QueuedTask
+              //Create a point
+              var pt = MapPointBuilder.CreateMapPoint(x, y, SpatialReferenceBuilder.CreateSpatialReference(4326));
+              //Buffer it - for purpose of zoom
+              var poly = GeometryEngine.Instance.Buffer(pt, buffer_size);
 
-                //do we need to project the buffer polygon?
+              //do we need to project the buffer polygon?
 
-                if (!MapView.Active.Map.SpatialReference.IsEqual(poly.SpatialReference))
-                {
-                    //project the polygon
-                    poly = GeometryEngine.Instance.Project(poly, MapView.Active.Map.SpatialReference);
-                }
+              if (!MapView.Active.Map.SpatialReference.IsEqual(poly.SpatialReference))
+              {
+                  //project the polygon
+                  poly = GeometryEngine.Instance.Project(poly, MapView.Active.Map.SpatialReference);
+              }
 
-                //Zoom - add in a delay for animation effect
-                MapView.Active.ZoomTo(poly, new TimeSpan(0, 0, 0, 3));
-                #endregion
-            });
-        }
+              //Zoom - add in a delay for animation effect
+              MapView.Active.ZoomTo(poly, new TimeSpan(0, 0, 0, 3));
+              #endregion
+          });
+      }
 
-        public void Polyline()
+      public void Polyline()
       {
         #region Construct a Polyline - from an enumeration of MapPoints
 
@@ -520,15 +604,43 @@ namespace ProSnippetsGeometry {
         ReadOnlyPointCollection pts = polyline.Points;
         int numPts = polyline.PointCount;
 
-        // get an enumeration of the points
+        // OR   get an enumeration of the points
         IEnumerator<MapPoint> enumPts = polyline.Points.GetEnumerator();
 
-        // get the point coordinates as a readonly list of Coordinate2D
+        // OR   get the point coordinates as a readonly list of Coordinate2D
         IReadOnlyList<Coordinate2D> coordinates = polyline.Copy2DCoordinatesToList();
 
-        // get the point coordinates as a readonly list of Coordinate3D
+        // OR   get the point coordinates as a readonly list of Coordinate3D
         IReadOnlyList<Coordinate3D> coordinates3D = polyline.Copy3DCoordinatesToList();
 
+        // OR   get a subset of the collection as Coordinate2D using preallocated memory
+
+        IList<Coordinate2D> coordinate2Ds = new List<Coordinate2D>(10);   // allocate some space
+        ICollection<Coordinate2D> subsetCoordinates2D = coordinate2Ds;    // assign
+        pts.Copy2DCoordinatesToList(1, 2, ref subsetCoordinates2D);       // copy 2 elements from index 1 into the allocated list
+        // coordinate2Ds.Count = 2
+        // do something with the coordinate2Ds
+
+        // without allocating more space, obtain a different set of coordinates
+        pts.Copy2DCoordinatesToList(5, 9, ref subsetCoordinates2D);       // copy 9 elements from index 5 into the allocated list
+        // coordinate2Ds.Count = 9
+    
+
+        // OR   get a subset of the collection as Coordinate3D using preallocated memory
+
+        IList<Coordinate3D> coordinate3Ds = new List<Coordinate3D>(15);   // allocate some space
+        ICollection<Coordinate3D> subsetCoordinates3D = coordinate3Ds;    // assign
+        pts.Copy3DCoordinatesToList(3, 5, ref subsetCoordinates3D);       // copy 5 elements from index 3 into the allocated list
+        // coordinate3Ds.Count = 5
+
+
+        // OR   get a subset of the collection as MapPoint using preallocated memory
+
+        IList<MapPoint> mapPoints = new List<MapPoint>(7);   // allocate some space
+        ICollection<MapPoint> subsetMapPoint = mapPoints;    // assign
+        pts.CopyPointsToList(1, 4, ref subsetMapPoint);      // copy 4 elements from index 1 into the allocated list
+        // mapPoints.Count = 4
+        
         #endregion
 
         #region Get the parts of a Polyline
@@ -566,6 +678,25 @@ namespace ProSnippetsGeometry {
           }
         }
         
+        // or use foreach pattern
+        foreach (var part in polyline.Parts)
+        {
+          foreach (var segment in part)
+          {
+           len += segment.Length;
+
+            // perhaps do something specific per segment type
+            switch (segment.SegmentType)
+            {
+              case SegmentType.Line:
+                break;
+              case SegmentType.Bezier:
+                break;
+              case SegmentType.EllipticArc:
+                break;
+            }
+          }
+        }
         #endregion
 
         #region Reverse the order of points in a Polyline
@@ -611,7 +742,7 @@ namespace ProSnippetsGeometry {
           }
         });
 
-            #endregion
+        #endregion
             
         Geometry sketchGeometry = null;
         #region StartPoint of a Polyline
@@ -635,9 +766,9 @@ namespace ProSnippetsGeometry {
         var startPoint = firsLineSegment.StartPoint;
 
         #endregion
-        }
+      }
 
-        public void Clothoid()
+      public void Clothoid()
       {
         #region Construct a Clothoid by Angle
 
@@ -713,8 +844,10 @@ namespace ProSnippetsGeometry {
           createMethod = esriClothoidCreateMethod.ByLength;
           curveLength = 10;
 
-          PolylineBuilder pb = new PolylineBuilder(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, esriCurveDensifyMethod.ByLength, 0.5, sr);
-          Polyline polyline = pb.ToGeometry();
+          using (PolylineBuilder pb = new PolylineBuilder(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, esriCurveDensifyMethod.ByLength, 0.5, sr))
+          {
+            Polyline polyline = pb.ToGeometry();
+          }
 
         });
         #endregion
@@ -826,8 +959,11 @@ namespace ProSnippetsGeometry {
         // get an enumeration of the points
         IEnumerator<MapPoint> enumPts = poly.Points.GetEnumerator();
 
+        // get the point coordinates as a readonly list of Coordinate2D
+        IReadOnlyList<Coordinate2D> coordinates = poly.Copy2DCoordinatesToList();
+
         // get the point coordinates as a readonly list of Coordinate3D
-        IReadOnlyList<Coordinate3D> coordinates = poly.Copy3DCoordinatesToList();
+        IReadOnlyList<Coordinate3D> coordinates3D = poly.Copy3DCoordinatesToList();
         #endregion
 
         #region Get the parts of a Polygon
@@ -950,7 +1086,63 @@ namespace ProSnippetsGeometry {
             result = eBuilder.ToGeometry();
           }
         });
+  
+        #endregion
 
+        #region Update Coordinates of an Envelope
+        
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          Coordinate2D minCoord = new Coordinate2D(1, 3);
+          Coordinate2D maxCoord = new Coordinate2D(2, 4);
+          using (EnvelopeBuilder builder = new EnvelopeBuilder(minCoord, maxCoord))
+          {
+            // builder.XMin, YMin, Zmin, MMin  = 1, 3, 0, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 2, 4, 0, double.Nan
+
+            // set XMin.  if XMin > XMax; both XMin and XMax change
+            builder.XMin = 6;
+            // builder.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 6, 4, 0, double.Nan
+
+            // set XMax
+            builder.XMax = 8;
+            // builder.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 8, 4, 0, double.Nan
+
+            // set XMax.  if XMax < XMin, both XMin and XMax change
+            builder.XMax = 3;
+            // builder.XMin, YMin, ZMin, MMin  = 3, 3, 0, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
+
+            // set YMin
+            builder.YMin = 2;
+            // builder.XMin, YMin, ZMin, MMin  = 3, 2, 0, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
+
+            // set ZMin.  if ZMin > ZMax, both ZMin and ZMax change
+            builder.ZMin = 3;
+            // builder.XMin, YMin, ZMin, MMin  = 3, 2, 3, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 3, 4, 3, double.Nan
+
+            // set ZMax.  if ZMax < ZMin. both ZMin and ZMax change
+            builder.ZMax = -1;
+            // builder.XMin, YMin, ZMin, MMin  = 3, 2, -1, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 3, 4, -1, double.Nan
+
+            builder.SetZCoords(8, -5);
+            // builder.XMin, YMin, ZMin, MMin  = 3, 2, -5, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 3, 4, 8, double.Nan
+
+            Coordinate2D c1 = new Coordinate2D(0, 5);
+            Coordinate2D c2 = new Coordinate2D(1, 3);
+            builder.SetXYCoords(c1, c2);
+            // builder.XMin, YMin, ZMin, MMin  = 0, 3, -5, double.Nan
+            // builder.XMax, YMax, ZMax, MMax = 1, 5, 8, double.Nan
+
+          }
+        });
         #endregion
       }
 
@@ -1003,6 +1195,14 @@ namespace ProSnippetsGeometry {
             Multipoint modifiedMultiPoint = mpb.ToGeometry();
           }
         });
+
+        #endregion
+
+        #region Retrieve Points, 2D Coordinates, 3D Coordinates from a multipoint
+
+        ReadOnlyPointCollection points = multiPt.Points;
+        IReadOnlyList<Coordinate2D> coords2d = multiPt.Copy2DCoordinatesToList();
+        IReadOnlyList<Coordinate3D> coords3d = multiPt.Copy3DCoordinatesToList();
 
         #endregion
       }
@@ -1440,6 +1640,146 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      public void GeometryBag()
+      {
+        #region Construct GeometryBag
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          using (GeometryBagBuilder builder = new GeometryBagBuilder(SpatialReferences.WGS84))
+          {
+            GeometryBag bag = builder.ToGeometry();
+            // bag.IsEmpty = true
+
+            MapPoint point = MapPointBuilder.CreateMapPoint(1, 2, SpatialReferences.WebMercator);
+            builder.AddGeometry(point);
+            // builder.CountGeometries = 1
+
+            bag = builder.ToGeometry();
+            // bag.PartCount = 1
+            // bag.PointCount = 1
+            // bag.IsEmpty = false
+
+            IReadOnlyList<Geometry> geometries = bag.Geometries;
+            // geometries.Count = 1
+            // geometries[0] is MapPoint with a sr of WGS84
+
+            List<Coordinate2D> coords2D = new List<Coordinate2D>()
+            {
+              new Coordinate2D(0, 0),
+              new Coordinate2D(0, 1),
+              new Coordinate2D(1, 1),
+              new Coordinate2D(1, 0)
+            };
+
+            Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords2D, SpatialReferences.WGS84);
+            builder.InsertGeometry(0, multipoint);
+            bag = builder.ToGeometry();
+            // bag.PartCount = 2
+
+            geometries = bag.Geometries;
+            // geometries.Count = 2
+            // geometries[0] is Multipoint
+            // geometries[1] is MapPoint
+
+            Polyline polyline = PolylineBuilder.CreatePolyline(coords2D, SpatialReferences.WebMercator);
+            builder.AddGeometry(polyline);
+            builder.RemoveGeometry(1);
+            bag = builder.ToGeometry();
+            // bag.PartCount = 2
+
+            geometries = bag.Geometries;
+            // geometries.Count = 2
+            // geometries[0] is Multipoint
+            // geometries[1] is Polyline          }
+          }
+        });
+
+        #endregion
+
+        #region Construct GeometryBag - from an enumeration of geometries
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          MapPoint point = MapPointBuilder.CreateMapPoint(10, 20);
+
+          List<Coordinate2D> coords = new List<Coordinate2D>() { new Coordinate2D(50, 60), new Coordinate2D(-120, -70), new Coordinate2D(40, 60) };
+          Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords, SpatialReferences.WebMercator);
+          Polyline polyline = PolylineBuilder.CreatePolyline(coords);
+
+          string json = "{\"rings\":[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[3,0],[3,1],[4,1],[4,0],[3,0]]]}";
+          Polygon polygon = PolygonBuilder.FromJson(json);
+
+          var geometries = new List<Geometry>() { point, multipoint, polyline, polygon };
+          using (var builder = new GeometryBagBuilder(geometries, SpatialReferences.WGS84))
+          {
+            // builder.CountGeometries = 4
+
+            var bag = builder.ToGeometry();
+            // bag.PartCount = 4
+            // bag.PointCount = 17
+          }
+
+          // or use the convenience method
+          var bag2 = GeometryBagBuilder.CreateGeometryBag(geometries, SpatialReferences.WGS84);
+        });
+
+      #endregion
+
+        #region Construct GeometryBag - from JSON, Xml
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          const string json = "{\"geometries\":[{\"x\":1,\"y\":2},{\"rings\":[[[0,0],[0,4],[3,4],[3,0],[0,0]]]}],\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}";
+          GeometryBag bag = GeometryBagBuilder.FromJson(json);
+
+          string xml = bag.ToXML();
+          GeometryBag bag_xml = GeometryBagBuilder.FromXML(xml);
+
+        });
+
+        #endregion
+
+        #region Construct GeometryBag - adding or inserting an enumeration of geometries
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          MapPoint point = MapPointBuilder.CreateMapPoint(10, 20);
+
+          List<Coordinate2D> coords = new List<Coordinate2D>() { new Coordinate2D(50, 60), new Coordinate2D(-120, -70), new Coordinate2D(40, 60) };
+          Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords, SpatialReferences.WebMercator);
+          Polyline polyline = PolylineBuilder.CreatePolyline(coords);
+
+          string json = "{\"rings\":[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[3,0],[3,1],[4,1],[4,0],[3,0]]]}";
+          Polygon polygon = PolygonBuilder.FromJson(json);
+
+          var geometries = new List<Geometry>() { point, multipoint, polyline, polygon };
+
+          using (var builder = new GeometryBagBuilder(SpatialReferences.WGS84))
+          {
+            // builder.CountGeometries = 0
+
+            builder.AddGeometries(geometries);
+            // builder.CountGeometries = 4
+
+            var bag = builder.ToGeometry();
+            // bag.PartCount = 4    (point, multipoint, polyline, polygon)
+
+            geometries = new List<Geometry>() { point, polyline };
+            builder.InsertGeometries(1, geometries);
+            // builder.CountGeometries = 6
+            bag = builder.ToGeometry();
+            // bag.PartCount = 6    (point, point, polyline, multipoint, polyline, polygon)
+          }
+        });
+
+        #endregion
+      }
+
       #region Get the individual parts of a multipart feature
 
       /// <summary>
@@ -1690,10 +2030,10 @@ namespace ProSnippetsGeometry {
 
       public void ImportExport()
       {
-        #region Import and Export Geometries to Well Known Text
+      #region Import and Export Geometries to well-known Text
 
-        // methods need to run on the MCT
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      // methods need to run on the MCT
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // create a point with z, m
           MapPoint point = MapPointBuilder.CreateMapPoint(100, 200, 300, 400, SpatialReferences.WebMercator);
@@ -1750,12 +2090,12 @@ namespace ProSnippetsGeometry {
 
         });
 
-        #endregion
+      #endregion
 
-        #region Import and Export Geometries to Well Known Binary
+      #region Import and Export Geometries to well-known Binary
 
-        // methods need to run on the MCT
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      // methods need to run on the MCT
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // create a polyline
           List<Coordinate2D> coords = new List<Coordinate2D> 
@@ -2029,46 +2369,46 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
-    public void AccelerateGeomtries()
-    {
-      Polygon polygon = null;
-      IEnumerable<Polygon> testPolygons = null;
-
-      #region Accelerate Geometries
-
-      // Use acceleration to speed up relational operations.  Accelerate your source geometry only if you are going to test many other geometries against it. 
-      // Acceleration is applicable for polylines and polygons only. Note that accelerated geometries take more memory so if you aren't going to get any
-      // benefit from accelerating it, don't do it. 
-
-      // The performance of the following GeometryEngine functions are the only ones which can be improved with an accelerated geometry.
-      //    GeometryEngine.Instance.Contains
-      //    GeometryEngine.Instance.Crosses
-      //    GeometryEngine.Instance.Disjoint
-      //    GeometryEngine.Instance.Disjoint3D
-      //    GeometryEngine.Instance.Equals
-      //    GeometryEngine.Instance.Intersects
-      //    GeometryEngine.Instance.Relate
-      //    GeometryEngine.Instance.Touches
-      //    GeometryEngine.Instance.Within
-
-
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      public void AccelerateGeomtries()
       {
-        // accelerate the geometry to test
-        var acceleratedPoly = GeometryEngine.Instance.AccelerateForRelationalOperations(polygon);
+        Polygon polygon = null;
+        IEnumerable<Polygon> testPolygons = null;
 
-        // loop through all the geometries to test against
-        foreach (var testPolygon in testPolygons)
+        #region Accelerate Geometries
+
+        // Use acceleration to speed up relational operations.  Accelerate your source geometry only if you are going to test many other geometries against it. 
+        // Acceleration is applicable for polylines and polygons only. Note that accelerated geometries take more memory so if you aren't going to get any
+        // benefit from accelerating it, don't do it. 
+
+        // The performance of the following GeometryEngine functions are the only ones which can be improved with an accelerated geometry.
+        //    GeometryEngine.Instance.Contains
+        //    GeometryEngine.Instance.Crosses
+        //    GeometryEngine.Instance.Disjoint
+        //    GeometryEngine.Instance.Disjoint3D
+        //    GeometryEngine.Instance.Equals
+        //    GeometryEngine.Instance.Intersects
+        //    GeometryEngine.Instance.Relate
+        //    GeometryEngine.Instance.Touches
+        //    GeometryEngine.Instance.Within
+
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
-          bool contains = GeometryEngine.Instance.Contains(acceleratedPoly, testPolygon);
-          bool within = GeometryEngine.Instance.Within(acceleratedPoly, testPolygon);
-          bool crosses = GeometryEngine.Instance.Crosses(acceleratedPoly, testPolygon);
-        }
-      });
+          // accelerate the geometry to test
+          var acceleratedPoly = GeometryEngine.Instance.AccelerateForRelationalOperations(polygon);
 
-      #endregion
-    }
+          // loop through all the geometries to test against
+          foreach (var testPolygon in testPolygons)
+          {
+            bool contains = GeometryEngine.Instance.Contains(acceleratedPoly, testPolygon);
+            bool within = GeometryEngine.Instance.Within(acceleratedPoly, testPolygon);
+            bool crosses = GeometryEngine.Instance.Crosses(acceleratedPoly, testPolygon);
+          }
+        });
+
+        #endregion
+      }
     
       public void Area()
       {
@@ -2666,7 +3006,7 @@ namespace ProSnippetsGeometry {
 
       public void DensifyByLength()
       {
-        #region Densify By Length
+        #region Densify by Length
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -3157,20 +3497,20 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
-    public void GeodesicDistance()
-    {
-      #region Determine geodesic distance between two Geometries
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      public void GeodesicDistance()
       {
-        var point1 = MapPointBuilder.CreateMapPoint(-170, 45, SpatialReferences.WGS84);
-        var point2 = MapPointBuilder.CreateMapPoint(170, 45, SpatialReferences.WGS84);
+        #region Determine geodesic distance between two Geometries
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          var point1 = MapPointBuilder.CreateMapPoint(-170, 45, SpatialReferences.WGS84);
+          var point2 = MapPointBuilder.CreateMapPoint(170, 45, SpatialReferences.WGS84);
 
-        var distances_meters = GeometryEngine.Instance.GeodesicDistance(point1, point2);
-        // distance is approximately 1572912.2066940258 in meters
-      });
-      #endregion
-    }
+          var distances_meters = GeometryEngine.Instance.GeodesicDistance(point1, point2);
+          // distance is approximately 1572912.2066940258 in meters
+        });
+        #endregion
+      }
 
       public void GeodesicEllipse()
       {
@@ -3538,6 +3878,198 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      public void M_Functions()
+      {
+        // GetMinMaxM, GetMMonotonic, GetPointsAtM, GetSubCurveBetweenMs, GetNormalsAtM, SetMsAsDistance, SetAndInterpolateMsBetween
+
+        #region Get the minimum and maximum M values (GetMinMaxM)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"rings\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20],[0,-2000,0],[1000,-2000,-20],[2000,-2000,-30],[3000,-2000,10],[4000,-2000,5]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polygon polygon = PolygonBuilder.FromJson(json);
+
+          double minM, maxM;
+          GeometryEngine.Instance.GetMinMaxM(polygon, out minM, out maxM);
+          // minM = -30 
+          // maxM = 20
+
+          json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,null],[-1000,-2000,null]]]}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          GeometryEngine.Instance.GetMinMaxM(polyline, out minM, out maxM);
+          // minM = 10
+          // maxM = 10
+
+          json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,null],[-2000,-2000,null],[-1000,-2000,null]]]}";
+          polyline = PolylineBuilder.FromJson(json);
+
+          GeometryEngine.Instance.GetMinMaxM(polyline, out minM, out maxM);
+          // minM = double.Nan
+          // maxM = double.Nan
+        });
+
+        #endregion
+
+        #region Determine whether Ms are monotonic and whether ascending or descending (GetMMonotonic)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20]]]}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          Monotonic monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
+          // monotonic = Monotonic.Ascending
+
+          json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,5],[-1000,-2000,0]]]}";
+          polyline = PolylineBuilder.FromJson(json);
+
+          monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
+          // monotonic = Monotonic.Descending
+
+          json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,0]]]}";
+          polyline = PolylineBuilder.FromJson(json);
+
+          monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
+          // monotonic = Monotonic.NotMonotonic
+
+        });
+
+        #endregion
+
+        #region Get a multipoint corresponding to the locations where the specified M values occur along the geometry (GetPointsAtM)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20],[0,-2000,0],[1000,-2000,20],[2000,-2000,30],[3000,-2000,10],[4000,-2000,5]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          Multipoint multipoint = GeometryEngine.Instance.GetPointsAtM(polyline, 10, 500);
+          // multiPoint.PointCount = 4
+          // multipoint.Points[0]  X= -3000, Y= -2500  M= 10
+          // multipoint.Points[1]  X= -500, Y= -2500  M= 10
+          // multipoint.Points[2]  X= 500, Y= -2500  M= 10
+          // multipoint.Points[3]  X= 3000, Y= -2500  M= 10
+
+        });
+
+        #endregion
+
+        #region Get a polyline corresponding to the subcurve(s) between specified M values (GetSubCurveBetweenMs)
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"paths\":[[[-2000,0,1],[-1000,1000,2],[-1000,0,3],[1000,1000,4],[2000,1000,5],[2000,2000,6],[3000,2000,7],[4000,0,8]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          Polyline subCurve = GeometryEngine.Instance.GetSubCurveBetweenMs(polyline, 2, 6);
+          // subCurve.PointCount = 5
+          // subCurve.Points[0]  X= --1000, Y= 1000 M= 2
+          // subCurve.Points[1]  X= --1000, Y= 0  M= 3
+          // subCurve.Points[2]  X= 1000, Y= 1000  M= 4
+          // subCurve.Points[3]  X= 2000, Y= -1000  M= 5
+          // subCurve.Points[4]  X= 2000, Y= -2000  M= 6
+
+          subCurve = GeometryEngine.Instance.GetSubCurveBetweenMs(polyline, double.NaN, 5);
+          // subCurve.PointCount = 0
+          // subCurve.IsEmpty = true
+
+        });
+        #endregion
+
+        #region Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry (GetNormalsAtM)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+
+          IList<MapPoint> inPoints = new List<MapPoint>()
+          {
+            MapPointBuilder.CreateMapPoint(-3000, -2000, 0, 100),
+            MapPointBuilder.CreateMapPoint(-3000, 0, 0, 200),
+            MapPointBuilder.CreateMapPoint(-1000, 0, 0, 300),
+            MapPointBuilder.CreateMapPoint(-1000, 2000, 0, 100),
+            MapPointBuilder.CreateMapPoint(3000, 2000, 0, 200),
+            MapPointBuilder.CreateMapPoint(3000, 0, 0, 300),
+            MapPointBuilder.CreateMapPoint(1000, 0, 0, 100),
+            MapPointBuilder.CreateMapPoint(1000, -2000, 0, 200),
+            MapPointBuilder.CreateMapPoint(-3000, -2000, 0, 300)
+          };
+
+          using (PolygonBuilder builder = new PolygonBuilder(inPoints))
+          {
+            builder.HasM = true;
+            Polygon polygon = builder.ToGeometry();
+
+            Polyline polyline = GeometryEngine.Instance.GetNormalsAtM(polygon, 150, 100);
+            // polyline.PartCount = 5
+            // polyline.PointCount = 10
+            // polyline.HasM = false
+
+            ReadOnlyPartCollection parts = polyline.Parts;
+            ReadOnlySegmentCollection segments = parts[0];
+            LineSegment line = segments[0] as LineSegment;
+            // line.StartCoordinate = (-3000, -1000)
+            // line.EndCoordinate = (-2900, -1000)
+
+            segments = parts[1];
+            line = segments[0] as LineSegment;
+            // line.StartCoordinate = (-1000, 1500)
+            // line.EndCoordinate = (-900, 1500)
+
+            segments = parts[2];
+            line = segments[0] as LineSegment;
+            // line.StartCoordinate = (1000, 2000)
+            // line.EndCoordinate = (1000, 1900)
+
+            segments = parts[3];
+            line = segments[0] as LineSegment;
+            // line.StartCoordinate = (1500, 0)
+            // line.EndCoordinate = (1500, 100)
+
+            segments = parts[4];
+            line = segments[0] as LineSegment;
+            // line.StartCoordinate = (1000, -1000)
+            // line.EndCoordinate = (900, -1000)
+          }
+        });
+
+        #endregion
+
+        #region Set M values to the cumulative length from the start of the multipart (SetMsAsDistance)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"rings\":[[[0,0],[0,3000],[4000,3000],[4000,0],[0,0]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polygon polygon = PolygonBuilder.FromJson(json);
+
+          Polygon outPolygon = GeometryEngine.Instance.SetMsAsDistance(polygon, AsRatioOrLength.AsLength) as Polygon;
+          ReadOnlyPointCollection outPoints = outPolygon.Points;
+          // outPoints M values are { 0, 3000, 7000, 10000, 14000 };
+        });
+
+        #endregion
+
+        #region Set Ms at the beginning and end of the geometry and interpolate M values between the two values (SetAndInterpolateMsBetween)
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000],[-2000,-2000],[-1000,-2000],[0,-2000],[1000,-2000],[2000,-2000],[3000,-2000],[4000,-2000]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          Polyline outPolyline = GeometryEngine.Instance.SetAndInterpolateMsBetween(polyline, 100, 800) as Polyline;
+          ReadOnlyPointCollection outPoints = outPolyline.Points;
+          // outPoints M values are { 100, 200, 300, 400, 500, 600, 700, 800 };
+        });
+
+        #endregion
+      }
+
       public void Move()
       {
         #region Move a MapPoint
@@ -3711,6 +4243,43 @@ namespace ProSnippetsGeometry {
           // pointAlong = 1, 2, 9, 12
         });
         #endregion
+      }
+
+      public void MultipartToSinglePart()
+      {
+        Polygon multipartPolygon = null;
+
+        #region Separate components of a geometry into single component geometries
+
+        List<Coordinate2D> coords2D = new List<Coordinate2D>()
+        {
+          new Coordinate2D(0, 0),
+          new Coordinate2D(1, 4),
+          new Coordinate2D(2, 7),
+          new Coordinate2D(-10, 3)
+        };
+
+        Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords2D, SpatialReferences.WGS84);
+
+        IReadOnlyList<Geometry> result = GeometryEngine.Instance.MultipartToSinglePart(multipoint);
+        // result.Count = 4, 
+
+
+        // 'explode' a multipart polygon
+        result = GeometryEngine.Instance.MultipartToSinglePart(multipartPolygon);
+
+
+        // create a bag of geometries
+        Polygon polygon = PolygonBuilder.CreatePolygon(coords2D, SpatialReferences.WGS84);
+        GeometryBag bag = GeometryBagBuilder.CreateGeometryBag(new List<Geometry>() { multipoint, polygon });
+        // bag.PartCount = 2
+        
+        result = GeometryEngine.Instance.MultipartToSinglePart(bag);
+        // result.Count = 2
+        // result[0] is MultiPoint
+        // result[1] is Polygon
+
+      #endregion
       }
 
       public void NearestPoint_NearestVertex()

@@ -66,15 +66,37 @@ namespace Content.Snippets
     public async void ContentSnippets2()
     {
 
-      #region New project using a particular template
+      #region New project using a custom template file
       //Settings used to create a new project
       CreateProjectSettings projectSettings = new CreateProjectSettings()
-      {
+      {        
+        //Sets the project's name
+        Name = "New Project",
+        //Path where new project will be stored in
+        LocationPath = @"C:\Data\NewProject",
         //Sets the project template that will be used to create the new project
         TemplatePath = @"C:\Data\MyProject1\CustomTemplate.aptx"
       };
       //Create the new project
       await Project.CreateAsync(projectSettings);
+      #endregion
+
+      #region Create project using template available with ArcGIS Pro
+      //Settings used to create a new project
+      CreateProjectSettings proTemplateSettings = new CreateProjectSettings()
+      {
+        //Sets the project's name
+        Name = "New Project",
+        //Path where new project will be stored in
+        LocationPath = @"C:\Data\NewProject",
+        //Select which Pro template you like to use
+        TemplateType = TemplateType.Catalog
+        //TemplateType = TemplateType.LocalScene
+        //TemplateType = TemplateType.GlobalScene
+        //TemplateType = TemplateType.Map
+      };
+      //Create the new project
+      await Project.CreateAsync(proTemplateSettings);
       #endregion
 
       #region Open project
@@ -283,7 +305,7 @@ namespace Content.Snippets
       }
       #endregion
 
-      #region Get The Default Project Folder
+      #region Get the Default Project Folder
 
       var defaultProjectPath = System.IO.Path.Combine(
                   System.Environment.GetFolderPath(
@@ -310,8 +332,8 @@ namespace Content.Snippets
 
     }
 
-    #region Method to Return The Default Template Folder
-
+    
+ //removed at 2.3
     public static string GetDefaultTemplateFolder()
     {
       string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
@@ -319,9 +341,9 @@ namespace Content.Snippets
       return System.IO.Path.Combine(root, @"Resources\ProjectTemplates");
     }
 
-    #endregion
 
-    #region Get The List of Installed Templates
+
+  //removed at 2.3
 
     public static Task<List<string>> GetDefaultTemplatesAsync()
     {
@@ -334,13 +356,12 @@ namespace Content.Snippets
       });
     }
 
-    #endregion
+    
 
     public static async void CreateProjectWithTemplate()
     {
 
-      #region Create Project With Template
-      var templates = await GetDefaultTemplatesAsync();
+      #region Create Project with Template      
       var projectFolder = System.IO.Path.Combine(
           System.Environment.GetFolderPath(
               Environment.SpecialFolder.MyDocuments),
@@ -350,7 +371,7 @@ namespace Content.Snippets
       {
         Name = "MyProject",
         LocationPath = projectFolder,
-        TemplatePath = templates[2]//2D "Map" template
+        TemplatePath = @"C:\data\my_templates\custom_template.aptx"
       };
 
       var project = await Project.CreateAsync(ps);
@@ -499,9 +520,11 @@ namespace Content.Snippets
 
       //Item gdbItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\regionFive.gdb");
 
-      
 
-      #region Item: Updates metadata with the imported metadata - the input path can be the path to an item with metadata, or a URI to a XML file: ImportMetadata
+
+      #region Item: Updates metadata with the imported metadata: ImportMetadata
+
+      // the input path can be the path to an item with metadata, or a URI to an XML file
 
       await QueuedTask.Run(() => metadataItemImport.ImportMetadata(@"E:\YellowStone.gdb\MyDataset\MyFeatureClass", MDImportExportOption.esriCurrentMetadataStyle));
 

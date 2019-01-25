@@ -21,8 +21,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
+using ArcGIS.Desktop.Mapping;
+
+namespace Layout_HelpExamples
+{
+  public class Export_Examples
+  {
+    async public static void ExportLayoutToPDF()
+    {
+
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
+      Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
+      String filePath = null;
+
+      #region Layout_ExportPDF
+      //Export a layout to PDF
+
+      //Create a PDF export format
+      PDFFormat pdf = new PDFFormat()
+      {
+        OutputFileName = filePath,
+        Resolution = 300,
+        DoCompressVectorGraphics = true,
+        DoEmbedFonts = true,
+        HasGeoRefInfo = true,
+        ImageCompression = ImageCompression.Adaptive,
+        ImageQuality = ImageQuality.Best,
+        LayersAndAttributes = LayersAndAttributes.LayersAndAttributes
+    };
+
+      //Check to see if the path is valid and export
+      if (pdf.ValidateOutputFilePath())
+      {
+        layout.Export(pdf);  //Export the PDF 
+      }
+      #endregion Layout_ExportPDF
+    }
+  }
+  
+}
+
+
+
+
+
 
 
 namespace Layout_HelpExamples
@@ -121,19 +168,19 @@ namespace Layout_HelpExamples
     {
       return QueuedTask.Run(() =>
       {
-              //Reference the active map view
-              MapView map = MapView.Active;
+        //Reference the active map view
+        MapView map = MapView.Active;
 
-              //Create BMP format with appropriate settings
-              BMPFormat BMP = new BMPFormat();
+        //Create BMP format with appropriate settings
+        BMPFormat BMP = new BMPFormat();
         BMP.Resolution = 300;
         BMP.Height = 500;
         BMP.Width = 800;
         BMP.HasWorldFile = true;
         BMP.OutputFileName = Path;
 
-              //Export active map view
-              if (BMP.ValidateOutputFilePath())
+        //Export active map view
+        if (BMP.ValidateOutputFilePath())
         {
           map.Export(BMP);
         }
@@ -142,8 +189,6 @@ namespace Layout_HelpExamples
   }
   #endregion ExportBMP_ActiveMap
 }
-
-
 
 namespace Layout_HelpExamples
 {
@@ -261,8 +306,6 @@ namespace Layout_HelpExamples
   #endregion ExportEMF_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportEPS_Layout
@@ -378,8 +421,6 @@ namespace Layout_HelpExamples
   }
   #endregion ExportEPS_ActiveMap
 }
-
-
 
 namespace Layout_HelpExamples
 {
@@ -499,8 +540,6 @@ namespace Layout_HelpExamples
   #endregion ExportGIF_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportJPEG_Layout
@@ -619,8 +658,6 @@ namespace Layout_HelpExamples
   #endregion ExportJPEG_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportPDF_Layout
@@ -738,8 +775,6 @@ namespace Layout_HelpExamples
   #endregion ExportPDF_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportPNG_Layout
@@ -855,8 +890,6 @@ namespace Layout_HelpExamples
   }
   #endregion ExportPNG_ActiveMap
 }
-
-
 
 namespace Layout_HelpExamples
 {
@@ -974,8 +1007,6 @@ namespace Layout_HelpExamples
   #endregion ExportSVG_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportTGA_Layout
@@ -1092,8 +1123,6 @@ namespace Layout_HelpExamples
   #endregion ExportTGA_ActiveMap
 }
 
-
-
 namespace Layout_HelpExamples
 {
   #region ExportTIFF_Layout
@@ -1209,8 +1238,6 @@ namespace Layout_HelpExamples
   }
   #endregion ExportTIFF_ActiveMap
 }
-
-
 
 namespace Layout_HelpExamples
 {

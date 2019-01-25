@@ -1,4 +1,4 @@
-## ArcGIS Pro 2.2 SDK for .NET
+## ArcGIS Pro 2.3 SDK for .NET
 
 Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based on the add-in and configurations extensibility pattern. Leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to write integrated 2D/3D add-ins using Pro’s new APIs.
 
@@ -14,6 +14,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [ArcGIS Pro SDK for .NET templates](#arcgis-pro-sdk-for-net-templates)
   * [ArcGIS Pro SDK for .NET utilities](#arcgis-pro-sdk-for-net-utilities)
 * [Getting started](#getting-started) 
+* [ProGuide: ArcGIS Pro Extensions NuGet](../../wiki/ProGuide-ArcGIS-Pro-Extensions-NuGet)
 * [ProConcepts: Migrating to ArcGIS Pro](../../wiki/ProConcepts-Migrating-to-ArcGIS-Pro)
 * [ProSnippets](#prosnippets)  
 * [ArcGIS Pro API](#arcgis-pro-api)
@@ -21,7 +22,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [Extensions](#extensions)
   * [Extensions with no public API](#extensions-with-no-public-api)
 * [Release notes](#release-notes)
-  * [ArcGIS Pro 2.2 SDK for .NET](#arcgis-pro-22-sdk-for-net-1)
+  * [ArcGIS Pro 2.3 SDK for .NET](#arcgis-pro-23-sdk-for-net-1)
        * [What's New](#whats-new)
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
@@ -32,6 +33,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProConcepts: Framework](../../wiki/ProConcepts-Framework)
 * [ProConcepts: Advanced topics](../../wiki/ProConcepts-Advanced-Topics)
 * [ProGuide: Command line switches for ArcGISPro.exe](../../wiki/ProGuide-Command-line-switches-for-ArcGISPro.exe)
+* [ProGuide: Reusing ArcGIS Pro Commands](../../wiki/ProGuide-Reusing-Pro-Commands)
 * [ProGuide: Licensing](../../wiki/ProGuide-License-Your-Add-in)
 * [ProGuide: Digital signatures](../../wiki/ProGuide-Digitally-signed-add-ins-and-configurations)
 
@@ -97,10 +99,12 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProSnippets: Editing](../../wiki/ProSnippets-Editing)
 * [ProConcepts: Editing](../../wiki/ProConcepts-Editing)
 * [ProConcepts: Annotation Editing](../../wiki/ProConcepts-Editing-Annotation)
+* [ProConcepts: Editing Dimensions](../../wiki/ProConcepts-Editing-Dimensions)
 * [ProGuide: Editing Tool](../../wiki/ProGuide-Editing-Tool)
 * [ProGuide: Construction Tools with Options](../../wiki/ProGuide-Construction-Tools-with-Options)
 * [ProGuide: Annotation Construction Tools](../../wiki/ProGuide-Annotation-Construction-Tools)
 * [ProGuide: Annotation Editing Tools](../../wiki/ProGuide-Annotation-Editing-Tools)
+* [ProGuide: Templates](../../wiki/ProGuide-Templates)
 
 --------------------------
 
@@ -108,6 +112,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProSnippets: Geodatabase](../../wiki/ProSnippets-Geodatabase)
 * [ProConcepts: Geodatabase](../../wiki/ProConcepts-Geodatabase)
+* [ProConcepts: Plugin Datasources](../../wiki/ProConcepts-Plugin-Datasources)
+* [ProGuide: Plugin Datasources](../../wiki/ProGuide-Plugin-Datasource)
 
 --------------------------
 
@@ -147,6 +153,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProSnippets: Text Symbols](../../ProSnippets-TextSymbols)
 * [ProConcepts: Map Authoring](../../wiki/ProConcepts-Map-Authoring)
 * [ProConcepts: Annotation](../../wiki/ProConcepts-Annotation)
+* [ProConcepts: Dimensions](../../wiki/ProConcepts-Dimensions)
 * [ProGuide: Geocoding](../../wiki/ProGuide-Geocoding)
  
 --------------------------
@@ -157,6 +164,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProSnippets: Custom Pane with Contents](../../wiki/ProSnippets-CustomPaneWithContents)
 * [ProConcept: Map Exploration](../../wiki/ProConcepts-Map-Exploration)
 * [ProGuide: Map Pane Impersonation](../../wiki/ProGuide-Map-Pane-Impersonation)
+* [ProGuide: TableControl](../../wiki/ProGuide-TableControl)
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Map Tools**<br>
 
@@ -214,18 +222,12 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [FAQ](http://github.com/Esri/arcgis-pro-sdk/wiki/FAQ)
 * [ArcGIS Pro SDK icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.0.0.8933)
 
-&nbsp;&nbsp;&nbsp;&nbsp;**2.0 Migration**
-
-* [ProSnippets: 2.0 Migration](../../wiki/ProSnippets-Migrating-to-2.0)
-* [ProSnippets: 2.0 Migration Samples](../../wiki/ProSnippets-2.0-Migration-Samples)
-* [ProConcepts: 2.0 Migration](../../wiki/ProConcepts-2.0-Migration-Guide)
-
 ## Requirements
 The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here.
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.1
+* ArcGIS Pro 2.3
 
 #### Supported platforms
 
@@ -240,7 +242,10 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 #### Supported IDEs
 
 * Visual Studio 2017 (Professional, Enterprise, and Community Editions)
-* Visual Studio 2015 (Professional, Enterprise, and Community Editions) 
+* Visual Studio 2015 (Professional, Enterprise, and Community Editions)  (**Deprecated at 2.3**)
+
+#### Deprecation Notice
+ Visual Studio 2015 has been deprecated at 2.3. Support will be removed with the next release.
  
 Note: [ArcGIS Pro system requirements](http://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
@@ -272,6 +277,7 @@ C#  | VB| Name
 ------------------------  | -------------| ---------
 ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleC32.png "ArcGIS Pro Module C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleVB32.png "ArcGIS Pro Module VB") |  ArcGIS Pro Module Add-in Project template  
 ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsC32.png "ArcGIS Pro Configurations C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsVB32.png "ArcGIS Pro Configurations VB") |  ArcGIS Pro Managed Configurations Project template  
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPluginC32.png "ArcGIS Pro Plugin C#") | N/A |  ArcGIS Pro Plugin Project template 
 ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabC32.png "ArcGIS Pro Backstage Tab C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabVB32.png "ArcGIS Pro Backstage Tab VB") | ArcGIS Pro Backstage Tab 
 ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonC32.png "ArcGIS Pro Button C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonVB32.png "ArcGIS Pro Button VB") | ArcGIS Pro Button 
 ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteC32.png "ArcGIS Pro Button Palette C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteVB32.png "ArcGIS Pro Button Palette VB") | ArcGIS Pro Button Palette
@@ -383,50 +389,60 @@ Note: Static string resource properties and image resources included within the 
 
 ## Release notes 
 
-### ArcGIS Pro 2.2 SDK for .NET
+### ArcGIS Pro 2.3 SDK for .NET
 
-These release notes describe details of the ArcGIS Pro 2.2 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
+These release notes describe details of the ArcGIS Pro 2.3 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
 #### What's new
 
-The following functionality is available at the ArcGIS Pro 2.2 SDK for .NET release:
+The following functionality is available at the ArcGIS Pro 2.3 SDK for .NET release:
 
-#### 1. API Enhancements  
+#### 1. New Project and Item Visual Studio templates
 
-**Content API:**<br/>
-* Additional Item methods for metadata access and management
+##### Plugin Datasource project template
+This Visual Studio project template is used to build and interact with a Plugin Datasource at Pro 2.3+. 
 
-**Editing API:**<br/>
-* Additional support for annotation editing and split operations
+##### ProWindow item template
+This Visual Studio item template is used to create a ProWindow UI element in your Add-in and Configurations.
 
-**Geodatabase API:**<br/>
-* Table methods for sorting and calculating statistics
 
-**Geometry API:**<br/>
-* Performance improvements for buffering and use of relational operators
+#### 2. API Enhancements  
 
-**Utility Network API:**<br/>
-* Support for ValidateNetworkTopology, Tier groups, access to network system tables
+**Map Exploration:**<br/>
+* New Table control, and reports customization with the CIM.
 
-For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.2
+**Geodatabase:**<br/>
+* Plug-in data sources and additional version management support.
+
+**Layout:**<br/>
+* Additional map series support.
+
+**Dimension:**<br/>
+* First release of this new API, to be expanded in future releases.
+
+**Content:**<br/>
+* Additional support for metadata.
+
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.3
 ](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
-#### 2. SDK Resources
+#### 3. SDK Resources
 
 There are many ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
 
 Updates to the SDK Resources include:
 
 * [ProConcepts: Framework](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Framework)
-* [ProConcepts: Editing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Editing)
-* [ProConcepts: Geodatabase](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Geodatabase)
-* [ProConcepts: Geometry](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Geometry)
-* [ProConcepts: Utility Network](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Utility-Network)
+* [ProConcepts: Configurations](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Configurations)
+* [ProGuide: ArcGIS Pro Extensions NuGet](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-ArcGIS-Pro-Extensions-NuGet)
+* [ProConcepts: Plugin Datasources](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Plugin-Datasources)
+* [ProGuide: TableControl](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-TableControl)
 * The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
-* The API Changes section of the [What’s New for Developers 2.2](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
+* The API Changes section of the [What’s New for Developers 2.3](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
 
 ## Previous versions
 
+* [ArcGIS Pro 2.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.2.0.12813)
 * [ArcGIS Pro 2.1 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.1.0.10257)
 * [ArcGIS Pro 2.0 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.0.0.8933)
 * [ArcGIS Pro 1.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/1.4.0.7198)
@@ -445,7 +461,7 @@ Esri welcomes contributions from anyone and everyone. For more information, see 
 Find a bug or want to request a new feature? Let us know by submitting an issue.
 
 ## Licensing
-Copyright 2018 Esri
+Copyright 2019 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

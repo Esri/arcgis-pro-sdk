@@ -111,7 +111,7 @@ namespace MapAuthoring.ProSnippet
     }
     #endregion
 
-    #region Get The Unique List of Maps From the Map Panes
+    #region Get the Unique List of Maps From the Map Panes
     public static IReadOnlyList<Map> GetMapsFromMapPanes()
     {
       //Gets the unique list of Maps from all the MapPanes.
@@ -144,14 +144,14 @@ namespace MapAuthoring.ProSnippet
         public List<Layer> FindLayersWithPartialName(string partialName)
     {
 
-      // Find a layers using partial name search
+            #region Find a layer using partial name search
 
-      Map map = MapView.Active.Map;
+            Map map = MapView.Active.Map;
       IEnumerable<Layer> matches = map.GetLayersAsFlattenedList().Where(l => l.Name.IndexOf(partialName, StringComparison.CurrentCultureIgnoreCase) >= 0);
 
-      // endregion
+            #endregion
 
-      List<Layer> layers = new List<Layer>();
+            List<Layer> layers = new List<Layer>();
       foreach (Layer l in matches)
         layers.Add(l);
 
@@ -183,20 +183,41 @@ namespace MapAuthoring.ProSnippet
 
     }
 
-        public void AddWMSLayer()
+        public async Task AddWMSLayerAsync()
         {
-            #region Add a WMS service
-            // Create a connection to the WMS server
-            var serverConnection = new CIMInternetServerConnection { URL = "URL of the WMS service" };
-            var connection = new CIMWMSServiceConnection { ServerConnection = serverConnection };
+      {
+        #region Add a WMS service
+        // Create a connection to the WMS server
+        var serverConnection = new CIMInternetServerConnection { URL = "URL of the WMS service" };
+        var connection = new CIMWMSServiceConnection { ServerConnection = serverConnection };
 
-            // Add a new layer to the map
-            QueuedTask.Run(() =>
-            {
-                var layer = LayerFactory.Instance.CreateLayer(connection, MapView.Active.Map);
-            });
-            #endregion
-        }
+        // Add a new layer to the map
+        await QueuedTask.Run(() =>
+        {
+          var layer = LayerFactory.Instance.CreateLayer(connection, MapView.Active.Map);
+        });
+        #endregion
+      }
+      {
+
+        #region Add a WFS Service
+        CIMStandardDataConnection cIMStandardDataConnection = new CIMStandardDataConnection()
+        {
+          WorkspaceConnectionString = @"SWAPXY=TRUE;SWAPXYFILTER=FALSE;URL=http://sampleserver6.arcgisonline.com/arcgis/services/SampleWorldCities/MapServer/WFSServer;VERSION=2.0.0",
+          WorkspaceFactory = WorkspaceFactory.WFS,
+          Dataset = "Continent",
+          DatasetType = esriDatasetType.esriDTFeatureClass
+        };
+
+        // Add a new layer to the map
+        await QueuedTask.Run(() =>
+        {
+          Layer layer = LayerFactory.Instance.CreateLayer(cIMStandardDataConnection, MapView.Active.Map);
+        });
+        #endregion
+
+      }
+    }
 
         public static void MoveLayerTo3D()
         {
@@ -214,6 +235,35 @@ namespace MapAuthoring.ProSnippet
             #endregion
         }
 
+        public Task<bool> Convert2DMapTo3D()
+        {
+            return QueuedTask.Run(async () =>
+            {
+                #region Convert a 2D Map to a Local Scene
+                //Note: Run within the context of QueuedTask.Run
+                var localScene = MapFactory.Instance.CreateMap("3DMap", MapType.Scene, MapViewingMode.SceneLocal, basemap: Basemap.None);
+
+                //Get all the layers in the Active map you want to move over to the local scene
+                var lyrs = MapView.Active.Map.GetLayersAsFlattenedList();
+                //Move each of these layers to the new local scene
+                foreach (var lyr in lyrs)
+                {
+                    LayerFactory.Instance.CopyLayer(lyr, localScene);
+                }
+
+                //Set all the layers in the scene to be in the 3D group
+                foreach (var sceneLyr in localScene.GetLayersAsFlattenedList().OfType<FeatureLayer>())
+                {
+                    var lyrDefn = sceneLyr.GetDefinition() as CIMBasicFeatureLayer;
+                    //setting this property moves the layer to 3D group in a scene
+                    lyrDefn.IsFlattened = false;
+                    //Set the definition back to the layer
+                    sceneLyr.SetDefinition(lyrDefn);
+                }
+                #endregion
+                return true;
+            });
+        }
 
         private Task CreateNewElevationSurface()
         {
@@ -252,7 +302,6 @@ namespace MapAuthoring.ProSnippet
                     VerticalExaggeration = 1,
                     EnableSurfaceShading = false,
                     SurfaceTINShadingMode = SurfaceTINShadingMode.Smooth,
-                    Offset = 0,
                     Expanded = false,
                     MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
                 };
@@ -385,7 +434,66 @@ namespace MapAuthoring.ProSnippet
 
     }
 
-    public async Task AddQuerylayerAsync()
+        internal static Task UniqueValueRenderer(FeatureLayer featureLayer)
+        {
+            #region Create a UniqueValueRenderer to specify symbols to values 
+            return QueuedTask.Run(() =>
+            {
+                //The goal is to construct the CIMUniqueValueRenderer which will be applied to the feature layer.
+                // To do this, the following are the objects we need to set the renderer up with the fields and symbols.
+                // As a reference, this is the USCities dataset. Snippet will create a unique value renderer that applies 
+                // specific symbols to all the cities in California and Alabama.  The rest of the cities will use a default symbol.
+
+                // First create a "CIMUniqueValueClass" for the cities in Alabama.
+                List<CIMUniqueValue> listUniqueValuesAlabama = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "Alabama" } } };
+                CIMUniqueValueClass alabamaUniqueValueClass = new CIMUniqueValueClass
+                {
+                    Editable = true,
+                    Label = "Alabama",
+                    Patch = PatchShape.Default,
+                    Symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB).MakeSymbolReference(),
+                    Visible = true,
+                    Values = listUniqueValuesAlabama.ToArray()
+
+                };
+                // Create a "CIMUniqueValueClass" for the cities in California.
+                List<CIMUniqueValue> listUniqueValuescalifornia = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "California" } } };
+                CIMUniqueValueClass californiaUniqueValueClass = new CIMUniqueValueClass
+                {
+                    Editable = true,
+                    Label = "California",
+                    Patch = PatchShape.Default,
+                    Symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlueRGB).MakeSymbolReference(),
+                    Visible = true,
+                    Values = listUniqueValuescalifornia.ToArray()
+                };
+                //Create a list of the above two CIMUniqueValueClasses
+                List<CIMUniqueValueClass> listUniqueValueClasses = new List<CIMUniqueValueClass>
+                {
+                        alabamaUniqueValueClass, californiaUniqueValueClass
+                };
+                //Create a list of CIMUniqueValueGroup
+                CIMUniqueValueGroup uvg = new CIMUniqueValueGroup
+                {
+                    Classes = listUniqueValueClasses.ToArray(),
+                };
+                List<CIMUniqueValueGroup> listUniqueValueGroups = new List<CIMUniqueValueGroup> { uvg };
+                //Create the CIMUniqueValueRenderer
+                CIMUniqueValueRenderer uvr = new CIMUniqueValueRenderer
+                {
+                    UseDefaultSymbol = true,
+                    DefaultLabel = "all other values",
+                    DefaultSymbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreyRGB).MakeSymbolReference(),
+                    Groups = listUniqueValueGroups.ToArray(),
+                    Fields = new string[] { "STATE_NAME" }
+                };
+                //Set the feature layer's renderer.
+                featureLayer.SetRenderer(uvr);
+            });
+            #endregion
+        }
+
+ public async Task AddQuerylayerAsync()
     {
       #region Create a query layer
       await QueuedTask.Run(() =>
@@ -416,37 +524,6 @@ namespace MapAuthoring.ProSnippet
             #endregion
         }
 
-        public async Task ChangeGDBVersionAsync()
-    {
-
-      #region Change Geodatabase Version of layers off a specified version in a map using version name
-
-      await QueuedTask.Run(() =>
-    {
-      //Getting the current version name from the first feature layer of the map
-      FeatureLayer flyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();  //first feature layer
-      Datastore dataStore = flyr.GetFeatureClass().GetDatastore();  //getting datasource
-      Geodatabase geodatabase = dataStore as Geodatabase; //casting to Geodatabase
-      if (geodatabase == null)
-        return;
-
-      VersionManager versionManager = geodatabase.GetVersionManager();
-      String currentVersionName = versionManager.GetCurrentVersion().GetName();
-
-      //Getting all available versions except the current one
-      IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions().Where(v => !v.GetName().Equals(currentVersionName, StringComparison.CurrentCultureIgnoreCase));
-
-      //Assuming there is at least one other version we pick the first one from the list
-      ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
-      if (toVersion != null)
-      {
-        //Changing version
-        MapView.Active.Map.ChangeVersion(currentVersionName, toVersion.GetName());
-      }
-    });
-      #endregion
-
-    }
 
     public async Task ChangeGDBVersion2Async()
     {
@@ -980,6 +1057,25 @@ namespace MapAuthoring.ProSnippet
         var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(cimMarker); 
         #endregion
     }
+        private static Task CreateSymbolSwatch()
+        {
+            return QueuedTask.Run(() => {
+                #region Create a Swatch for a given symbol
+
+                //Note: call within QueuedTask.Run()
+                CIMSymbol symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle); 
+                //You can generate a swatch for a text symbols also.
+                var si = new SymbolStyleItem()
+                {
+                    Symbol = symbol,
+                    PatchHeight = 64,
+                    PatchWidth = 64
+                };
+                return si.PreviewImage;
+                #endregion
+            });
+        }
+
 
         public async void CreateProportionaRenderer()
     {
@@ -1287,6 +1383,73 @@ namespace MapAuthoring.ProSnippet
             #endregion
 
         }
+        #region Create and apply Abbreviation Dictionary in the Map Definition to a layer
+        public static void CreateDictionary()
+        {            
+            //Get the map's defintion
+            var mapDefn = MapView.Active.Map.GetDefinition();
+            //Get the Map's Maplex labelling engine properties
+            var mapDefnPlacementProps = mapDefn.GeneralPlacementProperties as CIMMaplexGeneralPlacementProperties;
+
+            //Define the abbreaviations we need in an array            
+            List<CIMMaplexDictionaryEntry> abbreviationDictionary = new List<CIMMaplexDictionaryEntry>
+            {
+                new CIMMaplexDictionaryEntry {
+                Abbreviation = "Hts",
+                Text = "Heights",
+                MaplexAbbreviationType = MaplexAbbreviationType.Ending
+
+             },
+                new CIMMaplexDictionaryEntry
+                {
+                    Abbreviation = "Ct",
+                    Text = "Text",
+                    MaplexAbbreviationType = MaplexAbbreviationType.Ending
+
+                }
+                //etc
+            };
+            //The Maplex Dictionary - can hold multiple Abbreviation collections
+            var maplexDictionary = new List<CIMMaplexDictionary>
+            {
+                new CIMMaplexDictionary {
+                    Name = "NameEndingsAbbreviations",
+                    MaplexDictionary = abbreviationDictionary.ToArray()
+                }
+
+            };
+            //Set the Maplex Label Engine Dictionary property to the Maplex Dictionary collection created above.
+            mapDefnPlacementProps.Dictionaries = maplexDictionary.ToArray();
+            //Set the Map defintion 
+            MapView.Active.Map.SetDefinition(mapDefn);
+        }
+
+        private static void ApplyDictionary()
+        {
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().First();
+
+            QueuedTask.Run(() => {
+                //Creates Abbreviation dictionary and adds to Map Defintion                                
+                CreateDictionary();
+                //Get the layer's definition
+                var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
+                //Get the label classes - we need the first one
+                var listLabelClasses = lyrDefn.LabelClasses.ToList();
+                var theLabelClass = listLabelClasses.FirstOrDefault();
+                //Modify label Placement props to use abbreviation dictionary 
+                CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
+                theLabelClass.MaplexLabelPlacementProperties.DictionaryName = "NameEndingsAbbreviations";
+                theLabelClass.MaplexLabelPlacementProperties.CanAbbreviateLabel = true;
+                theLabelClass.MaplexLabelPlacementProperties.CanStackLabel = false;
+                //Set the labelClasses back
+                lyrDefn.LabelClasses = listLabelClasses.ToArray();
+                //set the layer's definition
+                featureLayer.SetDefinition(lyrDefn);
+            });
+        }
+        
+
+#endregion
 
     }
 }

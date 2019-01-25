@@ -42,17 +42,17 @@ namespace TasksAPI
         message += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
         message += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
 
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Item Information");
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
       }
       catch (OpenTaskException e)
       {
         // exception thrown if task file doesn't exist or has incorrect format
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Item Information");
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
       }
       catch (TaskFileVersionException e)
       {
         // exception thrown if task file does not support returning task information
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Item Information");
+        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
       }
     }
   }}

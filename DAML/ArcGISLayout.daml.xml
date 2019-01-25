@@ -9,7 +9,7 @@
 
   <categories>
     <updateCategory refID="esri_core_projectContainers">
-      <insertComponent id="esri_layouts_container" className="ArcGIS.Desktop.Internal.Layouts.LayoutContainer"  insert="after" placeWith="esri_geoprocessing_history">
+      <insertComponent id="esri_layouts_container" className="ArcGIS.Desktop.Internal.Layouts.LayoutContainer"  insert="after" placeWith="esri_geodatabase_projectContainer">
         <content type="Layout" displayName="Layouts" contextMenu="esri_layouts_projectContainer"/>
       </insertComponent>
       <insertComponent id="esri_reports_container" className="ArcGIS.Desktop.Internal.Reports.ReportProjectItemContainer"  insert="after" placeWith="esri_layouts_container">
@@ -50,19 +50,19 @@
 
       <component id="esri_layouts_TypeOrderView">
         <content L_name = "Element Type" buttonTooltipHeader="List By Element Type" buttonTooltip = "Elements are listed by type."
-                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ContentsWindowListByElementType24.png">
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListByElementType24.png">
         </content>
       </component>
 
       <component id="esri_layouts_MapFrameOrderView">
         <content L_name = "Map Frames" buttonTooltipHeader="List By Map Frame" buttonTooltip = "Map surrounds are listed with their associated map frame."
-                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ContentsWindowListByMapFrame24.png">
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListByMapFrame24.png">
         </content>
       </component>
 
       <component id="esri_layouts_MapSeriesView">
         <content L_name = "Series" buttonTooltipHeader="List Map Series Pages" buttonTooltip = "Map series pages are listed by output order."
-                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeries24.png">
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries24.png">
         </content>
       </component>
     </insertCategory>
@@ -77,10 +77,26 @@
 
       <component id="esri_reports_TypeOrderView">
         <content L_name = "Element Type" buttonTooltipHeader="List By Element Type" buttonTooltip = "Elements are listed by type."
-                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ContentsWindowListByElementType24.png">
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListByElementType24.png">
         </content>
       </component>
     </insertCategory>
+
+    <updateCategory refID="esri_browseDialogFilters">
+      <insertComponent id="esri_browseDialogFilters_composite_reportSources" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content include="FolderConnection, GDB">
+          <filter refID="esri_browseDialogFilters_gp_tableView" />
+        </content>
+      </insertComponent>
+    </updateCategory>
+
+    <updateCategory refID="esri_browseDialogFilters">
+      <insertComponent id="esri_browseDialogFilters_composite_reportSourcesMap" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content include="FolderConnection, GDB, Map">
+          <filter refID="esri_browseDialogFilters_gp_tableView" />
+        </content>
+      </insertComponent>
+    </updateCategory>
 
   </categories>
   
@@ -92,9 +108,19 @@
           initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Select a layout element in the Contents pane.">
           <content className="ArcGIS.Desktop.Internal.Layouts.DockPanes.ElementDockPane"/>
         </dockPane>
+        <dockPane id="esri_layouts_spellCheckDockPane" caption="Check Spelling" className="ArcGIS.Desktop.Internal.Layouts.DockPanes.LayoutSpellCheckDockPaneVM" dock="group" condition="esri_layouts_layoutPaneCondition" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
+          initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Checking spelling...">
+          <content assembly="Extensions\Core\ArcGIS.Desktop.Core.dll" className="ArcGIS.Desktop.Internal.Core.CommonControls.SpellCheckDockPane"/>
+        </dockPane>
       </dockPanes>
 
       <tabs>
+        <tab id="esri_layouts_LayoutContainer" caption="Layout" keytip="Y" condition="esri_LayoutContainer" tabGroupID="esri_layouts_LayoutTabGroup">
+          <group refID="esri_core_clipboardGroup"/>
+          <group refID="esri_core_organize"/>
+          <group refID="esri_project_layout"/>
+        </tab>
+            
         <tab id="esri_layouts_homeTab" caption="Layout" condition="esri_layouts_layoutPane" keytip="Y">
           <group refID="esri_layouts_clipboardGroup"/>
           <group refID="esri_layouts_pageNavigateGroup"/>
@@ -103,6 +129,7 @@
           <group refID="esri_layouts_pageShowGroup"/>
           <group refID="esri_layouts_mapFrameGroup"/>
           <group refID="esri_layouts_sharingGroup"/>
+          <group refID="esri_layouts_reviewGroup"/>
         </tab>
 
         <tab id="esri_layouts_insertTab" caption="Insert" condition="esri_layouts_layoutPane" keytip="N">
@@ -146,6 +173,7 @@
           <group refID="esri_layouts_scaleBarFormatGroup"/>
           <group refID="esri_layouts_meterReferenceFormatGroup"/>
           <group refID="esri_layouts_elevationGuideBarFormatGroup"/>
+          <group refID="esri_layouts_slopeGuideFormatGroup"/>
           <group refID="esri_layouts_textFormatGroup"/>
           <group refID="esri_layouts_arrangeGroup"/>
           <group refID="esri_layouts_sizeAndPositionGroup"/>
@@ -170,12 +198,17 @@
       </tabs>
 
       <panes>
-        <pane id="esri_layouts_layoutPane" caption="Layout" className="LayoutPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Layout16.png" isClosable="true" defaultTab="esri_layouts_insertTab" defaultTool="esri_layouts_selectByRectangleTool">
+        <pane id="esri_layouts_layoutPane" caption="Layout" className="LayoutPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png" isClosable="true" defaultTab="esri_layouts_insertTab" defaultTool="esri_layouts_selectByRectangleTool">
           <content className="LayoutPaneView"/>
         </pane>
       </panes>
 
       <tabGroups>
+        <tabGroup id="esri_layouts_LayoutTabGroup" caption="Manage">
+          <color A="255" R="104" G="170" B="103" />
+          <borderColor A="0" R="211" G="234" B="249" />
+        </tabGroup>
+        
         <tabGroup caption="Activated Map Frame" id="esri_layouts_activatedMapTabGroup">
           <color A="255" R="184" G="139" B="85"/>
           <borderColor A="200" R="233" G="222" B="212"/>
@@ -196,6 +229,10 @@
       </tabGroups>
 
       <groups>
+        <group id="esri_project_layout" caption="Project">
+          <button refID="esri_layouts_projectContainer_NewLayout"/>
+          <button refID="esri_layouts_projectContainer_ImportPAGX"/>
+        </group>
         <group id="esri_layouts_clipboardGroup" caption="Clipboard">
           <buttonPalette refID="esri_core_editPasteSplitButton" size="large" />
           <button refID="esri_core_editCutButton" size="middle" />
@@ -209,7 +246,7 @@
           <splitButton refID="esri_layouts_mapSeriesSplitButton" size="large"/>
           <button refID="esri_layouts_mapSeriesRefreshButton" size="small"/>
         </group>
-        <group id="esri_layouts_pageShowGroup" caption="Show" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Rulers16.png">
+        <group id="esri_layouts_pageShowGroup" caption="Show" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers16.png">
           <checkBox refID="esri_layouts_showHideRulersCheck" size="small"/>
           <checkBox refID="esri_layouts_showHideGuidesCheck" size="small"/>
         </group>
@@ -249,6 +286,7 @@
         <group id="esri_layouts_activatedMapGroup" caption="Map">
           <button refID="esri_layouts_deactivateMap" size="large"/>
         </group>
+        
         <group id="esri_layouts_selectionGroup" caption="Elements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png">
           <toolPalette refID="esri_layouts_selectToolPalette" size="large"/>
           <button refID="esri_layouts_selectAllButton" size="middle"/>
@@ -256,20 +294,27 @@
           <button refID="esri_core_editDeleteButton" size="middle"/>
         </group>
 
+        <group id="esri_layouts_reviewGroup" caption="Review" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMarkBlueCircleOn32.png" launcherButtonID="esri_layouts_showProofingDialogButton">
+          <button refID="esri_layouts_showSpellCheckPane" size="large"/>
+        </group>
+
         <group id="esri_layouts_insertMapFrameGroup" caption="Map Frames">
-          <splitButton refID="esri_layouts_newMapFrameSplitButton" size="large"/>
+          <gallery refID="esri_layouts_newMapFrameGallery" inline="false" size="large"/>
+          <toolPalette refID="esri_layouts_newMapFrameToolPalette" size="middle"/>
+          <button refID="esri_layouts_dummyButton" size="small"/>
+          <button refID="esri_layouts_dummyButton" size="small"/>
           <gallery refID="esri_layouts_newExtentIndicatorMapFrameGallery" size="middle"/>
           <gallery refID="esri_layouts_newMapGridStyleGallery" size="middle"/>
           <toolPalette refID="esri_layouts_reshapeMapFrameToolPalette" size="middle"/>
         </group>
 
-        <group id="esri_layouts_insertMapSurroundGroup" caption="Map Surrounds" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/NorthArrow16.png">
+        <group id="esri_layouts_insertMapSurroundGroup" caption="Map Surrounds" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png">
           <splitButton refID="esri_layouts_newNorthArrowSplitButton" size="large"/>
           <splitButton refID="esri_layouts_newScaleBarSplitButton" size="large"/>
           <tool refID="esri_layouts_newLegendTool" size="large"/>
-          <tool refID="esri_layouts_newChartGallery" size="large"/>
+          <splitButton refID="esri_layouts_newChartSplitButton" size="large"/>
           <tool refID="esri_layouts_newTableFrameTool" size="large"/>
-          <tool refID="esri_layouts_newMapSurroundGallery" size="large"/>
+          <splitButton refID="esri_layouts_newProductionSplitButton" size="large"/>
         </group>
 
         <group id="esri_layouts_insertTextGroup" caption="Text" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png">
@@ -384,8 +429,13 @@
           <customControl refID="esri_layouts_elevationGuideBarLowColorGallery" size="small"/>
         </group>
 
+        <group id="esri_layouts_slopeGuideFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showSlopeGuideStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" 
+               launcherKeytip="NA" condition="esri_layouts_slopeGuideCondition">
+          <gallery refID="esri_layouts_slopeGuideStyleGalleryInLine" inline="true" size="large"/>
+        </group>
+                
         <!--DESIGN groups-->
-        <group id="esri_layouts_mapSurroundMapFrameGroup" caption="Map Frame" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrame32.png" launcherKeytip="MF">
+        <group id="esri_layouts_mapSurroundMapFrameGroup" caption="Map Frame" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrame32.png" launcherKeytip="MF">
           <gallery refID="esri_layouts_mapSurroundMapFrameGallery" inline="false" size="middle"/>
         </group>
 
@@ -426,7 +476,7 @@
         </group>
 
         <!--Arrange-->
-        <group id="esri_layouts_arrangeGroup" caption="Arrange" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlign32.png" condition="esri_layouts_selectedElementsNotPartsCondition">
+        <group id="esri_layouts_arrangeGroup" caption="Arrange" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlign32.png" condition="esri_layouts_selectedElementsNotPartsCondition">
           <menu refID="esri_layouts_alignMenu" size="large"/>
         </group>
         <!--Size and Position-->
@@ -457,12 +507,19 @@
           <tool refID="esri_layouts_newOpenLassoTool"/>
         </toolPalette>
         <toolPalette id="esri_layouts_newTextToolPalette" showItemCaption="true" keytip="TP" extendedCaption="Create a text element in a layout">
+          <tool refID="esri_layouts_newRectangleParagraphTool"/>
           <tool refID="esri_layouts_newPointTextTool"/>
           <tool refID="esri_layouts_newSplinedTextTool"/>
-          <tool refID="esri_layouts_newRectangleParagraphTool"/>
           <tool refID="esri_layouts_newPolygonParagraphTool"/>
           <tool refID="esri_layouts_newCircleParagraphTool"/>
           <tool refID="esri_layouts_newEllipseParagraphTool"/>
+        </toolPalette>
+        <toolPalette id="esri_layouts_newMapFrameToolPalette" showItemCaption="true" keytip="MP" extendedCaption="Create a map frame in a layout">
+          <tool refID="esri_layouts_newMapFrameRectangleTool"/>
+          <tool refID="esri_layouts_newMapFramePolygonTool"/>
+          <tool refID="esri_layouts_newMapFrameLassoTool"/>
+          <tool refID="esri_layouts_newMapFrameCircleTool"/>
+          <tool refID="esri_layouts_newMapFrameEllipseTool"/>
         </toolPalette>
         <toolPalette id="esri_layouts_reshapeMapFrameToolPalette" showItemCaption="true" keytip="RS" caption="Reshape" extendedCaption="Reshape a map frame in a layout">
           <tool refID="esri_layouts_reshapeMapFrameRectangleTool"/>
@@ -474,19 +531,24 @@
       </palettes>
 
       <splitButtons>
-        <splitButton id="esri_layouts_newMapFrameSplitButton" keytip="MF" extendedCaption="Perform operations on a map frame">
-          <button refID="esri_layouts_newMapFrameButton"/>
-          <gallery refID="esri_layouts_newMapFrameGallery" inline="false"/>
-        </splitButton>
-
-        <splitButton id="esri_layouts_newNorthArrowSplitButton" keytip="NA" extendedCaption="Perform operations on a north arrow">
-          <button refID="esri_layouts_newNorthArrowButton"/>
+        <splitButton id="esri_layouts_newNorthArrowSplitButton" keytip="NA" extendedCaption="Add a north arrow to a layout.">
+          <tool refID="esri_layouts_newNorthArrowTool"/>
           <gallery refID="esri_layouts_northArrowStyleGallery"/>
         </splitButton>
 
-        <splitButton id="esri_layouts_newScaleBarSplitButton" keytip="SB" extendedCaption="Perform operations on a scale bar">
-          <button refID="esri_layouts_newScaleBarButton"/>
+        <splitButton id="esri_layouts_newScaleBarSplitButton" keytip="SB" extendedCaption="Add a scale bar to a layout.">
+          <tool refID="esri_layouts_newScaleBarTool"/>
           <gallery refID="esri_layouts_scaleBarStyleGallery"/>
+        </splitButton>
+
+        <splitButton id="esri_layouts_newChartSplitButton" keytip="LC" extendedCaption="Add a chart frame to a layout.">
+          <tool refID="esri_layouts_newChartFrameTool"/>
+          <gallery refID="esri_layouts_newChartGallery"/>
+        </splitButton>
+
+        <splitButton id="esri_layouts_newProductionSplitButton" keytip="LA" extendedCaption="Add an additional map surround to a layout.">
+          <tool refID="esri_layouts_newProductionToolPlaceHolder"/>
+          <gallery refID="esri_layouts_newProductionToolGallery"/>
         </splitButton>
 
         <splitButton id="esri_layouts_mapSeriesSplitButton" keytip="MS" extendedCaption="Define a map series on the layout">
@@ -497,7 +559,7 @@
 
       <galleries>
         <!--New Layout-->
-        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" caption="New Layout" keytip="NL" extendedCaption="Choose a layout by choosing a page size." itemsInRow="6" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true" resizable="true" loadingMessage="Loading..." showGroup="true" condition="esri_mapping_openProjectCondition" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
+        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" caption="New Layout" keytip="L" extendedCaption="Choose a layout by choosing a page size." itemsInRow="6" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true" resizable="true" loadingMessage="Loading..." showGroup="true" condition="esri_mapping_openProjectCondition" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
           <tooltip heading="">Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText></tooltip>
           <button refID="esri_layouts_importLayoutFile"/>
           <!--<button refID="esri_layouts_openWebMapFromFileButton"/>-->
@@ -522,8 +584,8 @@
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapSeriesGalleryViewModel"                  
                  itemWidth="275" itemsInRow="1" resizable="true" 
                  loadingMessage="Loading ..." showGroup="false" loadOnClick="false"                 
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeries16.png" 
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeries32.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries16.png" 
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries32.png"
                  templateID="MapSeriesTemplate" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml">
           <tooltip heading="">
             <disabledText></disabledText>
@@ -533,7 +595,7 @@
 
         <!--Styles-->
         <gallery id="esri_layouts_polygonStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.PolygonStyleGallery" 
-                 keytip="AS" caption="Symbol" extendedCaption="Choose default symbol for a polygon in the layout." 
+                 keytip="XS" caption="Symbol" extendedCaption="Choose default symbol for a polygon in the layout." 
                  loadOnClick="false" itemsInRow="6" showGroup="true" 
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/CommonControls/CommonControls.xaml" templateID="StyleGallery" 
                  helpContextID="" useWhiteBackground="true">
@@ -618,7 +680,7 @@
         <!--Map Surrounds-->
         <gallery id="esri_layouts_northArrowStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NorthArrowStyleGallery" caption="North Arrow" keytip="NA" extendedCaption="Create a new north arrow by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="64" itemHeight="64" showGroup="true"
           dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="NorthArrowTemplate"
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/NorthArrow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/NorthArrow32.png" helpContextID="">
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow32.png" helpContextID="">
           <tooltip heading="New North Arrow">Create a new north arrow by choosing a style.<disabledText></disabledText></tooltip>
           <button refID="esri_layouts_defaultNorthArrowStyleButton"/>
         </gallery>
@@ -628,7 +690,7 @@
           <button refID="esri_layouts_northArrowStyleButton"/>
         </gallery>
 
-        <gallery id="esri_layouts_scaleBarStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarStyleGallery" caption="Scale Bar" extendedCaption="Create a new scale bar by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="150" itemHeight="50" showGroup="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="ScaleBarTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ScaleBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ScaleBar32.png" helpContextID="">
+        <gallery id="esri_layouts_scaleBarStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarStyleGallery" caption="Scale Bar" extendedCaption="Create a new scale bar by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="150" showGroup="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="ScaleBarTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar32.png" helpContextID="">
           <tooltip heading="New Scale Bar">Create a new scale bar by choosing a style.<disabledText></disabledText></tooltip>
           <button refID="esri_layouts_defaultScaleBarStyleButton"/>
         </gallery>
@@ -640,7 +702,7 @@
 
         <gallery id="esri_layouts_meterReferenceStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MeterReferenceStyleGallery" caption="Meter Reference Guide" keytip="NA" extendedCaption="Create a new meter reference guide by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="150" itemHeight="100" showGroup="true"
           dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="MeterReferenceTemplate"
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MeterReference16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MeterReference32.png" helpContextID="">
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference32.png" helpContextID="">
           <tooltip heading="New Meter Reference Guide">
             Create a new meter reference guide by choosing a style.<disabledText></disabledText>
           </tooltip>
@@ -654,9 +716,16 @@
           <button refID="esri_layouts_meterReferenceStyleButton"/>
         </gallery>
 
+        <gallery id="esri_layouts_slopeGuideStyleGalleryInLine" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SlopeGuideStyleGalleryInLine" caption="Slope Guide" keytip="NS" extendedCaption="Change the style for the slope guide in the layout." loadOnClick="false" itemWidth="150" itemHeight="100" itemsInRow="3" showGroup="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/CommonControls/CommonControls.xaml" templateID="InlineStyleGallery" helpContextID="">
+          <tooltip heading="">
+            Change the style for the selected slope guides.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_layouts_slopeGuideStyleButton"/>
+        </gallery>
+
         <gallery id="esri_layouts_elevationGuideBarStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ElevationGuideBarStyleGallery" caption="Elevation Guide Bar" extendedCaption="Create a new elevation guide bar by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="150" itemHeight="100" showGroup="true" 
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="ElevationGuideBarTemplate" 
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElevationGuideBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElevationGuideBar32.png" helpContextID="">
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGuideBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGuideBar32.png" helpContextID="">
           <tooltip heading="New Elevation Guide Bar">
             Create a new elevation guide bar by choosing a style.<disabledText></disabledText>
           </tooltip>
@@ -671,23 +740,23 @@
         </gallery>
 
         <!--Map Frame Source-->
-        <gallery id="esri_layouts_newMapFrameGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameSourceGallery" caption="Map Frame" extendedCaption="Create a new map frame in the layout by choosing a map." loadOnClick="false" itemsInRow="3" itemWidth="75" itemHeight="75" showItemCaption="true" showItemCaptionBelow="true" showGroup="true" resizable="true"
+        <gallery id="esri_layouts_newMapFrameGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameSourceGallery" caption="Map Frame" keytip="MG" extendedCaption="Create a new map frame in the layout by choosing a map." loadOnClick="false" itemsInRow="3" itemWidth="140" itemHeight="115" showItemCaption="true" showItemCaptionBelow="true" showGroup="true" resizable="true"
           dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="MapFrameTemplate"
-          largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNew32.png" helpContextID="">
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrameNew32.png" helpContextID="">
           <tooltip heading="New Map Frame">Create a new map frame by choosing a map.<disabledText></disabledText></tooltip>
         </gallery>
 
-        <gallery id="esri_layouts_mapFrameSourceGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapFrameSourceGallery" caption="Source" keytip="MS" extendedCaption="Choose the map associated with the map frame in the layout." loadOnClick="false" itemsInRow="1" showGroup="false" itemWidth="150" showItemCaption="true" showItemCaptionBelow="false" resizable="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="SmallImageAndCaption" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutFocusDataFrame16.png" helpContextID="">
+        <gallery id="esri_layouts_mapFrameSourceGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapFrameSourceGallery" caption="Source" keytip="MS" extendedCaption="Choose the map associated with the map frame in the layout." loadOnClick="false" itemsInRow="1" showGroup="false" itemWidth="150" showItemCaption="true" showItemCaptionBelow="false" resizable="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="SmallImageAndCaption" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutFocusDataFrame16.png" helpContextID="">
           <tooltip heading="Map Source">Choose the map associated with the map frame.<disabledText></disabledText></tooltip>
         </gallery>
 
-        <gallery id="esri_layouts_mapSurroundMapFrameGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapSurroundMapFrameGallery" caption="Map Frame" keytip="MS" extendedCaption="Select a map frame for the map surround in the layout." loadOnClick="false" itemsInRow="1" showGroup="false" itemWidth="150" showItemCaption="true" showItemCaptionBelow="false" resizable="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="SmallImageAndCaption" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutFocusDataFrame16.png" helpContextID="">
+        <gallery id="esri_layouts_mapSurroundMapFrameGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapSurroundMapFrameGallery" caption="Map Frame" keytip="MS" extendedCaption="Select a map frame for the map surround in the layout." loadOnClick="false" itemsInRow="1" showGroup="false" itemWidth="150" showItemCaption="true" showItemCaptionBelow="false" resizable="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="SmallImageAndCaption" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutFocusDataFrame16.png" helpContextID="">
           <tooltip heading="Map Source">Choose the map frame associated with the map surround.<disabledText></disabledText></tooltip>
         </gallery>
 
         <gallery id="esri_layouts_newExtentIndicatorMapFrameGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewExtentIndicatorMapFrameGallery" caption="Extent Indicator" keytip="EX" extendedCaption="Add an extent indicator for the specified map frame." loadOnClick="false" itemsInRow="1" showGroup="false" itemWidth="150" showItemCaption="true" resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="SmallImageAndCaption" helpContextID=""
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Insert_Extent_Indicator16.png">
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Insert_Extent_Indicator16.png">
           <tooltip heading="New Extent Indicator">
             Create a new extent indicator by choosing a map frame<disabledText>Extent Indicators require two 2D map frames.</disabledText>
           </tooltip>
@@ -698,8 +767,8 @@
                  itemsInRow="3" showGroup="true" itemWidth="170" showItemCaption="true" resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" 
                  templateID="MapGridTemplate" helpContextID=""
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/GridsAndGraticulesCreate16.png"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/GridsAndGraticulesCreate32.png">
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GridsAndGraticulesCreate16.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GridsAndGraticulesCreate32.png">
           <tooltip heading="New Grid">
             Create a new grid on the map frame<disabledText>Grids can only be added to 2D map frames.</disabledText>
           </tooltip>
@@ -723,17 +792,17 @@
           </tooltip>
         </gallery>
 
-        <gallery id="esri_layouts_newMapSurroundGallery"
-            className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MapSurroundGalleryViewModel"
+        <gallery id="esri_layouts_newProductionToolGallery"
+            className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ProductionToolGalleryViewModel"
             caption="Additional Surrounds" extendedCaption="Add an additional map surround to the layout"
             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapSurround16.png"
             largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapSurround32.png"
             itemsInRow="3" itemWidth="130"
             showGroup="true" showItemCaption="true" resizable="true"
             dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
-            templateID="MapSurroundTemplate"
+            templateID="ProductionToolTemplate"
             loadOnClick="false"
-            keytip="CF"           
+            keytip="CF"
             helpContextID="">
           <tooltip heading="Additional Map Surrounds">
             Create an additional map surround on the layout.
@@ -758,6 +827,8 @@
       </toolbars>
 
       <controls>
+        <button id="esri_layouts_dummyButton" className="esri_layouts:DummyButton" condition="false"/>
+
         <!-- Misc -->
         <!--<button id="esri_layouts_insertTableText" className="esri_layouts:InsertTableText" caption="Add to layout" keytip="L" loadOnClick="false" extendedCaption="Add a dynamic text element to layout that shows a value from the row." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png" helpContextID="">
           <tooltip heading="">
@@ -773,8 +844,18 @@
 
         <!--Home - Navigate-->
         <tool id="esri_layouts_pageNavigateTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateTool" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout (Ribbon control)" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
-          <tooltip heading="">
-            Navigate the layout using the mouse.<disabledText></disabledText>
+          <tooltip heading="" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScreenTipNavigateTool.png">
+1. Pan
+2. Zoom
+3. Continuous zoom
+
+Quick shortcuts:     
+Shift = zoom rectangle
+Insert = zoom to full page
+C = explore when using another tool
+&#60; = previous extent
+&#62; = next extent
+            <disabledText></disabledText>
           </tooltip>
         </tool>
         <button id="esri_layouts_pageNavigateButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateButton" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout in an activated view." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
@@ -828,13 +909,13 @@
         </button>
 
         <!--Home - Map Series-->
-        <button id="esri_layouts_defineSeries" className="esri_layouts:ShowSeriesProperties" caption="Map Series" extendedCaption="Define a map series on the layout" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeries16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeries32.png" keytip="MS">
+        <button id="esri_layouts_defineSeries" className="esri_layouts:ShowSeriesProperties" caption="Map Series" extendedCaption="Define a map series on the layout" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries32.png" keytip="MS">
           <tooltip heading="Map Series">
             Define a map series on the layout.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_layouts_mapSeriesRefreshButton" className="esri_layouts:RefreshMapSeries" caption="Refresh" extendedCaption="Refresh the map series" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeriesRefresh32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapSeriesRefresh16.png" keytip="R">
+        <button id="esri_layouts_mapSeriesRefreshButton" className="esri_layouts:RefreshMapSeries" caption="Refresh" extendedCaption="Refresh the map series" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeriesRefresh32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeriesRefresh16.png" keytip="R">
           <tooltip heading="Refresh Map Series">
             Refresh the map series when the related map data changes.<disabledText></disabledText>
           </tooltip>
@@ -962,13 +1043,13 @@
           <tooltip heading="">Set as the default symbol.<disabledText></disabledText></tooltip>
         </button>
 
-        <button id="esri_layouts_groupSelectedElementsButton" className="esri_layouts:GroupSelectedElements" caption="Group" extendedCaption="Group elements in the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementGroup16.png" condition="esri_layouts_canGroupElementsCondition" helpContextID="">
+        <button id="esri_layouts_groupSelectedElementsButton" className="esri_layouts:GroupSelectedElements" caption="Group" extendedCaption="Group elements in the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementGroup16.png" condition="esri_layouts_canGroupElementsCondition" helpContextID="">
           <tooltip heading="">Group the selected elements.<disabledText>You cannot group elements from different levels of the tree.</disabledText></tooltip>
         </button>
-        <button id="esri_layouts_ungroupSelectedElementsButton" className="esri_layouts:UngroupSelectedElements" caption="Ungroup" extendedCaption="Ungroup elements in the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementUnGroup16.png" condition="esri_layouts_selectedGroupElementsCondition" helpContextID="">
+        <button id="esri_layouts_ungroupSelectedElementsButton" className="esri_layouts:UngroupSelectedElements" caption="Ungroup" extendedCaption="Ungroup elements in the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementUnGroup16.png" condition="esri_layouts_selectedGroupElementsCondition" helpContextID="">
           <tooltip heading="">Ungroup the selected elements.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_layouts_ConvertToGraphicsButton" className="esri_layouts:ConvertSelectedElementsToGraphicsAsync" caption="Convert To Graphics" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutConvertToGraphics16.png" helpContextID="" loadOnClick="false">
+        <button id="esri_layouts_ConvertToGraphicsButton" className="esri_layouts:ConvertSelectedElementsToGraphicsAsync" caption="Convert To Graphics" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutConvertToGraphics16.png" helpContextID="" loadOnClick="false">
           <tooltip heading="">Convert the selected elements to simple graphics.<disabledText></disabledText></tooltip>          
         </button>
         <button id="esri_layouts_openSelectionSettings" className="esri_layouts_layoutPane:OpenSelectionSettings" caption="Selection" extendedCaption="Options for selecting elements in the layout." helpContextID="">
@@ -987,19 +1068,32 @@
           <tooltip heading="">Select from the current selection when interactively selectingc elements.<disabledText></disabledText></tooltip>
         </button>
 
-        <button id="esri_layouts_selectContext" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectCommand" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png" caption="Select" extendedCaption="Select layout elements using a rectangle." condition="esri_layouts_layoutPane" helpContextID="" flipImageRTL="true">
+        <button id="esri_layouts_selectContext" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectCommand" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png" caption="Select" extendedCaption="Select layout elements using a rectangle." condition="esri_layouts_layoutPaneCondition" helpContextID="" flipImageRTL="true">
           <tooltip heading="Select by Rectangle">
             Select elements by clicking them or dragging a box around them.<disabledText></disabledText>
           </tooltip>
         </button>
-        
+
+        <!--Review-->
+        <button id="esri_layouts_showSpellCheckPane" 
+                caption="Check Spelling" 
+                className="esri_layouts:ShowSpellCheckDockPane" 
+                loadOnClick="false"     
+                keytip="SP"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpellCheck16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpellCheck32.png" helpContextID="">
+          <tooltip heading="Spell Check">
+            Spell check all the text elements on the layout.<disabledText>To enable Check Spelling click the Project tab and select Options. Select Proofing and check Enable spell checking.</disabledText>
+          </tooltip>
+        </button>
+
         <!--Chart-->
         <button id="esri_layouts_chartOpenButton"
                 caption="Open" extendedCaption="Open the chart pane."
                 className="esri_layouts:OpenChart"
                 loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Generic_Chart32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Generic_Chart16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Generic_Chart32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Generic_Chart16.png"
                 helpContextID="">
           <tooltip heading="Open Chart">
             Open the chart pane.<disabledText></disabledText>
@@ -1029,8 +1123,8 @@
                 caption="Open" extendedCaption="Open the table pane."
                 className="esri_layouts:OpenTable"
                 loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/TableDBase32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/TableDBase16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDBase32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDBase16.png"
                 helpContextID="">
           <tooltip heading="Open Table">
             Open the attribute table.<disabledText></disabledText>
@@ -1039,10 +1133,10 @@
 
 
         <!--MapFrame-->
-        <button id="esri_layouts_activateMap" caption="Activate" keytip="A" className="esri_layouts:ActivateMapToggle" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ActivateMapFrame32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ActivateMapFrame16.png" helpContextID="">
+        <button id="esri_layouts_activateMap" caption="Activate" keytip="A" className="esri_layouts:ActivateMapToggle" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ActivateMapFrame32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ActivateMapFrame16.png" helpContextID="">
           <tooltip heading="Activate Map Frame">Activate the map frame to navigate and interact with the map.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_layouts_deactivateMap" caption="Close Activation" keytip="C" className="esri_layouts:DeactivateMap" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutUnfocusDataFrame32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutUnfocusDataFrame16.png" helpContextID="">
+        <button id="esri_layouts_deactivateMap" caption="Close Activation" keytip="C" className="esri_layouts:DeactivateMap" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame16.png" helpContextID="">
           <tooltip heading="Close Map Frame Activation">Deactivate the map frame and restore the layout tools.<disabledText></disabledText></tooltip>
         </button>
         
@@ -1052,7 +1146,7 @@
           </tooltip>
         </button>
 
-        <button id="esri_layouts_showExtentIndicatorLeaderButton" caption="Show/Hide Leader" extendedCaption="Show a leader from the extent indicator to the source map frame." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowExtentIndicatorLeaderCheckBox" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/AddLeader16.png" helpContextID="">
+        <button id="esri_layouts_showExtentIndicatorLeaderButton" caption="Show/Hide Leader" extendedCaption="Show a leader from the extent indicator to the source map frame." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowExtentIndicatorLeaderCheckBox" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddLeader16.png" helpContextID="">
           <tooltip heading="Show/Hide Leader">
             Show text leader.  Use the symbol callout to change appearance.<disabledText></disabledText>
           </tooltip>
@@ -1071,8 +1165,8 @@
                 caption="Open" extendedCaption="Open the map pane."
                 className="esri_layouts:OpenMap"
                 loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Map32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Map16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Map32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Map16.png"
                 helpContextID="">
           <tooltip heading="Open Map">
             Open the map pane.<disabledText></disabledText>
@@ -1081,7 +1175,7 @@
         
 
         <!--Text-->
-        <button id="esri_layouts_showLeader" caption="Show/Hide Leader" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowLeaderCheckBox" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/AddLeader16.png" helpContextID="">
+        <button id="esri_layouts_showLeader" caption="Show/Hide Leader" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowLeaderCheckBox" loadOnClick="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddLeader16.png" helpContextID="">
           <tooltip heading="Show/Hide Leader">
             Show text leader.  Use the Text Symbol callout to change appearance.<disabledText></disabledText>
           </tooltip>
@@ -1102,42 +1196,42 @@
         </button>
 
         <!--Arrange-->
-        <button id="esri_layouts_alignLeft" caption="Align Left" keytip="L" className="esri_layouts:AlignLeft" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignLeft16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignLeft" caption="Align Left" keytip="L" className="esri_layouts:AlignLeft" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignLeft16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Left">
             Align the selected element(s) to the left.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_alignCenter" caption="Align Center" keytip="C" className="esri_layouts:AlignCenter" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignCenter16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignCenter" caption="Align Center" keytip="C" className="esri_layouts:AlignCenter" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignCenter16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Center">
             Align the selected element(s) to the horizontal center.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_alignRight" caption="Align Right" keytip="R" className="esri_layouts:AlignRight" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignRight16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignRight" caption="Align Right" keytip="R" className="esri_layouts:AlignRight" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignRight16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Right">
             Align the selected element(s) to the right.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_alignTop" caption="Align Top" keytip="T" className="esri_layouts:AlignTop" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignTop16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignTop" caption="Align Top" keytip="T" className="esri_layouts:AlignTop" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignTop16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Top">
             Align the selected element(s) to the top.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_alignMiddle" caption="Align Middle" keytip="M" className="esri_layouts:AlignMiddle" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignMiddle16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignMiddle" caption="Align Middle" keytip="M" className="esri_layouts:AlignMiddle" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignMiddle16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Middle">
             Align the selected element(s) to the vertical center.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_alignBottom" caption="Align Bottom" keytip="B" className="esri_layouts:AlignBottom" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlignBottom16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_alignBottom" caption="Align Bottom" keytip="B" className="esri_layouts:AlignBottom" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignBottom16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Bottom">
             Align the selected element(s) to the bottom.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_distributeHorizontally" caption="Distribute Horizontally" keytip="H" className="esri_layouts:DistributeHorizontally" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementDistributeHorizontally16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_distributeHorizontally" caption="Distribute Horizontally" keytip="H" className="esri_layouts:DistributeHorizontally" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDistributeHorizontally16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Distribute Horizontally">
             Space the selected elements equally in the horizontal direction.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_layouts_distributeVertically" caption="Distribute Vertically" keytip="V" className="esri_layouts:DistributeVertically" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementDistributeVertically16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_distributeVertically" caption="Distribute Vertically" keytip="V" className="esri_layouts:DistributeVertically" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDistributeVertically16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Distribute Vertically">
             Space the selected elements equally in the vertical direction.<disabledText></disabledText>
           </tooltip>
@@ -1149,13 +1243,13 @@
         </button>
 
         <!--Size & Position-->
-        <customControl id="esri_layouts_sizeAndPositionControl" caption="Size &amp; Position" loadOnClick="false" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SizeAndPositionControlViewModel" condition="esri_layouts_selectedElementsNotPartsCondition" helpContextID="">
+        <customControl id="esri_layouts_sizeAndPositionControl" caption="Size &amp; Position" loadOnClick="false" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SizeAndPositionControlViewModel" condition="esri_layouts_selectedElementsNotPartsCondition" helpContextID="" keytip="SP">
           <content className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SizeAndPositionControl"/>
         </customControl>
 
         <!--Insert Graphic-->
         <tool id="esri_layouts_newPointTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPointTool" caption="Point" keytip="PT" extendedCaption="Create new layout point." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementMarker16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementMarker32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
-          <tooltip heading="New Point">Create a new point on the layout.<disabledText></disabledText></tooltip>
+          <tooltip heading="New Point">Create a new point on the layout. Single click to use default size.  Drag a rectangle to specify height.<disabledText></disabledText></tooltip>
         </tool>
         <tool id="esri_layouts_newLineTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLineTool" caption="Line" keytip="DL" extendedCaption="Create new layout line." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLine16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLine32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
           <tooltip heading="New Line">Create a new line on the layout.<disabledText></disabledText></tooltip>
@@ -1182,7 +1276,7 @@
           <tooltip heading="New Ellipse">Create a new ellipse on the layout.<disabledText></disabledText></tooltip>
         </tool>
         <tool id="esri_layouts_newPointTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPointTextTool" caption="Text" keytip="TE" extendedCaption="Create new layout text by clicking a point." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
-          <tooltip heading="New Text">Create new text on the layout by clicking a point.<disabledText></disabledText></tooltip>
+          <tooltip heading="New Text">Create new text on the layout.  Single click to use the default size.  Drag a rectangle to specify height.<disabledText></disabledText></tooltip>
         </tool>
         <tool id="esri_layouts_newPictureTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPictureTool" caption="Picture" keytip="PC" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture32.png" helpContextID="">
           <tooltip heading="New Picture">
@@ -1191,11 +1285,6 @@
         </tool>
         <tool id="esri_layouts_newSplinedTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewSplinedTextTool" caption="Curved Text" extendedCaption="Create a new layout line text." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText32.png" helpContextID="">
           <tooltip heading="New Text">Create new text by dragging a line.<disabledText></disabledText></tooltip>
-        </tool>
-        <tool id="esri_layouts_newDynamicTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewDynamicTextTool" caption="Dynamic Text" extendedCaption="Create a new layout dynamic text." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText32.png" condition="esri_layouts_layoutPane" helpContextID="">
-          <tooltip heading="New Dynamic Text">
-            Create new dynamic text by dragging a rectangle.<disabledText></disabledText>
-          </tooltip>
         </tool>
         <tool id="esri_layouts_newRectangleParagraphTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewRectangleParagraphTool" caption="Rectangle" extendedCaption="Create a new layout rectangle paragraph." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
           <tooltip heading="New Rectangle Paragraph">
@@ -1212,19 +1301,31 @@
           <tooltip heading="New Ellipse Paragraph">Create a new paragraph on the layout by drawing an ellipse.<disabledText></disabledText></tooltip>
         </tool>
 
-        <!--Insert Legend -->
-        <!--<button id="esri_layouts_newLegendButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLegendButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Legend32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Legend16.png" caption="Legend" keytip="LE" condition="esri_layouts_layoutPane" helpContextID="120001011">
-          <tooltip heading="New Legend">
-            Create a new legend on the layout.<disabledText></disabledText>
+        <tool id="esri_layouts_newNorthArrowTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewNorthArrowTool" caption="North Arrow" keytip="NA" extendedCaption="Create new north arrow on the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New North Arrow">
+            Create new north arrow on the layout.  Single click to use the default size.  Drag a rectangle to specify height.<disabledText></disabledText>
           </tooltip>
-        </button>-->
-        <tool id="esri_layouts_newLegendTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLegendTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Legend32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Legend16.png" caption="Legend" keytip="LE" condition="esri_layouts_layoutPane" helpContextID="120001011">
+        </tool>
+
+        <tool id="esri_layouts_newScaleBarTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewScaleBarTool" caption="Scale Bar" keytip="NA" extendedCaption="Create new scale bar on the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar32.png" condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Scale Bar">
+            Create new scale bar on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <tool id="esri_layouts_newLegendTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLegendTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Legend32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Legend16.png" caption="Legend" keytip="LE" condition="esri_layouts_layoutPane" helpContextID="120001011">
           <tooltip heading="New Legend">
 Create a new legend on the layout.
 
 Add layers to the legend by selecting them in the Contents pane. If no layers are selected, all layers from the default map frame will be added. If specific layers are selected, only those layers are added.
             
 Drag a rectangle to create a legend that adjusts the items to fit inside the frame.   Click a point to create a legend that adjusts the frame to fit the items.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <tool id="esri_layouts_newChartFrameTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewChartFrameTool" caption="Chart Frame" keytip="CF" extendedCaption="Create new chart frame on the layout." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/New_Chart16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/New_Chart32.png" loadOnClick="false" helpContextID="">
+          <tooltip heading="New Chart Frame">
+            Create new chart frame on the layout.<disabledText></disabledText>
           </tooltip>
         </tool>
 
@@ -1242,41 +1343,50 @@ Specify the associated layer or standalone table by selecting it in the Contents
         </tool>
 
         <!--Insert Map Frame-->
-        <button id="esri_layouts_newMapFrameButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNew16.png" caption="Map Frame" extendedCaption="Create a new map frame on the layout." condition="esri_layouts_layoutPane" helpContextID="120001012">
-          <tooltip heading="New Map Frame">Create a new map frame on the layout.<disabledText></disabledText></tooltip>
-        </button>
-        <tool id="esri_layouts_reshapeMapFrameRectangleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameRectangleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameRectangle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameRectangle16.png" caption="Rectangle" keytip="R" extendedCaption="Reshape layout map frame using a rectangle tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
+        <tool id="esri_layouts_newMapFrameRectangleTool" caption="Rectangle" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameRectangleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameRectangle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameRectangle16.png" keytip="R" extendedCaption="New map frame using a rectangle tool." condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Map Frame">Create a new map frame by dragging a rectangle.<disabledText></disabledText></tooltip>
+        </tool>
+        <tool id="esri_layouts_newMapFramePolygonTool" caption="Polygon" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFramePolygonTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFramePolygon32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFramePolygon16.png" keytip="P" extendedCaption="New map frame using a polygon tool." condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Map Frame">Create a new map frame by dragging a polygon.<disabledText></disabledText></tooltip>
+        </tool>
+        <tool id="esri_layouts_newMapFrameLassoTool" caption="Lasso" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameLassoTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameLasso32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameLasso16.png" keytip="L" extendedCaption="New map frame using a lasso tool." condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Map Frame">Create a new map frame by by dragging a freehand shape.<disabledText></disabledText></tooltip>
+        </tool>
+        <tool id="esri_layouts_newMapFrameEllipseTool" caption="Ellipse" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameEllipseTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameEllipse32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameEllipse16.png" keytip="E" extendedCaption="New map frame using a ellipse tool." condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Map Frame">Create a new map frame by by dragging an ellipse.<disabledText></disabledText></tooltip>
+        </tool>
+        <tool id="esri_layouts_newMapFrameCircleTool" caption="Circle" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMapFrameCircleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameCircle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapFrameCircle16.png" keytip="C" extendedCaption="New map frame using a circle tool." condition="esri_layouts_layoutPaneCondition" helpContextID="">
+          <tooltip heading="New Map Frame">Create a new map frame by by dragging a circle.<disabledText></disabledText></tooltip>
+        </tool>
+        
+        <tool id="esri_layouts_reshapeMapFrameRectangleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameRectangleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameRectangle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameRectangle16.png" caption="Rectangle" keytip="R" extendedCaption="Reshape layout map frame using a rectangle tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
           <tooltip heading="Reshape">Replace the existing map frame extent with a new one by dragging a rectangle.<disabledText></disabledText></tooltip>
         </tool>
-        <tool id="esri_layouts_reshapeMapFramePolygonTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFramePolygonTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNewPolygon32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNewPolygon16.png" caption="Polygon" keytip="P" extendedCaption="Reshape layout map frame using a polygon tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
+        <tool id="esri_layouts_reshapeMapFramePolygonTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFramePolygonTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFramePolygon32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFramePolygon16.png" caption="Polygon" keytip="P" extendedCaption="Reshape layout map frame using a polygon tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
           <tooltip heading="Reshape">Replace the map frame extent with a new one by dragging a polygon.<disabledText></disabledText></tooltip>
         </tool>
-        <tool id="esri_layouts_reshapeMapFrameLassoTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameLassoTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNewLasso32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MapFrameNewLasso16.png" caption="Lasso" keytip="L" extendedCaption="Reshape layout map frame using a lasso tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
+        <tool id="esri_layouts_reshapeMapFrameLassoTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameLassoTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameLasso32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameLasso16.png" caption="Lasso" keytip="L" extendedCaption="Reshape layout map frame using a lasso tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
           <tooltip heading="Reshape">Replace the map frame extent with a new one by dragging a freehand shape.<disabledText></disabledText></tooltip>
         </tool>
-        <tool id="esri_layouts_reshapeMapFrameEllipseTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameEllipseTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameEllipse32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameEllipse16.png" caption="Ellipse" keytip="E" extendedCaption="Reshape layout map frame using a ellipse tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
+        <tool id="esri_layouts_reshapeMapFrameEllipseTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameEllipseTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameEllipse32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameEllipse16.png" caption="Ellipse" keytip="E" extendedCaption="Reshape layout map frame using a ellipse tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
           <tooltip heading="Reshape">
             Replace the map frame extent with a new one by dragging an ellipse.<disabledText></disabledText>
           </tooltip>
         </tool>
-        <tool id="esri_layouts_reshapeMapFrameCircleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameCircleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameCircle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ReshapeMapFrameCircle16.png" caption="Circle" keytip="C" extendedCaption="Reshape layout map frame using a circle tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
+        <tool id="esri_layouts_reshapeMapFrameCircleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReshapeMapFrameCircleTool" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameCircle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReshapeMapFrameCircle16.png" caption="Circle" keytip="C" extendedCaption="Reshape layout map frame using a circle tool." condition="esri_layouts_mapFrameDesignCondition" helpContextID="">
           <tooltip heading="Reshape">
             Replace the map frame extent with a new one by dragging a circle.<disabledText></disabledText>
           </tooltip>
         </tool>
 
         <button id="esri_layouts_newExtentIndicatorButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewExtentIndicatorButton" caption="Extent Indicator" extendedCaption="Create a new extent indicator on the default map frame." loadOnClick="false" helpContextID=""
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Insert_Extent_Indicator16.png">
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Insert_Extent_Indicator16.png">
           <tooltip heading="New Extent Indicator">
             Create a new extent indicator on the default map frame.<disabledText>Extent Indicators require two 2D map frames.</disabledText>
           </tooltip>
         </button>
        
         <!--North Arrow Parts-->
-        <button id="esri_layouts_newNorthArrowButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewNorthArrowButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/NorthArrow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/NorthArrow32.png" caption="North Arrow" extendedCaption="Create a new North Arrow on the layout." condition="esri_layouts_layoutPane" helpContextID="">
-          <tooltip heading="New North Arrow">Create a north arrow on the layout.<disabledText></disabledText></tooltip>
-        </button>
-
         <button id="esri_layouts_northArrowStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NorthArrowStyleButton" caption="More..." keytip="M" extendedCaption="North arrow styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
           <tooltip heading="">
             Choose the north arrow.<disabledText></disabledText>
@@ -1297,10 +1407,6 @@ Specify the associated layer or standalone table by selecting it in the Contents
         </editBox>
 
         <!--Scale Bar Parts-->
-        <button id="esri_layouts_newScaleBarButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewScaleBarButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ScaleBar16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ScaleBar32.png" caption="Scale Bar" extendedCaption="Create a new scale bar on the layout." condition="esri_layouts_layoutPane" helpContextID="">
-          <tooltip heading="New Scale Bar">Create a new scale bar on the layout.<disabledText></disabledText></tooltip>
-        </button>
-
         <button id="esri_layouts_scaleBarStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarStyleButton" caption="More..." keytip="M" extendedCaption="ScaleBar styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
           <tooltip heading="">
             Choose the scale bar.<disabledText></disabledText>
@@ -1334,15 +1440,59 @@ Specify the associated layer or standalone table by selecting it in the Contents
           <tooltip heading="Existing">Show an existing map in your new map frame.<disabledText></disabledText></tooltip>
         </dynamicMenu>
 
-        <!--Meter Reference Guide parts-->
-        <button id="esri_layouts_newMeterReferenceButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewMeterReferenceGuideButton" 
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MeterReference16.png" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/MeterReference32.png" 
-                caption="Meter Reference" extendedCaption="Create a meter reference guide on the layout." condition="esri_layouts_layoutPane" helpContextID="">
-          <tooltip heading="New Meter Reference Guide">
-            Create a meter reference guide on the layout.<disabledText></disabledText>
+        <!--Production Tool Place Holder-->
+        <tool id="esri_layouts_newProductionToolPlaceHolder" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewProductionToolPlaceHolder"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapSurround16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewMapSurround32.png"
+              caption="Additional Surrounds" loadOnClick="false" extendedCaption="Create an additional map surround on the layout." helpContextID="">
+          <tooltip heading="New Map Surround">
+            Create an additional map surround on the layout.<disabledText>Choose a map surround from the gallery.</disabledText>
           </tooltip>
-        </button>
+        </tool>
+
+        <!--Topo North Arrow-->
+        <!--<tool id="esri_layouts_newTopoNorthArrowTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewTopoNorthArrowTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TopoNorthArrow16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TopoNorthArrow32.png"
+                caption="Topographic North Arrow" extendedCaption="Create a topographic north arrow on the layout." loadOnClick="false" helpContextID="">
+          <tooltip heading="New Topographic North Arrow">
+            Create a new topographic north arrow on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>-->
+
+        <!--Meter Reference Guide parts-->
+        <tool id="esri_layouts_newTLMMeterReferenceGuideTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewTLMMeterReferenceGuideTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference32.png"
+                caption="TLM Meter Reference Guide" loadOnClick="false" extendedCaption="Create a TLM meter reference guide on the layout." helpContextID="">
+          <tooltip heading="New TLM Meter Reference Guide">
+            Create a TLM meter reference guide on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_layouts_newICMMeterReferenceGuideTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewICMMeterReferenceGuideTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference32.png"
+                caption="ICM Meter Reference Guide" loadOnClick="false" extendedCaption="Create a meter reference guide on the layout." helpContextID="">
+          <tooltip heading="New ICM Meter Reference Guide">
+            Create an ICM meter reference guide on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_layouts_newJOGMeterReferenceGuideTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewJOGMeterReferenceGuideTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference32.png"
+                caption="JOG Meter Reference Guide" loadOnClick="false" extendedCaption="Create a JOG meter reference guide on the layout." helpContextID="">
+          <tooltip heading="New JOG Meter Reference Guide">
+            Create a JOG meter reference guide on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_layouts_newUSNGMeterReferenceGuideTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewUSNGMeterReferenceGuideTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/USNationalGridReference16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/USNationalGridReference32.png"
+                caption="U.S. National Grid Reference Box" loadOnClick="false" extendedCaption="Create a U.S. National Grid reference box on the layout." helpContextID="">
+          <tooltip heading="New U.S. National Grid Reference Box">
+            Create a U.S. National Grid reference box on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
 
         <button id="esri_layouts_meterReferenceStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MeterReferenceStyleButton" caption="More..." keytip="M" extendedCaption="Meter reference guide styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
           <tooltip heading="">
@@ -1362,16 +1512,46 @@ Specify the associated layer or standalone table by selecting it in the Contents
             Change the color of the selected meter reference guides.<disabledText></disabledText>
           </tooltip>
         </customControl>
+        
+        <tool id="esri_layouts_newSlopeGuideTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewSlopeGuideTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SlopeGuide16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SlopeGuide32.png"
+                caption="Slope Guide" loadOnClick="false" extendedCaption="Create a slope guide on the layout" helpContextID="">
+          <tooltip heading="New Slope Guide">
+            Create a slope guide on the layout<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <button id="esri_layouts_newSlopeGuideButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewSlopeGuideButton"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SlopeGuide16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SlopeGuide32.png"
+                caption="Slope Guide" extendedCaption="Create a slope guide on the layout." condition="esri_layouts_layoutPane" helpContextID="">
+          <tooltip heading="New Slope Guide">
+            Create a slope guide on the layout.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_layouts_slopeGuideStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SlopeGuideStyleButton" caption="More..." keytip="M" extendedCaption="Slope guide styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="">
+            Choose the slope guide.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_layouts_defaultSlopeGuideStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.DefaultSlopeGuideStyleButton" caption="More..." keytip="M" extendedCaption="Default slope guide style." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="">
+            Choose the default slope guide.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
          <!--Elevation Guide Bar parts-->
-        <button id="esri_layouts_newElevationGuideBarButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewElevationGuideBarButton" 
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElevationGuideBar16.png" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElevationGuideBar32.png" 
-                caption="Elevation Guide Bar" extendedCaption="Create a new elevation guide bar on the layout." condition="esri_layouts_layoutPane" helpContextID="">
+        <tool id="esri_layouts_newElevationGuideBarTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewElevationGuideBarTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGuideBar16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElevationGuideBar32.png"
+                caption="Elevation Guide Bar" extendedCaption="Create a new elevation guide bar on the layout." loadOnClick="false" helpContextID="">
           <tooltip heading="New Elevation Guide Bar">
             Create a new elevation guide bar on the layout.<disabledText></disabledText>
           </tooltip>
-        </button>
+        </tool>
 
         <button id="esri_layouts_elevationGuideBarStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ElevationGuideBarStyleButton" caption="More..." keytip="M" extendedCaption="ElevationGuideBar styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
           <tooltip heading="">
@@ -1412,6 +1592,15 @@ Specify the associated layer or standalone table by selecting it in the Contents
           </tooltip>
         </customControl>
 
+        <!--Profile Frame-->
+        <tool id="esri_layouts_newProfileFrameTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewProfileFrameTool"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TerrainObstacleProfile16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TerrainObstacleProfile32.png"
+                caption="Terrain Obstacle Profile" extendedCaption="Create a terrain obstacle profile on the layout." loadOnClick="false" helpContextID="">
+          <tooltip heading="New Terrain Obstacle Profile">
+            Create a new terrain obstacle profile on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
 
         <!--Format-->
         <comboBox id="esri_layouts_subElementComboBox" caption="Element Part" extendedCaption="Layout element part selection." keytip="EP" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.SubElementComboBox" isEditable="false" rows="20" resizable="true" itemWidth="110" helpContextID="">
@@ -1548,16 +1737,6 @@ Specify the associated layer or standalone table by selecting it in the Contents
             Set the corner rounding for the selected element's shadow.<disabledText></disabledText>
           </tooltip>
         </comboBox>-->
-
-        <button id="esri_layouts_colorNullButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NullColorStyleButton" caption="No Fill Color" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor16.png" helpContextID="">
-          <tooltip heading="">Set the selected elements to have no fill color.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_layouts_outlineColorNullButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NullOutlineColorStyleButton" caption="No Outline Color" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor16.png" helpContextID="">
-          <tooltip heading="">Set the selected elements to have no outline color.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_layouts_textColorNullButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NullTextColorStyleButton" caption="No Text Color" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmptyColor16.png" helpContextID="">
-          <tooltip heading="">Set the selected elements to have no text color.<disabledText></disabledText></tooltip>
-        </button>
 
         <button id="esri_layouts_colorSelectorButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ColorStyleButton" caption="More Colors..." extendedCaption="Choose fill color of the element in the layout." loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorSelector32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorSelector16.png" helpContextID="">
           <tooltip heading="">Choose the fill color of the selected elements.<disabledText></disabledText></tooltip>
@@ -1729,21 +1908,57 @@ Adjust divisions and division values preserves the number of subdivisions by adj
             Format the elevation guide bar using the advanced formatting controls available on the Element pane.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_layouts_slopeGuideStyleDockPaneButton" caption="Format Slope Guide" className="esri_layouts:ShowElementStyleDockPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="Format Slope Guide">
+            Format the slope guide using the advanced formatting controls available on the Element pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_showSlopeGuideStyleDockPaneButton" caption="Format Slope Guide" className="esri_layouts:ShowElementStyleDockPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="Format Slope Guide">
+            Format the slope guide using the advanced formatting controls available on the Element pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_showProofingDialogButton" caption="Proofing Options" className="esri_layouts:ShowProofingDialog" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpellCheck16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpellCheck32.png" helpContextID="">
+          <tooltip heading="Show Proofing Options">
+            Show the Proofing options dialog to control spell checking.<disabledText></disabledText>
+          </tooltip>
+        </button>
         
         <!-- project container view model -->
-        <button id="esri_layouts_projectContainer_NewLayout" caption="New Layout" extendedCaption="Create a new layout." className="esri_layouts:NewLayout" smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/LayoutNew16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_layouts_projectContainer_NewLayout" caption="New Layout" keytip="L" extendedCaption="Create a new layout." 
+                className="esri_layouts:NewLayout" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png" 
+                loadOnClick="false" helpContextID="">
           <tooltip heading="">Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText></tooltip>
         </button>
 
-        <button id="esri_layouts_projectContainer_ImportPAGX" caption="Import" extendedCaption="Import layout PAGX file." className="esri_mapping:OpenImportMapDocument" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" loadOnClick="false" helpContextID="">
-          <tooltip heading="Import a PAGX file to the project."><disabledText></disabledText></tooltip>
+        <button id="esri_layouts_projectContainer_ImportPAGX" caption="Import" keytip="I" 
+                extendedCaption="Import layout PAGX file." 
+                className="esri_mapping:OpenImportMapDocument" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
+                loadOnClick="false" helpContextID="">
+          <tooltip heading="Import Layout">A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.<disabledText></disabledText></tooltip>
+        </button>
+
+        <button id="esri_layouts_projectContainer_RibbonImportPAGX" caption="Import Layout" keytip="L"
+                extendedCaption="Import layout PAGX file."
+                className="esri_mapping:OpenImportMapDocument"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
+                loadOnClick="false" helpContextID="">
+          <tooltip heading="Import Layout">A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.
+            <disabledText></disabledText>
+          </tooltip>
         </button>
 
         <!-- project item view model -->
         <button id="esri_layouts_projectItem_OpenLayoutView" 
                 caption="Open" extendedCaption="Open layout view." 
                 className="esri_layouts:OnOpenLayoutView" 
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Layout16.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png" 
                 loadOnClick="false" helpContextID="">
           <tooltip heading="Open Layout">
             View the layout.<disabledText></disabledText>
@@ -1959,10 +2174,10 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_showElementDockPaneButton"/>
         </menu>
 
-        <menu id="esri_layouts_alignMenu" caption="Align" keytip="A"
+        <menu id="esri_layouts_alignMenu" caption="Align" keytip="AL"
           condition="esri_layouts_selectedElementsNotPartsCondition"
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlign16.png"
-          largeImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/ElementAlign32.png">
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlign16.png"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlign32.png">
           <tooltip heading="Align">Align the selected elements to each other or to the page.<disabledText></disabledText></tooltip>
           <button refID="esri_layouts_alignLeft"/>
           <button refID="esri_layouts_alignCenter"/>
@@ -1979,21 +2194,27 @@ Adjust divisions and division values preserves the number of subdivisions by adj
 
     <insertModule id="esri_reports_module" className="ArcGIS.Desktop.Internal.Reports.ReportsModule" caption="Reports" description="Reports module" autoLoad="false">
 
+      <dockPanes>
+        <dockPane id="esri_reports_reportsWizardDockPane" caption="Create New Report" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDockPaneVM" dock="group" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
+          initiallyVisible="false">
+          <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDockPane"/>
+        </dockPane>
+      </dockPanes>
+
       <tabs>
         <tab id="esri_reports_homeTab" caption="Report" condition="esri_reports_reportPane" keytip="R">
           <group refID="esri_layouts_clipboardGroup"/>
           <group refID="esri_layouts_pageNavigateGroup"/>
-          <group refID="esri_layouts_selectionGroup"/>
+          <group refID="esri_reports_selectionGroup"/>
           <group refID="esri_reports_pageDesignGroup"/>
           <group refID="esri_layouts_pageShowGroup"/>
-          <group refID="esri_reports_reportBackgroundGroup"/>
         </tab>
 
         <tab id="esri_reports_insertTab" caption="Insert" condition="esri_reports_reportPane" keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_reports_insertDataGroup"/>
-          <group refID="esri_layouts_insertTextGroup"/>
-          <group refID="esri_layouts_insertGraphicGroup"/>
+          <group refID="esri_reports_insertTextGroup"/>
+          <group refID="esri_reports_insertGraphicGroup"/>
           <group refID="esri_project_styles"/>
           <group refID="esri_core_favoritesData"/>
         </tab>
@@ -2014,6 +2235,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <tab id="esri_reports_reportHeaderFormatTab" caption="Format" extendedCaption="Report Header" condition="esri_reports_reportHeaderFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
           <group refID="esri_reports_sizeGroup"/>
           <group refID="esri_reports_colorGroup"/>
+          <group refID="esri_reports_generalGroup"/>
         </tab>
 
         <tab id="esri_reports_groupHeaderFormatTab" caption="Format" extendedCaption="Group Header" condition="esri_reports_groupHeaderFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
@@ -2025,11 +2247,13 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <tab id="esri_reports_detailsFormatTab" caption="Format" extendedCaption="Details" condition="esri_reports_detailsFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
           <group refID="esri_reports_sizeGroup"/>
           <group refID="esri_reports_colorGroup"/>
+          <group refID="esri_reports_generalGroup"/>
         </tab>
 
         <tab id="esri_reports_reportFooterFormatTab" caption="Format" extendedCaption="Report Footer" condition="esri_reports_reportFooterFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
           <group refID="esri_reports_sizeGroup"/>
           <group refID="esri_reports_colorGroup"/>
+          <group refID="esri_reports_generalGroup"/>
         </tab>
 
         <tab id="esri_reports_groupFooterFormatTab" caption="Format" extendedCaption="Group Footer" condition="esri_reports_groupFooterFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
@@ -2043,6 +2267,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <group refID="esri_reports_exclusionGroup"/>
         </tab>
 
+        <!--Catalog Tabs-->
+        <tab id="esri_reports_ReportContainer" caption="Report" keytip="Y" condition="esri_ReportContainer" tabGroupID="esri_reports_ReportTabGroup">
+          <group refID="esri_core_clipboardGroup"/>
+          <group refID="esri_core_organize"/>
+          <group refID="esri_project_report"/>
+        </tab>
       </tabs>
 
       <tabGroups>
@@ -2050,30 +2280,35 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <color A="255" R="145" G="130" B="189"/>
           <borderColor A="0" R="230" G="226" B="240"/>
         </tabGroup>
+
+        <!--Catalog Tabs-->
+        <tabGroup id="esri_reports_ReportTabGroup" caption="Manage">
+          <color A="255" R="104" G="170" B="103" />
+          <borderColor A="0" R="211" G="234" B="249" />
+        </tabGroup>
       </tabGroups>
 
       <groups>
-        <group id="esri_reports_pageDesignGroup" caption="Page Setup" launcherButtonID="esri_reports_projectItem_ReportProperties" 
-               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutPortrait16.png" launcherKeytip="PS">
-          <gallery refID="esri_layouts_pageOrientationGallery" inline="false" size="large"/>
-          <gallery refID="esri_layouts_pageSizeGallery" inline="false" size="small"/>
+        <group id="esri_reports_selectionGroup" caption="Elements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png">
+          <toolPalette refID="esri_layouts_selectToolPalette" size="large"/>
+          <button refID="esri_reports_selectAllButton" size="middle"/>
+          <button refID="esri_reports_clearSelectionButton" size="middle"/>
+          <button refID="esri_core_editDeleteButton" size="middle"/>
         </group>
-
-        <!--REPORT TO: update image-->
-        <group id="esri_reports_reportBackgroundGroup" caption="Background"
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
-                 keytip="B"
-                 condition="esri_reports_reportPane">
-          <button refID="esri_reports_openWatermarksButton"/>
+        
+        <group id="esri_reports_pageDesignGroup" caption="Page Setup" launcherButtonID="esri_reports_reportPageSetupPropertiesButton" 
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutPortrait16.png" launcherKeytip="PS">
+          <gallery refID="esri_reports_pageOrientationGallery" inline="false" size="large"/>
+          <gallery refID="esri_reports_pageSizeGallery" inline="false" size="small"/>
         </group>
 
         <group id="esri_reports_insertDataGroup" caption="Data"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView16.png"
                  keytip="R"
                  condition="esri_reports_reportPane">
-          <button refID="esri_reports_openFieldsButton"/>
-          <splitButton refID="esri_reports_statisticsMenu"/>
-          <splitButton refID="esri_reports_groupingMenu"/>
+          <tool refID="esri_reports_newFieldElementTool"/>
+          <toolPalette refID="esri_reports_statisticToolPalette"/>
+          <Button refID="esri_reports_addGroupButton"/>
         </group>
 
         <group id="esri_reports_generalGroup" caption="General"
@@ -2103,58 +2338,94 @@ Adjust divisions and division values preserves the number of subdivisions by adj
                condition="esri_reports_reportPane">
           <customControl refID="esri_reports_colorControl"/>
         </group>
+        
+        <group id="esri_reports_insertTextGroup" caption="Text" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png">
+          <gallery refID="esri_layouts_textStyleGallery" inline="false" size="large"/>
+          <tool refID="esri_reports_newRectangleParagraphTool" size="middle"/>
+          <gallery refID="esri_reports_dynamicTextGallery" inline="false" size="middle"/>
+        </group>
+        
+        <group id="esri_reports_insertGraphicGroup" caption="Graphics" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png">
+          <gallery refID="esri_layouts_polygonStyleGallery" inline="false" size="small"/>
+          <gallery refID="esri_layouts_lineStyleGallery" inline="false" size="small"/>
+          <gallery refID="esri_layouts_pointStyleGallery" inline="false" size="small"/>
+          <toolPalette refID="esri_reports_newPolygonGraphicToolPalette" size="middle"/>
+          <toolPalette refID="esri_reports_newLineGraphicToolPalette" size="middle"/>
+          <tool refID="esri_reports_newPointTool" size="middle"/>
+          <tool refID="esri_reports_newPictureTool" size="middle"/>
+        </group>
 
+        <!--Catalog Groups-->
+        <group id="esri_project_report" caption="Project">
+          <button refID="esri_reports_projectContainer_NewReport"/>
+          <button refID="esri_reports_importReportFile"/>
+        </group>
+        
       </groups>
       
       <galleries>
-        <!-- New Report -->
-        <gallery id="esri_reports_gallery" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportsGalleryViewModel" caption="New Report" keytip="NR"
-                 extendedCaption="Choose a report by choosing a page size." itemsInRow="3" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true"
-                 resizable="true" loadingMessage="Loading report types..." showGroup="true" condition="esri_mapping_openProjectCondition"
-                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Reports/LocalResources/ReportGalleryTemplates.xaml" templateID="ReportItemTemplate"
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport32.png">
-          <tooltip heading="">
-            Create a new report and add it to the project. The new report is saved within the project.<disabledText></disabledText>
+        <gallery id="esri_reports_dynamicTextGallery" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportDynamicTextGallery" caption="Dynamic Text" keytip="DT" 
+                 extendedCaption="Create new dynamic text." itemsInRow="3" itemWidth="154" resizable="true" showGroup="true" showHelp="true"
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="DynamicTextGallery"
+                 condition="esri_reports_reportSectionActiveCondition"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDynamicText32.png" 
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDynamicText16.png" helpContextID="">
+          <tooltip heading="New Dynamic Text">
+            Create new dynamic text on the report.<disabledText></disabledText>
           </tooltip>
-          <button refID="esri_reports_importReportFile"/>
+        </gallery>
+
+        <gallery id="esri_reports_pageOrientationGallery" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportPageOrientationGallery" caption="Orientation" keytip="O" extendedCaption="Choose orientation of the report." loadOnClick="false" itemsInRow="1" rows="2" itemWidth="110" itemHeight="40" helpContextID="" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="PageOrientationTemplate" showItemCaption="true" resizable="false" loadingMessage="loading..." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutOrientation32.png">
+          <tooltip heading="Page Orientation">
+            Choose the orientation of the report.<disabledText></disabledText>
+          </tooltip>
+        </gallery>
+
+        <gallery id="esri_reports_pageSizeGallery" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportPageSizeGallery" caption="Size" keytip="SI" extendedCaption="Size of the layout." itemsInRow="1" itemWidth="200" itemHeight="35" helpContextID="" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="PageSizeTemplate" showItemCaption="true" resizable="false" loadingMessage="loading..." showGroup="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSize16.png">
+          <tooltip heading="Page Size">
+            Choose the size of the report.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_reports_customPageSizeButton"/>
+          <button refID="esri_reports_customPageSizeFromPrinter"/>
         </gallery>
       </galleries>
 
       <controls>
-        <button id="esri_reports_projectContainer_NewReport" caption="New Report" extendedCaption="Create a new report." className="esri_reports_module:Commands.OnNewReport"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png" loadOnClick="false" helpContextID="">
+        <button id="esri_reports_projectContainer_NewReport" caption="New Report" extendedCaption="Create a new report." className="esri_reports_module:Commands.OnOpenReportWizard"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport32.png" loadOnClick="false" helpContextID=""
+                keytip="NR">
           <tooltip heading="New Report">
             Create a new report and add it to the project. The new report is saved within the project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_newLayerReport" caption="Create Report" extendedCaption="Create a new report." className="esri_reports_module:Commands.OnNewMapMemberReport"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png" loadOnClick="false" helpContextID="">
-          <tooltip heading="Create Report">
-            Create a new report for the layer and add it to the project. The new report is saved within the project.<disabledText></disabledText>
+        <button id="esri_reports_newLayerReport" caption="New Report" extendedCaption="Create a new report." className="esri_reports_module:Commands.OnOpenReportWizardForLayer"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport32.png" loadOnClick="false" helpContextID="" keytip="NR">
+          <tooltip heading="New Report">
+            Create a new report for the layer and add it to the project. The new report is saved within the project.<disabledText>Layer does not have an associated table.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_newStandaloneTableReport" caption="Create Report" extendedCaption="Create a new report." className="esri_reports_module:Commands.OnNewMapMemberReport"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png" loadOnClick="false" helpContextID="">
-          <tooltip heading="Create Report">
-            Create a new report for the standalone table and add it to the project. The new report is saved within the project.<disabledText></disabledText>
+        <button id="esri_reports_importReportFile" className="esri_mapping:OpenImportMapDocument" caption="Import" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
+          <tooltip heading="Import Report">
+            A report stored in an ArcGIS Pro report file is added to the project and opened. A copy of the report is added to the project. Future changes to the report file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_importReportFile" className="esri_reports_module:Commands.OnImportReportFile" caption="Import a report file..." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="">
+        <button id="esri_reports_projectContainer_importReportFile" className="esri_mapping:OpenImportMapDocument" caption="Import Report" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
           <tooltip heading="Import Report">
             A report stored in an ArcGIS Pro report file is added to the project and opened. A copy of the report is added to the project. Future changes to the report file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_projectItem_OpenReportView" caption="Open" extendedCaption="Open report view." className="esri_reports_module:Commands.OnOpenReportView"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Images/Report16.png" loadOnClick="false" helpContextID="">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Open Report">
             View the report.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_projectItem_RemoveReport" caption="Delete" extendedCaption="Delete report." className="esri_reports_module:Commands.OnDeleteReport"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" loadOnClick="false" helpContextID="">
-          <tooltip heading="Delete Layout">
-            Remove the layout from the project.<disabledText></disabledText>
+          <tooltip heading="Delete Report">
+            Remove the report from the project.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_projectItem_ReportProperties" caption="Properties" extendedCaption="Report properties." className="esri_reports_module:Commands.OnOpenReportProperties"
@@ -2163,94 +2434,266 @@ Adjust divisions and division values preserves the number of subdivisions by adj
             View the properties of the report.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_openWatermarksButton" caption="Watermark" extendedCaption="Open the watermarks." className="esri_reports_module:Commands.OnOpenWatermarks"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverlayWatermarkPreset16.png" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverlayWatermarkPreset32.png" helpContextID="">
-          <tooltip heading="Watermarks">
-            View the watermarks of the report.<disabledText></disabledText>
+        <button id="esri_reports_addGroupButton" caption="Group" extendedCaption="Insert group." className="esri_reports_module:Commands.OnInsertGroup" keytip="DG"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping32.png" helpContextID="">
+          <tooltip heading="Insert group">
+            Insert a new group into the report.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_openFieldsButton" caption="Fields" extendedCaption="Open the fields pane." className="esri_reports_module:Commands.OnOpenFields"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView32.png" helpContextID="">
-          <tooltip heading="Fields">
-            View the fields for the report.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addAvgStatisticButton" caption="Average" extendedCaption="Add average text control." className="esri_reports_module:Commands.OnAddAvgStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Mean16.png" helpContextID="">
-          <tooltip heading="Average">
-            Add average text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addCountStatisticButton" caption="Count" extendedCaption="Add count text control." className="esri_reports_module:Commands.OnAddCountStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Count16.png" helpContextID="">
-          <tooltip heading="Average">
-            Add count text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addMaxStatisticButton" caption="Max" extendedCaption="Add max text control." className="esri_reports_module:Commands.OnAddMaxStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Maximum16.png" helpContextID="">
-          <tooltip heading="Max">
-            Add max text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addMinStatisticButton" caption="Min" extendedCaption="Add min text control." className="esri_reports_module:Commands.OnAddMinStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Minimum16.png" helpContextID="">
-          <tooltip heading="Min">
-            Add min text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addStdDevStatisticButton" caption="Standard Deviation" extendedCaption="Add standard deviation text control." className="esri_reports_module:Commands.OnAddStdDevStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StandardDeviation16.png" helpContextID="">
-          <tooltip heading="Standard Deviation">
-            Add standard deviation text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addSumStatisticButton" caption="Sum" extendedCaption="Add sum text control." className="esri_reports_module:Commands.OnAddSumStatistic"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Sum16.png" helpContextID="">
-          <tooltip heading="Sum">
-            Add sum text control.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_reports_addGroupButton" caption="Insert group" extendedCaption="Insert group." className="esri_reports_module:Commands.OnInsertGroup"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" helpContextID="">
-          <tooltip heading="Sum">
-            Insert group.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
         <button id="esri_reports_removeGroupButton" caption="Remove group" extendedCaption="Remove group." className="esri_reports_module:Commands.OnRemoveGroup"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" helpContextID="">
           <tooltip heading="Sum">
             Remove group.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_reports_selectAllButton" className="esri_reports_module:Commands.OnSelectAll" caption="Select All" keytip="SA" extendedCaption="Select all elements on the report." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll16.png" condition="esri_reports_reportSectionActiveCondition" helpContextID="">
+          <tooltip heading="">Select all elements on the report section.<disabledText>Select a section in the Contents pane.</disabledText></tooltip>
+        </button>
+        <button id="esri_reports_clearSelectionButton" className="esri_layouts:ClearSelection" caption="Clear Selection" keytip="CS" extendedCaption="Clear all selected elements in the report." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected16.png" condition="esri_layouts_selectedElementsCondition" helpContextID="">
+          <tooltip heading="">
+            Deselect all currently selected elements on the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_zoomToActiveSection" caption="Zoom To Section" keytip="ZS" flipImageRTL="false" className="esri_reports_module:Commands.ZoomToActiveSection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementsZoomToSelected16.png" condition="esri_reports_reportSectionActiveCondition" helpContextID="">
+          <tooltip heading="Zoom To Section">
+            Zoom to the extent of the selected section.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_reportPropertiesButton" className="esri_reports_module:Commands.ReportProperties" caption="Properties" extendedCaption="Properties for the report." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_reports_reportPane" helpContextID="">
+          <tooltip heading="">
+            Show the properties for the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_reportPageSetupPropertiesButton" className="esri_reports_module:Commands.ReportPageSetupProperties" caption="Properties" extendedCaption="Properties for the report." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_reports_reportPane" helpContextID="">
+          <tooltip heading="">
+            Show the properties for the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_customPageSizeButton" className="esri_reports_module:Commands.ReportPageSetupProperties" caption="Custom page size..." extendedCaption="Set a custom page size." helpContextID="">
+          <tooltip heading="Custom Page Size">
+            Set a custom page size.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_customPageSizeFromPrinter" className="esri_reports_module:Commands.ReportSelectPageFromPrinter" caption="Select page from printer..." extendedCaption="Copy page size from a printer." helpContextID="">
+          <tooltip heading="Page From Printer">
+            Copy page size from a printer.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
+        <!-- Custom Controls -->
         <customControl id="esri_reports_generalControl" caption="Design General" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatGeneralViewModel" disableIfBusy="false" loadOnClick="false" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatGeneral" />
         </customControl>
-
         <customControl id="esri_reports_sizeControl" caption="Design Size" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatSizeViewModel" disableIfBusy="false" loadOnClick="false" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatSize" />
         </customControl>
-
         <customControl id="esri_reports_exclusionControl" caption="Design Exclusion" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatExclusionViewModel" disableIfBusy="false" loadOnClick="false" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatExclusion" />
         </customControl>
-
         <customControl id="esri_reports_colorControl" caption="Design Color" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatColorViewModel" disableIfBusy="false" loadOnClick="false" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatColor" />
         </customControl>
+        
+        <!-- Tools -->
+        <tool id="esri_reports_newFieldElementTool" 
+              caption="Field" 
+              extendedCaption="Create a new report field element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewFieldElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView16.png" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView32.png" 
+              condition="esri_reports_canAddFieldElementCondition"
+              keytip="DF"
+              helpContextID="">
+          <tooltip heading="New Field Element">
+            Create a new field element on the report by drawing a rectangle.<disabledText>Select a section in the Contents pane(group header, details or group footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addAvgStatisticTool" 
+              caption="Mean" 
+              extendedCaption="Create a new mean element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewAvgElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Mean16.png" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Mean32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="AE"
+              helpContextID="">
+          <tooltip heading="Mean">
+            Create a new mean element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addCountStatisticTool" 
+              caption="Count" 
+              extendedCaption="Create a new count element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewCountElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Count16.png" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Count32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="CT"
+              helpContextID="">
+          <tooltip heading="Count">
+            Create a new count element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addMaxStatisticTool" 
+              caption="Maximum" 
+              extendedCaption="Create a new max element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewMaxElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Maximum16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Maximum32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="MX"
+              helpContextID="">
+          <tooltip heading="Maximum">
+            Create a new maximum element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addMinStatisticTool" 
+              caption="Minimum" 
+              extendedCaption="Create a new min element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewMinElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Minimum16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Minimum32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="MN"
+              helpContextID="">
+          <tooltip heading="Minimum">
+            Create a new minimum element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addStdDevStatisticTool" 
+              caption="Standard Deviation" 
+              extendedCaption="Create a new standard deviation element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewStdDevElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StandardDeviation16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StandardDeviation32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="SD"
+              helpContextID="">
+          <tooltip heading="Standard Deviation">
+            Create a new standard deviation element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addSumStatisticTool" 
+              caption="Sum" 
+              extendedCaption="Create a new sum element." 
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewSumElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Sum16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Sum32.png" 
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="SM"
+              helpContextID="">
+          <tooltip heading="Sum">
+            Create a new sum element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_addMedianStatisticTool"
+              caption="Median"
+              extendedCaption="Create a new median element."
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportNewMedianElementTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Median16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Median32.png"
+              condition="esri_reports_canAddFieldStatisticElementCondition"
+              keytip="SN"
+              helpContextID="">
+          <tooltip heading="Median">
+            Create a new median element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <!-- Wrapped Tools -->
+        <tool id="esri_reports_newPointTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPointTool" caption="Point" keytip="PT" extendedCaption="Create new report point." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementMarker16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementMarker32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Point">Create a new point on the report.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newLineTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLineTool" caption="Line" keytip="DL" extendedCaption="Create new report line." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLine16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLine32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Line">Create a new line on the report.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newBezierCurveTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewBezierCurveTool" caption="Curve" keytip="" extendedCaption="Create new report curve." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCurve16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCurve32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Curve">Create a new line on the report by drawing a Bezier curve.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newOpenLassoTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewOpenLassoTool" caption="Freehand" keytip="DO" extendedCaption="Create new report freehand line." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementFreehand16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementFreehand32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Freehand Line">Create a new line on the report by drawing a freehand sketch.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newRectangleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewRectangleTool" caption="Rectangle" keytip="DR" extendedCaption="Create new report rectangle." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangle16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangle32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Rectangle">Create a new rectangle on the report.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newPolygonTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPolygonTool" caption="Polygon" keytip="DP" extendedCaption="Create new report polygon." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygon16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygon32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Polygon">Create a new shape on the report by drawing a polygon.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newLassoTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewLassoTool" caption="Lasso" keytip="DS" extendedCaption="Create new report lasso." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLasso16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementLasso32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Lasso Area">Create a new shape on the report by drawing an area.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newCircleTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewCircleTool" caption="Circle" keytip="DC" extendedCaption="Create new report circle." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCircle16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCircle32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Circle">Create a new circle on the report.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newEllipseTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewEllipseTool" caption="Ellipse" keytip="DE" extendedCaption="Create new report ellipse." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementEllipse16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementEllipse32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Ellipse">Create a new ellipse on the report.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <!--<tool id="esri_reports_newPointTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPointTextTool" caption="Text" keytip="TE" extendedCaption="Create new report text by clicking a point." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Text">Create new text on the report by clicking a point.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>-->
+        <tool id="esri_reports_newPictureTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPictureTool" caption="Picture" keytip="PC" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Picture">
+            Insert a picture on the report.  Use the property pane to specify a picture file or URL.<disabledText>Select a report section in the Contents pane.</disabledText>
+          </tooltip>
+        </tool>
+        <!--<tool id="esri_reports_newSplinedTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewSplinedTextTool" caption="Curved Text" extendedCaption="Create a new report line text." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText32.png" helpContextID="" condition="esri_reports_canAddElementCondition">
+          <tooltip heading="New Text">Create new text by dragging a line.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>-->
+        <tool id="esri_reports_newRectangleParagraphTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewRectangleParagraphTool" caption="Rectangle" extendedCaption="Create a new report rectangle paragraph." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRectangleText32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Rectangle Paragraph">
+            Create a new paragraph on the report by drawing a rectangle.<disabledText>Select a report section in the Contents pane.</disabledText>
+          </tooltip>
+        </tool>
+        
+        <!--<tool id="esri_reports_newPolygonParagraphTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPolygonParagraphTool" caption="Polygon" extendedCaption="Create a new report polygon paragraph." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Polygon Paragraph">Create a new paragraph on the report by drawing a polygon.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newCircleParagraphTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewCircleParagraphTool" caption="Circle" extendedCaption="Create a new report circle paragraph." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCircleText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCircleText32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Circle Paragraph">Create a new paragraph on the report by drawing a circle.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>
+        <tool id="esri_reports_newEllipseParagraphTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewEllipseParagraphTool" caption="Ellipse" extendedCaption="Create a new report ellipse paragraph." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementEllipseText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementEllipseText32.png" condition="esri_reports_canAddElementCondition" helpContextID="">
+          <tooltip heading="New Ellipse Paragraph">Create a new paragraph on the report by drawing an ellipse.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
+        </tool>-->
       </controls>
 
+      <splitButtons>
+        <splitButton id="esri_reports_newReportSplitButton" keytip="NR" extendedCaption="Create a new report.">
+          <button refID="esri_reports_projectContainer_NewReport" />
+          <button refID="esri_reports_importReportFile" />
+        </splitButton>        
+      </splitButtons>
+      
+      <palettes>
+        <toolPalette id="esri_reports_statisticToolPalette" itemsInRow="1" showItemCaption="true" caption="Statistics" extendedCaption="Open statistic tool palette" keytip="DS">
+          <tool refID="esri_reports_addCountStatisticTool"/>
+          <tool refID="esri_reports_addAvgStatisticTool"/>
+          <tool refID="esri_reports_addMedianStatisticTool"/>
+          <tool refID="esri_reports_addMaxStatisticTool"/>
+          <tool refID="esri_reports_addMinStatisticTool"/>
+          <tool refID="esri_reports_addStdDevStatisticTool"/>
+          <tool refID="esri_reports_addSumStatisticTool"/>
+        </toolPalette>
+        <!--<toolPalette id="esri_reports_newTextToolPalette" showItemCaption="true" keytip="TP" extendedCaption="Create a text element in a report">
+          <tool refID="esri_reports_newPointTextTool"/>
+          <tool refID="esri_reports_newSplinedTextTool"/>
+          <tool refID="esri_reports_newRectangleParagraphTool"/>
+          <tool refID="esri_reports_newPolygonParagraphTool"/>
+          <tool refID="esri_reports_newCircleParagraphTool"/>
+          <tool refID="esri_reports_newEllipseParagraphTool"/>
+        </toolPalette>-->
+        <toolPalette id="esri_reports_newPolygonGraphicToolPalette" showItemCaption="true" keytip="PP" extendedCaption="Create a graphic element in a report">
+          <tool refID="esri_reports_newRectangleTool"/>
+          <tool refID="esri_reports_newPolygonTool"/>
+          <tool refID="esri_reports_newLassoTool"/>
+          <tool refID="esri_reports_newCircleTool"/>
+          <tool refID="esri_reports_newEllipseTool"/>
+        </toolPalette>
+        <toolPalette id="esri_reports_newLineGraphicToolPalette" showItemCaption="true" keytip="LP" extendedCaption="Create a line element in a report">
+          <tool refID="esri_reports_newLineTool"/>
+          <tool refID="esri_reports_newBezierCurveTool"/>
+          <tool refID="esri_reports_newOpenLassoTool"/>
+        </toolPalette>      
+      </palettes>
+      
       <menus>
         <menu id="esri_reports_projectContainerMenu" caption="New Layout" extendedCaption="Create, paste or import a layout." contextMenu="true">
           <button refID="esri_reports_projectContainer_NewReport"/>
@@ -2271,54 +2714,26 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_reports_projectItem_ReportProperties" separator="true"/>
         </menu>
 
-        <menu id="esri_reports_statisticsMenu" caption="Statistics" extendedCaption="Add statistic control."
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSummaryStatistics32.png" 
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSummaryStatistics16.png">
-          <button refID="esri_reports_addAvgStatisticButton"/>
-          <button refID="esri_reports_addCountStatisticButton"/>
-          <button refID="esri_reports_addMaxStatisticButton"/>
-          <button refID="esri_reports_addMinStatisticButton"/>
-          <button refID="esri_reports_addStdDevStatisticButton"/>
-          <button refID="esri_reports_addSumStatisticButton"/>
-        </menu>
-
-        <menu id="esri_reports_statisticsMenu" caption="Statistics" extendedCaption="Add statistic control."
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSummaryStatistics32.png"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSummaryStatistics16.png">
-          <button refID="esri_reports_addAvgStatisticButton"/>
-          <button refID="esri_reports_addCountStatisticButton"/>
-          <button refID="esri_reports_addMaxStatisticButton"/>
-          <button refID="esri_reports_addMinStatisticButton"/>
-          <button refID="esri_reports_addStdDevStatisticButton"/>
-          <button refID="esri_reports_addSumStatisticButton"/>
-        </menu>
-
-        <menu id="esri_reports_groupingMenu" caption="Grouping" extendedCaption="Grouping."
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping16.png"
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping32.png">
-          <button refID="esri_reports_addGroupButton"/>
-          <button refID="esri_reports_removeGroupButton"/>
-        </menu>
-
         <menu id="esri_reports_reportsContextMenu" caption="Reports Menu" extendedCaption="Context menu for reports." contextMenu="true">
           <button refID="esri_layouts_pageZoomFullButton"/>
           <button refID="esri_layouts_pageZoom100PercentButton"/>
-          <button refID="esri_layouts_selectAllButton" separator="true"/>
-          <button refID="esri_layouts_clearSelectionButton"/>
+          <button refID="esri_reports_selectAllButton" separator="true"/>
+          <button refID="esri_reports_clearSelectionButton"/>
           <button refID="esri_layouts_pageZoomToSelected"/>
           <button refID="esri_layouts_navigateContext" separator="true"/>
           <button refID="esri_layouts_selectContext"/>
           <button refID="esri_layouts_showHideRulers" separator="true"/>
           <button refID="esri_layouts_showHideGuides"/>
-          <button refID="esri_layouts_layoutPropertiesButton" separator="true"/>
+          <button refID="esri_reports_reportPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="esri_report_reportElementInlineMenu" contextMenu="true">
-          <button refID="esri_layouts_pageZoomFullButton"/>
-          <button refID="esri_layouts_pageZoomToSelected"/>
+          <button refID="esri_core_editPasteButton"/>
+          <button refID="esri_layouts_pageZoomFullButton" separator="true"/>
+          <button refID="esri_reports_zoomToActiveSection"/>
           <button refID="esri_layouts_navigateContext" separator="true"/>
         </menu>
-        
+
         <menu id="esri_reports_reportSectionContextMenu" contextMenu="true">
           <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
         </menu>
@@ -2341,15 +2756,22 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         
         <menu id="esri_reports_reportGroupHeaderContextMenu" contextMenu="true">
           <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
+          <button refID="esri_reports_removeGroupButton"/>
         </menu>
         
         <menu id="esri_reports_reportGroupFooterContextMenu" contextMenu="true">
           <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
         </menu>
-        
+
         <menu id="esri_reports_reportDetailsContextMenu" contextMenu="true">
           <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
-        </menu>        
+        </menu>
+
+        <menu id="esri_reports_textElementContextMenu" contextMenu="true">
+          <menu refID="esri_layouts_elementBasicSubMenu" inline="true"/>
+          <button refID="esri_layouts_editTextButton" separator="true"/>
+          <button refID="esri_layouts_showElementDockPaneButton"/>
+        </menu>
       </menus>
 
       <panes>
@@ -2361,16 +2783,6 @@ Adjust divisions and division values preserves the number of subdivisions by adj
 
     </insertModule>
 
-    <!--DON'T INSTALL THESE MODULE UPDATES-->
-    <!--
-    <updateModule refID="esri_core_module">
-      <groups>
-        <updateGroup refID="esri_core_projectData">
-          <insertButton refID="esri_reports_gallery" placeWith="esri_layouts_gallery" insert="before" size="large" />
-        </updateGroup>
-      </groups>
-    </updateModule>
-
     <updateModule refID="esri_mapping">
       <menus>
         <updateMenu refID="esri_mapping_layerContextMenu">
@@ -2380,27 +2792,48 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
         <updateMenu refID="esri_mapping_rasterLayerContextMenu">
-          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designPopupsButton" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after"  placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
         <updateMenu refID="esri_mapping_imageServiceLayerContextMenu">
-          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designPopupsButton" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="before" placeWith="esri_mapping_zoomToSelectedLayersButton" />
         </updateMenu>
         <updateMenu refID="esri_mapping_mosaicFootprintSubLayerContextMenu">
-          <insertButton refID="esri_reports_newLayerReport" insert="before" separator="true"  placeWith="esri_mapping_designViewMenu" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after"  placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
         <updateMenu refID="esri_mapping_mosaicBoundarySubLayerContextMenu">
-          <insertButton refID="esri_reports_newLayerReport" insert="before" separator="true"  placeWith="esri_mapping_designViewMenu" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after"  placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
         <updateMenu refID="esri_mapping_mosaicSeamlineSubLayerContextMenu">
-          <insertButton refID="esri_reports_newLayerReport" insert="before" separator="true"  placeWith="esri_mapping_designViewMenu" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after"  placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
         <updateMenu refID="esri_mapping_standaloneTableContextMenu">
-          <insertButton refID="esri_reports_newStandaloneTableReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
       </menus>
     </updateModule>
-    -->
+
   </modules>
+
+  <wizards>
+    <insertWizard id ="esri_reports_reportsWizard" caption="Create New Report" pageHeight="400" pageWidth="250" isPageListVisible="true" resizable="true">
+      <page id ="esri_reports_reportsWizardHomePage" caption="Set the data source" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardHomePageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardHomePage"/>
+        <toolTip>Set a name and select the data source for your report.</toolTip>
+      </page>
+      <page id ="esri_reports_reportsWizardDataPage" caption="Filter the data" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDataPageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDataPage"/>
+        <toolTip>Decide which rows to include and specify the fields in your report.</toolTip>
+      </page>
+      <page id ="esri_reports_reportsWizardOrganizePage" caption="Organize the data" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardOrganizePageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardOrganizePage"/>
+        <toolTip>Add grouping, sorting, and summary statistics to your report.</toolTip>
+      </page>
+      <page id ="esri_reports_reportsWizardDesignPage" caption="Design the report" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDesignPageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDesignPage"/>
+        <toolTip>Choose the report template, style, and page setup.</toolTip>
+      </page>
+    </insertWizard>
+  </wizards>
 
   <propertySheets>
     <insertSheet id="esri_layouts_propertySheet" caption="Layout Properties" pageHeight="465" pageWidth="640" resizable="true">
@@ -2465,9 +2898,28 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </insertPage>
     </updateSheet>
 
+    <insertSheet id="esri_reports_propertySheet" caption="Report Properties" pageHeight="465" pageWidth="640" resizable="true">
+      <page id ="esri_reports_reportGeneralPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPageViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPage"/>
+      </page>
+      <page id ="esri_reports_reportSourcePage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPageViewModel" caption="Source">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPage"/>
+      </page>
+      <page id ="esri_reports_reportGroupSortPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPageViewModel" caption="Grouping and Sorting">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPage"/>
+      </page>
+      <page id="esri_reports_reportPageSetupPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPageViewModel" caption="Page Setup">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPage"/>
+      </page>
+    </insertSheet>
+
   </propertySheets>
 
   <conditions>
+    <insertCondition id="esri_LayoutContainer" caption="">
+      <state id="esri_layouts_container" />
+    </insertCondition>
+    
     <insertCondition id="esri_layouts_mapActivatedCondition" caption="A map is activated">
       <state id="esri_layouts_mapFrameActivated"/>
     </insertCondition>
@@ -2572,6 +3024,24 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </or>
       </and>
     </insertCondition>
+    <insertCondition id="esri_layouts_slopeGuideDesignCondition">
+      <and>
+        <state id="esri_layouts_layoutPane"/>
+        <or>
+          <state id="esri_layouts_slopeGuideCondition"/>
+          <state id="esri_layouts_slopeGuideBackgroundCondition"/>
+          <state id="esri_layouts_slopeGuideBorderCondition"/>
+          <state id="esri_layouts_slopeGuideShadowCondition"/>
+          <state id="esri_layouts_slopeGuideTitleTextCondition"/>
+          <state id="esri_layouts_slopeGuideUnitTextCondition"/>
+          <state id="esri_layouts_slopeGuideTextCondition"/>
+          <state id="esri_layouts_slopeGuideFootnoteTextCondition"/>
+          <state id="esri_layouts_slopeGuideVerticalLineCondition"/>
+          <state id="esri_layouts_slopeGuideHorizontalLineCondition"/>
+          <state id="esri_layouts_slopeGuideTickLineCondition"/>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_layouts_scaleBarDesignCondition">
       <and>
         <state id="esri_layouts_layoutPane"/>
@@ -2636,6 +3106,9 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_topoNorthArrowLineCondition"/>
         <state id="esri_layouts_topoNorthArrowArcCondition"/>
         <state id="esri_layouts_elevationGuideBarLineCondition"/>
+        <state id="esri_layouts_slopeGuideHorizontalLineCondition"/>
+        <state id="esri_layouts_slopeGuideVerticalLineCondition"/>
+        <state id="esri_layouts_slopeGuideTickLineCondition"/>        
 
         <state id="esri_layouts_profileFrameLineCondition"/>
         <state id="esri_layouts_profileFrameOISCondition"/>
@@ -2654,6 +3127,8 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_legendItemCondition"/>
         <state id="esri_layouts_extentIndicatorCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderPolygonCondition"/>
+        <state id="esri_layouts_mapGridCondition"/>
+        <state id="esri_layouts_mapGridPolygonCondition"/>
 
         <state id="esri_layouts_paragraphCondition"/>
         <state id="esri_layouts_pictureCondition"/>
@@ -2757,6 +3232,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_mapGridCondition"/>
         <state id="esri_layouts_mapGridPointCondition"/>
         <state id="esri_layouts_mapGridLineCondition"/>
+        <state id="esri_layouts_mapGridPolygonCondition"/>
         <state id="esri_layouts_mapGridTextCondition"/>
         <state id="esri_layouts_topoNorthArrowCondition"/>
         <state id="esri_layouts_topoNorthArrowTextCondition"/>
@@ -2776,6 +3252,17 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_profileFrameOISCondition"/>
         <state id="esri_layouts_profileFrameOISLineCondition"/>
         <state id="esri_layouts_profileFrameObstacleCondition"/>
+        <state id="esri_layouts_slopeGuideCondition"/>
+        <state id="esri_layouts_slopeGuideBackgroundCondition"/>
+        <state id="esri_layouts_slopeGuideBorderCondition"/>
+        <state id="esri_layouts_slopeGuideShadowCondition"/>
+        <state id="esri_layouts_slopeGuideTitleTextCondition"/>
+        <state id="esri_layouts_slopeGuideUnitTextCondition"/>
+        <state id="esri_layouts_slopeGuideTextCondition"/>
+        <state id="esri_layouts_slopeGuideFootnoteTextCondition"/>
+        <state id="esri_layouts_slopeGuideVerticalLineCondition"/>
+        <state id="esri_layouts_slopeGuideHorizontalLineCondition"/>
+        <state id="esri_layouts_slopeGuideTickLineCondition"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_layouts_backgroundGroupCondition">
@@ -2794,6 +3281,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_legendBackgroundCondition"/>
         <state id="esri_layouts_mapFrameBackgroundCondition"/>
         <state id="esri_layouts_topoNorthArrowBackgroundCondition"/>
+        <state id="esri_layouts_slopeGuideBackgroundCondition"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_layouts_borderGroupCondition">
@@ -2812,6 +3300,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_legendBorderCondition"/>
         <state id="esri_layouts_mapFrameBorderCondition"/>
         <state id="esri_layouts_topoNorthArrowBorderCondition"/>
+        <state id="esri_layouts_slopeGuideBorderCondition"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_layouts_shadowGroupCondition">
@@ -2830,9 +3319,13 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_legendShadowCondition"/>
         <state id="esri_layouts_mapFrameShadowCondition"/>
         <state id="esri_layouts_topoNorthArrowShadowCondition"/>
+        <state id="esri_layouts_slopeGuideShadowCondition"/>
       </or>
     </insertCondition>
-    
+
+    <!---->
+    <!--Report Conditions-->
+    <!---->
     <insertCondition id="esri_reports_pageHeaderFormatCondition">
       <and>
         <state id="esri_reports_reportPane"/>
@@ -2889,6 +3382,46 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </or>
       </and>
     </insertCondition>
-    
+    <insertCondition id="esri_reports_reportSectionActiveCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_reportSectionActiveStateId" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_canAddFieldElementCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_report_groupHeaderActiveStateId"/>
+          <state id="esri_report_groupFooterActiveStateId"/>
+          <state id="esri_report_detailsActiveStateId"/>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_canAddFieldStatisticElementCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_report_groupHeaderActiveStateId"/>
+          <state id="esri_report_groupFooterActiveStateId"/>
+          <state id="esri_report_reportFooterActiveStateId"/>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_canAddElementCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_reportSectionActiveStateId" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_ReportContainer" caption="">
+      <state id="esri_reports_container" />
+    </insertCondition>
+    <insertCondition id="esri_reports_reportSourceConnectedCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_reportSourceConnectedStateId" />
+      </and>
+    </insertCondition>
   </conditions>
 </ArcGIS>

@@ -1,4 +1,4 @@
-/*
+﻿/*
 
    Copyright 2018 Esri
 
@@ -188,6 +188,53 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Opening datasets from Geodatabase
 
+    #region Checking for the existence of a Table
+    // Must be called within QueuedTask.Run9)
+    public bool TableExists(Geodatabase geodatabase, string tableName)
+    {
+      try
+      {
+        TableDefinition tableDefinition = geodatabase.GetDefinition<TableDefinition>(tableName);
+        tableDefinition.Dispose();
+        return true;
+      }
+      catch
+      {
+        // GetDefinition throws an exception if the definition doesn't exist
+        return false;
+      }
+    }
+    #endregion
+
+    #region Checking for the existence of a Feature Class
+    // Must be called within QueuedTask.Run()
+    public bool FeatureClassExists(Geodatabase geodatabase, string featureClassName)
+    {
+      try
+      {
+        FeatureClassDefinition featureClassDefinition = geodatabase.GetDefinition<FeatureClassDefinition>(featureClassName);
+        featureClassDefinition.Dispose();
+        return true;
+      }
+      catch
+      {
+        // GetDefinition throws an exception if the definition doesn't exist
+        return false;
+      }
+    }
+    #endregion
+
+    #region Opening RelationshipClass between two Tables
+
+    // Must be called within QueuedTask.Run().  
+    // When used with file or enterprise geodatabases, this routine takes two table names.
+    // When used with feature services, this routine takes layer IDs, or the names of the tables as they are exposed through the service (e.g., "L0States")
+    public IReadOnlyList<RelationshipClass> OpenRelationshipClassFeatureServices(Geodatabase geodatabase, string originClass, string destinationClass)
+    {
+      return geodatabase.OpenRelationshipClass(originClass, destinationClass);
+    }
+    #endregion Opening RelationshipClass between two Tables
+
     #region Obtaining Definition from Geodatabase
 
     public async Task ObtainingDefinitionFromGeodatabase()
@@ -339,6 +386,42 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion
+
+    public async Task SearchingATableWithNonLatinCharacters()
+    {
+
+        await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() => {
+
+          #region Searching a Table for non-Latin characters
+
+          using (Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri("path\\to\\sde\\file\\sdefile.sde"))))
+          using (Table table = geodatabase.OpenDataset<Table>("TableWithChineseCharacters"))
+          {
+            // This will fail with many database systems that expect Latin characters by default
+
+            string incorrectWhereClause = "颜色 = '绿'";
+
+            // Correct solution is to prepend the 'National String Prefix' to the attribute value
+            // For example, with SQL Server this value is 'N'
+            // This value is obtained using the SQLSyntax class
+
+            string nationalStringPrefix = "";
+            SQLSyntax sqlSyntax = geodatabase.GetSQLSyntax();
+            nationalStringPrefix = sqlSyntax.GetSupportedStrings(SQLStringType.NationalStringPrefix).First();
+
+            // This Where clause will work
+
+            QueryFilter queryFilter = new QueryFilter()
+            {
+              WhereClause = "颜色 = " + nationalStringPrefix + "'绿'"
+            };
+          }
+          #endregion
+        });
+
+
+    }
+
 
     #region Searching a Table using a set of ObjectIDs
 
@@ -530,9 +613,27 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
         tableStatisticsDescription.OrderBy = new List<SortDescription>() { new SortDescription(regionField) };
 
         // Calculate Statistics
-        IReadOnlyList<TableStatisticsResult> statisticsResults = countryFeatureClass.CalculateStatistics(tableStatisticsDescription);
+        IReadOnlyList<TableStatisticsResult> tableStatisticsResults = countryFeatureClass.CalculateStatistics(tableStatisticsDescription);
 
-        // Code to process results goes here...
+        foreach(TableStatisticsResult tableStatisticsResult in tableStatisticsResults)
+        {
+          // Get the Region name
+          // If multiple fields had been passed into TableStatisticsDescription.GroupBy, there would be multiple values in TableStatisticsResult.GroupBy
+          string regionName = tableStatisticsResult.GroupBy.First().Value.ToString();
+
+          // Get the statistics results for the Population_1990 field
+          StatisticsResult pop1990Statistics = tableStatisticsResult.StatisticsResults[0];
+          double population1990Sum = pop1990Statistics.Sum;
+          double population1990Average = pop1990Statistics.Average;
+
+          // Get the statistics results for the Population_2000 field
+          StatisticsResult pop2000Statistics = tableStatisticsResult.StatisticsResults[1];
+          double population2000Sum = pop2000Statistics.Sum;
+          double population2000Average = pop2000Statistics.Average;
+
+          // Do something with the results here...
+
+        }
       }
     }
     #endregion
@@ -1327,7 +1428,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Create QueryDescription from a query for a Database table which has more than one shape type
 
-    #region Create QueryDescription from a query for a SQLite Database table
+    #region Create QueryDescription from a query for an SQLite Database table
 
     public async Task SqliteQueryDescription()
     {

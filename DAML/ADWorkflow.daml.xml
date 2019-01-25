@@ -40,7 +40,7 @@
       </component>
       <component id="esri_workflow_userGroupsView" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserGroupsViewModel">
         <content L_name = "Groups" buttonTooltipHeader="Add Users to Groups" buttonTooltip = "Add users to workflow groups."
-                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Group_B32.png">
+                 buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Group_B_32.png">
         </content>
       </component>
     </insertCategory>    
@@ -250,9 +250,9 @@
 
       <controls>
         <!-- Workflow Connection button -->
-        <button id="esri_workflow_workflowConnectionButton" className="workflow_module:ConnectToWorkflowAsync" caption="Add Workflow Connection" extendedCaption="Insert Connection"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
+        <button id="esri_workflow_workflowConnectionButton" className="workflow_module:ConnectToWorkflowAsync" caption="New Workflow Connection" extendedCaption="Insert Connection"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewWorkflowConnections16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewWorkflowConnections32.png"
                 condition="esri_workflow_canAddWorkflowConnectionCondition" keytip="WC">
           <tooltip heading="">
             Add a connection to a Workflow Manager database to the project.

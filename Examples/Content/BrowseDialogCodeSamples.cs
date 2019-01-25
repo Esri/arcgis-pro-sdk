@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Mapping;
 
 namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 {
@@ -51,10 +52,10 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       #region Show_OpenItemDialog
 
       OpenItemDialog addToProjectDialog = new OpenItemDialog();
-      addToMapDialog.Title = "Add To Project";
-      addToMapDialog.InitialLocation = @"C:\Data\NewYork\Counties\Maps";
-      addToMapDialog.MultiSelect = true;
-      addToMapDialog.Filter = ItemFilters.composite_maps_import;
+      addToProjectDialog.Title = "Add To Project";
+      addToProjectDialog.InitialLocation = @"C:\Data\NewYork\Counties\Maps";
+      addToProjectDialog.MultiSelect = true;
+      addToProjectDialog.Filter = ItemFilters.composite_maps_import;
 
       bool? ok = addToMapDialog.ShowDialog();
 
@@ -62,7 +63,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       {
         IEnumerable<Item> selectedItems = addToMapDialog.Items;
         foreach (Item selectedItem in selectedItems)
-          Mapping.MapFactory.Instance.CreateMapFromItem(selectedItem);
+          MapFactory.Instance.CreateMapFromItem(selectedItem);
       }
 
       #endregion //Show_OpenItemDialog
