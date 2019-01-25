@@ -115,8 +115,8 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;Contributor:&nbsp;&nbsp;&nbsp;ArcGIS Pro SDK Team <arcgisprosdk@esri.com>
                         <br />
                         &nbsp;&nbsp;&nbsp;&nbsp;Organization:&nbsp;&nbsp;Esri, http://www.esri.com<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6/7/2018<br />
-                        &nbsp;&nbsp;&nbsp;&nbsp;ArcGIS Pro:&nbsp;&nbsp;&nbsp;&nbsp;2.2<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12/28/2018<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;ArcGIS Pro:&nbsp;&nbsp;&nbsp;&nbsp;2.3<br />
                         &nbsp;&nbsp;&nbsp;&nbsp;Visual Studio:&nbsp;2015, 2017<br /><br />
                 </div>
 
@@ -132,7 +132,6 @@
                     <li><a href="#text">Text Foreground</a></li>
                     <li><a href="#states">Control background and borders (State behavior)</a></li>
                     <li><a href="#background">Control background</a></li>
-		    <li><a href="#migrating">Migrating from 1.4 Brushes</a></li>
                 </ul>
 
                 <!--Begin Results-->
@@ -151,6 +150,11 @@
                             <td style="background-color: #FFFFFF;">#FFFFFF</td>
                             <td>Foreground brush for text in menu items</td>
                         </tr>
+						<tr>						
+						<td><i>Esri_TextStyleDisabledBrush</i></td>
+                            <td style="background-color: #959595;">#959595</td>
+                            <td>Foreground brush for disabled text.</td>
+						</tr>
                         <tr>
                             <td><i>Esri_TextStyleSubduedBrush</i></td>
                             <td style="background-color: #6A6A6A;color: white">#6A6A6A</td>
@@ -288,17 +292,7 @@
                             <td style="background-color: transparent">transparent</td>
                             <td>Background brush for the Gallery item</td>
                         </tr>
-                    </table>
-					<hr id="hr-colors">
-                    <a name="migrating"><h3>Migrating from 1.4 Brushes</h3> </a>
-
-                    <p>At ArcGIS Pro 1.4, brushes used for Background, Foreground and Borders were chosen based on color.  At 2.0, brushes should be chosen based on their use.
-                    For example, if you had used <code>Esri_Gray100</code> brush for your dockpane's background, use <code>Esri_DialogClientAreaBackgroundBrush</code> with ArcGIS Pro 2.0.  If you had
-                    used <code>Esri_Gray155</code> for the Foreground of your TextBlock elements, use <code>Esri_TextControlBrush</code> with ArcGIS Pro 2.0.</p>
-
-                    <p style="font-weight:600">Note: At ArcGIS Pro 2.0, because themes are based on a blue/gray/black color palette, Red, Yellow, Green, Orange, Purple and Brown brushes are not provided. </p>
-   
-
+                    </table>					   
                 </div>
             </main>		<!--End Main Content Area-->
         </div>
