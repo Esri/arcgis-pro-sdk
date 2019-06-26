@@ -37,6 +37,9 @@ namespace UtilityNetworkProSnippets
   class ProSnippetsUtilityNetwork
   {
 
+    #region ProSnippet Group: Obtaining Utility Networks
+    #endregion
+
     #region Get a Utility Network from a Table
 
     public static UtilityNetwork GetUtilityNetworkFromTable(Table table)
@@ -114,6 +117,9 @@ namespace UtilityNetworkProSnippets
     #endregion
 
 
+    #region ProSnippet Group: Elements
+    #endregion
+
     #region Fetching a Row from an Element
 
     public static Row FetchRowFromElement(UtilityNetwork utilityNetwork, Element element)
@@ -138,6 +144,73 @@ namespace UtilityNetworkProSnippets
         }
       }
     }
+    #endregion
+
+    #region ProSnippet Group: Editing Associations
+    #endregion
+
+
+    public void EditOperation(UtilityNetwork utilityNetwork, AssetType poleAssetType, Guid poleGlobalID, AssetType transformerBankAssetType, Guid transformerBankGlobalID)
+    {
+
+      #region Create a utility network association
+
+      // Create edit operation
+
+      EditOperation editOperation = new EditOperation();
+      editOperation.Name = "Create structural attachment association";
+
+      // Create a RowHandle for the pole
+
+      Element poleElement = utilityNetwork.CreateElement(poleAssetType, poleGlobalID);
+      RowHandle poleRowHandle = new RowHandle(poleElement, utilityNetwork);
+
+      // Create a RowHandle for the transformer bank
+
+      Element transformerBankElement = utilityNetwork.CreateElement(transformerBankAssetType, transformerBankGlobalID);
+      RowHandle transformerBankRowHandle = new RowHandle(transformerBankElement, utilityNetwork);
+
+      // Attach the transformer bank to the pole
+
+      StructuralAttachmentAssociationDescription structuralAttachmentAssociationDescription = new StructuralAttachmentAssociationDescription(poleRowHandle, transformerBankRowHandle);
+      editOperation.Create(structuralAttachmentAssociationDescription);
+      editOperation.Execute();
+
+      #endregion
+    }
+
+    public void EditOperation2(FeatureLayer transformerBankLayer, Dictionary<string, object> transformerBankAttributes, FeatureLayer poleLayer, Dictionary<string, object> poleAttributes)
+    {
+
+      #region Create utility network features and associations in a single edit operation
+
+      // Create an EditOperation
+      EditOperation editOperation = new EditOperation();
+      editOperation.Name = "Create pole; create transformer bank; attach transformer bank to pole";
+
+      // Create the transformer bank
+      RowToken transformerBankToken = editOperation.CreateEx(transformerBankLayer, transformerBankAttributes);
+
+      // Create a pole
+      RowToken poleToken = editOperation.CreateEx(poleLayer, poleAttributes);
+
+      // Create a structural attachment association between the pole and the transformer bank
+      RowHandle poleHandle = new RowHandle(poleToken);
+      RowHandle transformerBankHandle = new RowHandle(transformerBankToken);
+
+      StructuralAttachmentAssociationDescription poleAttachment = new StructuralAttachmentAssociationDescription(poleHandle, transformerBankHandle);
+
+      editOperation.Create(poleAttachment);
+
+      // Execute the EditOperation
+      editOperation.Execute();
+
+
+      #endregion
+
+    }
+
+    #region ProSnippet Group: Subnetworks and Tiers
     #endregion
 
     void FindATierFromDomainNetworkNameAndTierName(UtilityNetwork utilityNetwork, string domainNetworkName, string tierName)
@@ -170,6 +243,9 @@ namespace UtilityNetworkProSnippets
 
       #endregion
     }
+
+    #region ProSnippet Group: Tracing
+    #endregion
 
     void CreateADownstreamTracerObject(UtilityNetwork utilityNetwork)
 
@@ -206,7 +282,6 @@ namespace UtilityNetworkProSnippets
       #endregion
 
     }
-
 
     private void CreateNetworkAttributeComparison(UtilityNetworkDefinition utilityNetworkDefinition, TraceConfiguration traceConfiguration)
     {
@@ -331,6 +406,9 @@ namespace UtilityNetworkProSnippets
 
     }
 
+    #region ProSnippet Group: Network Diagrams
+    #endregion
+
     #region Get a list of inconsistent Network Diagrams
     public List<NetworkDiagram> GetInconsistentDiagrams(UtilityNetwork utilityNetwork)
     {
@@ -445,66 +523,6 @@ namespace UtilityNetworkProSnippets
 
     }
 
-
-    public void EditOperation(UtilityNetwork utilityNetwork, AssetType poleAssetType, Guid poleGlobalID, AssetType transformerBankAssetType, Guid transformerBankGlobalID)
-    {
-
-      #region Create a utility network association
-
-      // Create edit operation
-
-      EditOperation editOperation = new EditOperation();
-      editOperation.Name = "Create structural attachment association";
-
-      // Create a RowHandle for the pole
-
-      Element poleElement = utilityNetwork.CreateElement(poleAssetType, poleGlobalID);
-      RowHandle poleRowHandle = new RowHandle(poleElement, utilityNetwork);
-
-      // Create a RowHandle for the transformer bank
-
-      Element transformerBankElement = utilityNetwork.CreateElement(transformerBankAssetType, transformerBankGlobalID);
-      RowHandle transformerBankRowHandle = new RowHandle(transformerBankElement, utilityNetwork);
-
-      // Attach the transformer bank to the pole
-
-      StructuralAttachmentAssociationDescription structuralAttachmentAssociationDescription = new StructuralAttachmentAssociationDescription(poleRowHandle, transformerBankRowHandle);
-      editOperation.Create(structuralAttachmentAssociationDescription);
-      editOperation.Execute();
-
-      #endregion
-    }
-
-    public void EditOperation2(FeatureLayer transformerBankLayer, Dictionary<string,object> transformerBankAttributes, FeatureLayer poleLayer, Dictionary<string,object> poleAttributes)
-    {
-
-      #region Create utility network features and associations in a single edit operation
-
-      // Create an EditOperation
-      EditOperation editOperation = new EditOperation();
-      editOperation.Name = "Create pole; create transformer bank; attach transformer bank to pole";
-
-      // Create the transformer bank
-      RowToken transformerBankToken = editOperation.CreateEx(transformerBankLayer, transformerBankAttributes);
-
-      // Create a pole
-      RowToken poleToken = editOperation.CreateEx(poleLayer, poleAttributes);
-
-      // Create a structural attachment association between the pole and the transformer bank
-      RowHandle poleHandle = new RowHandle(poleToken);
-      RowHandle transformerBankHandle = new RowHandle(transformerBankToken);
-
-      StructuralAttachmentAssociationDescription poleAttachment = new StructuralAttachmentAssociationDescription(poleHandle, transformerBankHandle);
-
-      editOperation.Create(poleAttachment);
-
-      // Execute the EditOperation
-      editOperation.Execute();
-
-
-      #endregion
-
-    }
 
   }
 

@@ -75,11 +75,11 @@
         </content>
       </component>
 
-      <component id="esri_reports_TypeOrderView">
+      <!--<component id="esri_reports_TypeOrderView">
         <content L_name = "Element Type" buttonTooltipHeader="List By Element Type" buttonTooltip = "Elements are listed by type."
                  buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListByElementType24.png">
         </content>
-      </component>
+      </component>-->
     </insertCategory>
 
     <updateCategory refID="esri_browseDialogFilters">
@@ -231,7 +231,7 @@
       <groups>
         <group id="esri_project_layout" caption="Project">
           <button refID="esri_layouts_projectContainer_NewLayout"/>
-          <button refID="esri_layouts_projectContainer_ImportPAGX"/>
+          <button refID="esri_layouts_import"/>
         </group>
         <group id="esri_layouts_clipboardGroup" caption="Clipboard">
           <buttonPalette refID="esri_core_editPasteSplitButton" size="large" />
@@ -263,7 +263,7 @@
         </group>
 
         <group id="esri_layouts_mapActivatedPageNavigateGroup" caption="Navigate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png">
-          <button refID="esri_layouts_pageNavigateButton" size="large"/>
+          <tool refID="esri_layouts_pageNavigateTool" size="large"/>
           <button refID="esri_layouts_pageZoomFullButton" size="small"/>
           <button refID="esri_layouts_pageZoomToSelected" size="small"/>
           <button refID="esri_layouts_pagePrevExtentButton" size="small"/>
@@ -410,6 +410,7 @@
         </group>
 
         <group id="esri_layouts_topoNorthArrowFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showTopoNorthArrowStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="TNA" condition="esri_layouts_topoNorthArrowCondition">
+          <gallery refID="esri_layouts_topoNorthArrowStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
           <comboBox refID="esri_layouts_symbolSizeComboBox" size="large"/>
@@ -559,9 +560,9 @@
 
       <galleries>
         <!--New Layout-->
-        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" caption="New Layout" keytip="L" extendedCaption="Choose a layout by choosing a page size." itemsInRow="6" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true" resizable="true" loadingMessage="Loading..." showGroup="true" condition="esri_mapping_openProjectCondition" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
+        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" caption="New Layout" keytip="NL" extendedCaption="Choose a layout by choosing a page size." itemsInRow="6" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true" resizable="true" loadingMessage="Loading..." showGroup="true" condition="esri_mapping_openProjectCondition" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
           <tooltip heading="">Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText></tooltip>
-          <button refID="esri_layouts_importLayoutFile"/>
+          <button refID="esri_layouts_importPAGX"/>
           <!--<button refID="esri_layouts_openWebMapFromFileButton"/>-->
           <button refID="esri_layouts_customNewLayoutButton"/>
           <button refID="esri_layouts_selectPageFromPrinter"/>
@@ -700,6 +701,11 @@
           <button refID="esri_layouts_scaleBarStyleButton"/>
         </gallery>
 
+        <gallery id="esri_layouts_topoNorthArrowStyleGalleryInLine" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.TopoNorthArrowStyleGalleryInLine" caption="North Arrow" keytip="NG" extendedCaption="Change the style for the north arrow in the layout." loadOnClick="false" itemWidth="56" itemHeight="56" itemsInRow="3" showGroup="true" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/CommonControls/CommonControls.xaml" templateID="InlineStyleGallery" helpContextID="">
+          <tooltip heading="">Change the style for the selected north arrows.<disabledText></disabledText></tooltip>
+          <button refID="esri_layouts_topoNorthArrowStyleButton"/>
+        </gallery>
+          
         <gallery id="esri_layouts_meterReferenceStyleGallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MeterReferenceStyleGallery" caption="Meter Reference Guide" keytip="NA" extendedCaption="Create a new meter reference guide by choosing a style in the layout." loadOnClick="false" itemsInRow="3" itemWidth="150" itemHeight="100" showGroup="true"
           dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="MeterReferenceTemplate"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeterReference32.png" helpContextID="">
@@ -843,7 +849,7 @@
         </button>
 
         <!--Home - Navigate-->
-        <tool id="esri_layouts_pageNavigateTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateTool" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout (Ribbon control)" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
+        <tool id="esri_layouts_pageNavigateTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateTool" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout (Ribbon control)" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" helpContextID="">
           <tooltip heading="" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScreenTipNavigateTool.png">
 1. Pan
 2. Zoom
@@ -858,11 +864,6 @@ C = explore when using another tool
             <disabledText></disabledText>
           </tooltip>
         </tool>
-        <button id="esri_layouts_pageNavigateButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateButton" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout in an activated view." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
-          <tooltip heading="">
-            Navigate the layout using the mouse.<disabledText></disabledText>
-          </tooltip>
-        </button>
         <button id="esri_layouts_pageFixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Zoom out on a layout." className="esri_layouts:FixedZoomOut" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutFixedZoomOut16.png" condition="esri_layouts_condition" helpContextID="">
           <tooltip heading="Fixed Zoom Out">Zoom out a fixed distance.<disabledText></disabledText></tooltip>
         </button>
@@ -899,7 +900,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_navigateContext" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateCommand" caption="Navigate" keytip="NA" extendedCaption="Navigate the layout (Context menu)" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
           <tooltip heading="">
-            Navigate the layout using the mouse.<disabledText></disabledText>
+            Pan and zoom the layout to navigate.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_exportMapSeries" caption="Export to File..." flipImageRTL="false" className="esri_layouts:OnExportMapSeriesTOC" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png" helpContextID="">
@@ -918,13 +919,6 @@ C = explore when using another tool
         <button id="esri_layouts_mapSeriesRefreshButton" className="esri_layouts:RefreshMapSeries" caption="Refresh" extendedCaption="Refresh the map series" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeriesRefresh32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeriesRefresh16.png" keytip="R">
           <tooltip heading="Refresh Map Series">
             Refresh the map series when the related map data changes.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <!--Import layout from PAGX file-->
-        <button id="esri_layouts_importLayoutFile" className="esri_mapping:OpenImportMapDocument" caption="Import a layout file..." helpContextID="">
-          <tooltip heading="Import Layout">
-            A layout stored in an ArcGIS Pro layout file is added to the project and opened. A copy of the layout is added to the project. Future changes to the layout file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1195,6 +1189,13 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <!--TableFrame-->
+        <button id="esri_layouts_saveAsDefaultTableFrameField" caption="Save As Default" extendedCaption="Save selected field as the default." className="esri_layouts:SaveAsDefaultTableFrameField" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolderOpenState32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolderOpenState16.png" helpContextID="">
+          <tooltip heading="Save As Default">
+            Save selected field as the default.  This style will be used when new fields are added to the Table Frame.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <!--Arrange-->
         <button id="esri_layouts_alignLeft" caption="Align Left" keytip="L" className="esri_layouts:AlignLeft" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignLeft16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Left">
@@ -1333,7 +1334,7 @@ Drag a rectangle to create a legend that adjusts the items to fit inside the fra
               className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewTableFrameTool"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png"
-              caption="Table Frame" keytip="LT" loadOnClick="false" condition="esri_layouts_tableCondition" helpContextID="">
+              caption="Table Frame" keytip="LT" helpContextID="">
           <tooltip heading="New Table Frame">
 Drag a rectangle to create a new table frame on the layout.
 
@@ -1451,6 +1452,11 @@ Specify the associated layer or standalone table by selecting it in the Contents
         </tool>
 
         <!--Topo North Arrow-->
+        <button id="esri_layouts_topoNorthArrowStyleButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.TopoNorthArrowStyleButton" caption="More..." keytip="M" extendedCaption="North arrow styles." loadOnClick="false" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="">
+            Choose the north arrow.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <!--<tool id="esri_layouts_newTopoNorthArrowTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewTopoNorthArrowTool"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TopoNorthArrow16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TopoNorthArrow32.png"
@@ -1930,34 +1936,45 @@ Adjust divisions and division values preserves the number of subdivisions by adj
                 className="esri_layouts:NewLayout" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" 
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png" 
-                loadOnClick="false" helpContextID="">
+                loadOnClick="true" helpContextID="">
           <tooltip heading="">Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText></tooltip>
         </button>
 
-        <button id="esri_layouts_projectContainer_ImportPAGX" caption="Import" keytip="I" 
-                extendedCaption="Import layout PAGX file." 
-                className="esri_mapping:OpenImportMapDocument" 
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
-                loadOnClick="false" helpContextID="">
-          <tooltip heading="Import Layout">A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.<disabledText></disabledText></tooltip>
+        <!--This is the "Import MXD" button on the Insert ribbon-->
+        <button id="esri_layouts_import" className="esri_layouts:ImportDocument" caption="Import" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
+          <tooltip heading="">
+            Import an existing ArcMap, ArcGlobe, or ArcScene document, a map or basemap package, or a map or layout file to the project.&#xD;&#xD;The original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. One of the new maps or layouts is opened in a view.<disabledText></disabledText>
+          </tooltip>
         </button>
 
-        <button id="esri_layouts_projectContainer_RibbonImportPAGX" caption="Import Layout" keytip="L"
+        <button id="esri_layouts_importMap" className="esri_layouts:ImportDocument" caption="Import Map" keytip="IM" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
+          <tooltip heading="">
+            Import an existing ArcMap, ArcGlobe, or ArcScene document, a map or basemap package, or a map or layout file to the project.&#xD;&#xD;The original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. One of the new maps or layouts is opened in a view.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_importLayout" className="esri_layouts:ImportDocument" caption="Import Layout" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
+          <tooltip heading="">
+            Import an existing ArcMap, ArcGlobe, or ArcScene document, a map or basemap package, or a map or layout file to the project.&#xD;&#xD;The original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. One of the new maps or layouts is opened in a view.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <!--The following import options only differ by caption.-->
+        <button id="esri_layouts_importPAGX" caption="Import layout file..." keytip="I"
                 extendedCaption="Import layout PAGX file."
-                className="esri_mapping:OpenImportMapDocument"
+                className="esri_layouts:ImportDocument"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
                 loadOnClick="false" helpContextID="">
-          <tooltip heading="Import Layout">A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.
-            <disabledText></disabledText>
+          <tooltip heading="Import Layout">
+            A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <!-- project item view model -->
-        <button id="esri_layouts_projectItem_OpenLayoutView" 
+        <button id="esri_layouts_projectItem_OpenLayout" 
                 caption="Open" extendedCaption="Open layout view." 
-                className="esri_layouts:OnOpenLayoutView" 
+                className="esri_layouts:OnOpenLayout" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png" 
                 loadOnClick="false" helpContextID="">
           <tooltip heading="Open Layout">
@@ -1995,11 +2012,11 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <menu id="esri_layouts_projectContainer" caption="New Layout" extendedCaption="Create, paste or import a layout." contextMenu="true">
           <button refID="esri_layouts_projectContainer_NewLayout"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
-          <button refID="esri_layouts_projectContainer_ImportPAGX"/>
+          <button refID="esri_layouts_import"/>
         </menu>
 
         <menu id="esri_layouts_projectItem" caption="Layout Menu" extendedCaption="Perform operation on the layout." contextMenu="true">
-          <button refID="esri_layouts_projectItem_OpenLayoutView"/>
+          <button refID="esri_layouts_projectItem_OpenLayout"/>
           <button refID="esri_sharing_projectItem_SaveAsLayoutFile"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_layouts_projectItem_ExportLayout"/>
@@ -2137,6 +2154,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </menu>
 
         <menu id="esri_layouts_tableFrameFieldContextMenu" caption="Field Menu" extendedCaption="Perform operations on table frame fields." contextMenu="true">
+          <button refID="esri_layouts_saveAsDefaultTableFrameField" separator="true"/>
           <button refID="esri_layouts_removeTableFrameFieldButton" separator="true"/>
           <button refID="esri_layouts_showElementDockPaneButton" separator="true"/>
         </menu>
@@ -2192,7 +2210,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </menus>
     </insertModule>
 
-    <insertModule id="esri_reports_module" className="ArcGIS.Desktop.Internal.Reports.ReportsModule" caption="Reports" description="Reports module" autoLoad="false">
+    <insertModule id="esri_reports_module" className="ArcGIS.Desktop.Reports.ReportsModule" caption="Reports" description="Reports module" autoLoad="false">
 
       <dockPanes>
         <dockPane id="esri_reports_reportsWizardDockPane" caption="Create New Report" className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDockPaneVM" dock="group" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
@@ -2204,7 +2222,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <tabs>
         <tab id="esri_reports_homeTab" caption="Report" condition="esri_reports_reportPane" keytip="R">
           <group refID="esri_layouts_clipboardGroup"/>
-          <group refID="esri_layouts_pageNavigateGroup"/>
+          <group refID="esri_reports_pageNavigateGroup"/>
           <group refID="esri_reports_selectionGroup"/>
           <group refID="esri_reports_pageDesignGroup"/>
           <group refID="esri_layouts_pageShowGroup"/>
@@ -2289,6 +2307,16 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </tabGroups>
 
       <groups>
+        <group id="esri_reports_pageNavigateGroup" caption="Navigate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png">
+          <tool refID="esri_layouts_pageNavigateTool" size="large"/>
+          <button refID="esri_reports_pageZoomFullButton" size="small"/>
+          <button refID="esri_layouts_pageZoomToSelected" size="small"/>
+          <button refID="esri_layouts_pagePrevExtentButton" size="small"/>
+          <button refID="esri_layouts_pageZoomPageWidthButton" size="small"/>
+          <button refID="esri_layouts_pageZoom100PercentButton" size="small"/>
+          <button refID="esri_layouts_pageNextExtentButton" size="small"/>
+        </group>
+
         <group id="esri_reports_selectionGroup" caption="Elements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png">
           <toolPalette refID="esri_layouts_selectToolPalette" size="large"/>
           <button refID="esri_reports_selectAllButton" size="middle"/>
@@ -2406,12 +2434,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
             Create a new report for the layer and add it to the project. The new report is saved within the project.<disabledText>Layer does not have an associated table.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_importReportFile" className="esri_mapping:OpenImportMapDocument" caption="Import" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
+        <button id="esri_reports_importReportFile" className="esri_mapping:OpenImportReportDocument" caption="Import" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
           <tooltip heading="Import Report">
             A report stored in an ArcGIS Pro report file is added to the project and opened. A copy of the report is added to the project. Future changes to the report file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_reports_projectContainer_importReportFile" className="esri_mapping:OpenImportMapDocument" caption="Import Report" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
+        <button id="esri_reports_projectContainer_importReportFile" className="esri_mapping:OpenImportReportDocument" caption="Import Report" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" helpContextID="" keytip="IR">
           <tooltip heading="Import Report">
             A report stored in an ArcGIS Pro report file is added to the project and opened. A copy of the report is added to the project. Future changes to the report file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
@@ -2477,6 +2505,21 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <button id="esri_reports_customPageSizeFromPrinter" className="esri_reports_module:Commands.ReportSelectPageFromPrinter" caption="Select page from printer..." extendedCaption="Copy page size from a printer." helpContextID="">
           <tooltip heading="Page From Printer">
             Copy page size from a printer.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoomFullButton" caption="Zoom to Page" keytip="ZP" className="esri_layouts:ZoomToWholePage" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomWholePage16.png" condition="esri_layouts_condition" helpContextID="">
+          <tooltip heading="Full Extent">
+            Zoom to the full extent of the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_navigateContext" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateCommand" caption="Navigate" keytip="NA" extendedCaption="Navigate the report (Context menu)" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" condition="esri_layouts_condition" helpContextID="">
+          <tooltip heading="">
+            Pan and zoom the report to navigate.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_showElementDockPaneButton" caption="Properties" extendedCaption="Show report element properties in dock pane." className="esri_layouts:ShowElementDockPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
+          <tooltip heading="Element Properties">
+            Show the Element pane.  Use this pane to access advanced properties and formatting controls for elements on the report.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2715,12 +2758,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </menu>
 
         <menu id="esri_reports_reportsContextMenu" caption="Reports Menu" extendedCaption="Context menu for reports." contextMenu="true">
-          <button refID="esri_layouts_pageZoomFullButton"/>
+          <button refID="esri_reports_pageZoomFullButton"/>
           <button refID="esri_layouts_pageZoom100PercentButton"/>
           <button refID="esri_reports_selectAllButton" separator="true"/>
           <button refID="esri_reports_clearSelectionButton"/>
           <button refID="esri_layouts_pageZoomToSelected"/>
-          <button refID="esri_layouts_navigateContext" separator="true"/>
+          <button refID="esri_reports_navigateContext" separator="true"/>
           <button refID="esri_layouts_selectContext"/>
           <button refID="esri_layouts_showHideRulers" separator="true"/>
           <button refID="esri_layouts_showHideGuides"/>
@@ -2729,9 +2772,25 @@ Adjust divisions and division values preserves the number of subdivisions by adj
 
         <menu id="esri_report_reportElementInlineMenu" contextMenu="true">
           <button refID="esri_core_editPasteButton"/>
-          <button refID="esri_layouts_pageZoomFullButton" separator="true"/>
+          <button refID="esri_reports_pageZoomFullButton" separator="true"/>
           <button refID="esri_reports_zoomToActiveSection"/>
-          <button refID="esri_layouts_navigateContext" separator="true"/>
+          <button refID="esri_reports_navigateContext" separator="true"/>
+        </menu>
+
+        <menu id="esri_reports_elementBasicSubMenu" caption="Element Menu" extendedCaption="Perform operation on report elements." contextMenu="true">
+          <button refID="esri_reports_pageZoomFullButton"/>
+          <button refID="esri_layouts_pageZoomToSelected"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_layouts_ConvertToGraphicsButton" separator="true"/>
+          <button refID="esri_layouts_groupSelectedElementsButton" separator="true"/>
+          <button refID="esri_layouts_ungroupSelectedElementsButton"/>
+          <submenu refID="esri_layouts_alignMenu" separator="true"/>
+          <button refID="esri_layouts_saveAsStyle"/>
+          <button refID="esri_reports_navigateContext" separator="true"/>
+          <button refID="esri_layouts_selectContext"/>
+          <!--<button refID="esri_layouts_setDefaultSymbol" separator="true"/>-->
         </menu>
 
         <menu id="esri_reports_reportSectionContextMenu" contextMenu="true">
@@ -2767,10 +2826,15 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
         </menu>
 
+        <menu id="esri_reports_elementContextMenu" caption="Element Menu" extendedCaption="Element context menu for report." contextMenu="true">
+          <menu refID="esri_reports_elementBasicSubMenu" inline="true"/>
+          <button refID="esri_reports_showElementDockPaneButton" separator="true"/>
+        </menu>
+
         <menu id="esri_reports_textElementContextMenu" contextMenu="true">
-          <menu refID="esri_layouts_elementBasicSubMenu" inline="true"/>
+          <menu refID="esri_reports_elementBasicSubMenu" inline="true"/>
           <button refID="esri_layouts_editTextButton" separator="true"/>
-          <button refID="esri_layouts_showElementDockPaneButton"/>
+          <button refID="esri_reports_showElementDockPaneButton"/>
         </menu>
       </menus>
 
@@ -2846,6 +2910,9 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <page id="esri_layouts_mapSeriesPage" className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.MapSeriesPageViewModel" caption="Map Series">
         <content className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.MapSeriesPage"/>
       </page>
+      <page id="esri_layouts_colorManagementPage" className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.ColorManagementViewModel" caption="Color Management">
+        <content className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.ColorManagementView"/>
+      </page>
     </insertSheet>
 
     <!--Elements-->
@@ -2910,6 +2977,9 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </page>
       <page id="esri_reports_reportPageSetupPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPageViewModel" caption="Page Setup">
         <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPage"/>
+      </page>
+      <page id="esri_reports_reportColorManagementPropPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportColorManagementPropPageViewModel" caption="Color Management">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportColorManagementPropPage"/>
       </page>
     </insertSheet>
 
@@ -3105,6 +3175,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_mapGridTextCondition"/>
         <state id="esri_layouts_topoNorthArrowLineCondition"/>
         <state id="esri_layouts_topoNorthArrowArcCondition"/>
+        <state id="esri_layouts_meterReferenceLineCondition"/>
         <state id="esri_layouts_elevationGuideBarLineCondition"/>
         <state id="esri_layouts_slopeGuideHorizontalLineCondition"/>
         <state id="esri_layouts_slopeGuideVerticalLineCondition"/>
@@ -3195,6 +3266,8 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_northArrowBorderCondition"/>
         <state id="esri_layouts_northArrowShadowCondition"/>
         <state id="esri_layouts_meterReferenceCondition"/>
+        <state id="esri_layouts_meterReferenceLineCondition"/>
+        <state id="esri_layouts_meterReferenceTextCondition"/>
         <state id="esri_layouts_meterReferenceBackgroundCondition"/>
         <state id="esri_layouts_meterReferenceBorderCondition"/>
         <state id="esri_layouts_meterReferenceShadowCondition"/>

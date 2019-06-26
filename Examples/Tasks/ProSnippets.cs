@@ -42,7 +42,7 @@ namespace ProSnippetsTasks
 
       #endregion
 
-      #region Open a Task File (*.esriTasks)
+      #region Open a Task File - .esriTasks file
       // Open a task file
       try
       {
@@ -122,7 +122,7 @@ namespace ProSnippetsTasks
 
     public async void GetTaskItemInfo_ProjectItem()
     {
-      #region Get Task Information (TaskProjectItem)
+      #region Get Task Information - from a TaskProjectItem
 
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
       // if there isn't a project task item, return
@@ -173,7 +173,7 @@ namespace ProSnippetsTasks
 
     public async void GetTaskItemInfo_EsriTasksFile()
     { 
-      #region Get Task Information (.esriTasks file)
+      #region Get Task Information - from an .esriTasks file
 
       // TODO - substitute your own .esriTasks file
       string taskFile = @"c:\Tasks\Get Started.esriTasks";
@@ -205,7 +205,7 @@ namespace ProSnippetsTasks
 
     public async void OpenSpecificTask()
     {
-      #region Open a specific Task in a Task File (.esriTasks)
+      #region Open a specific Task in a Task File - .esriTasks file
 
       // TODO - substitute your own .esriTasks file to be opened
       string taskFile = @"c:\Tasks\Get Started.esriTasks";

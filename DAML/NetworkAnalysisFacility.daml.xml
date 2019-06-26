@@ -34,7 +34,7 @@
            <group refID="esri_networkanalysis_utility_Terminals_Group"/>
            <group refID="esri_networkanalysis_utility_Selection_Group"/>
            <group refID="esri_networkanalysis_utility_Drawing_Group" />
-           <group refID="esri_networkanalysis_utility_SourceManagement_Group" />
+           <group refID="esri_networkanalysis_utility_SubnetworkManagement_Group" />
          </tab>
        </tabs>
        
@@ -55,10 +55,10 @@
            <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
            <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
          </group>
-        <group id="esri_networkanalysis_utility_SourceManagement_Group" caption="Subnetwork">
-          <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
+        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork">
+          <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ViewSubnetworks_Btn" size="large"/>
-          <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="middle"/>
+          <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
         </group>
         <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection" launcherButtonID="esri_mapping_openSelectionOptionsButton">
           <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
@@ -97,7 +97,7 @@
 
         <gallery id="esri_networkanalysis_utility_ApplySelectionGallery" caption="Propagate Selection Gallery" extendedCaption="Apply selection to another utility network map" className="Ribbon.NetworkToNetworkGalleryViewModel"
                  condition="esri_networkanalysis_utility_PropagateSelection_Condition"
-                 itemWidth="100" itemHeight="50" resizable="false"
+                 itemWidth="150" resizable="true"
                  loadingMessage="Loading ..." showGroup="false" itemsInRow="1" showItemCaption="false"
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew32.png"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew16.png"
@@ -269,7 +269,7 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select a subnetwork controller feature">
-            Select a network feature to add or drop it as a subnetwork controller.<disabledText></disabledText>
+            Select a network feature to set or remove it as a subnetwork controller.<disabledText></disabledText>
           </tooltip>
         </tool>
         
@@ -315,20 +315,18 @@
             Select a network feature to modify its terminal configuration path.<disabledText></disabledText>
           </tooltip>
         </tool>
-        
-        <button id="esri_networkanalysis_utility_ShowModifySourceBtn"
-                caption="Modify Controller" extendedCaption="Show Modify Subnetwork Controller pane."
-                condition="esri_networkanalysis_utility_TraceTool_Condition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource16.png"
-                className="esri_networkanalysis_utility_module:ShowModifySourceWindow"
-                keytip="MC">
-          <tooltip heading="Modify Control Device">
-            Open the Modify Subnetwork Controller pane to Add or Drop a feature as a network subnetwork controller.<disabledText></disabledText>
+
+        <!-- esri_networkanalysis_utility_SubnetworkManagement_Group -->
+        <button id="esri_networkanalysis_utility_FindSubnetworks_Btn" className="esri_networkanalysis_utility_module:ShowFindSubnetworksWindow"
+                caption="Find" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png"
+                helpContextID=""
+                keytip="FS">
+          <tooltip heading="Find Subnetwork features">
+            Find the features in a Subnetwork.<disabledText></disabledText>
           </tooltip>
         </button>
-
-        <!-- esri_networkanalysis_utility_SourceManagement_Group -->
 
         <button id="esri_networkanalysis_utility_ViewSubnetworks_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.Tools.ViewSubnetworksButton" 
                 caption="View" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition" 
@@ -341,17 +339,18 @@
           </tooltip>
         </button>
 
-        <button id="esri_networkanalysis_utility_FindSubnetworks_Btn" className="esri_networkanalysis_utility_module:ShowFindSubnetworksWindow"
-                caption="Find" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png"
-                helpContextID=""
-                keytip="FS">
-          <tooltip heading="Find Subnetwork features">
-            Find the features in a Subnetwork.<disabledText></disabledText>
+        <button id="esri_networkanalysis_utility_ShowModifySourceBtn"
+                caption="Modify Controller" extendedCaption="Show Modify Subnetwork Controller pane."
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource16.png"
+                className="esri_networkanalysis_utility_module:ShowModifySourceWindow"
+                keytip="MC">
+          <tooltip heading="Modify Control Device">
+            Open the Modify Subnetwork Controller pane to set or remove a feature as a network subnetwork controller.<disabledText></disabledText>
           </tooltip>
         </button>
-        
+
         <!--esri_networkanalysis_utility_connectivityAssociationGroup-->
         <tool id="esri_networkanalysis_utility_featurePropertiesTool" className="Tools.ConnectivityInfoTool" 
               caption="Feature Properties" condition="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" 
@@ -505,14 +504,14 @@
           </tooltip>
         </button>
         <button id="esri_networkanalysis_ShowModifyConnectionBtn"
-                 caption="Terminal Connections" extendedCaption="Show Modify Terminal Connection pane."
+                 caption="Terminal Connections" extendedCaption="Show Modify Terminal Connections pane."
                  condition="esri_networkanalysis_utility_TerminalConnections_Condition"
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection32.png"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection16.png"
-                 className="esri_networkanalysis_utility_module:ShowModifyTerminalConnectionWindow"
+                 className="esri_networkanalysis_utility_module:ShowModifyTerminalConnectionsWindow"
                  keytip="TC">
           <tooltip heading="Terminal Connections">
-            Show the Modify Terminal Connection pane.<disabledText></disabledText>
+            Show the Modify Terminal Connections pane.<disabledText></disabledText>
           </tooltip>
         </button>
         
@@ -550,7 +549,7 @@
           <content className="ModifySourceView" />
         </dockPane>
         <dockPane id="esri_networkanalysis_utility_ModifyDeviceTerminalPane"
-                  caption="Modify Terminal Path"
+                  caption="Modify Terminal Paths"
                   className="ModifyDeviceTerminalViewModel"
                   dock="group"
                   initiallyVisible="false"
@@ -558,14 +557,14 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyDeviceTerminalView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionsPane"
                  caption="Modify Terminal Connections"
-                 className="ModifyTerminalConnectionViewModel"
+                 className="ModifyTerminalConnectionsViewModel"
                  dock="group"
                  initiallyVisible="false"
                  delayLoadMessage="Open a map to get started."
                  dockWith="esri_core_projectDockPane">
-          <content className="ModifyTerminalConnectionView" />
+          <content className="ModifyTerminalConnectionsView" />
         </dockPane>
         <dockPane id="esri_networkanalysis_utility_FindSubnetworkPane"
           caption="Find Subnetworks"

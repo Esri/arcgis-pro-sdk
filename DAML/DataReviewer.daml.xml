@@ -665,6 +665,7 @@
         <menu id="esri_dataReviewer_batchJobFolderConnectionMenu" caption="Batch Job Menu" extendedCaption = "Context menu for Batch Jobs in Folder">
           <button refID="esri_dataReviewer_batchJobAddToProjectButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="esri_dataReviewer_MetadataResultsContextMenu" caption="Selected Metadata Results Context Menu" extendedCaption = "Context menu for actions to perform on selected metadata results">

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -53,136 +54,8 @@ namespace EditingSDKExamples
       return base.OnSketchCompleteAsync(geometry);
     }
 
-    public void FindTemplateByName()
-    {
-      #region Find edit template by name on a layer
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        //get the templates
-        var map = ArcGIS.Desktop.Mapping.MapView.Active.Map;
-        if (map == null)
-          return;
-
-        var mainTemplate = map.FindLayers("main").FirstOrDefault()?.GetTemplate("Distribution");
-        var mhTemplate = map.FindLayers("Manhole").FirstOrDefault()?.GetTemplate("Active");
-      });
-      #endregion
-    }
-
-    public void CreateFeature()
-    {
-      #region Create a feature using the current template
-      var myTemplate = ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current;
-      var myGeometry = _geometry;
-
-      //Create edit operation and execute
-      var op = new ArcGIS.Desktop.Editing.EditOperation();
-      op.Name = "Create my feature";
-      op.Create(myTemplate, myGeometry);
-      op.Execute();
-      #endregion
-    }
-
-    public void CreateFeatureFromInspector()
-    {
-      #region Create feature from modified inspector
-      var disLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.FindLayers("Distribution mains").FirstOrDefault() as BasicFeatureLayer;
-
-      var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
-      insp.Load(disLayer, 86);
-
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // modify attributes if necessary
-        // insp["Field1"] = newValue;
-
-        //Create new feature from an existing inspector (copying the feature)
-        var op = new ArcGIS.Desktop.Editing.EditOperation();
-        op.Name = "Create from insp";
-        op.Create(insp.MapMember, insp.ToDictionary(a => a.FieldName, a => a.CurrentValue));
-        op.Execute();
-      });
-      #endregion
-    }
-
-    public void CreateFromFile()
-    {
-      var csvData = new List<CSVData>();
-      var layer = MapView.Active.Map.FindLayers("Distribution mains") as FeatureLayer;
-
-      #region Create features from a CSV file
-      //Run on MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        //Create the edit operation
-        var createOperation = new ArcGIS.Desktop.Editing.EditOperation();
-        createOperation.Name = "Generate points";
-        createOperation.SelectNewFeatures = false;
-
-        // determine the shape field name - it may not be 'Shape' 
-        string shapeField = layer.GetFeatureClass().GetDefinition().GetShapeField();
-
-        //Loop through csv data
-        foreach (var item in csvData)
-        {
-
-          //Create the point geometry
-          ArcGIS.Core.Geometry.MapPoint newMapPoint = ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(item.X, item.Y);
-
-          // include the attributes via a dictionary
-          var atts = new Dictionary<string, object>();
-          atts.Add("StopOrder", item.StopOrder);
-          atts.Add("FacilityID", item.FacilityID);
-          atts.Add(shapeField, newMapPoint);   
-
-          // queue feature creation
-          createOperation.Create(layer, atts);
-        }
-
-        // execute the edit (feature creation) operation
-        return createOperation.Execute();
-      });
-      #endregion
-    }
-
-
-    public void SearchAndUpdate()
-    {
-      #region Search for layer features and update a field
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        //find layer
-        var disLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.FindLayers("Distribution mains").FirstOrDefault() as BasicFeatureLayer;
-
-        //Search by attribute
-        var queryFilter = new ArcGIS.Core.Data.QueryFilter();
-        queryFilter.WhereClause = "CONTRACTOR = 'KCGM'";
-
-        var oidSet = new List<long>();
-        using (var rc = disLayer.Search(queryFilter))
-        {
-          //Create list of oids to update
-          while (rc.MoveNext())
-          {
-            oidSet.Add(rc.Current.GetObjectID());
-          }
-        }
-
-        //Create edit operation 
-        var op = new ArcGIS.Desktop.Editing.EditOperation();
-        op.Name = "Update date";
-
-        // load features into inspector and update field
-        var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
-        insp.Load(disLayer, oidSet);
-        insp["InspDate"] = "9/21/2013";
-
-        // modify and execute
-        op.Modify(insp);
-        op.Execute();
-      });
-      #endregion
-    }
+    #region ProSnippet Group: Edit Operation Methods
+    #endregion
 
     public void EditOperations() {
 
@@ -192,6 +65,7 @@ namespace EditingSDKExamples
       var cutLine = new PolylineBuilder().ToGeometry();
       var modifyLine = cutLine;
       var oid = 1;
+      var layer = featureLayer;
 
       #region Edit Operation Create Features
 
@@ -226,6 +100,71 @@ namespace EditingSDKExamples
       //or use async flavor
       //await createFeatures.ExecuteAsync();
 
+      #endregion
+
+      #region Create a feature using the current template
+      var myTemplate = ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current;
+      var myGeometry = _geometry;
+
+      //Create edit operation and execute
+      var op = new ArcGIS.Desktop.Editing.EditOperation();
+      op.Name = "Create my feature";
+      op.Create(myTemplate, myGeometry);
+      op.Execute();
+      #endregion
+
+      #region Create feature from a modified inspector
+
+      var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+      insp.Load(layer, 86);
+
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        // modify attributes if necessary
+        // insp["Field1"] = newValue;
+
+        //Create new feature from an existing inspector (copying the feature)
+        var createOp = new ArcGIS.Desktop.Editing.EditOperation();
+        createOp.Name = "Create from insp";
+        createOp.Create(insp.MapMember, insp.ToDictionary(a => a.FieldName, a => a.CurrentValue));
+        createOp.Execute();
+      });
+      #endregion
+
+      var csvData = new List<CSVData>();
+
+      #region Create features from a CSV file
+      //Run on MCT
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        //Create the edit operation
+        var createOperation = new ArcGIS.Desktop.Editing.EditOperation();
+        createOperation.Name = "Generate points";
+        createOperation.SelectNewFeatures = false;
+
+        // determine the shape field name - it may not be 'Shape' 
+        string shapeField = layer.GetFeatureClass().GetDefinition().GetShapeField();
+
+        //Loop through csv data
+        foreach (var item in csvData)
+        {
+
+          //Create the point geometry
+          ArcGIS.Core.Geometry.MapPoint newMapPoint = ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(item.X, item.Y);
+
+          // include the attributes via a dictionary
+          var atts = new Dictionary<string, object>();
+          atts.Add("StopOrder", item.StopOrder);
+          atts.Add("FacilityID", item.FacilityID);
+          atts.Add(shapeField, newMapPoint);
+
+          // queue feature creation
+          createOperation.Create(layer, atts);
+        }
+
+        // execute the edit (feature creation) operation
+        return createOperation.Execute();
+      });
       #endregion
 
       #region Edit Operation Clip Features
@@ -405,11 +344,46 @@ namespace EditingSDKExamples
       modifyFeatures.Name = "Modify features";
       modifyFeatures.ShowProgressor = true;
 
-      var insp = new Inspector();
-      insp.Load(featureLayer, oidSet);
-      insp["MOMC"] = 24;
-      modifyFeatures.Modify(insp);
+      var muultipleFeaturesInsp = new Inspector();
+      muultipleFeaturesInsp.Load(featureLayer, oidSet);
+      muultipleFeaturesInsp["MOMC"] = 24;
+      modifyFeatures.Modify(muultipleFeaturesInsp);
       modifyFeatures.ExecuteAsync();
+      #endregion
+
+      #region Search for layer features and update a field
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        //find layer
+        var disLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.FindLayers("Distribution mains").FirstOrDefault() as BasicFeatureLayer;
+
+        //Search by attribute
+        var filter = new ArcGIS.Core.Data.QueryFilter();
+        filter.WhereClause = "CONTRACTOR = 'KCGM'";
+
+        var oids = new List<long>();
+        using (var rc = disLayer.Search(filter))
+        {
+          //Create list of oids to update
+          while (rc.MoveNext())
+          {
+            oids.Add(rc.Current.GetObjectID());
+          }
+        }
+
+        //Create edit operation 
+        var modifyOp = new ArcGIS.Desktop.Editing.EditOperation();
+        modifyOp.Name = "Update date";
+
+        // load features into inspector and update field
+        var dateInsp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+        dateInsp.Load(disLayer, oids);
+        dateInsp["InspDate"] = "9/21/2013";
+
+        // modify and execute
+        modifyOp.Modify(insp);
+        modifyOp.Execute();
+      });
       #endregion
 
       #region Move features
@@ -693,10 +667,14 @@ namespace EditingSDKExamples
       #endregion
     }
 
+    #region ProSnippet Group: Row Events
+    #endregion
+
     private static Guid _lastEdit = Guid.Empty;
     #region Stop a delete
     public static void StopADelete()
     {
+      // subscribe to the RowDeletedEvent for the appropriate table
       Table table = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault().GetTable();
       RowDeletedEvent.Subscribe(OnRowDeletedEvent, table);
     }
@@ -711,38 +689,113 @@ namespace EditingSDKExamples
         _lastEdit = obj.Guid;
       }
     }
-        #endregion
+    #endregion
 
-        #region Determine if Geometry Changed while editing
-        private static FeatureLayer featureLayer;
-        private static void DetermineGeometryChange()
-        {
-            featureLayer = MapView.Active?.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-            if (featureLayer == null)
-                return;
-            QueuedTask.Run(() => {
-                //Listen to the RowChangedEvent that occurs when a Row is changed.
-                ArcGIS.Desktop.Editing.Events.RowChangedEvent.Subscribe(OnRowChangedEvent, featureLayer.GetTable());
-            });
-        }
-        private static void OnRowChangedEvent(RowChangedEventArgs obj)
-        {
-            //Get the layer's definition
-            var lyrDefn = featureLayer.GetFeatureClass().GetDefinition();
-            //Get the shape field of the feature class
-            string shapeField = lyrDefn.GetShapeField();
-            //Index of the shape field
-            var shapeIndex = lyrDefn.FindField(shapeField);
-            //Original geometry of the modified row
-            var geomOrig = obj.Row.GetOriginalValue(shapeIndex) as Geometry;
-            //New geometry of the modified row
-            var geomNew = obj.Row[shapeIndex] as Geometry;
-            //Compare the two
-            bool shapeChanged = geomOrig.IsEqual(geomNew);
-        }
-        #endregion
+    #region Determine if Geometry Changed while editing
+    private static FeatureLayer featureLayer;
+    private static void DetermineGeometryChange()
+    {
+      featureLayer = MapView.Active?.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      if (featureLayer == null)
+          return;
 
-        public async void LoadSelection2Inspector()
+      QueuedTask.Run(() => {
+          //Listen to the RowChangedEvent that occurs when a Row is changed.
+          ArcGIS.Desktop.Editing.Events.RowChangedEvent.Subscribe(OnRowChangedEvent, featureLayer.GetTable());
+      });
+    }
+    private static void OnRowChangedEvent(RowChangedEventArgs obj)
+    {
+      //Get the layer's definition
+      var lyrDefn = featureLayer.GetFeatureClass().GetDefinition();
+      //Get the shape field of the feature class
+      string shapeField = lyrDefn.GetShapeField();
+      //Index of the shape field
+      var shapeIndex = lyrDefn.FindField(shapeField);
+      //Original geometry of the modified row
+      var geomOrig = obj.Row.GetOriginalValue(shapeIndex) as Geometry;
+      //New geometry of the modified row
+      var geomNew = obj.Row[shapeIndex] as Geometry;
+      //Compare the two
+      bool shapeChanged = geomOrig.IsEqual(geomNew);
+    }
+    #endregion
+
+    #region Create a record in a separate table within Row Events
+
+    // Use the EditOperation in the RowChangedEventArgs to append actions to be executed. 
+    //  Your actions will become part of the operation and combined into one item on the undo stack
+
+    private void HookEvents()
+    {
+      // subscribe to the RowCreatedEvent
+      Table table = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault().GetTable();
+      RowCreatedEvent.Subscribe(MyRowCreatedEvent, table);
+    }
+
+    private void MyRowCreatedEvent(RowChangedEventArgs obj)
+    {
+      // get the edit operation
+      var parentEditOp = obj.Operation;
+
+      // set up some attributes
+      var attribues = new Dictionary<string, object> { };
+      attribues.Add("Layer", "Parcels");
+      attribues.Add("Description", "OID: " + obj.Row.GetObjectID().ToString() + " " + DateTime.Now.ToShortTimeString());
+
+      //create a record in an audit table
+      var sTable = MapView.Active.Map.FindStandaloneTables("EditHistory").First();
+      var table = sTable.GetTable();
+      parentEditOp.Create(table, attribues);
+    }
+    #endregion
+
+    #region Modify a record within Row Events
+    private void HookChangedEvent()
+    {
+      // subscribe to the RowChangedEvent
+      Table table = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault().GetTable();
+      RowChangedEvent.Subscribe(MyRowChangedEvent, table);
+    }
+
+    private void MyRowChangedEvent(RowChangedEventArgs obj)
+    {
+      //example of modifying a field on a row that has been created
+      var parentEditOp = obj.Operation;
+
+      // avoid recursion
+      if (_lastEdit != obj.Guid)
+      {
+        //update field on change
+        parentEditOp.Modify(obj.Row, "ZONING", "New");
+
+        _lastEdit = obj.Guid;
+      }
+    }
+    #endregion
+
+    #region ProSnippet Group: Inspector
+    #endregion
+
+    public async void LoadFirstFeature2Inspector()
+    {
+      int oid = 0;
+
+      #region Load a feature from a layer into the inspector
+
+      // get the first feature layer in the map
+      var firstFeatureLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().
+          OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
+
+      // create an instance of the inspector class
+      var inspector = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+      // load the feature with ObjectID 'oid' into the inspector
+      await inspector.LoadAsync(firstFeatureLayer, oid);
+
+      #endregion
+    }
+
+    public async void LoadSelection2Inspector()
     {
       #region Load map selection into Inspector
 
@@ -757,46 +810,6 @@ namespace EditingSDKExamples
       await inspector.LoadAsync(firstSelectionSet.Key, firstSelectionSet.Value);
       #endregion
     }
-
-    public async void LoadFirstFeature2Inspector()
-    {
-      int oid = 0;
-
-      #region Load the first feature of a layer into the inspector
-
-      // get the first feature layer in the map
-      var firstFeatureLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().
-          OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
-
-      // create an instance of the inspector class
-      var inspector = new ArcGIS.Desktop.Editing.Attributes.Inspector();
-      // load the feature with ObjectID 'oid' into the inspector
-      await inspector.LoadAsync(firstFeatureLayer, oid);
-
-      #endregion
-    }
-
-    public async void InspectorChangeAttributes()
-    {
-      #region Load map selection into Inspector and Change Attributes
-
-      // get the currently selected features in the map
-      var selectedFeatures = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetSelection();
-      // get the first layer and its corresponding selected feature OIDs
-      var firstSelectionSet = selectedFeatures.First();
-
-      // create an instance of the inspector class
-      var inspector = new ArcGIS.Desktop.Editing.Attributes.Inspector();
-      // load the selected features into the inspector using a list of object IDs
-      await inspector.LoadAsync(firstSelectionSet.Key, firstSelectionSet.Value);
-
-      // assign the new attribute value to the field "Description"
-      // if more than one features are loaded, the change applies to all features
-      inspector["Description"] = "The new value.";
-      // apply the changes as an edit operation - but with no undo/redo
-      await inspector.ApplyAsync();
-      #endregion
-    } 
 
     public static void InspectorGetAttributeValue()
     {
@@ -822,15 +835,102 @@ namespace EditingSDKExamples
       });
     }
 
-    public static void StartEditAnnotationTool()
+    public async void InspectorChangeAttributes()
     {
-      #region Programmatically start Edit Annotation
+      #region Load map selection into Inspector and Change Attributes
 
-      var plugin = FrameworkApplication.GetPlugInWrapper("esri_editing_EditVerticesText");
-      if (plugin.Enabled)
-          ((ICommand)plugin).Execute(null);
+      // get the currently selected features in the map
+      var selectedFeatures = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetSelection();
+      // get the first layer and its corresponding selected feature OIDs
+      var firstSelectionSet = selectedFeatures.First();
+
+      // create an instance of the inspector class
+      var inspector = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+      // load the selected features into the inspector using a list of object IDs
+      await inspector.LoadAsync(firstSelectionSet.Key, firstSelectionSet.Value);
+
+      // assign the new attribute value to the field "Description"
+      // if more than one features are loaded, the change applies to all features
+      inspector["Description"] = "The new value.";
+      // apply the changes as an edit operation - but with no undo/redo
+      await inspector.ApplyAsync();
       #endregion
     }
+
+    #region ProSnippet Group: Accessing Blob Fields
+    #endregion
+
+    public static void ReadWriteBlobInspector()
+    {
+      #region Read and Write blob fields with the attribute inspector
+      QueuedTask.Run(() =>
+      {
+        //get selected feature into inspector
+        var selectedFeatures = MapView.Active.Map.GetSelection();
+        var insp = new Inspector();
+        insp.Load(selectedFeatures.Keys.First(), selectedFeatures.Values.First());
+
+        //read file into memory stream
+        var msr = new MemoryStream();
+        using (FileStream file = new FileStream(@"d:\images\Hydrant.jpg", FileMode.Open, FileAccess.Read))
+        {
+          file.CopyTo(msr);
+        }
+
+        //put the memory stream in the blob field
+        var op = new EditOperation();
+        op.Name = "Blob Inspector";
+        insp["Blobfield"] = msr;
+        op.Modify(insp);
+        op.Execute();
+
+        //read a blob field and save to a file
+        //assume inspector has been loaded with a feature
+        var msw = new MemoryStream();
+        msw = insp["Blobfield"] as MemoryStream;
+        using (FileStream file = new FileStream(@"d:\temp\blob.jpg", FileMode.Create, FileAccess.Write))
+        {
+          msw.WriteTo(file);
+        }
+      });
+      #endregion
+    }
+    
+    public static void ReadWriteBlobRow()
+    {
+      #region Read and Write blob fields with a row cursor in a callback
+      QueuedTask.Run(() =>
+      {
+        var editOp = new EditOperation();
+        editOp.Name = "Blob Cursor";
+        var featLayer = MapView.Active.Map.FindLayers("Hydrant").First() as FeatureLayer;
+
+        editOp.Callback((context) => {
+          using (var rc = featLayer.GetTable().Search(null, false))
+          {
+            while (rc.MoveNext())
+            {
+              //read file into memory stream
+              var msr = new MemoryStream();
+              using (FileStream file = new FileStream(@"d:\images\Hydrant.jpg", FileMode.Open, FileAccess.Read))
+              {file.CopyTo(msr);}
+
+              rc.Current["BlobField"] = msr;
+              rc.Current.Store();
+
+              //read the blob field to a file
+              var msw = new MemoryStream();
+              msw = rc.Current["BlobField"] as MemoryStream;
+              using (FileStream file = new FileStream(@"d:\temp\blob.jpg", FileMode.Create, FileAccess.Write))
+              {msw.WriteTo(file);}
+            }
+          }
+        }, featLayer.GetTable());
+        editOp.Execute();
+      });
+      #endregion
+    }
+
   }
 
   public class CSVData {

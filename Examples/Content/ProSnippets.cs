@@ -515,26 +515,41 @@ namespace Content.Snippets
       Item featureClassItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\regionFive.gdb\SourceFeatureClass");
       await QueuedTask.Run(() => metadataItemImport.CopyMetadataFromItem(featureClassItem));
 
+    #endregion
+
+    //Item gdbItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\regionFive.gdb");
+
+    #region Item: Updates metadata with the imported metadata - the input path can be the path to an item with metadata, or a URI to a XML file: ImportMetadata
+
+    // the input path can be the path to an item with metadata, or a URI to an XML file
+    IMetadata metadataItemImport1 = null;
+    await QueuedTask.Run(() => metadataItemImport1.ImportMetadata(@"E:\YellowStone.gdb\MyDataset\MyFeatureClass", MDImportExportOption.esriCurrentMetadataStyle));
+
       #endregion
 
-
-      //Item gdbItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\regionFive.gdb");
-
-
+      IMetadata metadataItemImport2 = null;
 
       #region Item: Updates metadata with the imported metadata: ImportMetadata
 
       // the input path can be the path to an item with metadata, or a URI to an XML file
 
-      await QueuedTask.Run(() => metadataItemImport.ImportMetadata(@"E:\YellowStone.gdb\MyDataset\MyFeatureClass", MDImportExportOption.esriCurrentMetadataStyle));
+      await QueuedTask.Run(() => metadataItemImport2.ImportMetadata(@"E:\YellowStone.gdb\MyDataset\MyFeatureClass", MDImportExportOption.esriCustomizedStyleSheet, @"E:\StyleSheets\Import\MyImportStyleSheet.xslt"));
 
       #endregion
 
-      IMetadata metadataItemExport = null;
+      IMetadata metadataItemExport1 = null;
 
       #region Item: export the metadata of the currently selected item: ExportMetadata
 
-      await QueuedTask.Run(() => metadataItemExport.ExportMetadata(@"E:\Temp\OutputXML.xml",  MDImportExportOption.esriCurrentMetadataStyle, MDExportRemovalOption.esriExportExactCopy));
+      await QueuedTask.Run(() => metadataItemExport1.ExportMetadata(@"E:\Temp\OutputXML.xml",  MDImportExportOption.esriCurrentMetadataStyle, MDExportRemovalOption.esriExportExactCopy));
+
+      #endregion
+
+      IMetadata metadataItemExport2 = null;
+
+      #region Item: export the metadata of the currently selected item: ExportMetadata
+
+      await QueuedTask.Run(() => metadataItemExport2.ExportMetadata(@"E:\Temp\OutputXML.xml", MDImportExportOption.esriCustomizedStyleSheet, MDExportRemovalOption.esriExportExactCopy, @"E:\StyleSheets\Export\MyExportStyleSheet.xslt"));
 
       #endregion
 
@@ -560,12 +575,13 @@ namespace Content.Snippets
 
       await QueuedTask.Run(() => metadataItemToSaveAsUsingCustomXSLT.SaveMetadataAsUsingCustomXSLT(@"E:\Data\Metadata\CustomXSLT.xsl", @"E:\Temp\OutputXMLCustom.xml"));
      #endregion
-     #region Item: Upgrade the metadata of the current item: UpgradeMetadata
+
+      #region Item: Upgrade the metadata of the current item: UpgradeMetadata
 
       var fgdcItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\testData.gdb");
       await QueuedTask.Run(() => fgdcItem.UpgradeMetadata(MDUpgradeOption.esriUpgradeFgdcCsdgm));
      #endregion
 
-        }
     }
+  }
 }

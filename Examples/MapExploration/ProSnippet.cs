@@ -34,13 +34,18 @@ using Geometry = ArcGIS.Core.Geometry.Geometry;
 using ArcGIS.Desktop.Framework;
 using System.Windows.Input;
 using System.IO;
+using System.Threading;
 
 namespace Snippets
 {
     internal class ProSnippet
     {
-        #region Get the active map's name
 
+
+
+        #region ProSnippet Group: Maps
+        #endregion
+        #region Get the active map's name
         public string GetActiveMapName()
         {
             //Get the active map view.
@@ -52,6 +57,80 @@ namespace Snippets
             return mapView.Map.Name;
         }
 
+        #endregion
+        #region Test if the view is 3D
+
+        public bool IsView3D()
+        {
+            //Get the active map view.
+            var mapView = MapView.Active;
+            if (mapView == null)
+                return false;
+
+            //Return whether the viewing mode is SceneLocal or SceneGlobal
+            return mapView.ViewingMode == ArcGIS.Core.CIM.MapViewingMode.SceneLocal ||
+                   mapView.ViewingMode == ArcGIS.Core.CIM.MapViewingMode.SceneGlobal;
+        }
+
+        #endregion
+
+        #region Rotate the map view
+
+        public void RotateView(double heading)
+        {
+            //Get the active map view.
+            var mapView = MapView.Active;
+            if (mapView == null)
+                return;
+
+            //Get the camera for the view, adjust the heading and zoom to the new camera position.
+            var camera = mapView.Camera;
+            camera.Heading = heading;
+            mapView.ZoomToAsync(camera, TimeSpan.Zero);
+        }
+
+        #endregion
+        private static void ClearSelectionMap()
+        {
+
+            #region Clear all selection in an Active map
+            QueuedTask.Run(() =>
+            {
+                if (MapView.Active.Map != null)
+                {
+                    MapView.Active.Map.SetSelection(null);
+                }
+            });
+            #endregion
+        }
+        private static async void AddMapViewOverlayControl ()
+         {
+            #region MapView Overlay Control
+            //Creat a Progress Bar user control
+            var progressBarControl = new System.Windows.Controls.ProgressBar();
+            //Configure the progress bar
+            progressBarControl.Minimum = 0;
+            progressBarControl.Maximum = 100;
+            progressBarControl.IsIndeterminate = true;
+            progressBarControl.Width = 300;
+            progressBarControl.Value = 10;
+            progressBarControl.Height = 25;
+            progressBarControl.Visibility = System.Windows.Visibility.Visible;
+            //Create a MapViewOverlayControl. 
+            var mapViewOverlayControl = new MapViewOverlayControl(progressBarControl, true, true, true, OverlayControlRelativePosition.BottomCenter, .5, .8);
+            //Add to the active map
+            MapView.Active.AddOverlayControl(mapViewOverlayControl);
+            await QueuedTask.Run(() =>
+            {
+                //Wait 3 seconds to remove the progress bar from the map.
+                Thread.Sleep(3000);
+
+            });
+            //Remove from active map
+            MapView.Active.RemoveOverlayControl(mapViewOverlayControl);
+            #endregion
+        }
+        #region ProSnippet Group: Layers
         #endregion
 
         #region Select all feature layers in TOC
@@ -93,39 +172,71 @@ namespace Snippets
 
         #endregion
 
-        #region Test if the view is 3D
-
-        public bool IsView3D()
+        
+        private void CheckLayerVisiblityInView()
         {
-            //Get the active map view.
+            #region Check if Layer is visible in the given map view
             var mapView = MapView.Active;
-            if (mapView == null)
-                return false;
-
-            //Return whether the viewing mode is SceneLocal or SceneGlobal
-            return mapView.ViewingMode == ArcGIS.Core.CIM.MapViewingMode.SceneLocal ||
-                   mapView.ViewingMode == ArcGIS.Core.CIM.MapViewingMode.SceneGlobal;
+            var layer = mapView.Map.GetLayersAsFlattenedList().OfType<Layer>().FirstOrDefault();
+            if (mapView == null) return;
+            bool isLayerVisibleInView = layer.IsVisibleInView(mapView);
+            if (isLayerVisibleInView)
+            {
+                //Do Something
+            }
+            #endregion
         }
 
-        #endregion
-
-        #region Rotate the map view
-
-        public void RotateView(double heading)
+        private static void GetLayerPropertiesDialog()
         {
-            //Get the active map view.
-            var mapView = MapView.Active;
-            if (mapView == null)
+            #region Select a layer and open its layer properties page 
+            // get the layer you want
+            var layer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+
+            // select it in the TOC
+            List<Layer> layersToSelect = new List<Layer>();
+            layersToSelect.Add(layer);
+            MapView.Active.SelectLayers(layersToSelect);
+
+            // now execute the layer properties command
+            var wrapper = FrameworkApplication.GetPlugInWrapper("esri_mapping_selectedLayerPropertiesButton");
+            var command = wrapper as ICommand;
+            if (command == null)
                 return;
 
-            //Get the camera for the view, adjust the heading and zoom to the new camera position.
-            var camera = mapView.Camera;
-            camera.Heading = heading;
-            mapView.ZoomToAsync(camera, TimeSpan.Zero);
+            // execute the command
+            if (command.CanExecute(null))
+                command.Execute(null);
+            #endregion
         }
-
+        private static void ClearSelection()
+        {
+            #region Clear selection for a specific layer
+            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            QueuedTask.Run(() =>
+            {
+                lyr.ClearSelection();
+            });
+            #endregion
+        }
+        #region ProSnippet Group: Features
         #endregion
-
+        private static void Masking()
+        {
+            QueuedTask.Run(() => {
+                #region Mask feature
+                //Get the layer to be masked
+                var lineLyrToBeMasked = MapView.Active.Map.Layers.FirstOrDefault(lyr => lyr.Name == "TestLine") as FeatureLayer;
+                //Get the layer's definition
+                var lyrDefn = lineLyrToBeMasked.GetDefinition();
+                //Create an array of Masking layers (polygon only)
+                //Set the LayerMasks property of the Masked layer
+                lyrDefn.LayerMasks = new string[] { "CIMPATH=map3/testpoly.xml" };
+                //Re-set the Masked layer's defintion
+                lineLyrToBeMasked.SetDefinition(lyrDefn);
+                #endregion
+            });
+        }
         #region Show a pop-up for a feature
 
         public void ShowPopup(MapMember mapMember, long objectID)
@@ -160,6 +271,8 @@ namespace Snippets
 
         #endregion
 
+        #region ProSnippet Group: Zoom
+        #endregion
         #region Zoom to an extent
 
         public async Task<bool> ZoomToExtentAsync(double xMin, double yMin, double xMax, double yMax,
@@ -256,6 +369,31 @@ namespace Snippets
         }
 
         #endregion
+        #region Project camera into a new spatial reference
+
+        public Task<Camera> ProjectCamera(Camera camera, ArcGIS.Core.Geometry.SpatialReference spatialReference)
+        {
+            return QueuedTask.Run(() =>
+            {
+                var mapPoint = MapPointBuilder.CreateMapPoint(camera.X, camera.Y, camera.Z, camera.SpatialReference);
+                var newPoint = GeometryEngine.Instance.Project(mapPoint, spatialReference) as MapPoint;
+                var newCamera = new Camera()
+                {
+                    X = newPoint.X,
+                    Y = newPoint.Y,
+                    Z = newPoint.Z,
+                    Scale = camera.Scale,
+                    Pitch = camera.Pitch,
+                    Heading = camera.Heading,
+                    Roll = camera.Roll,
+                    Viewpoint = camera.Viewpoint,
+                    SpatialReference = spatialReference
+                };
+                return newCamera;
+            });
+        }
+
+        #endregion
 
         #region Zoom to a bookmark with a given name
 
@@ -278,6 +416,9 @@ namespace Snippets
             });
         }
 
+        #endregion
+
+        #region ProSnippet Group: Bookmarks
         #endregion
 
         #region Create a new bookmark using the active map view
@@ -337,30 +478,9 @@ namespace Snippets
 
         #endregion
 
-        #region Project camera into a new spatial reference
 
-        public Task<Camera> ProjectCamera(Camera camera, ArcGIS.Core.Geometry.SpatialReference spatialReference)
-        {
-            return QueuedTask.Run(() =>
-            {
-                var mapPoint = MapPointBuilder.CreateMapPoint(camera.X, camera.Y, camera.Z, camera.SpatialReference);
-                var newPoint = GeometryEngine.Instance.Project(mapPoint, spatialReference) as MapPoint;
-                var newCamera = new Camera()
-                {
-                    X = newPoint.X,
-                    Y = newPoint.Y,
-                    Z = newPoint.Z,
-                    Scale = camera.Scale,
-                    Pitch = camera.Pitch,
-                    Heading = camera.Heading,
-                    Roll = camera.Roll,
-                    Viewpoint = camera.Viewpoint,
-                    SpatialReference = spatialReference
-                };
-                return newCamera;
-            });
-        }
 
+        #region ProSnippet Group: Time
         #endregion
 
         #region Step forward in time by 1 month
@@ -386,8 +506,11 @@ namespace Snippets
             MapView.Active.Time.End = null;
             #endregion
         }
+        #region ProSnippet Group: Graphic overlay
+        #endregion
         #region Graphic Overlay
-
+        //Defined elsewhere
+        private IDisposable _graphic = null;
         public async void GraphicOverlaySnippetTest()
         {
             // get the current mapview and point
@@ -398,7 +521,7 @@ namespace Snippets
             var point = myextent.Center;
 
             // add point graphic to the overlay at the center of the mapView
-            var disposable = await QueuedTask.Run(() =>
+            _graphic = await QueuedTask.Run(() =>
             {
                 //add these to the overlay
                 return mapView.AddOverlay(point,
@@ -410,59 +533,100 @@ namespace Snippets
             MessageBox.Show("Now to update the overlay...");
             await QueuedTask.Run(() =>
             {
-                mapView.UpdateOverlay(disposable, point, SymbolFactory.Instance.ConstructPointSymbol(
+                mapView.UpdateOverlay(_graphic, point, SymbolFactory.Instance.ConstructPointSymbol(
                                         ColorFactory.Instance.BlueRGB, 20.0, SimpleMarkerStyle.Circle).MakeSymbolReference());
             });
 
             // clear the overlay display by disposing of the graphic
             MessageBox.Show("Now to clear the overlay...");
-            disposable.Dispose();
+            _graphic.Dispose();
 
         }
         #endregion
 
-        private static void GetLayerPropertiesDialog()
+        public void CIMPictureGraphicOverlay(Geometry geometry, ArcGIS.Core.Geometry.Envelope envelope)
         {
-            #region Select a layer and open its layer properties page 
-            // get the layer you want
-            var layer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            #region Graphic Overlay with CIMPictureGraphic
 
-            // select it in the TOC
-            List<Layer> layersToSelect = new List<Layer>();
-            layersToSelect.Add(layer);
-            MapView.Active.SelectLayers(layersToSelect);
-
-            // now execute the layer properties command
-            var wrapper = FrameworkApplication.GetPlugInWrapper("esri_mapping_selectedLayerPropertiesButton");
-            var command = wrapper as ICommand;
-            if (command == null)
+            // get the current mapview
+            var mapView = MapView.Active;
+            if (mapView == null)
                 return;
 
-            // execute the command
-            if (command.CanExecute(null))
-                command.Execute(null);
-            #endregion
-        }
+            //Valid formats for PictureURL are:
+            // e.g. local file URL:
+            // file:///<path>
+            // file:///c:/images/symbol.png
+            //
+            // e.g. network file URL:
+            // file://<host>/<path>
+            // file://server/share/symbol.png
+            //
+            // e.g. data URL:
+            // data:<mediatype>;base64,<data>
+            // data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAU ...
+            //
+            // image/bmp
+            // image/gif
+            // image/jpeg
+            // image/png
+            // image/tiff
+            // image/x-esri-bglf
 
-        private static void ClearSelection()
-        {
-            #region Clear selection for a specific layer
-            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-            QueuedTask.Run(() =>
+            var pictureGraphic = new CIMPictureGraphic
             {
-                lyr.ClearSelection();
-            });
-            #endregion
-            #region Clear all selection in an Active map
-            QueuedTask.Run(() =>
-            {
-                if (MapView.Active.Map != null)
-                {
-                    MapView.Active.Map.SetSelection(null);
-                }
-            });
+                PictureURL = @"file:///C:/Images/MyImage.png",
+                Box = envelope
+            };
+            
+            IDisposable _graphic = mapView.AddOverlay(pictureGraphic);
             #endregion
         }
+        #region Add overlay graphic with text
+        internal class AddOverlayWithText : MapTool
+        {
+            private IDisposable _graphic = null;
+            private CIMLineSymbol _lineSymbol = null;
+            public AddOverlayWithText()
+            {
+                IsSketchTool = true;
+                SketchType = SketchGeometryType.Line;
+                SketchOutputMode = SketchOutputMode.Map;
+            }
+
+            protected override async Task<bool> OnSketchCompleteAsync(Geometry geometry)
+            {
+                //Add an overlay graphic to the map view
+                _graphic = await this.AddOverlayAsync(geometry, _lineSymbol.MakeSymbolReference());
+
+                //define the text symbol
+                var textSymbol = new CIMTextSymbol();
+                //define the text graphic
+                var textGraphic = new CIMTextGraphic();
+
+                await QueuedTask.Run(() =>
+                {
+                    //Create a simple text symbol
+                    textSymbol = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.BlackRGB, 8.5, "Corbel", "Regular");
+                    //Sets the geometry of the text graphic
+                    textGraphic.Shape = geometry;
+                    //Sets the text string to use in the text graphic
+                    textGraphic.Text = "This is my line";
+                    //Sets symbol to use to draw the text graphic
+                    textGraphic.Symbol = textSymbol.MakeSymbolReference();
+                    //Draw the overlay text graphic
+                    _graphic = this.ActiveMapView.AddOverlay(textGraphic);
+                });
+
+                return true;
+            }
+        }
+        #endregion
+
+
+        #region ProSnippet Group: Tools
+        #endregion
+
 
         #region Change symbol for a sketch tool
 
@@ -552,46 +716,7 @@ namespace Snippets
 
         #endregion
 
-        #region Add overlay graphic with text
-        internal class AddOverlayWithText : MapTool
-        {
-            private IDisposable _graphic = null;
-            private CIMLineSymbol _lineSymbol = null;
-            public AddOverlayWithText()
-            {
-                IsSketchTool = true;
-                SketchType = SketchGeometryType.Line;
-                SketchOutputMode = SketchOutputMode.Map;
-            }
-
-            protected override async Task<bool> OnSketchCompleteAsync(Geometry geometry)
-            {
-                //Add an overlay graphic to the map view
-                _graphic = await this.AddOverlayAsync(geometry, _lineSymbol.MakeSymbolReference());
-
-                //define the text symbol
-                var textSymbol = new CIMTextSymbol();
-                //define the text graphic
-                var textGraphic = new CIMTextGraphic();
-
-                await QueuedTask.Run(() =>
-                {
-                //Create a simple text symbol
-                textSymbol = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.BlackRGB, 8.5, "Corbel", "Regular");
-                //Sets the geometry of the text graphic
-                textGraphic.Shape = geometry;
-                //Sets the text string to use in the text graphic
-                textGraphic.Text = "This is my line";
-                //Sets symbol to use to draw the text graphic
-                textGraphic.Symbol = textSymbol.MakeSymbolReference();
-                //Draw the overlay text graphic
-                _graphic = this.ActiveMapView.AddOverlay(textGraphic);
-                });
-
-                return true;
-            }
-        }
-        #endregion
+       
 
         #region Change the cursor of a Tool
         internal class CustomMapTool : MapTool
@@ -621,22 +746,6 @@ namespace Snippets
                 return base.OnSketchCompleteAsync(geometry);
             }
         }
-
-        private static void Masking()
-        {
-            QueuedTask.Run(() => {
-                #region Mask feature
-                //Get the layer to be masked
-                var lineLyrToBeMasked = MapView.Active.Map.Layers.FirstOrDefault(lyr => lyr.Name == "TestLine") as FeatureLayer;
-                //Get the layer's definition
-                var lyrDefn = lineLyrToBeMasked.GetDefinition();
-                //Create an array of Masking layers (polygon only)
-                //Set the LayerMasks property of the Masked layer
-                lyrDefn.LayerMasks = new string[] { "CIMPATH=map3/testpoly.xml" };
-                //Re-set the Masked layer's defintion
-                lineLyrToBeMasked.SetDefinition(lyrDefn);
-                #endregion
-            });
-        }
+        
     }
 }

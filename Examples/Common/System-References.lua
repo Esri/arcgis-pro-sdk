@@ -7,7 +7,7 @@
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Core.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Data.DataSetExtensions.dll",
-   "C:/Program Files (x86)/Reference Assemblies\Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll",
+   "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Windows.Forms.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xaml.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Xml.Linq.dll",
@@ -17,6 +17,7 @@
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Web.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.ServiceModel.dll",
    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.ServiceModel.Web.dll",
+   "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5/System.Drawing.dll",
    "../packages/Newtonsoft.Json.11.0.1/lib/net45/Newtonsoft.Json.dll"
    
    

@@ -401,6 +401,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         
         <menu id="TaskAssistantFileItemContextMenu" caption="Task File" extendedCaption="Task File context menu">
           <button refID="esri_tasks_ImportOpenTaskFile" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_tasks_ProjectTaskFileProperties" separator="true"/>

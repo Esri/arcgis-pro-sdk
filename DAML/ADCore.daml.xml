@@ -54,7 +54,7 @@
     <!--insertProduct id="esri_product_aviationCharting" caption="Aviation Charting" description="Provides tools and workflows for working with aeronautical data and charting." code="53"/-->
     <insertProduct id="esri_product_aviationAirports" caption="Aviation Airports" description="Provides tools for airport planning, maintenance and analysis." code="70"/>
     <insertProduct id="esri_product_maritimeCharting" caption="Maritime Charting" description="Provides tools and workflows for working with nautical data and charting." code="50"/>
-    <!--insertProduct id="esri_product_maritimeBathymetry" caption="Maritime Bathymetry" description="Provides tools and workflows for working with bathymetric data." code="69"/-->
+    <insertProduct id="esri_product_maritimeBathymetry" caption="Maritime Bathymetry" description="Provides tools and workflows for working with bathymetric data." code="69"/>
     <insertProduct id="esri_product_businessanalyst" caption="Business Analyst" description="Provides advanced analysis tools and an extensive library of data from industry leading data providers to help you make better business decisions." code="33"/>
     <insertProduct id="esri_product_imageanalyst" caption="Image Analyst" description="ArcGIS Image Analyst Extension." code="86"/>
     <insertProduct id="esri_product_locatext" caption="LocateXT" description="ArcGIS LocateXT Extension." code="87"/>
@@ -78,6 +78,7 @@
     <insertCategory id="esri_project_historyControls" />
     <insertCategory id="esri_sharingCategory" />
     <insertCategory id="esri_customizedCommandsCategory" />
+    <insertCategory id="esri_customItems" />
     
     <!-- browse places -->
     <updateCategory refID="esri_browsePlaces">
@@ -242,7 +243,7 @@
           <tooltip heading="Catalog">
             Show the Catalog pane. You can access items in and available to the project, whether they are available on a local or network computer, or from a database, a server, ArcGIS Online, or your organization's portal.
 
-            With the Catalog pane you can drag and drop items onto a map, a model, or a tool parameter. Access geoprocessing and raster function history, and add your favorite items to the project.<disabledText></disabledText>
+With the Catalog pane you can drag and drop items onto a map, a model, or a tool parameter. Access geoprocessing and raster function history, and add your favorite items to the project.<disabledText></disabledText>
           </tooltip>
         </button>
         <!-- show project view -->
@@ -254,7 +255,7 @@
           <tooltip heading="">
             Open a view that provides access to items in and available to the project. All items and actions that are available in the Catalog pane are also available in the Catalog view. You can also access detailed information about available items.
 
-            With the Catalog view you can sort items, preview spatial data, edit an item’s metadata, manage styles and other items, and add your favorite items to the project.<disabledText></disabledText>
+With the Catalog view you can sort items, preview spatial data, edit an item’s metadata, manage styles and other items, and add your favorite items to the project.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -300,7 +301,7 @@
           </tooltip>
         </button>
         <!--Home - Clipboard-->
-        <button id="esri_core_editPasteButton" caption="Paste" extendedCaption="Paste the item on the clipboard; on ribbon and Project pane default context menu"
+        <button id="esri_core_editPasteButton" caption="Paste" extendedCaption="Paste the item on the clipboard"
                 keytip="P" loadOnClick="false"
                 className="ArcGIS.Desktop.Framework.PasteCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png"
@@ -309,7 +310,7 @@
             Paste from clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_editPasteSpecialButton" caption="Paste Special" extendedCaption="Paste the item on the clipboard using special settings; on ribbon" keytip="S" loadOnClick="false"
+        <button id="esri_core_editPasteSpecialButton" caption="Paste Special" extendedCaption="Paste the item on the clipboard using special settings" keytip="S" loadOnClick="false"
                 className="ArcGIS.Desktop.Framework.PasteSpecialCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" >
@@ -317,7 +318,7 @@
             Paste special from clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_editCutButton" caption="Cut" extendedCaption="Cut the selected item and place the item on the clipboard; on ribbon" loadOnClick="false" keytip="X"
+        <button id="esri_core_editCutButton" caption="Cut" extendedCaption="Cut the selected item and place the item on the clipboard" loadOnClick="false" keytip="X"
                 className="ArcGIS.Desktop.Framework.CutCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut32.png">
@@ -325,7 +326,7 @@
             Cut selection to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_editCopyButton" caption="Copy" extendedCaption="Copy the selected item to the clipboard; on ribbon"
+        <button id="esri_core_editCopyButton" caption="Copy" extendedCaption="Copy the highlighted item(s) to the clipboard"
                 loadOnClick="false" keytip="CO"
                 className="ArcGIS.Desktop.Framework.CopyCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"
@@ -365,7 +366,7 @@
           </tooltip>
         </button>
         <button id="esri_core_newFolderButton"
-                caption="New Folder" extendedCaption="Add new folder"
+                caption="Folder" extendedCaption="Add new folder"
                 loadOnClick="false" keytip="NF"
                 className="CreateFolderCmd"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderNew16.png"
@@ -849,6 +850,10 @@
             assembly="ArcGIS.Desktop.Framework.dll" group="Application" insert="after" condition="esri_core_noCustomize"/>
       <page id="esri_mapping_customizeQATPropertyPage" caption="Quick Access Toolbar" className="ArcGIS.Desktop.Framework.CustomizeQATViewModel" 
             assembly="ArcGIS.Desktop.Framework.dll" group="Application" insert="after" condition="esri_core_noCustomize"/>
+      <page id="esri_sharing_SharingPropertyPage" caption="Share and Download" className="LocationOptionsViewModel" group="Application"
+                  insert="before" placeWith="esri_metadata_MetadataOptionsPropertyPage">
+        <content className="LocationOptionsView"/>
+      </page>
 
     </insertSheet>
   </propertySheets>
@@ -903,6 +908,10 @@
       <and>
         <state id="esri_core_previewCanEditBasemapState"/>
       </and>
+    </insertCondition>
+
+    <insertCondition id="esri_core_ColorManagementEnabledCondition">
+      <state id="esri_core_ColorManagementEnabledState"/>
     </insertCondition>
   </conditions>
 

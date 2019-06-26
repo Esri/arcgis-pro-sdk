@@ -174,8 +174,13 @@
     <insertCondition id="esri_projectItem_SelectedItemIsEditorTrackingEnabledCondition">
       <and>
         <state id="esri_license_hasStandardLicenseState" />
-        <state id="esri_projectItem_SelectedItemIsEditorTrackingEnabled"/>
-        <state id="esri_projectItem_SelectedTableIsRegisteredWithGDB"/>
+        <or>
+          <and>
+            <state id="esri_projectItem_SelectedTableIsRegisteredWithGDB"/>
+            <state id="esri_projectItem_SelectedItemIsEditorTrackingEnabled"/>
+          </and>
+          <state id="esri_project_featureDatasetSelected" />
+        </or>
         <not>
           <or>
             <and>
@@ -183,7 +188,6 @@
               <state id="esri_projectItem_SelectedItemIsMultiBranchVersioned"/>
             </and>
             <state id="esri_projectItem_SelectedItemIsNotEditorTrackingEnabled"/>
-            <state id="esri_project_featureDatasetSelected" /> <!--temporarily negate this until tool is fixed to support FDs-->
           </or>
         </not>
       </and>
@@ -191,18 +195,22 @@
     <insertCondition id="esri_projectItem_SelectedItemIsNotEditorTrackingEnabledCondition">
       <and>
         <state id="esri_license_hasStandardLicenseState" />
-            <state id="esri_projectItem_SelectedItemIsNotEditorTrackingEnabled"/>
+        <or>
+          <and>
             <state id="esri_projectItem_SelectedTableIsRegisteredWithGDB"/>
-          <not>
-            <or>
-              <and>
-                <state id="esri_projectItem_SelectedItemIsVersioned"/>
-                <state id="esri_projectItem_SelectedItemIsMultiBranchVersioned"/>
-              </and>
-              <state id="esri_projectItem_SelectedItemIsEditorTrackingEnabled"/>
-              <state id="esri_project_featureDatasetSelected" /> <!--temporarily negate this until tool is fixed to support FDs-->
-            </or>
-          </not>
+            <state id="esri_projectItem_SelectedItemIsNotEditorTrackingEnabled"/>
+          </and>
+          <state id="esri_project_featureDatasetSelected" />
+        </or>
+        <not>
+          <or>
+            <and>
+              <state id="esri_projectItem_SelectedItemIsVersioned"/>
+              <state id="esri_projectItem_SelectedItemIsMultiBranchVersioned"/>
+            </and>
+            <state id="esri_projectItem_SelectedItemIsEditorTrackingEnabled"/>
+          </or>
+        </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_projectItem_SelectedItemIsNotCompressedCondition">
@@ -299,7 +307,7 @@
         <not>
           <state id="esri_project_featureDatasetExtensionSelected" />
           <or>
-            <state id="esri_project_fileGDBSelected"/>
+            <state id="esri_project_GDBSelected"/>
             <state id="esri_project_shapeFileSelected"/>
             <state id="esri_project_cadFileSelected"/>
             <state id="esri_project_rasterFileSelected"/>
@@ -316,7 +324,7 @@
         <not>
           <state id="esri_project_featureDatasetExtensionSelected" />
           <or>
-            <state id="esri_project_fileGDBSelected"/>
+            <state id="esri_project_GDBSelected"/>
             <state id="esri_project_shapeFileSelected"/>
             <state id="esri_project_cadFileSelected"/>
             <state id="esri_project_rasterFileSelected"/>
@@ -621,6 +629,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
             <type id="mgdb_table" />
             <type id="mgdb_relationship" />
 
@@ -929,12 +939,14 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_3dModel_files" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="3D Model Files (3DS, DAE, FLT, OBJ)" exclude="esri_browsePlaces_Online" include="FolderConnection">
+        <content displayName="3D Model Files (3DS, DAE, FLT, OBJ, glTF, GLB)" exclude="esri_browsePlaces_Online" include="FolderConnection">
           <allow>
             <type id="file_3ds" />
             <type id="file_dae" />
             <type id="file_flt" />
             <type id="file_obj" />
+            <type id="file_gltf" />
+            <type id="file_glb" />
           </allow>
           <deny>
             <type id="database_fgdb" />
@@ -1666,6 +1678,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
             <type id="mgdb_table" />
 
             <type id="excel_table" />
@@ -1729,6 +1743,7 @@
             <type id="file_mov" />
             <type id="file_ts" />
             <type id="file_ps" />
+            <type id="file_netcdf" />
 
             <type id="service_feature" isSelectable="True" />
             <type id="service_image" isSelectable="True" />
@@ -1770,6 +1785,8 @@
             <type id="portal_tpkx" />
             <type id="portal_kml" />
             <type id="portal_kmz" />
+            <type id="portal_feed" />
+            <type id="portal_netcdf" />
 
             <type id="portal_url_featureservice" isSelectable="True" />
             <type id="portal_url_featureservice_hosted" isSelectable="True" />
@@ -1789,8 +1806,9 @@
             <type id="portal_url_sceneservice_Polygon" isSelectable="True" />
             <type id="portal_url_sceneservice_IntegratedMesh" isSelectable="True" />
             <type id="portal_url_sceneservice_PointCloud" isSelectable="True" />
-            <type id="portal_url_sceneservice_Building" isSelectable="True"/>          
+            <type id="portal_url_sceneservice_Building" isSelectable="True"/>
             <type id="portal_url_vectortileservice" />
+            <type id="portal_url_vectortileservice_hosted" />
             <type id="portal_url_ogcwms" />
             <type id="portal_url_ogcwmts" />
             <type id="portal_url_ogcwfs" />
@@ -2538,6 +2556,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
 
             <type id="cad_dataset" />
             <!-- cad feature classes may return this typeid when we browse -->
@@ -2651,6 +2671,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
 
             <type id="cad_dataset" />
             <!-- cad feature classes may return this typeid when we browse -->
@@ -2738,13 +2760,23 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_featureClasses_annotation" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Annotation Feature Classes (All Types)" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
+        <content displayName="Annotation Feature Classes (All Types)" include="FolderConnection, GDB, ServerConnection, esri_browsePlaces_Online">
           <allow>
             <type id="fgdb_fc_general" />
             <type id="fgdb_fc_annotation" />
 
             <type id="egdb_fc_general" />
             <type id="egdb_fc_annotation" />
+
+            <type id ="mgdb_fc_general"/>
+            <type id ="mgdb_fc_annotation"/>
+
+            <type id="portal_sublayer_feature" />
+            <type id="portal_sublayer_feature_anno" />
+            <type id="portal_sublayer_feature_hosted" />
+            <type id="portal_sublayer_feature_hosted_anno" />
+
+            <type id="service_sublayer_feature_annotation" />
           </allow>
           <deny>
             <type id="database_mgdb" />
@@ -2782,18 +2814,51 @@
             <type id="toolbox_egdb" />
 
             <type id="cloudStorageConnection_acs" />
+
+            <type id="portal_url_datastore" />
+            <type id="portal_url_imageservice" />
+            <type id="portal_url_mapservice" />
+            <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_mapimage" />
+            <type id="portal_url_sceneservice" />
+            <type id="portal_url_sceneservice_Line" />
+            <type id="portal_url_sceneservice_MultiPatch" />
+            <type id="portal_url_sceneservice_Point" />
+            <type id="portal_url_sceneservice_Polygon" />
+            <type id="portal_url_sceneservice_IntegratedMesh" />
+            <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
+            <type id="portal_url_webtoolbox" />
+            
+            <type id="service_image" />
+            <type id="service_geoprocessing" />
+            <type id="service_stream" />
+            
+            <type id="bimfile_workspace"/>
+
           </deny>
         </content>
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_featureClasses_dimension" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Dimension Feature Classes (All Types)" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
+        <content displayName="Dimension Feature Classes (All Types)" include="FolderConnection, GDB, ServerConnection, esri_browsePlaces_Online">
           <allow>
             <type id="fgdb_fc_general" />
             <type id="fgdb_fc_dimension" />
 
             <type id="egdb_fc_general" />
             <type id="egdb_fc_dimension" />
+
+            <type id ="mgdb_fc_general"/>
+            <type id ="mgdb_fc_dimension"/>
+
+            <type id="portal_sublayer_feature" />
+            <type id="portal_sublayer_feature_dimension" />
+            <type id="portal_sublayer_feature_hosted" />
+            <type id="portal_sublayer_feature_hosted_dimension" />
+
+            <type id="service_sublayer_feature_dimension" />
+
           </allow>
           <deny>
             <type id="database_mgdb" />
@@ -2829,6 +2894,26 @@
             <type id="toolbox_pyt" />
             <type id="toolbox_fgdb" />
             <type id="toolbox_egdb" />
+
+            <type id="portal_url_datastore" />
+            <type id="portal_url_imageservice" />
+            <type id="portal_url_mapservice" />
+            <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_mapimage" />
+            <type id="portal_url_sceneservice" />
+            <type id="portal_url_sceneservice_Line" />
+            <type id="portal_url_sceneservice_MultiPatch" />
+            <type id="portal_url_sceneservice_Point" />
+            <type id="portal_url_sceneservice_Polygon" />
+            <type id="portal_url_sceneservice_IntegratedMesh" />
+            <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
+            <type id="portal_url_webtoolbox" />
+            <type id="bimfile_workspace"/>
+            
+            <type id="service_image" />
+            <type id="service_geoprocessing" />
+            <type id="service_stream" />
 
             <type id="cloudStorageConnection_acs" />
           </deny>
@@ -3625,6 +3710,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
 
             <type id="shapefile_general" />
             <type id="shapefile_point" />
@@ -4335,6 +4422,7 @@
           </allow>
           <deny>
             <type id="portal_url_vectortileservice" />
+            <type id="portal_url_vectortileservice_hosted" />
             <type id="portal_url_datastore" />
             <type id="portal_url_featureservice" />
             <type id="portal_url_featureservice_hosted" />
@@ -4560,6 +4648,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
             <type id="mgdb_table" />
           </allow>
           <deny>
@@ -4722,7 +4812,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_geodatabaseItems_cadastralFabric" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Parcel Fabrics" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
+        <content displayName="Parcel Fabrics for ArcMap" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
           <allow>
             <type id="fgdb_cadastral" isSelectable="True"/>
             <type id="egdb_cadastral" isSelectable="True"/>
@@ -4750,10 +4840,13 @@
             <type id="fgdb_facility_network" />
             <type id="egdb_facility_network" />
 
+            <type id="fgdb_parcel_dataset" />
+            <type id="egdb_parcel_dataset" />
+
             <type id="cad_dataset_dxf" />
             <type id="cad_dataset_dwg" />
             <type id="cad_dataset_dgn" />
-
+            
             <type id="bimfile_workspace"/>
 
             <type id="toolbox" />
@@ -4767,10 +4860,13 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_geodatabaseItems_parcelDataset" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Parcel Dataset" exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
+        <content displayName="Parcel Fabrics" include="FolderConnection, GDB, ServerConnection">
           <allow>
             <type id="fgdb_parcel_dataset" isSelectable="True"/>
             <type id="egdb_parcel_dataset" isSelectable="True"/>
+
+            <type id="portal_sublayer_group_parceldataset" isSelectable="True" />
+            <type id="portal_sublayer_group_parceldataset_hosted" isSelectable="True" />
           </allow>
           <deny>
             <type id="database_mgdb" />
@@ -6113,6 +6209,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
             <type id="mgdb_table" />
             <type id="mgdb_relationship" />
 
@@ -6325,6 +6423,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
 
             <type id="raster_dataset_egdb" isSelectable="True" />
             <type id="mosaic_dataset_egdb" />
@@ -6493,6 +6593,8 @@
             <type id="mgdb_fc_polygon" />
             <type id="mgdb_fc_multipoint" />
             <type id="mgdb_fc_multipatch" />
+            <type id="mgdb_fc_annotation" />
+            <type id="mgdb_fc_dimension" />
 
             <type id="fgdb_relationship" />
             <type id="egdb_relationship" />
@@ -6706,6 +6808,14 @@
 
             <type id="cloudStorageConnection_acs" />
           </deny>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_glft_tables" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Tables" include="FolderConnection, esri_browsePlaces_Online">
+          <allow>
+            <type id="portal_sub_table" />
+          </allow>
         </content>
       </insertComponent>
 
@@ -6945,6 +7055,127 @@
             <type id="portal_url_mapimage" />
             <type id="portal_url_mapservice" />
             <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_sceneservice" />
+            <type id="portal_url_sceneservice_Line" />
+            <type id="portal_url_sceneservice_MultiPatch" />
+            <type id="portal_url_sceneservice_Point" />
+            <type id="portal_url_sceneservice_Polygon" />
+            <type id="portal_url_sceneservice_IntegratedMesh" />
+            <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
+            <type id="portal_url_webtoolbox" />
+            <type id="portal_url_featureservice_spatiotemporal" />
+            <type id="portal_url_featureservice_hosted_spatiotemporal" />
+            <type id="portal_url_featureservice_hosted_spatiotemporal_table" />
+            <type id="portal_url_featureservice_spatiotemporal_table" />
+            <type id="portal_url_featureservice_table" />
+            <type id="portal_url_featureservice_hosted_table" />
+            <type id="bimfile_workspace"/>
+
+            <type id="cloudStorageConnection_acs" />
+          </deny>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_feed_localAndOnline" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Feed Files (FEED)" include="FolderConnection">
+          <allow>
+            <type id="portal_feed" />
+          </allow>
+          <deny>
+            <type id="database_fgdb" />
+            <type id="database_mgdb" />
+            <type id="database_sqlite" />
+            <type id="database_excel" />
+            <type id="database_egdb" />
+
+            <type id="serverConnection_ags" />
+            <type id="serverConnection_wcs" />
+            <type id="serverConnection_wfs" />
+            <type id="serverConnection_wms" />
+            <type id="serverConnection_wmts" />
+
+            <type id="raster_product" />
+            <type id="raster_afr" />
+            <type id="raster_file_general" />
+
+            <type id="cad_dataset_dxf" />
+            <type id="cad_dataset_dwg" />
+            <type id="cad_dataset_dgn" />
+
+            <type id="toolbox" />
+            <type id="toolbox_pyt" />
+
+            <type id="portal_url_datastore" />
+            <type id="portal_url_featureservice" />
+            <type id="portal_url_featureservice_hosted" />
+            <type id="portal_url_featureservice_hosted_view" />
+            <type id="portal_url_featurecollection" />
+            <type id="portal_url_imageservice" />
+            <type id="portal_url_mapservice" />
+            <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_mapimage" />
+            <type id="portal_url_sceneservice" />
+            <type id="portal_url_sceneservice_Line" />
+            <type id="portal_url_sceneservice_MultiPatch" />
+            <type id="portal_url_sceneservice_Point" />
+            <type id="portal_url_sceneservice_Polygon" />
+            <type id="portal_url_sceneservice_IntegratedMesh" />
+            <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
+            <type id="portal_url_webtoolbox" />
+            <type id="portal_url_featureservice_spatiotemporal" />
+            <type id="portal_url_featureservice_hosted_spatiotemporal" />
+            <type id="portal_url_featureservice_hosted_spatiotemporal_table" />
+            <type id="portal_url_featureservice_spatiotemporal_table" />
+            <type id="portal_url_featureservice_table" />
+            <type id="portal_url_featureservice_hosted_table" />
+            <type id="bimfile_workspace"/>
+
+            <type id="cloudStorageConnection_acs" />
+          </deny>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_ipynb_localAndOnline" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Notebook (IPYNB)" include="FolderConnection">
+          <allow>
+            <type id="file_ipynb" />
+            <type id="portal_ipynb" />
+          </allow>
+          <deny>
+            <type id="database_fgdb" />
+            <type id="database_mgdb" />
+            <type id="database_sqlite" />
+            <type id="database_excel" />
+            <type id="database_egdb" />
+
+            <type id="serverConnection_ags" />
+            <type id="serverConnection_wcs" />
+            <type id="serverConnection_wfs" />
+            <type id="serverConnection_wms" />
+            <type id="serverConnection_wmts" />
+
+            <type id="raster_product" />
+            <type id="raster_afr" />
+            <type id="raster_file_general" />
+
+            <type id="cad_dataset_dxf" />
+            <type id="cad_dataset_dwg" />
+            <type id="cad_dataset_dgn" />
+
+            <type id="toolbox" />
+            <type id="toolbox_pyt" />
+
+            <type id="portal_url_datastore" />
+            <type id="portal_url_featureservice" />
+            <type id="portal_url_featureservice_hosted" />
+            <type id="portal_url_featureservice_hosted_view" />
+            <type id="portal_url_featurecollection" />
+            <type id="portal_url_imageservice" />
+            <type id="portal_url_mapservice" />
+            <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_mapimage" />
             <type id="portal_url_sceneservice" />
             <type id="portal_url_sceneservice_Line" />
             <type id="portal_url_sceneservice_MultiPatch" />
@@ -7737,6 +7968,57 @@
         </content>
       </insertComponent>
 
+      <insertComponent id="esri_browseDialogFilters_locators_local_and_project_noserver" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Locators" exclude="esri_browsePlaces_Online" include="FolderConnection, LocatorsConnection">
+          <allow>
+            <type id="locator_file" />
+            <type id="locator_general" />
+            <type id="locator_general_composite" />
+            <type id="locator_eagle" />
+
+            <!-- Excel-based locator? locator_xls -->
+            <!-- locator packages not included -->
+            
+          </allow>
+          <deny>
+            <type id="locator_server" />
+            <type id="service_geocoding" />
+            
+            <type id="serverConnection_wcs" />
+            <type id="serverConnection_wms" />
+            <type id="serverConnection_wfs" />
+            <type id="serverConnection_wmts" />
+
+            <type id="database_egdb" />
+            <type id="database_fgdb" />
+            <type id="database_mgdb" />
+            <type id="database_sqlite" />
+            <type id="database_excel" />
+
+            <type id="raster_product" />
+            <type id="raster_afr" />
+            <type id="raster_file_general" />
+
+            <type id="cad_dataset_dxf" />
+            <type id="cad_dataset_dwg" />
+            <type id="cad_dataset_dgn" />
+
+            <type id="bimfile_workspace"/>
+
+            <type id="toolbox" />
+            <type id="toolbox_pyt" />
+
+            <type id="service_feature" />
+            <type id="service_geoprocessing" />
+            <type id="service_image" />
+            <type id="service_map" />
+            <type id="service_stream" />
+
+            <type id="cloudStorageConnection_acs" />
+          </deny>
+        </content>
+      </insertComponent>
+
       <insertComponent id="esri_browseDialogFilters_locators_allTypes" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
         <content displayName="Locators" include="FolderConnection, ServerConnection">
           <allow>
@@ -7991,6 +8273,20 @@
             <type id="portal_url_featureservice_hosted_table" />
 
             <type id="cloudStorageConnection_acs" />
+          </deny>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_maps_project" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Maps" include="Map" exclude="esri_browsePlaces_Online, esri_browsePlaces_Computer">
+          <allow>
+            <type id="cim_map_map" isSelectable="True" />
+          </allow>
+          <deny>
+            <type id="cim_map_globe" />
+            <type id="cim_map_scene" />
+            <type id="cim_map_stereo" />
+            <type id="cim_map_basemap" />
           </deny>
         </content>
       </insertComponent>
@@ -11549,7 +11845,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_addToMap" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Web Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Web Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_feature" isSelectable="True" />
             <type id="service_image" isSelectable="True" />
@@ -11599,6 +11895,7 @@
             <type id="portal_url_sceneservice_PointCloud" isSelectable="True" />
             <type id="portal_url_sceneservice_Building" isSelectable="True"/>
             <type id="portal_url_vectortileservice" />
+            <type id="portal_url_vectortileservice_hosted" />
             <type id="portal_url_ogcwms" />
             <type id="portal_url_ogcwmts" />
             <type id="portal_url_ogcwfs" />
@@ -11662,7 +11959,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_addToStereoMap" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Web Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Web Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_feature" isSelectable="True" />
 
@@ -11756,7 +12053,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_all" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Web Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Web Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_feature" isSelectable="True" />
             <type id="service_geocoding" />
@@ -11811,6 +12108,7 @@
             <type id="portal_url_sceneservice_PointCloud" isSelectable="True" />
             <type id="portal_url_sceneservice_Building" isSelectable="True"/>
             <type id="portal_url_vectortileservice"  />
+            <type id="portal_url_vectortileservice_hosted" />
             <type id="portal_url_ogcwms"  />
             <type id="portal_url_ogcwmts"  />
             <type id="portal_url_ogcwfs" />
@@ -11959,7 +12257,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_feature" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Feature Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Feature Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_feature" isSelectable="True" />
 
@@ -12046,7 +12344,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_geocoding" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Geocoding Services" exclude="esri_browsePlaces_Computer, esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
+        <content displayName="Geocoding Services" exclude="esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_geocoding" />
           </allow>
@@ -12087,7 +12385,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_geodata" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Geodata Services" exclude="esri_browsePlaces_Computer, esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
+        <content displayName="Geodata Services" exclude="esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_geodata" />
           </allow>
@@ -12161,7 +12459,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_globe" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Globe Layers and Services" exclude="esri_browsePlaces_Computer, esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
+        <content displayName="Globe Layers and Services" exclude="esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_globe" />
           </allow>
@@ -12202,7 +12500,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_stream" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Stream Services" exclude="esri_browsePlaces_Computer, esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
+        <content displayName="Stream Services" exclude="esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_stream" />
           </allow>
@@ -12442,7 +12740,7 @@
       <insertComponent id="esri_browseDialogFilters_services_hosted_vectortiles_new" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
         <content displayName="Web Vector Tile Layers" exclude="project_browse_place_project, esri_browsePlaces_Computer" include="esri_browsePlaces_Online_UserContent">
           <allow>
-            <type id="portal_url_vectortileservice" />
+            <type id="portal_url_vectortileservice_hosted" />
           </allow>
           <deny>
             <type id="portal_url_datastore" />
@@ -12474,7 +12772,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_image" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Imagery Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Imagery Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_image" isSelectable="True" />
             <type id="service_sublayer_image" />
@@ -12547,7 +12845,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_map" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Map Dynamic Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Map Dynamic Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_map" isSelectable="True" />
             <type id="service_sublayer_map" />
@@ -12692,7 +12990,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_network" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Network Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Network Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_na" />
             <type id="portal_url_naservice" />
@@ -12759,7 +13057,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_tilingscheme" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Web Tile Layer / Image Service" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Web Tile Layer / Image Service" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_image" isSelectable="True" />
             <type id="service_map" isSelectable="True" />
@@ -12834,6 +13132,7 @@
         <content displayName="Vector Tile Layer" exclude="project_browse_place_project, esri_browsePlaces_Computer" >
           <allow>
             <type id="portal_url_vectortileservice" />
+            <type id="portal_url_vectortileservice_hosted" />
           </allow>
           <deny>
             <type id="portal_url_imageservice"/>
@@ -12871,7 +13170,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_tilingscheme_elevationservice" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="Web Tile Layer / Image Service / Elevation Service" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="Web Tile Layer / Image Service / Elevation Service" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_image" isSelectable="True" />
             <type id="service_map" isSelectable="True" />
@@ -12945,7 +13244,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_wcs" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="WCS Dynamic Layers and Services" exclude="esri_browsePlaces_Computer, esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
+        <content displayName="WCS Dynamic Layers and Services" exclude="esri_browsePlaces_Online" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_wcs" isSelectable="True" />
             <type id="service_wcs_coverage" />
@@ -12981,7 +13280,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_wfs" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="WFS Dynamic Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="WFS Dynamic Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_wfs" isSelectable="True" />
             <type id="service_wfs_groupLayer" />
@@ -13045,7 +13344,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_wms" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="WMS Dynamic Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="WMS Dynamic Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_wms" isSelectable="True" />
             <type id="service_wms_groupLayer" />
@@ -13109,7 +13408,7 @@
       </insertComponent>
 
       <insertComponent id="esri_browseDialogFilters_services_wmts" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content displayName="WMTS Tile Layers and Services" exclude="esri_browsePlaces_Computer" include="FolderConnection, ServerConnection">
+        <content displayName="WMTS Tile Layers and Services" include="FolderConnection, ServerConnection">
           <allow>
             <type id="service_wmts" isSelectable="True" />
             <type id="service_wmts_layer" />
@@ -14065,6 +14364,70 @@
 
             <type id="toolbox" />
             <type id="toolbox_pyt" />
+
+            <type id="cloudStorageConnection_acs" />
+          </deny>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_tables_geocode_file" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName="Tables for Geocode File" include="FolderConnection, GDB, ServerConnection">
+          <allow>
+            <type id="fgdb_table" />
+            <type id="excel_table" />
+
+            <type id="text_csv" />
+          </allow>
+          <deny>
+            <type id="serverConnection_wcs" />
+            <type id="serverConnection_wms" />
+            <type id="serverConnection_wfs" />
+            <type id="serverConnection_wmts" />
+
+            <type id="dataset_fgdb" />
+            <type id="dataset_egdb" />
+            <type id="dataset_mgdb" />
+
+            <type id="raster_dataset_fgdb" />
+            <type id="raster_dataset_egdb" />
+            <type id="raster_catalog_fgdb" />
+            <type id="raster_catalog_egdb" />
+
+            <type id="raster_product" />
+            <type id="raster_afr" />
+            <type id="raster_file_general" />
+
+            <type id="cad_dataset_dxf" />
+            <type id="cad_dataset_dwg" />
+            <type id="cad_dataset_dgn" />
+
+            <type id="bimfile_workspace"/>
+
+            <type id="toolbox" />
+            <type id="toolbox_pyt" />
+            <type id="toolbox_fgdb" />
+            <type id="toolbox_egdb" />
+
+            <!-- included in Add Data composite filter, which allows portal items -->
+            <type id="service_geoprocessing" />
+            <type id="service_image" />
+            <type id="service_stream" />
+
+            <type id="portal_url_datastore" />
+            <type id="portal_url_featurecollection" />
+            <type id="portal_url_imageservice" />
+            <type id="portal_url_mapservice" />
+            <type id="portal_url_mapservice_hosted" />
+            <type id="portal_url_mapimage" />
+            <type id="portal_url_sceneservice" />
+            <type id="portal_url_sceneservice_Line" />
+            <type id="portal_url_sceneservice_MultiPatch" />
+            <type id="portal_url_sceneservice_Point" />
+            <type id="portal_url_sceneservice_Polygon" />
+            <type id="portal_url_sceneservice_IntegratedMesh" />
+            <type id="portal_url_sceneservice_PointCloud" />
+            <type id="portal_url_sceneservice_Building" />
+            <type id="portal_url_webtoolbox" />
 
             <type id="cloudStorageConnection_acs" />
           </deny>
@@ -15104,6 +15467,7 @@
           <filter refID="esri_browseDialogFilters_cad" />
           <filter refID="esri_browseDialogFilters_tables_all" />
           <filter refID="esri_browseDialogFilters_video_fullMotion" />
+          <filter refID="esri_browseDialogFilters_netcdf" />
         </content>
       </insertComponent>
       
@@ -15309,6 +15673,7 @@
             <type id="file_rpk" contextMenuID="esri_core_noContextMenu"/>
             <type id="geoprocessing_gpk" contextMenuID="esri_geoprocessing_packageMenu"/>
             <type id="geoprocessing_gpkx" contextMenuID="esri_geoprocessing_packageMenu"/>
+            <type id="file_dlpk" contextMenuID="deepLearningPackageMenu"/>
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -15333,7 +15698,7 @@
             <type id="fgdb_gn" />
             <type id="network_general" contextMenuID="gdbItemNetworkGeneralTypeMenu" />
             <type id="fgdb_network" contextMenuID="fgdbItemNetworkDatasetTypeMenu" />
-            <type id="fgdb_facility_network" contextMenuID="fgdbItemFeatureClassTypeMenu" />
+            <type id="fgdb_facility_network" contextMenuID="fgdbItemFacilityNetworkTypeMenu" />
             <type id="fgdb_diagram_dataset" contextMenuID="gdbItemDiagramDatasetTypeMenu" />
             <type id="fgdb_network_diagram" contextMenuID="gdbItemNetworkDiagramTypeMenu" />
             <type id="fgdb_topology" contextMenuID="gdbItemTopologyTypeMenu" />
@@ -15376,7 +15741,7 @@
             <type id="egdb_relationship" contextMenuID="egdbItemRelationshipTypeMenu" />
             <type id="egdb_gn" />
             <type id="egdb_network" contextMenuID="egdbItemNetworkDatasetTypeMenu" />
-            <type id="egdb_facility_network" contextMenuID="egdbItemFeatureClassTypeMenu" />
+            <type id="egdb_facility_network" contextMenuID="egdbItemFacilityNetworkTypeMenu" />
             <type id="egdb_diagram_dataset" contextMenuID="gdbItemDiagramDatasetTypeMenu" />
             <type id="egdb_network_diagram" contextMenuID="gdbItemNetworkDiagramTypeMenu" />
             <type id="egdb_topology" contextMenuID="gdbItemTopologyTypeMenu" />
@@ -15434,7 +15799,7 @@
         </content>
       </insertComponent>
 
-      <insertComponent id="esri_itemInfoType_BimFileDatasetItem" className="ArcGIS.Desktop.Internal.Catalog.GDBItem">
+      <insertComponent id="esri_itemInfoType_BimFileDatasetItem" className="ArcGIS.Desktop.Internal.Catalog.BimFileItem">
         <content contextMenuID="bimFileDatasetItemTypeMenu">
           <supportedTypeIDs>
             <type id="bimfile_dataset" />
@@ -15442,7 +15807,7 @@
         </content>
       </insertComponent>
 
-      <insertComponent id="esri_itemInfoType_BimFileFeatureClassItem" className="ArcGIS.Desktop.Internal.Catalog.GDBItem">
+      <insertComponent id="esri_itemInfoType_BimFileFeatureClassItem" className="ArcGIS.Desktop.Internal.Catalog.BimFileItem">
         <content contextMenuID="bimFileFeatureClassItemTypeMenu">
           <supportedTypeIDs>
             <type id="bimfile_featureclass_multipatch" />
@@ -15700,6 +16065,15 @@
         </content>
       </insertComponent>
 
+      <!--Notebook items-->
+      <insertComponent id="esri_itemInfoType_NotebookItem" className="ArcGIS.Desktop.Internal.Catalog.NotebookItem">
+        <content>
+          <supportedTypeIDs>
+            <type id="file_ipynb" contextMenuID="notebookItemMenu" />
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+
     <!-- misc project items -->
       <insertComponent id="esri_itemInfoType_FolderConnectionItem" className="ArcGIS.Desktop.Catalog.FolderConnectionProjectItem" containerType="FolderConnection">
         <content>
@@ -15863,6 +16237,7 @@
             <type id="portal_item" contextMenuID="onlineGenericItemMenu" />
             <type id="portal_url_elevationservice" contextMenuID="onlineItemMenu" />
             <type id="portal_url_vectortileservice" contextMenuID="onlineItemMenu" />
+            <type id="portal_url_vectortileservice_hosted" contextMenuID="onlineItemMenu" />
             <type id="portal_url_streamservice" contextMenuID="onlineItemMenu" />
             <type id="portal_url_streamservice_hosted" contextMenuID="onlineItemMenu" />
             <type id="portal_url_ogcwms" contextMenuID="onlineItemMenu" />
@@ -15883,7 +16258,10 @@
             <type id="portal_kml" contextMenuID="onlineItemMenu" />
             <type id="portal_kmz" contextMenuID="onlineItemMenu" />
             <type id="portal_rft" contextMenuID="portalRFTItemMenu" />
+            <type id="portal_feed" contextMenuID="onlineItemMenu" />
+            <type id="portal_ipynb" contextMenuID="notebookItemMenu" />
             <type id="portal_url_webstyle" contextMenuID="onlineItemMenu" />
+            <type id="portal_dlpk" contextMenuID="portalDLPKPackageItemMenu"/>
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -16177,12 +16555,14 @@
           <button refID="esri_layoutItemPAGXImportOpenButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="rptxItemRPTXTypeMenu" caption="ArcGIS Pro Report File" extendedCaption="Context menu for Pro Report files">
           <button refID="esri_reportItemRPTXImportOpenButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="esri_browsePlaces_Online_Menu" caption="Portal Item Collection" extendedCaption="Context menu for collections of items provided by the active portal">
@@ -16193,6 +16573,7 @@
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="esri_core_portalFolderMenu" caption="Default" extendedCaption="Context menu for portal folders">
@@ -16209,10 +16590,10 @@
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_core_editCopyPaths" />
+          <button refID ="esri_GDBPasteToFolder"/>
           <button refID="esri_DeleteItem" />
           <!-- TODO: <button refID="esri_folderConnectionMakeDefaultButton" />-->
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
-          <button refID ="esri_GDBPasteToFolder"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>       
@@ -16224,36 +16605,62 @@
         <menu id="locatorPackageItemMenu" caption="Locator Package Item" extendedCaption="Context menu for locator packages">
           <button refID="esri_itemInfoAddPackageToProjectButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="agsServerConnectionFileTypeMenu" caption="ArcGIS Server Connection File" extendedCaption="Context menu for ArcGIS Server connection files accessed from a folder connection">
           <button refID="esri_projectItemAddToProjectButton" />
           <button refID="esri_addFavoriteButton" />
           <button refID="esri_addProjectItemToNewProjectsButton" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="wcsServerConnectionFileTypeMenu" caption="WCS Server Connection File" extendedCaption="Context menu for WCS Server connection files accessed from a folder connection">
           <button refID="esri_projectItemAddToProjectButton" />
           <button refID="esri_addFavoriteButton" />
-          <button refID="esri_addProjectItemToNewProjectsButton" />        
+          <button refID="esri_addProjectItemToNewProjectsButton" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="wmsServerConnectionFileTypeMenu" caption="WMS Server Connection File" extendedCaption="Context menu for WMS Server connection files accessed from a folder connection">
           <button refID="esri_projectItemAddToProjectButton" />
           <button refID="esri_addFavoriteButton" />
-          <button refID="esri_addProjectItemToNewProjectsButton" />        
+          <button refID="esri_addProjectItemToNewProjectsButton" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="wfsServerConnectionFileTypeMenu" caption="WFS Server Connection File" extendedCaption="Context menu for WFS Server connection files accessed from a folder connection">
           <button refID="esri_projectItemAddToProjectButton" />
           <button refID="esri_addFavoriteButton" />
-          <button refID="esri_addProjectItemToNewProjectsButton" />        
+          <button refID="esri_addProjectItemToNewProjectsButton" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="wmtsServerConnectionFileTypeMenu" caption="WMTS Server Connection File" extendedCaption="Context menu for WMTS Server connection files accessed from a folder connection">
           <button refID="esri_projectItemAddToProjectButton" />
           <button refID="esri_addFavoriteButton" />
-          <button refID="esri_addProjectItemToNewProjectsButton" />        
+          <button refID="esri_addProjectItemToNewProjectsButton" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <!-- ACS connection files accessed from a folder connection -->
@@ -16262,9 +16669,10 @@
           <button refID="esri_addFavoriteButton" />
           <button refID="esri_addProjectItemToNewProjectsButton" />
           <button refID="esri_itemInfoRefreshButton" separator="true" />
-          <!--<button refID="esri_core_editCopyButton" separator="true" />-->
+          <button refID="esri_core_editCopyButton" separator="true" />
           <!--<button refID="esri_core_rename" separator="true" />-->
-          <button refID="esri_DeleteItem" separator="true" />
+          
+          <button refID="esri_DeleteItem"/>
           <button refID="esri_projectItemViewMetadata" separator="true" />
           <button refID="esri_projectItemEditMetadata" />
           <button refID="esri_projectItemPropertiesButton" separator="true" />
@@ -16319,7 +16727,7 @@
           <menu refID="manageFGDBMenu" separator="true"/>
           <button refID="esri_WorkspaceDomainsViewButton" separator="true" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_DeleteItem" />
           <button refID="esri_core_rename"/>
@@ -16336,7 +16744,7 @@
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
           <button refID="FileGDBFromFolderConnectionOrEGDBExportItemMenu"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_DeleteItem" />
           <!--<button refID="esri_core_rename"/>-->
@@ -16357,7 +16765,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_itemInfoRefreshButton" separator="true" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -16381,11 +16789,13 @@
           <button refID="esri_mapItemMxdImportOpenButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="mapxItemMAPXTypeMenu" caption="ArcGIS Pro Map File" extendedCaption="Context menu for Pro map files">
           <button refID="esri_mapItemMAPXImportOpenButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="fgdbItemFeatureDatasetTypeMenu" caption="Geodatabase Feature Dataset" extendedCaption="Context menu for file geodatabase feature datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
@@ -16393,7 +16803,7 @@
           <button refID="GDBFeatureDatasetImportItemMenu" separator="true"/>
           <button refID="FileGDBAndEGDBFeatureDatasetExportItemMenu" />
           <menu refID="manageFGDBItemMenu" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToFeatureDataset"/>
           <button refID="esri_GDBPasteSpecialToFeatureDataset"/>
           <button refID="esri_DeleteItem" />
@@ -16410,7 +16820,7 @@
           <button refID="GDBFeatureDatasetImportItemMenu" separator="true"/>
           <button refID="FileGDBAndEGDBFeatureDatasetExportItemMenu" />
           <menu refID="ManageGDBItemMenu" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToFeatureDataset"/>
           <button refID="esri_GDBPasteSpecialToFeatureDataset"/>
           <button refID="esri_DeleteItem" />
@@ -16427,7 +16837,7 @@
           <!--  <button refID="GDBFeatureDatasetImportItemMenu" separator="true"/> -->
           <!--  <button refID="FileGDBAndEGDBFeatureDatasetExportItemMenu" /> -->
           <!--  <menu refID="manageFGDBItemMenu" separator="true"/> -->
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <!--  <button refID="esri_GDBPasteToFeatureDataset"/> -->
           <!--  <button refID="esri_GDBPasteSpecialToFeatureDataset"/> -->
           <!--  <button refID="esri_DeleteItem" /> -->
@@ -16443,7 +16853,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="FileGDBAndEGDBFeatureClassExportItemMenu" separator="true"/>
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16454,7 +16864,7 @@
         </menu>
         <menu id="sqliteItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for sqlite feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16464,16 +16874,20 @@
         </menu>
         <menu id="mgdbItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for sqlite feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="fgdbItemRelationshipClassTypeMenu" caption="Geodatabase Relationship Class" extendedCaption="Context menu for file geodatabase relationship classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
+          <button refID="esri_AddGlobalIDButton" separator="true"/>
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
+          <button refID="esri_DisableEditorTrackingButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -16485,7 +16899,7 @@
         </menu>
         <menu id="fgdbTerrainItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for file geodatabase terrains">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -16495,7 +16909,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
           <button refID="FileGDBAndEGDBFeatureClassExportItemMenu" separator="true" />
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true" />
+          <button refID="esri_core_editCopyButton" separator="true" />
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true" />
@@ -16506,10 +16920,12 @@
         </menu>
         <menu id="egdbItemRelationshipTypeMenu" caption="Geodatabase Relationship" extendedCaption="Context menu for enterprise geodatabase relationships">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_AddGlobalIDButton" separator="true"/>
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
+          <button refID="esri_DisableEditorTrackingButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -16518,7 +16934,7 @@
         <menu id="egdbGeneralItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for unregistered enterprise geodatabase feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="EGDBGeneralItemFeatureClassTypeExportItemMenu" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
@@ -16530,7 +16946,7 @@
         <!--<button refID="esri_projectItemPropertiesButton" separator="true"/>-->
         <menu id="egdbTerrainItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for enterprise geodatabase terrains">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <menu refID="ManageGDBItemMenu" separator="true"/>
@@ -16539,7 +16955,7 @@
         </menu>
         <menu id="fgdbAnnotationItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for file geodatabase feature classes and utility networks">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16551,7 +16967,7 @@
         </menu>
         <menu id="egdbAnnotationItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for unregistered enterprise geodatabase feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
@@ -16563,7 +16979,7 @@
         </menu>
         <menu id="fgdbDimensionItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for file geodatabase feature classes and utility networks">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16575,7 +16991,7 @@
         </menu>
         <menu id="egdbDimensionItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for unregistered enterprise geodatabase feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
@@ -16587,16 +17003,19 @@
         </menu>
         <menu id="fgdbItemNetworkDatasetTypeMenu" caption="Geodatabase Network Dataset" extendedCaption="Context menu for file geodatabase network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
+          <button refID="esri_AddGlobalIDButton" separator="true"/>
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
+          <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="gdbItemNetworkGeneralTypeMenu" caption="Geodatabase Network Dataset" extendedCaption="Context menu for geodatabase network general datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <!--<button refID="esri_GDBCopy" separator="true"/>-->
+          <!--<button refID="esri_core_editCopyButton" separator="true"/>-->
           <!--<button refID="esri_core_rename"/>-->
           <!--<button refID="esri_DeleteItem"/>-->
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -16605,16 +17024,35 @@
         </menu>
         <menu id="egdbItemNetworkDatasetTypeMenu" caption="Geodatabase Network Dataset" extendedCaption="Context menu for enterprise geodatabase network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
+          <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
+        <menu id="fgdbItemFacilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for file geodatabase network utility datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_rename" />
+          <button refID="esri_DeleteItem" />
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="egdbItemFacilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for enterprise geodatabase network utility datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_rename" />
+          <button refID="esri_DeleteItem" />
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        
         <menu id="shapefileItemNetworkDatasetTypeMenu" caption="Shapefile Network Dataset" extendedCaption="Context menu for shapefile network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -16625,7 +17063,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="FileGDBAndEGDBItemTableTypeExportItemMenu" separator="true"/>
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16636,7 +17074,7 @@
         </menu>
         <menu id="sqliteItemTableTypeMenu" caption="Geodatabase Table" extendedCaption="Context menu for file geodatabase tables">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16648,7 +17086,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="FileGDBAndEGDBItemTableTypeExportItemMenu" separator="true"/>
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16660,13 +17098,16 @@
         <menu id="excelItemTableTypeMenu" caption="Excel Sheet" extendedCaption="Context menu for Excel sheets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
+          <button refID="GeneralItemTableTypeExportItemMenu"  separator="true"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="gdbItemTopologyTypeMenu" caption="Geodatabase Table" extendedCaption="Context menu for geodatabase topologies">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
+          <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -16685,26 +17126,34 @@
         </menu>
         <menu id="gdbItemParcelDatasetItemMenu" caption="GDB Parcel Fabric" extendedCaption="Context menu for file geodatabase parcel dataset">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_GDBAddParcelTypeButton" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="lasDatasetItemMenu" caption="LAS Dataset" extendedCaption="Context menu for LAS datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <!--<button refID="esri_GDBCopy" separator="true"/>-->
-          <button refID="esri_DeleteItem" separator="true"/>
+          <!--<button refID="esri_core_editCopyButton" separator="true"/>-->
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_DeleteItem" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
+        <menu id="notebookItemMenu" caption="Notebook" extendedCaption="Context menu for Notebooks">
+          <button refID="esri_notebookAddToProjectButton" separator="false"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu> 
         <menu id="shapefileItemMenu" caption="Shapefile" extendedCaption="Context menu for shapefiles">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="ShapefileItemMenuExportItemMenu" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_core_rename" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -16716,6 +17165,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>          
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="cadfileItemMenu" caption="Cad" extendedCaption="Context menu for CAD feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
@@ -16725,8 +17175,9 @@
         </menu>
         <menu id="cadDatasetItemMenu" caption="Cad Dataset" extendedCaption="Context menu for CAD datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_DeleteItem" />
+          <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -16734,12 +17185,15 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="tableItemMenu" caption="Table" extendedCaption="Context menu for standalone tables">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
+          <button refID="GeneralItemTableTypeExportItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="serviceItemMenu" caption="Service" extendedCaption="Context menu for ArcGIS Server map and feature services">
@@ -16768,10 +17222,12 @@
         <menu id="layerPackageItemMenu" caption="Package" extendedCaption="Context menu for layer packages">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="mapPackageItemMenu" caption="Package" extendedCaption="Context menu for map packages">
           <button refID="esri_packageItemUnpackOpenButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
         <menu id="onlineStyleItemMenu" caption="Style" extendedCaption="Context menu for styles">
           <button refID="esri_mapping_AddOnlineStyleButton" separator="false"/>
@@ -16800,6 +17256,9 @@
           <button refID="esri_taskItemTaskImportOpenButton"/>
           <button refID="esri_DeleteItem" separator="true"/>
         </menu>
+        <menu id="portalDLPKPackageItemMenu" caption="Deep Learning Package" extendedCaption="Context menu for Deep Learning Package">
+          <button refID="esri_DeleteItem" separator="true"/>
+        </menu>
         <menu id="itemInfoGenericMenu" caption="Generic Item" extendedCaption="Context menu for items that don't have a unique context menu">
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_GDBPasteProjectItem"/>
@@ -16809,6 +17268,7 @@
         </menu>
         <menu id="locatorsConnectionContainerMenu" caption="Locators Container" extendedCaption="Context menu for the Locators container in the project">
           <button refID="esri_geodatabase_addLocatorButton" />
+          <button refID="esri_geodatabase_refreshLocatorsButton" separator="true"/>
         </menu>
         <menu id="LocatorsConnectionItemMenu" caption="Locator Item" extendedCaption="Context menu for locators that have been added to a project">
           <button refID="esri_locatorsConnectionRemoveButton" />
@@ -16854,6 +17314,10 @@
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
 
+        <menu id="deepLearningPackageMenu" caption="Deep learning Package" extendedCaption="Context menu for geodatabase raster datasets">
+          <button refID="esri_DeleteItem"/>
+        </menu>
+
         <!-- Raster, Mosaic dataset, Image service etc menu items -->
         <menu id="rasterItemMenu" caption="Raster" extendedCaption="Context menu for file-based raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
@@ -16862,13 +17326,13 @@
         <menu id="gdbItemRasterItemMenu" caption="GDB Raster" extendedCaption="Context menu for geodatabase raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="EGDBRasterDatasetExportItemMenu" separator="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem"/>
         </menu>
         <menu id="gdbItemMosaicDatasetTypeMenu" caption="Mosaic Dataset" contextMenu="true" extendedCaption="Context menu for mosaic datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
         </menu>
@@ -16894,7 +17358,7 @@
         <menu id="gdbItemNetworkDiagramTypeMenu" caption="Geodatabase Network Diagram" contextMenu="true" extendedCaption="Context menu for geodatabase network diagrams">
           <button refID="esri_projectItemAddToNewDiagramMapButton"/>
           <!--<dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>-->
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_DeleteItem" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -16924,7 +17388,7 @@
           <button refID="esri_WorkspaceDomainsViewButton" separator="true" />
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" separator="true" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
           <button refID="esri_core_editDeleteButton"/>
@@ -16965,7 +17429,7 @@
           <button refID="FileGDBFromFolderConnectionOrEGDBExportItemMenu"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_GDBCopy" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <!--<button refID="esri_GDBPasteSpecialToDatabase" />-->
           <button refID="esri_core_editDeleteButton"/>
@@ -16983,7 +17447,7 @@
           <!--<button refID="esri_itemInfoRefreshButton" separator="true" />-->
           <button refID="esri_GDBRemoveButton" />
           <!--<dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>-->
-          <!--<button refID="esri_GDBCopy" separator="true"/>-->
+          <!--<button refID="esri_core_editCopyButton" separator="true"/>-->
           <!--<button refID="esri_GDBPasteToDatabase" />-->
           <!--<button refID="esri_DeleteItem" separator="true"/>-->
           <button refID="esri_projectItemViewMetadata" separator="true" />
@@ -17132,7 +17596,14 @@
           <button refID="esri_GDBTablesExportTodBASEButton"/> <!--With multi-select limitations-->
           <button refID="esri_GDBTableExportToTableButton"/>
           <button refID="esri_GDBTablesExportToGeodatabaseButton"/> <!--With multi-select limitations-->
+          <dynamicMenu refID="GeneralItemTableTypeExportItemMenu"  inline="true" separator="true"/>       
           <button refID="esri_GDBTableExportToXMLWorkspaceDocumentsButton" separator="true"/>
+        </menu>
+
+        <menu id="GeneralItemTableTypeExportItemMenu" caption="Export" contextMenu="true" extendedCaption="Context menu submenu for exporting data in a geodatabase">
+          <button refID="esri_GDBTableExportToPointFeatureClassButton"/>
+          <button refID="esri_GDBTableExportToLineFeatureClassButton"/>
+          <button refID="esri_GDBTableExportToEllipseFeatureClassButton"/>
         </menu>
 
         <menu id="EGDBGeneralItemFeatureClassTypeExportItemMenu" caption="Export" contextMenu="true" extendedCaption="Context menu submenu for exporting data in a geodatabase">
@@ -17154,12 +17625,12 @@
         
         <menu id="FolderConnectionProjectNewItemMenu" caption="New" contextMenu="true" extendedCaption="Context menu submenu for creating new items in a geodatabase">
           <button refID="esri_core_newFolderButton"/>
+          <button refID="esri_GDBCreateNewFileGeodatabaseButton" />
           <button refID="esri_GDBCreateNewToolboxButtonInFolder" />
           <button refID="esri_GDBCreateNewPythonToolboxButtonInFolder"/>
+          <button refID="esri_GDBCreateNewLasDatasetButton"/>
           <button refID="esri_GDBCreateNewGeoPackageButton" />
           <button refID="esri_GDBShapeFileButton"/>
-          <button refID="esri_GDBCreateNewFileGeodatabaseButton" />
-          <button refID="esri_GDBCreateNewLasDatasetButton"/>
         </menu>
         <menu id="FolderConnectionProjectNewItemMenu2" caption="New" contextMenu="true" extendedCaption="Context menu submenu for creating new items in a geodatabase">
           <button refID="esri_core_newFolderButton"/>
@@ -17185,6 +17656,8 @@
           <button refID="esri_DisableArchivingButton"/>
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
+          <button refID="esri_EnableAttachmentsButton" separator="true"/>
+          <button refID="esri_DisableAttachementsButton"/>
         </menu>
         <menu id="manageFGDBMenu" caption="Manage" extendedCaption="Context menu submenu providing file geodatabase management options" contextMenu="true">
           <button refID="esri_CompactFileGdbButton"/>
@@ -17192,8 +17665,11 @@
           <button refID="esri_UncompressFileGdbButton"/>
         </menu>
         <menu id="manageFGDBItemMenu" caption="Manage" extendedCaption="Context menu submenu providing file geodatabase management options" contextMenu="true">
-          <button refID="esri_EnableEditorTrackingButton"/>
+          <button refID="esri_AddGlobalIDButton"/>
+          <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
+          <button refID="esri_EnableAttachmentsButton" separator="true"/>
+          <button refID="esri_DisableAttachementsButton"/>
           <button refID="esri_CompressFileGdbItemButton" separator="true"/>
           <button refID="esri_UncompressFileGdbItemButton"/>
         </menu>
@@ -17602,6 +18078,33 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
+        <button id="esri_GDBTableExportToPointFeatureClassButton" className="esri_geodatabase_module:gdbExportXYTableToPointFeatureClass" loadOnClick="false"
+                caption="Table To Point Feature Class..."
+                extendedCaption="Convert this table into a point feature class.; in Export context menu for geodatabases and feature datasets"
+                smallImage="" helpContextID="" >
+          <tooltip heading="">
+            Convert this table into a point feature class.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_GDBTableExportToLineFeatureClassButton" className="esri_geodatabase_module:gdbExportXYTableToLineFeatureClass" loadOnClick="false"
+                caption="Table To Line Feature Class..."
+                extendedCaption="Convert this table into a line feature class.; in Export context menu for geodatabases and feature datasets"
+                smallImage="" helpContextID="" >
+          <tooltip heading="">
+            Convert this table into a line feature class.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_GDBTableExportToEllipseFeatureClassButton" className="esri_geodatabase_module:gdbExportTableToEllipseFeatureClass" loadOnClick="false"
+                caption="Table To Ellipse Feature Class..."
+                extendedCaption="Convert this table into a polygon feature class.; in Export context menu for geodatabases and feature datasets"
+                smallImage="" helpContextID="" >
+          <tooltip heading="">
+            Convert this table into a polygon feature class.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_GDBTablesExportTodBASEButton" className="esri_geodatabase_module:gdbExportTablesTodBASEfiles" loadOnClick="false"
                 caption="Table(s) To dBASE..." 
                 condition="esri_projectItem_isValidCondition"
@@ -17787,7 +18290,7 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_GDBCreateNewFileGeodatabaseButton" 
                 className="CreateFileGeodatabaseCmd" loadOnClick="false"
-                caption="New File Geodatabase" extendedCaption="Create a new file geodatabase; on context menu." 
+                caption="File Geodatabase" extendedCaption="Create a new file geodatabase; on context menu." 
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew32.png" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png" 
                 helpContextID="" keytip="G">
@@ -17797,22 +18300,13 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_GDBCreateNewLasDatasetButton"
                 className="CreateLasDatasetCmd" loadOnClick="false"
-                caption="New LAS Dataset" extendedCaption="Create a new LAS dataset; on context menu."
+                caption="LAS Dataset" extendedCaption="Create a new LAS dataset; on context menu."
                 condition="esri_project_canCreateAnalyst3DDatasetWithValidLicenseCondition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewLasDataset32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewLasDataset16.png"
                 helpContextID="" keytip="L">
           <tooltip heading="">
             Create a new LAS dataset.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_GDBCopy"
-                className="ArcGIS.Desktop.Framework.CopyCMD" assembly="ArcGIS.Desktop.Framework.dll" loadOnClick="false"
-                caption="Copy" extendedCaption="Copy the selected geodatabase item to the clipboard; on context menu" 
-                condition="esri_projectItem_isValidAndOpenProjectCondition" 
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png" helpContextID="">
-          <tooltip heading="">
-            Copy the highlighted item(s) to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_GDBPasteToFeatureDataset"
@@ -17901,7 +18395,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_GDBAddParcelTypeButton" className="esri_geoprocessing_module:Commands.gdbAddParcelType" 
-                caption="Parcel Type" extendedCaption="Add a new parcel type tp a parcel fabric; on parcel dataset context menu" condition="esri_license_HasStandardLicenseCondition" 
+                caption="Add Parcel Type" extendedCaption="Add a new parcel type to a parcel fabric; on parcel dataset context menu" condition="esri_license_HasStandardLicenseCondition" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png" 
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png" 
                 helpContextID="" keytip="Y">
@@ -18155,6 +18649,16 @@ The original data frames and layout are converted to the ArcGIS Pro map and layo
             Converts the web map to an ArcGIS Pro map and adds it to the project.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_notebookAddToProjectButton" className="esri_core_module:AddProjectItem" caption="Add To Project"
+                extendedCaption="Add a notebook to the project; on context menu"
+                condition="esri_mapping_openProjectCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png"
+                helpContextID="">
+          <tooltip heading="">
+            Add a notebook to the project.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_projectItemAddToProjectButton" className="esri_core_module:AddProjectItem" caption="Add To Project" 
                 extendedCaption="Add a server or database to the project; on context menu" 
                 condition="esri_mapping_openProjectCondition" 
@@ -18218,6 +18722,11 @@ The original data frames and layout are converted to the ArcGIS Pro map and layo
         <button id="esri_geodatabase_addLocatorButton" className="esri_database_module:AddLocator" caption="Add Locator" extendedCaption="Add an existing locator to the project; on ribbon and Locators context menu" condition="esri_mapping_locateProvidersReadyToUseNoMap" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeocodeAddressLocatorAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeocodeAddressLocatorAdd16.png" helpContextID="" keytip="L">
           <tooltip heading="Add Locator">
             Add an existing locator to the project. The project saves a reference to the locator.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_geodatabase_refreshLocatorsButton" className="esri_database_module:RefreshLocators" caption="Refresh Locators" extendedCaption="Refresh available locators" condition="esri_mapping_locateProvidersReadyToUseNoMap" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png" helpContextID="">
+          <tooltip heading="Refresh Locators">
+            Refresh available locators.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_mapping_AddExistingServerConnectionButton" className="esri_geodatabase_module:AddExistingServerConnection" caption="Add Server" extendedCaption="Add an existing server connection file to the project; on ribbon." condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerGenericAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerGenericAdd16.png" helpContextID="" keytip="AS">
@@ -18410,10 +18919,10 @@ A new server connection file is created in your roaming profile and is reference
           </tooltip>
         </button>
         <button id="esri_EnableEditorTrackingButton" loadOnClick="false"
-                className="esri_geodatabase_module:enableEditorTracking" 
-                condition="esri_projectItem_SelectedItemIsNotEditorTrackingEnabledCondition" 
-                caption="Enable Editor Tracking" 
-                extendedCaption="Enables editor tracking on the selected geodatabase item; on context menu" 
+                className="esri_geodatabase_module:enableEditorTracking"
+                condition="esri_projectItem_SelectedItemIsNotEditorTrackingEnabledCondition"
+                caption="Enable Editor Tracking"
+                extendedCaption="Enables editor tracking on the selected geodatabase item; on context menu"
                 helpContextID="">
           <tooltip heading="Enable Editor Tracking.">
             Enable editor tracking on the data.
@@ -18422,13 +18931,37 @@ A new server connection file is created in your roaming profile and is reference
           </tooltip>
         </button>
         <button id="esri_DisableEditorTrackingButton" loadOnClick="false"
-                className="esri_geodatabase_module:disableEditorTracking" 
-                condition="esri_projectItem_SelectedItemIsEditorTrackingEnabledCondition" 
-                caption="Disable Editor Tracking" 
-                extendedCaption="Disables editor tracking on the selected geodatabase item; on context menu" 
+                className="esri_geodatabase_module:disableEditorTracking"
+                condition="esri_projectItem_SelectedItemIsEditorTrackingEnabledCondition"
+                caption="Disable Editor Tracking"
+                extendedCaption="Disables editor tracking on the selected geodatabase item; on context menu"
                 helpContextID="">
           <tooltip heading="Disable Editor Tracking.">
             Disable editor tracking on the data.
+            <disabledText>
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_EnableAttachmentsButton" loadOnClick="false"
+                className="esri_geodatabase_module:enableAttachments"
+                condition="esri_projectItem_SelectedItemAttachmentsCondition"
+                caption="Enable Attachments"
+                extendedCaption="Enables attachments on the selected geodatabase item; on context menu"
+                helpContextID="">
+          <tooltip heading="Enable Attachments.">
+            Enable attachments on the data.
+            <disabledText>
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_DisableAttachementsButton" loadOnClick="false"
+                className="esri_geodatabase_module:disableAttachments"
+                condition="esri_projectItem_SelectedItemAttachmentsCondition"
+                caption="Disable Attachments"
+                extendedCaption="Disables attachments on the selected geodatabase item; on context menu"
+                helpContextID="">
+          <tooltip heading="Disable Attachments.">
+            Disable attachments on the data.
             <disabledText>
             </disabledText>
           </tooltip>
@@ -18595,7 +19128,7 @@ A new server connection file is created in your roaming profile and is reference
     <updateModule refID="esri_core_module">
       <groups>
         <updateGroup refID="esri_core_projectData">
-          <insertMenu refID="esri_geodatabase_insertMenu" placeWith="esri_mapping_importMapButton" insert="after" size="middle"/>
+          <insertMenu refID="esri_geodatabase_insertMenu" placeWith="esri_layouts_importMap" insert="after" size="middle"/>
           <insertButton refID="esri_geodatabase_addFolderConnectionButton" placeWith="esri_geoprocessing_insertMenu" insert="after" size="middle"/>
         </updateGroup>
         <updateGroup refID="esri_core_favoritesData">
@@ -18669,13 +19202,13 @@ A new server connection file is created in your roaming profile and is reference
   
   <propertySheets>
 
-    <insertSheet id="esri_catalog_agsConnectionPropertySheet" caption="Properties" pageHeight="410" pageWidth="710" resizable="true">
+    <insertSheet id="esri_catalog_agsConnectionPropertySheet" caption="Properties" pageHeight="410" pageWidth="770" resizable="true">
       <page id="esri_catalog_agsConnection_general_propertyPage" className="ArcGIS.Desktop.Catalog.AGSConnectionViewModel" caption="General">
         <content className="ArcGIS.Desktop.Catalog.AGSConnectionGeneralPage" />
       </page>
     </insertSheet>
 
-    <insertSheet id="esri_catalog_ogcConnectionPropertySheet" caption="Properties" pageHeight="450" pageWidth="710" resizable="true">
+    <insertSheet id="esri_catalog_ogcConnectionPropertySheet" caption="Properties" pageHeight="450" pageWidth="790" resizable="true">
       <page id="esri_catalog_ogcConnection_general_propertyPage" className="ArcGIS.Desktop.Catalog.OGCConnectionViewModel" caption="General">
         <content className="ArcGIS.Desktop.Catalog.OGCConnectionScrollableGeneralPage" />
       </page>
@@ -18765,6 +19298,9 @@ A new server connection file is created in your roaming profile and is reference
       <page id="esri_catalog_networkDatasetTravelAttributesPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.NetworkDataset.TravelAttributesPropertyPage" caption="Travel Attributes">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.NetworkDataset.TravelAttributesPropertyPageView" />
       </page>
+      <!--<page id="esri_catalog_networkDatasetDirectionsSettingsPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.NetworkDataset.DirectionsSettingsPropertyPage" caption="Directions">-->
+        <!--<content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.NetworkDataset.DirectionsSettingsPropertyPageView" />-->
+      <!--</page>-->
     </insertSheet>
 
     <insertSheet id="esri_catalog_topologyPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
@@ -18798,6 +19334,18 @@ A new server connection file is created in your roaming profile and is reference
       </page>
       <page id="esri_catalog_lasDatasetCoordinateSystemPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.LASDataset.CoordinateSystemViewModel" caption="Coordinate System">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.LASDataset.CoordinateSystemView" />
+      </page>
+    </insertSheet>
+
+    <insertSheet id="esri_catalog_parcelDatasetPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
+      <page id="esri_catalog_parcelDatasetGeneralPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.GeneralViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.GeneralView" />
+      </page>
+      <page id="esri_catalog_parcelFeatureClassesPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.FeatureClassesViewModel" caption="Feature Class">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.FeatureClassesView" />
+      </page>
+      <page id="esri_catalog_parcelRulesPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.RulesViewModel" caption="Parcel Rules">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.ParcelDataset.RulesView" />
       </page>
     </insertSheet>
 

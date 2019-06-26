@@ -18,6 +18,7 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,10 +32,13 @@ namespace ProSnippetsGeometry {
 
       public void SpatialReference()
       {
-      #region Construct a SpatialReference - from a well-known ID
+        #region ProSnippet Group: SpatialReference
+        #endregion
 
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        #region Construct a SpatialReference - from a well-known ID
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // use the builder constructor
           SpatialReference sr3857 = null;
@@ -70,14 +74,14 @@ namespace ProSnippetsGeometry {
         bool isProjected = wgs84.IsProjected;     // false
         bool isGeographic = wgs84.IsGeographic;   // true
 
-      #endregion
+        #endregion
 
-      #region Construct a SpatialReference with a vertical coordinate system - from well-known IDs
+        #region Construct a SpatialReference with a vertical coordinate system - from well-known IDs
 
-      // see a list of vertical coordinate systems at http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Vertical_coordinate_systems/02r3000000rn000000/
+        // see a list of vertical coordinate systems at http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Vertical_coordinate_systems/02r3000000rn000000/
 
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // use the builder constructor
           // 4326 = GCS_WGS_1984
@@ -251,6 +255,7 @@ namespace ProSnippetsGeometry {
             // angle = 10.03
 
         #endregion
+
         #region Datum
         var cimMapDefinition = MapView.Active.Map.GetDefinition();
         // use if map's sr does not have a vertical coordinate system
@@ -261,8 +266,8 @@ namespace ProSnippetsGeometry {
 
         #region SpatialReference Datum and datum properties
 
-            // methods need to run on the MCT
-            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // get datum of a spatial reference
           SpatialReference sr = SpatialReferences.WGS84;
@@ -290,8 +295,10 @@ namespace ProSnippetsGeometry {
         });
 
         #endregion
-
       }
+
+      #region ProSnippet Group: Coordinate3D
+      #endregion
 
       public void Coordinate3D()
       {
@@ -387,6 +394,9 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Builder Properties
+      #endregion
+
       public void Builders()
       {
         #region Builder Properties
@@ -451,6 +461,9 @@ namespace ProSnippetsGeometry {
 
         #endregion
       }
+
+      #region ProSnippet Group: MapPoint
+      #endregion
 
       public void MapPoint()
       {
@@ -549,27 +562,29 @@ namespace ProSnippetsGeometry {
 
       private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
       {
-          QueuedTask.Run(() => {
-              #region Zoom to a specified point
-              //Note: Run within QueuedTask
-              //Create a point
-              var pt = MapPointBuilder.CreateMapPoint(x, y, SpatialReferenceBuilder.CreateSpatialReference(4326));
-              //Buffer it - for purpose of zoom
-              var poly = GeometryEngine.Instance.Buffer(pt, buffer_size);
+        QueuedTask.Run(() => {
+          #region Zoom to a specified point
+          //Note: Run within QueuedTask
+          //Create a point
+          var pt = MapPointBuilder.CreateMapPoint(x, y, SpatialReferenceBuilder.CreateSpatialReference(4326));
+          //Buffer it - for purpose of zoom
+          var poly = GeometryEngine.Instance.Buffer(pt, buffer_size);
 
-              //do we need to project the buffer polygon?
+          //do we need to project the buffer polygon?
+          if (!MapView.Active.Map.SpatialReference.IsEqual(poly.SpatialReference))
+          {
+            //project the polygon
+            poly = GeometryEngine.Instance.Project(poly, MapView.Active.Map.SpatialReference);
+          }
 
-              if (!MapView.Active.Map.SpatialReference.IsEqual(poly.SpatialReference))
-              {
-                  //project the polygon
-                  poly = GeometryEngine.Instance.Project(poly, MapView.Active.Map.SpatialReference);
-              }
-
-              //Zoom - add in a delay for animation effect
-              MapView.Active.ZoomTo(poly, new TimeSpan(0, 0, 0, 3));
-              #endregion
-          });
+          //Zoom - add in a delay for animation effect
+          MapView.Active.ZoomTo(poly, new TimeSpan(0, 0, 0, 3));
+          #endregion
+        });
       }
+
+      #region ProSnippet Group: Polyline
+      #endregion
 
       public void Polyline()
       {
@@ -710,6 +725,23 @@ namespace ProSnippetsGeometry {
             Polyline reversedPolyline = polylineBuilder.ToGeometry();
           }
         });
+        #endregion
+
+        #region Get the segments of a Polyline
+
+        ICollection<Segment> collection = new List<Segment>();
+        polyline.GetAllSegments(ref collection);
+        int numSegments = collection.Count;    // = 10
+
+        IList<Segment> iList = collection as IList<Segment>;
+        for (int i = 0; i < numSegments; i++)
+        {
+          // do something with iList[i]
+        }
+
+        // use the segments to build another polyline
+        Polyline polylineFromSegments = PolylineBuilder.CreatePolyline(collection);
+
         #endregion
 
         #region Build a multi-part Polyline
@@ -903,6 +935,9 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Polygon
+      #endregion
+
       public void ConstructPolygon()
       {
         #region Construct a Polygon - from an enumeration of MapPoints
@@ -988,6 +1023,18 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
+        #region Get the segments of a Polygon
+
+        List<Segment> segmentList = new List<Segment>(30);
+        ICollection<Segment> collection = segmentList;
+        poly.GetAllSegments(ref collection);
+        // segmentList.Count = 4
+        // segmentList.Capacity = 30
+
+        // use the segments to build another polygon
+        Polygon polygonFromSegments = PolygonBuilder.CreatePolygon(collection);
+        #endregion
+
         #region Build a donut polygon
 
         // methods need to run on the MCT
@@ -1023,6 +1070,9 @@ namespace ProSnippetsGeometry {
 
         #endregion
       }
+
+      #region ProSnippet Group: Envelope
+      #endregion
 
       public void ConstructEnvelope()
       {
@@ -1063,6 +1113,38 @@ namespace ProSnippetsGeometry {
           Envelope env2 = EnvelopeBuilder.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
 
           Envelope env3 = env1.Union(env2);
+
+          double area = env3.Area;
+          double depth = env3.Depth;
+          double height = env3.Height;
+          double width = env3.Width;
+          double len = env3.Length;
+
+          MapPoint centerPt = env3.Center;
+          Coordinate2D coord = env3.CenterCoordinate;
+
+          bool isEmpty = env3.IsEmpty;
+          int pointCount = env3.PointCount;
+
+          // coordinates
+          //env3.XMin, env3.XMax, env3.YMin, env3.YMax
+          //env3.ZMin, env3.ZMax, env3.MMin, env3.MMax
+
+          bool isEqual = env1.IsEqual(env2);    // false
+        });
+
+      #endregion
+
+        #region Intersect two Envelopes
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          Envelope env1 = EnvelopeBuilder.CreateEnvelope(0, 0, 1, 1, SpatialReferences.WGS84);
+          Envelope env2 = EnvelopeBuilder.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
+
+          Envelope env3 = env1.Intersection(env2);
+          bool intersects = env1.Intersects(env2);
         });
 
         #endregion
@@ -1146,6 +1228,9 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Multipoint
+      #endregion
+
       public void ConstructMultiPoint()
       {
         #region Construct a Multipoint - from an enumeration of MapPoints
@@ -1207,6 +1292,9 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Line Segment
+      #endregion
+
       public void ConstructLineSegment()
       {
         #region Construct a LineSegment using two MapPoints
@@ -1220,14 +1308,83 @@ namespace ProSnippetsGeometry {
           // use the builder constructor
           using (LineBuilder lb = new LineBuilder(startPt, endPt))
           {
-            LineSegment line = lb.ToSegment();
+            LineSegment lineFromMapPoint = lb.ToSegment();
           }
 
           // or use the convenience method
-          LineSegment anotherLine = LineBuilder.CreateLineSegment(startPt, endPt);
+          LineSegment anotherLineFromMapPoint = LineBuilder.CreateLineSegment(startPt, endPt);
+
+          // coordinate2D
+          Coordinate2D start2d = (Coordinate2D)startPt;
+          Coordinate2D end2d = (Coordinate2D)endPt;
+
+          // use the builder constructor
+          using (LineBuilder lb = new LineBuilder(start2d, end2d))
+          {
+            LineSegment lineFromCoordinate2D = lb.ToSegment();
+          }
+
+          // or use the convenience method
+          LineSegment anotherLineromCoordinate2D = LineBuilder.CreateLineSegment(start2d, end2d);
+
+          // coordinate3D
+          Coordinate3D start3d = (Coordinate3D)startPt;
+          Coordinate3D end3d = (Coordinate3D)endPt;
+
+          // use the builder constructor
+          using (LineBuilder lb = new LineBuilder(start3d, end3d))
+          {
+            LineSegment lineFromCoordinate3D = lb.ToSegment();
+          }
+
+          // or use the convenience method
+          LineSegment anotherLineFromCoordinate3D = LineBuilder.CreateLineSegment(start3d, end3d);
+
+          // lineSegment
+          using (LineBuilder lb = new LineBuilder(anotherLineFromCoordinate3D))
+          {
+            LineSegment lineFromLineSegment = lb.ToSegment();
+          }
+
+          // or use the convenience method
+          LineSegment anotherLineFromLineSegment = LineBuilder.CreateLineSegment(anotherLineFromCoordinate3D);
         });
-        #endregion
+      #endregion
+
+        LineSegment lineSegment = null;
+        #region Alter LineSegment Coordinates
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          MapPoint startPt;
+          MapPoint endPt;
+
+          // use the builder constructor
+          using (LineBuilder lb = new LineBuilder(lineSegment))
+          {
+            // find the existing coordinates
+            lb.QueryCoords(out startPt, out endPt);
+
+            // or use 
+            //startPt = lb.StartPoint;
+            //endPt = lb.EndPoint;
+
+            // update the coordinates
+            lb.SetCoords(GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint, GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint);
+
+            // or use 
+            //lb.StartPoint = GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint;
+            //lb.EndPoint = GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint;
+
+            LineSegment anotherLineSegment = lb.ToSegment();
+          }
+        });
+      #endregion
       }
+
+      #region ProSnippet Group: Cubic Bezier
+      #endregion
 
       public void ConstructCubicBezier()
       {
@@ -1358,7 +1515,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Construct a Polyline (from a Cubic Bezier)
+        #region Construct a Polyline - from a Cubic Bezier
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -1368,6 +1525,9 @@ namespace ProSnippetsGeometry {
 
         #endregion
       }
+
+      #region ProSnippet Group: Arc
+      #endregion
 
       public void ConstructArc()
       {
@@ -1609,6 +1769,7 @@ namespace ProSnippetsGeometry {
             double endAngle = builder.EndAngle;
             double centralAngle = builder.CentralAngle;
             double rotationAngle = builder.RotationAngle;
+            esriArcOrientation orientation = builder.Orientation;
           }
         });
 
@@ -1631,14 +1792,34 @@ namespace ProSnippetsGeometry {
           Coordinate2D centerPt = arc.CenterPoint;
           bool isCircular = arc.IsCircular;
           bool isMinor = arc.IsMinor;
+          bool isCounterClockwise = arc.IsCounterClockwise;
+          bool isCurve = arc.IsCurve;
+          double len = arc.Length;
+          double ratio = arc.MinorMajorRatio;
 
-          double startAngle, centralAngle, rotationAngle, semiMajorAxis, semiMinorAxis;
-          // or use QueryCoords
+          double semiMajorAxis, semiMinorAxis;
+          // get the axes
+          arc.GetAxes(out semiMajorAxis, out semiMinorAxis);
+          // or use the properties
+          // semiMajorAxis = arc.SemiMajorAxis;
+          // semiMinorAxis = arc.SemiMinorAxis;
+
+          double startAngle, centralAngle, rotationAngle;
+          // or use QueryCoords to get complete information
           arc.QueryCoords(out centerPt, out startAngle, out centralAngle, out rotationAngle, out semiMajorAxis, out semiMinorAxis);
+
+          // use properties to get angle information
+          //double endAngle = arc.EndAngle;
+          //centralAngle = arc.CentralAngle;
+          //rotationAngle = arc.RotationAngle;
+          //startAngle = arc.StartAngle;
         });
 
         #endregion
       }
+
+      #region ProSnippet Group: GeometryBag
+      #endregion
 
       public void GeometryBag()
       {
@@ -1649,14 +1830,14 @@ namespace ProSnippetsGeometry {
         {
           using (GeometryBagBuilder builder = new GeometryBagBuilder(SpatialReferences.WGS84))
           {
-            GeometryBag bag = builder.ToGeometry();
+            GeometryBag emptyBag = builder.ToGeometry();
             // bag.IsEmpty = true
 
             MapPoint point = MapPointBuilder.CreateMapPoint(1, 2, SpatialReferences.WebMercator);
             builder.AddGeometry(point);
             // builder.CountGeometries = 1
 
-            bag = builder.ToGeometry();
+            GeometryBag bag = builder.ToGeometry();
             // bag.PartCount = 1
             // bag.PointCount = 1
             // bag.IsEmpty = false
@@ -1664,6 +1845,8 @@ namespace ProSnippetsGeometry {
             IReadOnlyList<Geometry> geometries = bag.Geometries;
             // geometries.Count = 1
             // geometries[0] is MapPoint with a sr of WGS84
+
+            bool isEqual = bag.IsEqual(emptyBag);   // isEqual = false
 
             List<Coordinate2D> coords2D = new List<Coordinate2D>()
             {
@@ -1780,18 +1963,224 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
-      #region Get the individual parts of a multipart feature
+      #region ProSnippet Group: Multipatch
+      #endregion
+
+      public void Multipatch()
+      {
+        #region Construct Multipatch via Extrusion of Polygon or Polyline
+
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        {
+          // build a polygon
+          string json = "{\"hasZ\":true,\"rings\":[[[0,0,0],[0,1,0],[1,1,0],[1,0,0],[0,0,0]]],\"spatialReference\":{\"wkid\":4326}}";
+          Polygon polygon = PolygonBuilder.FromJson(json);
+
+          // extrude the polygon by an offset to create a multipatch
+          Multipatch multipatch = GeometryEngine.Instance.ConstructMultipatchExtrude(polygon, 2);
+
+
+          // a different polygon
+          json = "{\"hasZ\":true,\"rings\":[[[0,0,1],[0,1,2],[1,1,3],[1,0,4],[0,0,1]]],\"spatialReference\":{\"wkid\":4326}}";
+          polygon = PolygonBuilder.FromJson(json);
+
+          // extrude between z values to create a multipatch
+          multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeFromToZ(polygon, -10, 20);
+
+          // extrude along the axis defined by the coordinate to create a multipatch
+          Coordinate3D coord = new Coordinate3D(10, 18, -10);
+          multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeAlongVector3D(polygon, coord);
+
+
+
+          // build a polyline
+          json = "{\"hasZ\":true,\"paths\":[[[400,800,1000],[800,1400,1500],[1200,800,2000],[1800,1800,2500],[2200,800,3000]]],\"spatialReference\":{\"wkid\":3857}}";
+          Polyline polyline = PolylineBuilder.FromJson(json);
+
+          // extrude to a specific z value to create a multipatch
+          multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeToZ(polyline, 500);
+
+          Coordinate3D fromCoord = new Coordinate3D(50, 50, -500);
+          Coordinate3D toCoord = new Coordinate3D(200, 50, 1000);
+
+          // extrude between two coordinates to create a multipatch
+          multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeAlongLine(polyline, fromCoord, toCoord);
+        });
+
+      #endregion
+
+        Multipatch multiPatch = null;
+
+        #region Multipatch Properties
+        // number of patches (parts)
+        int patchCount = multiPatch.PartCount;
+        int pointCount = multiPatch.PointCount;
+
+        int textureVertexCount = multiPatch.TextureVertexCount;
+        bool hasTextures = multiPatch.HasTextures;
+        int materialCount = multiPatch.MaterialCount;
+        bool hasMaterials = multiPatch.HasMaterials;
+        bool hasNormals = multiPatch.HasNormals;
+
+        // properties for an individual patch
+        int patchPointCount = multiPatch.GetPatchPointCount(0);
+        int patchPriority = multiPatch.GetPatchPriority(0);
+        esriPatchType type = multiPatch.GetPatchType(0);
+
+        // patch points
+        int pointStartIndex = multiPatch.GetPatchStartPointIndex(0);
+        var coordinate2D = multiPatch.GetPatchTextureCoordinate(0, pointStartIndex);
+
+        int numPatchTexturePoints = multiPatch.GetPatchTextureVertexCount(0);       
+        ICollection<Coordinate2D> textures = new List<Coordinate2D>(numPatchTexturePoints);
+        multiPatch.GetPatchTextureCoordinates(0, ref textures);
+
+        #endregion
+
+        #region Construct Multipatch
+        // export to binary xml
+        string binaryXml = multiPatch.ToBinaryXML();
+        // import from binaryXML - methods need to run on the MCT
+        Multipatch binaryMultipatch = MultipatchBuilder.FromBinaryXML(binaryXml);
+
+        // xml export / import
+        string xml = multiPatch.ToXML();
+        Multipatch xmlMultipatch = MultipatchBuilder.FromXML(xml);
+
+        // esriShape export/import
+        byte[] buffer = multiPatch.ToEsriShape();
+        Multipatch esriPatch = MultipatchBuilder.FromEsriShape(buffer);
+        // or use GeometryEngine
+        Multipatch patchImport = GeometryEngine.Instance.ImportFromEsriShape(EsriShapeImportFlags.esriShapeImportDefaults, buffer, multiPatch.SpatialReference) as Multipatch;
+        #endregion
+     }
+
+      #region Get the texture image of a multipatch 
 
       /// <summary>
-      /// This method takes an input multi part geometry and breaks the parts into individual standalone geometries.
+      /// This method gets the material texture image of a multipatch.
       /// This method must be called on the MCT. Use QueuedTask.Run.
       /// </summary>
-      /// <param name="inputGeometry">The geometry to be exploded into the individual parts.</param>
-      /// <returns>An enumeration of individual parts as standalone geometries. The type of geometry is maintained, i.e.
-      /// if the input geometry is of type Polyline then each geometry in the return is of type Polyline as well.
-      /// If the input geometry is of type Unknown then an empty list is returned.</returns>
-      /// <remarks>This method must be called on the MCT. Use QueuedTask.Run.</remarks>
-      public IEnumerable<Geometry> MultipartToSinglePart(Geometry inputGeometry)
+      /// <param name="multipatch">The input multipatch.</param>
+      /// <param name="patchIndex">The index of the patch (part) for which to get the material texture.</param>
+      public void GetMultipatchTextureImage(Multipatch multipatch, int patchIndex)
+      {
+        int materialIndex = multipatch.GetPatchMaterialIndex(patchIndex);
+        if (!multipatch.IsMaterialTextured(materialIndex))
+          return;
+
+        esriTextureCompressionType compressionType = multipatch.GetMaterialTextureCompressionType(materialIndex);
+        string ext = compressionType == esriTextureCompressionType.CompressionJPEG ? ".jpg" : ".dat";
+        byte[] textureBuffer = multipatch.GetMaterialTexture(materialIndex);
+
+        Stream imageStream = new MemoryStream(textureBuffer);
+        System.Drawing.Image image = System.Drawing.Image.FromStream(imageStream);
+        image.Save(@"C:\temp\myImage" + ext);
+      }
+
+      #endregion
+
+      #region Get the normal coordinate of a multipatch 
+
+      /// <summary>
+      /// This method gets the normal coordinate of a multipatch and does something with it.
+      /// This method must be called on the MCT. Use QueuedTask.Run.
+      /// </summary>
+      /// <param name="multipatch">The input multipatch.</param>
+      /// <param name="patchIndex">The index of the patch (part) for which to get the normal.</param>
+      public void DoSomethingWithNormalCoordinate(Multipatch multipatch, int patchIndex)
+      {
+        if (multipatch.HasNormals)
+        {
+          // If the multipatch has normals, then the number of normals is equal to the number of points.
+          int numNormals = multipatch.GetPatchPointCount(patchIndex);
+
+          for (int pointIndex = 0; pointIndex < numNormals; pointIndex++)
+          {
+            Coordinate3D normal = multipatch.GetPatchNormal(patchIndex, pointIndex);
+
+            // Do something with the normal coordinate.
+          }
+        }
+      }
+
+      #endregion
+
+      #region Get the normals of a multipatch 
+
+      /// <summary>
+      /// This method gets the normal coordinate of a multipatch and does something with it.
+      /// This method must be called on the MCT. Use QueuedTask.Run.
+      /// </summary>
+      /// <param name="multipatch">The input multipatch.</param>
+      public void DoSomethingWithNormalCoordinates(Multipatch multipatch)
+      {
+        if (multipatch.HasNormals)
+        {
+          // Allocate the list only once
+          int numPoints = multipatch.PointCount;
+          ICollection<Coordinate3D> normals = new List<Coordinate3D>(numPoints);
+
+          // The parts of a multipatch are also called patches
+          int numPatches = multipatch.PartCount;
+
+          for (int patchIndex = 0; patchIndex < numPatches; patchIndex++)
+          {
+            multipatch.GetPatchNormals(patchIndex, ref normals);
+
+            // Do something with the normals for this patch.
+          }
+        }
+      }
+
+      #endregion
+
+      #region Get the material properties of a multipatch 
+
+      /// <summary>
+      /// This method gets several properties of a material in a multipatch.
+      /// This method must be called on the MCT. Use QueuedTask.Run.
+      /// </summary>
+      /// <param name="multipatch">The input multipatch.</param>
+      /// <param name="patchIndex">The index of the patch (part) from which to get the material properties.</param>
+      public void GetMaterialProperties(Multipatch multipatch, int patchIndex)
+      {
+        if (multipatch.HasMaterials)
+        {
+          // Get the material index for the specified patch.
+          int materialIndex = multipatch.GetPatchMaterialIndex(patchIndex);
+
+          System.Windows.Media.Color color = multipatch.GetMaterialColor(materialIndex);
+          int tranparencyPercent = multipatch.GetMaterialTransparencyPercent(materialIndex);
+          bool isBackCulled = multipatch.IsMaterialCullBackface(materialIndex);
+
+          if (multipatch.IsMaterialTextured(materialIndex))
+          {
+            int bpp = multipatch.GetMaterialTextureBytesPerPixel(materialIndex);
+            int columnCount = multipatch.GetMaterialTextureColumnCount(materialIndex);
+            int rowCount = multipatch.GetMaterialTextureRowCount(materialIndex);
+          }
+        }
+      }
+
+      #endregion
+
+      #region ProSnippet Group: Multiparts
+      #endregion
+
+      #region Get the individual parts of a multipart feature
+
+    /// <summary>
+    /// This method takes an input multi part geometry and breaks the parts into individual standalone geometries.
+    /// This method must be called on the MCT. Use QueuedTask.Run.
+    /// </summary>
+    /// <param name="inputGeometry">The geometry to be exploded into the individual parts.</param>
+    /// <returns>An enumeration of individual parts as standalone geometries. The type of geometry is maintained, i.e.
+    /// if the input geometry is of type Polyline then each geometry in the return is of type Polyline as well.
+    /// If the input geometry is of type Unknown then an empty list is returned.</returns>
+    /// <remarks>This method must be called on the MCT. Use QueuedTask.Run.</remarks>
+    public IEnumerable<Geometry> MultipartToSinglePart(Geometry inputGeometry)
       {
         // list holding the part(s) of the input geometry
         List<Geometry> singleParts = new List<Geometry>();
@@ -1907,8 +2296,8 @@ namespace ProSnippetsGeometry {
 
           // return the final geometry of the outer rings
           return outerRings.ToGeometry();
+        }
       }
-    }
 
       #endregion
 
@@ -1970,6 +2359,9 @@ namespace ProSnippetsGeometry {
 
       #endregion
 
+      #region ProSnippet Group: Retrieve Geometry from Geodatabase
+      #endregion
+
       public void RetrieveGeometryFromGeodatabase()
       {
         #region Retrieve Geometry from Geodatabase
@@ -2028,12 +2420,15 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Import, Export Geometries
+      #endregion
+
       public void ImportExport()
       {
-      #region Import and Export Geometries to well-known Text
+        #region Import and Export Geometries to well-known Text
 
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // create a point with z, m
           MapPoint point = MapPointBuilder.CreateMapPoint(100, 200, 300, 400, SpatialReferences.WebMercator);
@@ -2090,12 +2485,12 @@ namespace ProSnippetsGeometry {
 
         });
 
-      #endregion
+        #endregion
 
-      #region Import and Export Geometries to well-known Binary
+        #region Import and Export Geometries to well-known Binary
 
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // create a polyline
           List<Coordinate2D> coords = new List<Coordinate2D> 
@@ -2368,6 +2763,9 @@ namespace ProSnippetsGeometry {
         });
         #endregion
       }
+
+      #region ProSnippet Group: GeometryEngine functions
+      #endregion
 
       public void AccelerateGeomtries()
       {
@@ -2726,6 +3124,13 @@ namespace ProSnippetsGeometry {
         });
         #endregion
       }
+
+      // ConstructMultipatchExtrude()
+      // ConstructMultipatchExtrudeAlongLine
+      // ConstructMultipatchExtrudeAlongVector3D
+      // ConstructMultipathExtrudeFromToZ
+      // ConstructMultipatchExtrudeToZ
+      //      see Multipatch above
 
       public void Contains()
       {
@@ -3249,7 +3654,7 @@ namespace ProSnippetsGeometry {
 
       public void Distance3D()
       {
-         #region Determine 3D distance between two Geometries
+        #region Determine 3D distance between two Geometries
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -3693,8 +4098,13 @@ namespace ProSnippetsGeometry {
         // get geographic and projected coordinate systems
         IReadOnlyList<CoordinateSystemListEntry> combined_list = GeometryEngine.Instance.GetPredefinedCoordinateSystemList(CoordinateSystemFilter.GeographicCoordinateSystem | CoordinateSystemFilter.ProjectedCoordinateSystem);
 
-        #endregion
-      }
+        // investigate one of the entries
+        CoordinateSystemListEntry entry = gcs_list[0];
+        int wkid = entry.Wkid;
+        string category = entry.Category;
+        string name = entry.Name;
+      #endregion
+    }
 
       public void GetPredefinedGeographicTransformationList()
       {
@@ -3704,7 +4114,12 @@ namespace ProSnippetsGeometry {
         IReadOnlyList<GeographicTransformationListEntry> list = GeometryEngine.Instance.GetPredefinedGeographicTransformationList();
 
         // a GeographicTransformationListEntry consists of Name, Wkid, the From SpatialReference Wkid, the To SpatialReference Wkid
+        GeographicTransformationListEntry entry = list[0];
 
+        int fromWkid = entry.FromSRWkid;
+        int toWkid = entry.ToSRWkid;
+        int wkid = entry.Wkid;
+        string name = entry.Name;
         #endregion
       }
 
@@ -3882,7 +4297,7 @@ namespace ProSnippetsGeometry {
       {
         // GetMinMaxM, GetMMonotonic, GetPointsAtM, GetSubCurveBetweenMs, GetNormalsAtM, SetMsAsDistance, SetAndInterpolateMsBetween
 
-        #region Get the minimum and maximum M values (GetMinMaxM)
+        #region Get the minimum and maximum M values - GetMinMaxM
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -3912,7 +4327,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Determine whether Ms are monotonic and whether ascending or descending (GetMMonotonic)
+        #region Determine whether Ms are monotonic and whether ascending or descending - GetMMonotonic
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -3939,7 +4354,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Get a multipoint corresponding to the locations where the specified M values occur along the geometry (GetPointsAtM)
+        #region Get a multipoint corresponding to the locations where the specified M values occur along the geometry - GetPointsAtM
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -3958,7 +4373,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Get a polyline corresponding to the subcurve(s) between specified M values (GetSubCurveBetweenMs)
+        #region Get a polyline corresponding to the subcurves between specified M values - GetSubCurveBetweenMs
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
@@ -3980,7 +4395,7 @@ namespace ProSnippetsGeometry {
         });
         #endregion
 
-        #region Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry (GetNormalsAtM)
+        #region Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry - GetNormalsAtM
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -4039,7 +4454,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Set M values to the cumulative length from the start of the multipart (SetMsAsDistance)
+        #region Set M values to the cumulative length from the start of the multipart - SetMsAsDistance
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -4054,7 +4469,7 @@ namespace ProSnippetsGeometry {
 
         #endregion
 
-        #region Set Ms at the beginning and end of the geometry and interpolate M values between the two values (SetAndInterpolateMsBetween)
+        #region Set Ms at the beginning and end of the geometry and interpolate M values between the two values - SetAndInterpolateMsBetween
 
         // methods need to run on the MCT
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -5410,6 +5825,9 @@ namespace ProSnippetsGeometry {
         #endregion
       }
 
+      #region ProSnippet Group: Transformations
+      #endregion
+
       public void Create_GeographicTransformation()
       {
         #region Create Geographic Transformation
@@ -5418,6 +5836,7 @@ namespace ProSnippetsGeometry {
         GeographicTransformation gt1478 = ArcGIS.Core.Geometry.GeographicTransformation.Create(1478);
         string name = gt1478.Name;
         string wkt = gt1478.Wkt;
+        int wkid = gt1478.Wkid;
 
         // create from wkt
         GeographicTransformation another_gt1478 = ArcGIS.Core.Geometry.GeographicTransformation.Create(wkt);
@@ -5451,8 +5870,17 @@ namespace ProSnippetsGeometry {
         // inversed_cgt[0] is same as gt1
         // inversed_cgt[1] is same as gt0
 
-        #endregion
-      }
+        var wkt = gt0.Wkt;
+        // create from string 
+        CompositeGeographicTransformation third_cgt = ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(wkt, gt0.IsForward);
+        count = third_cgt.Count;        // count = 1
+
+        // create from josn
+        string json = cgt.ToJson();
+        CompositeGeographicTransformation joson_cgt = DatumTransformation.CreateFromJson(json) as CompositeGeographicTransformation;
+
+      #endregion
+    }
 
       public void Create_ProjectionTransformation()
       {
@@ -5522,23 +5950,26 @@ namespace ProSnippetsGeometry {
         HVDatumTransformation tranform = transforms[0];
         // transform.Wkid = 108034
 
-        string xml = compositehv.ToXML();
+        // get inverse
+        CompositeHVDatumTransformation inverse_compositehv = compositehv.GetInverse() as CompositeHVDatumTransformation;
 
         // create from xml
-        CompositeHVDatumTransformation another_compositehv = CompositeHVDatumTransformation.CreateFromXML(xml);
+        string xml = compositehv.ToXML();
+        CompositeHVDatumTransformation xml_compositehv = CompositeHVDatumTransformation.CreateFromXML(xml);
 
-        // get inverse
-        CompositeHVDatumTransformation inverse_compositehv = another_compositehv.GetInverse() as CompositeHVDatumTransformation;
+        // create from json
+        string json = compositehv.ToJson();
+        CompositeHVDatumTransformation json_compositehv = DatumTransformation.CreateFromJson(json) as CompositeHVDatumTransformation;
 
         #endregion
       }
 
       public void Determine_Transformations()
       {
-      #region Determine Transformations
+        #region Determine Transformations
 
-      // methods need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        // methods need to run on the MCT
+        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           //
           // find the first transformation used between spatial references 4267 and 4326
@@ -5664,6 +6095,9 @@ namespace ProSnippetsGeometry {
       #endregion
       }
 
+      #region ProSnippet Group: MapPoint GeoCoordinateString
+      #endregion
+
       public void GeoCoordinateStringConversion()
       {
         #region MapPoint - GeoCoordinateString Conversion
@@ -5728,6 +6162,9 @@ namespace ProSnippetsGeometry {
 
       public void OtherUtilities()
       {
+        #region ProSnippet Group: AngularUnit
+        #endregion
+
         #region AngularUnit - Convert between degrees and radians
 
         // convert 45 degrees to radians
@@ -5768,10 +6205,10 @@ namespace ProSnippetsGeometry {
 
         // custom unit - 3 radians per unit
         var myAngularUnit = AngularUnit.CreateAngularUnit("myCustomAngularUnit", 3);
-        string Name = myAngularUnit.Name;               // myCustomAngularUnit
-        double Factor = myAngularUnit.ConversionFactor;   // 3
-        int Code = myAngularUnit.FactoryCode;             // 0 because it is a custom angular unit
-        double radiansUnit = myAngularUnit.RadiansPerUnit; // 3
+        string Name = myAngularUnit.Name;                   // myCustomAngularUnit
+        double Factor = myAngularUnit.ConversionFactor;     // 3
+        int Code = myAngularUnit.FactoryCode;               // 0 because it is a custom angular unit
+        double radiansUnit = myAngularUnit.RadiansPerUnit;  // 3
 
         // convert 10 degrees to my unit
         double converted = AngularUnit.Degrees.ConvertTo(10, myAngularUnit);
@@ -5781,6 +6218,18 @@ namespace ProSnippetsGeometry {
         // convert 1 radian into my angular units
         converted = myAngularUnit.ConvertFromRadians(1);
 
+        // get the wkt
+        string wkt = myAngularUnit.Wkt;
+
+        // create an angular unit from this wkt
+        var anotherAngularUnit = AngularUnit.CreateAngularUnit(wkt);
+        // anotherAngularUnit.ConversionFactor = 3
+        // anotherAngularUnit.FactoryCode = 0    
+        // anotherAngularUnit.RadiansPerUnit = 3
+
+        #endregion
+
+        #region ProSnippet Group: LinearUnit
         #endregion
 
         #region LinearUnit - Convert between feet and meters
@@ -5843,6 +6292,18 @@ namespace ProSnippetsGeometry {
         // convert 10 centimeters to myLinearUnit 
         double convertedVal = LinearUnit.Centimeters.ConvertTo(10, myLinearUnit);
 
+
+        // get the wkt
+        string lu_wkt = myLinearUnit.Wkt;
+
+        // create an angular unit from this wkt
+        var anotherLinearUnit = LinearUnit.CreateLinearUnit(lu_wkt);
+        // anotherLinearUnit.ConversionFactor = 0.33
+        // anotherLinearUnit.FactoryCode = 0    
+        // anotherLinearUnit.MetersPerUnit = 0.33
+      #endregion
+
+        #region ProSnippet Group: AreaUnit
         #endregion
 
         #region AreaUnit - Convert between square feet and square meters
@@ -5876,6 +6337,26 @@ namespace ProSnippetsGeometry {
         sqMetersPerUnit = AreaUnit.SquareYards.SquareMetersPerUnit;
 
       #endregion
+
+        #region AreaUnit - Create an AreaUnit 
+
+        try
+        {
+
+          var myFactoryCodeInit = AreaUnit.CreateAreaUnit(109439);     // 109439 is the factory code for square miles
+
+          var myWktUnit = AreaUnit.CreateAreaUnit("HECTARE_AREAUNIT[\"H\",10000.0]");
+
+          var myCustomUnit = AreaUnit.CreateAreaUnit("myAreaUnit", 12);
+        }
+        catch (ArgumentException)
+        {
+          // ArgumentException will be thrown by CreateAreaUnit in the following scenarios
+          // - if the factory code used is a non-areal factory code  (i.e. it corresponds to degrees which is an angular unit code)
+          // - if the factory code used is invalid (i.e. it is negative or doesn't correspond to any factory code)
+        }
+
+        #endregion
 
     }
   }

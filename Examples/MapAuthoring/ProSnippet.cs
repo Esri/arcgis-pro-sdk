@@ -33,6 +33,8 @@ namespace MapAuthoring.ProSnippet
 {
   class ProSnippet
   {
+    #region ProSnippet Group: Maps
+    #endregion
     public void GetActiveMapAsync()
     {
       #region Get the active map
@@ -141,39 +143,40 @@ namespace MapAuthoring.ProSnippet
             #endregion
 
         }
-        public List<Layer> FindLayersWithPartialName(string partialName)
-    {
 
-            #region Find a layer using partial name search
+        private Task ConvertMapToScene(Map map)
+        {
+            if (map == null) return Task.FromResult(0);
+            return QueuedTask.Run(() => {
+                #region Convert Map to Local Scene
+                //Note: Run within the context of QueuedTask.Run
+                bool canConvertMap = MapFactory.Instance.CanConvertMap(map, MapConversionType.SceneLocal);
+                if (canConvertMap)
+                    MapFactory.Instance.ConvertMap(map, MapConversionType.SceneLocal, true);
+                #endregion
+            });
+        }
 
-            Map map = MapView.Active.Map;
-      IEnumerable<Layer> matches = map.GetLayersAsFlattenedList().Where(l => l.Name.IndexOf(partialName, StringComparison.CurrentCultureIgnoreCase) >= 0);
-
-            #endregion
-
-            List<Layer> layers = new List<Layer>();
-      foreach (Layer l in matches)
-        layers.Add(l);
-
-      return layers;
-    }
-
-    public async Task AddLayerAsync()
+        #region ProSnippet Group: Create Layer
+        #endregion
+        public async Task AddLayerAsync()
     {
       Map map = null;
 
-      #region Create and add a layer to the active map
+    #region Create and add a layer to the active map
 
-      /*
-* string url = @"c:\data\project.gdb\DEM";  //Raster dataset from a FileGeodatabase
-* string url = @"c:\connections\mySDEConnection.sde\roads";  //FeatureClass of a SDE
-* string url = @"c:\connections\mySDEConnection.sde\States\roads";  //FeatureClass within a FeatureDataset from a SDE
-* string url = @"c:\data\roads.shp";  //Shapefile
-* string url = @"c:\data\imagery.tif";  //Image from a folder
-* string url = @"c:\data\mySDEConnection.sde\roads";  //.lyrx or .lpkx file
-* string url = @"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer";  //map service
-* string url = @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/FeatureServer/0";  //FeatureLayer off a map service or feature service
-*/
+            /*
+      * string url = @"c:\data\project.gdb\DEM";  //Raster dataset from a FileGeodatabase
+      * string url = @"c:\connections\mySDEConnection.sde\roads";  //FeatureClass of a SDE
+      * string url = @"c:\connections\mySDEConnection.sde\States\roads";  //FeatureClass within a FeatureDataset from a SDE
+      * string url = @"c:\data\roads.shp";  //Shapefile
+      * string url = @"c:\data\imagery.tif";  //Image from a folder
+      * string url = @"c:\data\mySDEConnection.sde\roads";  //.lyrx or .lpkx file
+      * string url = @"c:\data\CAD\Charlottesville\N1W1.dwg\Polyline";  //FeatureClass in a CAD dwg file
+      * string url = @"C:\data\CAD\UrbanHouse.rvt\Architectural\Windows"; //Features in a Revit file
+      * string url = @"http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Census_USA/MapServer";  //map service
+      * string url = @"http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/FeatureServer/0";  //FeatureLayer off a map service or feature service
+      */
       string url = @"c:\data\project.gdb\roads";  //FeatureClass of a FileGeodatabase
 
       Uri uri = new Uri(url);
@@ -181,7 +184,217 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      #region Create layer with create-params
+      var flyrCreatnParam = new FeatureLayerCreationParams(new Uri(@"c:\data\world.gdb\cities"))
+      {
+        Name = "World Cities",
+        IsVisible = false,
+        MinimumScale = 1000000,
+        MaximumScale = 5000,
+        DefinitionFilter = new CIMDefinitionFilter()
+        {
+          DefinitionExpression = "Population > 100000",
+          Name = "More than 100k"
+        },
+        RendererDefinition = new SimpleRendererDefinition()
+        {
+          SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(
+            CIMColor.CreateRGBColor(255, 0, 0), 8, SimpleMarkerStyle.Hexagon).MakeSymbolReference()
+        }
+      };
+
+      var featureLayer = LayerFactory.Instance.CreateLayer<FeatureLayer>(
+        flyrCreatnParam, map, LayerPosition.AutoArrange);
+      #endregion
+
     }
+    public static void CreateLayerWithParams()
+        {
+
+            #region Create FeatureLayer and add to Map using LayerCreationParams
+            //Note: Call within QueuedTask.Run()
+            var layerDoc = new LayerDocument(@"E:\Data\SDK\Default2DPointSymbols.lyrx");
+            var createParams = new LayerCreationParams(layerDoc.GetCIMLayerDocument());
+            LayerFactory.Instance.CreateLayer<FeatureLayer>(createParams, MapView.Active.Map);
+            #endregion
+        }
+        public static FeatureLayer CreateLayerWithOptions()
+        {
+            #region Create FeatureLayer and set to not display in Map.
+            //The catalog path of the feature layer to add to the map
+            var featureClassUriVisibility = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
+            //Define the Feature Layer's parameters.
+            var layerParamsVisibility = new FeatureLayerCreationParams(featureClassUriVisibility)
+            {
+                //Set visibility
+                IsVisible = false,
+            };
+            //Create the layer with the feature layer parameters and add it to the active map
+            var createdFC = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParamsVisibility, MapView.Active.Map);
+            #endregion
+
+            #region Create FeatureLayer with a Renderer
+            //Note: Call within QueuedTask.Run()
+            //Define a simple renderer to draw the Point US Cities feature class.
+            var simpleRender = new SimpleRendererDefinition
+            {
+                SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB, 4.0, SimpleMarkerStyle.Circle).MakeSymbolReference()
+
+            };
+            //The catalog path of the feature layer to add to the map
+            var featureClassUri = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
+            //Define the Feature Layer's parameters.
+            var layerParams = new FeatureLayerCreationParams(featureClassUri)
+            {
+                //Set visibility
+                IsVisible = true,
+                //Set Renderer
+                RendererDefinition = simpleRender,
+            };
+            //Create the layer with the feature layer parameters and add it to the active map
+            var createdFCWithRenderer = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParams, MapView.Active.Map);
+            #endregion
+            #region Create FeatureLayer with a Query Definition
+            //The catalog path of the feature layer to add to the map
+            var featureClassUriDefinition = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
+            //Define the Feature Layer's parameters.
+            var layerParamsQueryDefn = new FeatureLayerCreationParams(featureClassUriDefinition)
+            {
+                IsVisible = true,
+                DefinitionFilter = new CIMDefinitionFilter()
+                {
+                    Name = "CACities",
+                    DefinitionExpression = "STATE_NAME = 'California'"
+                }
+
+            };
+            //Create the layer with the feature layer parameters and add it to the active map
+            var createdFCWithQueryDefn = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParamsQueryDefn, MapView.Active.Map);
+            #endregion
+
+            return createdFCWithQueryDefn;
+        }
+
+        public static void CreateLayerUsingDocument()
+        {
+            #region Apply Symbology from a Layer in the TOC
+            //Note: Call within QueuedTask.Run()
+            if (MapView.Active.Map == null) return;
+            //Get an existing Layer. This layer has a symbol you want to use in a new layer.
+            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+                  .Where(l => l.ShapeType == esriGeometryType.esriGeometryPoint).FirstOrDefault();
+            //This is the renderer to use in the new Layer
+            var renderer = lyr.GetRenderer() as CIMSimpleRenderer;
+            //Set the Dataconnection for the new layer
+            Geodatabase geodatabase = new Geodatabase(
+              new FileGeodatabaseConnectionPath(new Uri(@"E:\Data\Admin\AdminData.gdb")));
+            FeatureClass featureClass = geodatabase.OpenDataset<FeatureClass>("Cities");
+            var dataConnection = featureClass.GetDataConnection();
+            //Create the definition for the new feature layer
+            var featureLayerParams = new FeatureLayerCreationParams(dataConnection)
+            {
+                RendererDefinition = new SimpleRendererDefinition(renderer.Symbol),
+                IsVisible = true,
+            };
+            //create the new layer
+            LayerFactory.Instance.CreateLayer<FeatureLayer>(
+              featureLayerParams, MapView.Active.Map, LayerPosition.AutoArrange);
+            #endregion
+        }
+        private void CreateSubTypeLayers()
+        {
+
+      #region Create a new SubTypeGroupLayer
+      var subtypeGroupLayerCreateParam = new SubtypeGroupLayerCreationParams
+      (
+          new Uri(@"c:\data\SubtypeAndDomain.gdb\Fittings")
+      );
+
+      // Define Subtype layers
+      subtypeGroupLayerCreateParam.SubtypeLayers = new List<SubtypeFeatureLayerCreationParams>()
+      {
+        //define first subtype layer with unique value renderer
+        new SubtypeFeatureLayerCreationParams()
+        {
+          SubtypeId = 1,
+          RendererDefinition = new UniqueValueRendererDefinition(new string[] { "type" })
+        },
+
+        //define second subtype layer with simple symbol renderer
+        new SubtypeFeatureLayerCreationParams()
+        {
+          SubtypeId = 2,
+          RendererDefinition = new SimpleRendererDefinition()
+          {
+              SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(
+                CIMColor.CreateRGBColor(255, 0, 0), 8, SimpleMarkerStyle.Hexagon).MakeSymbolReference()
+          }
+        }
+      };
+
+      // Define additional parameters
+      subtypeGroupLayerCreateParam.DefinitionFilter = new CIMDefinitionFilter()
+      {
+        Name = "IsActive",
+        DefinitionExpression = "Enabled = 1"
+      };
+      subtypeGroupLayerCreateParam.IsVisible = true;
+      subtypeGroupLayerCreateParam.MinimumScale = 50000;
+
+      SubtypeGroupLayer subtypeGroupLayer2 = LayerFactory.Instance.CreateLayer<SubtypeGroupLayer>(
+                    subtypeGroupLayerCreateParam, MapView.Active.Map);
+      #endregion
+    }
+
+    public async Task CreateLayerFromALyrxFile()
+    {
+      Map map = null;
+
+      #region Create layer from a lyrx file
+      var lyrDocFromLyrxFile = new LayerDocument(@"d:\data\cities.lyrx");
+      var cimLyrDoc = lyrDocFromLyrxFile.GetCIMLayerDocument();
+
+      //modifying its renderer symbol to red
+      var r = ((CIMFeatureLayer)cimLyrDoc.LayerDefinitions[0]).Renderer as CIMSimpleRenderer;
+      r.Symbol.Symbol.SetColor(new CIMRGBColor() { R = 255 });
+
+      //optionally save the updates out as a file
+      lyrDocFromLyrxFile.Save(@"c:\data\cities_red.lyrx");
+
+      //get a json representation of the layer document and you want store away...
+      var aJSONString = lyrDocFromLyrxFile.AsJson();
+
+      //... and load it back when needed
+      lyrDocFromLyrxFile.Load(aJSONString);
+      cimLyrDoc = lyrDocFromLyrxFile.GetCIMLayerDocument();
+
+      //create a layer and add it to a map
+      var lcp = new LayerCreationParams(cimLyrDoc);
+      var lyr = LayerFactory.Instance.CreateLayer<FeatureLayer>(lcp, map, LayerPosition.AutoArrange);
+      #endregion
+    }
+        private static async Task ModifyLayerSymbologyFromLyrFileAsync(IEnumerable<FeatureLayer> featureLayers, string layerFile)
+        {
+            await QueuedTask.Run(() => {
+                foreach (var featureLayer in featureLayers)
+                {
+                    #region Apply Symbology to a layer from a Layer file
+                    //Note: Run within QueuedTask.Run
+                    //Get the Layer Document from the lyrx file
+                    var lyrDocFromLyrxFile = new LayerDocument(layerFile);
+                    var cimLyrDoc = lyrDocFromLyrxFile.GetCIMLayerDocument();
+
+                    //Get the renderer from the layer file
+                    var rendererFromLayerFile = ((CIMFeatureLayer)cimLyrDoc.LayerDefinitions[0]).Renderer as CIMUniqueValueRenderer;
+
+                    //Apply the renderer to the feature layer
+                    featureLayer?.SetRenderer(rendererFromLayerFile);
+                    #endregion
+                }
+
+            });
+        }
+
 
         public async Task AddWMSLayerAsync()
         {
@@ -218,7 +431,95 @@ namespace MapAuthoring.ProSnippet
 
       }
     }
+        public async Task AddQuerylayerAsync()
+        {
+            #region Create a query layer
+            await QueuedTask.Run(() =>
+            {
+                Map map = MapView.Active.Map;
+                Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri(@"C:\Connections\mySDE.sde")));
+                CIMSqlQueryDataConnection sqldc = new CIMSqlQueryDataConnection()
+                {
+                    WorkspaceConnectionString = geodatabase.GetConnectionString(),
+                    GeometryType = esriGeometryType.esriGeometryPolygon,
+                    OIDFields = "OBJECTID",
+                    Srid = "102008",
+                    SqlQuery = "select * from MySDE.dbo.STATES",
+                    Dataset = "States"
+                };
+                FeatureLayer flyr = (FeatureLayer)LayerFactory.Instance.CreateLayer(sqldc, map, layerName: "States");
+            });
+            #endregion
+        }
+        public async Task AddFeatureLayerClasBreaksAsync()
+        {
 
+            #region Create a feature layer with class breaks renderer with defaults
+            await QueuedTask.Run(() =>
+              LayerFactory.Instance.CreateFeatureLayer(
+                new Uri(@"c:\data\countydata.gdb\counties"),
+                MapView.Active.Map,
+                layerName: "Population Density (sq mi) Year 2010",
+                rendererDefinition: new GraduatedColorsRendererDefinition("POP10_SQMI")
+              )
+            );
+            #endregion
+        }
+
+        public async Task AddFeatureLayerClasBreaksExAsync()
+        {
+
+            #region Create a feature layer with class breaks renderer
+
+            string colorBrewerSchemesName = "ColorBrewer Schemes (RGB)";
+            StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
+            string colorRampName = "Greens (Continuous)";
+            IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
+            {
+                return style.SearchColorRamps(colorRampName);
+            });
+            ColorRampStyleItem colorRamp = colorRampList[0];
+
+            await QueuedTask.Run(() =>
+            {
+                GraduatedColorsRendererDefinition gcDef = new GraduatedColorsRendererDefinition()
+                {
+                    ClassificationField = "CROP_ACR07",
+                    ClassificationMethod = ArcGIS.Core.CIM.ClassificationMethod.NaturalBreaks,
+                    BreakCount = 6,
+                    ColorRamp = colorRamp.ColorRamp,
+                    SymbolTemplate = SymbolFactory.Instance.ConstructPolygonSymbol(
+                                    ColorFactory.Instance.GreenRGB, SimpleFillStyle.Solid, null).MakeSymbolReference(),
+                    ExclusionClause = "CROP_ACR07 = -99",
+                    ExclusionSymbol = SymbolFactory.Instance.ConstructPolygonSymbol(
+                                    ColorFactory.Instance.RedRGB, SimpleFillStyle.Solid, null).MakeSymbolReference(),
+                    ExclusionLabel = "No yield",
+                };
+
+                LayerFactory.Instance.CreateFeatureLayer(new Uri(@"c:\Data\CountyData.gdb\Counties"),
+                    MapView.Active.Map, layerName: "Crop", rendererDefinition: gcDef);
+            });
+
+            #endregion
+        }
+        #region ProSnippet Group: Working with Layers
+        #endregion
+        public List<Layer> FindLayersWithPartialName(string partialName)
+        {
+
+            #region Find a layer using partial name search
+
+            Map map = MapView.Active.Map;
+            IEnumerable<Layer> matches = map.GetLayersAsFlattenedList().Where(l => l.Name.IndexOf(partialName, StringComparison.CurrentCultureIgnoreCase) >= 0);
+
+            #endregion
+
+            List<Layer> layers = new List<Layer>();
+            foreach (Layer l in matches)
+                layers.Add(l);
+
+            return layers;
+        }
         public static void MoveLayerTo3D()
         {
             #region Move a layer in the 2D group to the 3D Group in a Local Scene
@@ -235,179 +536,353 @@ namespace MapAuthoring.ProSnippet
             #endregion
         }
 
-        public Task<bool> Convert2DMapTo3D()
+        private static void ResetDataConnectionFeatureService(Layer dataConnectionLayer, string newConnectionString)
         {
-            return QueuedTask.Run(async () =>
-            {
-                #region Convert a 2D Map to a Local Scene
-                //Note: Run within the context of QueuedTask.Run
-                var localScene = MapFactory.Instance.CreateMap("3DMap", MapType.Scene, MapViewingMode.SceneLocal, basemap: Basemap.None);
-
-                //Get all the layers in the Active map you want to move over to the local scene
-                var lyrs = MapView.Active.Map.GetLayersAsFlattenedList();
-                //Move each of these layers to the new local scene
-                foreach (var lyr in lyrs)
-                {
-                    LayerFactory.Instance.CopyLayer(lyr, localScene);
-                }
-
-                //Set all the layers in the scene to be in the 3D group
-                foreach (var sceneLyr in localScene.GetLayersAsFlattenedList().OfType<FeatureLayer>())
-                {
-                    var lyrDefn = sceneLyr.GetDefinition() as CIMBasicFeatureLayer;
-                    //setting this property moves the layer to 3D group in a scene
-                    lyrDefn.IsFlattened = false;
-                    //Set the definition back to the layer
-                    sceneLyr.SetDefinition(lyrDefn);
-                }
-                #endregion
-                return true;
-            });
-        }
-
-        private Task CreateNewElevationSurface()
-        {
-            return ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() => {
-                #region Create a New Elevation Surface
-                //Note: call within QueuedTask.Run()
-                //Define a ServiceConnection to use for the new Elevation surface
-                var serverConnection = new CIMInternetServerConnection
-                {
-                    Anonymous = true,
-                    HideUserProperty = true,
-                    URL = "https://elevation.arcgis.com/arcgis/services"
-                };
-                CIMAGSServiceConnection serviceConnection = new CIMAGSServiceConnection
-                {
-                    ObjectName = "WorldElevation/Terrain",
-                    ObjectType = "ImageServer",
-                    URL = "https://elevation.arcgis.com/arcgis/services/WorldElevation/Terrain/ImageServer",
-                    ServerConnection = serverConnection
-                };
-                //Defines a new elevation source set to the CIMAGSServiceConnection defined above
-                var newElevationSource = new ArcGIS.Core.CIM.CIMElevationSource
-                {
-                    VerticalUnit = ArcGIS.Core.Geometry.LinearUnit.Meters,
-                    DataConnection = serviceConnection,
-                    Name = "WorldElevation/Terrain",
-                    Visibility = true
-                };
-                //The elevation surface
-                var newElevationSurface = new ArcGIS.Core.CIM.CIMMapElevationSurface
-                {
-                    Name = "New Elevation Surface",
-                    BaseSources = new ArcGIS.Core.CIM.CIMElevationSource[1] { newElevationSource },
-                    Visibility = true,
-                    ElevationMode = ElevationMode.CustomSurface,
-                    VerticalExaggeration = 1,
-                    EnableSurfaceShading = false,
-                    SurfaceTINShadingMode = SurfaceTINShadingMode.Smooth,
-                    Expanded = false,
-                    MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
-                };
-                //Get the active map
-                var map = MapView.Active.Map;
-                //Get the active map's definition
-                var definition = map.GetDefinition();
-                //Get the elevation surfaces defined in the map
-                var listOfElevationSurfaces = definition.ElevationSurfaces.ToList();
-                //Add the new elevation surface 
-                listOfElevationSurfaces.Add(newElevationSurface);
-                //Set the map definitions to ElevationSurface (this has the new elevation surface)
-                definition.ElevationSurfaces = listOfElevationSurfaces.ToArray();
-                //Set the map definition
-                map.SetDefinition(definition);
-                #endregion
-            });
-        }
-
-        private Task SetElevationSurfaceToLayer(FeatureLayer featureLayer)
-        {
-            return QueuedTask.Run(() =>
-            {
-                #region Set a custom elevation surface to a Z-Aware layer
-                
-                //Define the custom elevation surface to use
-                var layerElevationSurface = new CIMLayerElevationSurface
-                {
-                    MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
-                };
-                //Get the layer's definition
-                var lyrDefn = featureLayer.GetDefinition() as CIMBasicFeatureLayer; 
-                //Set the layer's elevation surface
-                lyrDefn.LayerElevation = layerElevationSurface;
-                //Set the layer's definition
-                featureLayer.SetDefinition(lyrDefn);
-                #endregion
-            });
-        }
-
-        private static async Task<SurfaceZsResult> GetZValue()
-        {
-            #region Get Z values from a surface
-            var geometry = await QueuedTask.Run<Geometry>(() => {
-                Geometry mapCentergeometry = MapView.Active.Map.CalculateFullExtent().Center;
-                return mapCentergeometry;
-            });
-            //Pass any Geometry type to GetZsFromSurfaceAsync
-            var surfaceZResult = await MapView.Active.Map.GetZsFromSurfaceAsync(geometry);
-            return surfaceZResult;
+            #region Reset the URL of a feature service layer 
+            CIMStandardDataConnection dataConnection = dataConnectionLayer.GetDataConnection() as CIMStandardDataConnection;
+            dataConnection.WorkspaceConnectionString = newConnectionString;
+            dataConnectionLayer.SetDataConnection(dataConnection);
             #endregion
         }
-        public async Task AddFeatureLayerClasBreaksAsync()
-    {
 
-      #region Create a feature layer with class breaks renderer with defaults
-      await QueuedTask.Run(() =>
-        LayerFactory.Instance.CreateFeatureLayer(
-          new Uri(@"c:\data\countydata.gdb\counties"),
-          MapView.Active.Map,
-          layerName: "Population Density (sq mi) Year 2010",
-          rendererDefinition: new GraduatedColorsRendererDefinition("POP10_SQMI")
-        )
-      );
-      #endregion
-    }
 
-    public async Task AddFeatureLayerClasBreaksExAsync()
-    {
-
-      #region Create a feature layer with class breaks renderer
-
-      string colorBrewerSchemesName = "ColorBrewer Schemes (RGB)";
-      StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
-      string colorRampName = "Greens (Continuous)";
-      IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
-      {
-        return style.SearchColorRamps(colorRampName);
-      });
-      ColorRampStyleItem colorRamp = colorRampList[0];
-
-      await QueuedTask.Run(() =>
-      {
-        GraduatedColorsRendererDefinition gcDef = new GraduatedColorsRendererDefinition()
+        public async Task ChangeGDBVersion2Async()
         {
-          ClassificationField = "CROP_ACR07",
-          ClassificationMethod = ArcGIS.Core.CIM.ClassificationMethod.NaturalBreaks,
-          BreakCount = 6,
-          ColorRamp = colorRamp.ColorRamp,
-          SymbolTemplate = SymbolFactory.Instance.ConstructPolygonSymbol(
-                            ColorFactory.Instance.GreenRGB, SimpleFillStyle.Solid, null).MakeSymbolReference(),
-          ExclusionClause = "CROP_ACR07 = -99",
-          ExclusionSymbol = SymbolFactory.Instance.ConstructPolygonSymbol(
-                            ColorFactory.Instance.RedRGB, SimpleFillStyle.Solid, null).MakeSymbolReference(),
-          ExclusionLabel = "No yield",
-        };
 
-        LayerFactory.Instance.CreateFeatureLayer(new Uri(@"c:\Data\CountyData.gdb\Counties"),
-            MapView.Active.Map, layerName: "Crop", rendererDefinition: gcDef);
-      });
+            #region Change Geodatabase Version of layers off a specified version in a map
 
-      #endregion
-    }
+            await QueuedTask.Run(() =>
+            {
+                //Getting the current version name from the first feature layer of the map
+                FeatureLayer flyr = MapView.Active.Map.GetLayersAsFlattenedList()
+                        .OfType<FeatureLayer>().FirstOrDefault();  //first feature layer
+                Datastore dataStore = flyr.GetFeatureClass().GetDatastore();  //getting datasource
+                Geodatabase geodatabase = dataStore as Geodatabase; //casting to Geodatabase
+                if (geodatabase == null)
+                    return;
+
+                VersionManager versionManager = geodatabase.GetVersionManager();
+                ArcGIS.Core.Data.Version currentVersion = versionManager.GetCurrentVersion();
+
+                //Getting all available versions except the current one
+                IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions()
+                        .Where(v => !v.GetName().Equals(currentVersion.GetName(), StringComparison.CurrentCultureIgnoreCase));
+
+                //Assuming there is at least one other version we pick the first one from the list
+                ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
+                if (toVersion != null)
+                {
+                    //Changing version
+                    MapView.Active.Map.ChangeVersion(currentVersion, toVersion);
+                }
+            });
+            #endregion
+
+        }
+        public async void SearchAndGetFeatureCount()
+        {
+
+            #region Querying a feature layer
+
+            var count = await QueuedTask.Run(() =>
+            {
+                QueryFilter qf = new QueryFilter()
+                {
+                    WhereClause = "Class = 'city'"
+                };
+
+                //Getting the first selected feature layer of the map view
+                var flyr = (FeatureLayer)MapView.Active.GetSelectedLayers()
+                                  .OfType<FeatureLayer>().FirstOrDefault();
+                RowCursor rows = flyr.Search(qf);//execute
+
+                //Looping through to count
+                int i = 0;
+                while (rows.MoveNext()) i++;
+
+                return i;
+            });
+            MessageBox.Show(String.Format(
+               "Total features that matched the search criteria: {0}", count));
+
+            #endregion
+
+        }
+        public void MiscOneLiners()
+        {
+            Map aMap = MapView.Active.Map;
+
+            #region Update a map's basemap layer
+            aMap.SetBasemapLayers(Basemap.Gray);
+            #endregion
+
+            #region Remove basemap layer from a map
+            aMap.SetBasemapLayers(Basemap.None);
+            #endregion
+
+            #region Find a layer
+            //Finds layers by name and returns a read only list of Layers
+            IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
+
+            //Finds a layer using a URI.
+            //The Layer URI you pass in helps you search for a specific layer in a map
+            var lyrFindLayer = MapView.Active.Map.FindLayer("CIMPATH=map/u_s__states__generalized_.xml");
+
+            //This returns a collection of layers of the "name" specified. You can use any Linq expression to query the collection.  
+            var lyrExists = MapView.Active.Map.GetLayersAsFlattenedList()
+                               .OfType<FeatureLayer>().Any(f => f.Name == "U.S. States (Generalized)");
+            #endregion
+
+            #region Count the features selected in a map
+            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            var noFeaturesSelected = lyr.SelectionCount;
+            #endregion
+
+            #region Get a list of layers filtered by layer type from a map
+            List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
+            #endregion
+
+            #region Find a standalone table
+            IReadOnlyList<StandaloneTable> tables = aMap.FindStandaloneTables("addresses");
+            #endregion
+        }
+
+        public static void GetRotationFieldOfRenderer()
+        {
+            #region Get the attribute rotation field of a layer
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            QueuedTask.Run(() =>
+            {
+                var cimRenderer = featureLayer.GetRenderer() as CIMUniqueValueRenderer;
+                var cimRotationVariable = cimRenderer.VisualVariables.OfType<CIMRotationVisualVariable>().FirstOrDefault();
+                var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
+                var rotationExpression = rotationInfoZ.ValueExpressionInfo.Expression; // this expression stores the field name  
+            });
+            #endregion
+        }
+        public void EnableLabeling()
+        {
+            #region Enable labeling on a layer
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // toggle the label visibility
+                featureLayer.SetLabelVisibility(!featureLayer.IsLabelVisible);
+            });
+            #endregion
+        }
 
 
-    public async Task SetUniqueValueRendererAsync()
+        public void AccessDisplayField()
+        {
+            #region Access the display field for a layer
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // get the CIM definition from the layer
+                var cimFeatureDefinition = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
+                // get the view of the source table underlying the layer
+                var cimDisplayTable = cimFeatureDefinition.FeatureTable;
+                // this field is used as the 'label' to represent the row
+                var displayField = cimDisplayTable.DisplayField;
+            });
+            #endregion
+        }
+
+        public void FindConnectedAttribute()
+        {
+            #region Find connected attribute field for rotation
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // get the CIM renderer from the layer
+                var cimRenderer = featureLayer.GetRenderer() as ArcGIS.Core.CIM.CIMSimpleRenderer;
+                // get the collection of connected attributes for rotation
+                var cimRotationVariable = cimRenderer.VisualVariables.OfType<ArcGIS.Core.CIM.CIMRotationVisualVariable>().FirstOrDefault();
+                // the z direction is describing the heading rotation
+                var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
+                var rotationExpression = rotationInfoZ.Expression; // this expression stores the field name  
+            });
+            #endregion
+        }
+
+        public void ScaleSymbols()
+        {
+            #region Toggle "Scale layer symbols when reference scale is set"
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // get the CIM layer definition
+                var cimFeatureLayer = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMFeatureLayer;
+                // turn on the option to scale the symbols in this layer based in the map's reference scale
+                cimFeatureLayer.ScaleSymbols = true;
+            });
+            #endregion
+        }
+
+        public void SetLayerCache()
+        {
+            #region Set the layer cache
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // change the layer cache type to maximum age
+                featureLayer.SetDisplayCacheType(ArcGIS.Core.CIM.DisplayCacheType.MaxAge);
+                // change from the default 5 min to 2 min
+                featureLayer.SetDisplayCacheMaxAge(TimeSpan.FromMinutes(2));
+            });
+            #endregion
+        }
+
+        public void ChangeSelectionColor()
+        {
+            #region Change the layer selection color
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+            ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+            {
+                // get the CIM definition of the layer
+                var layerDef = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
+                // disable the default symbol
+                layerDef.UseSelectionSymbol = false;
+                // assign a new color
+                layerDef.SelectionColor = ColorFactory.Instance.RedRGB;
+                // apply the definition to the layer
+                featureLayer.SetDefinition(layerDef);
+
+                if (!featureLayer.IsVisible) featureLayer.SetVisibility(true);
+                //Do a selection
+
+                MapView.Active.SelectFeatures(MapView.Active.Extent);
+            });
+            #endregion
+        }
+        public async void RemoveAllUncheckedLayers()
+        {
+            #region Removes all layers that are unchecked
+            var map = MapView.Active.Map;
+            if (map == null)
+                return;
+            //Get the group layers first
+            IReadOnlyList<GroupLayer> groupLayers = map.Layers.OfType<GroupLayer>().ToList();
+            //Iterate and remove the layers within the group layers that are unchecked.
+            foreach (var groupLayer in groupLayers)
+            {
+                //Get layers that not visible within the group
+                var layers = groupLayer.Layers.Where(l => l.IsVisible == false).ToList();
+                //Remove all the layers that are not visible within the group
+                await QueuedTask.Run(() => map.RemoveLayers(layers));
+            }
+
+            //Group Layers that are empty and are unchecked
+            foreach (var group in groupLayers)
+            {
+                if (group.Layers.Count == 0 && group.IsVisible == false) //No layers in the group
+                {
+                    //remove the group
+                    await QueuedTask.Run(() => map.RemoveLayer(group));
+                }
+            }
+
+            //Get Layers that are NOT Group layers and are unchecked
+            var notAGroupAndUnCheckedLayers = map.Layers.Where(l => !(l is GroupLayer) && l.IsVisible == false).ToList();
+            //Remove all the non group layers that are not visible
+            await QueuedTask.Run(() => map.RemoveLayers(notAGroupAndUnCheckedLayers));
+            #endregion
+
+        }
+        public async void RemoveEmptyGroups()
+        {
+            #region Remove empty groups
+            var map = MapView.Active.Map;
+            if (map == null)
+                return;
+            //Get the group layers
+            IReadOnlyList<GroupLayer> groupLayers = map.Layers.OfType<GroupLayer>().ToList();
+            foreach (var group in groupLayers)
+            {
+                if (group.Layers.Count == 0) //No layers in the group
+                {
+                    //remove the group
+                    await QueuedTask.Run(() => map.RemoveLayer(group));
+                }
+            }
+            #endregion
+
+        }
+        #region Create and apply Abbreviation Dictionary in the Map Definition to a layer
+        public static void CreateDictionary()
+        {
+            //Get the map's defintion
+            var mapDefn = MapView.Active.Map.GetDefinition();
+            //Get the Map's Maplex labelling engine properties
+            var mapDefnPlacementProps = mapDefn.GeneralPlacementProperties as CIMMaplexGeneralPlacementProperties;
+
+            //Define the abbreaviations we need in an array            
+            List<CIMMaplexDictionaryEntry> abbreviationDictionary = new List<CIMMaplexDictionaryEntry>
+            {
+                new CIMMaplexDictionaryEntry {
+                Abbreviation = "Hts",
+                Text = "Heights",
+                MaplexAbbreviationType = MaplexAbbreviationType.Ending
+
+             },
+                new CIMMaplexDictionaryEntry
+                {
+                    Abbreviation = "Ct",
+                    Text = "Text",
+                    MaplexAbbreviationType = MaplexAbbreviationType.Ending
+
+                }
+                //etc
+            };
+            //The Maplex Dictionary - can hold multiple Abbreviation collections
+            var maplexDictionary = new List<CIMMaplexDictionary>
+            {
+                new CIMMaplexDictionary {
+                    Name = "NameEndingsAbbreviations",
+                    MaplexDictionary = abbreviationDictionary.ToArray()
+                }
+
+            };
+            //Set the Maplex Label Engine Dictionary property to the Maplex Dictionary collection created above.
+            mapDefnPlacementProps.Dictionaries = maplexDictionary.ToArray();
+            //Set the Map defintion 
+            MapView.Active.Map.SetDefinition(mapDefn);
+        }
+
+        private static void ApplyDictionary()
+        {
+            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().First();
+
+            QueuedTask.Run(() => {
+                //Creates Abbreviation dictionary and adds to Map Defintion                                
+                CreateDictionary();
+                //Get the layer's definition
+                var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
+                //Get the label classes - we need the first one
+                var listLabelClasses = lyrDefn.LabelClasses.ToList();
+                var theLabelClass = listLabelClasses.FirstOrDefault();
+                //Modify label Placement props to use abbreviation dictionary 
+                CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
+                theLabelClass.MaplexLabelPlacementProperties.DictionaryName = "NameEndingsAbbreviations";
+                theLabelClass.MaplexLabelPlacementProperties.CanAbbreviateLabel = true;
+                theLabelClass.MaplexLabelPlacementProperties.CanStackLabel = false;
+                //Set the labelClasses back
+                lyrDefn.LabelClasses = listLabelClasses.ToArray();
+                //set the layer's definition
+                featureLayer.SetDefinition(lyrDefn);
+            });
+        }
+
+
+        #endregion
+
+       
+
+
+        #region ProSnippet Group: Renderers
+        #endregion
+        public async Task SetUniqueValueRendererAsync()
     {
 
 
@@ -492,99 +967,283 @@ namespace MapAuthoring.ProSnippet
             });
             #endregion
         }
-
- public async Task AddQuerylayerAsync()
-    {
-      #region Create a query layer
-      await QueuedTask.Run(() =>
-      {
-        Map map = MapView.Active.Map;
-        Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri(@"C:\Connections\mySDE.sde")));
-        CIMSqlQueryDataConnection sqldc = new CIMSqlQueryDataConnection()
+        public async void CreateHeatMapRenderer()
         {
-          WorkspaceConnectionString = geodatabase.GetConnectionString(),
-          GeometryType = esriGeometryType.esriGeometryPolygon,
-          OIDFields = "OBJECTID",
-          Srid = "102008",
-          SqlQuery = "select * from MySDE.dbo.STATES",
-		  Dataset = "States"
-        };
-        FeatureLayer flyr = (FeatureLayer)LayerFactory.Instance.CreateLayer(sqldc, map, layerName: "States");
-      });
-      #endregion
-    }
+            #region Create a Heatmap Renderer
+            string colorBrewerSchemesName = "ArcGIS Colors";
+            StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
+            string colorRampName = "Heat Map 4 - Semitransparent";
+            IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
+            {
+                return style.SearchColorRamps(colorRampName);
+            });
+            ColorRampStyleItem colorRamp = colorRampList[0];
 
+            await QueuedTask.Run(() =>
+            {
+                //defining a heatmap renderer that uses values from Population field as the weights
+                HeatMapRendererDefinition heatMapDef = new HeatMapRendererDefinition()
+                {
+                    Radius = 20,
+                    WeightField = "Population",
+                    ColorRamp = colorRamp.ColorRamp,
+                    RendereringQuality = 8,
+                    UpperLabel = "High Density",
+                    LowerLabel = "Low Density"
+                };
 
-        private static void ResetDataConnectionFeatureService(Layer dataConnectionLayer, string newConnectionString)
-        {
-            #region Reset the URL of a feature service layer 
-            CIMStandardDataConnection dataConnection = dataConnectionLayer.GetDataConnection() as CIMStandardDataConnection;
-            dataConnection.WorkspaceConnectionString = newConnectionString;
-            dataConnectionLayer.SetDataConnection(dataConnection);
+                FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
+                CIMHeatMapRenderer heatMapRndr = (CIMHeatMapRenderer)flyr.CreateRenderer(heatMapDef);
+                flyr.SetRenderer(heatMapRndr);
+            });
             #endregion
         }
 
-
-    public async Task ChangeGDBVersion2Async()
-    {
-
-      #region Change Geodatabase Version of layers off a specified version in a map
-
-      await QueuedTask.Run(() =>
-    {
-      //Getting the current version name from the first feature layer of the map
-      FeatureLayer flyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();  //first feature layer
-      Datastore dataStore = flyr.GetFeatureClass().GetDatastore();  //getting datasource
-      Geodatabase geodatabase = dataStore as Geodatabase; //casting to Geodatabase
-      if (geodatabase == null)
-        return;
-
-      VersionManager versionManager = geodatabase.GetVersionManager();
-      ArcGIS.Core.Data.Version currentVersion = versionManager.GetCurrentVersion();
-
-      //Getting all available versions except the current one
-      IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions().Where(v => !v.GetName().Equals(currentVersion.GetName(), StringComparison.CurrentCultureIgnoreCase));
-
-      //Assuming there is at least one other version we pick the first one from the list
-      ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
-      if (toVersion != null)
-      {
-        //Changing version
-        MapView.Active.Map.ChangeVersion(currentVersion, toVersion);
-      }
-    });
-      #endregion
-
-    }
-    public async void SearchAndGetFeatureCount()
-    {
-
-      #region Querying a feature layer
-
-      var count = await QueuedTask.Run(() =>
-      {
-        QueryFilter qf = new QueryFilter()
+        public async void CreateUnclassedRenderer()
         {
-          WhereClause = "Class = 'city'"
-        };
+            #region Create an Unclassed Renderer
+            string colorBrewerSchemesName = "ArcGIS Colors";
+            StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
+            string colorRampName = "Heat Map 4 - Semitransparent";
+            IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
+            {
+                return style.SearchColorRamps(colorRampName);
+            });
+            ColorRampStyleItem colorRamp = colorRampList[0];
 
-        //Getting the first selected feature layer of the map view
-        var flyr = (FeatureLayer)MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().FirstOrDefault();
-        RowCursor rows = flyr.Search(qf);//execute
+            await QueuedTask.Run(() =>
+            {
+                CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 16.0, SimpleMarkerStyle.Diamond);
+                CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
-        //Looping through to count
-        int i = 0;
-        while (rows.MoveNext()) i++;
+                //defining an unclassed renderer with custom upper and lower stops
+                //all features with value >= 5,000,000 will be drawn with the upper color from the color ramp
+                //all features with value <= 50,000 will be drawn with the lower color from the color ramp
+                UnclassedColorsRendererDefinition unclassRndrDef = new UnclassedColorsRendererDefinition
+                                            ("Population", symbolPointTemplate, colorRamp.ColorRamp, "Highest", "Lowest", 5000000, 50000)
+                {
 
-        return i;
-      });
-      MessageBox.Show(String.Format("Total features that matched the search criteria: {0}", count));
+                    //drawing features with null values with a different symbol
+                    ShowNullValues = true,
+                    NullValueLabel = "Unknown"
+                };
+                CIMPointSymbol nullSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB, 16.0, SimpleMarkerStyle.Circle);
+                unclassRndrDef.NullValueSymbol = nullSym.MakeSymbolReference();
+                FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
+                CIMClassBreaksRenderer cbRndr = (CIMClassBreaksRenderer)flyr.CreateRenderer(unclassRndrDef);
+                flyr.SetRenderer(cbRndr);
+            });
+            #endregion
+        }
 
-      #endregion
+        public async void CreateProportionaRenderer()
+        {
+            #region Create a Proportion Renderer with max and min symbol size capped
+            string colorBrewerSchemesName = "ArcGIS Colors";
+            StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
+            string colorRampName = "Heat Map 4 - Semitransparent";
+            IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
+            {
+                return style.SearchColorRamps(colorRampName);
+            });
+            ColorRampStyleItem colorRamp = colorRampList[0];
 
-    }
+            await QueuedTask.Run(() =>
+            {
+                CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
+                CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
-    public async Task RasterLayers()
+                //minimum symbol size is capped to 4 point while the maximum symbol size is set to 50 point
+                ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", symbolPointTemplate, 4, 50, true)
+                {
+
+                    //setting upper and lower size stops to stop symbols growing or shrinking beyond those thresholds
+                    UpperSizeStop = 5000000,  //features with values >= 5,000,000 will be drawn with maximum symbol size
+                    LowerSizeStop = 50000    //features with values <= 50,000 will be drawn with minimum symbol size
+                };
+                FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
+                CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
+                flyr.SetRenderer(propRndr);
+
+            });
+            #endregion
+        }
+
+        public async void CreateTrueProportionaRenderer()
+        {
+            #region Create a True Proportion Renderer
+            string colorBrewerSchemesName = "ArcGIS Colors";
+            StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
+            string colorRampName = "Heat Map 4 - Semitransparent";
+            IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
+            {
+                return style.SearchColorRamps(colorRampName);
+            });
+            ColorRampStyleItem colorRamp = colorRampList[0];
+
+            await QueuedTask.Run(() =>
+            {
+                CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
+                CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
+
+                //Defining proportional renderer where size of symbol will be same as its value in field used in the renderer.
+                ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", esriUnits.esriMeters, symbolPointTemplate, SymbolShapes.Square, ValueRepresentations.Radius);
+
+                FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
+                CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
+                flyr.SetRenderer(propRndr);
+
+            });
+            #endregion
+        }
+
+        #region ProSnippet Group: Arcade
+        #endregion
+
+        protected static void ArcadeRenderer()
+        {
+            #region Modify renderer using Arcade
+            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
+            if (lyr == null) return;
+            QueuedTask.Run(() => {
+                // GetRenderer from Layer (assumes it is a unique value renderer)
+                var uvRenderer = lyr.GetRenderer() as CIMUniqueValueRenderer;
+                if (uvRenderer == null) return;
+                //layer has STATE_NAME field
+                //community sample Data\Admin\AdminSample.aprx
+                string expression = "if ($view.scale > 21000000) { return $feature.STATE_NAME } else { return 'All' }";
+                CIMExpressionInfo updatedExpressionInfo = new CIMExpressionInfo
+                {
+                    Expression = expression,
+                    Title = "Custom" // can be any string used for UI purpose.
+                };
+                //set the renderer's expression
+                uvRenderer.ValueExpressionInfo = updatedExpressionInfo;
+
+                //SetRenderer on Layer
+                lyr.SetRenderer(uvRenderer);
+            });
+            #endregion
+        }
+        protected static void ArcadeLabeling()
+        {
+            #region Modify label expression using Arcade
+            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
+            if (lyr == null) return;
+            QueuedTask.Run(() => {
+                //Get the layer's definition
+                //community sample Data\Admin\AdminSample.aprx
+                var lyrDefn = lyr.GetDefinition() as CIMFeatureLayer;
+                if (lyrDefn == null) return;
+                //Get the label classes - we need the first one
+                var listLabelClasses = lyrDefn.LabelClasses.ToList();
+                var theLabelClass = listLabelClasses.FirstOrDefault();
+                //set the label class Expression to use the Arcade expression
+                theLabelClass.Expression = "return $feature.STATE_NAME + TextFormatting.NewLine + $feature.POP2000;";
+                //Set the label definition back to the layer.
+                lyr.SetDefinition(lyrDefn);
+            });
+
+            #endregion
+        }
+
+        #region ProSnippet Group: Elevation Surface
+        #endregion
+
+        private Task CreateNewElevationSurface()
+        {
+            return ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() => {
+                #region Create a New Elevation Surface
+                //Note: call within QueuedTask.Run()
+                //Define a ServiceConnection to use for the new Elevation surface
+                var serverConnection = new CIMInternetServerConnection
+                {
+                    Anonymous = true,
+                    HideUserProperty = true,
+                    URL = "https://elevation.arcgis.com/arcgis/services"
+                };
+                CIMAGSServiceConnection serviceConnection = new CIMAGSServiceConnection
+                {
+                    ObjectName = "WorldElevation/Terrain",
+                    ObjectType = "ImageServer",
+                    URL = "https://elevation.arcgis.com/arcgis/services/WorldElevation/Terrain/ImageServer",
+                    ServerConnection = serverConnection
+                };
+                //Defines a new elevation source set to the CIMAGSServiceConnection defined above
+                var newElevationSource = new ArcGIS.Core.CIM.CIMElevationSource
+                {
+                    VerticalUnit = ArcGIS.Core.Geometry.LinearUnit.Meters,
+                    DataConnection = serviceConnection,
+                    Name = "WorldElevation/Terrain",
+                    Visibility = true
+                };
+                //The elevation surface
+                var newElevationSurface = new ArcGIS.Core.CIM.CIMMapElevationSurface
+                {
+                    Name = "New Elevation Surface",
+                    BaseSources = new ArcGIS.Core.CIM.CIMElevationSource[1] { newElevationSource },
+                    Visibility = true,
+                    ElevationMode = ElevationMode.CustomSurface,
+                    VerticalExaggeration = 1,
+                    EnableSurfaceShading = false,
+                    SurfaceTINShadingMode = SurfaceTINShadingMode.Smooth,
+                    Expanded = false,
+                    MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
+                };
+                //Get the active map
+                var map = MapView.Active.Map;
+                //Get the active map's definition
+                var definition = map.GetDefinition();
+                //Get the elevation surfaces defined in the map
+                var listOfElevationSurfaces = definition.ElevationSurfaces.ToList();
+                //Add the new elevation surface 
+                listOfElevationSurfaces.Add(newElevationSurface);
+                //Set the map definitions to ElevationSurface (this has the new elevation surface)
+                definition.ElevationSurfaces = listOfElevationSurfaces.ToArray();
+                //Set the map definition
+                map.SetDefinition(definition);
+                #endregion
+            });
+        }
+
+        private Task SetElevationSurfaceToLayer(FeatureLayer featureLayer)
+        {
+            return QueuedTask.Run(() =>
+            {
+                #region Set a custom elevation surface to a Z-Aware layer
+
+                //Define the custom elevation surface to use
+                var layerElevationSurface = new CIMLayerElevationSurface
+                {
+                    MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
+                };
+                //Get the layer's definition
+                var lyrDefn = featureLayer.GetDefinition() as CIMBasicFeatureLayer;
+                //Set the layer's elevation surface
+                lyrDefn.LayerElevation = layerElevationSurface;
+                //Set the layer's definition
+                featureLayer.SetDefinition(lyrDefn);
+                #endregion
+            });
+        }
+
+        private static async Task<SurfaceZsResult> GetZValue()
+        {
+            #region Get Z values from a surface
+            var geometry = await QueuedTask.Run<Geometry>(() => {
+                Geometry mapCentergeometry = MapView.Active.Map.CalculateFullExtent().Center;
+                return mapCentergeometry;
+            });
+            //Pass any Geometry type to GetZsFromSurfaceAsync
+            var surfaceZResult = await MapView.Active.Map.GetZsFromSurfaceAsync(geometry);
+            return surfaceZResult;
+            #endregion
+        }
+        #region ProSnippet Group: Raster Layers
+        #endregion
+
+
+        public async Task RasterLayers()
     {
       Map aMap = MapView.Active.Map;
       string layerName = null;
@@ -691,8 +1350,9 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
-
-    public async Task MosaicLayers()
+        #region ProSnippet Group: Mosaic Layers
+        #endregion
+        public async Task MosaicLayers()
     {
       Map aMap = MapView.Active.Map;
       string layerName = null;
@@ -839,8 +1499,9 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
-
-    public async Task ImageServiceLayers()
+        #region ProSnippet Group: Image Service Layers
+        #endregion
+        public async Task ImageServiceLayers()
     {
       Map aMap = MapView.Active.Map;
       string layerName = null;
@@ -972,484 +1633,10 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
     }
-    public async void CreateHeatMapRenderer()
-    {
-      #region Create a Heatmap Renderer
-      string colorBrewerSchemesName = "ArcGIS Colors";
-      StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
-      string colorRampName = "Heat Map 4 - Semitransparent";
-      IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
-      {
-        return style.SearchColorRamps(colorRampName);
-      });
-      ColorRampStyleItem colorRamp = colorRampList[0];
-
-      await QueuedTask.Run(() =>
-      {
-        //defining a heatmap renderer that uses values from Population field as the weights
-        HeatMapRendererDefinition heatMapDef = new HeatMapRendererDefinition()
-        {
-          Radius = 20,
-          WeightField = "Population",
-          ColorRamp = colorRamp.ColorRamp,
-          RendereringQuality = 8,
-          UpperLabel = "High Density",
-          LowerLabel = "Low Density"
-        };
-
-        FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMHeatMapRenderer heatMapRndr = (CIMHeatMapRenderer)flyr.CreateRenderer(heatMapDef);
-        flyr.SetRenderer(heatMapRndr);
-      });
-      #endregion
-    }
-
-    public async void CreateUnclassedRenderer()
-    {
-      #region Create an Unclassed Renderer
-      string colorBrewerSchemesName = "ArcGIS Colors";
-      StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
-      string colorRampName = "Heat Map 4 - Semitransparent";
-      IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
-      {
-        return style.SearchColorRamps(colorRampName);
-      });
-      ColorRampStyleItem colorRamp = colorRampList[0];
-
-      await QueuedTask.Run(() =>
-      {
-        CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 16.0, SimpleMarkerStyle.Diamond);
-        CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
-
-        //defining an unclassed renderer with custom upper and lower stops
-        //all features with value >= 5,000,000 will be drawn with the upper color from the color ramp
-        //all features with value <= 50,000 will be drawn with the lower color from the color ramp
-        UnclassedColorsRendererDefinition unclassRndrDef = new UnclassedColorsRendererDefinition
-                                    ("Population", symbolPointTemplate, colorRamp.ColorRamp, "Highest", "Lowest", 5000000, 50000)
-        {
-
-          //drawing features with null values with a different symbol
-          ShowNullValues = true,
-          NullValueLabel = "Unknown"
-        };
-        CIMPointSymbol nullSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB, 16.0, SimpleMarkerStyle.Circle);
-        unclassRndrDef.NullValueSymbol = nullSym.MakeSymbolReference();
-        FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMClassBreaksRenderer cbRndr = (CIMClassBreaksRenderer)flyr.CreateRenderer(unclassRndrDef);
-        flyr.SetRenderer(cbRndr);
-      });
-      #endregion
-    }
-
-    private static void GetSymbol()
-    {
-        #region Modify a point symbol created from a character marker    
-        //create marker from the Font, char index,size,color
-        var cimMarker = SymbolFactory.Instance.ConstructMarker(125, "Wingdings 3", "Regular", 6, ColorFactory.Instance.BlueRGB) as CIMCharacterMarker; 
-        var polygonMarker = cimMarker.Symbol;
-        //modifying the polygon's outline and fill
-        //This is the outline
-        polygonMarker.SymbolLayers[0] = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.GreenRGB, 2, SimpleLineStyle.Solid); 
-        //This is the fill
-        polygonMarker.SymbolLayers[1] = SymbolFactory.Instance.ConstructSolidFill(ColorFactory.Instance.BlueRGB); 
-        //create a symbol from the marker 
-        //Note this overload of ConstructPointSymbol does not need to be run within QueuedTask.Run.
-        var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(cimMarker); 
-        #endregion
-    }
-        private static Task CreateSymbolSwatch()
-        {
-            return QueuedTask.Run(() => {
-                #region Create a Swatch for a given symbol
-
-                //Note: call within QueuedTask.Run()
-                CIMSymbol symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle); 
-                //You can generate a swatch for a text symbols also.
-                var si = new SymbolStyleItem()
-                {
-                    Symbol = symbol,
-                    PatchHeight = 64,
-                    PatchWidth = 64
-                };
-                return si.PreviewImage;
-                #endregion
-            });
-        }
 
 
-        public async void CreateProportionaRenderer()
-    {
-      #region Create a Proportion Renderer with max and min symbol size capped
-      string colorBrewerSchemesName = "ArcGIS Colors";
-      StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
-      string colorRampName = "Heat Map 4 - Semitransparent";
-      IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
-      {
-        return style.SearchColorRamps(colorRampName);
-      });
-      ColorRampStyleItem colorRamp = colorRampList[0];
+       
 
-      await QueuedTask.Run(() =>
-      {
-        CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
-        CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
-
-        //minimum symbol size is capped to 4 point while the maximum symbol size is set to 50 point
-        ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", symbolPointTemplate, 4, 50, true)
-        {
-
-          //setting upper and lower size stops to stop symbols growing or shrinking beyond those thresholds
-          UpperSizeStop = 5000000,  //features with values >= 5,000,000 will be drawn with maximum symbol size
-          LowerSizeStop = 50000    //features with values <= 50,000 will be drawn with minimum symbol size
-        };
-        FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
-        flyr.SetRenderer(propRndr);
-
-      });
-      #endregion
-    }
-
-    public async void CreateTrueProportionaRenderer()
-    {
-      #region Create a True Proportion Renderer
-      string colorBrewerSchemesName = "ArcGIS Colors";
-      StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
-      string colorRampName = "Heat Map 4 - Semitransparent";
-      IList<ColorRampStyleItem> colorRampList = await QueuedTask.Run(() =>
-      {
-        return style.SearchColorRamps(colorRampName);
-      });
-      ColorRampStyleItem colorRamp = colorRampList[0];
-
-      await QueuedTask.Run(() =>
-      {
-        CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
-        CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
-
-        //Defining proportional renderer where size of symbol will be same as its value in field used in the renderer.
-        ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", esriUnits.esriMeters, symbolPointTemplate, SymbolShapes.Square, ValueRepresentations.Radius);
-
-        FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
-        flyr.SetRenderer(propRndr);
-
-      });
-      #endregion
-    }
-        protected static void ArcadeRenderer()
-        {
-            #region Modify renderer using Arcade
-            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
-            if (lyr == null) return;
-            QueuedTask.Run(() => {
-                // GetRenderer from Layer (assumes it is a unique value renderer)
-                var uvRenderer = lyr.GetRenderer() as CIMUniqueValueRenderer;
-                if (uvRenderer == null) return;
-                //layer has STATE_NAME field
-                //community sample Data\Admin\AdminSample.aprx
-                string expression = "if ($view.scale > 21000000) { return $feature.STATE_NAME } else { return 'All' }";
-                CIMExpressionInfo updatedExpressionInfo = new CIMExpressionInfo
-                {
-                    Expression = expression,
-                    Title = "Custom" // can be any string used for UI purpose.
-                };
-                //set the renderer's expression
-                uvRenderer.ValueExpressionInfo = updatedExpressionInfo;
-
-                //SetRenderer on Layer
-                lyr.SetRenderer(uvRenderer);
-            });
-            #endregion
-        }
-        protected static void ArcadeLabeling()
-        {
-            #region Modify label expression using Arcade
-            var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
-            if (lyr == null) return;
-            QueuedTask.Run(() => {
-                //Get the layer's definition
-                //community sample Data\Admin\AdminSample.aprx
-                var lyrDefn = lyr.GetDefinition() as CIMFeatureLayer;
-                if (lyrDefn == null) return;
-                //Get the label classes - we need the first one
-                var listLabelClasses = lyrDefn.LabelClasses.ToList();
-                var theLabelClass = listLabelClasses.FirstOrDefault();
-                //set the label class Expression to use the Arcade expression
-                theLabelClass.Expression = "return $feature.STATE_NAME + TextFormatting.NewLine + $feature.POP2000;";
-                //Set the label definition back to the layer.
-                lyr.SetDefinition(lyrDefn);
-            });
-
-            #endregion
-        }
-        public void MiscOneLiners()
-    {
-      Map aMap = MapView.Active.Map;
-
-      #region Update a map's basemap layer
-      aMap.SetBasemapLayers(Basemap.Gray);
-      #endregion
-
-      #region Remove basemap layer from a map
-      aMap.SetBasemapLayers(Basemap.None);
-            #endregion
-
-        #region Find a layer
-        //Finds layers by name and returns a read only list of Layers
-        IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
-            
-        //Finds a layer using a URI.
-        //The Layer URI you pass in helps you search for a specific layer in a map
-        var lyrFindLayer = MapView.Active.Map.FindLayer("CIMPATH=map/u_s__states__generalized_.xml");
-
-        //This returns a collection of layers of the "name" specified. You can use any Linq expression to query the collection.  
-        var lyrExists = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().Any(f => f.Name == "U.S. States (Generalized)");
-            #endregion
-
-        #region Count the features selected in a map
-        var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-        var noFeaturesSelected = lyr.SelectionCount;
-        #endregion
-
-            #region Get a list of layers filtered by layer type from a map
-            List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
-      #endregion
-
-      #region Find a standalone table
-      IReadOnlyList<StandaloneTable> tables = aMap.FindStandaloneTables("addresses");
-      #endregion
-    }
-
-        public static void GetRotationFieldOfRenderer()
-        {
-            #region Get the attribute rotation field of a layer
-            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-            QueuedTask.Run(() =>
-            {
-                var cimRenderer = featureLayer.GetRenderer() as CIMUniqueValueRenderer;
-                var cimRotationVariable = cimRenderer.VisualVariables.OfType<CIMRotationVisualVariable>().FirstOrDefault();
-                var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
-                var rotationExpression = rotationInfoZ.ValueExpressionInfo.Expression; // this expression stores the field name  
-            });
-            #endregion
-        }
-        public void EnableLabeling()
-    {
-      #region Enable labeling on a layer
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // toggle the label visibility
-        featureLayer.SetLabelVisibility(!featureLayer.IsLabelVisible);
-      });
-      #endregion
-    }
-
-
-    public void AccessDisplayField()
-    {
-      #region Access the display field for a layer
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // get the CIM definition from the layer
-        var cimFeatureDefinition = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
-        // get the view of the source table underlying the layer
-        var cimDisplayTable = cimFeatureDefinition.FeatureTable;
-        // this field is used as the 'label' to represent the row
-        var displayField = cimDisplayTable.DisplayField;
-      });
-      #endregion
-    }
-
-    public void FindConnectedAttribute()
-    {
-      #region Find connected attribute field for rotation
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // get the CIM renderer from the layer
-        var cimRenderer = featureLayer.GetRenderer() as ArcGIS.Core.CIM.CIMSimpleRenderer;
-        // get the collection of connected attributes for rotation
-        var cimRotationVariable = cimRenderer.VisualVariables.OfType<ArcGIS.Core.CIM.CIMRotationVisualVariable>().FirstOrDefault();
-        // the z direction is describing the heading rotation
-        var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
-        var rotationExpression = rotationInfoZ.Expression; // this expression stores the field name  
-      });
-      #endregion
-    }
-
-    public void ScaleSymbols()
-    {
-      #region Toggle "Scale layer symbols when reference scale is set"
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // get the CIM layer definition
-        var cimFeatureLayer = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMFeatureLayer;
-        // turn on the option to scale the symbols in this layer based in the map's reference scale
-        cimFeatureLayer.ScaleSymbols = true;
-      });
-      #endregion
-    }
-
-    public void SetLayerCache()
-    {
-      #region Set the layer cache
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // change the layer cache type to maximum age
-        featureLayer.SetDisplayCacheType(ArcGIS.Core.CIM.DisplayCacheType.MaxAge);
-        // change from the default 5 min to 2 min
-        featureLayer.SetDisplayCacheMaxAge(TimeSpan.FromMinutes(2));
-      });
-      #endregion
-    }
-
-    public void ChangeSelectionColor()
-    {
-      #region Change the layer selection color
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // get the CIM definition of the layer
-        var layerDef = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
-        // disable the default symbol
-        layerDef.UseSelectionSymbol = false;
-        // assign a new color
-        layerDef.SelectionColor = ColorFactory.Instance.RedRGB;
-        // apply the definition to the layer
-        featureLayer.SetDefinition(layerDef);
-
-        if (!featureLayer.IsVisible) featureLayer.SetVisibility(true);
-        //Do a selection
-
-        MapView.Active.SelectFeatures(MapView.Active.Extent);
-      });
-      #endregion
-    }
-        public async void RemoveAllUncheckedLayers()
-        {
-            #region Removes all layers that are unchecked
-            var map = MapView.Active.Map;
-            if (map == null)
-                return;
-            //Get the group layers first
-            IReadOnlyList<GroupLayer> groupLayers = map.Layers.OfType<GroupLayer>().ToList();
-            //Iterate and remove the layers within the group layers that are unchecked.
-            foreach (var groupLayer in groupLayers)
-            {
-                //Get layers that not visible within the group
-                var layers = groupLayer.Layers.Where(l => l.IsVisible == false).ToList();
-                //Remove all the layers that are not visible within the group
-                await QueuedTask.Run(() => map.RemoveLayers(layers));
-            }
-
-            //Group Layers that are empty and are unchecked
-            foreach (var group in groupLayers)
-            {
-                if (group.Layers.Count == 0 && group.IsVisible == false) //No layers in the group
-                {
-                    //remove the group
-                    await QueuedTask.Run(() => map.RemoveLayer(group));
-                }
-            }
-
-            //Get Layers that are NOT Group layers and are unchecked
-            var notAGroupAndUnCheckedLayers = map.Layers.Where(l => !(l is GroupLayer) && l.IsVisible == false).ToList();
-            //Remove all the non group layers that are not visible
-            await QueuedTask.Run(() => map.RemoveLayers(notAGroupAndUnCheckedLayers));
-            #endregion
-
-        }
-        public async void RemoveEmptyGroups()
-        {
-            #region Remove empty groups
-            var map = MapView.Active.Map;
-            if (map == null)
-                return;
-            //Get the group layers
-            IReadOnlyList<GroupLayer> groupLayers = map.Layers.OfType<GroupLayer>().ToList();
-            foreach (var group in groupLayers)
-            {
-                if (group.Layers.Count == 0) //No layers in the group
-                {
-                    //remove the group
-                    await QueuedTask.Run(() => map.RemoveLayer(group));
-                }
-            }
-            #endregion
-
-        }
-        #region Create and apply Abbreviation Dictionary in the Map Definition to a layer
-        public static void CreateDictionary()
-        {            
-            //Get the map's defintion
-            var mapDefn = MapView.Active.Map.GetDefinition();
-            //Get the Map's Maplex labelling engine properties
-            var mapDefnPlacementProps = mapDefn.GeneralPlacementProperties as CIMMaplexGeneralPlacementProperties;
-
-            //Define the abbreaviations we need in an array            
-            List<CIMMaplexDictionaryEntry> abbreviationDictionary = new List<CIMMaplexDictionaryEntry>
-            {
-                new CIMMaplexDictionaryEntry {
-                Abbreviation = "Hts",
-                Text = "Heights",
-                MaplexAbbreviationType = MaplexAbbreviationType.Ending
-
-             },
-                new CIMMaplexDictionaryEntry
-                {
-                    Abbreviation = "Ct",
-                    Text = "Text",
-                    MaplexAbbreviationType = MaplexAbbreviationType.Ending
-
-                }
-                //etc
-            };
-            //The Maplex Dictionary - can hold multiple Abbreviation collections
-            var maplexDictionary = new List<CIMMaplexDictionary>
-            {
-                new CIMMaplexDictionary {
-                    Name = "NameEndingsAbbreviations",
-                    MaplexDictionary = abbreviationDictionary.ToArray()
-                }
-
-            };
-            //Set the Maplex Label Engine Dictionary property to the Maplex Dictionary collection created above.
-            mapDefnPlacementProps.Dictionaries = maplexDictionary.ToArray();
-            //Set the Map defintion 
-            MapView.Active.Map.SetDefinition(mapDefn);
-        }
-
-        private static void ApplyDictionary()
-        {
-            var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().First();
-
-            QueuedTask.Run(() => {
-                //Creates Abbreviation dictionary and adds to Map Defintion                                
-                CreateDictionary();
-                //Get the layer's definition
-                var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
-                //Get the label classes - we need the first one
-                var listLabelClasses = lyrDefn.LabelClasses.ToList();
-                var theLabelClass = listLabelClasses.FirstOrDefault();
-                //Modify label Placement props to use abbreviation dictionary 
-                CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
-                theLabelClass.MaplexLabelPlacementProperties.DictionaryName = "NameEndingsAbbreviations";
-                theLabelClass.MaplexLabelPlacementProperties.CanAbbreviateLabel = true;
-                theLabelClass.MaplexLabelPlacementProperties.CanStackLabel = false;
-                //Set the labelClasses back
-                lyrDefn.LabelClasses = listLabelClasses.ToArray();
-                //set the layer's definition
-                featureLayer.SetDefinition(lyrDefn);
-            });
-        }
-        
-
-#endregion
 
     }
 }

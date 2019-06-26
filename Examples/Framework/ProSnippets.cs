@@ -165,6 +165,37 @@ namespace Framework.Snippets {
 
         }
 
+    public void Foo()
+    {
+      #region Get Information on the Currently Installed Add-ins
+
+      var addin_infos = FrameworkApplication.GetAddInInfos();
+      StringBuilder sb = new StringBuilder();
+
+      foreach(var info in addin_infos)
+      {
+        sb.AppendLine($"Addin: {info.Name}");
+        sb.AppendLine($"Description {info.Description}");
+        sb.AppendLine($"ImagePath {info.ImagePath}");
+        sb.AppendLine($"Author {info.Author}");
+        sb.AppendLine($"Company {info.Company}");
+        sb.AppendLine($"Date {info.Date}");
+        sb.AppendLine($"Version {info.Version}");
+        sb.AppendLine($"FullPath {info.FullPath}");
+        sb.AppendLine($"DigitalSignature {info.DigitalSignature}");
+        sb.AppendLine($"IsCompatible {info.IsCompatible}");
+        sb.AppendLine($"IsDeleted {info.IsDeleted}");
+        sb.AppendLine($"TargetVersion {info.TargetVersion}");
+        sb.AppendLine($"ErrorMsg {info.ErrorMsg}");
+        sb.AppendLine($"ID {info.ID}");
+        sb.AppendLine("");
+      }
+      System.Diagnostics.Debug.WriteLine(sb.ToString());
+      MessageBox.Show(sb.ToString(), "Addin Infos");
+
+      #endregion
+    }
+
         public void Dockpane1()
     {
       #region Find a dockpane

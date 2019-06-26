@@ -97,28 +97,53 @@ namespace ProSnippetsGeoprocessing
       }
             #endregion
 
-        #region Stop a featureclass created with GP from automatically adding to the map
-        var GPresult = Geoprocessing.ExecuteToolAsync(tool_path, args, null, null, null, GPExecuteToolFlags.None);
-        #endregion
-        }
+      #region Stop a featureclass created with GP from automatically adding to the map
+      var GPresult = Geoprocessing.ExecuteToolAsync(tool_path, args, null, null, null, GPExecuteToolFlags.None);
+      #endregion
+      }
 
-        #region Multi Ring Buffer
-        //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
-        //https://github.com/Esri/arcgis-pro-sdk-community-samples
-        protected async Task<string> CreateRings(EditingTemplate currentTemplate)
+      #region Multi Ring Buffer
+      //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
+      //https://github.com/Esri/arcgis-pro-sdk-community-samples
+      protected async Task<string> CreateRings(EditingTemplate currentTemplate)
+      {
+          var valueArray = await QueuedTask.Run(() =>
+          {
+              return Geoprocessing.MakeValueArray(currentTemplate.MapMember.Name,
+                    @"C:\Data\FeatureTest\FeatureTest.gdb\Points_MultipleRingBuffer",
+                    new List<string> { "1000", "2000" }, "Meters", "Distance",
+                    "ALL", "FULL");
+          });
+          IGPResult gpResult = await Geoprocessing.ExecuteToolAsync("Analysis.MultipleRingBuffer", valueArray);
+          return string.IsNullOrEmpty(gpResult.ReturnValue)
+                ? $@"Error in gp tool: {gpResult.ErrorMessages}"
+                : $@"Ok: {gpResult.ReturnValue}";
+      }
+      #endregion
+
+      #region Non-blocking execution of a Geoprocessing tool
+      //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
+      //https://github.com/Esri/arcgis-pro-sdk-community-samples
+      protected async Task<string> NonBlockingExecuteGP(EditingTemplate currentTemplate)
+      {
+        var valueArray = await QueuedTask.Run(() =>
         {
-            var valueArray = await QueuedTask.Run(() =>
-            {
-                return Geoprocessing.MakeValueArray(currentTemplate.MapMember.Name,
-                     @"C:\Data\FeatureTest\FeatureTest.gdb\Points_MultipleRingBuffer",
-                     new List<string> { "1000", "2000" }, "Meters", "Distance",
-                     "ALL", "FULL");
-            });
-            IGPResult gpResult = await Geoprocessing.ExecuteToolAsync("Analysis.MultipleRingBuffer", valueArray);
-            return string.IsNullOrEmpty(gpResult.ReturnValue)
-                 ? $@"Error in gp tool: {gpResult.ErrorMessages}"
-                 : $@"Ok: {gpResult.ReturnValue}";
-        }
-        #endregion
-    }
+          string in_data = @"C:\tools\data.gdb\cities";
+          string cities_buff = @"E:\data\data.gdb\cities_2km";
+
+          return Geoprocessing.MakeValueArray(in_data, cities_buff, "2000 Meters");
+        });
+
+        // to let the GP tool run asynchronously without blocking the main thread
+        // use the GPThread option of GPExecuteToolFlasgs
+        //
+        GPExecuteToolFlags flags = GPExecuteToolFlags.GPThread;  // instruct the tool run non-blocking GPThread
+        IGPResult gpResult = await Geoprocessing.ExecuteToolAsync("Analysis.Buffer", valueArray, null, null, null, flags);
+
+        return string.IsNullOrEmpty(gpResult.ReturnValue)
+              ? $@"Error in gp tool: {gpResult.ErrorMessages}"
+              : $@"Ok: {gpResult.ReturnValue}";
+      }
+      #endregion
+  }
 }

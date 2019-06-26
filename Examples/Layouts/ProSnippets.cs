@@ -37,7 +37,9 @@ namespace ProSnippetsTasks
 {
   class Snippets
   {
-    async public void snippets_ProjectItems()
+        #region ProSnippet Group: Layout Project Items
+        #endregion
+        async public void snippets_ProjectItems()
     {
       #region Reference layout project items and their associated layout
       //Reference layout project items and their associated layout.
@@ -212,8 +214,9 @@ namespace ProSnippetsTasks
       }
       #endregion
     }
-
-    async public void snippets_CreateLayoutElements()
+        #region ProSnippet Group: Create Layout Elements
+        #endregion
+        async public void snippets_CreateLayoutElements()
     {
       LayoutView layoutView = LayoutView.Active;
       Layout layout = layoutView.Layout;
@@ -606,9 +609,10 @@ namespace ProSnippetsTasks
       #endregion        
     }
 
-    
 
-    public void snippets_elements()
+        #region ProSnippet Group: Layout Elements & Selection
+        #endregion
+        public void snippets_elements()
     {
       #region Find an element on a layout
       //Find and element on a layout.
@@ -753,8 +757,9 @@ namespace ProSnippetsTasks
       #endregion
 
     }
-
-    public void snippets_UpdateElements()
+        #region ProSnippet Group: Update Layout Elements
+        #endregion
+        public void snippets_UpdateElements()
     {
       double x = 0;
       double y = 0;
@@ -908,8 +913,9 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
-
-    async public void snippets_MapFrame()
+        #region ProSnippet Group: Layout MapFrame
+        #endregion
+        async public void snippets_MapFrame()
     {
       Layout layout = LayoutView.Active.Layout;
 
@@ -1024,8 +1030,9 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
-
-    async public void snippets_MapSeries()
+        #region ProSnippet Group: Layout MapSeries
+        #endregion
+        async public void snippets_MapSeries()
     {
       Layout layout = LayoutView.Active.Layout;
 
@@ -1072,8 +1079,9 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
-
-    async public void snippets_StandardExport()
+        #region ProSnippet Group: Layout Export
+        #endregion
+        async public void snippets_StandardExport()
     {
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
       Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());

@@ -32,6 +32,8 @@ namespace CartoFeatures.ProSnippet
   class ProSnippet
   {
     //style management
+    #region ProSnippet Group: Style Management
+    #endregion
     public void GetStyleInProjectByName()
     {
       #region How to get a style in project by name
@@ -167,9 +169,11 @@ namespace CartoFeatures.ProSnippet
       //return true if style was upgraded
       return success;
     }
-    #endregion
+        #endregion
 
     //construct point symbol
+    #region ProSnippet Group: Symbols
+    #endregion
     public async Task ConstructPointSymbol_1()
     {
       #region How to construct a point symbol of a specific color and size
@@ -319,19 +323,75 @@ namespace CartoFeatures.ProSnippet
       #endregion
     }
 
-    //symbol search
-    #region How to search for a specific item in a style
-    public Task<SymbolStyleItem> GetSymbolFromStyleAsync(StyleProjectItem style, string key)
+
+    private static void GetSymbol()
     {
-      return QueuedTask.Run(() =>
-      {
+        #region Modify a point symbol created from a character marker    
+        //create marker from the Font, char index,size,color
+        var cimMarker = SymbolFactory.Instance.ConstructMarker(125, "Wingdings 3", "Regular", 6, ColorFactory.Instance.BlueRGB) as CIMCharacterMarker;
+        var polygonMarker = cimMarker.Symbol;
+        //modifying the polygon's outline and fill
+        //This is the outline
+        polygonMarker.SymbolLayers[0] = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.GreenRGB, 2, SimpleLineStyle.Solid);
+        //This is the fill
+        polygonMarker.SymbolLayers[1] = SymbolFactory.Instance.ConstructSolidFill(ColorFactory.Instance.BlueRGB);
+        //create a symbol from the marker 
+        //Note this overload of ConstructPointSymbol does not need to be run within QueuedTask.Run.
+        var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(cimMarker);
+        #endregion
+    }
+    private static Task CreateSymbolSwatch()
+    {
+        return QueuedTask.Run(() => {
+            #region Create a Swatch for a given symbol
+
+            //Note: call within QueuedTask.Run()
+            CIMSymbol symbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
+            //You can generate a swatch for a text symbols also.
+            var si = new SymbolStyleItem()
+            {
+                Symbol = symbol,
+                PatchHeight = 64,
+                PatchWidth = 64
+            };
+            return si.PreviewImage;
+            #endregion
+        });
+    }
+
+        private static void SymbolLookup(FeatureLayer featureLayer)
+        {
+            #region Lookup Symbol
+            //Note: Run within QueuedTask.Run
+            //Get the selection
+            var selection = featureLayer.GetSelection();
+            //Get the first Object ID
+            var firstOID = selection.GetObjectIDs().FirstOrDefault();
+            //Determine whether the layer's renderer type supports symbol lookup.
+            if (featureLayer.CanLookupSymbol())
+            {
+                //Looks up the symbol for the corresponding feature identified by the object id.
+                var symbol = featureLayer.LookupSymbol(firstOID, MapView.Active);
+                var jSon = symbol.ToJson(); //Create a JSON encoding of the symbol
+                //Do something with symbol
+            }
+            #endregion
+        }
+        #region ProSnippet Group: Symbol search
+        #endregion
+        //symbol search
+        #region How to search for a specific item in a style
+        public Task<SymbolStyleItem> GetSymbolFromStyleAsync(StyleProjectItem style, string key)
+    {
+        return QueuedTask.Run(() =>
+        {
         if (style == null)
-          throw new System.ArgumentNullException();
+            throw new System.ArgumentNullException();
 
         //Search for a specific point symbol in style
         SymbolStyleItem item = (SymbolStyleItem)style.LookupItem(StyleItemType.PointSymbol, key);
         return item;
-      });
+        });
     }
     #endregion
 
@@ -423,12 +483,15 @@ namespace CartoFeatures.ProSnippet
       //Search for standard label placement
       return QueuedTask.Run(() => style.SearchLabelPlacements(StyleItemType.StandardLabelPlacement, searchString));
     }
+        #endregion
+    
+    #region ProSnippet Group: Feature Layer Symbology
     #endregion
 
-    //feature layer symbology
-    #region How to set symbol for a feature layer symbolized with simple renderer
+        //feature layer symbology
+        #region How to set symbol for a feature layer symbolized with simple renderer
 
-    public Task SetFeatureLayerSymbolAsync(FeatureLayer ftrLayer, CIMSymbol symbolToApply)
+        public Task SetFeatureLayerSymbolAsync(FeatureLayer ftrLayer, CIMSymbol symbolToApply)
     {
       if (ftrLayer == null || symbolToApply == null)
         throw new System.ArgumentNullException();
@@ -518,7 +581,29 @@ namespace CartoFeatures.ProSnippet
               featureLayer.SetRenderer(renderer);
       });
     }
+        #endregion
+    #region How to apply a color ramp from a style to a feature layer
+
+    public async Task ApplyColorRampAsync(FeatureLayer featureLayer, string[] fields)
+    {
+
+        StyleProjectItem style =
+            Project.Current.GetItems<StyleProjectItem>().FirstOrDefault(s => s.Name == "ColorBrewer Schemes (RGB)");
+        if (style == null) return;
+        var colorRampList = await QueuedTask.Run(() => style.SearchColorRamps("Red-Gray (10 Classes)"));
+        if (colorRampList == null || colorRampList.Count == 0) return;
+        CIMColorRamp cimColorRamp = null;
+        CIMRenderer renderer = null;
+        await QueuedTask.Run(() =>
+        {
+            cimColorRamp = colorRampList[0].ColorRamp;
+            var rendererDef = new UniqueValueRendererDefinition(fields, null, cimColorRamp);
+            renderer = featureLayer?.CreateRenderer(rendererDef);
+            featureLayer?.SetRenderer(renderer);
+        });
+
+    }
     #endregion
 
-  }
+    }
 }

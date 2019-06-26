@@ -32,6 +32,8 @@ using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Core.Data;
 using Attribute = ArcGIS.Desktop.Editing.Attributes.Attribute;
+using ArcGIS.Desktop.Framework;
+using System.Windows.Input;
 
 namespace EditingSDKExamples
 {
@@ -54,6 +56,9 @@ namespace EditingSDKExamples
       //elsewhere
       editOp.UndoAsync();
 
+      #region ProSnippet Group: Undo / Redo
+      #endregion
+
       #region Undo/Redo the Most Recent Operation
 
       //undo
@@ -66,7 +71,26 @@ namespace EditingSDKExamples
 
       #endregion
     }
-    
+
+    #region ProSnippet Group: Edit Templates
+    #endregion
+
+    public void FindTemplateByName()
+    {
+      #region Find edit template by name on a layer
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        //get the templates
+        var map = ArcGIS.Desktop.Mapping.MapView.Active.Map;
+        if (map == null)
+          return;
+
+        var mainTemplate = map.FindLayers("main").FirstOrDefault()?.GetTemplate("Distribution");
+        var mhTemplate = map.FindLayers("Manhole").FirstOrDefault()?.GetTemplate("Active");
+      });
+      #endregion
+    }
+
     #region Change Default Edit tool for a template
     public Task ChangeTemplateDefaultToolAsync(ArcGIS.Desktop.Mapping.FeatureLayer flayer,
                       string toolContentGUID, string templateName)
@@ -112,6 +136,41 @@ namespace EditingSDKExamples
     }
 
     #endregion
+
+    protected void FilterTemplateTools()
+    {
+      #region Hide or show editing tools on templates
+      QueuedTask.Run(() =>
+      {
+        //hide all tools except line tool on layer
+        var featLayer = MapView.Active.Map.FindLayers("Roads").First();
+
+        var editTemplates = featLayer.GetTemplates();
+        var newCIMEditingTemplates = new List<CIMEditingTemplate>();
+
+        foreach (var et in editTemplates)
+        {
+          //initialize template by activating default tool
+          et.ActivateDefaultToolAsync();
+          var cimEditTemplate = et.GetDefinition();
+          //get the visible tools on this template
+          var allTools = et.ToolIDs.ToList();
+          //add the hidden tools on this template
+          allTools.AddRange(cimEditTemplate.GetExcludedToolDamlIds().ToList());
+          //hide all the tools then allow the line tool
+          cimEditTemplate.SetExcludedToolDamlIds(allTools.ToArray());
+          cimEditTemplate.AllowToolDamlID("esri_editing_SketchLineTool");
+          newCIMEditingTemplates.Add(cimEditTemplate);
+        }
+        //update the layer templates
+        var layerDef = featLayer.GetDefinition() as CIMFeatureLayer;
+        // Set AutoGenerateFeatureTemplates to false for template changes to stick
+        layerDef.AutoGenerateFeatureTemplates = false;
+        layerDef.FeatureTemplates = newCIMEditingTemplates.ToArray();
+        featLayer.SetDefinition(layerDef);
+      });
+      #endregion
+    }
 
     public void CreateTemplate()
     {
@@ -228,6 +287,9 @@ namespace EditingSDKExamples
 
     }
 
+    #region ProSnippet Group: Annotation
+    #endregion
+
     #region Annotation Construction Tool
 
     //In your config.daml...set the categoryRefID
@@ -277,6 +339,15 @@ namespace EditingSDKExamples
 
     #endregion
 
+    public static void StartEditAnnotationTool()
+    {
+      #region Programmatically start Edit Annotation
+
+      var plugin = FrameworkApplication.GetPlugInWrapper("esri_editing_EditVerticesText");
+      if (plugin.Enabled)
+        ((ICommand)plugin).Execute(null);
+      #endregion
+    }
 
     //Using Inspector...
     internal async void UpdateAnnotation()
