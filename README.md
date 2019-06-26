@@ -447,7 +447,7 @@ This Visual Studio item template is used to create a custom project item in your
 **ArcGIS Pro Extensions NuGet:**<br/>
 * Full support availability.
 
-For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.3
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.4
 ](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](http://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
 #### 3. SDK Resources
