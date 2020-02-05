@@ -530,18 +530,21 @@ namespace MapAuthoring.RealtimeProSnippet
           {
             while (rc.MoveNext())
             {
-              //determine the origin of the row event
-              switch (rc.Current.GetRowSource())
+              using (var row = rc.Current)
               {
-                case RealtimeRowSource.PreExisting:
-                  //pre-existing row at the time of subscribe
-                  continue;
-                case RealtimeRowSource.EventInsert:
-                  //row was inserted after subscribe
-                  continue;
-                case RealtimeRowSource.EventDelete:
-                  //row was deleted after subscribe
-                  continue;
+                //determine the origin of the row event
+                switch (row.GetRowSource())
+                {
+                  case RealtimeRowSource.PreExisting:
+                    //pre-existing row at the time of subscribe
+                    continue;
+                  case RealtimeRowSource.EventInsert:
+                    //row was inserted after subscribe
+                    continue;
+                  case RealtimeRowSource.EventDelete:
+                    //row was deleted after subscribe
+                    continue;
+                }
               }
             }
           }
@@ -583,7 +586,10 @@ namespace MapAuthoring.RealtimeProSnippet
               //check for row events
               while (rc.MoveNext())
               {
-                //etc
+                using (var row = rc.Current)
+                {
+                  //etc
+                }
               }
             }
           }
@@ -621,7 +627,10 @@ namespace MapAuthoring.RealtimeProSnippet
           //check for row events
           while (rc.MoveNext())
           {
-            //etc
+            using (var row = rc.Current)
+            {
+              //etc
+            }
           }
         }
       }
@@ -726,21 +735,24 @@ namespace MapAuthoring.RealtimeProSnippet
             //default is no cancellation
             while (await rc.WaitForRowsAsync())
             {
-              while(rc.MoveNext())
+              while (rc.MoveNext())
               {
-                switch (rc.Current.GetRowSource())
+                using (var row = rc.Current)
                 {
-                  case RealtimeRowSource.EventInsert:
-                    //getting geometry from new events as they arrive
-                    Polygon poly = ((RealtimeFeature)rc.Current).GetShape() as Polygon;
+                  switch (row.GetRowSource())
+                  {
+                    case RealtimeRowSource.EventInsert:
+                      //getting geometry from new events as they arrive
+                      Polygon poly = ((RealtimeFeature)row).GetShape() as Polygon;
 
-                    //using the geometry to select features from another feature layer
-                    spatialFilter.FilterGeometry = poly;//project poly if needed...
-                    countyFeatureLayer.Select(spatialFilter);
-                    continue;
-                  default:
-                    continue;
-                }
+                      //using the geometry to select features from another feature layer
+                      spatialFilter.FilterGeometry = poly;//project poly if needed...
+                      countyFeatureLayer.Select(spatialFilter);
+                      continue;
+                    default:
+                      continue;
+                  }
+                }                  
               }
             }
           }//row cursor is disposed. row cursor is unsubscribed
@@ -776,19 +788,21 @@ namespace MapAuthoring.RealtimeProSnippet
               //pre-existing rows will be retrieved that were searched
               while (rc.MoveNext())
               {
-                var row = rc.Current;
-                var row_source = row.GetRowSource();
-                switch (row_source)
+                using (var row = rc.Current)
                 {
-                  case RealtimeRowSource.EventDelete:
-                    //TODO - handle deletes
-                    break;
-                  case RealtimeRowSource.EventInsert:
-                    //TODO handle inserts
-                    break;
-                  case RealtimeRowSource.PreExisting:
-                    //TODO handle pre-existing rows
-                    break;
+                  var row_source = row.GetRowSource();
+                  switch (row_source)
+                  {
+                    case RealtimeRowSource.EventDelete:
+                      //TODO - handle deletes
+                      break;
+                    case RealtimeRowSource.EventInsert:
+                      //TODO handle inserts
+                      break;
+                    case RealtimeRowSource.PreExisting:
+                      //TODO handle pre-existing rows
+                      break;
+                  }
                 }
               }
             }
@@ -818,7 +832,10 @@ namespace MapAuthoring.RealtimeProSnippet
                 //check for row events
                 while (rc.MoveNext())
                 {
-                  //etc
+                  using (var record = rc.Current)
+                  {
+                    //etc
+                  }
                 }
               }
             }

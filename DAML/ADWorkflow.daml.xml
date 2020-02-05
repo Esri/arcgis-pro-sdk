@@ -13,7 +13,7 @@
   </dependencies>
 
   <products>
-    <insertProduct id="esri_product_workflow" caption="Workflow Manager" description="ArcGIS Workflow Manager Extension" code="40,200" />
+    <insertProduct id="esri_product_workflow" caption="Workflow Manager" description="Provides tools for work management, that help automate and simplify GIS and non-GIS work." code="40,200" />
   </products>
   
   <categories>
@@ -511,10 +511,11 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <button id="esri_workflow_cloneJobButton" className="JobPane.Ribbon.CloneJobButton" caption="Clone Job" keytip="CO" extendedCaption="Clone Job"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClone16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobClone32.png"
-                loadOnClick="false">
+                loadOnClick="false"
+                condition="esri_workflow_workflowCreateJobUserPrivilegeCondition">
           <tooltip>
             Clone the current job
-            <disabledText>There is no current job</disabledText><!-- Should not happen -->
+            <disabledText>Current user does not have the Create Job privilege or there is no current job.</disabledText><!-- Should not happen -->
           </tooltip>
         </button>
         
@@ -909,10 +910,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
       <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
     </insertCondition>
     <insertCondition id="esri_workflow_workflowIndividualDataWorkspaceCondition" caption="Configuration has an individual data workspace">
-      <and>
-        <state id="esri_workflow_workflowIndividualDataWorkspaceState" />
-        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
-      </and>
+      <state id="esri_workflow_workflowIndividualDataWorkspaceState" />
     </insertCondition>
     <insertCondition id="esri_workflow_workflowCreateJobUserPrivilegeCondition" caption="A Worflow job can be created">
       <state id="esri_workflow_workflowCreateJobUserPrivilegeState" />

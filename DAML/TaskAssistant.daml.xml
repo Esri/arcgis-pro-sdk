@@ -13,13 +13,6 @@
   </accelerators>
   
   <categories>
-    <!--<updateCategory refID="esri_browseDialogFilters">
-      <insertComponent id="esri_browseDialogFilters_geodatabases_add_withGDBFolder" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
-        <content exclude="esri_browsePlaces_Online" include="FolderConnection, GDB">
-          <filter refID="esri_browseDialogFilters_databases_add" />
-        </content>
-      </insertComponent>
-    </updateCategory>-->
     
     <updateCategory refID="esri_core_projectContainers">
       <insertComponent id="esri_tasks_TaskContainer" className="ArcGIS.Desktop.Internal.TaskAssistant.TaskContainer" insert="after" placeWith="esri_geodatabase_serverConnectionContainer">
@@ -63,6 +56,7 @@
       <component id="esri_core_redoButton"/>
       <component id="esri_mapping_syncCenterAndScaleButton"/>
       <component id="esri_mapping_syncCenterButton"/>
+      <component id="esri_editing_GetPointTool"/>
     </insertCategory>
 
     <!--list of commands (and associated dock panes) that participate in the auto panecleanup-->
@@ -208,9 +202,6 @@
         <updateGroup refID="esri_core_dockWindows">
           <insertButton refID="esri_tasks_ShowTasks" size="large" />
         </updateGroup>
-        <updateGroup refID="esri_core_projectData">
-          <insertButtonPalette refID="esri_task_insertMenu" placeWith="esri_geodatabase_addFolderConnectionButton" insert="after" size="middle"/>
-        </updateGroup>
       </groups>
     </updateModule>
         
@@ -258,10 +249,18 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="TI">                
           <tooltip heading="">Create a new task item in the project. A task item contains a set of tasks. The new task item is saved within the project.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_tasks_ImportTaskFile" caption="Import And Open Task" extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">                
-          <tooltip heading="">Import a task file and add it as a task item to the project. A copy of the task item is saved within the project. Future changes to the task file are not reflected in the project.<disabledText></disabledText></tooltip>
+        <button id="esri_tasks_ImportTaskFile" caption="Import And Open Task" extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">
+          <tooltip heading="">
+            Import a task file and add it as a task item to the project. A copy of the task item is saved within the project. Future changes to the task file are not reflected in the project.<disabledText></disabledText>
+          </tooltip>
         </button>
-        
+        <!--same as esri_tasks_ImportTaskFile but caption is Browse, icon is FolderOpenState-->
+        <button id="esri_tasks_ImportTaskFileBrowse" caption="Browse..." extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderOpenState16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">
+          <tooltip heading="">
+            Import a task file and add it as a task item to the project. A copy of the task item is saved within the project. Future changes to the task file are not reflected in the project.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <!--project pane Project Item context menuItems-->
         <button id="esri_tasks_OpenProjectTaskItem" caption="Open" extendedCaption="Open a task item." className="ArcGIS.Desktop.Internal.TaskAssistant.OpenTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png" condition="esri_tasks_openProjectCondition" loadOnClick="false" helpContextID="">
           <tooltip heading="">View the task item.<disabledText></disabledText></tooltip>
@@ -376,18 +375,29 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
             Proceed to the next step.<disabledText></disabledText>
           </tooltip>
         </button>
+        
+        <dynamicMenu id="esri_tasks_ImportMenu"
+             className="ArcGIS.Desktop.Internal.TaskAssistant.ImportDynamicMenu"
+             caption="Import" hidden="true"/>
       </controls>
-      
+
       <menus>
+        <menu id="esri_tasks_ImportTaskFileMenu" caption="Import and Open Task File" 
+                    largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png" 
+                    smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png">
+          <button refID="esri_tasks_ImportTaskFileBrowse"/>
+          <dynamicMenu refID="esri_tasks_ImportMenu" inline="true"/>
+        </menu>
+        
         <menu id="esri_task_insertMenu" caption="Task" extendedCaption="Ribbon add task items menu" keytip="TA" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png">
           <tooltip heading="Task">Add task items to your project.</tooltip>
           <button refID="esri_tasks_NewProjectTaskItem" />
-          <button refID="esri_tasks_ImportTaskFile" separator="true" />
+          <menu refID="esri_tasks_ImportTaskFileMenu"/>
         </menu>
 
         <menu id="TaskAssistantFileContainerContextMenu" caption="Tasks Container">
           <button refID="esri_tasks_NewProjectTaskItem" />
-          <button refID="esri_tasks_ImportTaskFile" separator="true" />
+          <button refID="esri_tasks_ImportTaskFileBrowse" separator="true" />
         </menu>        
         <menu id="TaskAssistantProjectItemContextMenu" caption="Task Item">
           <button refID="esri_tasks_OpenProjectTaskItem" />
@@ -402,6 +412,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         <menu id="TaskAssistantFileItemContextMenu" caption="Task File" extendedCaption="Task File context menu">
           <button refID="esri_tasks_ImportOpenTaskFile" />
           <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_tasks_ProjectTaskFileProperties" separator="true"/>

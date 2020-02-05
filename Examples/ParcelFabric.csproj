@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{43211249-AFD6-8A3E-38CB-8415A47F8142}</ProjectGuid>
+    <ProjectGuid>{A3A78B5F-8F0A-1B04-3890-53BA24D2E686}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SceneLayers</RootNamespace>
-    <AssemblyName>SceneLayers</AssemblyName>
+    <RootNamespace>ParcelFabric</RootNamespace>
+    <AssemblyName>ParcelFabric</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -18,7 +18,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <BaseIntermediateOutputPath>obj\Debug\SceneLayers\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Debug\ParcelFabric\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <BaseIntermediateOutputPath>obj\Release\SceneLayers\</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\Release\ParcelFabric\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>NDEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -146,12 +146,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SceneLayers\ProSnippets.cs" />
-    <Compile Include="SceneLayers\ProSnippetsBuildingSceneLayerDiscipline.cs" />
-    <Compile Include="SceneLayers\ProSnippetsBuildingSceneLayerFilter.cs" />
-    <Compile Include="SceneLayers\ProSnippetsEditingFeatureSceneLayer.cs" />
-    <Compile Include="SceneLayers\ProSnippetsFeatureSceneLayer.cs" />
-    <Compile Include="SceneLayers\ProSnippetsPointCloudSceneLayer.cs" />
+    <Compile Include="ParcelFabric\ProSnippets.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

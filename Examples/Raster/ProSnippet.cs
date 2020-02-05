@@ -31,166 +31,186 @@ using ArcGIS.Core.Data.Raster;
 
 namespace Raster.ProSnippet
 {
-  class ProSnippet
-  {
-
-    public async void RasterDatasetSnippets()
+    class ProSnippet
     {
-      try
-      {
-        #region Open raster dataset in a folder.
-        // Create a FileSystemConnectionPath using the folder path.
-        FileSystemConnectionPath connectionPath = new FileSystemConnectionPath(new System.Uri(@"C:\Temp"), FileSystemDatastoreType.Raster);
-        // Create a new FileSystemDatastore using the FileSystemConnectionPath.
-        FileSystemDatastore dataStore = new FileSystemDatastore(connectionPath);
-        // Open the raster dataset.
-        RasterDataset fileRasterDataset = dataStore.OpenDataset<RasterDataset>("Sample.tif");
-        #endregion
 
-        #region Open raster dataset in a geodatabase.
-        // Create a FileGeodatabaseConnectionPath using the path to the gdb. Note: This can be a path to a .sde file.
-        FileGeodatabaseConnectionPath geodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Temp\rasters.gdb"));
-        // Create a new Geodatabase object using the FileGeodatabaseConnectionPath.
-        Geodatabase geodatabase = new Geodatabase(geodatabaseConnectionPath);
-        // Open the raster dataset.
-        RasterDataset gdbRasterDataset = geodatabase.OpenDataset<RasterDataset>("sample");
-        #endregion
-
-        RasterDataset rasterDataset = fileRasterDataset;
-        #region Get the raster dataset definition from a raster dataset.
-        await QueuedTask.Run(() =>
+        public async void RasterDatasetSnippets()
         {
-          RasterDatasetDefinition rasterDatasetDefinition = rasterDataset.GetDefinition();
-          rasterDatasetDefinition.GetBandCount();
-        });
-        #endregion
-
-        {
-          #region Create a raster cursor to iterate through the raster data.
-          await QueuedTask.Run(() =>
-          {
-            // Create a full raster from the raster dataset.
-            ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
-
-            // Calculate size of pixel blocks to process. Use 1000 or height/width of the raster, whichever is smaller.
-            int pixelBlockHeight = raster.GetHeight() > 1000 ? 1000 : raster.GetHeight();
-            int pixelBlockWidth = raster.GetWidth() > 1000 ? 1000 : raster.GetWidth();
-
-            // Create the raster cursor using the height and width calculated.
-            RasterCursor rasterCursor = raster.CreateCursor(pixelBlockWidth, pixelBlockHeight);
-
-            // Use a do while loop to iterate through the pixel blocks of the raster using the raster cursor.
-            do
+            try
             {
-              // Get the current pixel block from the cursor.
-              PixelBlock currentPixelBlock = rasterCursor.Current;
+                #region Open raster dataset in a folder.
+                // Create a FileSystemConnectionPath using the folder path.
+                FileSystemConnectionPath connectionPath = new FileSystemConnectionPath(new System.Uri(@"C:\Temp"), FileSystemDatastoreType.Raster);
+                // Create a new FileSystemDatastore using the FileSystemConnectionPath.
+                FileSystemDatastore dataStore = new FileSystemDatastore(connectionPath);
+                // Open the raster dataset.
+                RasterDataset fileRasterDataset = dataStore.OpenDataset<RasterDataset>("Sample.tif");
+                #endregion
+
+                #region Open raster dataset in a geodatabase.
+                // Create a FileGeodatabaseConnectionPath using the path to the gdb. Note: This can be a path to a .sde file.
+                FileGeodatabaseConnectionPath geodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Temp\rasters.gdb"));
+                // Create a new Geodatabase object using the FileGeodatabaseConnectionPath.
+                Geodatabase geodatabase = new Geodatabase(geodatabaseConnectionPath);
+                // Open the raster dataset.
+                RasterDataset gdbRasterDataset = geodatabase.OpenDataset<RasterDataset>("sample");
+                #endregion
+
+                RasterDataset rasterDataset = fileRasterDataset;
+                #region Get the raster dataset definition from a raster dataset.
+                await QueuedTask.Run(() =>
+                {
+                    RasterDatasetDefinition rasterDatasetDefinition = rasterDataset.GetDefinition();
+                    rasterDatasetDefinition.GetBandCount();
+                });
+                #endregion
+
+                {
+                    #region Access rows in a raster attribute table.
+                    var raster = MapView.Active.Map.GetLayersAsFlattenedList().OfType<RasterLayer>().FirstOrDefault();
+                    if (raster != null)
+                    {
+                        await QueuedTask.Run(() =>
+                        {
+                            var rasterTbl = raster.GetRaster().GetAttributeTable();
+                            var cursor = rasterTbl.Search();
+                            while (cursor.MoveNext())
+                            {
+                                var row = cursor.Current;
+                            }
+                        });
+                    }
+                    #endregion
+                }
+
+                {
+                    #region Create a raster cursor to iterate through the raster data.
+                    await QueuedTask.Run(() =>
+                    {
+              // Create a full raster from the raster dataset.
+              ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
+
+              // Calculate size of pixel blocks to process. Use 1000 or height/width of the raster, whichever is smaller.
+              int pixelBlockHeight = raster.GetHeight() > 1000 ? 1000 : raster.GetHeight();
+                        int pixelBlockWidth = raster.GetWidth() > 1000 ? 1000 : raster.GetWidth();
+
+              // Create the raster cursor using the height and width calculated.
+              RasterCursor rasterCursor = raster.CreateCursor(pixelBlockWidth, pixelBlockHeight);
+
+              // Use a do-while loop to iterate through the pixel blocks of the raster using the raster cursor.
+              do
+                        {
+                  // Get the current pixel block from the cursor.
+                  using (PixelBlock currentPixelBlock = rasterCursor.Current)
+                            {
+                      // Do something with the pixel block...
+                  }
+
+                  // Once you are done, move to the next pixel block.
+              }
+                        while (rasterCursor.MoveNext());
+                    });
+                    #endregion
+                }
+
+                {
+                    #region Read and Write pixels from and to a raster dataset using pixel blocks.
+                    await QueuedTask.Run(() =>
+                    {
+              // Create a full raster from the raster dataset.
+              ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
+
+              // Calculate size of pixel block to create. Use 128 or height/width of the raster, whichever is smaller.
+              int pixelBlockHeight = raster.GetHeight() > 128 ? 128 : raster.GetHeight();
+                        int pixelBlockWidth = raster.GetWidth() > 128 ? 128 : raster.GetWidth();
+
+              // Create a new (blank) pixel block.
+              PixelBlock currentPixelBlock = raster.CreatePixelBlock(pixelBlockWidth, pixelBlockHeight);
+
+              // Read pixel values from the raster dataset into the pixel block starting from the given top left corner.
+              raster.Read(0, 0, currentPixelBlock);
+
               // Do something with the pixel block...
 
-              // Once you are done, move to the next pixel block.
-            }
-            while (rasterCursor.MoveNext());
-          });
-          #endregion
-        }
-
-        {
-          #region Read and Write pixels from and to a raster dataset using pixel blocks.
-          await QueuedTask.Run(() =>
-          {
-            // Create a full raster from the raster dataset.
-            ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
-
-            // Calculate size of pixel block to create. Use 128 or height/width of the raster, whichever is smaller.
-            int pixelBlockHeight = raster.GetHeight() > 128 ? 128 : raster.GetHeight();
-            int pixelBlockWidth = raster.GetWidth() > 128 ? 128 : raster.GetWidth();
-
-            // Create a new (blank) pixel block.
-            PixelBlock currentPixelBlock = raster.CreatePixelBlock(pixelBlockWidth, pixelBlockHeight);
-
-            // Read pixel values from the raster dataset into the pixel block starting from the given top left corner.
-            raster.Read(0, 0, currentPixelBlock);
-
-            // Do something with the pixel block...
-
-            // Write the pixel block to the raster dataset starting from the given top left corner.
-            raster.Write(0, 0, currentPixelBlock);
-          });
-          #endregion
-        }
-
-        {
-          // Create a full raster from the raster dataset.
-          ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
-
-          // Calculate size of pixel block to create. Use 128 or height/width of the raster, whichever is smaller.
-          int pixelBlockHeight = raster.GetHeight() > 128 ? 128 : raster.GetHeight();
-          int pixelBlockWidth = raster.GetWidth() > 128 ? 128 : raster.GetWidth();
-
-          // Create a new (blank) pixel block.
-          PixelBlock currentPixelBlock = raster.CreatePixelBlock(pixelBlockWidth, pixelBlockHeight);
-
-          #region Process pixels using a pixel block
-          await QueuedTask.Run(() =>
-          {
-            // Read pixel values from the raster dataset into the pixel block starting from the given top left corner.
-            raster.Read(0, 0, currentPixelBlock);
-
-            // For each plane (band) in the pixel block
-            for (int plane = 0; plane < currentPixelBlock.GetPlaneCount(); plane++)
-            {
-              // Get a copy of the array of pixels from the pixel block corresponding to the current plane.
-              Array sourcePixels = currentPixelBlock.GetPixelData(plane, true);
-              // Get the height and width of the pixel block.
-              int pBHeight = currentPixelBlock.GetHeight();
-              int pBWidth = currentPixelBlock.GetWidth();
-
-              // Iterate through the pixels in the array.
-              for (int i = 0; i < pBHeight; i++)
-              {
-                for (int j = 0; j < pBWidth; j++)
-                {
-                  // Get the NoData mask value to see if the pixel is a valid pixel.
-                  if (Convert.ToByte(currentPixelBlock.GetNoDataMaskValue(plane, j, i)) == 1)
-                  {
-                    // Get the pixel value from the array and process it (add 5 to the value).
-                    // Note: This is assuming the pixel type is Unisigned 8bit.
-                    int pixelValue = Convert.ToInt16(sourcePixels.GetValue(j, i)) + 5;
-                    // Make sure the pixel value does not go above the range of the pixel type.
-                    pixelValue = pixelValue > 254 ? 254 : pixelValue;
-                    // Set the new pixel value to the array.
-                    // Note: This is assuming the pixel type is Unisigned 8bit.
-                    sourcePixels.SetValue(Convert.ToByte(pixelValue), j, i);
-                  }
+              // Write the pixel block to the raster dataset starting from the given top left corner.
+              raster.Write(0, 0, currentPixelBlock);
+                    });
+                    #endregion
                 }
-              }
-              // Set the modified array of pixels back to the pixel block.
-              currentPixelBlock.SetPixelData(plane, sourcePixels);
-            }
-            // Write the pixel block to the raster dataset starting from the given top left corner.
-            raster.Write(0, 0, currentPixelBlock);
-          });
-          #endregion
-          #region Calculate Raster statistics
-            //If a raster dataset has statistics, you can create a raster layer and get these statistics by accessing the colorizer.
-            await QueuedTask.Run(() =>
-            {
+
+                {
+                    // Create a full raster from the raster dataset.
+                    ArcGIS.Core.Data.Raster.Raster raster = rasterDataset.CreateFullRaster();
+
+                    // Calculate size of pixel block to create. Use 128 or height/width of the raster, whichever is smaller.
+                    int pixelBlockHeight = raster.GetHeight() > 128 ? 128 : raster.GetHeight();
+                    int pixelBlockWidth = raster.GetWidth() > 128 ? 128 : raster.GetWidth();
+
+                    // Create a new (blank) pixel block.
+                    PixelBlock currentPixelBlock = raster.CreatePixelBlock(pixelBlockWidth, pixelBlockHeight);
+
+                    #region Process pixels using a pixel block
+                    await QueuedTask.Run(() =>
+                    {
+              // Read pixel values from the raster dataset into the pixel block starting from the given top left corner.
+              raster.Read(0, 0, currentPixelBlock);
+
+              // For each plane (band) in the pixel block
+              for (int plane = 0; plane < currentPixelBlock.GetPlaneCount(); plane++)
+                        {
+                  // Get a copy of the array of pixels from the pixel block corresponding to the current plane.
+                  Array sourcePixels = currentPixelBlock.GetPixelData(plane, true);
+                  // Get the height and width of the pixel block.
+                  int pBHeight = currentPixelBlock.GetHeight();
+                            int pBWidth = currentPixelBlock.GetWidth();
+
+                  // Iterate through the pixels in the array.
+                  for (int i = 0; i < pBHeight; i++)
+                            {
+                                for (int j = 0; j < pBWidth; j++)
+                                {
+                          // Get the NoData mask value to see if the pixel is a valid pixel.
+                          if (Convert.ToByte(currentPixelBlock.GetNoDataMaskValue(plane, j, i)) == 1)
+                                    {
+                              // Get the pixel value from the array and process it (add 5 to the value).
+                              // Note: This is assuming the pixel type is Unisigned 8bit.
+                              int pixelValue = Convert.ToInt16(sourcePixels.GetValue(j, i)) + 5;
+                              // Make sure the pixel value does not go above the range of the pixel type.
+                              pixelValue = pixelValue > 254 ? 254 : pixelValue;
+                              // Set the new pixel value to the array.
+                              // Note: This is assuming the pixel type is Unisigned 8bit.
+                              sourcePixels.SetValue(Convert.ToByte(pixelValue), j, i);
+                                    }
+                                }
+                            }
+                  // Set the modified array of pixels back to the pixel block.
+                  currentPixelBlock.SetPixelData(plane, sourcePixels);
+                        }
+              // Write the pixel block to the raster dataset starting from the given top left corner.
+              raster.Write(0, 0, currentPixelBlock);
+                    });
+                    #endregion
+                    #region Calculate Raster statistics
+                    //If a raster dataset has statistics, you can create a raster layer and get these statistics by accessing the colorizer.
+                    await QueuedTask.Run(() =>
+                    {
                 //Accessing the raster layer
                 var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<BasicRasterLayer>().FirstOrDefault();
                 //Getting the colorizer
                 var colorizer = lyr.GetColorizer() as CIMRasterStretchColorizer;
                 //Accessing the statistics
                 var stats = colorizer.StretchStats;
-                var max = stats.max;
-                var min = stats.min;
-            });
-          #endregion
+                        var max = stats.max;
+                        var min = stats.min;
+                    });
+                    #endregion
 
                 }
             }
-      catch (Exception)
-      {        
-      }
-    }
+            catch (Exception)
+            {
+            }
+        }
 
-  }
+    }
 }

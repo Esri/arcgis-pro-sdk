@@ -30,10 +30,11 @@ using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
+using ArcGIS.Core.Data.UtilityNetwork.Extensions;
+  
 
-namespace UtilityNetworkProSnippets
+namespace UtilityNetworkProSnippets { 
 
-{
   class ProSnippetsUtilityNetwork
   {
 
@@ -122,6 +123,7 @@ namespace UtilityNetworkProSnippets
 
     #region Fetching a Row from an Element
 
+    // usage :   using (var row = FetchRowFromElement(...))
     public static Row FetchRowFromElement(UtilityNetwork utilityNetwork, Element element)
     {
       // Get the table from the element
@@ -242,6 +244,90 @@ namespace UtilityNetworkProSnippets
 
 
       #endregion
+    }
+
+
+
+    void RadialNetworkLifecycle(SubnetworkManager subnetworkManager, Tier mediumVoltageTier, Element elementR1)
+    {
+      #region Life cycle for a simple radial subnetwork with one controller
+
+      // Create a subnetwork named "Radial1" with a single controller
+      // elementR1 represents the device that serves as the subnetwork controller (e.g., circuit breaker)
+      Subnetwork subnetworkRadial1 = subnetworkManager.EnableControllerInEditOperation(mediumVoltageTier, elementR1, "Radial1", "R1", "my description", "my notes");
+
+      // ...
+
+      // Update the subnetwork and refresh the map
+      subnetworkRadial1.Update();
+      MapView.Active.Redraw(true);
+
+      // ...
+
+      // At some point, a subnetwork will need to be deleted.
+      
+      // First step is to disable the controller
+      subnetworkManager.DisableControllerInEditOperation(elementR1);
+
+      // At this point, the subnetwork is deleted, but all of the rows that have been labeled with the subnetwork ID need to be updated
+      subnetworkRadial1.Update();
+      MapView.Active.Redraw(true);
+
+      // The final step is to notify external systems (if any) using the Export Subnetwork geoprocessing tool
+
+      #endregion
+    }
+
+    void MeshNetworkLifeCycle(SubnetworkManager subnetworkManager, Tier lowVoltageMeshTier, Element elementM1, Element elementM2, Element elementM3)
+    {
+      #region Life cycle for a mesh subnetwork with multiple controllers
+
+      // Create a subnetwork named "Mesh1" from three controllers
+      // elementM1, elementM2, and elementM3 represent the devices that serve as subnetwork controllers (e.g., network protectors)
+      subnetworkManager.EnableController(lowVoltageMeshTier, elementM1, "Mesh1", "M1", "my description", "my notes");
+      subnetworkManager.EnableController(lowVoltageMeshTier, elementM2, "Mesh1", "M2", "my description", "my notes");
+      Subnetwork subnetworkMesh1 = subnetworkManager.EnableController(lowVoltageMeshTier, elementM3, "Mesh1", "M3", "my description", "my notes");
+      subnetworkMesh1.Update();
+      MapView.Active.Redraw(true);
+
+      // ...
+
+      // When deleting the subnetwork, each controller must be disabled before the subnetwork itself is deleted
+      subnetworkManager.DisableControllerInEditOperation(elementM1);
+      subnetworkManager.DisableControllerInEditOperation(elementM2);
+      subnetworkManager.DisableControllerInEditOperation(elementM3);
+
+      // After the subnetwork is deleted, all of the rows that have been labeled with the subnetwork ID need to be updated
+      subnetworkMesh1.Update();
+      MapView.Active.Redraw(true);
+
+      // The final step is to notify external systems (if any) using the Export Subnetwork geoprocessing tool
+      #endregion
+    }
+
+    void MultifeedRadialLifeCycle(SubnetworkManager subnetworkManager, Tier mediumVoltageTier, Element elementR2, Element elementR3)
+    {
+      #region Life cycle for a multifeed radial subnetwork with two controllers
+
+      // Create a subnetwork named "R2, R3" from two controllers
+      // elementR2 and elementR3 represent the devices that serve as subnetwork controllers (e.g., circuit breakers)
+      subnetworkManager.EnableControllerInEditOperation(mediumVoltageTier, elementR2, "R2, R3", "R2", "my description", "my notes");
+      subnetworkManager.EnableControllerInEditOperation(mediumVoltageTier, elementR3, "R2, R3", "R3", "my description", "my notes");
+
+      // If the tie switch between them is opened, the original subnetwork controllers must be disabled and re-enabled with different names
+      // This will create two new subnetworks, named "R2" and "R3"
+      subnetworkManager.DisableControllerInEditOperation(elementR2);
+      subnetworkManager.DisableControllerInEditOperation(elementR3);
+
+      Subnetwork subnetworkR2 = subnetworkManager.EnableControllerInEditOperation(mediumVoltageTier, elementR2, "R2", "R2", "my description", "my notes");
+      Subnetwork subnetworkR3 = subnetworkManager.EnableControllerInEditOperation(mediumVoltageTier, elementR3, "R3", "R3", "my description", "my notes");
+
+      subnetworkR2.Update();
+      subnetworkR3.Update();
+      MapView.Active.Redraw(true);
+
+      #endregion
+
     }
 
     #region ProSnippet Group: Tracing

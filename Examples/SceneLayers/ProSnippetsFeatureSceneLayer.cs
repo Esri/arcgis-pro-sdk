@@ -178,19 +178,22 @@ namespace ProSnippetsFeatureSceneLayer
         {
           while (rowCursor.MoveNext())
           {
-            var feature = rowCursor.Current as Feature;
-            var oid = feature.GetObjectID();
-            var shape = feature.GetShape();
-            var attrib = feature["Name"];
-            if (is3dObject)
+            using (var feature = rowCursor.Current as Feature)
             {
-              //shape is a multipatch
+              var oid = feature.GetObjectID();
+              var shape = feature.GetShape();
+              var attrib = feature["Name"];
+              if (is3dObject)
+              {
+                //shape is a multipatch
+              }
+              else
+              {
+                //shape is a point
+              }
+              rowCount += 1;
             }
-            else
-            {
-              //shape is a point
-            }
-            rowCount += 1;
+
           }
         }
 
@@ -292,9 +295,11 @@ namespace ProSnippetsFeatureSceneLayer
           {
             while (rc.MoveNext())
             {
-              var feature = rc.Current as Feature;
-              var oid = feature.GetObjectID();
-              //etc.
+              using (var feature = rc.Current as Feature)
+              {
+                var oid = feature.GetObjectID();
+                //etc.
+              }
             }
           }
         }

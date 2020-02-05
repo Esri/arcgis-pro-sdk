@@ -336,7 +336,12 @@ namespace EditingSDKExamples
       using (var rc = featureLayer.Search(queryFilter))
       {
         while (rc.MoveNext())
-          oidSet.Add(rc.Current.GetObjectID());
+        {
+          using (var record = rc.Current)
+          {
+            oidSet.Add(record.GetObjectID());
+          }
+        }
       }
 
       //create and execute the edit operation
@@ -367,7 +372,10 @@ namespace EditingSDKExamples
           //Create list of oids to update
           while (rc.MoveNext())
           {
-            oids.Add(rc.Current.GetObjectID());
+            using (var record = rc.Current)
+            {
+              oidSet.Add(record.GetObjectID());
+            }
           }
         }
 
@@ -626,6 +634,21 @@ namespace EditingSDKExamples
 
       #endregion
 
+      #region Edit Operation add attachment via RowToken
+
+      //ArcGIS Pro 2.5 extends the EditOperation.AddAttachment method to take a RowToken as a paramter.
+      //This allows you to create a feature, using EditOperation.CreateEx, and add an attachment in one transaction.
+
+      var editOpAttach = new EditOperation();
+      editOperation1.Name = string.Format("Create point in '{0}'", CurrentTemplate.Layer.Name);
+
+      var attachRowToken = editOpAttach.CreateEx(this.CurrentTemplate, polygon);
+      editOpAttach.AddAttachment(attachRowToken, @"c:\temp\image.jpg");
+
+      //Must be within a QueuedTask
+      editOpAttach.Execute();
+      #endregion
+
       #region SetOnUndone, SetOnRedone, SetOnComitted
 
       // SetOnUndone, SetOnRedone and SetOnComittedManage can be used to manage 
@@ -664,8 +687,8 @@ namespace EditingSDKExamples
 
       updateTestField.Execute();
 
-      #endregion
     }
+    #endregion
 
     #region ProSnippet Group: Row Events
     #endregion
@@ -913,16 +936,23 @@ namespace EditingSDKExamples
               //read file into memory stream
               var msr = new MemoryStream();
               using (FileStream file = new FileStream(@"d:\images\Hydrant.jpg", FileMode.Open, FileAccess.Read))
-              {file.CopyTo(msr);}
+              {
+                file.CopyTo(msr);
+              }
 
-              rc.Current["BlobField"] = msr;
-              rc.Current.Store();
+              using (var record = rc.Current)
+              {
+                record["BlobField"] = msr;
+                record.Store();
 
-              //read the blob field to a file
-              var msw = new MemoryStream();
-              msw = rc.Current["BlobField"] as MemoryStream;
-              using (FileStream file = new FileStream(@"d:\temp\blob.jpg", FileMode.Create, FileAccess.Write))
-              {msw.WriteTo(file);}
+                //read the blob field to a file
+                var msw = new MemoryStream();
+                msw = record["BlobField"] as MemoryStream;
+                using (FileStream file = new FileStream(@"d:\temp\blob.jpg", FileMode.Create, FileAccess.Write))
+                {
+                  msw.WriteTo(file);
+                }
+              }
             }
           }
         }, featLayer.GetTable());

@@ -159,6 +159,20 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Obtaining Geodatabase from FeatureLayer
 
+    #region Executing SQL Statements
+
+    // Executes raw SQL on the underlying database management system.
+    //  Any SQL is permitted (DDL or DML), but no results can be returned
+    public void ExecuteSQLOnGeodatabase(Geodatabase geodatabase, string statement)
+    {
+      QueuedTask.Run(() =>
+      {
+        DatabaseClient.ExecuteStatement(geodatabase, statement);
+      });
+    }
+
+    #endregion
+
     #region ProSnippet Group: Definitions
     #endregion
 
@@ -234,6 +248,33 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Obtaining Related Definitions from Geodatabase
 
+    #region Getting a Table Definition from a Layer
+
+    // GetDefinitionFromLayer - This code works even if the layer has a join to another table
+    private TableDefinition GetDefinitionFromLayer(FeatureLayer featureLayer)
+    {
+      // Get feature class from the layer
+      FeatureClass featureClass = featureLayer.GetFeatureClass();
+
+      // Determine if feature class is a join
+      if (featureClass.IsJoinedTable())
+      {
+
+        // Get join from feature class
+        Join join = featureClass.GetJoin();
+
+        // Get origin table from join
+        Table originTable = join.GetOriginTable();
+
+        // Return feature class definition from the join's origin table
+        return originTable.GetDefinition();
+      }
+      else
+      {
+        return featureClass.GetDefinition();
+      }
+    }
+    #endregion
 
     #region ProSnippet Group: Datasets
     #endregion
@@ -1463,15 +1504,16 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
           {
             while (landUseCursor.MoveNext())
             {
-              Feature rezoningUseCase = (Feature)landUseCursor.Current;
-
-              IReadOnlyList<Attachment> rezoningAttachments = rezoningUseCase.GetAttachments();
-              IEnumerable<Attachment> filteredAttachments = rezoningAttachments.Where(attachment => !attachment.GetName().Contains("rezoning"));
-
-              foreach (Attachment attachmentToUpdate in filteredAttachments)
+              using (Feature rezoningUseCase = (Feature)landUseCursor.Current)
               {
-                attachmentToUpdate.SetName(attachmentToUpdate.GetName().Replace(".pdf", "Rezoning.pdf"));
-                rezoningUseCase.UpdateAttachment(attachmentToUpdate);
+                IReadOnlyList<Attachment> rezoningAttachments = rezoningUseCase.GetAttachments();
+                IEnumerable<Attachment> filteredAttachments = rezoningAttachments.Where(attachment => !attachment.GetName().Contains("rezoning"));
+
+                foreach (Attachment attachmentToUpdate in filteredAttachments)
+                {
+                  attachmentToUpdate.SetName(attachmentToUpdate.GetName().Replace(".pdf", "Rezoning.pdf"));
+                  rezoningUseCase.UpdateAttachment(attachmentToUpdate);
+                }
               }
             }
           }

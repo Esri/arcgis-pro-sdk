@@ -50,14 +50,14 @@
     <insertProduct id="esri_product_streetmapPremiumnAsiaPacific" caption="StreetMap Premium Asia Pacific" description="Provides high-quality street data for display, geocoding, and routing" code="75"/>
     <insertProduct id="esri_product_streetmapPremiumnMiddleEastAfrica" caption="StreetMap Premium Middle East and Africa" description="Provides high-quality street data for display, geocoding, and routing" code="76"/>
     <insertProduct id="esri_product_streetmapPremiumJapan" caption="StreetMap Premium Japan" description="Provides high-quality street data for display, geocoding, and routing" code="77"/>
-    <insertProduct id="esri_product_publisher" caption="Publisher" description="ArcGIS Publisher Extension" code="15"/>
-    <!--insertProduct id="esri_product_aviationCharting" caption="Aviation Charting" description="Provides tools and workflows for working with aeronautical data and charting." code="53"/-->
+    <insertProduct id="esri_product_publisher" caption="Publisher" description="Enables the sharing of content throughout the ArcGIS platform." code="15"/>
+    <insertProduct id="esri_product_aviationCharting" caption="Aviation Charting" description="Provides tools and workflows for working with aeronautical data and charting." code="53"/>
     <insertProduct id="esri_product_aviationAirports" caption="Aviation Airports" description="Provides tools for airport planning, maintenance and analysis." code="70"/>
     <insertProduct id="esri_product_maritimeCharting" caption="Maritime Charting" description="Provides tools and workflows for working with nautical data and charting." code="50"/>
     <insertProduct id="esri_product_maritimeBathymetry" caption="Maritime Bathymetry" description="Provides tools and workflows for working with bathymetric data." code="69"/>
     <insertProduct id="esri_product_businessanalyst" caption="Business Analyst" description="Provides advanced analysis tools and an extensive library of data from industry leading data providers to help you make better business decisions." code="33"/>
-    <insertProduct id="esri_product_imageanalyst" caption="Image Analyst" description="ArcGIS Image Analyst Extension." code="86"/>
-    <insertProduct id="esri_product_locatext" caption="LocateXT" description="ArcGIS LocateXT Extension." code="87"/>
+    <insertProduct id="esri_product_imageanalyst" caption="Image Analyst" description="Delivers an integrated image interpretation and analysis workstation which provides powerful image visualization, exploitation, and feature extraction tools." code="86"/>
+    <insertProduct id="esri_product_locatext" caption="LocateXT" description="Discover and extract geocoordinates, place names, and other critical information from unstructured text and place them instantly on a map." code="87"/>
   </products>
 
   <categories>
@@ -66,8 +66,11 @@
         <content type="DisplayUnitEnvironment" displayName="DisplayUnitEnvironment"/>
       </component>
     </insertCategory>
+    <insertCategory id="esri_item" />
+    <insertCategory id="esri_cef_customSchemes"/>
     <insertCategory id="esri_itemInfoType" />
-    <insertCategory id="esri_browseDialogFilters" />
+    <insertCategory id="esri_browseFilters" />
+    <insertCategory id="esri_browseDialogFilters" /> <!--this is now obsolete, replaced by esri_browseFilters-->
     <insertCategory id="esri_browsePlaces" />
     <insertCategory id="esri_embeddableControls" />
     <insertCategory id="esri_tasks_embeddableControls" />
@@ -136,6 +139,10 @@
             assembly="ArcGIS.Desktop.Framework.dll"  dock="right"  keytip="">
           <content className="ArcGIS.Desktop.Framework.NotificationDockPane" assembly="ArcGIS.Desktop.Framework.dll" />
         </dockPane>
+        <dockPane id="esri_core_projectHistoryDockPane" caption="History" className="ProjectHistoryDockPaneViewModel"
+                  dock="group" dockWith="esri_core_projectDockPane">
+          <content className="ProjectHistoryDockPane" />
+        </dockPane>
       </dockPanes>
 
       <tabs>
@@ -171,6 +178,19 @@
 
       <groups>
         <group id="esri_core_projectData" caption="Project" sizePriorities="25,125,225" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject16.png">
+          <insertButton refID="esri_mapping_newMapPalette" size="large" />
+          <insertGallery refID="esri_layouts_gallery" size="large" />
+          
+          <insertButton refID="esri_reports_newReportSplitButton" size="middle" />
+          <insertButton refID="esri_layouts_AddNotebook" size="middle"/>
+          <insertButtonPalette refID="esri_geoprocessing_insertMenu" size="middle"/>
+          
+          <insertButton refID="esri_layouts_importMap" size="middle" />
+          <insertGallery refID="esri_layouts_templateGallery" size="middle" />
+          <insertButtonPalette refID="esri_task_insertMenu" size="middle"/>
+          
+          <insertMenu refID="esri_geodatabase_insertMenu" size="large"/>
+          <insertButton refID="esri_geodatabase_addFolderConnectionButton" size="large"/>       
         </group>
 
         <group id="esri_core_favoritesData" caption="Favorites" sizePriorities="25,125,225" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStar16.png">
@@ -178,13 +198,10 @@
         </group>
 
         <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png">
-          <checkBox refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
-          <checkBox refID="esri_core_projectViewOptionsSearchOrg" size="middle" />
-          <checkBox refID="esri_core_projectViewShowTooltips" size="middle" />
-
-          <menu refID="esri_core_projectViewDisplayType" size="middle" />
-          <checkBox refID="esri_core_projectViewLayoutBrowseDetail" size="middle" />
-
+          <buttonPalette refID="esri_core_popupTooltipPalette" size="large" />
+          <button refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
+          <buttonPalette refID="esri_core_projectViewDisplayType" size="middle" />
+          <buttonPalette refID="esri_core_searchPalette" size="middle"/>
         </group>
 
         <group id="esri_core_clipboardGroup" caption="Clipboard" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
@@ -226,6 +243,26 @@
           <button refID="esri_core_previewCaptureThumbnail" size="middle" />
         </group>
       </groups>
+
+      <palettes>
+        <buttonPalette id="esri_core_popupTooltipPalette" caption="Item Pop-ups" keytip="SC" itemsInRow="1" showItemCaption="true" bindChecked="false">
+          <tooltip heading="Display Type">Choose how popups are displayed.</tooltip>
+          <button refID="esri_core_HideItemTooltips"/>
+          <button refID="esri_core_ShowItemTooltips"/>
+          <button refID="esri_core_ShowDetailedItemTooltips"/>
+        </buttonPalette>
+        
+        <buttonPalette id="esri_core_searchPalette" itemsInRow="1" showItemCaption="true" bindChecked="false"
+                       caption="Portal Search" extendedCaption="Portal Search Options" keytip="PS">
+          <button refID="esri_core_projectViewOptionsSearchAll"/>
+          <button refID="esri_core_projectViewOptionsSearchOrg"/>
+        </buttonPalette>
+        <buttonPalette id="esri_core_projectViewDisplayType" caption="Display Type" temsInRow="1" showItemCaption="true" keytip="DT">
+          <button refID="esri_core_projectDetailsView"/>
+          <button refID="esri_core_projectTilesView"/>
+        </buttonPalette>
+      
+    </palettes>
 
       <controls>
         <button id="esri_itemInfoRefreshButton" className="RefreshCmd" loadOnClick="false"
@@ -338,7 +375,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <button id="esri_core_editCopyPaths" caption="Copy Path"
                 extendedCaption="Copy the path of the selected items to the Clipboard."
                 loadOnClick="false" keytip="CP"
-                className="CopyPathsCmd"
+                className="ArcGIS.Desktop.Framework.CopyPathCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopyPath16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopyPath32.png">
           <tooltip heading="">
@@ -359,8 +396,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
                 caption="Delete" extendedCaption="Delete the selection; on map editing context menu"
                 loadOnClick="false" keytip="D"
                 className="ArcGIS.Desktop.Framework.DeleteCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack32.png">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png">
           <tooltip heading="">
             Delete the selected items. For items that reference a file or folder on disk, the file or folder is deleted in the file system.<disabledText></disabledText>
           </tooltip>
@@ -490,7 +527,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           <tooltip heading="Update Map or Scene">
             Update this map or scene with changes made to the source web map or web scene on the active portal.
 
-            The copy of the portal item in the project is deleted, and the current version of the original portal item is added to the project. For example, update the copy of the web map in your project so you have the latest changes to its symbology.<disabledText></disabledText>
+The copy of the portal item in the project is deleted, and the current version of the original portal item is added to the project. For example, update the copy of the web map in your project so you have the latest changes to its symbology.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -505,31 +542,62 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </button>
 
-        <checkBox id="esri_core_projectViewLayoutCheckBoxOpen" className="ArcGIS.Desktop.Internal.Core.ProjectViewChangeLayoutCheckBox" condition="esri_core_resourcesPane"
-                  caption="Show Details Panel" extendedCaption="Show the Details panel in the Catalog view, e.g. to see metadata or style items; on ribbon" keytip="SD" loadOnClick="false">
+        <button id="esri_core_projectViewLayoutCheckBoxOpen" className="ArcGIS.Desktop.Internal.Core.ProjectViewChangeLayoutCheckBox" 
+                condition="esri_core_resourcesPane"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HideDetailsPanel32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HideDetailsPanel16"                
+                caption="Details Panel" extendedCaption="Show the Details panel in the Catalog view, e.g. to see metadata or style items; on ribbon" keytip="SD" loadOnClick="false">
           <tooltip heading="">
             Show the Details panel in the Catalog view. This lets you preview an item's data, view its metadata, and manage style items within a style.<disabledText></disabledText>
           </tooltip>
-        </checkBox>
-        <checkBox id="esri_core_projectViewOptionsSearchOrg" className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsSearchOrg" condition="esri_core_resourcesPane"
-                  caption="Search My Organization" extendedCaption="When searching portal items in the Catalog view, only search items from your organization; on ribbon" keytip="SO" loadOnClick="false">
+        </button>
+        <button id="esri_core_projectViewOptionsSearchOrg" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_disabled32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_disabled16"
+                className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsSearchOrg" 
+                condition="esri_core_resourcesPane"
+                caption="Search My Organization" 
+                extendedCaption="When searching portal items in the Catalog view, only search items from your organization." keytip="SO" loadOnClick="false">
           <tooltip heading="">
             When searching portal items in the Catalog view, only include items from your organization in the search results.<disabledText></disabledText>
           </tooltip>
-        </checkBox>
-        <checkBox id="esri_core_projectViewShowTooltips" className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsShowTooltips"
-                  caption="Show Pop-ups" extendedCaption="Show pop-ups in the catalog pane and view." keytip="SP" loadOnClick="false">
+        </button>
+        <button id="esri_core_projectViewOptionsSearchAll" 
+                className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsSearchAll" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_enabled32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_enabled16"
+                condition="esri_core_resourcesPane"
+                caption="Search All" extendedCaption="When searching portal items in the Catalog view, search entire portal." 
+                keytip="SA" loadOnClick="false">
           <tooltip heading="">
+When searching portal items in the Catalog view, include all accessible items from the portal in the search results. This includes public items, items in groups that you can access, and items you own.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_HideItemTooltips" className="ArcGIS.Desktop.Internal.Core.HideTooltips"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable16"
+                caption="Hide Pop-ups" extendedCaption="Show pop-ups in the catalog pane and view." keytip="NP" loadOnClick="false">
+          <tooltip heading="Hide Pop-ups">
+            Do not show information such as an item's location in a pop-up when you mouse over it in the Catalog pane and view.
+          </tooltip>
+        </button>
+        <button id="esri_core_ShowItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowItemTooltips"
+                caption="Show Pop-ups" extendedCaption="Show simple pop-ups in the catalog pane and view." keytip="SP" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp16">
+          <tooltip heading="Show Pop-ups">
             Show information such as an item's location in a pop-up when you mouse over it in the Catalog pane and view.
           </tooltip>
-        </checkBox>
-
-        <checkBox id="esri_core_projectViewLayoutBrowseDetail" className="ArcGIS.Desktop.Internal.Core.ProjectViewBrowseDetail" condition="esri_core_resourcesPane"
-                  caption="More Detail" extendedCaption="Show more information when browsing in the Catalog pane and view; on ribbon" keytip="MD" loadOnClick="false">
-          <tooltip heading="">
-            Show more information when browsing local and network items. An item's thumbnail, tags, and summary are extracted from the item's metadata and will appear in the Catalog pane's pop-up and the browse dialog's Details panel. Browsing will be slower when this option is enabled.<disabledText></disabledText>
+        </button>
+        <button id="esri_core_ShowDetailedItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowDetailedItemTooltips"
+                caption="Show Detailed Pop-ups" extendedCaption="Show detailed pop-ups in the catalog pane." keytip="AP" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDetailed32"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDetailed16">
+          <tooltip heading="Show Detailed Pop-ups">
+Show information such as an item's thumbnail and tags as well as its location in a pop-up when you mouse over the item in the Catalog pane. This option can help you find an item when you are not familiar with the contents of a portal, disk, database, or server. However, it can reduce overall performance when browsing enterprise geodatabases and ArcGIS Server services, and when accessing items with a slow internet or network connection.
           </tooltip>
-        </checkBox>
+        </button>
 
         <button id="esri_core_previewZoomToSelectionButton" condition="esri_core_previewZoomToSelectionButton"
                 className="CorePreviewItemZoomToSelection"
@@ -714,8 +782,13 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
 
       <galleries>
       </galleries>
+      
       <subgroups>
-        <!-- Can only have 3 items in a subgroup-->
+        <!--<subgroup id="esri_core_options" size="AlwaysMedium">
+          <checkBox refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
+          <menu refID="esri_core_projectViewDisplayType" size="large" />
+        </subgroup>-->
+
         <subgroup id="esri_core_editBtns" size="MediumThenSmallWhenSmall">
           <button refID="esri_core_editCutButton"/>
           <button refID="esri_core_editCopyButton"/>
@@ -750,14 +823,6 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
       </subgroups>
 
       <menus>
-        <menu id="esri_core_projectViewDisplayType" caption="Display Type" keytip="DT"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddList16.png"
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddList32.png">
-          <tooltip heading="Display Type">Choose how the contents list is displayed.</tooltip>
-          <button refID="esri_core_projectDetailsView"/>
-          <button refID="esri_core_projectTilesView"/>
-        </menu>
-
         <menu id="esri_BrowseDialog_SingleItem" caption="Browse Dialog Single Rename Item">
           <button refID="esri_core_rename"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -846,6 +911,10 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
             insert="after">
         <content className="ArcGIS.Desktop.Internal.Core.Language.Language"/>
       </page>
+      <page id="esri_core_userInterfacePropertyPage" caption="User Interface" className="UserInterfaceViewModel" group="Application"
+                  insert="after" placeWith="esri_core_LanguagePropertyPage">
+        <content className="UserInterfaceView"/>
+      </page>
       <page id="esri_mapping_customizePropertyPage" caption="Customize the Ribbon" className="ArcGIS.Desktop.Framework.CustomizeViewModel" 
             assembly="ArcGIS.Desktop.Framework.dll" group="Application" insert="after" condition="esri_core_noCustomize"/>
       <page id="esri_mapping_customizeQATPropertyPage" caption="Quick Access Toolbar" className="ArcGIS.Desktop.Framework.CustomizeQATViewModel" 
@@ -908,10 +977,6 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
       <and>
         <state id="esri_core_previewCanEditBasemapState"/>
       </and>
-    </insertCondition>
-
-    <insertCondition id="esri_core_ColorManagementEnabledCondition">
-      <state id="esri_core_ColorManagementEnabledState"/>
     </insertCondition>
   </conditions>
 

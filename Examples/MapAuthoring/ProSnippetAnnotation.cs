@@ -154,25 +154,31 @@ namespace AnnotationSnippets
 					WhereClause = "OBJECTID = 1"
 				};
 
-				//annoLayer is ~your~ Annotation layer
+        //annoLayer is ~your~ Annotation layer
 
-				var rowCursor = annoLayer.Search(qf);
-				rowCursor.MoveNext();
-				var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature;
-				var graphic = annoFeature.GetGraphic();
-				var textGraphic = graphic as CIMTextGraphic;
-				var textLine = textGraphic.Shape as Polyline;
-				// rotate the shape 90 degrees
-				var origin = GeometryEngine.Instance.Centroid(textLine);
-				Geometry rotatedPolyline = GeometryEngine.Instance.Rotate(textLine, origin, System.Math.PI / 2);
-				//Move the line 5 "units" in the x and y direction
-				//GeometryEngine.Instance.Move(textLine, 5, 5);
+        using (var rowCursor = annoLayer.Search(qf))
+        {
+          if (rowCursor.MoveNext())
+          {
+            using (var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature)
+            {
+              var graphic = annoFeature.GetGraphic();
+              var textGraphic = graphic as CIMTextGraphic;
+              var textLine = textGraphic.Shape as Polyline;
+              // rotate the shape 90 degrees
+              var origin = GeometryEngine.Instance.Centroid(textLine);
+              Geometry rotatedPolyline = GeometryEngine.Instance.Rotate(textLine, origin, System.Math.PI / 2);
+              //Move the line 5 "units" in the x and y direction
+              //GeometryEngine.Instance.Move(textLine, 5, 5);
 
-				EditOperation op = new EditOperation();
-				op.Name = "Change annotation angle";
-				op.Modify(annoLayer, oid, rotatedPolyline);
-				op.Execute();
-			});
+              EditOperation op = new EditOperation();
+              op.Name = "Change annotation angle";
+              op.Modify(annoLayer, oid, rotatedPolyline);
+              op.Execute();
+            }
+          }
+        }
+      });
 
 			#endregion
 
@@ -191,28 +197,33 @@ namespace AnnotationSnippets
 					{
 						WhereClause = "OBJECTID = 1"
 					};
-					//Cursor must be non-recycling. Use the table ~not~ the layer..i.e. "GetTable().Search()"
-					//annoLayer is ~your~ Annotation layer
-					var rowCursor = annoLayer.GetTable().Search(qf, false);
-					rowCursor.MoveNext();
-					var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature;
-					//Get the graphic from the anno feature
-					var graphic = annoFeature.GetGraphic();
-					var textGraphic = graphic as CIMTextGraphic;
+          //Cursor must be non-recycling. Use the table ~not~ the layer..i.e. "GetTable().Search()"
+          //annoLayer is ~your~ Annotation layer
+          using (var rowCursor = annoLayer.GetTable().Search(qf, false))
+          {
+            if (rowCursor.MoveNext())
+            {
+              using (var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature)
+              {
+                //Get the graphic from the anno feature
+                var graphic = annoFeature.GetGraphic();
+                var textGraphic = graphic as CIMTextGraphic;
 
-					// change the text and the color
-					textGraphic.Text = "hello world";
-					var symbol = textGraphic.Symbol.Symbol;
-					symbol.SetColor(ColorFactory.Instance.RedRGB);
-					textGraphic.Symbol = symbol.MakeSymbolReference();
-					// update the graphic
-					annoFeature.SetGraphic(textGraphic);
-					// store is required
-					annoFeature.Store();
-					//refresh layer cache
-					context.Invalidate(annoFeature);
-
-				}, annoLayer.GetTable());
+                // change the text and the color
+                textGraphic.Text = "hello world";
+                var symbol = textGraphic.Symbol.Symbol;
+                symbol.SetColor(ColorFactory.Instance.RedRGB);
+                textGraphic.Symbol = symbol.MakeSymbolReference();
+                // update the graphic
+                annoFeature.SetGraphic(textGraphic);
+                // store is required
+                annoFeature.Store();
+                //refresh layer cache
+                context.Invalidate(annoFeature);
+              }
+            }
+          }
+        }, annoLayer.GetTable());
 
 				op.Execute();
 			});

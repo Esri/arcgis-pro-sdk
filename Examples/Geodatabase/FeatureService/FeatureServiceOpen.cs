@@ -96,6 +96,7 @@ namespace SDKExamples.GeodatabaseSDK.FeatureService
       // Note that for feature services hosted on ArcGIS Server federated with ArcGIS Portal, the username and password cannot be specified through the API. 
       // Even if the username and password were specified, they will be disregarded.
       // Instead the Portal authorization has to be configured by adding the Portal to ArcGIS Pro with the user with which the connection should be established.
+      // To connect to a Portal from a CoreHost application, use the ArcGIS.Core.SystemCore.ArcGISSignOn class to authenticate with the Portal.
 
       ServiceConnectionProperties federatedArcGISServer = new ServiceConnectionProperties(federatedServerURL);
 

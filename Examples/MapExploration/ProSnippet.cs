@@ -237,6 +237,7 @@ namespace Snippets
                 #endregion
             });
         }
+
         #region Show a pop-up for a feature
 
         public void ShowPopup(MapMember mapMember, long objectID)
@@ -271,8 +272,54 @@ namespace Snippets
 
         #endregion
 
+        #region Show a pop-up for a feature using pop-up window properties
+
+        public void ShowPopupWithWindowDef(MapMember mapMember, long objectID)
+        {
+            if (MapView.Active == null) return;
+            // Sample code: https://github.com/ArcGIS/arcgis-pro-sdk-community-samples/blob/master/Map-Exploration/CustomIdentify/CustomIdentify.cs
+            var topLeftCornerPoint = new System.Windows.Point(200, 200);
+            var popupDef = new PopupDefinition()
+            {
+                Append = true,      // if true new record is appended to existing (if any)
+                Dockable = true,    // if true popup is dockable - if false Append is not applicable
+                Position = topLeftCornerPoint,  // Position of top left corner of the popup (in pixels)
+                Size = new System.Windows.Size(200, 400)    // size of the popup (in pixels)
+            };
+            MapView.Active.ShowPopup(mapMember, objectID, popupDef);
+        }
+
+        #endregion
+
+        #region Show a custom pop-up using pop-up window properties
+
+        public void ShowCustomPopupWithWindowDef()
+        {
+            if (MapView.Active == null) return;
+
+            //Create custom popup content
+            var popups = new List<PopupContent>
+            {
+                new PopupContent("<b>This text is bold.</b>", "Custom tooltip from HTML string"),
+                new PopupContent(new Uri("http://www.esri.com/"), "Custom tooltip from Uri")
+            };
+            // Sample code: https://github.com/ArcGIS/arcgis-pro-sdk-community-samples/blob/master/Framework/DynamicMenu/DynamicFeatureSelectionMenu.cs
+            var topLeftCornerPoint = new System.Windows.Point(200, 200);
+            var popupDef = new PopupDefinition()
+            {
+                Append = true,      // if true new record is appended to existing (if any)
+                Dockable = true,    // if true popup is dockable - if false Append is not applicable
+                Position = topLeftCornerPoint,  // Position of top left corner of the popup (in pixels)
+                Size = new System.Windows.Size(200, 400)    // size of the popup (in pixels)
+            };
+            MapView.Active.ShowCustomPopup(popups, null, true, popupDef);
+        }
+
+        #endregion
+
         #region ProSnippet Group: Zoom
         #endregion
+
         #region Zoom to an extent
 
         public async Task<bool> ZoomToExtentAsync(double xMin, double yMin, double xMax, double yMax,
@@ -477,8 +524,6 @@ namespace Snippets
         }
 
         #endregion
-
-
 
         #region ProSnippet Group: Time
         #endregion

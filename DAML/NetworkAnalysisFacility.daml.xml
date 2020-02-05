@@ -17,12 +17,16 @@
   </dialogs>
 
   <modules>
-     <insertModule id="esri_networkanalysis_utility_module" caption="Utility Network" description="Utility Network" className="NetworkAnalysisFacilityModule" autoLoad="false" productDescription="Facilities Network Extension">
+    <insertModule id="esri_networkanalysis_utility_module" caption="GDB Networks" description="GDB Networks" className="NetworkAnalysisFacilityModule" autoLoad="false" productDescription="Facilities Network Extension">
 
        <tabGroups>
          <tabGroup caption="Utility Network" id="esri_networkanalysis_utility_TabGroup">
            <color A="255" R="58" G="158" B="108" /> <!--green-->
            <borderColor A="0" R="44" G="124" B="85" /> <!--green-->
+         </tabGroup>
+         <tabGroup caption="Trace Network" id="esri_networkanalysis_trace_TabGroup">
+           <color A="255" R="145" G="130" B="189" /> <!--purple-->
+           <borderColor A="0" R="124" G="109" B="168" /> <!--purple-->
          </tabGroup>
        </tabGroups>
 
@@ -36,25 +40,33 @@
            <group refID="esri_networkanalysis_utility_Drawing_Group" />
            <group refID="esri_networkanalysis_utility_SubnetworkManagement_Group" />
          </tab>
+         <tab id="esri_networkanalysis_trace_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_trace_TabGroup" condition="esri_mapping_traceNetworkCondition" keytip="TN">
+           <group refID="esri_networkanalysis_trace_Validate_Group" />
+           <group refID="esri_networkanalysis_trace_Associations_Group" />
+           <group refID="esri_networkanalysis_trace_Tools_Group"/>
+           <group refID="esri_networkanalysis_utility_Terminals_Group"/>
+           <group refID="esri_networkanalysis_utility_Selection_Group"/>
+           <group refID="esri_networkanalysis_utility_Drawing_Group" />
+         </tab>
        </tabs>
-       
-       <groups>
-         <group id="esri_networkanalysis_utility_Tools_Group" caption="Tools">
-           <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
-           <gallery refID="esri_networkanalysis_utility_ToolsGallery" inline="true"/>
-         </group>
-         <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
-           <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
-           <button refID="esri_networkanalysis_ShowModifyDeviceBtn" size="large"/>
-           <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
-         </group>
-         <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
-           <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" />
-           <button refID="esri_networkanalysis_utility_Containment_Btn" size="middle"/>
-           <button refID="esri_networkanalysis_utility_Container_EditMode_Btn" size="middle"/>
-           <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
-           <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
-         </group>
+
+      <groups>
+        <group id="esri_networkanalysis_utility_Tools_Group" caption="Tools">
+          <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
+          <gallery refID="esri_networkanalysis_utility_ToolsGallery" inline="true"/>
+        </group>
+        <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
+          <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
+          <button refID="esri_networkanalysis_ShowModifyDeviceBtn" size="large"/>
+          <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
+        </group>
+        <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
+          <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" />
+          <button refID="esri_networkanalysis_utility_Containment_Btn" size="middle"/>
+          <button refID="esri_networkanalysis_utility_Container_EditMode_Btn" size="middle"/>
+          <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
+          <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
+        </group>
         <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork">
           <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ViewSubnetworks_Btn" size="large"/>
@@ -63,6 +75,18 @@
         <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection" launcherButtonID="esri_mapping_openSelectionOptionsButton">
           <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
           <button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>
+        </group>
+
+        <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools">
+          <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
+          <gallery refID="esri_networkanalysis_trace_ToolsGallery" inline="true"/>
+        </group>
+        <group id="esri_networkanalysis_trace_Validate_Group" caption="Network Topology">
+          <button refID="esri_networkanalysis_trace_BuildBtnPalette" size="large" />
+        </group>
+        <group id="esri_networkanalysis_trace_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
+          <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" />
+          <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
         </group>
       </groups>
 
@@ -94,6 +118,24 @@
           </tooltip>
           <button refID="esri_utilitynetwork_ShowCustomizeGallery" />
         </gallery>
+         <gallery id="esri_networkanalysis_trace_ToolsGallery"
+                  className="Ribbon.TraceNetworkGalleryViewModel"
+                  caption="Trace Network Tool Gallery"
+                  itemWidth="72"
+                  itemsInRow="4"
+                  showItemCaption="true"
+                  loadingMessage="Loading ..."
+                  showGroup="true"
+                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.NetworkAnalysis.Facility;component/Ribbon/GalleryTemplates.xaml"
+                  templateID="ToolsItemTemplate"
+                  showItemCaptionBelow="true"
+                  resizable="true"
+                  keytip="TG">
+           <tooltip heading="">
+             View a gallery of trace network tools.<disabledText></disabledText>
+           </tooltip>
+           <button refID="esri_utilitynetwork_ShowCustomizeGallery" />
+         </gallery>
 
         <gallery id="esri_networkanalysis_utility_ApplySelectionGallery" caption="Propagate Selection Gallery" extendedCaption="Apply selection to another utility network map" className="Ribbon.NetworkToNetworkGalleryViewModel"
                  condition="esri_networkanalysis_utility_PropagateSelection_Condition"
@@ -119,17 +161,21 @@
            <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
          </toolPalette>
          <toolPalette id="esri_networkanalysis_utility_ValidateBtnPalette" itemsInRow="1" showItemCaption="true" caption="Validate" extendedCaption="Validate Network Topology" keytip="VT">
-           <tool refID="esri_networkanalysis_validate_current_BuildTools_Btn"/>
-           <tool refID="esri_networkanalysis_validate_entire_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_un_validate_current_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_un_validate_entire_BuildTools_Btn"/>
          </toolPalette>
          <toolPalette id="esri_networkanalysis_utility_DisplayFilterBtnPalette" itemsInRow="1" showItemCaption="true" caption="Display Content" extendedCaption="Display Content" keytip="DC">
            <tool refID="esri_networkanalysis_ShowContentBtn"/>
            <tool refID="esri_networkanalysis_HideContentBtn"/>
          </toolPalette>
+         <toolPalette id="esri_networkanalysis_trace_BuildBtnPalette" itemsInRow="1" showItemCaption="true" caption="Build" extendedCaption="Build Network Topology" keytip="B">
+           <tool refID="esri_networkanalysis_tn_validate_current_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"/>
+         </toolPalette>
        </palettes>
 
       <controls>
-        <button id="esri_networkanalysis_validate_current_BuildTools_Btn" 
+        <button id="esri_networkanalysis_un_validate_current_BuildTools_Btn" 
                 className="esri_networkanalysis_utility_module:BuildAsyncCurrentExtent" 
                 caption="Current extent" 
                 extendedCaption="Validate current map extent" 
@@ -142,7 +188,7 @@
             Validate the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
           </tooltip>
         </button>
-        <button id="esri_networkanalysis_validate_entire_BuildTools_Btn"
+        <button id="esri_networkanalysis_un_validate_entire_BuildTools_Btn"
                className="esri_networkanalysis_utility_module:BuildAsyncFullExtent"
                caption="Entire extent"
                extendedCaption="Validate entire map extent"
@@ -155,9 +201,35 @@
             Validate the utility network topology in the entire map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
           </tooltip>
         </button>
+        <button id="esri_networkanalysis_tn_validate_current_BuildTools_Btn"
+                className="esri_networkanalysis_utility_module:BuildTraceNetworkCurrentExtent"
+                caption="Current extent"
+                extendedCaption="Build current map extent"
+                condition="esri_networkanalysis_trace_ValidateTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png"
+                helpContextID=""
+                keytip="C">
+          <tooltip heading="Build Network Topology">
+            Build the trace network in the current map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"
+               className="esri_networkanalysis_utility_module:BuildTraceNetworkFullExtent"
+               caption="Entire extent"
+               extendedCaption="Build entire map extent"
+               condition="esri_networkanalysis_trace_ValidateTool_Condition"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent32.png"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent16.png"
+               helpContextID=""
+               keytip="E">
+          <tooltip heading="Build Network Topology">
+            Build the trace network in the entire map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
         <button id="esri_networkanalysis_ShowModifyAssociationsBtn"
                 caption="Modify" extendedCaption="Show Modify Associations pane."
-                condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+                condition="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyAssociations32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyAssociations16.png"
                 className="esri_networkanalysis_utility_module:ShowModifyAssociationsWindow"
@@ -628,6 +700,15 @@
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+        <state id="esri_map_traceNetwork"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
         <state id="esri_map_utilityNetwork" />
         <state id="esri_map_utilityNetworkFeatureService" />
@@ -650,16 +731,26 @@
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </and>
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
+      <or>
+        <state id="esri_map_traceNetwork"/>
+      </or>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </and>
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+        <state id="esri_map_traceNetwork"/>
+      </or>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_OpenContainer_Condition" caption="Utility network layer is active and a selection exists">
       <and>

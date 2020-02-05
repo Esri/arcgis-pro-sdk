@@ -388,6 +388,7 @@ namespace MapAuthoring.ProSnippet
                     var rendererFromLayerFile = ((CIMFeatureLayer)cimLyrDoc.LayerDefinitions[0]).Renderer as CIMUniqueValueRenderer;
 
                     //Apply the renderer to the feature layer
+                    //Note: If working with a raster layer, use the SetColorizer method.
                     featureLayer?.SetRenderer(rendererFromLayerFile);
                     #endregion
                 }
@@ -594,13 +595,14 @@ namespace MapAuthoring.ProSnippet
                 //Getting the first selected feature layer of the map view
                 var flyr = (FeatureLayer)MapView.Active.GetSelectedLayers()
                                   .OfType<FeatureLayer>().FirstOrDefault();
-                RowCursor rows = flyr.Search(qf);//execute
-
+              using (RowCursor rows = flyr.Search(qf)) //execute
+              {
                 //Looping through to count
                 int i = 0;
                 while (rows.MoveNext()) i++;
 
                 return i;
+              }
             });
             MessageBox.Show(String.Format(
                "Total features that matched the search criteria: {0}", count));

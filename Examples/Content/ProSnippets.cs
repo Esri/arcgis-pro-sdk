@@ -65,10 +65,16 @@ namespace Content.Snippets
 
     public async void ContentSnippets2()
     {
+      #region Create new project using Pro's default settings
+      //Get Pro's default project settings.
+      var defaultProjectSettings = Project.GetDefaultProjectSettings();
+      //Create a new project using the default project settings
+      await Project.CreateAsync(defaultProjectSettings);
+      #endregion
 
       #region New project using a custom template file
-      //Settings used to create a new project
-      CreateProjectSettings projectSettings = new CreateProjectSettings()
+            //Settings used to create a new project
+            CreateProjectSettings projectSettings = new CreateProjectSettings()
       {        
         //Sets the project's name
         Name = "New Project",

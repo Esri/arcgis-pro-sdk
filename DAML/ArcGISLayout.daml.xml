@@ -82,22 +82,155 @@
       </component>-->
     </insertCategory>
 
-    <updateCategory refID="esri_browseDialogFilters">
+    <!--item type flags-->
+    <updateCategory refID="esri_item">
+      <insertComponent id="raster_tga">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+      <insertComponent id="raster_jpg">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+      <insertComponent id="raster_svgz">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+      <insertComponent id="raster_svg">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+      <insertComponent id="raster_eps">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+      <insertComponent id="raster_emf">
+        <content>
+          <filterFlags>
+            <type id="Raster" />
+          </filterFlags>
+        </content>
+      </insertComponent>
+    </updateCategory>
+
+    <!-- Browse Filters -->
+    <updateCategory refID="esri_browseFilters">
       <insertComponent id="esri_browseDialogFilters_composite_reportSources" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
         <content include="FolderConnection, GDB">
           <filter refID="esri_browseDialogFilters_gp_tableView" />
         </content>
       </insertComponent>
-    </updateCategory>
 
-    <updateCategory refID="esri_browseDialogFilters">
       <insertComponent id="esri_browseDialogFilters_composite_reportSourcesMap" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
         <content include="FolderConnection, GDB, Map">
           <filter refID="esri_browseDialogFilters_gp_tableView" />
         </content>
       </insertComponent>
-    </updateCategory>
 
+      <insertComponent id="esri_browseDialogFilters_pngExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="PNG" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_png" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_pdfExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="PDF" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="file_pdf" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_gifExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="GIF" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_gif" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_bmpExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="BMP" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_bmp" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_tgaExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="TGA" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_tga" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_tiffExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="TIFF" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_tiff" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_jpgExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="JPG" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_jpg" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_svgzExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="SVGZ" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_svgz" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_svgExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="SVG" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_svg" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_epsExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="EPS" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_eps" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_browseDialogFilters_emfExport" className="ArcGIS.Desktop.Internal.Core.BrowseProjectFilter" assembly="Extensions\Core\ArcGIS.Desktop.Core.dll">
+        <content displayName ="EMF" exclude="esri_browsePlaces_Online" include="FolderConnection">
+          <canBeTypeIds>
+            <type id="raster_emf" />
+          </canBeTypeIds>
+        </content>
+      </insertComponent>
+    </updateCategory>
+    
   </categories>
   
   <modules>
@@ -108,9 +241,17 @@
           initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Select a layout element in the Contents pane.">
           <content className="ArcGIS.Desktop.Internal.Layouts.DockPanes.ElementDockPane"/>
         </dockPane>
+        <dockPane id="esri_layouts_exportDockPane" caption="Export" className="ArcGIS.Desktop.Internal.Layouts.DockPanes.ExportDockPaneVM" dock="group" condition="esri_layouts_layoutPaneCondition" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
+          initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Select a layout element in the Contents pane.">
+          <content className="ArcGIS.Desktop.Internal.Layouts.DockPanes.ExportDockPane"/>
+        </dockPane>
         <dockPane id="esri_layouts_spellCheckDockPane" caption="Check Spelling" className="ArcGIS.Desktop.Internal.Layouts.DockPanes.LayoutSpellCheckDockPaneVM" dock="group" condition="esri_layouts_layoutPaneCondition" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
           initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Checking spelling...">
           <content assembly="Extensions\Core\ArcGIS.Desktop.Core.dll" className="ArcGIS.Desktop.Internal.Core.CommonControls.SpellCheckDockPane"/>
+        </dockPane>
+        <dockPane id="esri_layouts_printDockPane" caption="Print Layout" className="ArcGIS.Desktop.Internal.Layouts.DockPanes.PrintDockPaneVM" dock="group" condition="esri_layouts_layoutPaneCondition" dockWith="esri_core_projectDockPane" width="320" minwidth="320" disableIfBusy="true"
+          initiallyVisible="false" showLoadingMessage="true" delayLoadMessage="Print Layout...">
+          <content className="ArcGIS.Desktop.Internal.Layouts.DockPanes.PrintDockPane"/>
         </dockPane>
       </dockPanes>
 
@@ -147,6 +288,8 @@
         <tab id="esri_layouts_viewTab" caption="View" condition="esri_layouts_layoutPane" keytip="V">
           <group refID="esri_mapping_bookmarksGroup"/>
           <group refID="esri_core_dockWindows"/>
+          <group refID="esri_layouts_thumbnailGroup"/>
+          <!--<group refID="esri_layouts_overprintGroup"/>-->
         </tab>
 
         <!---->
@@ -175,6 +318,7 @@
           <group refID="esri_layouts_elevationGuideBarFormatGroup"/>
           <group refID="esri_layouts_slopeGuideFormatGroup"/>
           <group refID="esri_layouts_textFormatGroup"/>
+          <group refID="esri_layouts_editGraphicGroup"/>
           <group refID="esri_layouts_arrangeGroup"/>
           <group refID="esri_layouts_sizeAndPositionGroup"/>
         </tab>        
@@ -231,7 +375,7 @@
       <groups>
         <group id="esri_project_layout" caption="Project">
           <button refID="esri_layouts_projectContainer_NewLayout"/>
-          <button refID="esri_layouts_import"/>
+          <button refID="esri_layouts_importLayout"/>
         </group>
         <group id="esri_layouts_clipboardGroup" caption="Clipboard">
           <buttonPalette refID="esri_core_editPasteSplitButton" size="large" />
@@ -330,6 +474,10 @@
           <toolPalette refID="esri_layouts_newLineGraphicToolPalette" size="middle"/>
           <tool refID="esri_layouts_newPointTool" size="middle"/>
           <tool refID="esri_layouts_newPictureTool" size="middle"/>
+        </group>
+
+        <group id="esri_layouts_editGraphicGroup" caption="Edit" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMarkBlueCircleOn32.png" condition="esri_layouts_editGroupCondition">
+          <tool refID="esri_layouts_editVerticesTool" size="large"/>
         </group>
 
         <!--FORMAT groups-->
@@ -484,8 +632,20 @@
         <group id="esri_layouts_sizeAndPositionGroup" caption="Size &amp; Position" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSize16.png" condition="esri_layouts_selectedElementsNotPartsCondition">
           <customControl refID="esri_layouts_sizeAndPositionControl"/>
         </group>
-      </groups>
 
+        <group id="esri_layouts_thumbnailGroup" caption="Thumbnail" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png">
+          <subgroup refID="esri_layouts_thumbnail_SubGroup"/>
+        </group>
+        <group id="esri_layouts_overprintGroup" caption="Overprint" keytip="SO" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverprintSimulate16.png">
+          <button refID="esri_layouts_simulateOverprint" size="large"/>
+        </group>
+      </groups>
+      <subgroups>
+        <subgroup id="esri_layouts_thumbnail_SubGroup" size="AlwaysMedium">
+          <button refID="esri_layouts_createThumbnail" size="middle" />
+          <button refID="esri_layouts_importThumbnail" size="middle" />
+        </subgroup>
+      </subgroups>
       <palettes>
         <toolPalette id="esri_layouts_selectToolPalette" caption="Select" keytip="SE" extendedCaption="Select layout elements.">
           <tool refID="esri_layouts_selectByRectangleTool"/>
@@ -522,7 +682,7 @@
           <tool refID="esri_layouts_newMapFrameCircleTool"/>
           <tool refID="esri_layouts_newMapFrameEllipseTool"/>
         </toolPalette>
-        <toolPalette id="esri_layouts_reshapeMapFrameToolPalette" showItemCaption="true" keytip="RS" caption="Reshape" extendedCaption="Reshape a map frame in a layout">
+        <toolPalette id="esri_layouts_reshapeMapFrameToolPalette" showItemCaption="true" keytip="RS" caption="Reshape" extendedCaption="Reshape a map frame in a layout" condition="esri_layouts_mapFrameDesignCondition">
           <tool refID="esri_layouts_reshapeMapFrameRectangleTool"/>
           <tool refID="esri_layouts_reshapeMapFramePolygonTool"/>
           <tool refID="esri_layouts_reshapeMapFrameLassoTool"/>
@@ -558,14 +718,56 @@
         </splitButton>
       </splitButtons>
 
+      <miniToolbars>
+        <miniToolbar id="esri_layouts_SketchToolbar">
+          <row>
+            <button refID="esri_layouts_moveVerticesButton" />
+            <button refID="esri_layouts_addVerticesButton" />
+            <button refID="esri_layouts_deleteVerticesButton" />
+            <button refID="esri_layouts_continueVerticesButton" />
+            <button refID="esri_layouts_finishSketchButton" separator="true" />
+            <button refID="esri_layouts_clearSketchButton" />
+          </row>
+        </miniToolbar>
+      </miniToolbars>
+      
       <galleries>
         <!--New Layout-->
-        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" caption="New Layout" keytip="NL" extendedCaption="Choose a layout by choosing a page size." itemsInRow="6" itemWidth="140" itemHeight="100" helpContextID="" showItemCaption="true" resizable="true" loadingMessage="Loading..." showGroup="true" condition="esri_mapping_openProjectCondition" dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
+        <gallery id="esri_layouts_gallery" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutGalleryViewModel" 
+                 caption="New Layout" keytip="NL" extendedCaption="Choose a layout by choosing a page size." 
+                 itemsInRow="6" itemWidth="140" itemHeight="100" 
+                 helpContextID="" showItemCaption="true" 
+                 resizable="true" loadingMessage="Loading..." showGroup="true" 
+                 condition="esri_mapping_openProjectCondition" 
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" 
+                 templateID="LayoutTemplate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew16.png" 
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNew32.png">
           <tooltip heading="">Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText></tooltip>
           <button refID="esri_layouts_importPAGX"/>
           <!--<button refID="esri_layouts_openWebMapFromFileButton"/>-->
           <button refID="esri_layouts_customNewLayoutButton"/>
           <button refID="esri_layouts_selectPageFromPrinter"/>
+        </gallery>
+
+        <!--New Layout from template-->
+        <gallery id="esri_layouts_templateGallery" 
+                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.TemplateGalleryViewModel" 
+                 caption="Import Layout" keytip="L" extendedCaption="Create a layout from a layout file." 
+                 itemsInRow="4" itemWidth="204"
+                 helpContextID="" 
+                 showItemCaption="true" 
+                 resizable="true" 
+                 loadingMessage="Loading..." 
+                 showGroup="true" 
+                 condition="esri_mapping_openProjectCondition" 
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" 
+                 templateID="LayoutTemplateTemplate" 
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout16.png" 
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout32.png">
+          <tooltip heading="">
+            Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_layouts_importPAGX"/>
         </gallery>
 
         <!--Page Orientation-->
@@ -908,7 +1110,12 @@ C = explore when using another tool
             Export the selected Map Series.<disabledText></disabledText>
           </tooltip>
         </button>
-
+        <button id="esri_layouts_printMapSeries" caption="Print..." flipImageRTL="false" className="esri_layouts:OnPrintMapSeriesTOC" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPrint16.png" helpContextID="">
+          <tooltip heading="Map Series">
+            Print the selected Map Series.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <!--Home - Map Series-->
         <button id="esri_layouts_defineSeries" className="esri_layouts:ShowSeriesProperties" caption="Map Series" extendedCaption="Define a map series on the layout" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapSeries32.png" keytip="MS">
           <tooltip heading="Map Series">
@@ -954,6 +1161,21 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <button id="esri_layouts_createThumbnail" className="esri_layouts:CreateThumbnail" caption="Create Thumbnail" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate32.png">
+          <tooltip heading="">
+            Generate thumbnail in the metadata for the layout.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_importThumbnail" className="esri_layouts:ImportThumbnail" caption="Import Thumbnail" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png">
+          <tooltip heading="">
+            Import thumbnail to the metadata for the layout.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_simulateOverprint" className="esri_layouts:SimulateOverprint" caption="Simulate Overprint" extendedCaption="Simulate overprint" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverprintSimulate32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverprintSimulate16.png" loadOnClick="false">
+          <tooltip heading="">
+            Simulate the appearance of overprinting on the layouy when symbol layers have this option enabled.<disabledText>Simulate Overprint is enabled for layout with a CMYK color model when color management is enabled in the application settings.</disabledText>
+          </tooltip>
+        </button>
         <button id="esri_layouts_mapSeriesPropertiesButton" className="esri_layouts:ShowSeriesProperties" caption="Properties" extendedCaption="Properties for the map series." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_layouts_layoutPane" helpContextID="">
           <tooltip heading="">
             Show the properties for the map series.<disabledText></disabledText>
@@ -1028,11 +1250,146 @@ C = explore when using another tool
         <button id="esri_layouts_clearSelectionButton" className="esri_layouts:ClearSelection" caption="Clear Selection" keytip="CS" extendedCaption="Clear all selected elements in the layout." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected16.png" condition="esri_layouts_selectedElementsCondition" helpContextID="">
           <tooltip heading="">Deselect all currently selected elements on the layout.<disabledText></disabledText></tooltip>
         </button>
+        
         <tool id="esri_layouts_inlineEditTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.InlineEditTool" keytip="I" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png" caption="Inline Edit" extendedCaption="Edit layout elements inline." condition="esri_layouts_layoutPane" helpContextID="" flipImageRTL="true">
           <tooltip heading="Inline Edit">
             Edit elements by double-clicking them.<disabledText></disabledText>
           </tooltip>
         </tool>
+
+        <tool id="esri_layouts_editVerticesTool" 
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.EditVerticesTool" 
+              caption="Edit Vertices" extendedCaption="Edit element Vertices." 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices32.png" 
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices16.png" 
+              loadOnClick="false" helpContextID="">
+          <tooltip heading="Vertices">
+            Add, move, or delete Vertices or segments on the selected element.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <button id="esri_layouts_editVerticesContext" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.EditVerticesCommand" 
+                caption="Edit Vertices" extendedCaption="Edit element Vertices." 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices16.png" 
+                loadOnClick="false" helpContextID="">
+          <tooltip heading="Vertices">
+            Add, move, or delete Vertices or segments on the selected element.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_moveVerticesButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.MoveVerticesButton" caption="Normal" extendedCaption="Select vertices of feature in edit vertices mode." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectVertexLassoTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectVertexLassoTool16.png" loadOnClick="false" helpContextID="">
+          <tooltip heading="Select By Lasso">
+            Select vertices by clicking them or drawing a freehand sketch around them. To exit this mode, click Finish or another command.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_addVerticesButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddVerticesButton" caption="Add" extendedCaption="Add vertices to feature in edit vertices mode." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAddVertex32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAddVertex16.png" loadOnClick="false" helpContextID="">
+          <tooltip heading="Add">
+            Click a segment to add a vertex. To exit this mode, click Finish or another command.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_deleteVerticesButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.DeleteVerticesButton" caption="Delete" extendedCaption="Delete vertices from feature in edit vertices mode." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDeleteVertex32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDeleteVertex16.png" loadOnClick="false">
+          <tooltip heading="Delete">
+            Click a vertex to delete it. To exit this mode, click Finish or another command.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_continueVerticesButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ContinueVerticesButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditLine32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditLine16.png" caption="Continue" extendedCaption="Continue sketching an element in edit vertices mode." condition="esri_layouts_layoutPane" helpContextID="" flipImageRTL="true" loadOnClick="false">
+          <tooltip heading="Continue">
+            Continue sketching vertices.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_layouts_EditVerticesContinue"
+                caption="Continue Feature" extendedCaption="Continue sketching a feature in edit vertices mode."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditLine32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditLine16.png"
+                className="EditVerticesContinueModeCommand"
+                condition="esri_layouts_EditingMapCondition"
+                loadOnClick="false">
+          <tooltip heading="Continue Feature">
+            Continue sketching vertices.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_InsertVertexContextMenuItem" caption="Add Vertex" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddSketchVertexContextButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" loadOnClick="false">
+          <tooltip heading="Add Vertex">
+            Add a vertex at the right-clicked location.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_ReverseDirectionContextMenuItem" caption="Reverse Direction" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ReverseSketchOrientationContextButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingFlipLine32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingFlipLine16.png" loadOnClick="false">
+          <tooltip heading="Reverse Direction">
+            Change the direction of the sketch. The first point added to the sketch becomes the last point.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <!--<button id="esri_layouts_TrimToLengthContextMenuItem" caption="Change Length..." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTrimToLengthConstructor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTrimToLengthConstructor16.png" className="TrimToLengthCommand" loadOnClick="false">
+          <tooltip heading="Change Length">
+            Extend or Trim the line to the specified length.
+
+            Trim: A positive value less than the line length measures the new length from the first vertex. A negative value less than the line length trims the specified length from the last vertex.
+
+            Extend: A positive value greater than the line length measures the new length from the first vertex. A negative value greater than than the line length measures the new length from the last vertex
+            <disabledText></disabledText>
+          </tooltip>
+        </button>-->
+
+        <button id="esri_layouts_changesegment_ToLineCommand" caption="To Line" extendedCaption="Change line segment to be straight."
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ChangeSketchSegmentTypeToLineContextButton"
+                loadOnClick="false">
+          <tooltip heading="Change Segment To Line">
+            Change this segment to a straight line.<disabledText>Disabled if the segment is already a line.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_changesegment_ToCircularArcCommand" caption="To Circular Arc" extendedCaption="Change line segment to be circular."
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ChangeSketchSegmentTypeToArcContextButton"
+                loadOnClick="false">
+          <tooltip heading="Change Segment To Circular Arc">
+            Change this segment to a circular arc.<disabledText>Disabled if the segment is already an arc.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_changesegment_ToBezierCurveCommand" caption="To Bezier Curve" extendedCaption="Change line segment to be Bezier curve."
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ChangeSketchSegmentTypeToBezierContextButton"
+                loadOnClick="false">
+          <tooltip heading="Change Segment To Bezier Curve">
+            Change this segment to a bezier curve.<disabledText>Disabled if the segment is already a curve.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_DeleteVertexContextMenuItem" caption="Delete Vertex" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.DeleteSketchVertexContextButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png" loadOnClick="false">
+          <tooltip heading="Delete Vertex">
+            Delete the right-clicked vertex.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_MoveContextMenuItem" caption="Move..." className="MoveVertexCommand" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingXYZDeltaContructor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingXYZDeltaContructor16.png" loadOnClick="false">
+          <tooltip heading="Move Vertex">
+            Move vertex or vertices to the x,y distance specified.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_MoveToContextMenuItem" caption="Move To..." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingXYZAbsoluteContructor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingXYZAbsoluteContructor16.png" className="MoveToVertexCommand" loadOnClick="false">
+          <tooltip heading="Move Vertex To Location">
+            Move vertex to the x,y,z location specified.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_finishSketchButton"
+                caption="Finish" extendedCaption="Finish sketch."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchFinish32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchFinish16.png"
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FinishSketchButton"
+                condition="esri_layouts_layoutPane">
+          <tooltip heading="Finish (F2)">
+            Apply the changes and complete the current operation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_clearSketchButton" 
+                caption="Cancel" extendedCaption="Discard sketch changes and exit operation." 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchDiscard32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchDiscard16.png" 
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ClearSketchButton">
+          <tooltip heading="Cancel (Ctrl+Del)">
+            Discard the changes and exit the current operation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_layouts_setDefaultSymbol" className="esri_layouts:SetDefaultSymbol" caption="Set as Default" condition="esri_layouts_singleElementSelectedCondition" helpContextID="">
           <tooltip heading="">Set as the default symbol.<disabledText></disabledText></tooltip>
         </button>
@@ -1843,6 +2200,17 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           </tooltip>
         </comboBox>
 
+         Export Map
+        <button id="esri_mapping_mapContextMenu_ExportMap"
+               caption="Export To File..." extendedCaption="Export map to file"
+               className="esri_layouts:ExportSimpleMapProjectItem" loadOnClick="false"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport32.png" helpContextID="">
+          <tooltip heading="">
+            Export the map to a file on disk.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <!-- Element dock pane-->
         <button id="esri_layouts_showElementDockPaneButtonForView" caption="Element" className="esri_layouts:ShowElementDockPane" condition="esri_layouts_condition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" helpContextID="">
           <tooltip heading="Element">
@@ -1941,7 +2309,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </button>
 
         <!--This is the "Import MXD" button on the Insert ribbon-->
-        <button id="esri_layouts_import" className="esri_layouts:ImportDocument" caption="Import" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
+        <button id="esri_layouts_importMapContext" className="esri_layouts:ImportDocument" caption="Import" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
           <tooltip heading="">
             Import an existing ArcMap, ArcGlobe, or ArcScene document, a map or basemap package, or a map or layout file to the project.&#xD;&#xD;The original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. One of the new maps or layouts is opened in a view.<disabledText></disabledText>
           </tooltip>
@@ -1953,9 +2321,15 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           </tooltip>
         </button>
 
-        <button id="esri_layouts_importLayout" className="esri_layouts:ImportDocument" caption="Import Layout" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapDocumentImport16.png">
-          <tooltip heading="">
-            Import an existing ArcMap, ArcGlobe, or ArcScene document, a map or basemap package, or a map or layout file to the project.&#xD;&#xD;The original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. One of the new maps or layouts is opened in a view.<disabledText></disabledText>
+        <button id="esri_layouts_importLayout" className="esri_layouts:ImportDocument" caption="Import Layout" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout16.png">
+          <tooltip heading="Import Layout">
+            Import an existing layout file or ArcMap document to the project.&#xD;&#xD;For ArcMap documents, the original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. The new layout is opened in a view.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_importLayoutContext" className="esri_layouts:ImportDocument" caption="Import" keytip="I" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout16.png">
+          <tooltip heading="Import">
+            Import an existing layout file or ArcMap document to the project.&#xD;&#xD;For ArcMap documents, the original data frames and layout are converted to the ArcGIS Pro format, if appropriate, and added to the project. Future changes to the original document are not reflected in the project. The new layout is opened in a view.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1963,8 +2337,8 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <button id="esri_layouts_importPAGX" caption="Import layout file..." keytip="I"
                 extendedCaption="Import layout PAGX file."
                 className="esri_layouts:ImportDocument"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout32.png"
                 loadOnClick="false" helpContextID="">
           <tooltip heading="Import Layout">
             A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.<disabledText></disabledText>
@@ -2012,7 +2386,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <menu id="esri_layouts_projectContainer" caption="New Layout" extendedCaption="Create, paste or import a layout." contextMenu="true">
           <button refID="esri_layouts_projectContainer_NewLayout"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
-          <button refID="esri_layouts_import"/>
+          <button refID="esri_layouts_importLayoutContext"/>
         </menu>
 
         <menu id="esri_layouts_projectItem" caption="Layout Menu" extendedCaption="Perform operation on the layout." contextMenu="true">
@@ -2039,6 +2413,10 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_selectContext"/>
           <button refID="esri_layouts_showHideRulers" separator="true"/>
           <button refID="esri_layouts_showHideGuides"/>
+          <button refID="esri_layouts_createThumbnail" separator="true" />
+          <button refID="esri_layouts_importThumbnail" />
+          <button refID="esri_projectItemViewMetadata"/>
+          <button refID="esri_projectItemEditMetadata"/>
           <button refID="esri_sharing_SaveAsLayoutFile" separator="true"/>          
           <button refID="esri_layouts_layoutPropertiesButton" separator="true"/>
         </menu>
@@ -2076,6 +2454,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <menu id="esri_layouts_mapSeriesPageContextMenu" caption="Map Series Page Menu" extendedCaption="Context menu for map series page." contextMenu="true">
           <button refID="esri_layouts_pageNavigate"/>
           <button refID="esri_layouts_exportMapSeries"/>
+          <button refID="esri_layouts_printMapSeries"/>
         </menu>
 
         <menu id="esri_layouts_rulerContextMenu" caption="Ruler" extendedCaption="Ruler Options." contextMenu="true">
@@ -2109,6 +2488,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_saveAsStyle"/>
           <button refID="esri_layouts_navigateContext" separator="true"/>
           <button refID="esri_layouts_selectContext"/>
+          <button refID="esri_layouts_editVerticesContext"/>
           <!--<button refID="esri_layouts_setDefaultSymbol" separator="true"/>-->
         </menu>
 
@@ -2206,6 +2586,28 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_distributeHorizontally" separator="true"/>
           <button refID="esri_layouts_distributeVertically"/>
           <button refID="esri_layouts_alignToPage" separator="true"/>
+        </menu>
+
+        <menu id="esri_layouts_SegmentSketchContextMenu" caption="Segment Sketch Context Menu" contextMenu="true">
+          <button refID="esri_layouts_InsertVertexContextMenuItem" />
+          <menu refID="esri_layouts_ChangeSegmentMenu" separator="true" />
+          <button refID="esri_layouts_ReverseDirectionContextMenuItem" separator="true" />
+          <!--<button refID="esri_layouts_TrimToLengthContextMenuItem" />-->
+          <button refID="esri_layouts_clearSketchButton" separator="true" />
+          <button refID="esri_layouts_finishSketchButton" />
+        </menu>
+        <menu id="esri_layouts_ChangeSegmentMenu" caption="Change Segment" contextMenu="true">
+          <button refID="esri_layouts_changesegment_ToLineCommand" />
+          <button refID="esri_layouts_changesegment_ToCircularArcCommand" />
+          <button refID="esri_layouts_changesegment_ToBezierCurveCommand" />
+        </menu>
+        <menu id="esri_layouts_VertexSketchContextMenu" caption="Vertex Sketch Context Menu" contextMenu="true">
+          <button refID="esri_layouts_DeleteVertexContextMenuItem" />
+          <!--<button refID="esri_layouts_MoveContextMenuItem" />
+          <button refID="esri_layouts_MoveToContextMenuItem" />-->
+          <button refID="esri_layouts_ReverseDirectionContextMenuItem" separator="true" />
+          <button refID="esri_layouts_clearSketchButton" separator="true" />
+          <button refID="esri_layouts_finishSketchButton" />
         </menu>
       </menus>
     </insertModule>
@@ -2337,6 +2739,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <tool refID="esri_reports_newFieldElementTool"/>
           <toolPalette refID="esri_reports_statisticToolPalette"/>
           <Button refID="esri_reports_addGroupButton"/>
+          <tool refID="esri_reports_newAttachmentTool"/>
         </group>
 
         <group id="esri_reports_generalGroup" caption="General"
@@ -2640,6 +3043,19 @@ Adjust divisions and division values preserves the number of subdivisions by adj
               helpContextID="">
           <tooltip heading="Median">
             Create a new median element by drawing a rectangle.<disabledText>Select a report section in the Contents pane(group header, group footer, or report footer).</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_newAttachmentTool"
+              caption="Attachments"
+              extendedCaption="Create a new attachment element."
+              className="ArcGIS.Desktop.Internal.Reports.Ribbon.NewAttachmentTool"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddAttachments16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddAttachments32.png"
+              condition="esri_reports_canAddAttachmentElementCondition"
+              keytip="DA"
+              helpContextID="">
+          <tooltip heading="Add Attachments">
+            Add attachments to the report.  Use the property pane to specify additional properties.<disabledText>Select the details report section in the Contents pane.</disabledText>
           </tooltip>
         </tool>
         <!-- Wrapped Tools -->
@@ -3203,6 +3619,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
 
         <state id="esri_layouts_paragraphCondition"/>
         <state id="esri_layouts_pictureCondition"/>
+        <state id="esri_layouts_attachmentCondition"/>
         <state id="esri_layouts_chartCondition"/>
         <state id="esri_layouts_groupCondition"/>
         <state id="esri_layouts_tableFrameCondition"/>
@@ -3232,6 +3649,10 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_pictureBackgroundCondition"/>
         <state id="esri_layouts_pictureBorderCondition"/>
         <state id="esri_layouts_pictureShadowCondition"/>
+        <state id="esri_layouts_attachmentCondition"/>
+        <state id="esri_layouts_attachmentBackgroundCondition"/>
+        <state id="esri_layouts_attachmentBorderCondition"/>
+        <state id="esri_layouts_attachmentShadowCondition"/>
         <state id="esri_layouts_chartCondition"/>
         <state id="esri_layouts_chartBackgroundCondition"/>
         <state id="esri_layouts_chartBorderCondition"/>
@@ -3342,6 +3763,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <or>
         <state id="esri_layouts_paragraphBackgroundCondition"/>
         <state id="esri_layouts_pictureBackgroundCondition"/>
+        <state id="esri_layouts_attachmentBackgroundCondition"/>
         <state id="esri_layouts_chartBackgroundCondition"/>
         <state id="esri_layouts_groupBackgroundCondition"/>
         <state id="esri_layouts_multiFrameBackgroundCondition"/>
@@ -3361,6 +3783,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <or>
         <state id="esri_layouts_paragraphBorderCondition"/>
         <state id="esri_layouts_pictureBorderCondition"/>
+        <state id="esri_layouts_attachmentBorderCondition"/>
         <state id="esri_layouts_chartBorderCondition"/>
         <state id="esri_layouts_groupBorderCondition"/>
         <state id="esri_layouts_multiFrameBorderCondition"/>
@@ -3380,6 +3803,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <or>
         <state id="esri_layouts_paragraphShadowCondition"/>
         <state id="esri_layouts_pictureShadowCondition"/>
+        <state id="esri_layouts_attachmentShadowCondition"/>
         <state id="esri_layouts_chartShadowCondition"/>
         <state id="esri_layouts_groupShadowCondition"/>
         <state id="esri_layouts_multiFrameShadowCondition"/>
@@ -3393,6 +3817,14 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <state id="esri_layouts_mapFrameShadowCondition"/>
         <state id="esri_layouts_topoNorthArrowShadowCondition"/>
         <state id="esri_layouts_slopeGuideShadowCondition"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_layouts_editGroupCondition">
+      <or>
+        <state id="esri_layouts_lineCondition"/>
+        <state id="esri_layouts_polygonCondition"/>
+        <state id="esri_layouts_paragraphCondition"/>
+        <state id="esri_layouts_mapFrameCondition"/>
       </or>
     </insertCondition>
 
@@ -3494,6 +3926,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <state id="esri_report_reportSourceConnectedStateId" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_canAddAttachmentElementCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_detailsActiveStateId"/>
       </and>
     </insertCondition>
   </conditions>

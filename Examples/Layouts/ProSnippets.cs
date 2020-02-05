@@ -1016,15 +1016,17 @@ namespace ProSnippetsTasks
           while (rowCursor.MoveNext())
           {
             //Get the shape from the row and set extent
-            ArcGIS.Core.Data.Feature feature = rowCursor.Current as ArcGIS.Core.Data.Feature;
-            Polygon polygon = feature.GetShape() as Polygon;
-            Envelope env = polygon.Extent as Envelope;
-            mf.SetCamera(env);
+            using (var feature = rowCursor.Current as ArcGIS.Core.Data.Feature)
+            {
+              Polygon polygon = feature.GetShape() as Polygon;
+              Envelope env = polygon.Extent as Envelope;
+              mf.SetCamera(env);
 
-            //Zoom out 15 percent
-            Camera cam = mf.Camera;
-            cam.Scale = cam.Scale * 1.15;
-            mf.SetCamera(cam);
+              //Zoom out 15 percent
+              Camera cam = mf.Camera;
+              cam.Scale = cam.Scale * 1.15;
+              mf.SetCamera(cam);
+            }
           }
         }
       });
