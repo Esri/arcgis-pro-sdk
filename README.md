@@ -254,7 +254,9 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
 *  With the release of ArcGIS Pro 2.5, the minimum .NET target has been changed from 4.6.1 to 4.8. What does this mean for you and your add-ins?
       * Existing add-ins, already deployed, will work at 2.5 with no change to their forward compatibility.
       * New add-ins created at 2.5 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
-      * Existing add-ins which are recompiled at 2.5 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.5..
+      * Existing add-ins which are recompiled at 2.5 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.5.
+      
+Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
 #### ArcGIS Pro
 
@@ -280,6 +282,8 @@ _**Newtonsoft Json**_
 
 _**CefSharp**_
 * At 2.5 ArcGIS is using version 75.1.141 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Framework#chromiumwebbrowser) 
+
+Please consult technical support article [How To: Fix compiler error(s) using CefSharp and the ArcGIS Pro SDK ChromiumWebBrowser Control in an add-in](https://support.esri.com/en/Technical-Article/000022628) for more information
  
 Note: [ArcGIS Pro system requirements](http://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
@@ -449,6 +453,7 @@ The following functionality is available at the ArcGIS Pro 2.5 SDK for .NET rele
       * New add-ins created at 2.5 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
       * Existing add-ins which are recompiled at 2.5 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.5..
 
+Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
 For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.5
 ](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
