@@ -39,23 +39,40 @@
 
     <!--list of commands that recording is to ignore-->
     <insertCategory id="esri_tasks_recordingCommandSkipList">
-      <component id="esri_geoprocessing_selectByAttributeButton"/>
+      <!--At 2.6 gp team changed the way various gp daml-ids worked.  Previously the daml-id called a gp
+        tool.  When Task Record was used, two new steps were added (1 for the daml-id, 1 for the gp tool execution)
+        hence why they were included in the "skip list" to avoid a double entry - ignore the daml-id, record the gp tool
+        At 2.6, execution no longer calls the gp tool so these daml's need to be removed from the skip list to ensure the
+        daml-entry is recorded.
+        https://devtopia.esri.com/ArcGISPro/Tasks/issues/302
+        --> 
+      <!--<component id="esri_geoprocessing_selectByAttributeButton"/>
       <component id="esri_geoprocessing_selectByLocationButton"/>
-      <component id="esri_geoprocessing_toolsButton"/>
-      <component id="esri_editing_ShowEditFeaturesBtn"/>
-      <component id="esri_geoprocessing_tableCalculateFieldButton"/>
-      <component id="esri_geoprocessing_tableAddGeometryAttributesButton"/>
-      <component id="esri_geoprocessing_tableSummarizeButton"/>
-      <component id="esri_projectGDBItemRename"/>
-      <component id="esri_geoprocessing_openToolHistory"/>
       <component id="esri_geoprocessing_tableAddJoinButton"/>
       <component id="esri_geoprocessing_tableRemoveJoinButton"/>
       <component id="esri_geoprocessing_tableAddRelateButton"/>
       <component id="esri_geoprocessing_tableRemoveRelateButton"/>
-      <component id="esri_core_undoButton"/>
+      -->
+
+      <!--at 2.6 these gp damls don't appear on any ribbon/menu anywhere; could probably be removed too but lets not --> 
+      <component id="esri_geoprocessing_tableCalculateFieldButton"/>
+      <component id="esri_geoprocessing_tableAddGeometryAttributesButton"/>
+      <component id="esri_geoprocessing_tableSummarizeButton"/>
+
+      <!--these daml-ids open dockpanes (gp tools, modify features) - not recordable  -->
+      <component id="esri_geoprocessing_toolsButton"/>
+      <component id="esri_editing_ShowEditFeaturesBtn"/>
+      
+      <component id="esri_projectGDBItemRename"/>
+      <component id="esri_geoprocessing_openToolHistory"/>
+      
+      <!--undo,redo are not recordable-->
+      <component id="esri_core_undoButton"/>    
       <component id="esri_core_redoButton"/>
+      <!--sync, sync and center are not recordable-->
       <component id="esri_mapping_syncCenterAndScaleButton"/>
       <component id="esri_mapping_syncCenterButton"/>
+      <!--set start point, closing point on traverse dockpane - not recordable -->
       <component id="esri_editing_GetPointTool"/>
     </insertCategory>
 
@@ -235,7 +252,7 @@
       
       <controls>
         <!--ribbon buttons-->
-        <button id="esri_tasks_ShowTasks" caption="Tasks" keytip="T" className="esri_taskassistant_TaskAssistantModule:ShowTaskAssistant" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant16.png" helpContextID="">
+        <button id="esri_tasks_ShowTasks" caption="Tasks" keytip="TK" className="esri_taskassistant_TaskAssistantModule:ShowTaskAssistant" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant16.png" helpContextID="">
           <tooltip heading="Tasks">Show the Tasks pane. 
           
 Tasks are a set of preconfigured steps that guide you through a workflow. You can run tasks and configure task steps. Tasks can be used to implement best practice workflows, show correct workflows and improve overall software efficiency.<disabledText></disabledText></tooltip>

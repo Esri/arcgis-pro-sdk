@@ -103,7 +103,27 @@ namespace Snippets
             });
             #endregion
         }
-        private static async void AddMapViewOverlayControl ()
+    private static void CalculateSelectionTolerance()
+    {
+      #region Calculate Selection tolerance in map units
+      //Selection tolerance for the map in pixels
+      var selectionTolerance = SelectionEnvironment.SelectionTolerance;
+      QueuedTask.Run(() => {
+        //Get the map center
+        var mapExtent = MapView.Active.Map.GetDefaultExtent();
+        var mapPoint = mapExtent.Center;
+        //Map center as screen point
+        var screenPoint = MapView.Active.MapToScreen(mapPoint);
+        //Add selection tolerance pixels to get a "radius".
+        var radiusScreenPoint = new System.Windows.Point((screenPoint.X + selectionTolerance), screenPoint.Y);
+        var radiusMapPoint = MapView.Active.ScreenToMap(radiusScreenPoint);
+        //Calculate the selection tolerance distance in map uints.
+        var searchRadius = GeometryEngine.Instance.Distance(mapPoint, radiusMapPoint);
+      });
+      #endregion
+    }
+
+    private static async void AddMapViewOverlayControl ()
          {
             #region MapView Overlay Control
             //Creat a Progress Bar user control
@@ -760,8 +780,7 @@ namespace Snippets
         }
 
         #endregion
-
-       
+   
 
         #region Change the cursor of a Tool
         internal class CustomMapTool : MapTool

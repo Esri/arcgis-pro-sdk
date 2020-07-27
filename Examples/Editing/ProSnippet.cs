@@ -33,6 +33,8 @@ using ArcGIS.Desktop.Editing.Templates;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+using ArcGIS.Desktop.Core;
+using System.Windows;
 
 namespace EditingSDKExamples
 {
@@ -690,6 +692,62 @@ namespace EditingSDKExamples
     }
     #endregion
 
+    #region ProSnippet Group: Enable Editing
+    #endregion
+
+    private void CanWeEdit()
+    {
+      #region Enable Editing
+
+      // if not editing
+      if (!Project.Current.IsEditingEnabled)
+      {
+        var res = MessageBox.Show("You must enable editing to use editing tools. Would you like to enable editing?",
+                                                              "Enable Editing?", System.Windows.MessageBoxButton.YesNoCancel);
+        if (res == System.Windows.MessageBoxResult.No ||
+                      res == System.Windows.MessageBoxResult.Cancel)
+        {
+              return;
+        }
+        Project.Current.SetIsEditingEnabledAsync(true);
+      }
+
+      #endregion
+
+      #region Disable Editing
+
+      // if editing
+      if (Project.Current.IsEditingEnabled)
+      {
+        var res = MessageBox.Show("Do you want to disable editing? Editing tools will be disabled",
+                                                               "Disable Editing?", System.Windows.MessageBoxButton.YesNoCancel);
+        if (res == System.Windows.MessageBoxResult.No ||
+                      res == System.Windows.MessageBoxResult.Cancel)
+        {
+          return;
+        }
+
+        //we must check for edits
+        if (Project.Current.HasEdits)
+        {
+          res = MessageBox.Show("Save edits?", "Save Edits?", System.Windows.MessageBoxButton.YesNoCancel);
+          if (res == System.Windows.MessageBoxResult.Cancel)
+            return;
+          else if (res == System.Windows.MessageBoxResult.No)
+            Project.Current.DiscardEditsAsync();
+          else
+          {
+            Project.Current.SaveEditsAsync();
+          }
+        }
+        Project.Current.SetIsEditingEnabledAsync(false);
+      }
+
+      #endregion
+
+    }
+
+
     #region ProSnippet Group: Row Events
     #endregion
 
@@ -958,6 +1016,255 @@ namespace EditingSDKExamples
         }, featLayer.GetTable());
         editOp.Execute();
       });
+      #endregion
+    }
+
+    #region ProSnippet Group: Working with the Sketch
+    #endregion
+
+    #region Toggle sketch selection mode
+    //UseSelection = true; (UseSelection must be set to true in the tool constructor or tool activate)
+    private bool _inSelMode = false; 
+
+    public bool IsShiftKey(MapViewKeyEventArgs k)
+    {
+      return (k.Key == System.Windows.Input.Key.LeftShift ||
+             k.Key == System.Windows.Input.Key.RightShift);
+    }
+
+    protected override async void OnToolKeyDown(MapViewKeyEventArgs k)
+    {
+      //toggle sketch selection mode with a custom key
+      if (k.Key == System.Windows.Input.Key.W)
+      {
+        if (!_inSelMode)
+        {
+          k.Handled = true;
+
+          // Toggle the tool to select mode.
+          //  The sketch is saved if UseSelection = true;
+          if (await ActivateSelectAsync(true))
+            _inSelMode = true;
+        }
+      }
+      else if (!_inSelMode)
+      {
+        //disable effect of Shift in the base class.
+        //Mark the key event as handled to prevent further processing
+        k.Handled = IsShiftKey(k);
+      }
+    }
+    protected override void OnToolKeyUp(MapViewKeyEventArgs k)
+    {
+      if (k.Key == System.Windows.Input.Key.W)
+      {
+        if (_inSelMode)
+        {
+          _inSelMode = false;
+          k.Handled = true;//process this one
+
+          // Toggle back to sketch mode. If UseSelection = true
+          //   the sketch will be restored
+          ActivateSelectAsync(false);
+        }
+      }
+      else if (_inSelMode)
+      {
+        //disable effect of Shift in the base class.
+        //Mark the key event as handled to prevent further processing
+        k.Handled = IsShiftKey(k);
+      }
+    }
+    #endregion
+
+
+    #region ProSnippet Group: Snapping
+    #endregion
+
+
+    private async void Snapping()
+    {
+      Map myMap = null;
+      FeatureLayer fLayer = null;
+      IEnumerable<FeatureLayer> layerList = null;
+
+      #region Configure Snapping (Turn Snapping on or off)
+
+      //enable snapping
+      ArcGIS.Desktop.Mapping.Snapping.IsEnabled = true;
+
+
+      // disable snapping
+      ArcGIS.Desktop.Mapping.Snapping.IsEnabled = false;
+      #endregion
+
+
+      #region Configure Snapping (Application SnapModes)
+
+      // set only Point and Edge snapping modes, clear everything else
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapModes(SnapMode.Point, SnapMode.Edge); 
+
+
+      // clear all snap modes
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapModes();
+
+
+      // set snap modes one at a time
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapMode(SnapMode.Edge, true);
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapMode(SnapMode.End, true);
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapMode(SnapMode.Intersection, true);
+
+
+      // get current snap modes
+      var snapModes = ArcGIS.Desktop.Mapping.Snapping.SnapModes;
+
+
+      // get state of a specific snap mode
+      bool isOn = ArcGIS.Desktop.Mapping.Snapping.GetSnapMode(SnapMode.Vertex);
+
+      #endregion
+
+
+      #region Configure Snapping (Layer Snappability)
+
+      // is the layer snappable?
+      bool isSnappable = fLayer.IsSnappable;
+
+      // set snappability for a specific layer - needs to run on the MCT
+      await QueuedTask.Run(() => 
+      {
+        // use an extension method
+        fLayer.SetSnappable(true);
+
+        // or use the CIM directly
+        //var layerDef = fLayer.GetDefinition() as ArcGIS.Core.CIM.CIMGeoFeatureLayerBase;
+        //layerDef.Snappable = true;
+        //fLayer.SetDefinition(layerDef);
+      });
+
+
+      // turn all layers snappability off
+      layerList = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
+      await QueuedTask.Run(() =>
+      {
+        foreach (var layer in layerList)
+        {
+          layer.SetSnappable(false);
+        }
+      });
+      #endregion
+
+      #region Configure Snapping (LayerSnapModes)
+
+      layerList = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
+
+      // configure by layer
+      foreach (var layer in layerList)
+      {
+        // find the state of the snapModes for the layer
+        var lsm = ArcGIS.Desktop.Mapping.Snapping.GetLayerSnapModes(layer);
+        bool vertexOn = lsm.Vertex;
+        // or use 
+        vertexOn = lsm.GetSnapMode(SnapMode.Vertex);
+
+        bool edgeOn = lsm.Edge;
+        // or use 
+        edgeOn = lsm.GetSnapMode(SnapMode.Edge);
+
+        bool endOn = lsm.End;
+        // or use 
+        endOn = lsm.GetSnapMode(SnapMode.End);
+
+        // update a few snapModes 
+        //   turn Vertex off
+        lsm.SetSnapMode(SnapMode.Vertex, false);
+        // intersections on
+        lsm.SetSnapMode(SnapMode.Intersection, true);
+
+        // and set back to the layer
+        ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layer, lsm);
+
+
+        // assign a single snap mode at once
+        ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layer, SnapMode.Vertex, false);
+
+
+        // turn ALL snapModes on
+        ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layer, true);
+        // turn ALL snapModes off
+        ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layer, false);
+      }
+
+
+      // configure for a set of layers
+
+      // set Vertex, edge, end on for a set of layers, other snapModes false
+      var vee = new LayerSnapModes(false);
+      vee.Vertex = true;
+      vee.Edge = true;
+      vee.End = true;
+      ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layerList, vee);
+
+
+      // ensure intersection is on for a set of layers without changing any other snapModes
+
+      // get the layer snapModes for the set of layers
+      var dictLSM = ArcGIS.Desktop.Mapping.Snapping.GetLayerSnapModes(layerList);
+      foreach (var layer in dictLSM.Keys)
+      {
+        var lsm = dictLSM[layer];
+        lsm.Intersection = true;
+      }
+      ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(dictLSM);
+
+
+      // set all snapModes off for a list of layers
+      ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layerList, false);
+
+
+      #endregion
+
+      #region Configure Snapping (Combined Example)
+
+      // interested in only snapping to the vertices of a specific layer of interest and not the vertices of other layers
+      //  all other snapModes should be off.
+
+      // snapping must be on
+      ArcGIS.Desktop.Mapping.Snapping.IsEnabled = true;
+
+      // turn all application snapModes off
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapModes();
+
+      // set application snapMode vertex on 
+      ArcGIS.Desktop.Mapping.Snapping.SetSnapMode(SnapMode.Vertex, true);
+
+      // ensure layer snapping is on
+      await QueuedTask.Run(() =>
+      {
+        fLayer.SetSnappable(true);
+      });
+
+      // set vertex snapping only
+      var vertexOnly = new LayerSnapModes(false);
+      vertexOnly.Vertex = true;
+
+      // set vertex only for the specific layer, clearing all others
+      var dict = new Dictionary<Layer, LayerSnapModes>();
+      dict.Add(fLayer, vertexOnly);
+      ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(dict, true);  // true = reset other layers
+      #endregion
+
+
+      #region Snap Options
+
+      //Set snapping options via get/set options
+      var snapOptions = ArcGIS.Desktop.Mapping.Snapping.GetOptions(myMap);
+      snapOptions.SnapToSketchEnabled = true;
+      snapOptions.XYTolerance = 100;
+      snapOptions.ZToleranceEnabled = true;
+      snapOptions.ZTolerance = 0.6;
+      ArcGIS.Desktop.Mapping.Snapping.SetOptions(myMap, snapOptions);
+
       #endregion
     }
 

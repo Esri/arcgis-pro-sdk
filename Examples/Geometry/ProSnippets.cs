@@ -2220,7 +2220,7 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      #region Construct Multipatch via Xml, Esri Shape
+      #region Construct Multipatch
 
       // export to binary xml
       string binaryXml = multiPatch.ToBinaryXML();
@@ -4714,6 +4714,134 @@ namespace ProSnippetsGeometry
       Polygon outPolygon = GeometryEngine.Instance.SetMsAsDistance(polygon, AsRatioOrLength.AsLength) as Polygon;
       ReadOnlyPointCollection outPoints = outPolygon.Points;
       // outPoints M values are { 0, 3000, 7000, 10000, 14000 };
+      #endregion
+    }
+
+    public void InsertMAtDistance()
+    {
+      #region Insert M value at the given distance - InsertMAtDistance
+
+      string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,null]]]}";
+      Polyline polyline = PolylineBuilder.FromJson(json);
+      bool splitHappened;
+      int partIndex, segmentIndex;
+
+      // A point already exists at the given distance
+      double m = -1;
+      double distance = 2000;
+      bool createNewPart = false;
+      Polyline outputPolyline = GeometryEngine.Instance.InsertMAtDistance(polyline, m, distance, AsRatioOrLength.AsLength, createNewPart, out splitHappened, out partIndex, out segmentIndex) as Polyline;
+
+      // splitHappened = false, partIndex = 0, segmentIndex = 2
+      // outputPolyline.Points[2].M = -1
+
+      json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,-1]],[[0,0,0],[0,1000,0],[0,2000,2]]],\"spatialReference\":{\"wkid\":3857}}";
+      polyline = PolylineBuilder.FromJson(json);
+
+      // A point already exists at the given distance, but createNewPart = true
+      m = 1;
+      distance = 3000;
+      createNewPart = true;
+      outputPolyline = GeometryEngine.Instance.InsertMAtDistance(polyline, m, distance, AsRatioOrLength.AsLength, createNewPart, out splitHappened, out partIndex, out segmentIndex) as Polyline;
+      string outputJson = outputPolyline.ToJson();
+
+      // splitHappened = true, partIndex = 2, segmentIndex = 0
+      // outputJson = {"hasM":true,"paths":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,-1]],[[0,0,0],[0,1000,1]],[[0,1000,1],[0,2000,2]]]}}
+      // A new part has been created and the M values for outputPolyline.Points[4] and outputPolyline.Points[5] have been modified
+
+      // A point does not exist at the given distance
+      m = 1;
+      distance = 3500;
+      createNewPart = false;
+      outputPolyline = GeometryEngine.Instance.InsertMAtDistance(polyline, m, distance, AsRatioOrLength.AsLength, createNewPart, out splitHappened, out partIndex, out segmentIndex) as Polyline;
+      outputJson = outputPolyline.ToJson();
+
+      // splitHappened = true even though createNewPart = false because a new point was created
+      // partIndex = 1, segmentIndex = 2
+      // outputJson = {"hasM":true,"paths":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,-1]],[[0,0,0],[0,1000,0],[0,1500,1],[0,2000,2]]]}
+      // A new point has been inserted (0, 1500, 1) by interpolating the X and Y coordinates and M value set to the input M value.
+
+      #endregion
+    }
+
+    public void CalibrateByMs()
+    {
+      #region Calibrate M values using M values from input points - CalibrateByMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[0,0,-1],[1,0,0],[1,1,1],[1,2,2],[3,1,3],[5,3,4],[9,5,5],[7,6,6]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilder.FromJson(json);
+
+      // Interpolate using points (0, 0, 17), (1, 0, 42), (7, 6, 18) 
+      List<MapPoint> updatePoints = new List<MapPoint>(3);
+      MapPointBuilderEx builder = new MapPointBuilderEx(0, 0);
+      builder.M = 17;
+      updatePoints.Add(builder.ToGeometry() as MapPoint);
+
+      builder.X = 1;
+      builder.M = 42;
+      updatePoints.Add(builder.ToGeometry() as MapPoint);
+
+      builder.X = 7;
+      builder.Y = 6;
+      builder.M = 18;
+      updatePoints.Add(builder.ToGeometry() as MapPoint);
+
+      // Calibrate all the points in the polyline
+      double cutOffDistance = polyline.Length;
+
+      Polyline updatedPolyline = GeometryEngine.Instance.CalibrateByMs(polyline, updatePoints, UpdateMMethod.Interpolate, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0, 0, 17 ), ( 1, 0, 42 ), ( 1, 1, 38 ), ( 1, 2, 34 ), ( 3, 1, 30 ), ( 5, 3, 26 ), ( 9, 5, 22 ), ( 7, 6, 18 )
+
+      // ExtrapolateBefore using points (1, 2, 42), (9, 5, 18)
+      builder.X = 1;
+      builder.Y = 2;
+      builder.M = 42;
+      updatePoints[0] = builder.ToGeometry() as MapPoint;
+
+      builder.X = 9;
+      builder.Y = 5;
+      builder.M = 18;
+      updatePoints[1] = builder.ToGeometry() as MapPoint;
+
+      updatePoints.RemoveAt(2);
+
+      updatedPolyline = GeometryEngine.Instance.CalibrateByMs(polyline, updatePoints, UpdateMMethod.ExtrapolateBefore, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // ( 0, 0, 66 ), ( 1, 0, 58 ), ( 1, 1, 50 ), ( 1, 2, 42 ), ( 3, 1, 3 ), ( 5, 3, 4 ), ( 9, 5, 18 ), ( 7, 6, 6 )
+
+      // ExtrapolateAfter using points (0, 0, 17), (1, 2, 42)
+      builder.X = 0;
+      builder.Y = 0;
+      builder.M = 17;
+      updatePoints.Insert(0, builder.ToGeometry() as MapPoint);
+
+      updatePoints.RemoveAt(2);
+
+      updatedPolyline = GeometryEngine.Instance.CalibrateByMs(polyline, updatePoints, UpdateMMethod.ExtrapolateAfter, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // ( 0, 0, 17 ), ( 1, 0, 0 ), ( 1, 1, 1 ), ( 1, 2, 42 ), ( 3, 1, 50.333333333333333 ), ( 5, 3, 58.666666666666671 ), ( 9, 5, 67 ), ( 7, 6, 75.333333333333343 )
+
+      // ExtrapolateAfter and Interpolate using points (0, 0, 17), (1, 2, 42)
+      updatedPolyline = GeometryEngine.Instance.CalibrateByMs(polyline, updatePoints, UpdateMMethod.ExtrapolateAfter | UpdateMMethod.Interpolate, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0,0,17),(1,0,25.333333333333336),(1,1,33.666666666666671),(1,2,42),(3,1,50.333333333333336),(5,3,58.666666666666671),(9,5,67),(7,6,75.333333333333343)
+
+      #endregion
+    }
+
+    public void InterpolateMsBetween()
+    {
+      #region Generates M values by linear interpolation over a range of points - InterpolateMsBetween
+
+      string json = "{\"hasM\":true,\"paths\":[[[0,0,-1],[1,0,0],[1,1,1],[1,2,2],[3,1,3],[5,3,4],[9,5,5],[7,6,6]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilder.FromJson(json);
+
+      // Interpolate between points 2 and 6
+      Polyline outPolyline = GeometryEngine.Instance.InterpolateMsBetween(polyline, 0, 2, 0, 6) as Polyline;
+      // The points of the output polyline are
+      // (0, 0, -1), (1, 0, 0), (1, 1, 1), (1, 2, 1.3796279833912741), (3, 1, 2.2285019604153242), (5, 3, 3.3022520459518998), (9, 5, 5), (7, 6, 6)
+
       #endregion
     }
 

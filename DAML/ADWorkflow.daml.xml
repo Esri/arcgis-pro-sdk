@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ArcGIS defaultAssembly="ArcGIS.Desktop.Workflow.dll" defaultNamespace="ArcGIS.Desktop.Workflow" 
-        xmlns="http://schemas.esri.com/DADF/Registry" 
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<ArcGIS defaultAssembly="ArcGIS.Desktop.Workflow.dll" defaultNamespace="ArcGIS.Desktop.Workflow"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
 
   <dependencies>
     <dependency name="ADMapping.daml"/>
     <dependency name="Editing.daml" />
-	<dependency name="ADGeoDatabase.daml" />
+    <dependency name="ADGeoDatabase.daml" />
     <dependency name="TaskAssistant.daml" />
     <dependency name="ADSharing.daml" />
   </dependencies>
@@ -15,7 +15,7 @@
   <products>
     <insertProduct id="esri_product_workflow" caption="Workflow Manager" description="Provides tools for work management, that help automate and simplify GIS and non-GIS work." code="40,200" />
   </products>
-  
+
   <categories>
     <updateCategory refID="esri_core_projectContainers">
       <insertComponent id="WorkflowConnectionContainer" className="ArcGIS.Desktop.Internal.Workflow.WorkflowConnectionContainer">
@@ -31,7 +31,7 @@
         </content>
       </insertComponent>
     </updateCategory>
-    
+
     <insertCategory id="esri_workflow_userConfigurationViews">
       <component id="esri_workflow_userProfileView" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserProfileViewModel">
         <content L_name = "User Profile" buttonTooltipHeader="User Profile" buttonTooltip = "Update current user's profile and add new users."
@@ -43,7 +43,7 @@
                  buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Group_B_32.png">
         </content>
       </component>
-    </insertCategory>    
+    </insertCategory>
   </categories>
 
   <modules>
@@ -92,7 +92,7 @@
           <group refID="esri_workflow_jobManageGroup"/>
           <group refID="esri_workflow_jobGroup" />
         </tab>
-        
+
         <!-- Modal tab for defining LOI -->
         <tab id="esri_workflow_defineAOITab" caption="Define LOI" condition="esri_workflow_defineAOICondition" insert="after" tabGroupID="esri_workflow_workflowTabGroup" keytip="DA">
           <group refID="esri_mapping_navigateGroup" />
@@ -102,7 +102,7 @@
           <group refID="esri_workflow_defineAOIDrawGroup" />
           <group refID="esri_workflow_defineAOICloseGroup"/>
         </tab>
-        
+
         <!-- Workflow Map Tab-->
         <tab id="esri_workflow_mapPaneTab" caption="Workflow" condition="esri_workflow_mapPaneCondition" insert="after" keytip="W">
           <group refID="esri_workflow_exportGroup"/>
@@ -169,7 +169,7 @@
           <button refID="esri_tasks_ShowTasks" size="large" />
           <button refID="esri_workflow_workflowViewPalette" size="large" />
         </group>
-        
+
         <!-- Job view HOME groups -->
         <group id="esri_workflow_job_selectionGroup" caption="Selection"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png">
@@ -200,7 +200,7 @@
           <button refID="esri_workflow_canvas_fitToWindowButton" size="large" />
           <button refID="esri_workflow_canvas_zoomInButton" size="small" />
           <button refID="esri_workflow_canvas_zoomOutButton" size="small" />
-          <button refID="esri_workflow_canvas_panButton" size="small" />          
+          <button refID="esri_workflow_canvas_panButton" size="small" />
         </group>
 
         <group id="esri_workflow_defineAOIDrawGroup" caption="Draw LOI" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png">
@@ -217,12 +217,12 @@
           <button refID="esri_mapping_clearSelectionButton" size="middle" />
           <button refID="esri_editing_DelSelFeaturesBtn" size="middle" />
         </group>
-        
+
         <group id="esri_workflow_defineAOICloseGroup" caption="Close" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply16.png">
           <button refID="esri_workflow_defineAOISaveAndClose" size="large" />
           <button refID="esri_workflow_defineAOIClose" size="large" />
         </group>
-        
+
         <!-- Workflow Map Pane Groups -->
         <group id="esri_workflow_exportGroup" caption="Export">
           <button refID="esri_workflow_exportMap" size="large"/>
@@ -250,21 +250,21 @@
 
       <controls>
         <!-- Workflow Connection button -->
-        <button id="esri_workflow_workflowConnectionButton" className="workflow_module:ConnectToWorkflowAsync" caption="New Workflow Connection" extendedCaption="Insert Connection"
+        <button id="esri_workflow_workflowConnectionButton" className="workflow_module:ConnectToWorkflowAsync" caption="New Workflow (Classic) Connection" extendedCaption="Insert Connection"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewWorkflowConnections16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewWorkflowConnections32.png"
                 condition="esri_workflow_canAddWorkflowConnectionCondition" keytip="WC">
           <tooltip heading="">
-            Add a connection to a Workflow Manager database to the project.
+            Add a connection to a Workflow Manager (Classic) database to the project.
             <disabledText>Only one workflow connection can be added per project.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_workflow_workflowConnectionContextMenuButton" className="workflow_module:ConnectToWorkflowAsync" caption="Add Workflow Connection" extendedCaption="Add Workflow Connection - Context Menu"
+        <button id="esri_workflow_workflowConnectionContextMenuButton" className="workflow_module:ConnectToWorkflowAsync" caption="Add Workflow (Classic) Connection" extendedCaption="Add Workflow (Classic) Connection - Context Menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
                 condition="esri_workflow_canAddWorkflowConnectionCondition">
           <tooltip heading="">
-            Add a connection to a Workflow Manager database to the project.<disabledText></disabledText>
+            Add a connection to a Workflow Manager (Classic) database to the project.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_workflowConnectionOnlineButton" className="workflow_module:ConnectToOnlineWorkflow" caption="Add Workflow Server Connection"
@@ -276,9 +276,9 @@
             <disabledText>Only one workflow connection can be openend at a time.</disabledText>
           </tooltip>
         </button>
-        
+
         <!-- Workflow Jobs buttons (Home Tab, Jobs Group) -->
-        <button id="esri_workflow_openJobPropertiesDockPaneButton" className="WorkflowPane.Ribbon.OpenJobPropertiesDockPaneButton" 
+        <button id="esri_workflow_openJobPropertiesDockPaneButton" className="WorkflowPane.Ribbon.OpenJobPropertiesDockPaneButton"
                caption="Job Properties" extendedCaption="Open Job Properties pane" keytip="JP"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job32.png"
@@ -286,7 +286,7 @@
           <tooltip heading="Job Properties">
             Show the Job Properties pane.
 
-You can update multiple job properties at once.<disabledText></disabledText>
+            You can update multiple job properties at once.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_openWorkerDockPaneButton" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkerDockPaneButton"
@@ -298,7 +298,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
             <disabledText>No workflow connection in project</disabledText>
           </tooltip>
         </button>
-        <button id="esri_workflow_workflowView" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkflowViewButton" 
+        <button id="esri_workflow_workflowView" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkflowViewButton"
                 caption="Workflow View" extendedCaption="Open Workflow View" keytip="WV"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkFlowConnection32.png"
@@ -319,7 +319,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
         </button>
         <button id="esri_workflow_exportCSVButton" className="esri_workflow_workflowPane:ExportCSV" caption="Export to CSV"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
-               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png" 
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
                condition="esri_workflow_ExportCSVEnabledCondition" keytip="XC">
           <tooltip>
             Export workflow job(s) to a CSV file.
@@ -331,34 +331,44 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <button id="esri_workflow_exportJobButton" className="esri_workflow_workflowPane:ExportJob" caption="Export Job"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="EJ"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+               condition="esri_workflow_unimplementedCondition" keytip="EJ">
+          <!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
           <tooltip>
             Export workflow job(s) to a JXL file.
-            <disabledText>Not available yet.<!--Current user does not have the Export Job privilege.--></disabledText>
+            <disabledText>
+              Not available yet.<!--Current user does not have the Export Job privilege.-->
+            </disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_exportQueryResultsButton" className="esri_workflow_workflowPane:ExportQuery" caption="Export Query"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="EQ"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+               condition="esri_workflow_unimplementedCondition" keytip="EQ">
+          <!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
           <tooltip>
             Export query results to a CSV file.
-            <disabledText>Not available yet.<!--Current user does not have the Export Query Results privilege.--></disabledText>
+            <disabledText>
+              Not available yet.<!--Current user does not have the Export Query Results privilege.-->
+            </disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_exportReportButton" className="esri_workflow_workflowPane:Report" caption="Export Report" extendedCaption="Export Job Report"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="ER"><!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
+               condition="esri_workflow_unimplementedCondition" keytip="ER">
+          <!--esri_workflow_workflowExportJobsUserPrivilegeCondition">-->
           <tooltip>
             Export report results to an HTML file.
-            <disabledText>Not available yet.<!--Current user does not have the Export Query Results privilege.--></disabledText>
+            <disabledText>
+              Not available yet.<!--Current user does not have the Export Query Results privilege.-->
+            </disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_jobParentChildRelationshipButton" className="esri_workflow_workflowPane:ViewJobParentChildRelationship" caption="Parent Child Relationship"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="P"><!--esri_workflow_workflowPane">-->
+               condition="esri_workflow_unimplementedCondition" keytip="P">
+          <!--esri_workflow_workflowPane">-->
           <tooltip>
             View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
           </tooltip>
@@ -366,7 +376,8 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <button id="esri_workflow_jobDependentOnRelationshipButton" className="esri_workflow_workflowPane:ViewJobDependentOn" caption="Dependent On"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="DO"><!--esri_workflow_workflowPane">-->
+               condition="esri_workflow_unimplementedCondition" keytip="DO">
+          <!--esri_workflow_workflowPane">-->
           <tooltip>
             View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
           </tooltip>
@@ -374,7 +385,8 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <button id="esri_workflow_jobDependentToRelationshipButton" className="esri_workflow_workflowPane:ViewJobDependentTo" caption="Dependent To"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobRelated32.png"
-               condition="esri_workflow_unimplementedCondition" keytip="DT"><!--esri_workflow_workflowPane">-->
+               condition="esri_workflow_unimplementedCondition" keytip="DT">
+          <!--esri_workflow_workflowPane">-->
           <tooltip>
             View heirarchy of job relationships.<disabledText>Not available yet.</disabledText>
           </tooltip>
@@ -424,21 +436,24 @@ You can update multiple job properties at once.<disabledText></disabledText>
             <disabledText>Current user does not have the Delete MXDs privilege</disabledText>
           </tooltip>
         </button>
-        
+
         <!-- Workflow Notification buttons (Home Tab, Notifications Group) -->
         <button id="esri_workflow_subscribeToNotificationsButton" className="esri_workflow_workflowPane:SubscribeToNotifications" caption="Subscribe" keytip="SB"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmailUser16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EmailUser32.png"
-               condition="esri_workflow_unimplementedCondition"><!--esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition">-->
+               condition="esri_workflow_unimplementedCondition">
+          <!--esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition">-->
           <tooltip>
             Subscribe to workflow notifications.
-            <disabledText>Not available yet.<!--Current user does not have the Subscribe to Notifications privilege.--></disabledText>
+            <disabledText>
+              Not available yet.<!--Current user does not have the Subscribe to Notifications privilege.-->
+            </disabledText>
           </tooltip>
         </button>
         <!-- Workflow Context Menu buttons-->
-        <button id="esri_workflow_workflowConnectionContextMenuRemoveButton" className="esri_core_module:RemoveProjectItem" caption="Remove" condition="esri_worklflow_jobNotExecutingCondition" extendedCaption="Remove Selected Workflow Connection - Context Menu"
+        <button id="esri_workflow_workflowConnectionContextMenuRemoveButton" className="esri_core_module:RemoveProjectItem" caption="Remove" condition="esri_worklflow_jobNotExecutingCondition" extendedCaption="Remove Selected Workflow (Classic) Connection - Context Menu"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
-          <tooltip>Remove workflow connection from the project</tooltip>
+          <tooltip>Remove workflow (Classic) connection from the project</tooltip>
         </button>
         <button id="esri_workflow_workflowConnectionContextMenuOpenButton" className="workflow_module:OpenWorkflow" caption="Open Workflow Connection" extendedCaption="Open Selected Workflow Connection - Context Menu"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png">
@@ -455,7 +470,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" condition="esri_workflow_workflowConnectionOnlineAndAdminUserCondition">
           <tooltip>
             Update the current user's profile and add the user to workflow groups.
-            <disabledText>The current user does not have the AdministratorAccess privilege or an online Workflow connection is not available.</disabledText>
+            <disabledText>The current user does not have the AdministratorAccess privilege or an online Workflow (Classic) connection is not available.</disabledText>
           </tooltip>
         </button>
 
@@ -483,7 +498,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
             Mark the workflow step as complete
           </tooltip>
         </button>
-        
+
         <button id="esri_workflow_jobRefresh" className="JobPane.Ribbon.RefreshJob" caption="Refresh" keytip="R" extendedCaption="Refresh Job"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh32.png">
@@ -518,8 +533,8 @@ You can update multiple job properties at once.<disabledText></disabledText>
             <disabledText>Current user does not have the Create Job privilege or there is no current job.</disabledText><!-- Should not happen -->
           </tooltip>
         </button>
-        
-        
+
+
         <!-- Define AOI Close Group -->
         <button id="esri_workflow_clearAOI" className="DefineAOI.Ribbon.ClearAOIButton" caption="Clear LOI" extendedCaption="Clear Jobs Location of Interest" keytip="CL"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionClearSelected16.png"
@@ -561,7 +576,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
             The number of units to create the buffer
           </tooltip>
         </editBox>
-        
+
         <comboBox id="esri_workflow_bufferUnitsComboBox" className="DefineAOI.Ribbon.BufferUnitsComboBox" loadOnClick="false" caption="Buffer Units"
                   isEditable="false" resizable="false" showHelp="true" sizeString="0000" condition="esri_workflow_defineAOIBufferState">
           <tooltip heading="Distance Unit">
@@ -594,23 +609,23 @@ You can update multiple job properties at once.<disabledText></disabledText>
           </tooltip>
         </button>
         <!-- Add Task Assistant File Context Menu button -->
-        <button id="esri_workflow_addTaskFileContextMenuButton" className="workflow_module:AddTaskFileAsync" caption="Workflow Manager"
+        <button id="esri_workflow_addTaskFileContextMenuButton" className="workflow_module:AddTaskFileAsync" caption="Workflow Manager (Classic)"
                 condition="esri_workflow_canAddTaskFileCondition">
           <tooltip>
-            Add the task item to the Workflow Manager repository.
-            <disabledText>Not connected to a Workflow repository, or the current user does not have privileges to add tasks to the Workflow Manager repository.</disabledText>
+            Add the task item to the Workflow Manager (Classic) repository.
+            <disabledText>Not connected to a Workflow (Classic) repository, or the current user does not have privileges to add tasks to the Workflow Manager (Classic) repository.</disabledText>
           </tooltip>
         </button>
 
         <button id="esri_workflow_createAttachment" caption="New Attachment..." keytip="N" className="JobPane.Ribbon.NewAttachment"  loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClipNew32.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClipNew32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClipNew16.png" >
           <tooltip heading="New Attachment">
             Add a new attachment to the current job<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_manageAttachments" caption="Manage Attachments" keytip="M" className="JobPane.Ribbon.ManageAttachments"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip32.png" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PaperClip16.png" loadOnClick="false">
           <tooltip heading="Manage Attachment">
             Manage attachments from a dockable window.<disabledText></disabledText>
@@ -636,17 +651,17 @@ You can update multiple job properties at once.<disabledText></disabledText>
             Open the Create New Jobs GP tool to provide more advanced options
           </tooltip>
         </button>
-        
+
         <!-- Job View - Workflow View button-->
         <button id="esri_workflow_canvas_fitToWindowButton" caption="Fit To Window" keytip="FTW" className="JobPane.Ribbon.FitToWindowButton" extendedCaption="Fit Workflow Diagram To Window"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent16.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderFullExtent32.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
           <tooltip heading="Fit to window">
             Fit workflow diagram to window so you can see all steps.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_canvas_zoomToCurStepButton" caption="Zoom to Current Step" keytip="ZC" className="JobPane.Ribbon.ZoomToCurStepButton" extendedCaption="Zoom Workflow Diagram To Current Step"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-16.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Zoom-to-current-step-32.png" helpContextID="" condition="esri_workflow_inWorkflowTabCondition">
           <tooltip heading="Zoom to current step">
             Zoom to current step.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
@@ -671,14 +686,14 @@ You can update multiple job properties at once.<disabledText></disabledText>
             Pan in the workflow diagram.<disabledText>Only when workflow tab in job view is the active tab.</disabledText>
           </tooltip>
         </button>
-        
+
         <!-- Workflow Map Pane Buttons -->
         <button id="esri_workflow_exportMap" caption="Map" keytip="EM" className="ArcGIS.Desktop.Internal.Workflow.MapPane.Ribbon.ExportMapButton" extendedCaption="Export Map to Database"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportWorkflowMap16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportWorkflowMap32.png"
                 condition="esri_workflow_ExportMapCondition">
           <tooltip heading="Export Map">
-            Export Map to Workflow Manager Database.
+            Export Map to Workflow Manager (Classic) Database.
           </tooltip>
         </button>
       </controls>
@@ -722,7 +737,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
           <button refID="esri_workflow_workflowConnectionContextMenuButton"/>
         </menu>
         <menu id="esri_workflow_exportMenu" caption="Export" keytip="EX"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png" 
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png" >
           <tooltip>
             <disabledText>Not available yet.</disabledText>
@@ -746,7 +761,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
           <button refID="esri_workflow_workflowDiagramContextMenuCheckButton" />
           <button refID="esri_workflow_workflowDiagramContextMenuSetCurrentButton" />
           <button refID="esri_workflow_workflowDiagramContextMenuOpenStepHelp"/>
-          
+
         </menu>
         <menu id="esri_workflow_createJobContextMenu" caption="CreateJob">
           <button refID="esri_workflow_createJobContextMenuFavorite" />
@@ -755,7 +770,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
           <button refID="esri_workflow_createJobContextMenuUnfavorite" />
         </menu>
       </menus>
-      
+
       <palettes>
         <toolPalette id="esri_workflow_deleteJobsPalette" itemsInRow="1" showItemCaption="true" caption="Delete" extendedCaption="Delete jobdata palette" keytip="DJP">
           <tool refID="esri_workflow_deleteJobsButton" />
@@ -767,11 +782,11 @@ You can update multiple job properties at once.<disabledText></disabledText>
           <tool refID="esri_workflow_workflowView" />
         </toolPalette>
       </palettes>
-      
+
       <panes>
         <!-- Workflow view caption is blank to start off with, but will be populated with the workflow repository name when workflow is opened-->
-        <pane id="esri_workflow_workflowPane" caption=" " className="WorkflowPaneViewModel" 
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png" isClosable="true" 
+        <pane id="esri_workflow_workflowPane" caption=" " className="WorkflowPaneViewModel"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png" isClosable="true"
               defaultTab="esri_workflow_homeTab">
           <content className="WorkflowPaneView" />
         </pane>
@@ -780,7 +795,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Job16.png" isClosable="true"
               defaultTab="esri_workflow_jobHomeTab">
           <content className="JobView" />
-        </pane>        
+        </pane>
       </panes>
 
       <dockPanes>
@@ -789,14 +804,14 @@ You can update multiple job properties at once.<disabledText></disabledText>
           keytip="Attachments" initiallyVisible="false" delayLoadMessage="Manage job attachments in the project">
           <content className="AttachmentsDockPane" />
         </dockPane>
-        <dockPane id="esri_workflow_jobPropertiesDockPane" caption="Job Properties" className="WorkflowPane.JobPropertiesDockPaneViewModel" 
+        <dockPane id="esri_workflow_jobPropertiesDockPane" caption="Job Properties" className="WorkflowPane.JobPropertiesDockPaneViewModel"
           dock="group" condition="esri_workflow_workflowPane" dockWith="esri_core_projectDockPane"
           keytip="Job Properties" initiallyVisible="false" delayLoadMessage="Open the Workflow view to get started.">
           <content className="WorkflowPane.JobPropertiesDockPane" />
         </dockPane>
         <dockPane id="esri_workflow_userConfigurationDockPane" caption="Update Users and Groups" className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserConfigurationDockPaneViewModel"
           dock="group" condition="esri_workflow_workflowConnectionOnlineAndAdminUserCondition" dockWith="esri_core_projectDockPane"
-          keytip="Update Users and Groups" initiallyVisible="false" delayLoadMessage="Open an online Workflow connection and give the current user the AdministratorAccess privilege to get started.">
+          keytip="Update Users and Groups" initiallyVisible="false" delayLoadMessage="Open an online Workflow (Classic) connection and give the current user the AdministratorAccess privilege to get started.">
           <content className="ArcGIS.Desktop.Internal.Workflow.Configuration.UserConfigurationDockPane" />
         </dockPane>
         <dockPane id="esri_workflow_workerDockPane" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.WorkerDockPaneViewModel"
@@ -822,14 +837,14 @@ You can update multiple job properties at once.<disabledText></disabledText>
         </updateMenu>
       </menus>
     </updateModule>
-    
+
     <updateModule refID="esri_core_module">
-    <groups>
-      <updateGroup refID="esri_core_dockWindows">
-        <insertButton refID="esri_workflow_workflowViewPalette" />
-      </updateGroup>
-    </groups>
-  </updateModule>
+      <groups>
+        <updateGroup refID="esri_core_dockWindows">
+          <insertButton refID="esri_workflow_workflowViewPalette" />
+        </updateGroup>
+      </groups>
+    </updateModule>
   </modules>
 
   <conditions>
@@ -850,17 +865,18 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
       </and>
     </insertCondition>
-    <insertCondition id="esri_workflow_canAddOnlineWorkflowConnectionCondition" caption="A Workflow Connection can be opened">
+    <insertCondition id="esri_workflow_canAddOnlineWorkflowConnectionCondition" caption="A Workflow (Classic) Connection can be opened">
       <and>
         <not>
           <state id="esri_workflow_workflowConnectionExistsState" />
         </not>
         <state id="esri_core_isSignedIn" />
         <state id="esri_mapping_openProjectState"/>
-        <state id="esri_workflow_allowOnlineConnections"/> <!-- Temporary restriction to only allow if registry key enables it -->
+        <state id="esri_workflow_allowOnlineConnections"/>
+        <!-- Temporary restriction to only allow if registry key enables it -->
       </and>
     </insertCondition>
-	<insertCondition id="esri_workflow_canAddWorkflowConnectionCondition" caption="A Workflow Connection can be added">
+    <insertCondition id="esri_workflow_canAddWorkflowConnectionCondition" caption="A Workflow (Classic) Connection can be added">
       <and>
         <not>
           <state id="esri_workflow_workflowConnectionExistsState" />
@@ -868,12 +884,12 @@ You can update multiple job properties at once.<disabledText></disabledText>
         <state id="esri_mapping_openProjectState"/>
       </and>
     </insertCondition>
-    
-    <insertCondition id="esri_workflow_workflowConnectionExistsState" caption="A Workflow Connection exists">
+
+    <insertCondition id="esri_workflow_workflowConnectionExistsState" caption="A Workflow (Classic) Connection exists">
       <state id="esri_workflow_workflowConnectionExistsState" />
     </insertCondition>
-    
-    <insertCondition id="esri_workflow_canAddTaskFileCondition" caption="A Task item can be added to the Workflow Repository">
+
+    <insertCondition id="esri_workflow_canAddTaskFileCondition" caption="A Task item can be added to the Workflow (Classic) Repository">
       <and>
         <state id="esri_workflow_workflowConnectionExistsState" />
         <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
@@ -886,7 +902,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
       </and>
     </insertCondition>
 
-    <insertCondition id="esri_workflow_workflowConnectionOnlineAndAdminUserCondition" caption="A Workflow Connection is online and the user is an administrator">
+    <insertCondition id="esri_workflow_workflowConnectionOnlineAndAdminUserCondition" caption="A Workflow (Classic) Connection is online and the user is an administrator">
       <and>
         <state id="esri_workflow_workflowConnectionExistsState" />
         <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
@@ -964,7 +980,7 @@ You can update multiple job properties at once.<disabledText></disabledText>
       <and>
         <state id="esri_workflow_onlineState" />
         <state id="esri_workflow_workflowCanTakeJobsOfflineUserPrivilegeState" />
-      </and>      
+      </and>
     </insertCondition>
     <insertCondition id="esri_workflow_onlineCondition" caption="Connected to an online workflow repository">
       <state id="esri_workflow_onlineState"/>
@@ -986,6 +1002,6 @@ You can update multiple job properties at once.<disabledText></disabledText>
     </insertCondition>
     <insertCondition id="esri_workflow_workflowDeleteMXDUserPrivilegeCondition" caption="A Worflow job map can be deleted">
       <state id="esri_workflow_workflowDeleteMXDUserPrivilegeState" />
-    </insertCondition> 
+    </insertCondition>
   </conditions>
 </ArcGIS>

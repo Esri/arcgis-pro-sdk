@@ -44,7 +44,7 @@ namespace ParcelFabricSDKSamples
     protected async void GetActiveRecord()
     {
       #region Get the active record
-        await QueuedTask.Run(async () =>
+        await QueuedTask.Run( () =>
         {
           var layers = MapView.Active.Map.GetLayersAsFlattenedList();
           var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
@@ -62,35 +62,16 @@ namespace ParcelFabricSDKSamples
     protected async void SetActiveRecord()
     {
       #region Set the active record
-          await QueuedTask.Run(async () =>
+          await QueuedTask.Run( async () =>
           {
             var layers = MapView.Active.Map.GetLayersAsFlattenedList();
             var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
-            var recordsLayer = layers.FirstOrDefault(l => l.Name == "Records" && l is FeatureLayer);
             string sExistingRecord = "MyRecordName";
-            
-            var pFeatClass = (recordsLayer as FeatureLayer).GetFeatureClass();
-            QueryFilter queryFilter = new QueryFilter
+            if (!await myParcelFabricLayer.SetActiveRecordAsync(sExistingRecord))
             {
-              WhereClause = "Name = '" + sExistingRecord + "'"
-            };
-            Guid guid = new Guid();
-            long lOID = -1;
-
-            using (RowCursor rowCursor = pFeatClass.Search(queryFilter, false))
-            {
-              while (rowCursor.MoveNext())
-              {
-                using (Row row = rowCursor.Current)
-                {
-                  guid = row.GetGlobalID();
-                  long oid = row.GetObjectID();
-                }
-              }
+              MessageBox.Show("The active record could not be set.", "Set Active Record");
+              return;
             }
-
-            var parcelRecord=new ParcelRecord(myParcelFabricLayer.Map, sExistingRecord, guid, lOID);
-            await myParcelFabricLayer.SetActiveRecord(parcelRecord);
           });
       #endregion
     }
@@ -98,13 +79,14 @@ namespace ParcelFabricSDKSamples
     protected async void CreateNewRecord()
     {
       #region Create a new record
-          await QueuedTask.Run(async () =>
+          await QueuedTask.Run( async () =>
           {
+            var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+
+            string sNewRecordName = "myNewRecord";
             Dictionary<string, object> RecordAttributes = new Dictionary<string, object>();
-            var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-            var recordsLayer = layers.FirstOrDefault(l => l.Name == "Records" && l is FeatureLayer);
-            var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
-            var spatRef = recordsLayer.Map.SpatialReference;
+
+            var recordsLayer = await myParcelFabricLayer.GetParcelSubLayerAsync(ParcelSubLayerType.Records);
 
             var editOper = new EditOperation()
             {
@@ -115,29 +97,17 @@ namespace ParcelFabricSDKSamples
               SelectModifiedFeatures = false
             };
 
-            string sNewRecordName = "myNewRecord";
-            Polygon newPolygon = null;
-            newPolygon = PolygonBuilder.CreatePolygon(spatRef);
-            if (newPolygon != null)
-            {
-              RecordAttributes.Add("Name", sNewRecordName);
-              var editRowToken = editOper.CreateEx(recordsLayer, newPolygon, RecordAttributes);
-              RecordAttributes.Clear();
-              if (!await editOper.ExecuteAsync())
-                return;
+            RecordAttributes.Add("Name", sNewRecordName);
+            var editRowToken = editOper.CreateEx(recordsLayer, RecordAttributes);
+            RowHandle rowHandle = new RowHandle(editRowToken);
 
-              //Default Guid
-              var defGuid = new Guid("dddddddd-dddd-dddd-dddd-dddddddddddd");
-              var defOID = -1;
-              var guid = editRowToken.GlobalID.HasValue ? editRowToken.GlobalID.Value : defGuid;
-              var lOid = editRowToken.ObjectID.HasValue ? editRowToken.ObjectID.Value : defOID;
+            if (!editOper.Execute())
+              return;
 
-              if (guid == defGuid | lOid == defOID)
-                return;
+            long lOid = rowHandle.ObjectID.Value;
+            Guid guid = rowHandle.GlobalID.Value;
+            await myParcelFabricLayer.SetActiveRecordAsync(guid);
 
-              ParcelRecord parcelRecord = new ParcelRecord(myParcelFabricLayer.Map, sNewRecordName, guid, lOid);
-              await myParcelFabricLayer.SetActiveRecord(parcelRecord);
-            }
           });
       #endregion
     }
@@ -146,7 +116,7 @@ namespace ParcelFabricSDKSamples
     {
       #region Copy standard line features into a parcel type
       
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( async () =>
       {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
@@ -165,22 +135,30 @@ namespace ParcelFabricSDKSamples
           return;
         }
 
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-        var srcFeatLyr = layers.FirstOrDefault(l => l.Name == "Lines" && l is FeatureLayer);
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        if (! await destPolygonL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
+        {
+          System.Windows.MessageBox.Show("Please select a target parcel polygon layer in the table of contents", "Copy Line Features To");
+          return;
+        }
+
+        var srcFeatLyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == "Lines");
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
 
         string destLineLyrName1 = destPolygonL.Name + "_Lines";
         string destLineLyrName2 = destPolygonL.Name + " Lines";
         string destLineLyrName3 = destPolygonL.Name + "Lines";
 
-        var destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName1 && l is FeatureLayer);
+        var destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName1);
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName2 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName2);
 
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName3 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName3);
 
         if (myParcelFabricLayer == null || destLineL == null || destPolygonL == null)
+          return;
+
+        if (!await destLineL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
           return;
 
         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
@@ -190,7 +168,14 @@ namespace ParcelFabricSDKSamples
           System.Windows.MessageBox.Show("There is no Active Record. Please set the active record and try again.", "Copy Line Features To");
           return;
         }
+        //add the standard feature line layers source, and their feature ids to a new KeyValuePair
+        var ids = new List<long>((srcFeatLyr as FeatureLayer).GetSelection().GetObjectIDs());
 
+        if (ids.Count == 0)
+        {
+          System.Windows.MessageBox.Show("No selected lines were found. Please select line features and try again.", "Copy Line Features To");
+          return;
+        }
         var editOper = new EditOperation()
         {
           Name = "Copy Line Features To Parcel Type",
@@ -199,15 +184,7 @@ namespace ParcelFabricSDKSamples
           SelectNewFeatures = true,
           SelectModifiedFeatures = false
         };
-        //add the standard feature line layers source, and their feature ids to a new KeyValuePair
-        MapMember mapMemberSource = srcFeatLyr as MapMember;
-        var ids = new List<long>((srcFeatLyr as FeatureLayer).GetSelection().GetObjectIDs());
 
-        if (ids.Count == 0)
-        {
-          System.Windows.MessageBox.Show("No selected lines were found. Please select line features and try again.", "Copy Line Features To");
-          return;
-        }
         editOper.CopyLineFeaturesToParcelType(srcFeatLyr, ids, destLineL, destPolygonL);
       });
       #endregion
@@ -215,7 +192,7 @@ namespace ParcelFabricSDKSamples
 
     protected async void CopyParcelLinesToParcelType()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( async () =>
       {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
@@ -225,29 +202,43 @@ namespace ParcelFabricSDKSamples
         }
 
         //first get the feature layer that's selected in the table of contents
-        var srcParcelFeatLyr = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
+        var srcParcelFeatLyr = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().First();
 
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
+        var fcDefinition = srcParcelFeatLyr.GetFeatureClass().GetDefinition();
+        GeometryType geomType = fcDefinition.GetShapeType();
+        if (geomType != GeometryType.Polygon)
+        {
+          System.Windows.MessageBox.Show("Please select a source parcel polygon layer in the table of contents", "Copy Line Features To");
+          return;
+        }
+
+        if (! await srcParcelFeatLyr.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
+        {
+          System.Windows.MessageBox.Show("Please select a source parcel polygon feature layer in the table of contents", "Copy Parcel Lines To");
+          return;
+        }
+
+
 
         string sTargetParcelType = "Tax";
 
         if (sTargetParcelType.Trim().Length == 0)
           return;
 
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
 
         string destLineLyrName1 = sTargetParcelType + "_Lines";
         string destLineLyrName2 = sTargetParcelType + " Lines";
         string destLineLyrName3 = sTargetParcelType + "Lines";
 
-        var destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName1 && l is FeatureLayer);
+        var destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName1);
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName2 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName2);
 
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName3 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName3);
 
-        var destPolygonL = layers.FirstOrDefault(l => l.Name == sTargetParcelType && l is FeatureLayer);
+        var destPolygonL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == sTargetParcelType);
 
         if (myParcelFabricLayer == null || destLineL == null || destPolygonL == null)
           return;
@@ -270,7 +261,6 @@ namespace ParcelFabricSDKSamples
           SelectModifiedFeatures = false
         };
 
-        MapMember mapMemberSource = srcParcelFeatLyr as MapMember;
         var ids = new List<long>(srcParcelFeatLyr.GetSelection().GetObjectIDs());
 
         if (ids.Count == 0)
@@ -279,18 +269,18 @@ namespace ParcelFabricSDKSamples
           return;
         }
         //add the standard feature line layers source, and their feature ids to a new KeyValuePair
-        var kvp = new KeyValuePair<MapMember, List<long>>(mapMemberSource, ids);
+        var kvp = new KeyValuePair<MapMember, List<long>>(srcParcelFeatLyr, ids);
         var sourceParcelFeatures = new List<KeyValuePair<MapMember, List<long>>> { kvp };
         ParcelEditToken peToken = editOper.CopyParcelLinesToParcelType(myParcelFabricLayer, sourceParcelFeatures, destLineL, destPolygonL, null, true, false, true);
         var createdIDsSelectionSet = peToken.CreatedFeatures;
-        await editOper.ExecuteAsync();
+        editOper.Execute();
         #endregion
       });
     }
 
     protected async void AssignFeaturesToRecord()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( () =>
       {
         //check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
@@ -300,9 +290,8 @@ namespace ParcelFabricSDKSamples
         }
 
         //first get the feature layer that's selected in the table of contents
-        var srcFeatLyr = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        var srcFeatLyr = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().First();
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
         if (myParcelFabricLayer == null)
           return;
         
@@ -323,13 +312,12 @@ namespace ParcelFabricSDKSamples
           SelectModifiedFeatures = false
         };
         //add parcel type layers and their feature ids to a new KeyValuePair
-        MapMember mapMemberSource = srcFeatLyr as MapMember;
         var ids = new List<long>(srcFeatLyr.GetSelection().GetObjectIDs());
-        var kvp = new KeyValuePair<MapMember, List<long>>(mapMemberSource, ids);
+        var kvp = new KeyValuePair<MapMember, List<long>>(srcFeatLyr, ids);
         var sourceFeatures = new List<KeyValuePair<MapMember, List<long>>> { kvp };
 
         editOper.AssignFeaturesToRecord(myParcelFabricLayer, sourceFeatures, guid, ParcelRecordAttribute.CreatedByRecord); 
-        await editOper.ExecuteAsync();
+        editOper.Execute();
         #endregion
       });
 
@@ -337,7 +325,7 @@ namespace ParcelFabricSDKSamples
 
     protected async void CreateParcelSeeds()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( async () =>
       {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
@@ -348,6 +336,13 @@ namespace ParcelFabricSDKSamples
 
         //first get the feature layer that's selected in the table of contents
         var destPolygonL = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
+
+        if (destPolygonL == null)
+        {
+          System.Windows.MessageBox.Show("Please select a target parcel polygon layer in the table of contents.", "Create Parcel Seeds");
+          return;
+        }
+
         var fcDefinition = destPolygonL.GetFeatureClass().GetDefinition();
         GeometryType geomType = fcDefinition.GetShapeType();
         if (geomType != GeometryType.Polygon)
@@ -356,40 +351,38 @@ namespace ParcelFabricSDKSamples
           return;
         }
 
-        if (destPolygonL is FeatureLayer)
+        //is it a fabric parcel type?
+        if ( !await destPolygonL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
         {
-          //is it a fabric parcel type template?
-          string sTemplateID = destPolygonL.GetDefinition().LayerTemplate.LayerTemplateId;
-          if (sTemplateID.ToLower() != "esriparcels")
-          {
-            System.Windows.MessageBox.Show("Please select a target parcel polygon layer in the table of contents", "Create Parcel Seeds");
-            return;
-          }  
+          System.Windows.MessageBox.Show("Please select a target parcel polygon layer in the table of contents", "Create Parcel Seeds");
+          return;
         }
-        
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
 
         //hard-coded tests to find the line feature portion of the parcel type.
         string destLineLyrName1 = destPolygonL.Name + "_Lines";
         string destLineLyrName2 = destPolygonL.Name + " Lines";
         string destLineLyrName3 = destPolygonL.Name + "Lines";
 
-        var destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName1 && l is FeatureLayer);
+        var destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName1);
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName2 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName2);
 
         if (destLineL == null)
-          destLineL = layers.FirstOrDefault(l => l.Name == destLineLyrName3 && l is FeatureLayer);
+          destLineL = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == destLineLyrName3);
 
-        if (myParcelFabricLayer == null || destLineL == null || destPolygonL == null)
+        if (myParcelFabricLayer == null || destLineL == null)
+          return;
+
+        if (!await destLineL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
           return;
 
         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
 
         if (theActiveRecord == null)
         {
-          System.Windows.MessageBox.Show("There is no Active Record. Please set the active record and try again.", "Copy Line Features To");
+          System.Windows.MessageBox.Show("There is no Active Record. Please set the active record and try again.", "Create Parcel Seeds");
           return;
         }
 
@@ -405,21 +398,18 @@ namespace ParcelFabricSDKSamples
         };
 
         editOper.CreateParcelSeeds(myParcelFabricLayer, MapView.Active.Extent, guid);
-        await editOper.ExecuteAsync();
+        editOper.Execute();
         #endregion
       });
     }
 
     protected async void BuildParcels()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( () =>
       {
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
-
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-        await myParcelFabricLayer.SetActiveRecord(theActiveRecord);
+        myParcelFabricLayer.SetActiveRecord(theActiveRecord);
         var guid = theActiveRecord.Guid;
 
         if (myParcelFabricLayer == null)
@@ -433,8 +423,8 @@ namespace ParcelFabricSDKSamples
           SelectNewFeatures = true,
           SelectModifiedFeatures = true
         };
-        editOper.BuildParcelsByRecord(myParcelFabricLayer,guid);
-        await editOper.ExecuteAsync();
+        editOper.BuildParcelsByRecord(myParcelFabricLayer, guid);
+        editOper.Execute();
         #endregion
       });
 
@@ -442,20 +432,25 @@ namespace ParcelFabricSDKSamples
 
     protected async void DuplicateParcels()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( async () =>
       {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
         {
-          System.Windows.MessageBox.Show("Please select the source layer in the table of contents", "Duplicate Parcels");
+          System.Windows.MessageBox.Show("Please select the source parcel type polygon layer in the table of contents", "Duplicate Parcels");
           return;
         }
 
         //first get the feature layer that's selected in the table of contents
         var sourcePolygonL = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
 
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        if (! await sourcePolygonL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
+        {
+          System.Windows.MessageBox.Show("Please select the source parcel type polygon layer in the table of contents", "Duplicate Parcels");
+          return;
+        }
+
 
         string sTargetParcelType = "Tax"; //Microsoft.VisualBasic.Interaction.InputBox("Target Parcel Type:", "Copy Parcel Lines To", "Tax");
 
@@ -467,8 +462,7 @@ namespace ParcelFabricSDKSamples
         
         #region Duplicate parcels
         //get the polygon layer from the parcel fabric layer type, in this case a layer called Tax
-        var targetFeatLyr = layers.FirstOrDefault(l => l.Name == "Tax" && l is FeatureLayer) as FeatureLayer;
-        MapMember mapMemberSource = sourcePolygonL as MapMember; //a parcel polygon feature layer
+        var targetFeatLyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == "Tax") as FeatureLayer;
         var ids = new List<long>(sourcePolygonL.GetSelection().GetObjectIDs());
 
         if (ids.Count == 0)
@@ -478,7 +472,7 @@ namespace ParcelFabricSDKSamples
         }
 
         //add polygon layers and the feature ids to be duplicated to a new KeyValuePair
-        var kvp = new KeyValuePair<MapMember, List<long>>(mapMemberSource, ids);
+        var kvp = new KeyValuePair<MapMember, List<long>>(sourcePolygonL, ids);
         var sourceFeatures = new List<KeyValuePair<MapMember, List<long>>> { kvp };
         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
 
@@ -498,7 +492,7 @@ namespace ParcelFabricSDKSamples
           SelectModifiedFeatures = false
         };
         editOper.DuplicateParcels(myParcelFabricLayer, sourceFeatures, guid, targetFeatLyr, -1);
-        await editOper.ExecuteAsync();
+        editOper.Execute();
         #endregion
       });
 
@@ -506,37 +500,33 @@ namespace ParcelFabricSDKSamples
 
     protected async void SetParcelsHistoric()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( async () =>
       {
         //Get selection from a parcel fabric type's polygon layer
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
+        var layers = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
         int countLayersWithSelection = 0;
-        var destPolygonL = (layers.FirstOrDefault() as FeatureLayer);
+        var destPolygonL = layers.FirstOrDefault();
         foreach (var flyr in layers)
         {
-          if (flyr is FeatureLayer)
+          var fcDefinition = (flyr as FeatureLayer).GetFeatureClass().GetDefinition();
+          GeometryType geomType = fcDefinition.GetShapeType();
+          if (geomType == GeometryType.Polygon)
           {
-            var fcDefinition = (flyr as FeatureLayer).GetFeatureClass().GetDefinition();
-            GeometryType geomType = fcDefinition.GetShapeType();
-            if (geomType == GeometryType.Polygon)
+            if (flyr.SelectionCount > 0)
             {
-              if ((flyr as FeatureLayer).SelectionCount > 0)
-              {
-                destPolygonL = (flyr as FeatureLayer);
-                //test to check if the layer has a fabric parcel type layer template.
-                string sTemplateID =flyr.GetDefinition().LayerTemplate.LayerTemplateId;
-                if(sTemplateID.ToLower()=="esriparcels")
-                  countLayersWithSelection++;
-              }
+              destPolygonL = flyr;
+              //test to check if the layer has a fabric parcel type layer.
+              if( await destPolygonL.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric))
+                countLayersWithSelection++;
             }
-          }
+          }         
         }
         if (countLayersWithSelection != 1)
         {
           System.Windows.MessageBox.Show("Please select features from only one source polygon parcel layer", "Set Historic");
           return;
         }
-        var myParcelFabricLayer = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
         if (myParcelFabricLayer == null || destPolygonL == null)
           return;
 
@@ -544,7 +534,7 @@ namespace ParcelFabricSDKSamples
 
         if (theActiveRecord == null)
         {
-          System.Windows.MessageBox.Show("There is no Active Record. Please set the active record and try again.", "Copy Line Features To");
+          System.Windows.MessageBox.Show("There is no Active Record. Please set the active record and try again.", "Set Historic");
           return;
         }
 
@@ -565,15 +555,15 @@ namespace ParcelFabricSDKSamples
           SelectModifiedFeatures = false
         };
 
-        editOper.UpdateParcelHistory(myParcelFabricLayer, sourceFeatures, guid,true);
-        await editOper.ExecuteAsync();
+        editOper.UpdateParcelHistory(myParcelFabricLayer, sourceFeatures, guid, true);
+        editOper.Execute();
         #endregion
       });
     }
 
     protected async void ChangeParcelType()
     {
-      await QueuedTask.Run(async () =>
+      await QueuedTask.Run( () =>
       {
         //check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
@@ -583,10 +573,8 @@ namespace ParcelFabricSDKSamples
         }
 
         //first get the feature layer that's selected in the table of contents
-        var sourcePolygonL = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
-        
-        var layers = MapView.Active.Map.GetLayersAsFlattenedList();
-        var pfL = layers.FirstOrDefault(l => l is ParcelLayer) as ParcelLayer;
+        var sourcePolygonL = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().First();
+        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
 
         string sTargetParcelType = "Tax"; //Microsoft.VisualBasic.Interaction.InputBox("Target Parcel Type:", "Copy Parcel Lines To", "Tax");
 
@@ -594,15 +582,14 @@ namespace ParcelFabricSDKSamples
           return;
 
         #region Change parcel type
-        var targetFeatLyr = layers.FirstOrDefault(l => l.Name == "Tax" && l is FeatureLayer) as FeatureLayer; //the target parcel polygon feature layer
+        var targetFeatLyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == "Tax"); //the target parcel polygon feature layer
 
-        if (pfL == null || sourcePolygonL == null)
+        if (myParcelFabricLayer == null || sourcePolygonL == null)
           return;
 
         //add polygon layers and the feature ids to change the type on to a new KeyValuePair
-        MapMember mapMemberSource = sourcePolygonL as MapMember;
         var ids = new List<long>(sourcePolygonL.GetSelection().GetObjectIDs());
-        var kvp = new KeyValuePair<MapMember, List<long>>(mapMemberSource, ids);
+        var kvp = new KeyValuePair<MapMember, List<long>>(sourcePolygonL, ids);
         var sourceFeatures = new List<KeyValuePair<MapMember, List<long>>> { kvp };
 
         var editOper = new EditOperation()
@@ -614,14 +601,46 @@ namespace ParcelFabricSDKSamples
           SelectModifiedFeatures = false
         };
 
-        editOper.ChangeParcelType(pfL, sourceFeatures, targetFeatLyr, -1);
-        await editOper.ExecuteAsync();
+        editOper.ChangeParcelType(myParcelFabricLayer, sourceFeatures, targetFeatLyr, -1);
+        editOper.Execute();
         #endregion
       });
 
     }
 
-   }
+
+    protected async void IsLayerControlledByAParcelFabric()
+    {
+      await QueuedTask.Run(async () =>
+      {
+        // check for selected layer
+        if (MapView.Active.GetSelectedLayers().Count == 0)
+        {
+          System.Windows.MessageBox.Show("Please select a source layer in the table of contents", "Test Parcel Layer Type");
+          return;
+        }
+        #region Check if a layer has a parcel fabric source
+        var myTestLayer = MapView.Active.GetSelectedLayers().First();
+
+        bool bIsProFabric = await myTestLayer.IsControlledByParcelFabric(ParcelFabricType.ParcelFabric);
+        bool bIsArcMapFabric = await myTestLayer.IsControlledByParcelFabric(ParcelFabricType.ParcelFabricForArcMap);
+
+        if (bIsProFabric)
+          MessageBox.Show("This is a layer controlled by a Pro Parcel Fabric");
+        else if (bIsArcMapFabric)
+          MessageBox.Show("This is a layer from a Parcel Fabric For ArcMap");
+        else
+          MessageBox.Show("This layer is not a fabric layer.");
+
+        if (bIsArcMapFabric && bIsProFabric)
+          MessageBox.Show("This should not be possible.");
+        #endregion
+      });
+
+    }
+
+
+  }
 
 
 

@@ -157,9 +157,90 @@ namespace MapAuthoring.ProSnippet
             });
         }
 
-        #region ProSnippet Group: Create Layer
+    private async void GetBasemaps()
+    {
+      #region Get Basemaps
+
+      //Basemaps stored locally in the project. This is usually an empty collection
+      string localBasemapTypeID = "cim_map_basemap";
+      var localBasemaps = await QueuedTask.Run(() =>
+      {
+        var mapContainer = Project.Current.GetProjectItemContainer("Map");
+        return mapContainer.GetItems().Where(i => i.TypeID == localBasemapTypeID).ToList();
+      });
+
+      //portal basemaps. If there is no current active portal, the usual default
+      //is arcgis online
+      var portal = ArcGISPortalManager.Current.GetActivePortal();
+      var portalBaseMaps = await portal.GetBasemapsAsync();
+
+      //use one of them...local or portal...
+      //var map = MapView.Active.Map;
+      //QueuedTask.Run(() => map?.SetBasemapLayers(portalBaseMaps[0]));
+
+      #endregion
+
+    }
+    private void ClipMap()
+    {
+      QueuedTask.Run(() => {
+        #region Clip Map to the provided clip polygon
+        //Run within QueuedTask
+        var map = MapView.Active.Map;
+        //A layer to use for the clip extent
+        var lyrOfInterest = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().Where(l => l.Name == "TestPoly").FirstOrDefault();
+        //Get the polygon to use to clip the map
+        var extent = lyrOfInterest.QueryExtent();
+        var polygonForClipping = PolygonBuilder.CreatePolygon(extent);
+        //Clip the map using the layer's extent
+        map.SetClipGeometry(polygonForClipping,
+            SymbolFactory.Instance.ConstructLineSymbol(
+              SymbolFactory.Instance.ConstructStroke(
+                ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.Dash)));
         #endregion
-        public async Task AddLayerAsync()
+      });
+    }
+
+    private void ClearClipMap()
+    {
+      QueuedTask.Run(() => {
+        #region Clear the current map clip geometry 
+        //Run within QueuedTask
+        var map = MapView.Active.Map;
+        //Clear the Map clip.
+        //If no clipping is set then this is a no-op.
+        map.ClearClipGeometry();
+        #endregion
+      });
+    }
+
+    private void GetClipMapGeometry()
+    {
+      QueuedTask.Run(() =>
+      {
+        #region Get the map clipping geometry
+        var map = MapView.Active.Map;
+        //If clipping is set to ArcGIS.Core.CIM.ClippingMode.None or ArcGIS.Core.CIM.ClippingMode.MapSeries null is returned
+        //If clipping is set to ArcGIS.Core.CIM.ClippingMode.MapExtent the ArcGIS.Core.CIM.CIMMap.CustomFullExtent is returned.
+        //Otherwise, if clipping is set to ArcGIS.Core.CIM.ClippingMode.CustomShape the custom clip polygon is returned.
+        var poly = map.GetClipGeometry();
+        //You can use the polygon returned
+        //For example: We make a polygon graphic element and add it to a Graphics Layer.
+        var gl = map.GetLayersAsFlattenedList().OfType<GraphicsLayer>().FirstOrDefault();
+        if (gl == null) return;
+        var polygonSymbol = SymbolFactory.Instance.ConstructPolygonSymbol(CIMColor.CreateRGBColor(255, 255, 0));
+        var cimGraphicElement = new CIMPolygonGraphic
+        {
+          Polygon = poly,
+          Symbol = polygonSymbol.MakeSymbolReference()
+        };
+        gl.AddElement(cimGraphicElement);
+        #endregion
+      });
+    }
+    #region ProSnippet Group: Create Layer
+    #endregion
+    public async Task AddLayerAsync()
     {
       Map map = null;
 

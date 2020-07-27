@@ -174,7 +174,7 @@ namespace UtilityNetworkProSnippets {
 
       // Attach the transformer bank to the pole
 
-      StructuralAttachmentAssociationDescription structuralAttachmentAssociationDescription = new StructuralAttachmentAssociationDescription(poleRowHandle, transformerBankRowHandle);
+      AssociationDescription structuralAttachmentAssociationDescription = new AssociationDescription(AssociationType.Attachment, poleRowHandle, transformerBankRowHandle);
       editOperation.Create(structuralAttachmentAssociationDescription);
       editOperation.Execute();
 
@@ -200,7 +200,7 @@ namespace UtilityNetworkProSnippets {
       RowHandle poleHandle = new RowHandle(poleToken);
       RowHandle transformerBankHandle = new RowHandle(transformerBankToken);
 
-      StructuralAttachmentAssociationDescription poleAttachment = new StructuralAttachmentAssociationDescription(poleHandle, transformerBankHandle);
+      AssociationDescription poleAttachment = new AssociationDescription(AssociationType.Attachment, poleHandle, transformerBankHandle);
 
       editOperation.Create(poleAttachment);
 

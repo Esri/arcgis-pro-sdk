@@ -1,4 +1,4 @@
-## ArcGIS Pro 2.5 SDK for .NET
+## ArcGIS Pro 2.6 SDK for .NET
 
 Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based on the add-in and configurations extensibility pattern. Leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to write integrated 2D/3D add-ins using Pro’s new APIs.
 
@@ -23,7 +23,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [Extensions](#extensions)
   * [Extensions with no public API](#extensions-with-no-public-api)
 * [Release notes](#release-notes)
-  * [ArcGIS Pro 2.5 SDK for .NET](#arcgis-pro-25-sdk-for-net-1)
+  * [ArcGIS Pro 2.6 SDK for .NET](#arcgis-pro-26-sdk-for-net-1)
        * [What's New](#whats-new)
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
@@ -32,6 +32,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProSnippets: Framework](../../wiki/ProSnippets-Framework)
 * [ProConcepts: Framework](../../wiki/ProConcepts-Framework)
+* [ProConcepts: Asynchronous Programming in ArcGIS Pro](../../wiki/ProConcepts-Asynchronous-Programming-in-ArcGIS-Pro)
 * [ProConcepts: Advanced topics](../../wiki/ProConcepts-Advanced-Topics)
 * [ProGuide: Command line switches for ArcGISPro.exe](../../wiki/ProGuide-Command-line-switches-for-ArcGISPro.exe)
 * [ProGuide: Reusing ArcGIS Pro Commands](../../wiki/ProGuide-Reusing-Pro-Commands)
@@ -70,8 +71,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProGuide: Style Guide](../../wiki/proguide-style-guide)
 * [ProGuide: Applying custom styles](../../wiki/ProGuide-Applying-Custom-Styles)
-* [Esri Brushes](https://Esri.github.io/arcgis-pro-sdk/content/brushescolors/brushes.html)
-* [Esri Colors](https://Esri.github.io/arcgis-pro-sdk/content/brushescolors/colors.html)
+* [Esri Brushes](http://ArcGIS.github.io/arcgis-pro-sdk/content/brushescolors/brushes.html)
+* [Esri Colors](http://ArcGIS.github.io/arcgis-pro-sdk/content/brushescolors/colors.html)
 
 -------------------------
 
@@ -127,6 +128,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProSnippets: Geometry](../../wiki/ProSnippets-Geometry)
 * [ProConcepts: Geometry](../../wiki/ProConcepts-Geometry)
+* [ProConcepts: Multipatches](../../wiki/ProConcepts-Multipatches)
+* [ProGuide: Building Multipatches](../../wiki/ProGuide-Building-Multipatches)
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Relational Operations**
 
@@ -165,6 +168,10 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProConcepts: Dimensions](../../wiki/ProConcepts-Dimensions)
 * [ProGuide: Custom Dictionary Style](../../wiki/ProGuide-Custom-Dictionary-Style)
 * [ProGuide: Geocoding](../../wiki/ProGuide-Geocoding)
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Graphics**
+* [ProSnippets: Graphics Layers](../../wiki/ProSnippets-GraphicsLayers)
+* [ProConcepts: Graphics Layers](../../wiki/ProConcepts-GraphicsLayers)
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Scene**
 * [ProSnippets: Scene Layers](../../wiki/ProSnippets-SceneLayers)
@@ -252,16 +259,16 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 The requirements for the machine on which you develop your ArcGIS Pro add-ins are listed here.
   
 **.NET Framework 4.8:**<br/>
-*  With the release of ArcGIS Pro 2.5, the minimum .NET target has been changed from 4.6.1 to 4.8. What does this mean for you and your add-ins?
-      * Existing add-ins, already deployed, will work at 2.5 with no change to their forward compatibility.
-      * New add-ins created at 2.5 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
-      * Existing add-ins which are recompiled at 2.5 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.5.
+*  As with the release of ArcGIS Pro 2.5, the minimum .NET target is now 4.8. What does this mean for you and your add-ins?
+      * Existing add-ins, already deployed, will work at 2.6 with no change to their forward compatibility.
+      * New add-ins created at 2.6 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
+      * Existing add-ins which are recompiled at 2.6 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.6.
       
 Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.5
+* ArcGIS Pro 2.6
 
 #### Supported platforms
 
@@ -279,10 +286,10 @@ Please consult technical support article [How To: Convert a version 2.0 to 2.4 A
 
 #### Third party assemblies
 _**Newtonsoft Json**_
-* At 2.5 ArcGIS Pro is using version 12.0.1 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
+* At 2.6 ArcGIS Pro is using version 12.0.1 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
 
 _**CefSharp**_
-* At 2.5 ArcGIS is using version 75.1.141 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Framework#chromiumwebbrowser) 
+* At 2.6 ArcGIS is using version 81.3.100 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Framework#chromiumwebbrowser) 
 
 Please consult technical support article [How To: Fix compiler error(s) using CefSharp and the ArcGIS Pro SDK ChromiumWebBrowser Control in an add-in](https://support.esri.com/en/Technical-Article/000022628) for more information
  
@@ -314,30 +321,30 @@ ArcGIS Pro SDK for .NET provides the following project and item templates:
 
 C#  | VB| Name
 ------------------------  | -------------| ---------
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleC32.png "ArcGIS Pro Module C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleVB32.png "ArcGIS Pro Module VB") |  ArcGIS Pro Module Add-in Project template  
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsC32.png "ArcGIS Pro Configurations C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsVB32.png "ArcGIS Pro Configurations VB") |  ArcGIS Pro Managed Configurations Project template  
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPluginC32.png "ArcGIS Pro Plugin C#") | N/A |  ArcGIS Pro Plugin Project template 
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCoreHostC32.png "ArcGIS Pro CoreHost Application C#") | N/A |  ArcGIS Pro CoreHost Application Project template 
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabC32.png "ArcGIS Pro Backstage Tab C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabVB32.png "ArcGIS Pro Backstage Tab VB") | ArcGIS Pro Backstage Tab 
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonC32.png "ArcGIS Pro Button C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonVB32.png "ArcGIS Pro Button VB") | ArcGIS Pro Button 
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteC32.png "ArcGIS Pro Button Palette C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteVB32.png "ArcGIS Pro Button Palette VB") | ArcGIS Pro Button Palette
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProComboBoxC32.png "ArcGIS Pro Combo Box C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProComboBoxVB32.png "ArcGIS Pro Combo Box VB") | ArcGIS Pro Combo Box
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConstructionToolC32.png "ArcGIS Pro Construction Tool C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConstructionToolVB32.png "ArcGIS Pro Construction Tool VB") | ArcGIS Pro Construction Tool
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Control C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlVB32.png "ArcGIS Pro Custom Control VB") | ArcGIS Pro Custom Control
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Item C#") | N/A | ArcGIS Pro Custom Item
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Project Item C#") | N/A | ArcGIS Pro Custom Project Item
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneC32.png "ArcGIS Pro Dockpane C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneVB32.png "ArcGIS Pro Dockpane VB") | ArcGIS Pro Dockpane
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneC32.png "ArcGIS Pro Dockpane with Burger Button C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneVB32.png "ArcGIS Pro Dockpane with Burger Button VB") | ArcGIS Pro Dockpane with Burger Button
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDropHandlerC32.png "ArcGIS Pro Drop Handler C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDropHandlerVB32.png "ArcGIS Pro Drop Handler VB") | ArcGIS Pro Drop Handler
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProEmbeddableControlC32.png "ArcGIS Pro Embeddable Control C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProEmbeddableControlVB32.png "ArcGIS Pro Embeddable Control VB") | ArcGIS Pro Embeddable Control
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProGalleryC32.png "ArcGIS Pro Gallery C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProGalleryVB32.png "ArcGIS Pro Gallery VB") | ArcGIS Pro Gallery
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProInLineGalleryC32.png "ArcGIS Pro Inline-Gallery C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProInLineGalleryVB32.png "ArcGIS Pro Inline-Gallery VB") | ArcGIS Pro Inline-Gallery
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapPaneC32.png "ArcGIS Pro Map Pane Impersonation C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapPaneVB32.png "ArcGIS Pro Map Pane Impersonation VB") | ArcGIS Pro Map Pane Impersonation
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapToolC32.png "ArcGIS Pro Map Tool C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapToolVB32.png "ArcGIS Pro Map Tool VB") | ArcGIS Pro Map Tool
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMenuC32.png "ArcGIS Pro Menu C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMenuVB32.png "ArcGIS Pro Menu VB") | ArcGIS Pro Menu
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPaneC32.png "ArcGIS Pro Pane C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPaneVB32.png "ArcGIS Pro Pane VB") | ArcGIS Pro Pane
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPropertySheetC32.png "ArcGIS Pro Property Sheet C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPropertySheetVB32.png "ArcGIS Pro Property Sheet VB") | ArcGIS Pro Property Sheet
-![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProSplitButtonC32.png "ArcGIS Pro Split Button C#") | ![](https://Esri.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProSplitButtonVB32.png "ArcGIS Pro Split Button VB") | ArcGIS Pro Split Button
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleC32.png "ArcGIS Pro Module C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProModuleVB32.png "ArcGIS Pro Module VB") |  ArcGIS Pro Module Add-in Project template  
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsC32.png "ArcGIS Pro Configurations C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConfigurationsVB32.png "ArcGIS Pro Configurations VB") |  ArcGIS Pro Managed Configurations Project template  
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPluginC32.png "ArcGIS Pro Plugin C#") | N/A |  ArcGIS Pro Plugin Project template 
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCoreHostC32.png "ArcGIS Pro CoreHost Application C#") | N/A |  ArcGIS Pro CoreHost Application Project template 
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabC32.png "ArcGIS Pro Backstage Tab C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProBackstageTabVB32.png "ArcGIS Pro Backstage Tab VB") | ArcGIS Pro Backstage Tab 
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonC32.png "ArcGIS Pro Button C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonVB32.png "ArcGIS Pro Button VB") | ArcGIS Pro Button 
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteC32.png "ArcGIS Pro Button Palette C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProButtonPaletteVB32.png "ArcGIS Pro Button Palette VB") | ArcGIS Pro Button Palette
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProComboBoxC32.png "ArcGIS Pro Combo Box C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProComboBoxVB32.png "ArcGIS Pro Combo Box VB") | ArcGIS Pro Combo Box
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConstructionToolC32.png "ArcGIS Pro Construction Tool C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProConstructionToolVB32.png "ArcGIS Pro Construction Tool VB") | ArcGIS Pro Construction Tool
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Control C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlVB32.png "ArcGIS Pro Custom Control VB") | ArcGIS Pro Custom Control
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Item C#") | N/A | ArcGIS Pro Custom Item
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProCustomControlC32.png "ArcGIS Pro Custom Project Item C#") | N/A | ArcGIS Pro Custom Project Item
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneC32.png "ArcGIS Pro Dockpane C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneVB32.png "ArcGIS Pro Dockpane VB") | ArcGIS Pro Dockpane
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneC32.png "ArcGIS Pro Dockpane with Burger Button C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDockPaneVB32.png "ArcGIS Pro Dockpane with Burger Button VB") | ArcGIS Pro Dockpane with Burger Button
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDropHandlerC32.png "ArcGIS Pro Drop Handler C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProDropHandlerVB32.png "ArcGIS Pro Drop Handler VB") | ArcGIS Pro Drop Handler
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProEmbeddableControlC32.png "ArcGIS Pro Embeddable Control C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProEmbeddableControlVB32.png "ArcGIS Pro Embeddable Control VB") | ArcGIS Pro Embeddable Control
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProGalleryC32.png "ArcGIS Pro Gallery C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProGalleryVB32.png "ArcGIS Pro Gallery VB") | ArcGIS Pro Gallery
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProInLineGalleryC32.png "ArcGIS Pro Inline-Gallery C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProInLineGalleryVB32.png "ArcGIS Pro Inline-Gallery VB") | ArcGIS Pro Inline-Gallery
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapPaneC32.png "ArcGIS Pro Map Pane Impersonation C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapPaneVB32.png "ArcGIS Pro Map Pane Impersonation VB") | ArcGIS Pro Map Pane Impersonation
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapToolC32.png "ArcGIS Pro Map Tool C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMapToolVB32.png "ArcGIS Pro Map Tool VB") | ArcGIS Pro Map Tool
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMenuC32.png "ArcGIS Pro Menu C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProMenuVB32.png "ArcGIS Pro Menu VB") | ArcGIS Pro Menu
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPaneC32.png "ArcGIS Pro Pane C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPaneVB32.png "ArcGIS Pro Pane VB") | ArcGIS Pro Pane
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPropertySheetC32.png "ArcGIS Pro Property Sheet C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProPropertySheetVB32.png "ArcGIS Pro Property Sheet VB") | ArcGIS Pro Property Sheet
+![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProSplitButtonC32.png "ArcGIS Pro Split Button C#") | ![](http://ArcGIS.github.io/arcgis-pro-sdk/images/VisualStudioTemplates/ArcGISProSplitButtonVB32.png "ArcGIS Pro Split Button VB") | ArcGIS Pro Split Button
 
 
 #### ArcGIS Pro SDK for .NET utilities 
@@ -345,7 +352,7 @@ Package: proapp-sdk-utilities.vsix
 
 ArcGIS Pro SDK for .NET (Utilities) provides the following utilities that extend the Visual Studio environment:
 
-![pro-fix-references](https://Esri.github.io/arcgis-pro-sdk/images/Home/proapp-sdk-utilities.png "ArcGIS Pro SDK(Utilities)") 
+![pro-fix-references](http://ArcGIS.github.io/arcgis-pro-sdk/images/Home/proapp-sdk-utilities.png "ArcGIS Pro SDK(Utilities)") 
 
 Name               | Description
 ----------------------------  | --------------------------------------
@@ -365,7 +372,7 @@ The ArcGIS Pro APIs are managed .NET assemblies. Intermediary assemblies contain
 
 Add any of the ArcGIS Pro managed assemblies that comprise its API as references directly in your Visual Studio add-in projects
 
-![pro-references.png](https://Esri.github.io/arcgis-pro-sdk/images/Home/pro-references.png "ArcGIS Pro API References") 
+![pro-references.png](http://ArcGIS.github.io/arcgis-pro-sdk/images/Home/pro-references.png "ArcGIS Pro API References") 
 
 A complete list of the ArcGIS Pro assemblies in the public API is provided below:
 
@@ -408,12 +415,20 @@ There are extension assemblies in {ArcGIS Pro Installation folder}\bin\Extension
 * ArcGIS.Desktop.BusinessAnalyst.dll
 * ArcGIS.Desktop.Charts.dll
 * ArcGIS.Desktop.DataSourcesRaster.dll
+* ArcGIS.Desktop.Defense.dll
 * ArcGIS.Desktop.DefenseMapping.dll
 * ArcGIS.Desktop.Editing.PushPull.dll
 * ArcGIS.Desktop.FullMotionVideo.dll
 * ArcGIS.Desktop.GAWizard.dll
+* ArcGIS.Desktop.GeoProcessing.SAModels.dll
 * ArcGIS.Desktop.Geostatistics.dll
+* ArcGIS.Desktop.Geostatistics.dll
+* ArcGIS.Desktop.Indoors.dll
+* ArcGIS.Desktop.Intelligence.dll
+* ArcGIS.Desktop.Intelligence.Configuration.dll
+* ArcGIS.Desktop.KnowledgeGraph.dll
 * ArcGIS.Desktop.LocationReferencing.dll
+* ArcGIS.Desktop.Maritime.dll
 * ArcGIS.Desktop.Metadata.dll
 * ArcGIS.Desktop.NetworkAnalysis.Facility.dll
 * ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll
@@ -426,56 +441,56 @@ Note: Static string resource properties and image resources included within the 
 
 ## Release notes 
 
-### ArcGIS Pro 2.5 SDK for .NET
+### ArcGIS Pro 2.6 SDK for .NET
 
-These release notes describe details of the ArcGIS Pro 2.5 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
+These release notes describe details of the ArcGIS Pro 2.6 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
 #### What's new
 
-The following functionality is available at the ArcGIS Pro 2.5 SDK for .NET release:
+The following functionality is available at the ArcGIS Pro 2.6 SDK for .NET release:
 
 #### 1. API Enhancements  
 
-**Geometry API:**<br/>
-* Support for writing multipatch features, with the ability to update geometry, and apply materials and textures.
-
-**Content API**<br/>
-* New custom search and browse filters.
- 
 **Map Authoring API:**<br/>
-* Layer rendering enhancements.
+* Support for inserting and managing graphic and text elements, including element selection, grouping, alignment, distribution and ordering.
+
+**Editing API**<br/>
+* Enhancements to edit events and snapping to allow snapping to be set by layer.
+
+**Parcel Fabric API Pre-Release:**<br/>
+* Additional updates for this Internal Pre-release API, including testing layer participation in the fabric and creating and clearing parcel records.
+
+**Custom Settings:**<br/>
+* Developers can now store custom application settings for add-ins in the Roaming profile.
 
 **Other API Enhancements:**<br/>
-* New classes and methods available in the Editing, Geodatabase, Mapping, and Raster APIs.
+* New classes and methods available in the Editing, Geodatabase, Framework, Geometry, and Mapping APIs.
 
 **.NET Framework 4.8:**<br/>
-*  With the release of ArcGIS Pro 2.5, the minimum .NET target has been changed from 4.6.1 to 4.8. What does this mean for you and your add-ins?
-      * Existing add-ins, already deployed, will work at 2.5 with no change to their forward compatibility.
-      * New add-ins created at 2.5 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
-      * Existing add-ins which are recompiled at 2.5 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.5..
+*  As with the release of ArcGIS Pro 2.5, the minimum .NET target is now 4.8. What does this mean for you and your add-ins?
+      * Existing add-ins, already deployed, will work at 2.6 with no change to their forward compatibility.
+      * New add-ins created at 2.6 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
+      * Existing add-ins which are recompiled at 2.6 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.6.
 
 Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
-For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.5
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.6
 ](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
-#### 3. SDK Resources
+#### 2. SDK Resources
 
 There are many ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features including:
 
 Updates to the SDK Resources include, but are not limited to:
 
-* [ProConcepts: Framework](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Framework)
-* [ProGuide: Custom Dictionary Style](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Custom-Dictionary-Style)
-* [ProConcepts: Content and Items](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Content-and-Items)
-* [ProConcepts: Custom Items](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Custom-Items)
-* [ProGuide: Custom Items](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Custom-Items)
-* [ProGuide: Custom Browse Dialog Filters](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Custom-Browse-Dialog-Filters)
-* [ProConcepts: Editing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Editing)
-* [ProSnippets: Browse Dialog Filters](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-Browse-Dialog-Filters)
-* [ArcGIS Pro TypeID Reference](https://github.com/Esri/arcgis-pro-sdk/wiki/ArcGIS-Pro-TypeID-Reference)
+* [ProConcepts: Asynchronous Programming in ArcGIS Pro](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Asynchronous-Programming-in-ArcGIS-Pro)
+* [ProConcepts: Distributing Add-Ins Online](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Distributing-Add-Ins-Online)
+* [ProSnippets: GraphicsLayers](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-GraphicsLayers)
+* [ProConcepts GraphicsLayers](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-GraphicsLayers)
+* [ProConcepts: Editing](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Editing)
+* [ProConcepts: Map Authoring](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Map-Authoring)
 * The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
-* The API Changes section of the [What’s New for Developers 2.5](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
+* The API Changes section of the [What’s New for Developers 2.6](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
 
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons-first.png "ArcGIS Pro SDK Icons")
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons-second.png "ArcGIS Pro SDK Icons")
@@ -488,6 +503,7 @@ You can use the Pro SDK Icons as the image for your controls on the Pro Ribbon. 
 
 ## Previous versions
 
+* [ArcGIS Pro 2.5 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.5.0.22081)
 * [ArcGIS Pro 2.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.4.0.19948)
 * [ArcGIS Pro 2.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.3.0.15769)
 * [ArcGIS Pro 2.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.2.0.12813)
@@ -524,7 +540,7 @@ limitations under the License.
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
 
-<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.5 SDK for Microsoft .NET Framework</b></p>
+<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.6 SDK for Microsoft .NET Framework</b></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#installing-arcgis-pro-sdk-for-net) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
 

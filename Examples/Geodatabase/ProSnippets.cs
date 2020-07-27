@@ -32,6 +32,7 @@ using ArcGIS.Desktop.Mapping;
 using Version = ArcGIS.Core.Data.Version;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 
+
 namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 {
 
@@ -1095,8 +1096,62 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
         }
       });
     }
-
     #endregion Creating a QueryTable using a query which joins two versioned tables in a geodatabase
+
+    public void CheckColumnForNull(Row row, Field field)
+    {
+      #region Checking a field value for null
+      var val = row[field.Name];
+      if (val is DBNull || val == null)
+      {
+        // field value is null
+      }
+      else
+      {
+        // field value is not null
+      }
+      #endregion Checking a field value for null
+    }
+
+    #region Get domain string from a field
+    public string GetDomainStringFromField(Row row, Field field)
+    {
+      // Get the table and table definition from the Row
+      using (Table table = row.GetTable())
+      using (TableDefinition tableDefinition = table.GetDefinition())
+      {
+        // Get name of subtype field
+        string subtypeFieldName = tableDefinition.GetSubtypeField();
+
+        // Get subtype, if any
+        Subtype subtype = null;
+
+        if (subtypeFieldName.Length != 0)
+        {
+          // Get value of subtype field for this row
+          var varSubtypeCode = row[subtypeFieldName];
+          long subtypeCode = (long)varSubtypeCode ;
+
+          // Get subtype for this row
+          subtype = tableDefinition.GetSubtypes().First(x => x.GetCode() == subtypeCode);
+        }
+
+        // Get the coded value domain for this field
+        CodedValueDomain domain = field.GetDomain(subtype) as CodedValueDomain;
+
+        // Return the text string for this field
+        if (domain != null)
+        {
+          return domain.GetName(row[field.Name]);
+        }
+        else
+        {
+          return row[field.Name].ToString();
+        }
+      }
+    }
+
+    #endregion Get domain string from a field
     
     #region ProSnippet Group: Editing
     #endregion
@@ -1385,6 +1440,14 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Modifying a Feature
+
+    public void WritingIntoGuidColumn(Row row, Field field, Guid guid)
+    {
+      #region Writing a value into a Guid column
+      row[field.Name] = "{" + guid.ToString() + "}";
+      #endregion Writing a value into a Guid column
+    }
+
 
     #region Deleting a Row/Feature
 
@@ -1769,6 +1832,38 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Deleting a Relationship
+
+    #region Using an Insert Cursor
+    // Insert Cursors are intended for use in CoreHost applications, not Pro Add-ins
+    public void UsingInsertCursor()
+    {
+      using (Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri("path\\to\\sde\\file"))))
+      using (Table citiesTable = geodatabase.OpenDataset<Table>("name\\of\\cities_table"))
+      {
+        geodatabase.ApplyEdits(() =>
+        {
+          using (InsertCursor insertCursor = citiesTable.CreateInsertCursor())
+          using (RowBuffer rowBuffer = citiesTable.CreateRowBuffer())
+          {
+            rowBuffer["State"] = "Colorado";
+
+            rowBuffer["Name"] = "Fort Collins";
+            rowBuffer["Population"] = 167830;
+            insertCursor.Insert(rowBuffer);
+
+            rowBuffer["Name"] = "Denver";
+            rowBuffer["Population"] = 727211;
+            insertCursor.Insert(rowBuffer);
+
+            // Insert more rows here
+            // A more realistic example would be reading source data from a file
+
+            insertCursor.Flush();
+          }
+        });
+      }
+    }
+    #endregion
 
     #region ProSnippet Group: Versioning
     #endregion

@@ -26,6 +26,8 @@ using ArcGIS.Desktop.Core;
 using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace CartoFeatures.ProSnippet
 {
@@ -219,6 +221,22 @@ namespace CartoFeatures.ProSnippet
 
       #endregion
     }
+
+    public void ConstructPointSymbolFromMarkerStream()
+    {
+      #region How to construct a point symbol from a in memory graphic
+      //Create a stream for the image
+      Image newImage = Image.FromFile(@"C:\PathToImage\Image.png");
+      var stream = new System.IO.MemoryStream();
+      newImage.Save(stream, ImageFormat.Png);
+      stream.Position = 0;
+      //Create marker using the stream
+      CIMMarker markerFromStream = SymbolFactory.Instance.ConstructMarkerFromStream(stream);
+      //Create the point symbol from the marker
+      CIMPointSymbol pointSymbolFromStream = SymbolFactory.Instance.ConstructPointSymbol(markerFromStream);
+      #endregion
+    }
+
 
     //construct polygon symbol
     public void ConstructPolygonSymbol_1()

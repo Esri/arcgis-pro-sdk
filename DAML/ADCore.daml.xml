@@ -16,6 +16,11 @@
     <insertAccelerator refID="esri_core_editCutButton" flags="Ctrl" key="X" />
     <insertAccelerator refID="esri_core_redoButton" flags="Ctrl" key="Y" />
     <insertAccelerator refID="esri_core_undoButton" flags="Ctrl" key="Z" />
+    <insertAccelerator refID="esri_datasourcesraster_stereoModelSelectorButton" flags="Ctrl+Shift" key="S" />
+    <insertAccelerator refID="esri_editing_ShowCreateFeaturesBtn" flags="Ctrl+Shift" key="C" />
+    <insertAccelerator refID="esri_editing_ShowEditFeaturesBtn" flags="Ctrl+Shift" key="M" />
+    <insertAccelerator refID="esri_mapping_selectContext" flags="Ctrl+Alt" key="S" />
+    <insertAccelerator refID="esri_mapping_exploreContext" flags="Ctrl+Alt" key="C" />
   </accelerators>
   
   <DockPaneSets>
@@ -53,8 +58,8 @@
     <insertProduct id="esri_product_publisher" caption="Publisher" description="Enables the sharing of content throughout the ArcGIS platform." code="15"/>
     <insertProduct id="esri_product_aviationCharting" caption="Aviation Charting" description="Provides tools and workflows for working with aeronautical data and charting." code="53"/>
     <insertProduct id="esri_product_aviationAirports" caption="Aviation Airports" description="Provides tools for airport planning, maintenance and analysis." code="70"/>
-    <insertProduct id="esri_product_maritimeCharting" caption="Maritime Charting" description="Provides tools and workflows for working with nautical data and charting." code="50"/>
-    <insertProduct id="esri_product_maritimeBathymetry" caption="Maritime Bathymetry" description="Provides tools and workflows for working with bathymetric data." code="69"/>
+    <insertProduct id="esri_product_maritimeCharting" caption="Maritime" description="Provides tools and workflows for working with nautical data and charting." code="50"/>
+    <insertProduct id="esri_product_maritimeBathymetry" caption="Bathymetry" description="Provides tools and workflows for working with bathymetric data." code="69"/>
     <insertProduct id="esri_product_businessanalyst" caption="Business Analyst" description="Provides advanced analysis tools and an extensive library of data from industry leading data providers to help you make better business decisions." code="33"/>
     <insertProduct id="esri_product_imageanalyst" caption="Image Analyst" description="Delivers an integrated image interpretation and analysis workstation which provides powerful image visualization, exploitation, and feature extraction tools." code="86"/>
     <insertProduct id="esri_product_locatext" caption="LocateXT" description="Discover and extract geocoordinates, place names, and other critical information from unstructured text and place them instantly on a map." code="87"/>
@@ -82,6 +87,71 @@
     <insertCategory id="esri_sharingCategory" />
     <insertCategory id="esri_customizedCommandsCategory" />
     <insertCategory id="esri_customItems" />
+
+    <insertCategory id="portalTypesFilter">
+      <component id="portal">
+        <content>
+          <portalGroup displayName="Maps" type="maps">
+            <portalSubGroup displayName="Web Maps" type="webmaps"/>
+            <portalSubGroup displayName="Map Files" type="mapfiles"/>
+          </portalGroup>
+          <portalGroup displayName="Layers" type="layers">
+            <portalSubGroup displayName="Feature Layers" type="featurelayers"/>
+            <portalSubGroup displayName="Tile Layers" type="tilelayers"/>
+            <portalSubGroup displayName="Map Image Layers" type="mapimagelayers"/>
+            <portalSubGroup displayName="Imagery Layers" type="imagerylayers"/>
+            <portalSubGroup displayName="Tiled Imagery Layers" type="tiledimagerylayers"/>
+            <portalSubGroup displayName="Scene Layers" type="scenelayers"/>
+            <portalSubGroup displayName="Tables" type="tables"/>
+            <portalSubGroup displayName="Layer Files" type="layerfiles"/>
+          </portalGroup>
+          <portalGroup displayName="Scenes" type="scenes"/>
+          <!--<portalGroup displayName="Apps" type="apps">
+            <portalSubGroup displayName="Web Apps" type="webapps"/>
+            <portalSubGroup displayName="Dashboards" type="dashboards"/>
+            <portalSubGroup displayName="Sites" type="sites"/>
+            <portalSubGroup displayName="StoryMaps" type="storymaps"/>
+            <portalSubGroup displayName="Web AppBuilder Apps" type="webbuilderapps"/>
+            <portalSubGroup displayName="Mobile Apps" type="mobileapps"/>
+            <portalSubGroup displayName="Desktop Apps" type="desktopapps"/>
+          </portalGroup>-->
+          <portalGroup displayName="Tools" type="tools">
+            <portalSubGroup displayName="Locators" type="locators"/>
+            <!--<portalSubGroup displayName="Geodatabase Access" type="geodatabaseaccess"/>
+            <portalSubGroup displayName="Geometric Operations" type="geometricoperations"/>-->
+            <portalSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
+            <portalSubGroup displayName="Network Analysis" type="networkanalysis"/>
+          </portalGroup>
+          <!--<portalGroup displayName="Files" type="files">
+            <portalSubGroup displayName="Documents" type="documents"/>
+            <portalSubGroup displayName="Images" type="images"/>
+            <portalSubGroup displayName="PDFs" type="pdf"/>
+          </portalGroup>-->
+        </content>
+      </component>
+    </insertCategory>
+
+    <insertCategory id="portalSharingFilter">
+      <component id="portalSharing">
+        <content>
+          <portalGroup displayName="Owner" type="owner">
+            <portalSubGroup displayName="Shared with groups" type="sharedgroups"/>
+            <portalSubGroup displayName="Not shared with groups" type="notsharedgroups"/>
+          </portalGroup>
+          <portalGroup displayName="Organization" type="organization"/>
+          <portalGroup displayName="Everyone (public)" type="public"/>
+        </content>
+      </component>
+    </insertCategory>
+
+    <insertCategory id="portalStatusFilter">
+      <component id="portalStatus">
+        <content>
+          <portalGroup displayName="Authoritative" type="authoritative"/>
+          <portalGroup displayName="Deprecated" type="deprecated"/>
+        </content>
+      </component>
+    </insertCategory>
     
     <!-- browse places -->
     <updateCategory refID="esri_browsePlaces">
@@ -150,8 +220,8 @@
           <group refID="esri_core_clipboardGroup" />
           <group refID="esri_core_organize" />
           <group refID="esri_core_create" />
-          <group refID="esri_core_metadata" />
-          <!--<group refID="esri_project_styles_home" />  -->
+          <group refID="esri_core_update" />
+          <group refID="esri_metadata_metadataViewGroup" />
         </tab>
         <tab id="esri_core_insertTab" caption="Insert" condition="esri_core_projectItem_resourcesPane" keytip="N">
           <group refID="esri_core_projectData"/>
@@ -182,7 +252,7 @@
           <insertGallery refID="esri_layouts_gallery" size="large" />
           
           <insertButton refID="esri_reports_newReportSplitButton" size="middle" />
-          <insertButton refID="esri_layouts_AddNotebook" size="middle"/>
+          <insertSplitButton refID="esri_geodatabase_AddNewOrExistingNotebookSplitButton" size="middle"/>
           <insertButtonPalette refID="esri_geoprocessing_insertMenu" size="middle"/>
           
           <insertButton refID="esri_layouts_importMap" size="middle" />
@@ -201,7 +271,6 @@
           <buttonPalette refID="esri_core_popupTooltipPalette" size="large" />
           <button refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
           <buttonPalette refID="esri_core_projectViewDisplayType" size="middle" />
-          <buttonPalette refID="esri_core_searchPalette" size="middle"/>
         </group>
 
         <group id="esri_core_clipboardGroup" caption="Clipboard" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
@@ -214,6 +283,9 @@
           <subgroup refID="esri_core_organizeItems1"/>
           <subgroup refID="esri_core_organizeItems2"/>
           <subgroup refID="esri_core_organizeItems3"/>
+        </group>
+
+        <group id="esri_core_update" caption="Update" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
         </group>
 
         <group id="esri_core_create" caption="Create" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
@@ -252,11 +324,6 @@
           <button refID="esri_core_ShowDetailedItemTooltips"/>
         </buttonPalette>
         
-        <buttonPalette id="esri_core_searchPalette" itemsInRow="1" showItemCaption="true" bindChecked="false"
-                       caption="Portal Search" extendedCaption="Portal Search Options" keytip="PS">
-          <button refID="esri_core_projectViewOptionsSearchAll"/>
-          <button refID="esri_core_projectViewOptionsSearchOrg"/>
-        </buttonPalette>
         <buttonPalette id="esri_core_projectViewDisplayType" caption="Display Type" temsInRow="1" showItemCaption="true" keytip="DT">
           <button refID="esri_core_projectDetailsView"/>
           <button refID="esri_core_projectTilesView"/>
@@ -510,7 +577,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </customControl>
 
-        <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" keytip="CT" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow16.png">
+        <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" flipImageRTL="true" keytip="CT" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow16.png">
           <tooltip heading="">
             Show the Contents pane.<disabledText></disabledText>
           </tooltip>
@@ -549,28 +616,6 @@ The copy of the portal item in the project is deleted, and the current version o
                 caption="Details Panel" extendedCaption="Show the Details panel in the Catalog view, e.g. to see metadata or style items; on ribbon" keytip="SD" loadOnClick="false">
           <tooltip heading="">
             Show the Details panel in the Catalog view. This lets you preview an item's data, view its metadata, and manage style items within a style.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_core_projectViewOptionsSearchOrg" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_disabled32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_disabled16"
-                className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsSearchOrg" 
-                condition="esri_core_resourcesPane"
-                caption="Search My Organization" 
-                extendedCaption="When searching portal items in the Catalog view, only search items from your organization." keytip="SO" loadOnClick="false">
-          <tooltip heading="">
-            When searching portal items in the Catalog view, only include items from your organization in the search results.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_core_projectViewOptionsSearchAll" 
-                className="ArcGIS.Desktop.Internal.Core.ProjectViewOptionsSearchAll" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_enabled32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SearchActivePortal_enabled16"
-                condition="esri_core_resourcesPane"
-                caption="Search All" extendedCaption="When searching portal items in the Catalog view, search entire portal." 
-                keytip="SA" loadOnClick="false">
-          <tooltip heading="">
-When searching portal items in the Catalog view, include all accessible items from the portal in the search results. This includes public items, items in groups that you can access, and items you own.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -849,6 +894,30 @@ Show information such as an item's thumbnail and tags as well as its location in
 
           <button refID="esri_projectItemAddExistingACSConnection" />
           <button refID="esri_projectItemAddNewACSConnection" />
+          <button refID="esri_projectItemAddNewBIMConnection" separator="true"/>
+          <!--<button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_editPasteButton"/>-->
+          <!-- TODO: cut will come later
+          <button refID="esri_core_editCutButton"/>-->
+        </menu>
+
+        <!--Todo - DG - #regkey-->
+        <menu id="esri_projectDefaultContextMenu_withKnowledgeGraph" caption="-">
+          <button refID="esri_mapping_newMapButton" />
+          <button refID="esri_mapping_newSceneButton" />
+          <button refID="esri_mapping_newLocalSceneButton"/>
+          <button refID="esri_mapping_newStereoMapButton" />
+          <button refID="esri_mapping_newBasemapButton" />
+
+          <button refID="esri_folderConnectionAddButton" separator="true"/>
+          <button refID="esri_geodatabase_existingGeoDatabaseButton" />
+          <button refID="esri_geodatabase_databaseConnectionButton" />
+          <button refID="esri_projectItemAddAGSConnection" />
+
+          <button refID="esri_projectItemAddExistingACSConnection" />
+          <button refID="esri_projectItemAddNewACSConnection"/>
+          <button refID="esri_projectItemAddNewBIMConnection" separator="true"/>
+          <button refID="esri_knowledgeGraph_newKnowledgeGraph" separator="true"/>
 
           <!--<button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editPasteButton"/>-->
@@ -928,6 +997,9 @@ Show information such as an item's thumbnail and tags as well as its location in
   </propertySheets>
 
   <conditions>
+    <insertCondition id="esri_core_search" caption="Search tab">
+      <state id="esri_search_State" />
+    </insertCondition>
 
     <insertCondition id="esri_browsePlaces_Online_Condition" caption="Browse Places Online">
       <state id="esri_browsePlaces_Online_State" />

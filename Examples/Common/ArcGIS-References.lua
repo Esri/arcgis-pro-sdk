@@ -31,7 +31,7 @@
    "C:/Program Files/ArcGIS/Pro/bin/Extensions/DataReviewer/ArcGIS.Desktop.DataReviewer.dll"
 
 }
-
+flags { "NoCopyLocal" }
 
    -- filter "configurations:Debug"
       -- defines { "DEBUG" }

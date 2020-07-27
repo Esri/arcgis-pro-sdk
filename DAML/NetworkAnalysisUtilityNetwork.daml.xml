@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArcGIS defaultAssembly="ArcGIS.Desktop.NetworkAnalysis.Facility.dll" defaultNamespace="ArcGIS.Desktop.NetworkAnalysis.Facility" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
+
+  <dependencies>
+    <dependency name="ADGeoProcessing.daml" />
+  </dependencies>
+
+  <categories>
+    <updateCategory refID="esri_mapping_mapViews">
+      <insertComponent id="esri_mapping_containmentView" className="ArcGIS.Desktop.NetworkAnalysis.Facility.ContainmentView">
+        <content mapType="ContainmentMap"/>
+      </insertComponent>
+    </updateCategory>
+  </categories>
+
+  <dialogs>
+  </dialogs>
+
+  <modules>
+    <insertModule id="esri_networkanalysis_utility_module" caption="GDB Networks" description="GDB Networks" className="NetworkAnalysisFacilityModule" autoLoad="false" productDescription="Facilities Network Extension">
+
+       <tabGroups>
+         <tabGroup caption="Utility Network" id="esri_networkanalysis_utility_TabGroup">
+           <color A="255" R="58" G="158" B="108" /> <!--green-->
+           <borderColor A="0" R="44" G="124" B="85" /> <!--green-->
+         </tabGroup>
+         <tabGroup caption="Trace Network" id="esri_networkanalysis_trace_TabGroup">
+           <color A="255" R="145" G="130" B="189" /> <!--purple-->
+           <borderColor A="0" R="124" G="109" B="168" /> <!--purple-->
+         </tabGroup>
+       </tabGroups>
+
+       <tabs>
+         <tab id="esri_networkanalysis_utility_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_utility_TabGroup" condition="esri_mapping_utilityNetworkCondition" keytip="UN">
+           <group refID="esri_networkanalysis_utility_Validate_Group" />
+           <group refID="esri_networkanalysis_utility_Associations_Group" />
+           <group refID="esri_networkanalysis_utility_Tools_Group"/>
+           <group refID="esri_networkanalysis_utility_Terminals_Group"/>
+           <group refID="esri_networkanalysis_utility_Selection_Group"/>
+           <group refID="esri_networkanalysis_utility_Drawing_Group" />
+           <group refID="esri_networkanalysis_utility_SubnetworkManagement_Group" />
+         </tab>
+         <tab id="esri_networkanalysis_trace_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_trace_TabGroup" condition="esri_mapping_traceNetworkCondition" keytip="TN">
+           <group refID="esri_networkanalysis_trace_Validate_Group" />
+           <group refID="esri_networkanalysis_trace_Associations_Group" />
+           <group refID="esri_networkanalysis_trace_Tools_Group"/>
+           <group refID="esri_networkanalysis_utility_Terminals_Group"/>
+           <group refID="esri_networkanalysis_trace_Selection_Group"/>
+           <group refID="esri_networkanalysis_utility_Drawing_Group" />
+           <group refID="esri_networkanalysis_trace_FlowDirection_Group" />
+         </tab>
+       </tabs>
+
+      <groups>
+        <group id="esri_networkanalysis_utility_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_UN_Trace_Settings_Btn">
+          <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
+          <gallery refID="esri_networkanalysis_utility_ToolsGallery" inline="true"/>
+        </group>
+        <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
+          <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
+          <button refID="esri_networkanalysis_ShowModifyDeviceBtn" size="large"/>
+          <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
+        </group>
+        <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
+          <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" />
+          <button refID="esri_networkanalysis_utility_Containment_Btn" size="middle"/>
+          <button refID="esri_networkanalysis_utility_Container_EditMode_Btn" size="middle"/>
+          <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
+          <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
+        </group>
+        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork">
+          <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="large"/>
+          <button refID="esri_networkanalysis_utility_ViewSubnetworks_Btn" size="large"/>
+          <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
+        </group>
+        <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection">
+          <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
+          <button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>
+        </group>
+
+        <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn">
+          <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
+          <gallery refID="esri_networkanalysis_trace_ToolsGallery" inline="true"/>
+        </group>
+        <group id="esri_networkanalysis_trace_Validate_Group" caption="Network Topology">
+          <button refID="esri_networkanalysis_trace_BuildBtnPalette" size="large" />
+        </group>
+        <group id="esri_networkanalysis_trace_Selection_Group" caption="Selection">
+          <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
+          <!--<button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>-->
+        </group>
+        <!-- remove for 2.6 -->
+        <!--<group id="esri_networkanalysis_trace_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
+          <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" /> 
+          <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
+        </group>-->
+        <group id="esri_networkanalysis_trace_FlowDirection_Group" caption="Flow Direction" launcherButtonID="esri_networkanalysis_network_View_FlowDirection_Settings_Btn">
+          <button refID="esri_networkanalysis_trace_FlowDirectionButton" size="large" />
+        </group>
+      </groups>
+
+      <splitButtons>
+        
+        <splitButton id="esri_networkanalysis_utility_ApplySelectionSplitButton" extendedCaption="Apply the selection to another network map" keytip="AM">
+          <button refID="esri_networkanalysis_utility_ApplySelection_Btn"/>
+          <gallery refID="esri_networkanalysis_utility_ApplySelectionGallery" />
+        </splitButton>
+        
+      </splitButtons>
+      
+       <galleries>
+        <gallery id="esri_networkanalysis_utility_ToolsGallery"
+                 className="Ribbon.UtilityNetworkGalleryViewModel"
+                 caption="Utility Network Tool Gallery"
+                 itemWidth="72"
+                 itemsInRow="4"
+                 showItemCaption="true"
+                 loadingMessage="Loading ..."
+                 showGroup="true"
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.NetworkAnalysis.Facility;component/Ribbon/GalleryTemplates.xaml"
+                 templateID="ToolsItemTemplate"                
+                 showItemCaptionBelow="true"
+                 resizable="true"
+                 keytip="GG">
+          <tooltip heading="">
+            View a gallery of utility network tools.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_utilitynetwork_ShowCustomizeGallery" />
+        </gallery>
+         <gallery id="esri_networkanalysis_trace_ToolsGallery"
+                  className="Ribbon.TraceNetworkGalleryViewModel"
+                  caption="Trace Network Tool Gallery"
+                  itemWidth="72"
+                  itemsInRow="4"
+                  showItemCaption="true"
+                  loadingMessage="Loading ..."
+                  showGroup="true"
+                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.NetworkAnalysis.Facility;component/Ribbon/GalleryTemplates.xaml"
+                  templateID="ToolsItemTemplate"
+                  showItemCaptionBelow="true"
+                  resizable="true"
+                  keytip="TG">
+           <tooltip heading="">
+             View a gallery of trace network tools.<disabledText></disabledText>
+           </tooltip>
+           <button refID="esri_utilitynetwork_ShowCustomizeGallery" />
+         </gallery>
+
+        <gallery id="esri_networkanalysis_utility_ApplySelectionGallery" caption="Propagate Selection Gallery" extendedCaption="Apply selection to another utility network map" className="Ribbon.NetworkToNetworkGalleryViewModel"
+                 condition="esri_networkanalysis_utility_PropagateSelection_Condition"
+                 itemWidth="150" resizable="true"
+                 loadingMessage="Loading ..." showGroup="false" itemsInRow="1" showItemCaption="false"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew32.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew16.png"
+                 templateID="BasicGallery_TemplateID"
+                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.NetworkAnalysis.Facility;component/Ribbon/GalleryTemplates.xaml">
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </gallery>
+      </galleries>
+
+       <palettes>
+        <buttonPalette id="esri_networkanalysis_utility_CrossSection_BtnPalette" dropDown="false" showItemCaption="true" itemsInRow="1" caption="Cross Section" extendedCaption="Cross section of a utility network">
+          <button refID="esri_networkanalysis_utility_CrossSection_Btn" />
+        </buttonPalette>
+         <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace Locations" extendedCaption="Set Trace Locations" keytip="TL">
+           <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
+           <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
+           <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
+         </toolPalette>
+         <toolPalette id="esri_networkanalysis_utility_ValidateBtnPalette" itemsInRow="1" showItemCaption="true" caption="Validate" extendedCaption="Validate Network Topology" keytip="VT">
+           <tool refID="esri_networkanalysis_un_validate_current_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_un_validate_entire_BuildTools_Btn"/>
+         </toolPalette>
+         <toolPalette id="esri_networkanalysis_utility_DisplayFilterBtnPalette" itemsInRow="1" showItemCaption="true" caption="Display Content" extendedCaption="Display Content" keytip="DC">
+           <tool refID="esri_networkanalysis_ShowContentBtn"/>
+           <tool refID="esri_networkanalysis_HideContentBtn"/>
+         </toolPalette>
+         <toolPalette id="esri_networkanalysis_trace_BuildBtnPalette" itemsInRow="1" showItemCaption="true" caption="Validate" extendedCaption="Validate Network Topology" keytip="B">
+           <tool refID="esri_networkanalysis_tn_validate_current_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"/>
+         </toolPalette>
+       </palettes>
+
+      <controls>
+        <button id="esri_networkanalysis_un_validate_current_BuildTools_Btn" 
+                className="esri_networkanalysis_utility_module:BuildAsyncCurrentExtent" 
+                caption="Current extent" 
+                extendedCaption="Validate current map extent" 
+                condition="esri_networkanalysis_utility_ValidateTool_Condition" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png"
+                helpContextID=""
+                keytip="C">
+          <tooltip heading="Validate Network Topology">
+            Validate the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_un_validate_entire_BuildTools_Btn"
+               className="esri_networkanalysis_utility_module:BuildAsyncFullExtent"
+               caption="Entire extent"
+               extendedCaption="Validate entire map extent"
+               condition="esri_networkanalysis_utility_ValidateTool_Condition"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent32.png"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent16.png"
+               helpContextID=""
+               keytip="E">
+          <tooltip heading="Validate Network Topology">
+            Validate the utility network topology in the entire map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_tn_validate_current_BuildTools_Btn"
+                className="esri_networkanalysis_utility_module:BuildTraceNetworkCurrentExtent"
+                caption="Current extent"
+                extendedCaption="Validate current map extent"
+                condition="esri_networkanalysis_trace_ValidateTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png"
+                helpContextID=""
+                keytip="C">
+          <tooltip heading="Validate Network Topology">
+            Validate the trace network in the current map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"
+               className="esri_networkanalysis_utility_module:BuildTraceNetworkFullExtent"
+               caption="Entire extent"
+               extendedCaption="Validate entire map extent"
+               condition="esri_networkanalysis_trace_ValidateTool_Condition"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent32.png"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateEntireExtent16.png"
+               helpContextID=""
+               keytip="E">
+          <tooltip heading="Validate Network Topology">
+            Validate the trace network in the entire map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_ShowModifyAssociationsBtn"
+                caption="Modify" extendedCaption="Show Modify Associations pane."
+                condition="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyAssociations32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyAssociations16.png"
+                className="esri_networkanalysis_utility_module:ShowModifyAssociationsWindow"
+                keytip="MA">
+          <tooltip heading="Modify Associations">
+            Show the Modify Associations pane.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_ShowContentBtn"
+                caption="Show" extendedCaption="Show Content"
+                condition="esri_networkanalysis_utility_DisplayContent_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFilterByLayer32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFilterByLayer16.png"
+                className="esri_networkanalysis_utility_module:DisableDisplayFilters"
+                keytip="S">
+          <tooltip heading="Show Container Content">
+            Show Container Content by disabling the Display Filters for the Utility Network Layers.
+            <disabledText>The container content display filters are disabled in Containment Edit mode.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_HideContentBtn"
+                caption="Hide" extendedCaption="Hide Content"
+                condition="esri_networkanalysis_utility_DisplayContent_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFilterByLayerChecked32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFilterByLayerChecked16.png"
+                                     
+                className="esri_networkanalysis_utility_module:EnableDisplayFilters"
+                keytip="H">
+          <tooltip heading="Hide Container Content">
+            Hide Container Content by enabling the Display Filters for the Utility Network Layers.
+            <disabledText>The container content display filters are disabled in Containment Edit mode.</disabledText>
+          </tooltip>
+        </button>        
+        
+        <!-- Association pane tools-->
+        <tool id="esri_networkanalysis_utility_associations_SelectParentTool" 
+              className="Tools.SelectParentTool" 
+              caption="Select from association features" 
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select junction features">
+            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectJunctionJunctionConnectionsTool"
+              className="Tools.SelectJunctionJunctionConnectionsTool"
+              caption="Select junctions"
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select junction features">
+            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectJunctionEdgeConnectionsTool"
+              className="Tools.SelectJunctionEdgeConnectionsTool"
+              caption="Select junctions"
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select junction features">
+            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectContainersTool" 
+              className="Tools.SelectContainersTool" 
+              caption="Select containers" 
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select container features">
+            Select container features for establishing containment associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectContentTool"
+              className="Tools.SelectContentTool"
+              caption="Select content"
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select content features for the container">
+            Select content features for establishing containment associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectStructuresTool"
+              className="Tools.SelectStructuresTool"
+              caption="Select structures"
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select structure features">
+            Select structure features for establishing structural attachment associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_utility_associations_SelectAttachmentsTool"
+              className="Tools.SelectAttachmentsTool"
+              caption="Select attachments"
+              condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select attachment features for the structure">
+            Select attachment features for establishing structural attachment associations.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <!-- End of association pane tools-->
+
+        <!-- Select source feature tool-->
+        <tool id="esri_networkanalysis_utility_associations_SelectSourceFeatureTool"
+                     className="Tools.SelectSourceFeatureTool"
+                     caption="Select source feature"
+                     largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+                     smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+                     helpContextID="">
+          <tooltip heading="Select a subnetwork controller feature">
+            Select a network feature to set or remove it as a subnetwork controller.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        
+        <!-- Select terminal feature tool-->
+        <tool id="esri_networkanalysis_utility_associations_SelectTerminalFeatureTool"
+                     className="Tools.SelectTerminalFeatureTool"
+                     caption="Select Terminal"
+                     largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+                     smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+                     helpContextID="">
+          <tooltip heading="Select feature">
+            Select a network feature to modify its terminal configuration path.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        
+        <!-- Customize button -->
+        <button id="esri_utilitynetwork_ShowCustomizeGallery" 
+                caption="Customize..." extendedCaption="Customize..."
+                className="Ribbon.UtilityNetworkGalleryCustomizeButton" >
+          <tooltip heading="Customize Data Gallery">Add groups, reorder, or remove the tools in the Data gallery.<disabledText></disabledText></tooltip>
+        </button>
+        
+        <!-- Select connection device feature tool-->
+        <tool id="esri_networkanalysis_utility_associations_SelectConnectionDeviceFeatureTool"
+                     className="Tools.SelectConnectionDeviceFeatureTool"
+                     caption="Select Device"
+                     largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+                     smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+                     helpContextID="">
+          <tooltip heading="Select feature">
+            Select a device feature to modify its terminal configuration path.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <!-- Select connection line feature tool-->
+        <tool id="esri_networkanalysis_utility_associations_SelectConnectionLineFeatureTool"
+                     className="Tools.SelectConnectionLineFeatureTool"
+                     caption="Select Line"
+                     largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+                     smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+                     helpContextID="">
+          <tooltip heading="Select feature">
+            Select a network feature to modify its terminal configuration path.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <!-- esri_networkanalysis_utility_SubnetworkManagement_Group -->
+        <button id="esri_networkanalysis_utility_FindSubnetworks_Btn" className="esri_networkanalysis_utility_module:ShowFindSubnetworksWindow"
+                caption="Find" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png"
+                helpContextID=""
+                keytip="FS">
+          <tooltip heading="Find Subnetwork features">
+            Find the features in a Subnetwork.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_utility_ViewSubnetworks_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.Tools.ViewSubnetworksButton" 
+                caption="View" loadOnClick="false" condition="esri_mapping_utilityNetworkCondition" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewSubnetworks32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewSubnetworks16.png"
+                helpContextID=""
+                keytip="VS">
+          <tooltip heading="View Subnetworks">
+            View Subnetworks.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_utility_ShowModifySourceBtn"
+                caption="Modify Controller" extendedCaption="Show Modify Subnetwork Controller pane."
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource16.png"
+                className="esri_networkanalysis_utility_module:ShowModifySourceWindow"
+                keytip="MC">
+          <tooltip heading="Modify Control Device">
+            Open the Modify Subnetwork Controller pane to set or remove a feature as a network subnetwork controller.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <!--esri_networkanalysis_utility_connectivityAssociationGroup-->
+        <tool id="esri_networkanalysis_utility_featurePropertiesTool" className="Tools.ConnectivityInfoTool" 
+              caption="Feature Properties" condition="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" 
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties32.png" 
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties16.png"
+              helpContextID=""
+              keytip="FP">
+          <tooltip heading="Feature Properties">Display properties for the clicked feature.<disabledText></disabledText></tooltip>
+        </tool>
+
+        <tool id="esri_networkanalysis_utility_Containment_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.Tools.ContainmentViewTool" 
+                caption="Enter Containment" condition="esri_networkanalysis_utility_OpenContainer_Condition" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectContainer32.png" 
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectContainer16.png"
+                helpContextID=""
+                keytip="ENC">
+          <tooltip heading="Select a Container to activate">
+            Select a container feature to enable container editing mode.<disabledText>Disable Edit Mode to enable this tool</disabledText>
+          </tooltip>
+        </tool>
+
+        <button id="esri_networkanalysis_utility_Container_EditMode_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.EnableContainerEditModeButton"
+                caption="Exit Containment" condition="esri_networkanalysis_utility_Container_Activated_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExitContainment32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExitContainment16.png"
+                helpContextID=""
+                keytip="EXC">
+          <tooltip heading="Disable Container Edit Mode">
+            Turn Container edit mode off for the activated container.
+            When Container edit mode is on, any new features will automatically be associated with the container.
+            <disabledText>There is currently no active container in editing mode</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_utility_View_Associations_Mode_Btn" className="ArcGIS.Desktop.NetworkAnalysis.Facility.ViewAssociationsModeButton"
+                caption="View" condition="esri_networkanalysis_utility_ViewAssociations_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewAssociations32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewAssociations16.png"
+                helpContextID=""
+                keytip="VAM">
+          <tooltip heading="View Associations Mode">
+            Turn View Associations mode on/off.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_networkanalysis_utility_View_Associations_Settings_Btn" caption="Associations Options" className="ArcGIS.Desktop.NetworkAnalysis.Facility.ViewAssociationsSettingsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
+          <tooltip heading="Associations Options">Set associations options.<disabledText></disabledText></tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_network_View_TN_Trace_Settings_Btn" caption="Tracing Options" className="esri_networkanalysis_utility_module:ShowTNTraceOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
+          <tooltip heading="Tracing Options">
+            Set tracing options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_network_View_UN_Trace_Settings_Btn" caption="Tracing Options" className="esri_networkanalysis_utility_module:ShowUNTraceOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
+          <tooltip heading="Tracing Options">
+            Set tracing options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_network_View_FlowDirection_Settings_Btn" caption="Flow Direction Options" className="esri_networkanalysis_utility_module:ShowFlowDirectionOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
+          <tooltip heading="Flow Direction Options">
+            Set flow direction options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <!--esri_networkanalysis_utility_menus_group-->
+        <button id="esri_networkanalysis_utility_NavigateTo_NetworkElement" className="Tools.NavigateToNetworkElement" caption="Feature Properties" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties16.png"  helpContextID="">
+          <tooltip heading="Feature Properties">Pan to the feature and query its properties.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_PanTo_NetworkElement" className="Tools.PanToNetworkElement" caption="Pan" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanTool_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanTool_B_16.png" helpContextID="">
+          <tooltip heading="">Pan to the network object position on the geographic map.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_ZoomTo_NetworkElement" className="Tools.ZoomToNetworkElement" caption="Zoom" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomIn32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomIn16.png" helpContextID="">
+          <tooltip heading="">Zoom to the network object position on the geographic map.<disabledText></disabledText></tooltip>
+        </button>
+         <button id="esri_networkanalysis_utility_Flash_NetworkElement" className="Tools.FlashNetworkElement" caption="Flash feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png" helpContextID="">
+          <tooltip heading="">Flash the feature associated with the network object.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_Select_NetworkElement" className="Tools.SelectNetworkElement" caption="Select feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodNew16.png" helpContextID="">
+          <tooltip heading="Select feature">Select the feature depicting the network object.<disabledText></disabledText></tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_Select_AllNetworkElements" className="Tools.SelectAllNetworkElements" caption="Select all" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectAll32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectAll16.png" helpContextID="">
+          <tooltip heading="Select feature">Select all features depicting the network objects.<disabledText></disabledText></tooltip>
+        </button>
+
+        <!--tracing controls-->
+        <button id="esri_networkanalysis_trace_ShowSetStartingPointsBtn"
+                caption="Starting Points" extendedCaption="Set Starting Points"
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png"
+                className="esri_networkanalysis_utility_module:ShowModifyStartingPointsWindow"
+                keytip="SP">
+          <tooltip heading="Set Trace Locations">
+            Show the set trace locations pane. This allows you to access commands and tools to set starting points.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_trace_ShowSetBarriersBtn"
+                caption="Barriers" extendedCaption="Set Barriers"
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetBarriers32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetBarriers16.png"
+                className="esri_networkanalysis_utility_module:ShowModifyBarriersWindow"
+                keytip="B">
+          <tooltip heading="Set Barriers">
+            Show the set trace locations pane. This allows you to access commands and tools to set barriers.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_trace_ClearAllBtn"
+                caption="Clear All" extendedCaption="Clear All Trace Locations"
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/clear-tracing-32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/clear-tracing-16.png"
+                className="esri_networkanalysis_utility_module:ClearAllTraceLocations"
+                keytip="CL">
+          <tooltip heading="Clear All">
+            Clear All Trace Locations.<disabledText></disabledText>
+          </tooltip>
+        </button>        
+        <tool id="esri_networkanalysis_trace_SelectStartingPointsTool"
+              className="Tools.SelectStartingPointsTool"
+              caption="Select starting points"
+              condition="esri_networkanalysis_utility_TraceTool_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select starting points">
+            Select starting points from where the trace will be initiated.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_networkanalysis_trace_SelectBarriersTool"
+              className="Tools.SelectBarriersTool"
+              caption="Select barriers"
+              condition="esri_networkanalysis_utility_TraceTool_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select barriers">
+            Select barriers where the trace will terminate.<disabledText></disabledText>
+          </tooltip>
+        </tool>     
+        <button id="esri_networkanalysis_utility_ApplySelection_Btn" 
+                className="Tools.PropagateSelectionButton" 
+                caption="Apply To Maps" extendedCaption="Apply selection to the geographic maps" loadOnClick="false" 
+                condition="esri_networkanalysis_utility_PropagateSelection_Condition" 
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectOnMaps32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectOnMaps16.png" 
+                helpContextID=""
+                keytip="AM">
+          <tooltip heading="Apply To Maps">
+            Apply selection to other maps.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <!--end tracing controls-->
+
+        <!--terminals controls-->
+        <button id="esri_networkanalysis_ShowModifyDeviceBtn"
+                caption="Terminal Paths" extendedCaption="Show Modify Device Terminal pane."
+                condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyDevice32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyDevice16.png"
+                className="esri_networkanalysis_utility_module:ShowModifyDeviceTerminalWindow"
+                keytip="TP">
+          <tooltip heading="Terminal Configuration Paths">
+            Show the Modify Terminal Paths pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_ShowModifyConnectionBtn"
+                 caption="Terminal Connections" extendedCaption="Show Modify Terminal Connections pane."
+                 condition="esri_networkanalysis_utility_TerminalConnections_Condition"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection32.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyConnection16.png"
+                 className="esri_networkanalysis_utility_module:ShowModifyTerminalConnectionsWindow"
+                 keytip="TC">
+          <tooltip heading="Terminal Connections">
+            Show the Modify Terminal Connections pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_networkanalysis_trace_FlowDirectionButton"
+                caption="Display Flow Direction" extendedCaption="Adds the flow direction layer to the map for the current extent or updates if already being displayed."
+                condition="esri_networkanalysis_trace_ValidateTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisplayFlowArrow32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisplayFlowArrow16.png"
+                className="esri_networkanalysis_utility_module:ShowFlowDirectionArrows"
+                keytip="FA">
+          <tooltip heading="Display Flow Direction">
+            Add or update the flow direction layer for the network.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+      </controls>
+      <dockPanes>
+        <dockPane id="esri_networkanalysis_utility_ConnectivityInfo_Pane" className="ViewModels.ConnectivityInfoPaneViewModel" caption="Feature Properties"
+                  dock="group" dockWith="esri_core_projectDockPane" keytip="ConInfo" minwidth="600">
+          <content className="Views.ConnectivityInfoPaneView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifyAssociationsPane"
+                  caption="Modify Associations"
+                  className="ModifyAssociationsViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  dockWith="esri_core_projectDockPane">
+          <content className="ModifyAssociationsView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifyStartingPointsAndBarriersPane"
+                  caption="Trace Locations"
+                  className="ModifyStartingPointsAndBarriersViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  dockWith="esri_core_projectDockPane">
+          <content className="ModifyStartingPointsAndBarriersView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifySourcePane"
+                  caption="Modify Subnetwork Controller"
+                  className="ModifySourceViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  dockWith="esri_core_projectDockPane">
+          <content className="ModifySourceView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifyDeviceTerminalPane"
+                  caption="Modify Terminal Paths"
+                  className="ModifyDeviceTerminalViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  dockWith="esri_core_projectDockPane">
+          <content className="ModifyDeviceTerminalView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionsPane"
+                 caption="Modify Terminal Connections"
+                 className="ModifyTerminalConnectionsViewModel"
+                 dock="group"
+                 initiallyVisible="false"
+                 delayLoadMessage="Open a map to get started."
+                 dockWith="esri_core_projectDockPane">
+          <content className="ModifyTerminalConnectionsView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_FindSubnetworkPane"
+          caption="Find Subnetworks"
+          className="FindSubnetworkViewModel"
+          dock="group"
+          initiallyVisible="false"
+          delayLoadMessage="Open a map to get started."
+          dockWith="esri_core_projectDockPane">
+          <content className="FindSubnetworkView" />
+        </dockPane>
+      </dockPanes>
+
+      <panes>
+      </panes>
+
+      <menus>
+        <!--esri connectivity info root menus-->
+        <menu id="esri_networkanalysis_utility_ConnectivityInfo_RootContextMenu" caption="Utility Network connectivity info menu" contextMenu="true">
+          <button refID="esri_networkanalysis_utility_Select_AllNetworkElements" />
+          <!--<button refID="esri_networkanalysis_utility_Identify_Feature" />-->
+        </menu>
+        <!--esri connectivity info menus-->
+        <menu id="esri_networkanalysis_utility_ConnectivityInfo_ContextMenu" caption="Utility Network connectivity info menu" contextMenu="true">
+          <button refID="esri_networkanalysis_utility_NavigateTo_NetworkElement" />
+          <button refID="esri_networkanalysis_utility_PanTo_NetworkElement" />
+          <button refID="esri_networkanalysis_utility_ZoomTo_NetworkElement" />
+          <button refID="esri_networkanalysis_utility_Flash_NetworkElement" />
+          <button refID="esri_networkanalysis_utility_Select_NetworkElement" />
+          <!--<button refID="esri_networkanalysis_utility_Identify_Feature" />-->
+        </menu>
+      </menus>
+
+    </insertModule>
+  </modules>
+
+  <propertySheets>
+    <insertSheet id="esri_utilityNetwork_optionsPropertySheet" caption="Network Options" resizable="true" pageHeight="540" pageWidth="792" hasGroups="false">
+      <page id="esri_networkDiagrams_optionsPropertyPage" caption="Network Diagrams" className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsViewModel" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll">
+        <content className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsView" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll"/>
+      </page>
+      <page id="esri_networkanalysis_optionsPropertyPage" caption="Associations" className="AssociationsViewModel" condition="esri_networkanalysis_utility_ViewAssociations_Condition"
+                  insert="after">
+        <content className="AssociationsView"/>
+      </page>
+      <page id="esri_networkanalysis_traceOptionsPropertyPage" caption="Tracing" className="TracingOptionsViewModel" condition="esri_networkanalysis_utility_ViewAssociations_Condition"
+            insert="after">
+        <content className="TracingOptionsView"/>
+      </page>
+    </insertSheet>
+    <insertSheet id="esri_traceNetwork_optionsPropertySheet" caption="Network Options" resizable="true" pageHeight="540" pageWidth="792" hasGroups="false">
+      <page id="esri_networkDiagrams_optionsPropertyPage" caption="Network Diagrams" className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsViewModel" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll">
+        <content className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsView" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll"/>
+      </page>
+      <!-- block until 2.7 -->
+      <!--<page id="esri_networkanalysis_optionsPropertyPage" caption="Associations" className="AssociationsViewModel" condition="esri_networkanalysis_utility_ViewAssociations_Condition"
+            insert="after">
+        <content className="AssociationsView"/>
+      </page>-->
+      <page id="esri_networkanalysis_flowDirectionOptionsPropertyPage" caption="Flow Direction" className="FlowDirectionOptionsViewModel" condition="esri_networkanalysis_utility_FlowDirections_Condition"
+            insert="after">
+        <content className="FlowDirectionOptionsView"/>
+      </page>
+      <page id="esri_networkanalysis_traceOptionsPropertyPage" caption="Tracing" className="TracingOptionsViewModel"
+            insert="after">
+        <content className="TracingOptionsView"/>
+      </page>
+    </insertSheet>
+  </propertySheets>
+  
+  <conditions>
+    <insertCondition id="esri_networkanalysis_utility_TerminalConnections_Condition" caption="Geographic map is active and utility network layer is selected">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <and>
+            <state id="esri_mapping_layerSelectedState"/>
+            <not>
+              <state id="esri_mapping_mapMemberSelectedIsVersionedState" />
+            </not>
+          </and>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+        <state id="esri_map_traceNetwork"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_DisplayContent_Condition" caption="Geographic map is active and utility network layer is selected">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <not>
+          <state id="esri_networkanalysis_utility_active_container_state" />
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <not>
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
+      <or>
+        <state id="esri_map_traceNetwork"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </and>
+        <state id="esri_map_traceNetwork"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_OpenContainer_Condition" caption="Utility network layer is active and a selection exists">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <not>
+          <state id="esri_networkanalysis_utility_active_container_state" />      
+        </not>
+        <state id="esri_map_utilityNetworkFeatureService" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_Container_Activated_Condition" caption="Utility network layer has an active container">
+      <and>
+        <state id="esri_networkanalysis_utility_active_container_state" />
+      </and>
+    </insertCondition>
+    
+    <insertCondition id="esri_networkanalysis_utility_Implemented_Condition" caption="Not yet implemented">
+      <and>
+        <state id="esri_networkanalysis_utility_comingSoonState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_utility_PropagateSelection_Condition" caption="Utility network layer is active and a selection exists">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
+      </and>
+    </insertCondition>    
+    
+    <insertCondition id="esri_networkanalysis_utility_ViewAssociations_Condition" caption="Utility network layer is active and the map scale is valid.">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_utility_FlowDirections_Condition" caption="Utility or Trace network layer is active and the map scale is valid.">
+      <and>
+        <!--<state id="esri_map_utilityNetwork" />--> <!-- disable for now -->
+        <state id="esri_map_traceNetwork" />
+      </and>
+    </insertCondition>
+  </conditions>
+ 
+</ArcGIS>
