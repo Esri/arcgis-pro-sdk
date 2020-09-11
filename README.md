@@ -289,7 +289,7 @@ _**Newtonsoft Json**_
 * At 2.6 ArcGIS Pro is using version 12.0.1 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
 
 _**CefSharp**_
-* At 2.6 ArcGIS is using version 81.3.100 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Framework#chromiumwebbrowser) 
+* At 2.6 ArcGIS is using version 81.3.100 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](../../wiki/ProConcepts-Framework#chromiumwebbrowser) 
 
 Please consult technical support article [How To: Fix compiler error(s) using CefSharp and the ArcGIS Pro SDK ChromiumWebBrowser Control in an add-in](https://support.esri.com/en/Technical-Article/000022628) for more information
  
