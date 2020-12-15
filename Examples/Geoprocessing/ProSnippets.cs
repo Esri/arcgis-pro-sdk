@@ -1,5 +1,4 @@
 /*
-
    Copyright 2018 Esri
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,6 @@
 
    See the License for the specific language governing permissions and
    limitations under the License.
-
 */
 using System;
 using System.Collections.Generic;
@@ -43,7 +41,7 @@ namespace ProSnippetsGeoprocessing
     {
 
       #region How to execute a Model tool
-      // get the model tool's parameter syntax from the model's help 
+      // get the model tool's parameter syntax from the model's help
       string input_roads = @"C:\data\Input.gdb\PlanA_Roads";
       string buff_dist_field = "Distance";   // use values from a field
       string input_vegetation = @"C:\data\Input.gdb\vegtype";
@@ -98,14 +96,24 @@ namespace ProSnippetsGeoprocessing
             #endregion
 
       #region Stop a featureclass created with GP from automatically adding to the map
+      // However, settings in Pro App's Geoprocessing Options will override option set in code
+      // for example, in Pro App's Options > Geoprocessing dialog, if you check 'Add output datasets to an open map'
+      // then the output WILL BE added to history overriding settings in code
       var GPresult = Geoprocessing.ExecuteToolAsync(tool_path, args, null, null, null, GPExecuteToolFlags.None);
+      #endregion
+
+      #region GPExecuteToolFlags.AddToHistory will add the execution messages to Hisotry
+      // However, settings in Pro App's Geoprocessing Options will override option set in code
+      // for example, if in Options > Geoprocessing dialog, if you uncheck 'Write geoprocessing operations to Geoprocessing History'
+      // then the output will not be added to history. 
+      var result2 = Geoprocessing.ExecuteToolAsync(tool_path, args, null, null, null, GPExecuteToolFlags.AddToHistory);
       #endregion
       }
 
-      #region Multi Ring Buffer
-      //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
-      //https://github.com/Esri/arcgis-pro-sdk-community-samples
-      protected async Task<string> CreateRings(EditingTemplate currentTemplate)
+        #region Multi Ring Buffer
+        //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
+        //https://github.com/Esri/arcgis-pro-sdk-community-samples
+        protected async Task<string> CreateRings(EditingTemplate currentTemplate)
       {
           var valueArray = await QueuedTask.Run(() =>
           {
@@ -143,6 +151,32 @@ namespace ProSnippetsGeoprocessing
         return string.IsNullOrEmpty(gpResult.ReturnValue)
               ? $@"Error in gp tool: {gpResult.ErrorMessages}"
               : $@"Ok: {gpResult.ReturnValue}";
+      }
+      #endregion
+         
+      #region How to pass parameter with multiple or complex input values
+      public async Task<IGPResult> ExecuteSnap()
+      {
+        var environments = Geoprocessing.MakeEnvironmentArray(overwriteoutput: true);
+
+        string toolName = @"Snap_edit";
+         
+        // Snap tool takes multiple inputs each of which has 
+        // Three (3) parts: a feature class or layer, a string value and a distance
+        // Each part is separated by a semicolon - you can get example of sytax from the tool documentation page
+        var snapEnv = @"'C:/SnapProject/fgdb.gdb/line_1' END '2 Meters';'C:/SnapProject/fgdb.gdb/points_1' VERTEX '1 Meters';'C:/SnapProject/fgdb.gdb/otherline_1' END '20 Meters'";
+
+        var parameters = await QueuedTask.Run(() =>
+        {
+          var infc = @"C:/SnapProject/fgdb.gdb/poly_1";
+          return Geoprocessing.MakeValueArray(infc, snapEnv);
+        });
+
+        GPExecuteToolFlags tokens = GPExecuteToolFlags.RefreshProjectItems | GPExecuteToolFlags.GPThread | GPExecuteToolFlags.AddToHistory;
+
+        var gpResult = await Geoprocessing.ExecuteToolAsync(toolName, parameters, environments, null, null, flags: tokens);
+
+        return gpResult;
       }
       #endregion
   }

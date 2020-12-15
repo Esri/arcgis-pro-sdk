@@ -470,7 +470,7 @@ namespace Layout_HelpExamples
         polyTxtElm.SetName("New Polygon Text");
 
         //(Optionally) Modify paragraph border 
-        CIMGraphic polyTxtGra = polyTxtElm.Graphic;
+        CIMGraphic polyTxtGra = polyTxtElm.GetGraphic();
         CIMParagraphTextGraphic cimPolyTxtGra = polyTxtGra as CIMParagraphTextGraphic;
         cimPolyTxtGra.Frame.BorderSymbol = new CIMSymbolReference();
         cimPolyTxtGra.Frame.BorderSymbol.Symbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.GreyRGB, 1.0, SimpleLineStyle.Solid);
@@ -497,7 +497,7 @@ namespace Layout_HelpExamples
         cirTxtElm.SetName("New Circle Text");
 
         //(Optionally) Modify paragraph border 
-        CIMGraphic cirTxtGra = cirTxtElm.Graphic;
+        CIMGraphic cirTxtGra = cirTxtElm.GetGraphic();
         CIMParagraphTextGraphic cimCirTxtGra = cirTxtGra as CIMParagraphTextGraphic;
         cimCirTxtGra.Frame.BorderSymbol = new CIMSymbolReference();
         cimCirTxtGra.Frame.BorderSymbol.Symbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.GreyRGB, 1.0, SimpleLineStyle.Solid);
@@ -523,7 +523,7 @@ namespace Layout_HelpExamples
         elpTxtElm.SetName("New Ellipse Text");
 
         //(Optionally) Modify paragraph border 
-        CIMGraphic elpTxtGra = elpTxtElm.Graphic;
+        CIMGraphic elpTxtGra = elpTxtElm.GetGraphic();
         CIMParagraphTextGraphic cimElpTxtGra = elpTxtGra as CIMParagraphTextGraphic;
         cimElpTxtGra.Frame.BorderSymbol = new CIMSymbolReference();
         cimElpTxtGra.Frame.BorderSymbol.Symbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.GreyRGB, 1.0, SimpleLineStyle.Solid);

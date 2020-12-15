@@ -184,6 +184,7 @@
   <ItemGroup>
     <Compile Include="Geometry\GeometryCodeExamples.cs" />
     <Compile Include="Geometry\ProSnippets.cs" />
+    <Compile Include="Geometry\ProSnippetsGeometryEngine.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

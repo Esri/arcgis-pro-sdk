@@ -21,6 +21,7 @@
     <insertAccelerator refID="esri_editing_ShowEditFeaturesBtn" flags="Ctrl+Shift" key="M" />
     <insertAccelerator refID="esri_mapping_selectContext" flags="Ctrl+Alt" key="S" />
     <insertAccelerator refID="esri_mapping_exploreContext" flags="Ctrl+Alt" key="C" />
+    <insertAccelerator refID="esri_core_CommandSearchControl" flags="Alt" key="Q" />
   </accelerators>
   
   <DockPaneSets>
@@ -86,8 +87,8 @@
     <insertCategory id="esri_project_historyControls" />
     <insertCategory id="esri_sharingCategory" />
     <insertCategory id="esri_customizedCommandsCategory" />
+    <insertCategory id="esri_commandSearchCategory" />
     <insertCategory id="esri_customItems" />
-
     <insertCategory id="portalTypesFilter">
       <component id="portal">
         <content>
@@ -162,6 +163,7 @@
   </categories>
 
   <ribbonToolbar>
+    <control refID="esri_core_CommandSearchControl" size="middle"/>
     <control refID="esri_core_signOnControl" size="middle"/>
     <control refID="esri_core_notificationControl" size="small"/>
     <!--<control refID="esri_core_notificationButton" size="small"/>-->
@@ -196,13 +198,13 @@
       </panes>
 
       <dockPanes>
-        <dockPane id="esri_core_projectDockPane" caption="Catalog" className="ProjectDockPaneVM" dock="right">
+        <dockPane id="esri_core_projectDockPane" caption="Catalog" className="ProjectDockPaneVM" dock="right" width="320">
           <content className="ProjectDockPane" />
         </dockPane>
         <!--<dockPane id="esri_core_projectDockPane" caption="Project" className="ProjectDockPaneViewModel" dock="right"  keytip="prj">
           <content className="ProjectDockPaneView" />
         </dockPane>-->
-        <dockPane id="esri_core_contentsDockPane" caption="Contents" className="ContentsDockPaneViewModel" dock="left"  keytip="toc" delayLoadMessage="Open a map or layout view">
+        <dockPane id="esri_core_contentsDockPane" caption="Contents" className="ContentsDockPaneViewModel" dock="left" width="320" keytip="toc" delayLoadMessage="Open a map or layout view">
           <content className="ContentsDockPane" />
         </dockPane>
         <dockPane id="esri_core_notificationDockPane" caption="Notifications" className="ArcGIS.Desktop.Framework.NotificationDockPaneViewModel"
@@ -223,15 +225,33 @@
           <group refID="esri_core_update" />
           <group refID="esri_metadata_metadataViewGroup" />
         </tab>
-        <tab id="esri_core_insertTab" caption="Insert" condition="esri_core_projectItem_resourcesPane" keytip="N">
+        <tab id="esri_core_insertTab" caption="Insert"  keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_project_styles"/>
           <group refID="esri_core_favoritesData"/>
         </tab>
-        <tab id="esri_core_analysisTab" caption="Analysis" condition="esri_core_projectItem_resourcesPane" keytip="A"/>
-        <tab id="esri_core_viewTab" caption="View" condition="esri_core_projectItem_resourcesPane" keytip="V">
+        <tab id="esri_core_analysisTab" caption="Analysis"  keytip="A">
+          <group refID="esri_geoprocessing_analysisTools" />
+          <group refID="esri_geoprocessing_ToolsGallery" />
+          <group refID="esri_geoprocessing_portal" />
+          <group refID="esri_geoprocessing_analysis2" />
+          <group refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
+          <group refID="esri_geoprocessing_datainterop_group"/>
+        </tab>
+        <tab id="esri_core_viewTab" caption="View"  keytip="V">
           <group refID="esri_core_dockWindows" />
           <group refID="esri_core_projectViewOptionsGroup" />
+          <group refID="esri_mapping_syncViewGroup" placeWith="esri_core_dockWindows" insert="before" />
+          <group refID="esri_mapping_viewGroup" placeWith="esri_mapping_syncViewGroup" insert="before" />
+          <!--<group refID="esri_layouts_thumbnailGroup" insert="after" />-->
+          <group refID="esri_mapping_animation" insert="after"/>
+          <group refID="esri_mapping_sceneGroup" insert="after"/>
+          <group refID="esri_mapping_viewClippingGroup" insert="after"/>
+          <!--<group refID="esri_mapping_overprint" insert="after"/>-->
+          <group refID="esri_mapping_profileViewGroup" insert="after"/>
+          <group refID="esri_mapping_navigation" insert="after"/>
+          <group refID="esri_layouts_thumbnailGroup"/>
+          
         </tab>
         <tab id="esri_core_previewTab" caption="Preview" condition="esri_core_previewActiveCondition" tabGroupID="esri_core_previewTabGroup" keytip="P" insert="after">
           <group refID="esri_core_previewNavigateGroup" />
@@ -267,7 +287,7 @@
 
         </group>
 
-        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png">
+        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" condition="esri_core_projectItem_resourcesPane">
           <buttonPalette refID="esri_core_popupTooltipPalette" size="large" />
           <button refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
           <buttonPalette refID="esri_core_projectViewDisplayType" size="middle" />
@@ -295,7 +315,7 @@
           <!--<subgroup refID="esri_core_newItems"/>-->
         </group>
 
-        <group id="esri_core_dockWindows" caption="Windows" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectWindow16.png">
+        <group id="esri_core_dockWindows" caption="Windows" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectWindow16.png" >
           <dynamicMenu refID="esri_dockPaneSetDynamicMenu" size ="large"/>
           <button refID="esri_core_showProjectDockPane" size="large"/>
           <tool refID="esri_core_showProjectView" size="large" />
@@ -577,6 +597,13 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </customControl>
 
+        <customControl id="esri_core_CommandSearchControl" caption="CommandSearch" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel"
+                  assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="H">
+        <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
+        <tooltip heading="Command Search">
+          Just start typing here to bring features to your fingertips and get help.<disabledText></disabledText>
+        </tooltip>
+      </customControl>
         <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" flipImageRTL="true" keytip="CT" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow16.png">
           <tooltip heading="">
             Show the Contents pane.<disabledText></disabledText>
@@ -784,6 +811,14 @@ Show information such as an item's thumbnail and tags as well as its location in
           </tooltip>
         </button>
 
+        <button id="esri_core_deviceLocation_openBackstageOptionsButton"
+                className="ArcGIS.Desktop.Internal.Core.DeviceLocation.LocationDeviceOptionsButton"
+                caption="Device Location Options" extendedCaption="Open location device options">
+          <tooltip heading="Device Location Options">
+            Set device location options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <dynamicMenu id="esri_core_sortColumns" className="SortDynamicMenu" caption="Sort" keytip="SO" loadOnClick="false"
                      largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
@@ -877,6 +912,7 @@ Show information such as an item's thumbnail and tags as well as its location in
           <!--<menu refID="FolderConnectionProjectNewItemMenu2" separator="true" />-->
           <button refID="esri_core_newFolderButton"/>
           <button refID="esri_GDBCreateNewFileGeodatabaseButton" />
+          <button refID="esri_GDBCreateNewMobileGeodatabaseButton" />
           <button refID="esri_itemInfoRefreshButton" />
         </menu>
 
@@ -992,7 +1028,10 @@ Show information such as an item's thumbnail and tags as well as its location in
                   insert="before" placeWith="esri_metadata_MetadataOptionsPropertyPage">
         <content className="LocationOptionsView"/>
       </page>
-
+      <page id="esri_core_locationSourcesPage" caption="Device Location" className="ArcGIS.Desktop.Internal.Core.DeviceLocation.LocationSourcesViewModel" group="Application"
+                  insert="after" placeWith="esri_core_ApplicationOptionsPropertyPage" >
+        <content className="ArcGIS.Desktop.Internal.Core.DeviceLocation.LocationSourcesView" />
+      </page>
     </insertSheet>
   </propertySheets>
 
@@ -1017,12 +1056,98 @@ Show information such as an item's thumbnail and tags as well as its location in
         <state id="esri_metadata_metadataPane" />
       </not>
     </insertCondition>
-    <insertCondition id="esri_core_projectItem_resourcesPane" caption="">
-      <and>
+    <insertCondition id="esri_show_analysisTab">
+      <or>
         <state id="esri_core_resourcesPane" />
-      </and>
-      <or>        
         <state id="esri_metadata_metadataPane" />
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_editing_tablePane"/>
+        <state id="esri_mapping_fieldsPane" />
+        <state id="esri_mapping_domainsPane" />
+        <state id="esri_mapping_subtypesPane" />
+        <state id="esri_mapping_versionsPane" />
+        <state id="esri_mapping_attributeRulesPane" />
+        <state id="esri_mapping_contingentValuesPane" />
+        <state id="esri_editing_versionConflictsPane" />
+        <state id="esri_knowledgeGraph_knowledgeGraphView"/>
+        <state id="esri_layouts_layoutPane" />
+        <state id="esri_reports_reportPane" />
+        <state id="esri_geoprocessing_modelBuilderPane"/>
+        <state id="esri_geoprocessing_MBReportPane"/>
+        <state id="esri_geoprocessing_proNotebookPane"/>
+        <state id="esri_geoprocessing_dataEngineeringPaneView"/>
+        <state id="esri_knowledgeGraph_knowledgeGraphView"/>
+        <state id="esri_aviation_extractionQueriesPane"/>
+        <state id="esri_workflow_jobView"/>
+        <state id="esri_workflow_workflowPane"/>
+        <state id="esri_workflow_client_openAppPane"/>
+        <state id="esri_dataReviewer_reviewerRulesPane"/>
+        <state id="NoPanes"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_core_projectItem_resourcesPane">
+      <or>
+        <state id="esri_core_resourcesPane" />
+        <state id="esri_metadata_metadataPane" />
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_core_showViewTab" >
+      <or>
+        <state id="esri_core_resourcesPane" />
+        <state id="esri_metadata_metadataPane" />
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_editing_tablePane"/>
+        <state id="esri_mapping_fieldsPane" />
+        <state id="esri_mapping_domainsPane" />
+        <state id="esri_mapping_subtypesPane" />
+        <state id="esri_mapping_versionsPane" />
+        <state id="esri_mapping_attributeRulesPane" />
+        <state id="esri_mapping_contingentValuesPane" />
+        <state id="esri_editing_versionConflictsPane" />
+        <state id="esri_knowledgeGraph_knowledgeGraphView"/>
+        <state id="esri_layouts_layoutPane" />
+        <state id="esri_reports_reportPane" />
+        <state id="esri_geoprocessing_modelBuilderPane"/>
+        <state id="esri_geoprocessing_MBReportPane"/>
+        <state id="esri_geoprocessing_proNotebookPane"/>
+        <state id="esri_geoprocessing_dataEngineeringPaneView"/>
+        <state id="esri_workflow_jobView"/>
+        <state id="esri_workflow_workflowPane"/>
+        <state id="esri_workflow_client_openAppPane"/>
+        <state id="esri_aviation_extractionQueriesPane"/>
+        <state id="esri_dataReviewer_reviewerRulesPane"/>
+        <state id="NoPanes" />
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_core_showInsertTab" caption="">
+      <or>
+        <and>
+          <not>
+            <state id="esri_mapping_stereoMapState" />
+          </not>
+          <not>
+            <state id="esri_mapping_mapTypeNetworkDiagramState" />
+          </not>
+          <or>
+            <state id="esri_mapping_mapPane"/>
+            <state id="esri_editing_tablePane"/>
+            <state id="NoPanes" />
+          </or>
+        </and>
+        <state id="esri_core_resourcesPane" />
+        <state id="esri_metadata_metadataPane" />
+        <state id="esri_knowledgeGraph_knowledgeGraphView"/>
+        <state id="esri_layouts_layoutPane"/>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_geoprocessing_modelBuilderPane"/>
+        <state id="esri_geoprocessing_MBReportPane"/>
+        <state id="esri_geoprocessing_proNotebookPane"/>
+        <state id="esri_geoprocessing_dataEngineeringPaneView"/>
+        <state id="esri_workflow_jobView"/>
+        <state id="esri_workflow_workflowPane"/>
+        <state id="esri_workflow_client_openAppPane"/>
+        <state id="esri_dataReviewer_reviewerRulesPane"/>
+        <state id="esri_knowledgeGraph_knowledgeGraphView"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_core_search_orgOnlyCondition" caption="">

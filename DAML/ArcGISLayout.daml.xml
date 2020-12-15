@@ -117,7 +117,7 @@
           <group refID="esri_project_layout"/>
         </tab>
             
-        <tab id="esri_layouts_homeTab" caption="Layout" condition="esri_layouts_layoutPane" keytip="Y">
+        <tab id="esri_layouts_homeTab" caption="Layout" condition="esri_layouts_layoutPane" insert="before" placeWith="esri_core_insertTab" keytip="Y">
           <group refID="esri_layouts_clipboardGroup"/>
           <group refID="esri_layouts_pageNavigateGroup"/>
           <group refID="esri_layouts_selectionGroup"/>
@@ -128,23 +128,23 @@
           <group refID="esri_layouts_reviewGroup"/>
         </tab>
 
-        <tab id="esri_layouts_insertTab" caption="Insert" condition="esri_layouts_layoutPane" keytip="N">
+        <!--<tab id="esri_layouts_insertTab" caption="Insert" condition="esri_layouts_layoutPane" keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_layouts_insertMapFrameGroup"/>
           <group refID="esri_layouts_insertMapSurroundGroup"/>
           <group refID="esri_layouts_insertGraphicGroup"/>
           <group refID="esri_project_styles"/>
           <group refID="esri_core_favoritesData"/>
-        </tab>
+        </tab>-->
 
-        <tab id="esri_layouts_analysisTab" caption="Analysis" condition="esri_layouts_layoutPane" keytip="A"/>
+        <!--<tab id="esri_layouts_analysisTab" caption="Analysis" condition="esri_layouts_layoutPane" keytip="A"/>-->
 
-        <tab id="esri_layouts_viewTab" caption="View" condition="esri_layouts_layoutPane" keytip="V">
+        <!--<tab id="esri_layouts_viewTab" caption="View" condition="esri_layouts_layoutPane" keytip="V">
           <group refID="esri_mapping_bookmarksGroup"/>
           <group refID="esri_core_dockWindows"/>
           <group refID="esri_layouts_thumbnailGroup"/>
-          <!--<group refID="esri_layouts_overprintGroup"/>-->
-        </tab>
+          --><!--<group refID="esri_layouts_overprintGroup"/>--><!--
+        </tab>-->
 
         <!---->
         <!--Contextual Tab for Map Activation-->
@@ -178,7 +178,16 @@
           <group refID="esri_layouts_sizeAndPositionGroup"/>
         </tab>        
 
-        <tab id="esri_layouts_multiMapSurroundDesignTab" caption="Design" extendedCaption="Multiple Map Surrounds" condition="esri_layouts_multiMapSurroundDesignCondition" tabGroupID="esri_layouts_selectionTabGroup" keytip="JD">
+        <tab id="esri_layouts_compositeDesignTab" caption="Design" condition="esri_layouts_compositeDesignCondition" tabGroupID="esri_layouts_selectionTabGroup" keytip="JD">
+          <group refID="esri_layouts_mapSurroundMapFrameGroup"/>
+          <group refID="esri_layouts_northArrowAngleGroup"/>
+          <group refID="esri_layouts_scaleBarDivisionsGroup"/>
+          <group refID="esri_layouts_scaleBarUnitsGroup"/>
+          <group refID="esri_layouts_scaleBarMarksGroup"/>
+          <group refID="esri_layouts_scaleBarNumbersGroup"/>
+        </tab>
+        
+        <!--<tab id="esri_layouts_multiMapSurroundDesignTab" caption="Design" extendedCaption="Multiple Map Surrounds" condition="esri_layouts_multiMapSurroundDesignCondition" tabGroupID="esri_layouts_selectionTabGroup" keytip="JD">
           <group refID="esri_layouts_mapSurroundMapFrameGroup"/>
         </tab>
 
@@ -193,11 +202,11 @@
           <group refID="esri_layouts_scaleBarUnitsGroup"/>
           <group refID="esri_layouts_scaleBarMarksGroup"/>
           <group refID="esri_layouts_scaleBarNumbersGroup"/>
-        </tab>
+        </tab>-->
       </tabs>
 
       <panes>
-        <pane id="esri_layouts_layoutPane" caption="Layout" className="LayoutPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png" isClosable="true" defaultTab="esri_layouts_insertTab" defaultTool="esri_layouts_selectByRectangleTool">
+        <pane id="esri_layouts_layoutPane" caption="Layout" className="LayoutPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png" isClosable="true" defaultTab="esri_core_insertTab" defaultTool="esri_layouts_selectByRectangleTool">
           <content className="LayoutPaneView"/>
         </pane>
       </panes>
@@ -303,7 +312,7 @@
           <button refID="esri_layouts_showSpellCheckPane" size="large"/>
         </group>
 
-        <group id="esri_layouts_insertMapFrameGroup" caption="Map Frames">
+        <group id="esri_layouts_insertMapFrameGroup" caption="Map Frames" condition="esri_layouts_layoutPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrameNew16.png">
           <gallery refID="esri_layouts_newMapFrameGallery" inline="false" size="large"/>
           <toolPalette refID="esri_layouts_newMapFrameToolPalette" size="middle"/>
           <button refID="esri_layouts_dummyButton" size="small"/>
@@ -313,7 +322,7 @@
           <toolPalette refID="esri_layouts_reshapeMapFrameToolPalette" size="middle"/>
         </group>
 
-        <group id="esri_layouts_insertMapSurroundGroup" caption="Map Surrounds" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png">
+        <group id="esri_layouts_insertMapSurroundGroup" caption="Map Surrounds" condition="esri_layouts_layoutPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png">
           <splitButton refID="esri_layouts_newNorthArrowSplitButton" size="large"/>
           <splitButton refID="esri_layouts_newScaleBarSplitButton" size="large"/>
           <tool refID="esri_layouts_newLegendTool" size="large"/>
@@ -327,7 +336,7 @@
           <toolPalette refID="esri_layouts_newTextToolPalette" size="middle"/>
           <gallery refID="esri_layouts_dynamicTextGallery" inline="false" size="middle"/>
         </group>
-        <group id="esri_layouts_insertGraphicGroup" caption="Graphics and Text" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png" launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="TG">
+        <group id="esri_layouts_insertGraphicGroup" caption="Graphics and Text" condition="esri_layouts_layoutPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png" launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="TG">
           <gallery refID="esri_layouts_insertElementGallery" inline="true" size="large"/>
           <gallery refID="esri_layouts_dynamicTextGallery" inline="false" size="large"/>
         </group>
@@ -342,28 +351,28 @@
         <group id="esri_layouts_subElementGroup" caption="Current Selection" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CurrentSelectionGroup16.png" launcherKeytip="CS" condition="esri_layouts_subElementGroupCondition">
           <comboBox refID="esri_layouts_subElementComboBox" size="small"/>
         </group>
-        <group id="esri_layouts_polygonFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showPolygonSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="PG" condition="esri_layouts_polygonGroupCondition">
+        <group id="esri_layouts_polygonFormatGroup" caption="Symbol" extendedCaption="Format polygons" launcherButtonID="esri_layouts_showPolygonSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="PG" condition="esri_layouts_polygonGroupCondition">
           <gallery refID="esri_layouts_polygonStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
           <comboBox refID="esri_layouts_symbolSizeComboBox" size="large"/>
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
-        <group id="esri_layouts_lineFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showLineSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="LN" condition="esri_layouts_lineGroupCondition">
+        <group id="esri_layouts_lineFormatGroup" caption="Symbol" extendedCaption="Format lines" launcherButtonID="esri_layouts_showLineSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="LN" condition="esri_layouts_lineGroupCondition">
           <gallery refID="esri_layouts_lineStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_disabledColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
           <comboBox refID="esri_layouts_symbolSizeComboBox" size="large"/>
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
-        <group id="esri_layouts_pointFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showPointSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="PT" condition="esri_layouts_pointGroupCondition">
+        <group id="esri_layouts_pointFormatGroup" caption="Symbol" extendedCaption="Format points" launcherButtonID="esri_layouts_showPointSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="PT" condition="esri_layouts_pointGroupCondition">
           <gallery refID="esri_layouts_pointStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
           <comboBox refID="esri_layouts_symbolSizeComboBox" size="large"/>
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
-        <group id="esri_layouts_textFormatGroup" caption="Text Symbol" launcherButtonID="esri_layouts_showTextSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolGroup16.png" launcherKeytip="TS">
+        <group id="esri_layouts_textFormatGroup" caption="Text Symbol" extendedCaption="Format text" launcherButtonID="esri_layouts_showTextSymbolDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolGroup16.png" launcherKeytip="TS">
           <gallery refID="esri_layouts_textStyleGalleryInLine" inline="true" size="large"/>
           <toolbar refID="esri_layouts_textSymbolFontToolbar"/>
         </group>
@@ -399,7 +408,7 @@
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="middle"/>
         </group>
 
-        <group id="esri_layouts_northArrowFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showNorthArrowStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_northArrowCondition">
+        <group id="esri_layouts_northArrowFormatGroup" caption="Symbol" extendedCaption="Format north arrows" launcherButtonID="esri_layouts_showNorthArrowStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_northArrowCondition">
           <gallery refID="esri_layouts_northArrowStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
@@ -407,7 +416,7 @@
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
 
-        <group id="esri_layouts_scaleBarFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showScaleBarStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="SB" condition="esri_layouts_scaleBarCondition">
+        <group id="esri_layouts_scaleBarFormatGroup" caption="Symbol" extendedCaption="Format scale bars" launcherButtonID="esri_layouts_showScaleBarStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="SB" condition="esri_layouts_scaleBarCondition">
           <gallery refID="esri_layouts_scaleBarStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
@@ -415,7 +424,7 @@
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
 
-        <group id="esri_layouts_topoNorthArrowFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showTopoNorthArrowStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="TNA" condition="esri_layouts_topoNorthArrowCondition">
+        <group id="esri_layouts_topoNorthArrowFormatGroup" caption="Symbol" extendedCaption="Format topographic north arrows" launcherButtonID="esri_layouts_showTopoNorthArrowStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="TNA" condition="esri_layouts_topoNorthArrowCondition">
           <gallery refID="esri_layouts_topoNorthArrowStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_fillColorGallery" size="small"/>
           <customControl refID="esri_layouts_lineColorGallery" size="small"/>
@@ -423,12 +432,12 @@
           <comboBox refID="esri_layouts_symbolWidthComboBox" size="large"/>
         </group>
 
-        <group id="esri_layouts_meterReferenceFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showMeterReferenceStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_meterReferenceCondition">
+        <group id="esri_layouts_meterReferenceFormatGroup" caption="Symbol" extendedCaption="Format meter reference guides" launcherButtonID="esri_layouts_showMeterReferenceStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_meterReferenceCondition">
           <gallery refID="esri_layouts_meterReferenceStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_meterReferenceColorGallery" size="small"/>
         </group>
 
-        <group id="esri_layouts_elevationGuideBarFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showElevationGuideBarStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_elevationGuideBarCondition">
+        <group id="esri_layouts_elevationGuideBarFormatGroup" caption="Symbol" extendedCaption="Format elevation guide bars" launcherButtonID="esri_layouts_showElevationGuideBarStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" launcherKeytip="NA" condition="esri_layouts_elevationGuideBarCondition">
           <gallery refID="esri_layouts_elevationGuideBarStyleGalleryInLine" inline="true" size="large"/>
           <customControl refID="esri_layouts_elevationGuideBarHighestColorGallery" size="small"/>
           <customControl refID="esri_layouts_elevationGuideBarHighColorGallery" size="small"/>
@@ -436,26 +445,26 @@
           <customControl refID="esri_layouts_elevationGuideBarLowColorGallery" size="small"/>
         </group>
 
-        <group id="esri_layouts_slopeGuideFormatGroup" caption="Symbol" launcherButtonID="esri_layouts_showSlopeGuideStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" 
+        <group id="esri_layouts_slopeGuideFormatGroup" caption="Symbol" extendedCaption="Format slope guides" launcherButtonID="esri_layouts_showSlopeGuideStyleDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png" 
                launcherKeytip="NA" condition="esri_layouts_slopeGuideCondition">
           <gallery refID="esri_layouts_slopeGuideStyleGalleryInLine" inline="true" size="large"/>
         </group>
                 
         <!--DESIGN groups-->
-        <group id="esri_layouts_mapSurroundMapFrameGroup" caption="Map Frame" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrame32.png" launcherKeytip="MF">
+        <group id="esri_layouts_mapSurroundMapFrameGroup" caption="Map Frame" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_compositeDesignCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrame32.png" launcherKeytip="MF">
           <gallery refID="esri_layouts_mapSurroundMapFrameGallery" inline="false" size="middle"/>
         </group>
 
-        <group id="esri_layouts_northArrowAngleGroup" caption="Angle" launcherButtonID="esri_layouts_showElementDockPaneButton" launcherKeytip="NA">
+        <group id="esri_layouts_northArrowAngleGroup" caption="Angle" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_northArrowDesignCondition" launcherKeytip="NA">
           <comboBox refID="esri_layouts_northTypeComboBox" size="middle"/>
           <editBox refID="esri_layouts_northCalibrationAngleEditBox" size="middle"/>
           <editBox refID="esri_layouts_northCalculatedAngleEditBox" size="large"/>
         </group>
 
         <!--Divisions for scale-bars-->
-        <group id="esri_layouts_scaleBarDivisionsGroup" caption="Divisions" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarDivisions16.png" launcherKeytip="SD">
+        <group id="esri_layouts_scaleBarDivisionsGroup" caption="Divisions" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_scaleBarDesignCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarDivisions16.png" launcherKeytip="SD">
           <editBox refID="esri_layouts_divisionsEditBox" size="large"/>
-          <comboBox refID="esri_layouts_resizeBehaviorComboBox" size="large"/>
+          <comboBox refID="esri_layouts_fittingStrategyComboBox" size="large"/>
           <checkBox refID="esri_layouts_divisionsBeforeZero"/>
           <spinner refID="esri_layouts_numDivisionsSpinner" size="middle"/>
           <spinner refID="esri_layouts_numSubDivisionsSpinner" size="middle"/>
@@ -463,24 +472,24 @@
         </group>
 
         <!--Units for scale-bars-->
-        <group id="esri_layouts_scaleBarUnitsGroup" caption="Units" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarUnits16.png" launcherKeytip="SU">
+        <group id="esri_layouts_scaleBarUnitsGroup" caption="Units" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_scaleBarDesignCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarUnits16.png" launcherKeytip="SU">
           <comboBox refID="esri_layouts_unitsComboBox" size="large"/>
           <comboBox refID="esri_layouts_labelPosition" size="large"/>
           <editBox refID="esri_layouts_label" size="large"/>
         </group>
 
-        <!--Marks for scale-bars-->
-        <group id="esri_layouts_scaleBarMarksGroup" caption="Marks" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarMarks16.png" launcherKeytip="SM">
+        <!--Marks for scale-bars--><!--
+        <group id="esri_layouts_scaleBarMarksGroup" caption="Marks" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_scaleBarDesignCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarMarks16.png" launcherKeytip="SM">
           <comboBox refID="esri_layouts_marksFrequencyComboBox" size="large"/>
           <comboBox refID="esri_layouts_marksPositionComboBox" size="large"/>
         </group>
 
-        <!--Numbers for scale-bars-->
-        <group id="esri_layouts_scaleBarNumbersGroup" caption="Numbers" launcherButtonID="esri_layouts_showElementDockPaneButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarNumbers16.png" launcherKeytip="SN">
+        --><!--Numbers for scale-bars--><!--
+        <group id="esri_layouts_scaleBarNumbersGroup" caption="Numbers" launcherButtonID="esri_layouts_showElementDockPaneButton" condition="esri_layouts_scaleBarDesignCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBarNumbers16.png" launcherKeytip="SN">
           <comboBox refID="esri_layouts_numbersFrequencyComboBox" size="large"/>
           <comboBox refID="esri_layouts_numbersPositionComboBox" size="large"/>
           <checkBox refID="esri_layouts_numbersFractionalCharecter"/>
-        </group>
+        </group>-->
 
         <!--Arrange-->
         <group id="esri_layouts_arrangeGroup" caption="Arrange" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlign32.png">
@@ -500,7 +509,7 @@
           <customControl refID="esri_layouts_sizeAndPositionControl"/>
         </group>
 
-        <group id="esri_layouts_thumbnailGroup" caption="Thumbnail" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png">
+        <group id="esri_layouts_thumbnailGroup" caption="Thumbnail" condition="esri_layouts_layoutPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png">
           <subgroup refID="esri_layouts_thumbnail_SubGroup"/>
         </group>
         <group id="esri_layouts_overprintGroup" caption="Overprint" keytip="SO" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverprintSimulate16.png">
@@ -647,7 +656,7 @@
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout16.png" 
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportLayout32.png">
           <tooltip heading="">
-            Create a new layout and add it to the project. The new layout is saved within the project.<disabledText></disabledText>
+            A layout is added to the project and opened. A copy of the layout and any maps included in the file are added to the project. Future changes to the file are not reflected in the project.<disabledText></disabledText>
           </tooltip>
           <button refID="esri_layouts_importPAGX"/>
         </gallery>
@@ -658,7 +667,9 @@
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.InsertElementGallery"
                  itemsInRow="4" showGroup="false" scrollToSelectedItemInRibbon="true" 
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="InsertElementGallery"
-                 helpContextID="">
+                 helpContextID=""
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText16.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText32.png">
           <tooltip heading="Insert Graphic Element">
             Insert a new graphic element.<disabledText></disabledText>
           </tooltip>
@@ -926,7 +937,9 @@
           </group>
           <group>
             <comboBox refID="esri_layouts_textSymbolStyleComboBox"/>
+            <customControl refID="esri_layouts_textSymbolVariableFontSettings" size="small"/>
             <customControl refID="esri_layouts_textColorGallery" size="small"/>
+            <customControl refID="esri_layouts_textSymbolHorizontalAlignmentControl"/>
           </group>
         </toolbar>
       </toolbars>
@@ -1329,6 +1342,11 @@ C = explore when using another tool
         <button id="esri_layouts_ConvertToGraphicsButton" className="esri_layouts:ConvertSelectedElementsToGraphicsAsync" caption="Convert To Graphics" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutConvertToGraphics16.png" helpContextID="" loadOnClick="false">
           <tooltip heading="">Convert the selected elements to simple graphics.<disabledText></disabledText></tooltip>          
         </button>
+        <button id="esri_layouts_ConvertToFeaturesButton" className="esri_layouts:ConvertGridToFeaturesAsync" caption="Convert To Features" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GridToFeatures16.png" helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Convert the grid to features in a feature dataset.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_layouts_openSelectionSettings" className="esri_layouts_layoutPane:OpenSelectionSettings" caption="Selection" extendedCaption="Options for selecting elements in the layout." helpContextID="">
           <tooltip heading="">Set options for selecting elements.<disabledText></disabledText></tooltip>
         </button>
@@ -1481,6 +1499,18 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <checkBox id="esri_layouts_toggleLegendItemNewColumn" caption="New Column" extendedCaption="Start a new legend column with the selected item." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LegendItemNewColumnCheckBox" loadOnClick="false" helpContextID="">
+          <tooltip heading="New Column">
+            Start a new legend column with the selected item.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+
+        <checkBox id="esri_layouts_toggleLegendItemKeepTogether" caption="Keep In Single Column" extendedCaption="Avoid splitting the selected item across multiple legend columns." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LegendItemKeepTogetherCheckBox" loadOnClick="false" helpContextID="">
+          <tooltip heading="Keep In Single Colun">
+            Avoid splitting the selected item across multiple legend columns.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+
         <!--TableFrame-->
         <button id="esri_layouts_saveAsDefaultTableFrameField" caption="Save As Default" extendedCaption="Save selected field as the default." className="esri_layouts:SaveAsDefaultTableFrameField" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolderOpenState32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolderOpenState16.png" helpContextID="">
           <tooltip heading="Save As Default">
@@ -1516,7 +1546,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_alignBottom" caption="Align Bottom" keytip="B" className="esri_layouts:AlignBottom" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlignBottom16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Align Bottom">
-            Align the selected elements to the bottom<disabledText></disabledText>
+            Align the selected elements to the bottom.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_alignToPage" caption="Align to Page" keytip="P" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AlignToPageCheckBox" loadOnClick="false" helpContextID="">
@@ -1590,34 +1620,34 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_flipVertical" caption="Flip Vertical" keytip="V" className="esri_layouts:FlipVertical" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRotateFlipVertical16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Flip Vertical">
-            Flip selected element upside down.<disabledText></disabledText>
+            Flip selected elements upside down.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_flipHorizontal" caption="Flip Horizontal" keytip="H" className="esri_layouts:FlipHorizontal" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementRotateFlipHorizontal16.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Flip Horizontal">
-            Flip selected element to create a mirror image.<disabledText></disabledText>
+            Flip selected elements to create a mirror image.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <!--Z Order-->
         <button id="esri_layouts_bringToFront" caption="Bring To Front" extendedCaption="Bring element to front" keytip="F" className="esri_layouts:BringToFront" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Bring_To_Front16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Bring_To_Front32.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Bring To Front">
-            Bring element to the front of the drawing order.<disabledText></disabledText>
+            Bring elements to the front of the drawing order.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_bringForward" caption="Bring Forward" extendedCaption="Bring element forward" keytip="O" className="esri_layouts:BringForward" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Bring_Forward16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Bring_Forward32.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Bring Forward">
-            Bring element forward in the drawing order.<disabledText></disabledText>
+            Bring elements forward in the drawing order.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_sendBackward" caption="Send Backward" extendedCaption="Send element backward" keytip="A" className="esri_layouts:SendBackward" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Send_Backward16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Send_Backward32.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Send Backward">
-            Send element backward in the drawing order.<disabledText></disabledText>
+            Send elements backward in the drawing order.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_sendToBack" caption="Send To Back" extendedCaption="Send element to back" keytip="B" className="esri_layouts:SendToBack" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Send_To_Back16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layer_Send_To_Back32.png" loadOnClick="false" helpContextID="">
           <tooltip heading="Send To Back">
-            Send element to the back of the drawing order.<disabledText></disabledText>
+            Send elements to the back of the drawing order.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2231,6 +2261,18 @@ Specify the associated layer or standalone table by selecting it in the Contents
         <comboBox id="esri_layouts_textSymbolStyleComboBox" caption="Font Style" keytip="FY" extendedCaption="Choose font style for an element in the layout." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FontStyleComboBox" loadOnClick="false" isEditable="true" isReadOnly="true" resizable="false" itemWidth="130" rows="10" helpContextID="">
           <tooltip heading="Text Symbol Font Style">Choose a font style for the selected text.</tooltip>
         </comboBox>
+        <customControl id="esri_layouts_textSymbolVariableFontSettings" caption="Font Settings" keytip="FV" extendedCaption="Set font style parameters" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FontVariableSettingsControl" loadOnClick="false">
+          <content className="ArcGIS.Desktop.Internal.Mapping.CommonControls.FontVariableAxisControl" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll"/>
+          <tooltip heading="Font Settings">
+            Modify the parameters of the font style.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
+        <customControl id="esri_layouts_textSymbolHorizontalAlignmentControl" caption="Horizontal Alignment" keytip="HA" extendedCaption="Choose a horizontal alignment for the selected elements." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FontAlignHorizontalControl" loadOnClick="false">
+          <content className="ArcGIS.Desktop.Internal.Mapping.CommonControls.FontAlignRadioButtons" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll"/>
+          <tooltip heading="Font Alignment">
+            Choose a horizontal alignment for the selected text.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
 
         <!--Design-->
         <!--Controls for Scale-bar divisions-->
@@ -2238,10 +2280,10 @@ Specify the associated layer or standalone table by selecting it in the Contents
           <tooltip heading="">Set the value represented by one division.<disabledText></disabledText></tooltip>
         </editBox>
         <checkBox id="esri_layouts_fixedFrame" caption="Fixed frame" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarFixedFrame" loadOnClick="false" helpContextID="">
-          <tooltip heading="">Fix the scale bar width. Use the Resize Behavior options to adjust the scale bar  divisions and values. If this box is unchecked, the scale bar retains the division value and number of divisions and subdivisions.<disabledText></disabledText></tooltip>
+          <tooltip heading="">Fix the scale bar width. Use the Fitting Strategy options to adjust the scale bar divisions and values. If this box is unchecked, the scale bar retains the division value and number of divisions and subdivisions.<disabledText></disabledText></tooltip>
         </checkBox>
-        <comboBox id="esri_layouts_resizeBehaviorComboBox" caption="Resize Behavior"  keytip="RB" extendedCaption="Choose the resize behavior of scale bar in the layout." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarResizeBehaviorComboBox" isEditable="true" resizable="true" sizeString="0123456789ABCDEFGHIJKLMNOPQ" helpContextID="">
-          <tooltip heading="Resize Behavior">Choose how the scale bar responds to changes in the map scale.
+        <comboBox id="esri_layouts_fittingStrategyComboBox" caption="Fitting Strategy"  keytip="RB" extendedCaption="Choose the fitting strategy of scale bar in the layout." className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarFittingStrategyComboBox" isEditable="true" resizable="true" sizeString="0123456789ABCDEFGHIJKLMNOPQ" helpContextID="">
+          <tooltip heading="Fitting Strategy">Choose how the scale bar responds to changes in the map scale.
  
 Adjust width preserves the division value and number of divisions. Manual resizing is not allowed.
 
@@ -2256,10 +2298,10 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <checkBox id="esri_layouts_divisionsBeforeZero" caption="Show one division before zero" keytip="BZ" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarShowDivisionsBeforeZero" loadOnClick="false" helpContextID="">
           <tooltip heading="Show One Division Before Zero">Show one division to the left of the zero mark.<disabledText></disabledText></tooltip>
         </checkBox>
-        <spinner id="esri_layouts_numDivisionsSpinner" format="F0" caption="Divisions" keytip="DV" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarDivisionsSpinner"  minimum="1" defaultValue="" helpContextID="">
+        <spinner id="esri_layouts_numDivisionsSpinner" format="F0" caption="    Divisions" keytip="DV" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarDivisionsSpinner"  minimum="1" defaultValue="" helpContextID="">
           <tooltip heading="Divisions">Set the number of divisions.<disabledText></disabledText></tooltip>
         </spinner>
-        <spinner id="esri_layouts_numSubDivisionsSpinner" format="F0" caption="Subdivisions" keytip="SD" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarSubdivisionsSpinner" defaultValue="" helpContextID="">
+        <spinner id="esri_layouts_numSubDivisionsSpinner" format="F0" caption="    Subdivisions" keytip="SD" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ScaleBarSubdivisionsSpinner" defaultValue="" helpContextID="">
           <tooltip heading="Subdivisions">Set the number of subdivisions.<disabledText></disabledText></tooltip>
         </spinner>
 
@@ -2301,7 +2343,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           </tooltip>
         </comboBox>
 
-         Export Map
+         <!--Export Map-->
         <button id="esri_mapping_mapContextMenu_ExportMap"
                caption="Export To File..." extendedCaption="Export map to file"
                className="esri_layouts:ExportSimpleMapProjectItem" loadOnClick="false"
@@ -2666,6 +2708,8 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </menu>
 
         <menu id="esri_layouts_legendItemContextMenu" caption="Legend Item Menu" extendedCaption="Perform operations on legend items." contextMenu="true">
+          <checkBox refID="esri_layouts_toggleLegendItemNewColumn"/>
+          <checkBox refID="esri_layouts_toggleLegendItemKeepTogether"/>
           <button refID="esri_layouts_saveAsDefaultLegendItem" separator="true"/>
           <button refID="esri_layouts_removeLegendItemButton" separator="true"/>
           <button refID="esri_layouts_showElementDockPaneButton" separator="true"/>
@@ -2701,6 +2745,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_saveAsStyle"/>
           <button refID="esri_layouts_removeGridButton" separator="true"/>
           <button refID="esri_layouts_ConvertToGraphicsButton" separator="true"/>
+          <button refID="esri_layouts_ConvertToFeaturesButton"/>
           <button refID="esri_layouts_showElementDockPaneButton" separator="true"/>
         </menu>
 
@@ -2723,7 +2768,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <menu id="esri_layouts_distributeMenu" caption="Distribute" keytip="D"
           condition="esri_layouts_selectedElementsNotPartsCondition"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDistributeHorizontally16.png"
-          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDistributeHorizontallys32.png">
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDistributeHorizontally32.png">
           <tooltip heading="Distribute">
             Evenly distribute the selected elements.<disabledText></disabledText>
           </tooltip>
@@ -2835,7 +2880,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </dockPanes>
 
       <tabs>
-        <tab id="esri_reports_homeTab" caption="Report" condition="esri_reports_reportPane" keytip="R">
+        <tab id="esri_reports_homeTab" caption="Report" condition="esri_reports_reportPane" keytip="R" insert="before" placeWith="esri_core_insertTab">
           <group refID="esri_layouts_clipboardGroup"/>
           <group refID="esri_reports_pageNavigateGroup"/>
           <group refID="esri_reports_selectionGroup"/>
@@ -2843,7 +2888,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <group refID="esri_reports_pageShowGroup"/>
         </tab>
 
-        <tab id="esri_reports_insertTab" caption="Insert" condition="esri_reports_reportPane" keytip="N">
+        <!--<tab id="esri_reports_insertTab" caption="Insert" condition="esri_reports_reportPane" keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_reports_reportGroup"/>
           <group refID="esri_reports_insertDataGroup"/>
@@ -2851,16 +2896,24 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <group refID="esri_reports_insertGraphicGroup"/>
           <group refID="esri_project_styles"/>
           <group refID="esri_core_favoritesData"/>
-        </tab>
+        </tab>-->
 
-        <tab id="esri_reports_analysisTab" caption="Analysis" condition="esri_reports_reportPane" keytip="A"/>
+        <!--<tab id="esri_reports_analysisTab" caption="Analysis" condition="esri_reports_reportPane" keytip="A"/>-->
 
-        <tab id="esri_reports_viewTab" caption="View" condition="esri_reports_reportPane" keytip="V">
+        <!--<tab id="esri_reports_viewTab" caption="View" condition="esri_reports_reportPane" keytip="V">
           <group refID="esri_mapping_bookmarksGroup"/>
           <group refID="esri_core_dockWindows"/>
-        </tab>
+        </tab>-->
 
-        <tab id="esri_reports_pageHeaderFormatTab" caption="Format" extendedCaption="Page Header" condition="esri_reports_pageHeaderFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
+        
+        <tab id="esri_reports_compisiteFormatTab" caption="Format" extendedCaption="Headers" condition="esri_reports_compositeFromatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
+          <group refID="esri_reports_sizeGroup"/>
+          <group refID="esri_reports_colorGroup"/>
+          <group refID="esri_reports_exclusionGroup"/>
+          <group refID="esri_reports_generalGroup"/>
+        </tab>
+        
+        <!--<tab id="esri_reports_pageHeaderFormatTab" caption="Format" extendedCaption="Page Header" condition="esri_reports_pageHeaderFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
           <group refID="esri_reports_sizeGroup"/>
           <group refID="esri_reports_colorGroup"/>
           <group refID="esri_reports_exclusionGroup"/>
@@ -2899,7 +2952,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <group refID="esri_reports_sizeGroup"/>
           <group refID="esri_reports_colorGroup"/>
           <group refID="esri_reports_exclusionGroup"/>
-        </tab>
+        </tab>-->
 
         <!--Catalog Tabs-->
         <tab id="esri_reports_ReportContainer" caption="Report" keytip="Y" condition="esri_ReportContainer" tabGroupID="esri_reports_ReportTabGroup">
@@ -2961,7 +3014,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <group id="esri_reports_generalGroup" caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_showGeneralGroupFormatCondition">
           <customControl refID="esri_reports_generalControl"/>
         </group>
 
@@ -2975,7 +3028,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <group id="esri_reports_exclusionGroup" caption="Exclusion"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="E"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_pageFooterHeaderFormatCondition">
           <customControl refID="esri_reports_exclusionControl"/>
         </group>
 
@@ -2987,13 +3040,13 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </group>
         
         <group id="esri_reports_insertTextGroup" caption="Text" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png"
-               launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="TO">
+               launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="TO" condition="esri_reports_reportPane">
           <tool refID="esri_reports_newRectangleParagraphTool" size="middle"/>
           <gallery refID="esri_reports_dynamicTextGallery" inline="false" size="middle"/>
         </group>
         
         <group id="esri_reports_insertGraphicGroup" caption="Graphics" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png"
-               launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="GO">
+               launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton" launcherKeytip="GO" condition="esri_reports_reportPane">
           <toolPalette refID="esri_reports_newPolygonGraphicToolPalette" size="middle"/>
           <toolPalette refID="esri_reports_newLineGraphicToolPalette" size="middle"/>
           <tool refID="esri_reports_newPointTool" size="middle"/>
@@ -3006,7 +3059,8 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_reports_importReportFile"/>
         </group>
 
-        <group id="esri_reports_reportGroup" caption="Report" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png">
+        <group id="esri_reports_reportGroup" caption="Report" condition="esri_reports_reportPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png">
+          <button refID="esri_reports_addReportSupplementalPageButton" />
           <button refID="esri_reports_addRelatedReportButton"/>
         </group>
 
@@ -3016,7 +3070,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <gallery id="esri_reports_dynamicTextGallery" className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportDynamicTextGallery" caption="Dynamic Text" keytip="DT" 
                  extendedCaption="Create new dynamic text." itemsInRow="3" itemWidth="154" resizable="true" showGroup="true" showHelp="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml" templateID="DynamicTextGallery"
-                 condition="esri_reports_reportSectionActiveCondition"
+                 condition="esri_reports_canAddElementCondition"
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDynamicText32.png" 
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementDynamicText16.png" helpContextID="">
           <tooltip heading="New Dynamic Text">
@@ -3055,7 +3109,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
                  helpContextID="">
           <tooltip heading="New Chart Frame">
             Create a new chart frame on the report.
-            <disabledText></disabledText>
+            <disabledText>A Report or Group Header/Footer section must be active and the report's data source must be a layer in a map or scene.</disabledText>
           </tooltip>
         </gallery>
 
@@ -3106,7 +3160,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           </tooltip>
         </button>
         <button id="esri_reports_addGroupButton" caption="Group" extendedCaption="Insert group." className="esri_reports_module:Commands.OnInsertGroup" keytip="DG"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping32.png" helpContextID="">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping32.png" condition="esri_reports_canAddGroupCondition" helpContextID="">
           <tooltip heading="Insert group">
             Insert a new group into the report.<disabledText></disabledText>
           </tooltip>
@@ -3135,6 +3189,11 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <button id="esri_reports_reportPropertiesButton" className="esri_reports_module:Commands.ReportProperties" caption="Properties" extendedCaption="Properties for the report." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_reports_reportPane" helpContextID="">
           <tooltip heading="">
             Show the properties for the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_reportSectionPropertiesButton" className="esri_reports_module:Commands.ReportSectionProperties" caption="Properties" extendedCaption="Properties for the report section." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_reports_reportPane" helpContextID="">
+          <tooltip heading="">
+            Show the properties for the report section.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_reportRelatePropertiesButton" className="esri_reports_module:Commands.ReportRelateProperties" caption="Properties" extendedCaption="Properties for the Related Report." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_reports_reportPane" helpContextID="">
@@ -3202,6 +3261,131 @@ Adjust divisions and division values preserves the number of subdivisions by adj
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" helpContextID="">
           <tooltip heading="Remove Related Report">
             Remove Related Report section.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_addReportLayoutPageButton"
+                caption="Layout"
+                extendedCaption="Add Layout supplemental page."
+                className="esri_reports_module:Commands.AddReportLayoutPage"
+                keytip="LP"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Layout32.png"
+                condition="esri_reports_reportPane"
+                helpContextID="">
+          <tooltip heading="Add Layout Page">
+            Add a Layout supplemental page into the report.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_addReportSupplementalPageButton"
+                caption="Supplemental Page"
+                extendedCaption="Add supplemental page to the report."
+                className="esri_reports_module:Commands.AddReportSupplementalPage"
+                keytip="SP"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewSupplementalSection16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewSupplementalSection32.png"
+                condition="esri_reports_reportPane"
+                helpContextID="">
+          <tooltip heading="Add Supplemental Page">
+            Add a supplemental page into the report.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_addReportSupplementalPageAboveButton"
+                caption="Add Page Above"
+                extendedCaption="Add supplemental page above current section."
+                className="esri_reports_module:Commands.AddReportSupplementalPageAbove"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageAbove16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageAbove32.png"
+                condition="esri_reports_reportPane"
+                helpContextID="">
+          <tooltip heading="Add Supplemental Page Above">
+            Add a supplemental page into the report above this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_addReportSupplementalPageBelowButton"
+                caption="Add Page Below"
+                extendedCaption="Add supplemental page below current section."
+                className="esri_reports_module:Commands.AddReportSupplementalPageBelow"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageBelow16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageBelow32.png"
+                condition="esri_reports_reportPane"
+                helpContextID="">
+          <tooltip heading="Add Supplemental Page Below">
+            Add a supplemental page into the report below this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_moveReportSectionElementUpButton"
+                caption="Move Section Up"
+                extendedCaption="Move section up."
+                className="esri_reports_module:Commands.MoveReportSectionElementUp"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueUpArrowLongTail16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueUpArrowLongTail32.png"
+                condition="esri_reports_reportPane"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Move Section Up">
+            Move the section up.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_moveReportSectionElementDownButton"
+                caption="Move Section Down"
+                extendedCaption="Move section down."
+                className="esri_reports_module:Commands.MoveReportSectionElementDown"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueDownArrowLongTail16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueDownArrowLongTail32.png"
+                condition="esri_reports_reportPane"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Move Section Down">
+            Move the section down.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_replaceReportLayoutPageButton"
+                caption="Replace Page"
+                extendedCaption="Replace the layout definition of a layout page in the report."
+                className="esri_reports_module:Commands.ReplaceReportLayoutPage"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReplaceSupplementalPage16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReplaceSupplementalPage32.png"
+                condition="esri_reports_supplementalPageSectionActiveCondition"
+                helpContextID="">
+          <tooltip heading="Replace Supplemental Page">
+            Replace supplemental page with another layout.<disabledText>Select a layout page section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_removeReportSupplementalPageButton"
+                caption="Remove Page"
+                extendedCaption="Remove a supplemental page from the report."
+                className="esri_reports_module:Commands.RemoveReportSupplementalPage"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
+                condition="esri_reports_reportPane"
+                helpContextID="">
+          <tooltip heading="Remove Supplemental Page">
+            Remove the supplemental page from the report.<disabledText>Select a supplemental page section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_editReportLayoutPageButton"
+                caption="Open and Edit Layout"
+                extendedCaption="Edit the layout page."
+                className="esri_reports_module:Commands.EditReportLayoutPage"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditLayoutPage16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditLayoutPage32.png"
+                condition="esri_reports_supplementalPageSectionActiveCondition"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Open and Edit Layout">
+            Edit the layout of this page.<disabledText>A layout page section must be selected in the Contents pane, or the layout is missing or invalid.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_layoutPage_LayoutProperties"
+                caption="Properties"
+                extendedCaption="Layout properties."
+                className="esri_reports_module:Commands.OpenLayoutPageProperties"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
+                condition="esri_reports_supplementalPageSectionActiveCondition"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Layout Properties">
+            View the properties of the layout.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -3334,7 +3518,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
               keytip="DA"
               helpContextID="">
           <tooltip heading="Add Attachments">
-            Add attachments to the report.  Use the property pane to specify additional properties.<disabledText>Select the Details report section in the Contents pane.</disabledText>
+            Add attachments to the report.  Use the property pane to specify additional properties.<disabledText>Data source must have attachments and the Details report section must be selected in the Contents pane.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_reports_newReportChartFrameTool"
@@ -3425,7 +3609,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_reports_importReportFile" />
         </splitButton>
       </splitButtons>
-      
+
       <palettes>
         <toolPalette id="esri_reports_statisticToolPalette" itemsInRow="1" showItemCaption="true" caption="Statistics" extendedCaption="Open statistic tool palette" keytip="DS">
           <tool refID="esri_reports_addCountStatisticTool"/>
@@ -3516,7 +3700,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         </menu>
 
         <menu id="esri_reports_reportSectionContextMenu" contextMenu="true">
-          <menu refID="esri_report_reportElementInlineMenu" inline="true"/>
+          <button refID="esri_reports_addReportSupplementalPageAboveButton" separator="true"/>
+          <button refID="esri_reports_addReportSupplementalPageBelowButton"/>
+          <button refID="esri_reports_moveReportSectionElementUpButton" separator="true"/>
+          <button refID="esri_reports_moveReportSectionElementDownButton"/>
+          <menu refID="esri_report_reportElementInlineMenu" inline="true" separator="true"/>
+          <button refID="esri_reports_reportSectionPropertiesButton" separator="true"/>
         </menu>
 
         <menu id="esri_reports_reportHeaderContextMenu" contextMenu="true">
@@ -3571,22 +3760,52 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <button refID="esri_layouts_editTextButton" separator="true"/>
           <button refID="esri_reports_showElementDockPaneButton"/>
         </menu>
+
+        <menu id="esri_reports_reportLayoutPageContextMenu" caption="Layout Page Menu" extendedCaption="Context menu for Layout Page supplemental section." contextMenu="true">
+          <button refID="esri_reports_editReportLayoutPageButton"/>
+          <button refID="esri_reports_addReportSupplementalPageAboveButton" separator="true"/>
+          <button refID="esri_reports_addReportSupplementalPageBelowButton"/>
+          <button refID="esri_reports_moveReportSectionElementUpButton" separator="true"/>
+          <button refID="esri_reports_moveReportSectionElementDownButton"/>
+          <button refID="esri_reports_replaceReportLayoutPageButton" separator="true"/>
+          <button refID="esri_reports_removeReportSupplementalPageButton"/>
+          <!--<button refID="esri_reports_layoutPage_LayoutProperties" separator="true"/>-->
+        </menu>
+
       </menus>
 
       <panes>
         <pane id="esri_reports_reportPane" caption="Report" className="ArcGIS.Desktop.Internal.Reports.ReportPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png" 
-              isClosable="true" defaultTab="esri_reports_homeTab" defaultTool="esri_layouts_selectByRectangleTool">
-          <content className="ArcGIS.Desktop.Layouts.LayoutPaneView"/>
+              isClosable="true" defaultTab="esri_reports_homeTab" defaultTool="esri_layouts_selectByRectangleTool" isDropTarget="false">
+          <content className="ArcGIS.Desktop.Internal.Reports.ReportPaneView"/>
         </pane>
       </panes>
 
     </insertModule>
 
+    <updateModule refID="esri_core_module">
+      <tabs>
+        <updateTab refID="esri_core_insertTab">
+          <insertGroup refID="esri_layouts_insertMapFrameGroup" insert="after" placeWith="esri_core_projectData"/>
+          <insertGroup refID="esri_layouts_insertMapSurroundGroup" insert="after" placeWith="esri_layouts_insertMapFrameGroup"/>
+          <insertGroup refID="esri_layouts_insertGraphicGroup" insert="before" placeWith="esri_project_styles"/>
+          <insertGroup refID="esri_reports_reportGroup" insert="after" placeWith="esri_core_projectData"/>
+          <insertGroup refID="esri_reports_insertDataGroup" insert="after" placeWith="esri_reports_reportGroup"/>
+          <insertGroup refID="esri_reports_insertTextGroup" insert="after" placeWith="esri_reports_insertDataGroup"/>
+          <insertGroup refID="esri_reports_insertGraphicGroup" insert="before" placeWith="esri_project_styles"/>
+        </updateTab>
+      </tabs>
+
+    </updateModule>
     <updateModule refID="esri_mapping">
       <menus>
         <updateMenu refID="esri_mapping_layerContextMenu">
           <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
+        <updateMenu refID="esri_mapping_unregisteredLayerContextMenu">
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewUnregisteredMenu" />
+        </updateMenu>
+        
         <updateMenu refID="esri_mapping_subtypeValueLayerContextMenu">
           <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
@@ -3605,8 +3824,12 @@ Adjust divisions and division values preserves the number of subdivisions by adj
         <updateMenu refID="esri_mapping_mosaicSeamlineSubLayerContextMenu">
           <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after"  placeWith="esri_mapping_designViewMenu" />
         </updateMenu>
+        
         <updateMenu refID="esri_mapping_standaloneTableContextMenu">
           <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewMenu" />
+        </updateMenu>
+        <updateMenu refID="esri_mapping_unregisteredStandaloneTableContextMenu">
+          <insertButton refID="esri_reports_newLayerReport" separator="true" insert="after" placeWith="esri_mapping_designViewUnregisteredMenu" />
         </updateMenu>
       </menus>
 
@@ -3722,24 +3945,30 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       </insertPage>
     </updateSheet>
 
-    <insertSheet id="esri_reports_propertySheet" caption="Report Properties" pageHeight="465" pageWidth="640" resizable="true">
+    <insertSheet id="esri_reports_docPropertySheet" caption="Report Document Properties" pageHeight="465" pageWidth="640" resizable="true">
       <page id ="esri_reports_reportGeneralPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPageViewModel" caption="General">
         <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPage"/>
       </page>
       <page id="esri_reports_reportDescriptionPropertyPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportDescriptionViewModel" caption="Metadata">
         <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportDescriptionView" />
       </page>
-      <page id ="esri_reports_reportSourcePage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPageViewModel" caption="Source">
-        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPage"/>
-      </page>
-      <page id ="esri_reports_reportGroupSortPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPageViewModel" caption="Grouping and Sorting">
-        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPage"/>
-      </page>
       <page id="esri_reports_reportPageSetupPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPageViewModel" caption="Page Setup">
         <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportPageSetupPropPage"/>
       </page>
       <page id="esri_reports_reportColorManagementPropPage" className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportColorManagementPropPageViewModel" caption="Color Management">
         <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportColorManagementPropPage"/>
+      </page>
+    </insertSheet>
+
+    <insertSheet id="esri_reports_propertySheet" caption="Report Properties" pageHeight="465" pageWidth="640" resizable="true">
+      <page id ="esri_reports_reportGeneralPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPageViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGeneralPropPage"/>
+      </page>
+      <page id ="esri_reports_reportSourcePage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPageViewModel" caption="Source">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportSourcePropPage"/>
+      </page>
+      <page id ="esri_reports_reportGroupSortPage" className ="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPageViewModel" caption="Grouping and Sorting">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportGroupSortPropPage"/>
       </page>
     </insertSheet>
 
@@ -3903,6 +4132,27 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_layouts_layoutPane"/>
         <or>
+          <state id="esri_layouts_scaleBarCondition"/>
+          <state id="esri_layouts_scaleBarBackgroundCondition"/>
+          <state id="esri_layouts_scaleBarBorderCondition"/>
+          <state id="esri_layouts_scaleBarShadowCondition"/>
+          <state id="esri_layouts_scaleBarLineCondition"/>
+          <state id="esri_layouts_scaleBarPolygonCondition"/>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_layouts_compositeDesignCondition" >
+      <and>
+        <state id="esri_layouts_layoutPane"/>
+        <or>
+          <state id="esri_layouts_multiMapSurroundCondition"/>
+          <state id="esri_layouts_multiMapSurroundBackgroundCondition"/>
+          <state id="esri_layouts_multiMapSurroundBorderCondition"/>
+          <state id="esri_layouts_multiMapSurroundShadowCondition"/>
+          <state id="esri_layouts_northArrowCondition"/>
+          <state id="esri_layouts_northArrowBackgroundCondition"/>
+          <state id="esri_layouts_northArrowBorderCondition"/>
+          <state id="esri_layouts_northArrowShadowCondition"/>
           <state id="esri_layouts_scaleBarCondition"/>
           <state id="esri_layouts_scaleBarBackgroundCondition"/>
           <state id="esri_layouts_scaleBarBorderCondition"/>
@@ -4204,11 +4454,36 @@ Adjust divisions and division values preserves the number of subdivisions by adj
     <!---->
     <!--Report Conditions-->
     <!---->
+    <insertCondition id="esri_reports_compositeFromatCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportGroupHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportDetails"/>
+          <state id="ArcGIS_Desktop_Reports_ReportPageFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportGroupFooter"/>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_showGeneralGroupFormatCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportGroupHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportDetails"/>
+          <state id="ArcGIS_Desktop_Reports_ReportFooter"/>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_reports_pageHeaderFormatCondition">
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportPageHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
         </or>
       </and>
     </insertCondition>
@@ -4216,7 +4491,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
         </or>
       </and>
     </insertCondition>
@@ -4224,7 +4499,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportGroupHeader"/>
+          <state id="ArcGIS_Desktop_Reports_ReportGroupHeader"/>
         </or>
       </and>
     </insertCondition>
@@ -4232,7 +4507,16 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportDetails"/>
+          <state id="ArcGIS_Desktop_Reports_ReportDetails"/>
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_pageFooterHeaderFormatCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="ArcGIS_Desktop_Reports_ReportPageFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
         </or>
       </and>
     </insertCondition>
@@ -4240,7 +4524,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportPageFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportPageFooter"/>
         </or>
       </and>
     </insertCondition>
@@ -4248,7 +4532,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportFooter"/>
         </or>
       </and>
     </insertCondition>
@@ -4256,7 +4540,7 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="ArcGIS_Desktop_Internal_Reports_ReportGroupFooter"/>
+          <state id="ArcGIS_Desktop_Reports_ReportGroupFooter"/>
         </or>
       </and>
     </insertCondition>
@@ -4290,6 +4574,18 @@ Adjust divisions and division values preserves the number of subdivisions by adj
       <and>
         <state id="esri_reports_reportPane"/>
         <state id="esri_report_reportSectionActiveStateId" />
+        <not>
+          <state id="esri_report_layoutPageActiveStateId"/>
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_canAddGroupCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_reportSectionActiveStateId" />
+        <not>
+          <state id="esri_report_layoutPageActiveStateId"/>
+        </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_ReportContainer" caption="">
@@ -4325,6 +4621,13 @@ Adjust divisions and division values preserves the number of subdivisions by adj
           <state id="esri_report_detailsActiveStateId"/>
           <state id="esri_report_relatedReportActiveStateId"/>
         </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_reports_supplementalPageSectionActiveCondition">
+      <and>
+        <state id="esri_reports_reportPane"/>
+        <state id="esri_report_layoutPageActiveStateId"/>
+        <!--<state id="ArcGIS_Desktop_Reports_ReportPageSection"/>-->
       </and>
     </insertCondition>
   </conditions>

@@ -36,9 +36,13 @@ using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.GeoProcessing;
 using System.IO;
 using ArcGIS.Core.CIM;
+using ArcGIS.Desktop.Core.UnitFormats;
 
 namespace Content.Snippets
 {
+
+  #region ProSnippet Group: Project
+  #endregion
 
   internal class ProSinppets1
   {
@@ -127,7 +131,12 @@ namespace Content.Snippets
       #region Save project
       //Saves the project
       await Project.Current.SaveAsync();
-      
+
+      #endregion
+
+      #region Check if project needs to be saved
+      //The project's dirty state indicates changes made to the project have not yet been saved. 
+      bool isProjectDirty = Project.Current.IsDirty;
       #endregion
 
       #region SaveAs project
@@ -139,6 +148,19 @@ namespace Content.Snippets
       #region Close project
       //A project cannot be closed using the ArcGIS Pro API. 
       //A project is only closed when another project is opened, a new one is created, or the application is shutdown.
+      #endregion
+
+      #region How to add a new map to a project
+      await QueuedTask.Run(() =>
+      {
+        //Note: see also MapFactory in ArcGIS.Desktop.Mapping
+        var map = MapFactory.Instance.CreateMap("New Map", MapType.Map, MapViewingMode.Map, Basemap.Oceans);
+        ProApp.Panes.CreateMapPaneAsync(map);
+      });
+
+      #endregion
+
+      #region ProSnippet Group: Project Items
       #endregion
 
       #region Adds item to the current project
@@ -160,21 +182,6 @@ namespace Content.Snippets
         return Project.Current.AddItem(item) ? item as GDBProjectItem : null;
       });
 
-      #endregion
-
-      #region How to add a new map to a project
-        await QueuedTask.Run(() =>
-        {
-          //Note: see also MapFactory in ArcGIS.Desktop.Mapping
-          var map = MapFactory.Instance.CreateMap("New Map", MapType.Map, MapViewingMode.Map, Basemap.Oceans);
-          ProApp.Panes.CreateMapPaneAsync(map);
-        });
-
-      #endregion
-      
-      #region Check if project needs to be saved
-      //The project's dirty state indicates changes made to the project have not yet been saved. 
-      bool isProjectDirty = Project.Current.IsDirty;
       #endregion
 
       #region Get all the project items
@@ -455,6 +462,9 @@ namespace Content.Snippets
 
     }
 
+    #region ProSnippet Group: Metadata
+    #endregion
+
     public async Task MedataExamples()
     {
       string sourceXMLMetadataAsString = string.Empty;
@@ -589,5 +599,184 @@ namespace Content.Snippets
      #endregion
 
     }
-  }
+
+    #region ProSnippet Group: Project Units
+    #endregion
+
+    public void ProjectUnits1()
+		{
+      #region Get The Full List of All Available Unit Formats
+
+      //Must be on the QueuedTask.Run()
+
+      var unit_formats = Enum.GetValues(typeof(UnitFormatType))
+                            .OfType<UnitFormatType>().ToList();
+      System.Diagnostics.Debug.WriteLine("All available units\r\n");
+
+      foreach (var unit_format in unit_formats)
+			{
+        var units = DisplayUnitFormats.Instance.GetPredefinedProjectUnitFormats(unit_format);
+        System.Diagnostics.Debug.WriteLine(unit_format.ToString());
+
+        foreach (var display_unit_format in units)
+				{
+          var line = $"{display_unit_format.DisplayName}, {display_unit_format.UnitCode}";
+          System.Diagnostics.Debug.WriteLine(line);
+        }
+        System.Diagnostics.Debug.WriteLine("");
+      }
+      #endregion
+    }
+
+    public void ProjectUnits2()
+    {
+      #region Get The List of Unit Formats for the Current Project
+
+      //Must be on the QueuedTask.Run()
+
+      var unit_formats = Enum.GetValues(typeof(UnitFormatType))
+                            .OfType<UnitFormatType>().ToList();
+      System.Diagnostics.Debug.WriteLine("Project units\r\n");
+
+      foreach (var unit_format in unit_formats)
+      {
+        var units = DisplayUnitFormats.Instance.GetProjectUnitFormats(unit_format);
+        System.Diagnostics.Debug.WriteLine(unit_format.ToString());
+
+        foreach (var display_unit_format in units)
+        {
+          var line = $"{display_unit_format.DisplayName}, {display_unit_format.UnitCode}";
+          System.Diagnostics.Debug.WriteLine(line);
+        }
+        System.Diagnostics.Debug.WriteLine("");
+      }
+      #endregion
+    }
+
+    public void ProjectUnits3()
+    {
+
+      #region Get A Specific List of Unit Formats for the Current Project
+
+      //Must be on the QueuedTask.Run()
+
+      //UnitFormatType.Angular, UnitFormatType.Area, UnitFormatType.Distance, 
+      //UnitFormatType.Direction, UnitFormatType.Location, UnitFormatType.Page
+      //UnitFormatType.Symbol2D, UnitFormatType.Symbol3D
+      var units = DisplayUnitFormats.Instance.GetProjectUnitFormats(UnitFormatType.Distance);
+
+      #endregion
+    }
+
+    public void ProjectUnits4()
+    {
+      #region Get The List of Default Formats for the Current Project
+
+      //Must be on the QueuedTask.Run()
+
+      var unit_formats = Enum.GetValues(typeof(UnitFormatType))
+                            .OfType<UnitFormatType>().ToList();
+			System.Diagnostics.Debug.WriteLine("Default project units\r\n");
+
+			foreach (var unit_format in unit_formats)
+			{
+				var default_unit = DisplayUnitFormats.Instance.GetDefaultProjectUnitFormat(unit_format);
+				var line = $"{unit_format.ToString()}: {default_unit.DisplayName}, {default_unit.UnitCode}";
+				System.Diagnostics.Debug.WriteLine(line);
+			}
+			System.Diagnostics.Debug.WriteLine("");
+
+      #endregion
+    }
+
+    public void ProjectUnits5()
+    {
+
+      #region Get A Specific Default Unit Format for the Current Project
+
+      //Must be on the QueuedTask.Run()
+
+      //UnitFormatType.Angular, UnitFormatType.Area, UnitFormatType.Distance, 
+      //UnitFormatType.Direction, UnitFormatType.Location, UnitFormatType.Page
+      //UnitFormatType.Symbol2D, UnitFormatType.Symbol3D
+      var default_unit = DisplayUnitFormats.Instance.GetDefaultProjectUnitFormat(
+                                                           UnitFormatType.Distance);
+
+      #endregion
+    }
+
+    public void ProjectUnits6()
+		{
+
+      #region Set a Specific List of Unit Formats for the Current Project
+
+      //Must be on the QueuedTask.Run()
+
+      //UnitFormatType.Angular, UnitFormatType.Area, UnitFormatType.Distance, 
+      //UnitFormatType.Direction, UnitFormatType.Location
+
+      //Get the full list of all available location units
+      var all_units = DisplayUnitFormats.Instance.GetPredefinedProjectUnitFormats(
+                                                            UnitFormatType.Location);
+      //keep units with an even factory code
+      var list_units = all_units.Where(du => du.UnitCode % 2 == 0).ToList();
+
+      //set them as the new location unit collection. A new default is not being specified...
+      DisplayUnitFormats.Instance.SetProjectUnitFormats(list_units);
+
+      //set them as the new location unit collection along with a new default
+      DisplayUnitFormats.Instance.SetProjectUnitFormats(
+                                              list_units, list_units.First());
+
+      //Note: UnitFormatType.Page, UnitFormatType.Symbol2D, UnitFormatType.Symbol3D
+      //cannot be set.
+      #endregion
+    }
+
+    public void ProjectUnits7()
+		{
+      #region Set the Defaults for the Project Unit Formats
+
+      //Must be on the QueuedTask.Run()
+
+      var unit_formats = Enum.GetValues(typeof(UnitFormatType)).OfType<UnitFormatType>().ToList();
+      foreach (var unit_type in unit_formats)
+      {
+        var current_default = DisplayUnitFormats.Instance.GetDefaultProjectUnitFormat(unit_type);
+        //Arbitrarily pick the last unit in each unit format list
+        var replacement = DisplayUnitFormats.Instance.GetProjectUnitFormats(unit_type).Last();
+        DisplayUnitFormats.Instance.SetDefaultProjectUnitFormat(replacement);
+
+        var line = $"{current_default.DisplayName}, {current_default.UnitName}, {current_default.UnitCode}";
+        var line2 = $"{replacement.DisplayName}, {replacement.UnitName}, {replacement.UnitCode}";
+
+        System.Diagnostics.Debug.WriteLine($"Format: {unit_type.ToString()}");
+        System.Diagnostics.Debug.WriteLine($" Current default: {line}");
+        System.Diagnostics.Debug.WriteLine($" Replacement default: {line2}");
+      }
+
+      #endregion
+    }
+
+    public void Project8()
+		{
+      #region Update Unit Formats for the Project
+
+      //UnitFormatType.Angular, UnitFormatType.Area, UnitFormatType.Distance, 
+      //UnitFormatType.Direction, UnitFormatType.Location
+      var angle_units = DisplayUnitFormats.Instance.GetProjectUnitFormats(UnitFormatType.Angular);
+
+			//Edit the display name of each unit - append the abbreviation
+			foreach (var unit in angle_units)
+			{
+				unit.DisplayName = $"{unit.DisplayName} ({unit.Abbreviation})";
+			}
+			//apply the changes to the units and set the default to be the first entry
+			DisplayUnitFormats.Instance.SetProjectUnitFormats(angle_units, angle_units.First());
+
+			//The project must be saved to persist the changes...
+			#endregion
+
+		}
+	}
 }

@@ -31,6 +31,7 @@ using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Editing;
 using ArcGIS.Core.Data;
 using ArcGIS.Desktop.Editing.Attributes;
+using ArcGIS.Core.Data.Mapping;
 
 namespace AnnotationSnippets
 {
@@ -182,7 +183,26 @@ namespace AnnotationSnippets
 
 			#endregion
 
-			#region Change Annotation Text Graphic
+			#region Get the Annotation Text Graphic
+
+			await QueuedTask.Run(() =>
+			{
+				var rc = annoLayer.GetTable().Search();
+				rc.MoveNext();
+				var af = rc.Current as AnnotationFeature;
+				var graphic = af.GetGraphic();
+				var textGraphic = graphic as CIMTextGraphic;
+
+				//Note: 
+				//var outline_geom = af.GetGraphicOutline(); 
+				//gets the anno text outline geometry...
+				af.Dispose();
+				rc.Dispose();
+			});
+
+				#endregion
+
+				#region Change Annotation Text Graphic
 
 			await QueuedTask.Run(() =>
 			{
@@ -229,6 +249,65 @@ namespace AnnotationSnippets
 			});
 
 			#endregion
+		}
+
+		public void Masking1()
+		{
+			#region Get the Outline Geometry for an Annotation
+
+			var annoLayer = MapView.Active.Map.GetLayersAsFlattenedList()
+				                           .OfType<AnnotationLayer>().FirstOrDefault();
+			if (annoLayer == null)
+				return;
+
+			QueuedTask.Run(() =>
+			{
+				//get the first annotation feature...
+				//...assuming at least one feature gets selected
+				var rc = annoLayer.GetFeatureClass().Search();
+				rc.MoveNext();
+				var af = rc.Current as AnnotationFeature;
+				var outline_geom = af.GetGraphicOutline();
+				//TODO - use the outline...
+
+				//Note: 
+				//var graphic = annoFeature.GetGraphic(); 
+				//gets the CIMTextGraphic...
+
+				af.Dispose();
+				rc.Dispose();
+			});
+			#endregion
+
+		}
+
+		public void Masking2()
+		{
+			#region Get the Mask Geometry for an Annotation
+
+			var annoLayer = MapView.Active.Map.GetLayersAsFlattenedList()
+				                     .OfType<AnnotationLayer>().FirstOrDefault();
+			if (annoLayer == null)
+				return;
+			var mv = MapView.Active;
+
+			QueuedTask.Run(() =>
+			{
+				//get the first annotation feature...
+				//...assuming at least one feature gets selected
+				var rc = annoLayer.GetFeatureClass().Search();
+				rc.MoveNext();
+				var oid = rc.Current.GetObjectID();
+
+				//Use DrawingOutlineType.BoundingEnvelope to retrieve a generalized
+				//mask geometry or "Box". The mask will be in the same SpatRef as the map.
+				//The mask will be constructed using the anno class reference scale
+				var mask_geom = annoLayer.QueryDrawingOutline(oid, mv, DrawingOutlineType.Exact);
+
+				rc.Dispose();
+			});
+			#endregion
+
 		}
 	}
 }

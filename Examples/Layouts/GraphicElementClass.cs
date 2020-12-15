@@ -56,7 +56,7 @@ namespace Layout_HelpExamples
           return false;
 
         //Modify the Transparency property that exists only in the CIMGraphic class.
-        CIMGraphic CIMGra = graElm.Graphic as CIMGraphic;
+        CIMGraphic CIMGra = graElm.GetGraphic() as CIMGraphic;
         CIMGra.Transparency = TransValue;             //e.g., TransValue = 50
         graElm.SetGraphic(CIMGra);
 

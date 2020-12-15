@@ -31,6 +31,8 @@ using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Mapping;
 using Version = ArcGIS.Core.Data.Version;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Core.Internal.Data.DDL;
+using FieldDescription = ArcGIS.Core.Internal.Data.DDL.FieldDescription;
 
 
 namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
@@ -826,6 +828,66 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Evaluating a QueryDef on a OUTER JOIN
 
+    #region Evaluating a QueryDef on a INNER join
+
+    public async Task EvaluatingQueryDefWithInnerJoin()
+    {
+      await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        using (Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri("path\\to\\sde\\file"))))
+        {
+          QueryDef queryDef = new QueryDef()
+          {
+            Tables = "People INNER JOIN States ON People.FK_STATE_ID = States.OBJECTID",
+            SubFields = "People.OBJECTID, People.First_Name, People.Last_Name, People.City, States.State_Name"
+          };
+
+          using (RowCursor cursor = geodatabase.Evaluate(queryDef))
+          {
+            while (cursor.MoveNext())
+            {
+              using (Row row = cursor.Current)
+              {
+                // Handle row
+              }
+            }
+          }
+        }
+      });
+    }
+
+    #endregion Evaluating a QueryDef on a INNER join
+
+
+    #region Evaluating a QueryDef on a nested (INNER & OUTER) join
+
+    public async Task EvaluatingQueryDefWithNestedJoin()
+    {
+      await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        using (Geodatabase geodatabase = new Geodatabase(new DatabaseConnectionFile(new Uri("path\\to\\sde\\file"))))
+        {
+          QueryDef queryDef = new QueryDef()
+          {
+            Tables = "((People INNER JOIN States ON People.FK_STATE_ID = States.OBJECTID) LEFT OUTER JOIN Homes ON People.OBJECTID = Homes.FK_People_ID)",
+            SubFields = "People.OBJECTID, People.First_Name, People.Last_Name, States.State_Name, Homes.Address"
+          };
+
+          using (RowCursor cursor = geodatabase.Evaluate(queryDef, false))
+          {
+            while (cursor.MoveNext())
+            {
+              using (Row row = cursor.Current)
+              {
+                // Handle row
+              }
+            }
+          }
+        }
+      });
+    }
+
+    #endregion Evaluating a QueryDef on nested (INNER & OUTER) join
 
     #region Create Default QueryDescription for a Database table and obtain the ArcGIS.Core.Data.Table for the QueryDescription
 
@@ -1037,6 +1099,54 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Joining a file geodatabase feature class to an Oracle database query layer feature class with a virtual relationship class
+
+    #region Joining two tables from different geodatabases
+
+    public async Task JoinTablesFromDifferentGeodatabases()
+    {
+      await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        using (Geodatabase sourceGeodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri("Path \\ to \\Geodatabase \\ one"))))
+        using (Geodatabase destinationGeodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri("Path \\ to \\Geodatabase \\ two"))))
+        using (Table sourceTable = sourceGeodatabase.OpenDataset<Table>("State"))
+        using (Table destinationTable = destinationGeodatabase.OpenDataset<Table>("Cities"))
+        {
+          Field primaryKeyField = sourceTable.GetDefinition().GetFields().FirstOrDefault(field => field.Name.Equals("State.State_Abbreviation"));
+          Field foreignKeyField = destinationTable.GetDefinition().GetFields().FirstOrDefault(field => field.Name.Equals("Cities.State"));
+
+          VirtualRelationshipClassDescription virtualRelationshipClassDescription = new VirtualRelationshipClassDescription(primaryKeyField, foreignKeyField, RelationshipCardinality.OneToMany);
+
+          using (RelationshipClass relationshipClass = sourceTable.RelateTo(destinationTable, virtualRelationshipClassDescription))
+          {
+            JoinDescription joinDescription = new JoinDescription(relationshipClass)
+            {
+              JoinDirection = JoinDirection.Forward,
+              JoinType = JoinType.InnerJoin,
+              TargetFields = sourceTable.GetDefinition().GetFields()
+            };
+
+            using (Join join = new Join(joinDescription))
+            {
+              Table joinedTable = join.GetJoinedTable();
+
+              //Process the joined table. For example ..
+              using (RowCursor cursor = joinedTable.Search())
+              {
+                while (cursor.MoveNext())
+                {
+                  using (Row row = cursor.Current)
+                  {
+                    // Use Row
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    #endregion Joining two tables from different geodatabases
 
     #region Creating a QueryTable using a query which joins two versioned tables in a geodatabase
 
@@ -2015,6 +2125,226 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Creating a Version
+
+    public void PartialPostingSnippet(Version designVersion, FeatureClass supportStructureFeatureClass, List<long> deletedSupportStructureObjectIDs)
+    {
+      #region Partial Posting
+
+      // Partial posting allows developers to post a subset of changes made in a version. One sample use case is an electric utility that uses a version to design the facilities in a new
+      // housing subdivision. At some point in the process, one block of new houses have been completed, while the rest of the subdivision remains unbuilt.  Partial posting allows the user
+      // to post the completed work, while leaving not yet constructed features in the version to be posted later.
+      // Partial posting requires a branch-versioned feature service using ArcGIS Enterprise 10.9 and higher
+
+      // Specify a set of features that were constructed
+      QueryFilter constructedFilter = new QueryFilter()
+      {
+        WhereClause = "ConstructedStatus = 'True'"
+      };
+      // This selection represents the inserts and updates to the support structure feature class that we wish to post
+      using (Selection constructedSupportStructures = supportStructureFeatureClass.Select(constructedFilter, SelectionType.ObjectID, SelectionOption.Normal))
+      { 
+        // Specifying which feature deletions you wish to post is slightly trickier, since you cannot issue a query to fetch a set of deleted features
+        // Instead, a list of ObjectIDs must be used
+        using (Selection deletedSupportStructures = supportStructureFeatureClass.Select(null, SelectionType.ObjectID, SelectionOption.Empty))
+        {
+          deletedSupportStructures.Add(deletedSupportStructureObjectIDs);  // deletedSupportStructureObjectIDs is defined as List<long>
+
+          //Perform the reconcile with partial post
+          
+          ReconcileDescription reconcileDescription = new ReconcileDescription();
+          reconcileDescription.ConflictDetectionType = ConflictDetectionType.ByColumn;
+          reconcileDescription.ConflictResolutionMethod = ConflictResolutionMethod.Continue;
+          reconcileDescription.ConflictResolutionType = ConflictResolutionType.FavorEditVersion;
+          reconcileDescription.PartialPostSelections = new List<Selection>() { constructedSupportStructures, deletedSupportStructures };
+          reconcileDescription.WithPost = true;
+
+          ReconcileResult reconcileResult = designVersion.Reconcile(reconcileDescription);
+        }
+      }
+      #endregion
+    }
+
+    #region ProSnippet Group: DDL
+    #endregion
+
+    public void CreateTableSnippet(Geodatabase geodatabase, CodedValueDomain inspectionResultsDomain)
+    {
+      #region Creating a Table
+      // Geodatabase DDL is pre-release for Pro 2.7. See https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-DDL for more information
+
+      // Create a PoleInspection table with the following fields
+      //  GlobalID
+      //  ObjectID
+      //  InspectionDate (date)
+      //  InspectionResults (pre-existing InspectionResults coded value domain)
+      //  InspectionNotes (string)
+
+      // This static helper routine creates a FieldDescription for a GlobalID field with default values
+      FieldDescription globalIDFieldDescription = FieldDescription.CreateGlobalIDField();
+
+      // This static helper routine creates a FieldDescription for an ObjectID field with default values
+      FieldDescription objectIDFieldDescription = FieldDescription.CreateObjectIDField();
+
+      // Create a FieldDescription for the InspectionDate field
+      FieldDescription inspectionDateFieldDescription = new FieldDescription("InspectionDate", FieldType.Date)
+      {
+        AliasName = "Inspection Date"
+      };
+
+      // This static helper routine creates a FieldDescription for a Domain field (from a pre-existing domain)
+      FieldDescription inspectionResultsFieldDescription = FieldDescription.CreateDomainField("InspectionResults", new CodedValueDomainDescription(inspectionResultsDomain));
+      inspectionResultsFieldDescription.AliasName = "Inspection Results";
+
+      // This static helper routine creates a FieldDescription for a string field
+      FieldDescription inspectionNotesFieldDescription = FieldDescription.CreateStringField("InspectionNotes", 512);
+      inspectionNotesFieldDescription.AliasName = "Inspection Notes";
+
+      // Assemble a list of all of our field descriptions
+      List<FieldDescription> fieldDescriptions = new List<FieldDescription>() 
+        { globalIDFieldDescription, objectIDFieldDescription, inspectionDateFieldDescription, inspectionResultsFieldDescription, inspectionNotesFieldDescription };
+
+      // Create a TableDescription object to describe the table to create
+      TableDescription tableDescription = new TableDescription("PoleInspection", fieldDescriptions);
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the creation of PoleInspection to our list of DDL tasks
+      schemaBuilder.Create(tableDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      // Inspect error messages
+      if (!success)
+      {
+        IReadOnlyList<string> errorMessages = schemaBuilder.ErrorMessages;
+        //etc.
+      }
+
+      #endregion
+    }
+
+
+    public void CreateFeatureClassSnippet(Geodatabase geodatabase, FeatureClass existingFeatureClass, SpatialReference spatialReference)
+    {
+      #region Creating a feature class
+      // Geodatabase DDL is pre-release for Pro 2.7. See https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-DDL for more information
+
+      // Create a Cities feature class with the following fields
+      //  GlobalID
+      //  ObjectID
+      //  Name (string)
+      //  Population (integer)
+
+      // This static helper routine creates a FieldDescription for a GlobalID field with default values
+      FieldDescription globalIDFieldDescription = FieldDescription.CreateGlobalIDField();
+
+      // This static helper routine creates a FieldDescription for an ObjectID field with default values
+      FieldDescription objectIDFieldDescription = FieldDescription.CreateObjectIDField();
+
+      // This static helper routine creates a FieldDescription for a string field
+      FieldDescription nameFieldDescription = FieldDescription.CreateStringField("Name", 255);
+
+      // This static helper routine creates a FieldDescription for an integer field
+      FieldDescription populationFieldDescription = FieldDescription.CreateIntegerField("Population");
+
+      // Assemble a list of all of our field descriptions
+      List<FieldDescription> fieldDescriptions = new List<FieldDescription>()
+        { globalIDFieldDescription, objectIDFieldDescription, nameFieldDescription, populationFieldDescription };
+
+      // Create a ShapeDescription object
+      ShapeDescription shapeDescription = new ShapeDescription(GeometryType.Point, spatialReference);
+
+      // Alternately, ShapeDescriptions can be created from another feature class.  In this case, the new feature class will inherit the same shape properties of the existing class
+      ShapeDescription alternateShapeDescription = new ShapeDescription(existingFeatureClass.GetDefinition());
+
+      // Create a FeatureClassDescription object to describe the feature class to create
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription("Cities", fieldDescriptions, shapeDescription);
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the creation of the Cities feature class to our list of DDL tasks
+      schemaBuilder.Create(featureClassDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      // Inspect error messages
+      if (!success)
+      {
+        IReadOnlyList<string> errorMessages = schemaBuilder.ErrorMessages;
+        //etc.
+      }
+
+      #endregion
+    }
+
+    public void DeleteTableSnippet(Geodatabase geodatabase, Table table)
+    {
+      #region Deleting a Table
+
+      // Create a TableDescription object
+      TableDescription tableDescription = new TableDescription(table.GetDefinition());
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the deletion of the table to our list of DDL tasks
+      schemaBuilder.Delete(tableDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      #endregion
+    }
+
+    public void DeleteFeatureClassSnippet(Geodatabase geodatabase, FeatureClass featureClass)
+    {
+      #region Deleting a Feature Class
+
+      // Create a FeatureClassDescription object
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription(featureClass.GetDefinition());
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the deletion fo the feature class to our list of DDL tasks
+      schemaBuilder.Delete(featureClassDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      #endregion
+    }
+
+    public void CreateFeatureGeodatabaseSnippet()
+    {
+      #region Creating a File Geodatabase
+      // Create a FileGeodatabaseConnectionPath with the name of the file geodatabase you wish to create
+      FileGeodatabaseConnectionPath fileGeodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-File-Geodatabase\YourName.gdb"));
+
+      // Create and use the file geodatabase
+      using (Geodatabase geodatabase = SchemaBuilder.CreateGeodatabase(fileGeodatabaseConnectionPath))
+      {
+        // Create additional schema here
+      }
+      #endregion
+    }
+
+    public void DeleteFeatureGeodatabaseSnippet()
+    {
+      #region Deleting a File Geodatabase
+      // Create a FileGeodatabaseConnectionPath with the name of the file geodatabase you wish to delete
+      FileGeodatabaseConnectionPath fileGeodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-File-Geodatabase\YourName.gdb"));
+
+      // Delete the file geodatabase
+      SchemaBuilder.DeleteGeodatabase(fileGeodatabaseConnectionPath);
+
+      #endregion
+    }
+
 
 
   }

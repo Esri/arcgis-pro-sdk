@@ -33,7 +33,7 @@ namespace Layout_HelpExamples
 {
   internal class TextElementClass : Button
   {
-    async protected override void OnClick()
+    protected override void OnClick()
     {
       TextElementClassExamples.MethodSnippets();
     }
@@ -41,7 +41,7 @@ namespace Layout_HelpExamples
 
   public class TextElementClassExamples
   {
-    async public static void MethodSnippets()
+    public static void MethodSnippets()
     {
       #region TextElement_SetTextProperties
       //see Prosnippets.cs: "Update text element properties"

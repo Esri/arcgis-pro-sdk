@@ -174,6 +174,9 @@ namespace Framework.Snippets {
 
       foreach(var info in addin_infos)
       {
+        if (info == null)
+          break;//no addins probed
+
         sb.AppendLine($"Addin: {info.Name}");
         sb.AppendLine($"Description {info.Description}");
         sb.AppendLine($"ImagePath {info.ImagePath}");

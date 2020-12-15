@@ -216,10 +216,98 @@ namespace ProSnippetsTasks
     }
         #region ProSnippet Group: Create Layout Elements
         #endregion
-        async public void snippets_CreateLayoutElements()
+    public async void snippets_CreateLayoutElements()
     {
       LayoutView layoutView = LayoutView.Active;
       Layout layout = layoutView.Layout;
+      await QueuedTask.Run(() =>
+      {
+        #region Create Element using the CIMElement
+        //on the QueuedTask
+        //Place symbol on the layout
+        MapPoint point = MapPointBuilder.CreateMapPoint(new Coordinate2D(9, 1));
+
+        //specify a symbol
+        var pt_symbol = SymbolFactory.Instance.ConstructPointSymbol(
+                              ColorFactory.Instance.GreenRGB);
+
+        //create a CIMGraphic 
+        var graphic = new CIMGraphicElement()
+        {
+          Graphic = new CIMPointGraphic()
+          {
+            Symbol = pt_symbol.MakeSymbolReference(),
+            Location = point //A point in the layout
+          }
+        };
+        LayoutElementFactory.Instance.CreateElement(layout, graphic);
+        #endregion
+      });
+
+      await QueuedTask.Run(() =>
+      {
+        #region Create Graphic Element using CIMGraphic
+        //on the QueuedTask
+        //Place symbol on the layout
+        MapPoint location = MapPointBuilder.CreateMapPoint(new Coordinate2D(9, 1));
+
+        //specify a symbol
+        var pt_symbol = SymbolFactory.Instance.ConstructPointSymbol(
+                              ColorFactory.Instance.GreenRGB);
+
+        //create a CIMGraphic 
+        var graphic = new CIMPointGraphic()
+        {
+          Symbol = pt_symbol.MakeSymbolReference(),
+          Location = location //center of map
+        };
+        LayoutElementFactory.Instance.CreateGraphicElement(layout, graphic);
+        #endregion
+      });      
+
+      await QueuedTask.Run(() =>
+      {
+        #region Create Graphic Element using CIMSymbol
+        //on the QueuedTask
+        //Place symbol on the layout
+        MapPoint location = MapPointBuilder.CreateMapPoint(new Coordinate2D(9, 1));
+
+        //specify a symbol
+        var pt_symbol = SymbolFactory.Instance.ConstructPointSymbol(
+                              ColorFactory.Instance.GreenRGB);
+        LayoutElementFactory.Instance.CreateGraphicElement(layout, location, pt_symbol);
+        #endregion
+      });
+      await QueuedTask.Run(() => {
+        #region Bulk Element creation
+        //on the QueuedTask
+        //List of Point graphics
+        var listGraphics = new List<CIMPointGraphic>();
+        //Symbol
+        var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlackRGB);
+        //Define size of the array
+        int dx = 5;
+        int dy = 5;
+        MapPoint point = null;
+        //Create the List of graphics for the array
+        for (int row = 0; row <= dx; ++row)
+        {
+          for (int col = 0; col <= dy; ++col)
+          {
+            point = MapPointBuilder.CreateMapPoint(col, row);
+            //create a CIMGraphic 
+            var graphic = new CIMPointGraphic()
+            {
+              Symbol = pointSymbol.MakeSymbolReference(),
+              Location = point //center of map
+            };
+            listGraphics.Add(graphic);
+          }
+        }
+        //Draw the array of graphics
+        var bulkgraphics = LayoutElementFactory.Instance.CreateGraphicElements(layout, listGraphics, null);
+        #endregion
+      });
 
       #region Create point graphic with symbology
       //Create a simple 2D point graphic and apply an existing point style item as the symbology.
@@ -344,7 +432,7 @@ namespace ProSnippetsTasks
         polyTxtElm.SetName("New Polygon Text");
 
         //(Optionally) Modify paragraph border 
-        CIMGraphic polyTxtGra = polyTxtElm.Graphic;
+        CIMGraphic polyTxtGra = polyTxtElm.GetGraphic();
         CIMParagraphTextGraphic cimPolyTxtGra = polyTxtGra as CIMParagraphTextGraphic;
         cimPolyTxtGra.Frame.BorderSymbol = new CIMSymbolReference();
         cimPolyTxtGra.Frame.BorderSymbol.Symbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.GreyRGB, 1.0, SimpleLineStyle.Solid);
@@ -369,7 +457,7 @@ namespace ProSnippetsTasks
         picElm.SetName("New Picture");
 
         //(Optionally) Modify the border and shadow 
-        CIMGraphic picGra = picElm.Graphic;
+        CIMGraphic picGra = picElm.GetGraphic();
         CIMPictureGraphic cimPicGra = picGra as CIMPictureGraphic;
         cimPicGra.Frame.BorderSymbol = new CIMSymbolReference();
         cimPicGra.Frame.BorderSymbol.Symbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.Solid);
@@ -612,10 +700,10 @@ namespace ProSnippetsTasks
 
         #region ProSnippet Group: Layout Elements & Selection
         #endregion
-        public void snippets_elements()
+        public void snippets_elements( Layout layout)
     {
       #region Find an element on a layout
-      //Find and element on a layout.
+      //Find an element on a layout.
 
       // Reference a layout project item by name
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
@@ -624,18 +712,41 @@ namespace ProSnippetsTasks
         QueuedTask.Run(() =>
         {
           // Reference and load the layout associated with the layout item
-          Layout layout = layoutItem.GetLayout();
+          Layout mylayout = layoutItem.GetLayout();
           if (layout != null)
           {
             //Find a single specific element
-            Element rect = layout.FindElement("Rectangle") as Element;
+            Element rect = mylayout.FindElement("Rectangle") as Element;
 
             //Or use the Elements collection
-            Element rect2 = layout.Elements.FirstOrDefault(item => item.Name.Equals("Rectangle"));
+            Element rect2 = mylayout.Elements.FirstOrDefault(item => item.Name.Equals("Rectangle"));
           }
         });
       }
       #endregion
+      QueuedTask.Run(() => {
+        #region Find layout elements
+        //on the QueuedTask
+        //Find elements by name
+        var layoutElementsToFind = layout.FindElements(new List<string>() { "Point 1", "Line 3", "Text 1" });
+        //Get the collection of elements from the page layout. Nesting within GroupElement is preserved.
+        var elementCollection = layout.GetElements();
+        //Get the collection of Element from the page layout as a flattened list. Nested groups within GroupElement are not preserved.
+        var elements = layout.GetElementsAsFlattenedList();
+        //Convert collection of the elements to a collection of GraphicElements.
+        var graphicElements = elements.ToList().ConvertAll(x => (GraphicElement)x);
+        //Find elements by type
+        //Find all point graphics in the Layout
+        var pointGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMPointGraphic);
+        //Find all line graphics in the Graphics Layer
+        var lineGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMLineGraphic);
+        ////Find all polygon graphics in the Graphics Layer
+        ////Find all text graphics in the Graphics Layer
+        var textGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMTextGraphic);
+        ////Find all picture graphics in the Graphics Layer
+        var pictureGraphic = graphicElements.Where(elem => elem.GetGraphic() is CIMPictureGraphic);
+        #endregion
+      });
 
       Element element = null;
       #region Update element properties
@@ -651,7 +762,7 @@ namespace ProSnippetsTasks
         element.SetVisible(true);
       });
       #endregion 
-      {
+     {
         #region Get element selection count
         //Get element's selection count.
 
@@ -697,10 +808,27 @@ namespace ProSnippetsTasks
         }
         #endregion
       }
-      {
-        #region Clear the layout selection
-        //Clear the layout selection.
+      #region UnSelect elements on the Layout
+      //Unselect one element.
+      var elementToUnSelect = layout.FindElements(new List<string>() { "MyPoint" }).FirstOrDefault();
+      layout.UnSelectElement(elementToUnSelect);
+      //Unselect multiple elements.
+      var elementsToUnSelect = layout.FindElements(new List<string>() { "Point 1", "Line 3", "Text 1" });
+      layout.UnSelectElements(elementsToUnSelect);
+      #endregion
 
+      #region UnSelect elements on the LayoutView
+      LayoutView layoutView = LayoutView.Active;
+      //Unselect one element.
+      var elementToUnSelectInView = layout.FindElements(new List<string>() { "MyPoint" }).FirstOrDefault();
+      layoutView.UnSelectElement(elementToUnSelect);
+      //Unselect multiple elements.
+      var elementsToUnSelectInView = layout.FindElements(new List<string>() { "Point 1", "Line 3", "Text 1" });
+      layoutView.UnSelectElements(elementsToUnSelect);
+      #endregion
+
+      {
+        #region Clear the selection in a layout view
         //If the a layout view is active, clear its selection
         LayoutView activeLayoutView = LayoutView.Active;
         if (activeLayoutView != null)
@@ -708,9 +836,24 @@ namespace ProSnippetsTasks
           activeLayoutView.ClearElementSelection();
         }
         #endregion
+        #region Clear the selection in a layout 
+        //Clear the layout selection.
+        layout.ClearElementSelection();
+        #endregion
       }
       Layout aLayout = null;
       Element elm = null;
+
+      #region Copy Layout Elements
+      //on the QueuedTask
+      var elems = layout.FindElements(new List<string>() { "Point 1", "Line 3", "Text 1" });
+      var copiedElements = layout.CopyElements(elems);
+      #endregion
+      #region Delete Layout Elements
+      //on the QueuedTask  
+      var elementsToRemove = layout.GetSelectedElements();
+      layout.DeleteElements(elementsToRemove);
+      #endregion
       #region Delete an element or elements on a layout
       //Delete an element or elements on a layout.
 
@@ -727,7 +870,20 @@ namespace ProSnippetsTasks
         aLayout.DeleteElements(item => true);
       });
       #endregion
-      
+
+      #region Zoom to elements
+      LayoutView lytView = LayoutView.Active;
+      //Zoom to an element
+      var elementToZoomTo = layout.FindElements(new List<string>() { "MyPoint" }).FirstOrDefault();
+      lytView.ZoomToElement(elementToZoomTo);
+      //Zoom to  multiple elements.
+      var elementsToZoomTo = layout.FindElements(new List<string>() { "Point 1", "Line 3", "Text 1" });
+      lytView.ZoomToElements(elementsToZoomTo);
+
+      #endregion
+
+
+
       #region Set halo property of north arrow
       //Set the CIM halo properties of a north arrow.
 
@@ -757,9 +913,83 @@ namespace ProSnippetsTasks
       #endregion
 
     }
-        #region ProSnippet Group: Update Layout Elements
+    private void groupingElements(Layout layout)
+    {
+      #region ProSnippet Group: Grouping and Ordering Graphic Elements
+      #endregion
+      QueuedTask.Run(() => {
+        
+        #region Group Graphic Elements
+        //on the QueuedTask
+        var elemsToGroup = layout.GetSelectedElements();
+        //Note: run within the QueuedTask
+        //group  elements
+        var groupElement = layout.GroupElements(elemsToGroup);
         #endregion
-        public void snippets_UpdateElements()
+
+        #region Un-Group Graphic Elements
+        var selectedElements = layout.GetSelectedElements().ToList(); ;
+        if (selectedElements?.Any() == false)//must be at least 1.
+          return;
+        var elementsToUnGroup = new List<GroupElement>();
+        //All selected elements should be grouped elements.
+        if (selectedElements.Count() == selectedElements.OfType<GroupElement>().Count())
+        {
+          //Convert to a GroupElement list.
+          elementsToUnGroup = selectedElements.ConvertAll(x => (GroupElement)x);
+        }
+        if (elementsToUnGroup.Count() == 0)
+          return;
+        //UnGroup many grouped elements
+        layout.UnGroupElements(elementsToUnGroup);
+        //Ungroup one grouped element
+        layout.UnGroupElement(elementsToUnGroup.FirstOrDefault());
+        #endregion
+
+        #region Parent of GroupElement
+        //check the parent
+        var parent = groupElement.Elements.First().GetParent();//will be the group element
+        //top-most parent
+        var top_most = groupElement.Elements.First().GetParent(true);//will be the GraphicsLayer
+        #endregion
+        #region Children in a Group Element
+        // Nested groups within ArcGIS.Desktop.Layouts.GroupElement are not preserved.
+        var children = groupElement.GetElementsAsFlattenedList();
+        #endregion
+
+        #region Ordering: Send backward and Bring forward
+        //On the QueuedTask
+        //get the current selection set
+        var sel_elems = layout.GetSelectedElements();
+        //can they be brought forward? This will also check that all elements have the same parent
+        if (layout.CanBringForward(sel_elems))
+        {
+          //bring forward
+          layout.BringForward(sel_elems);
+          //bring to front (of parent)
+          //graphicsLayer.BringToFront(sel_elems);
+        }
+        else if (layout.CanSendBackward(sel_elems))
+        {
+          //send back
+          layout.SendBackward(sel_elems);
+          //send to the back (of parent)
+          //graphicsLayer.SendToBack(sel_elems);
+        }
+        #endregion
+
+        #region Get Z-Order
+        var selElementsZOrder = layout.GetSelectedElements();
+        //list out the z order
+        foreach (var elem in selElementsZOrder)
+          System.Diagnostics.Debug.WriteLine($"{elem.Name}: z-order {elem.GetZOrder()}");
+        #endregion
+      });
+    }
+
+    #region ProSnippet Group: Update Layout Elements
+    #endregion
+    public void snippets_UpdateElements()
     {
       double x = 0;
       double y = 0;
@@ -879,7 +1109,7 @@ namespace ProSnippetsTasks
           if (graphicElement != null)
           {
             // Modify the Transparency property that exists only in the CIMGraphic class.
-            CIMGraphic CIMGraphic = graphicElement.Graphic as CIMGraphic;
+            CIMGraphic CIMGraphic = graphicElement.GetGraphic() as CIMGraphic;
             CIMGraphic.Transparency = 50;             // mark it 50% transparent
             graphicElement.SetGraphic(CIMGraphic);
           }
@@ -913,9 +1143,29 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
-        #region ProSnippet Group: Layout MapFrame
-        #endregion
-        async public void snippets_MapFrame()
+
+    #region ProSnippet Group: Layout Metadata
+    #endregion
+
+    private void LayoutMetadata(Layout layout)
+    {
+      #region Layout Metadata
+      //var layout = ...;
+      //Must be on the QueuedTask.Run()
+
+      //Gets the Layout metadata.
+      var layout_xml = layout.GetMetadata();
+      //Can metadata be edited?
+      if (layout.GetCanEditMetadata())
+        //Set the metadata back
+        layout.SetMetadata(layout_xml);
+
+      #endregion
+    }
+
+    #region ProSnippet Group: Layout MapFrame
+    #endregion
+    async public void snippets_MapFrame()
     {
       Layout layout = LayoutView.Active.Layout;
 
@@ -1032,9 +1282,76 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
-        #region ProSnippet Group: Layout MapSeries
+
+    private void TranslatePointInMapFrameToMapView()
+    {
+
+      QueuedTask.Run(() => {
+        var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlackRGB, 8);
+        var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<GraphicsLayer>().FirstOrDefault();
+        #region Translates a point in page coordinates to a point in map coordinates. 
+        //On the QueuedTask
+        var layout = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault().GetLayout();
+        var mapFrame = layout.FindElement("New Map Frame") as MapFrame;
+
+        //Get a point in the center of the Map frame
+        var mapFrameCenterPoint = mapFrame.GetBounds().CenterCoordinate;
+        //Convert to MapPoint
+        var pointInMapFrame = MapPointBuilder.CreateMapPoint(mapFrameCenterPoint);
+
+        //Find the corresponding point in the MapView
+        var pointOnMap = mapFrame.PageToMap(pointInMapFrame);
+
+        //Create a point graphic on the MapView.
+        var cimGraphicElement = new CIMPointGraphic
+        {
+          Location = pointOnMap,
+          Symbol = pointSymbol.MakeSymbolReference()
+        };
+        graphicsLayer.AddElement(cimGraphicElement);
         #endregion
-        async public void snippets_MapSeries()
+      });
+    }
+    #region Translates a point in map coordinates to a point in page coordinates
+    internal class GetMapCoordinates : MapTool
+    {
+      protected override void OnToolMouseDown(MapViewMouseButtonEventArgs e)
+      {
+        if (e.ChangedButton == System.Windows.Input.MouseButton.Left)
+          e.Handled = true; //Handle the event args to get the call to the corresponding async method
+      }
+
+      protected override Task HandleMouseDownAsync(MapViewMouseButtonEventArgs e)
+      {
+        return QueuedTask.Run(() =>
+        {
+          var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.BlackRGB, 8);
+          var layout = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault().GetLayout();
+          
+          //Convert the clicked point in client coordinates to the corresponding map coordinates.
+          var mapPoint = MapView.Active.ClientToMap(e.ClientPoint);
+          ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(string.Format("X: {0} Y: {1} Z: {2}",
+              mapPoint.X, mapPoint.Y, mapPoint.Z), "Map Coordinates");
+          //Get the corresponding layout point
+          var mapFrame = layout.FindElement("New Map Frame") as MapFrame;
+          var pointOnLayoutFrame = mapFrame.MapToPage(mapPoint);
+
+          //Create a point graphic on the Layout.
+          var cimGraphicElement = new CIMPointGraphic
+          {
+            Location = pointOnLayoutFrame,
+            Symbol = pointSymbol.MakeSymbolReference()
+          };
+          LayoutElementFactory.Instance.CreateGraphicElement(layout, cimGraphicElement);
+        });
+        
+      }
+    }
+    #endregion
+
+    #region ProSnippet Group: Layout MapSeries
+    #endregion
+    async public void snippets_MapSeries()
     {
       Layout layout = LayoutView.Active.Layout;
 

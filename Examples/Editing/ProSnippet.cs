@@ -33,8 +33,10 @@ using ArcGIS.Desktop.Editing.Templates;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
+using ArcGIS.Desktop.Mapping.Events;
 using ArcGIS.Desktop.Core;
 using System.Windows;
+using ArcGIS.Core.Events;
 
 namespace EditingSDKExamples
 {
@@ -59,7 +61,8 @@ namespace EditingSDKExamples
     #region ProSnippet Group: Edit Operation Methods
     #endregion
 
-    public void EditOperations() {
+    public void EditOperations()
+    {
 
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList()[0] as FeatureLayer;
       var polygon = new PolygonBuilder().ToGeometry();
@@ -77,9 +80,10 @@ namespace EditingSDKExamples
       createFeatures.Create(featureLayer, polygon);
 
       //with a callback
-      createFeatures.Create(featureLayer, polygon, (object_id) => {
-          //TODO - use the oid of the created feature
-          //in your callback
+      createFeatures.Create(featureLayer, polygon, (object_id) =>
+      {
+        //TODO - use the oid of the created feature
+        //in your callback
       });
 
       //Do a create features and set attributes
@@ -229,7 +233,7 @@ namespace EditingSDKExamples
       //await deleteFeatures.ExecuteAsync();
 
       #endregion
-      
+
       #region Edit Operation Duplicate Features
 
       var duplicateFeatures = new EditOperation();
@@ -254,7 +258,7 @@ namespace EditingSDKExamples
 
       //Take a multipart and convert it into one feature per part
       //Provide a list of ids to convert multiple
-      explodeFeatures.Explode(featureLayer, new List<long>() {oid}, true);
+      explodeFeatures.Explode(featureLayer, new List<long>() { oid }, true);
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
@@ -288,8 +292,8 @@ namespace EditingSDKExamples
 
       //Merge features into a new feature in the same layer using the
       //defaults set in the inspector
-      mergeFeatures.Merge(featureLayer, new List<long>() {10, 96, 12}, inspector);
-            
+      mergeFeatures.Merge(featureLayer, new List<long>() { 10, 96, 12 }, inspector);
+
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
       mergeFeatures.Execute();
@@ -431,6 +435,9 @@ namespace EditingSDKExamples
 
       #region Edit Operation Planarize Features
 
+      // note - EditOperation.Planarize requires a standard license. 
+      //  An exception will be thrown if Pro is running under a basic license. 
+
       var planarizeFeatures = new EditOperation();
       planarizeFeatures.Name = "Planarize Features";
 
@@ -443,6 +450,33 @@ namespace EditingSDKExamples
 
       //or use async flavor
       //await planarizeFeatures.ExecuteAsync();
+
+      #endregion
+
+      #region Edit Operation ParallelOffset
+      //Create parrallel features from the selected features
+
+      //find the roads layer
+      var roadsLayer = MapView.Active.Map.FindLayers("Roads").FirstOrDefault();
+
+      //instatiate paralleloffset builder and set parameters
+      var parOffsetBuilder = new ParallelOffset.Builder()
+      {
+        Selection = MapView.Active.Map.GetSelection(),
+        Template = roadsLayer.GetTemplate("Freeway"),
+        Distance = 200,
+        Side = ParallelOffset.SideType.Both,
+        Corner = ParallelOffset.CornerType.Mitered,
+        Iterations = 1,
+        AlignConnected = false,
+        CopyToSeparateFeatures = false,
+        RemoveSelfIntersectingLoops = true
+      };
+
+      //create editoperation and execute
+      var parrallelOp = new EditOperation();
+      parrallelOp.Create(parOffsetBuilder);
+      parrallelOp.Execute();
 
       #endregion
 
@@ -479,7 +513,7 @@ namespace EditingSDKExamples
       //Get all features that intersect a polygon
       var rotateSelection = MapView.Active.GetFeatures(polygon).Select(
           k => new KeyValuePair<MapMember, List<long>>(k.Key as MapMember, k.Value));
-            
+
       //Rotate selected features 90 deg about "origin"
       rotateFeatures.Rotate(rotateSelection, origin, Math.PI / 2);
 
@@ -522,7 +556,7 @@ namespace EditingSDKExamples
       var splitFeatures = new EditOperation();
       splitFeatures.Name = "Split Features";
 
-      var splitPoints = new List<MapPoint>() {mp1, mp2, mp3};
+      var splitPoints = new List<MapPoint>() { mp1, mp2, mp3 };
 
       //Split the feature at 3 points
       splitFeatures.Split(featureLayer, oid, splitPoints);
@@ -583,13 +617,16 @@ namespace EditingSDKExamples
 
       #region Edit Operation Perform a Clip, Cut, and Planarize
 
+      // note - EditOperation.Planarize requires a standard license. 
+      //  An exception will be thrown if Pro is running under a basic license.
+
       //Multiple operations can be performed by a single
       //edit operation.
       var clipCutPlanarizeFeatures = new EditOperation();
       clipCutPlanarizeFeatures.Name = "Clip, Cut, and Planarize Features";
       clipCutPlanarizeFeatures.Clip(featureLayer, oid, clipPoly);
       clipCutPlanarizeFeatures.Split(featureLayer, oid, cutLine);
-      clipCutPlanarizeFeatures.Planarize(featureLayer, new List<long>() { oid});
+      clipCutPlanarizeFeatures.Planarize(featureLayer, new List<long>() { oid });
 
       //Note: An edit operation is a single transaction. 
       //Execute the operations (in the order they were declared)
@@ -613,22 +650,22 @@ namespace EditingSDKExamples
       long newFeatureID = -1;
       //The Create operation has to execute so we can get an object_id
       editOperation1.Create(this.CurrentTemplate, polygon, (object_id) => newFeatureID = object_id);
-	    //Must be within a QueuedTask
+      //Must be within a QueuedTask
       editOperation1.Execute();
-			
-	    //or use async flavor
+
+      //or use async flavor
       //await editOperation1.ExecuteAsync();
 
       //Now, because we have the object id, we can add the attachment.  As we are chaining it, adding the attachment 
-	    //can be undone as part of the "Undo Create" operation. In other words, only one undo operation will show on the 
-	    //Pro UI and not two.
+      //can be undone as part of the "Undo Create" operation. In other words, only one undo operation will show on the 
+      //Pro UI and not two.
       var editOperation2 = editOperation1.CreateChainedOperation();
       //Add the attachement using the new feature id
       editOperation2.AddAttachment(this.CurrentTemplate.Layer, newFeatureID, @"C:\data\images\Hydrant.jpg");
 
       //editOperation1 and editOperation2 show up as a single Undo operation on the UI even though
       //we had two transactions
-	    //Must be within a QueuedTask
+      //Must be within a QueuedTask
       editOperation2.Execute();
 
       //or use async flavor
@@ -671,20 +708,20 @@ namespace EditingSDKExamples
       //actions for SetOn...
       updateTestField.SetOnUndone(() =>
       {
-          //Sets an action that will be called when this operation is undone.
-          Debug.WriteLine("Operation is undone");
+        //Sets an action that will be called when this operation is undone.
+        Debug.WriteLine("Operation is undone");
       });
 
       updateTestField.SetOnRedone(() =>
       {
-          //Sets an action that will be called when this editoperation is redone.
-          Debug.WriteLine("Operation is redone");
+        //Sets an action that will be called when this editoperation is redone.
+        Debug.WriteLine("Operation is redone");
       });
 
       updateTestField.SetOnComitted((bool b) => //called on edit session save(true)/discard(false).
       {
-          // Sets an action that will be called when this editoperation is committed.
-          Debug.WriteLine("Operation is committed");
+        // Sets an action that will be called when this editoperation is committed.
+        Debug.WriteLine("Operation is committed");
       });
 
       updateTestField.Execute();
@@ -707,7 +744,7 @@ namespace EditingSDKExamples
         if (res == System.Windows.MessageBoxResult.No ||
                       res == System.Windows.MessageBoxResult.Cancel)
         {
-              return;
+          return;
         }
         Project.Current.SetIsEditingEnabledAsync(true);
       }
@@ -778,11 +815,12 @@ namespace EditingSDKExamples
     {
       featureLayer = MapView.Active?.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       if (featureLayer == null)
-          return;
+        return;
 
-      QueuedTask.Run(() => {
-          //Listen to the RowChangedEvent that occurs when a Row is changed.
-          ArcGIS.Desktop.Editing.Events.RowChangedEvent.Subscribe(OnRowChangedEvent, featureLayer.GetTable());
+      QueuedTask.Run(() =>
+      {
+        //Listen to the RowChangedEvent that occurs when a Row is changed.
+        ArcGIS.Desktop.Editing.Events.RowChangedEvent.Subscribe(OnRowChangedEvent, featureLayer.GetTable());
       });
     }
     private static void OnRowChangedEvent(RowChangedEventArgs obj)
@@ -976,7 +1014,7 @@ namespace EditingSDKExamples
       });
       #endregion
     }
-    
+
     public static void ReadWriteBlobRow()
     {
       #region Read and Write blob fields with a row cursor in a callback
@@ -986,7 +1024,8 @@ namespace EditingSDKExamples
         editOp.Name = "Blob Cursor";
         var featLayer = MapView.Active.Map.FindLayers("Hydrant").First() as FeatureLayer;
 
-        editOp.Callback((context) => {
+        editOp.Callback((context) =>
+        {
           using (var rc = featLayer.GetTable().Search(null, false))
           {
             while (rc.MoveNext())
@@ -1024,7 +1063,7 @@ namespace EditingSDKExamples
 
     #region Toggle sketch selection mode
     //UseSelection = true; (UseSelection must be set to true in the tool constructor or tool activate)
-    private bool _inSelMode = false; 
+    private bool _inSelMode = false;
 
     public bool IsShiftKey(MapViewKeyEventArgs k)
     {
@@ -1077,9 +1116,103 @@ namespace EditingSDKExamples
     }
     #endregion
 
+    #region Listen to the sketch modified event
+
+    // SketchModified event is fired by 
+    //  - COTS construction tools (except annotation, dimension geometry types), 
+    //  - Edit Vertices, Reshape, Align Features
+    //  - 3rd party tools with FireSketchEvents = true
+
+
+    //Subscribe the sketch modified event
+    //ArcGIS.Desktop.Mapping.Events.SketchModifiedEvent.Subscribe(OnSketchModified);
+
+    private void OnSketchModified(ArcGIS.Desktop.Mapping.Events.SketchModifiedEventArgs args)
+    {
+      // if not an undo operation
+      if (!args.IsUndo)
+      {
+        // what was the sketch before the change?
+        var prevSketch = args.PreviousSketch;
+        // what is the current sketch?
+        var currentSketch = args.CurrentSketch;
+        if (currentSketch is Polyline polyline)
+        {
+          // Examine the current (last) vertex in the line sketch
+          var lastSketchPoint = polyline.Points.Last();
+
+          // do something with the last point
+        }
+      }
+    }
+
+    #endregion
+
+    #region Listen to the before sketch completed event and modify the sketch
+
+    // BeforeSketchCompleted event is fired by 
+    //  - COTS construction tools (except annotation, dimension geometry types), 
+    //  - Edit Vertices, Reshape, Align Features
+    //  - 3rd party tools with FireSketchEvents = true
+
+
+    //Subscribe to the before sketch completed event
+    //ArcGIS.Desktop.Mapping.Events.BeforeSketchCompletedEvent.Subscribe(OnBeforeSketchCompleted);
+
+    private Task OnBeforeSketchCompleted(BeforeSketchCompletedEventArgs args)
+    {
+      //assign sketch Z values from default surface and set the sketch geometry
+      var modifiedSketch = args.MapView.Map.GetZsFromSurfaceAsync(args.Sketch).Result;
+      args.SetSketchGeometry(modifiedSketch.Geometry);
+      return Task.CompletedTask;
+    }
+    #endregion
+
+    #region Listen to the sketch completed event
+
+    // SketchCompleted event is fired by 
+    //  - COTS construction tools (except annotation, dimension geometry types), 
+    //  - Edit Vertices, Reshape, Align Features
+    //  - 3rd party tools with FireSketchEvents = true
+
+
+    //Subscribe to the sketch completed event
+    //ArcGIS.Desktop.Mapping.Events.SketchCompletedEvent.Subscribe(OnSketchCompleted);
+
+    private void OnSketchCompleted(SketchCompletedEventArgs args)
+    {
+      // get the sketch
+      var finalSketch = args.Sketch;
+
+      // do something with the sketch - audit trail perhaps
+    }
+    #endregion
+
+    #region Custom construction tool that fires sketch events
+
+    internal class ConstructionTool1 : MapTool
+    {
+      public ConstructionTool1()
+      {
+        IsSketchTool = true;
+        UseSnapping = true;
+        // Select the type of construction tool you wish to implement.  
+        // Make sure that the tool is correctly registered with the correct component category type in the daml 
+        SketchType = SketchGeometryType.Line;
+        //Gets or sets whether the sketch is for creating a feature and should use the CurrentTemplate.
+        UsesCurrentTemplate = true;
+
+        // set FireSketchEvents property to true
+        FireSketchEvents = true;
+      } 
+
+      //  ...
+    }
+
+    #endregion
 
     #region ProSnippet Group: Snapping
-    #endregion
+      #endregion
 
 
     private async void Snapping()

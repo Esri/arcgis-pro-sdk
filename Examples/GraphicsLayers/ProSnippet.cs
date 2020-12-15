@@ -26,7 +26,7 @@ namespace GraphicsLayer.GraphicsLayer
       QueuedTask.Run(() =>
       {
         //By default will be added to the top of the TOC
-        var grahicsLayer = LayerFactory.Instance.CreateLayer<ArcGIS.Desktop.Mapping.GraphicsLayer>(gl_param, map);
+        var graphicsLayer = LayerFactory.Instance.CreateLayer<ArcGIS.Desktop.Mapping.GraphicsLayer>(gl_param, map);
 
         //Add to the bottom of the TOC
         LayerFactory.Instance.CreateLayer<ArcGIS.Desktop.Mapping.GraphicsLayer>(gl_param, map,
@@ -48,8 +48,8 @@ namespace GraphicsLayer.GraphicsLayer
         return;// not 2D
       #region Accessing GraphicsLayer
       //get the first graphics layer in the map's collection of graphics layers
-      var grahicsLayer = map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
-      if (grahicsLayer != null)
+      var graphicsLayer = map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
+      if (graphicsLayer != null)
       {
         //TODO...use the graphics layer      
       }
@@ -143,6 +143,49 @@ namespace GraphicsLayer.GraphicsLayer
         (ColorFactory.Instance.BlackRGB, 8.5, "Corbel", "Regular");
 
         graphicsLayer.AddElement(location, "Text Example", text_symbol);
+      });
+      #endregion
+    }
+    private void BulkGraphicsCreation()
+    {
+      #region Bulk Graphics creation
+      //Point Feature layer to convert into graphics
+      var lyr = MapView.Active?.Map?.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      //Graphics layer to store the graphics to
+      var gl = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
+      if (lyr == null) return;
+      QueuedTask.Run(() =>
+      {
+        //Point symbol for graphics
+        var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(CIMColor.CreateRGBColor(100, 255, 40), 10, SimpleMarkerStyle.Circle);
+        //Collection to hold the point graphics
+        var listGraphicElements = new List<CIMGraphic>();
+        //Iterate through each point feature in the feature layer
+        using (RowCursor rows = lyr.Search()) //execute
+        {
+          int i = 0;
+          while (rows.MoveNext())
+          {
+            using (var feature = rows.Current as Feature)
+            {
+              //Create a point graphic for the feature
+              var crimePt = feature.GetShape() as MapPoint;
+              if (crimePt != null)
+              {
+                var cimGraphicElement = new CIMPointGraphic
+                {
+                  Location = crimePt, //MapPoint
+                  Symbol = pointSymbol.MakeSymbolReference()
+                };
+                //Add the point feature to the collection
+                listGraphicElements.Add(cimGraphicElement);
+                i++;
+              }
+            }
+          }
+        }
+        //Magic happens...Add all the features to the Graphics layer 
+        gl.AddElements(listGraphicElements);
       });
       #endregion
     }

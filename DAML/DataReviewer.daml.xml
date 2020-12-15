@@ -306,31 +306,8 @@
       <tabs>
         <!-- Core Tabs for Rules View -->
 
-        <tab id="esri_dataReviewer_viewTab" caption="View" condition="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_sharing_noValidPaneShareTab" keytip="V">
-          <group refID="esri_core_dockWindows" />
-          <group refID="esri_mapping_syncViewGroup" placeWith="esri_core_dockWindows" insert="before" />
-          <group refID="esri_mapping_viewGroup" placeWith="esri_mapping_syncViewGroup" insert="before" />
-          <group refID="esri_mapping_bookmarksGroup" placeWith="esri_mapping_viewGroup" insert="before" />
-          <group refID="esri_mapping_thumbnailGroup" insert="after" />
-          <group refID="esri_mapping_animation" insert="after"/>
-          <group refID="esri_mapping_sceneGroup" insert="after"/>
-        </tab>
-
-        <tab id="esri_dataReviewer_analysisTab" caption="Analysis" condition="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_dataReviewer_viewTab" keytip="A">
-          <group refID="esri_geoprocessing_analysisTools"/>
-          <insertGroup refID="esri_geoprocessing_portal" />
-          <group refID="esri_geoprocessing_analysis2"/>
-          <group refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
-        </tab>
-
-        <tab id="esri_dataReviewer_insertTab" caption="Insert" condition="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_dataReviewer_analysisTab" keytip="N">
-          <group refID="esri_core_projectData"/>
-          <group refID="esri_project_layerTemplate" />
-          <group refID="esri_project_styles"/>
-        </tab>
-
         <!-- Reviewer Rules Tabs -->
-        <tab id="esri_dataReviewer_validationTab" caption="Reviewer Rules"  condition ="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_dataReviewer_insertTab" keytip="RR">
+        <tab id="esri_dataReviewer_validationTab" caption="Reviewer Rules"  condition ="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_core_insertTab" keytip="RR">
           <group refID="esri_dataReviewer_RulesClipboardGroup"/>
           <group refID="esri_dataReviewer_NewRulesGroup"/>
         </tab>

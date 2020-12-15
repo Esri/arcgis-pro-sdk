@@ -188,6 +188,7 @@
     <Compile Include="MapAuthoring\ProSnippetAnnotation.cs" />
     <Compile Include="MapAuthoring\ProSnippetLabeling.cs" />
     <Compile Include="MapAuthoring\ProSnippetRealtime.cs" />
+    <Compile Include="MapAuthoring\ProSnippetVoxelLayers.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

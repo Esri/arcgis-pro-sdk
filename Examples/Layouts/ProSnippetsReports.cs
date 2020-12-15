@@ -1,11 +1,14 @@
 ﻿using ArcGIS.Core.CIM;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Desktop.Reports;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -214,11 +217,105 @@ namespace ReportAPITesting
             return reportStyle;
         }
 
-      
+    #region ProSnippet Group: Element Factory
+    public static void ElementFactory()
+    {
+      #region Find the active report view
+      Report report = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault().GetReport();
+      var reportPane = FrameworkApplication.Panes.FindReportPanes(report).Last();
+      if (reportPane == null)
+        return;
+
+      ReportView reportView = reportPane.ReportView;
+      #endregion
+
+      #region Refresh the report view
+      if (reportView == null)
+        return;
+
+      QueuedTask.Run(() =>
+      {
+        reportView.Refresh();
+      });
 
 
+      #endregion
 
-      
+      #region Select all elements
+      var pageFooterSection = report.Elements.Where(elm => elm is ReportPageFooter).FirstOrDefault() as ReportPageFooter;
 
+      pageFooterSection.SelectAllElements();
+      #endregion
+
+      #region Zoom to selected elements
+      //Process on worker thread
+       QueuedTask.Run(() =>
+      {
+        reportView.ZoomToSelectedElements();
+      });
+      #endregion Zoom to selected elements
+
+      #region Clear element selection
+      reportView.ClearElementSelection();
+      #endregion
+
+      #region Zoom to whole page
+      //Process on worker thread
+      QueuedTask.Run(() =>
+      {
+        reportView.ZoomToWholePage();
+      });
+      #endregion
+
+      #region Select elements
+      // Select text elements from the report footer
+      var reportFooterSection = report.Elements.Where(elm => elm is ReportFooter).FirstOrDefault() as ReportFooter;
+      var elements = reportFooterSection.GetElementsAsFlattenedList();
+
+      reportFooterSection.SelectElements(elements);
+      #endregion
+
+      #region Get selected elements
+      IReadOnlyList<Element> selectedElements = reportFooterSection.GetSelectedElements();
+      #endregion
+
+      #region Refresh report view
+      //Process on worker thread
+      QueuedTask.Run(() =>
+      {
+        reportView.Refresh();
+      });
+      #endregion
+
+      #region Zoom to
+      var detailsSection = report.Elements.Where(elm => elm is ReportDetails).FirstOrDefault() as ReportDetails;
+      var bounds = detailsSection.GetBounds();
+
+      Coordinate2D ll = new Coordinate2D(bounds.XMin, bounds.YMin);
+      Coordinate2D ur = new Coordinate2D(bounds.XMax, bounds.YMax);
+      Envelope env = EnvelopeBuilder.CreateEnvelope(ll, ur);
+
+      //Process on worker thread
+      QueuedTask.Run(() =>
+      {
+        reportView.ZoomTo(env);
+      });
+      #endregion
+
+      #region Zoom to page width
+      //Process on worker thread
+      QueuedTask.Run(() =>
+      {
+        reportView.ZoomToPageWidth();
+      });
+      #endregion
     }
+    #endregion
+
+
+
+
+
+
+  }
 }

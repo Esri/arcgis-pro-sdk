@@ -1,4 +1,4 @@
-## ArcGIS Pro 2.6 SDK for .NET
+## ArcGIS Pro 2.7 SDK for .NET
 
 Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based on the add-in and configurations extensibility pattern. Leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to write integrated 2D/3D add-ins using Pro’s new APIs.
 
@@ -14,6 +14,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [ArcGIS Pro SDK for .NET templates](#arcgis-pro-sdk-for-net-templates)
   * [ArcGIS Pro SDK for .NET utilities](#arcgis-pro-sdk-for-net-utilities)
 * [Getting started](#getting-started) 
+* [Pro SDK Videos](https://www.youtube.com/channel/UCSGXXfYjfpg9DI8eEUmW1ag)
 * [ProGuide: ArcGIS Pro Extensions NuGet](../../wiki/ProGuide-ArcGIS-Pro-Extensions-NuGet)
 * [ProConcepts: Migrating to ArcGIS Pro](../../wiki/ProConcepts-Migrating-to-ArcGIS-Pro)
 * [ProConcepts: Distributing Add-Ins Online](../../wiki/ProConcepts-Distributing-Add-Ins-Online)
@@ -23,7 +24,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
   * [Extensions](#extensions)
   * [Extensions with no public API](#extensions-with-no-public-api)
 * [Release notes](#release-notes)
-  * [ArcGIS Pro 2.6 SDK for .NET](#arcgis-pro-26-sdk-for-net-1)
+  * [ArcGIS Pro 2.7 SDK for .NET](#arcgis-pro-26-sdk-for-net-1)
        * [What's New](#whats-new)
 * [Previous versions](#previous-versions)  
 * [Resources](#resources)
@@ -62,6 +63,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProGuide: Check boxes](../../wiki/ProGuide-Checkboxes)
 * [ProGuide: Edit boxes](../../wiki/ProGuide-Edit-Boxes)
 * [ProGuide: Combo boxes](../../wiki/ProGuide-Combo-boxes)
+* [ProGuide: Context Menus](../../wiki/ProGuide-Context-Menus)
 * [ProGuide: Palettes and Split buttons](../../wiki/ProGuide-Palettes-and-Split-Buttons)
 * [ProGuide: Galleries](../../wiki/ProGuide-Galleries)
 * [ProGuide: Dockpanes](../../wiki/ProGuide-Dockpanes)
@@ -118,15 +120,20 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 ### Geodatabase
 
 * [ProSnippets: Geodatabase](../../wiki/ProSnippets-Geodatabase)
+* [ProSnippets: Topology](../../wiki/ProSnippets-Topology)
 * [ProConcepts: Geodatabase](../../wiki/ProConcepts-Geodatabase)
 * [ProConcepts: Plugin Datasources](../../wiki/ProConcepts-Plugin-Datasources)
 * [ProGuide: Plugin Datasources](../../wiki/ProGuide-Plugin-Datasource)
+
+&nbsp;&nbsp;&nbsp;&nbsp;**DDL** <img src="https://Esri.github.io/arcgis-pro-sdk/images/prerelease.png" width="10%">
+* [ProConcepts: DDL](../../wiki/ProConcepts-DDL)
 
 --------------------------
 
 ### Geometry
 
 * [ProSnippets: Geometry](../../wiki/ProSnippets-Geometry)
+* [ProSnippets: Geometry Engine](../../wiki/ProSnippets-GeometryEngine)
 * [ProConcepts: Geometry](../../wiki/ProConcepts-Geometry)
 * [ProConcepts: Multipatches](../../wiki/ProConcepts-Multipatches)
 * [ProGuide: Building Multipatches](../../wiki/ProGuide-Building-Multipatches)
@@ -152,6 +159,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Reports**
 * [ProSnippets: Reports](../../wiki/ProSnippets-Reports)
+* [ProConcepts: Reports](../../wiki/ProConcepts-Reports)
 
 --------------------------
 
@@ -180,6 +188,10 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 &nbsp;&nbsp;&nbsp;&nbsp;**Stream**
 * [ProSnippets: Stream Layers](../../wiki/ProSnippets-StreamLayers)
 * [ProConcepts: Stream Layers](../../wiki/ProConcepts-Stream-Layers)
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Voxel**
+* [ProSnippets: Voxel Layers](../../wiki/ProSnippets-VoxelLayers)
+* [ProConcepts: Voxel Layers](../../wiki/ProConcepts-Voxel-Layers)
  
 --------------------------
 
@@ -202,7 +214,8 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 --------------------------
 
-### Parcel Fabric <img src="https://ArcGIS.github.io/arcgis-pro-sdk/images/prerelease.png" width="10%">
+### Parcel Fabric
+
 * [ProSnippets: Parcel Fabric](../../wiki/ProSnippets-ParcelFabric)
 * [ProConcepts: Parcel Fabric](../../wiki/ProConcepts-Parcel-Fabric)
 
@@ -251,6 +264,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [arcgis-pro-sdk-community-samples](http://github.com/Esri/arcgis-pro-sdk-community-samples)
 * [ArcGISPro Registry Keys](http://github.com/Esri/arcgis-pro-sdk/wiki/ArcGIS-Pro-Registry-Keys)
 * [ArcGIS Pro DAML ID Reference](http://github.com/Esri/arcgis-pro-sdk/wiki/ArcGIS-Pro-DAML-ID-Reference)
+* [ArcGIS Pro Icon Reference](http://github.com/Esri/arcgis-pro-sdk/wiki/DAML-ID-Reference-Icons)
 * [ArcGIS Pro TypeID Reference](http://github.com/Esri/arcgis-pro-sdk/wiki/ArcGIS-Pro-TypeID-Reference)
 * [FAQ](http://github.com/Esri/arcgis-pro-sdk/wiki/FAQ)
 * [ArcGIS Pro SDK icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.5.0.8933)
@@ -260,15 +274,15 @@ The requirements for the machine on which you develop your ArcGIS Pro add-ins ar
   
 **.NET Framework 4.8:**<br/>
 *  As with the release of ArcGIS Pro 2.5, the minimum .NET target is now 4.8. What does this mean for you and your add-ins?
-      * Existing add-ins, already deployed, will work at 2.6 with no change to their forward compatibility.
-      * New add-ins created at 2.6 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
-      * Existing add-ins which are recompiled at 2.6 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.6.
+      * Existing add-ins, already deployed, will work at 2.7 with no change to their forward compatibility.
+      * New add-ins created at 2.7 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
+      * Existing add-ins which are recompiled at 2.7 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.7.
       
 Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 2.6
+* ArcGIS Pro 2.7
 
 #### Supported platforms
 
@@ -286,10 +300,10 @@ Please consult technical support article [How To: Convert a version 2.0 to 2.4 A
 
 #### Third party assemblies
 _**Newtonsoft Json**_
-* At 2.6 ArcGIS Pro is using version 12.0.1 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
+* At 2.7 ArcGIS Pro is using version 12.0.1 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
 
 _**CefSharp**_
-* At 2.6 ArcGIS is using version 81.3.100 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](../../wiki/ProConcepts-Framework#chromiumwebbrowser) 
+* At 2.7 ArcGIS is using version 81.3.100 of CefSharp. Pro includes the CefSharp.dll, CefSharp.Core.dll and CefSharp.Wpf.dll in the "C:\Program Files\ArcGIS\Pro\bin\cef" installation location.  To use the CefSharp ChromiumWebBrowser control, consult [ChromiumWebBrowser](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Framework#chromiumwebbrowser) 
 
 Please consult technical support article [How To: Fix compiler error(s) using CefSharp and the ArcGIS Pro SDK ChromiumWebBrowser Control in an add-in](https://support.esri.com/en/Technical-Article/000022628) for more information
  
@@ -436,45 +450,59 @@ There are extension assemblies in {ArcGIS Pro Installation folder}\bin\Extension
 * ArcGIS.Desktop.Search.dll
 * ArcGIS.Desktop.Sharing.dll
 * ArcGIS.Desktop.TerritoryDesign.dll
+* ArcGIS.Desktop.Workflow.Client.dll
 
 Note: Static string resource properties and image resources included within the public API assemblies are for Esri internal use only. They are not intended for use in third-party add-ins.
 
 ## Release notes 
 
-### ArcGIS Pro 2.6 SDK for .NET
+### ArcGIS Pro 2.7 SDK for .NET
 
-These release notes describe details of the ArcGIS Pro 2.6 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
+These release notes describe details of the ArcGIS Pro 2.7 SDK for .NET release. Here you will find information about available functionality as well as known issues and limitations.
 
 #### What's new
 
-The following functionality is available at the ArcGIS Pro 2.6 SDK for .NET release:
+The following functionality is available at the ArcGIS Pro 2.7 SDK for .NET release:
 
 #### 1. API Enhancements  
 
-**Map Authoring API:**<br/>
-* Support for inserting and managing graphic and text elements, including element selection, grouping, alignment, distribution and ordering.
 
-**Editing API**<br/>
-* Enhancements to edit events and snapping to allow snapping to be set by layer.
+**Editing**<br/>
+* New sketch events are available:  sketch modified, vertex events, and undo/redo.
 
-**Parcel Fabric API Pre-Release:**<br/>
-* Additional updates for this Internal Pre-release API, including testing layer participation in the fabric and creating and clearing parcel records.
+**Geodatabase**<br/>
+* New Topology API and a DDL pre-release API are available.  
 
-**Custom Settings:**<br/>
-* Developers can now store custom application settings for add-ins in the Roaming profile.
+**Layout**<br/>
+* Various Enhancements including view-page transformations and bulk element creation.
 
-**Other API Enhancements:**<br/>
-* New classes and methods available in the Editing, Geodatabase, Framework, Geometry, and Mapping APIs.
+**GraphicsLayer**<br/>
+* Bulk element creation
+
+**Map Authoring:**<br/>
+* New Device location API for GPS/GNSS data collection. Symbol Picker and Searcher user controls.
+
+**Map Exploration:**<br/>
+* New Reports API enhancements for report editing and management.
+
+**Parcel Fabric:**<br/>
+* Now in full release at 2.7, developers can build record-driven workflows. 
+
+**3D Layers :**<br/>
+* New Voxel layer API to create and manage voxel layer slices, sections, isosurfaces, voxel layer lighting and rendering.
+
+**Geometry:**<br/>
+* Geometry engine enhancements.
 
 **.NET Framework 4.8:**<br/>
 *  As with the release of ArcGIS Pro 2.5, the minimum .NET target is now 4.8. What does this mean for you and your add-ins?
-      * Existing add-ins, already deployed, will work at 2.6 with no change to their forward compatibility.
-      * New add-ins created at 2.6 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
-      * Existing add-ins which are recompiled at 2.6 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.6.
+      * Existing add-ins, already deployed, will work at 2.7 with no change to their forward compatibility.
+      * New add-ins created at 2.7 will require the minimum target framework set to 4.8 or they will not compile (this is the default setting in the Pro SDK).
+      * Existing add-ins which are recompiled at 2.7 (e.g. because a code change was made) will also require the minimum target framework set to 4.8 or they will not compile. Note: As always, if an existing add-in is changed for any reason, the desktopVersion attribute in its Config.daml file should be changed to reflect the version of Pro it was last compiled against, in this case, now 2.7.
 
 Please consult technical support article [How To: Convert a version 2.0 to 2.4 ArcGIS Pro SDK add-in solution to Pro 2.5 and later versions](https://support.esri.com/en/Technical-Article/000022645) for more information
 
-For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.6
+For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.7
 ](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic1.html).
 
 #### 2. SDK Resources
@@ -487,10 +515,11 @@ Updates to the SDK Resources include, but are not limited to:
 * [ProConcepts: Distributing Add-Ins Online](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Distributing-Add-Ins-Online)
 * [ProSnippets: GraphicsLayers](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-GraphicsLayers)
 * [ProConcepts GraphicsLayers](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-GraphicsLayers)
-* [ProConcepts: Editing](https://github.com/ArcGIS/arcgis-pro-sdk/wiki/ProConcepts-Editing)
+* [ProConcepts: Editing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Editing)
 * [ProConcepts: Map Authoring](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Map-Authoring)
+* [ProConcepts: Reports](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Reports)
 * The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
-* The API Changes section of the [What’s New for Developers 2.6](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
+* The API Changes section of the [What’s New for Developers 2.7](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
 
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons-first.png "ArcGIS Pro SDK Icons")
 ![ArcGIS Pro SDK for .NET Icons](https://esri.github.io/arcgis-pro-sdk/images/Home/Image-of-icons-second.png "ArcGIS Pro SDK Icons")
@@ -503,6 +532,7 @@ You can use the Pro SDK Icons as the image for your controls on the Pro Ribbon. 
 
 ## Previous versions
 
+* [ArcGIS Pro 2.6 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.6.0.24783)
 * [ArcGIS Pro 2.5 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.5.0.22081)
 * [ArcGIS Pro 2.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.4.0.19948)
 * [ArcGIS Pro 2.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/2.3.0.15769)
@@ -540,7 +570,7 @@ limitations under the License.
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
 
-<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.6 SDK for Microsoft .NET Framework</b></p>
+<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 2.7 SDK for Microsoft .NET Framework</b></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#installing-arcgis-pro-sdk-for-net) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
 

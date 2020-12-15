@@ -230,6 +230,7 @@
     <Compile Include="Geodatabase\Table\TableSearch.cs" />
     <Compile Include="Geodatabase\Table\TableSelect.cs" />
     <Compile Include="Geodatabase\Table\TableValidate.cs" />
+    <Compile Include="Geodatabase\Topology\ProSnippetTopology.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

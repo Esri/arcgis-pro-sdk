@@ -390,7 +390,7 @@ namespace Layout_HelpExamples
       Layout lyt = await QueuedTask.Run(() => layoutItem.GetLayout());
       GraphicElement graElm = lyt.FindElement("Rectangle") as GraphicElement;
 
-      CIMGraphic CIMGra = graElm.Graphic as CIMGraphic;
+      CIMGraphic CIMGra = graElm.GetGraphic() as CIMGraphic;
 
       await QueuedTask.Run(() =>
       {

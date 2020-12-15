@@ -58,7 +58,7 @@
         </group>
         <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
           <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
-          <button refID="esri_networkanalysis_ShowModifyDeviceBtn" size="large"/>
+          <button refID="esri_networkanalysis_ShowModifyTerminalPathsBtn" size="large"/>
           <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
         </group>
         <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
@@ -365,10 +365,10 @@
           </tooltip>
         </tool>
         
-        <!-- Select terminal feature tool-->
-        <tool id="esri_networkanalysis_utility_associations_SelectTerminalFeatureTool"
-                     className="Tools.SelectTerminalFeatureTool"
-                     caption="Select Terminal"
+        <!-- Select terminal path feature tool-->
+        <tool id="esri_networkanalysis_utility_paths_SelectTerminalFeature"
+                     className="Tools.SelectTerminalPathFeatureTool"
+                     caption="Select Terminal Path"
                      largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
@@ -392,7 +392,7 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select feature">
-            Select a device feature to modify its terminal configuration path.<disabledText></disabledText>
+            Select a device feature to modify its terminal connections.<disabledText></disabledText>
           </tooltip>
         </tool>
 
@@ -404,7 +404,7 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select feature">
-            Select a network feature to modify its terminal configuration path.<disabledText></disabledText>
+            Select a network feature to modify its terminal connections.<disabledText></disabledText>
           </tooltip>
         </tool>
 
@@ -504,7 +504,23 @@
             Set tracing options.<disabledText></disabledText>
           </tooltip>
         </button>
+        
+        <button id="esri_networkanalysis_network_View_TN_Trace_Configurations_Btn" caption="Sharing Options" className="esri_networkanalysis_utility_module:ShowTNSharingOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png"
+                condition="esri_networkanalysis_TN_Trace_Configurations_Condition"
+                loadOnClick="false" keytip="SOP">
+          <tooltip heading="Sharing Options">
+            Set sharing options.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
+        <button id="esri_networkanalysis_network_View_UN_Trace_Configurationss_Btn" caption="Sharing Options" className="esri_networkanalysis_utility_module:ShowUNSharingOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png"
+                condition="esri_networkanalysis_UN_Trace_Configurations_Condition"
+                loadOnClick="false" keytip="SOP">
+          <tooltip heading="Sharing Options">
+            Set sharing options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_networkanalysis_network_View_FlowDirection_Settings_Btn" caption="Flow Direction Options" className="esri_networkanalysis_utility_module:ShowFlowDirectionOptions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
           <tooltip heading="Flow Direction Options">
             Set flow direction options.<disabledText></disabledText>
@@ -602,12 +618,12 @@
         <!--end tracing controls-->
 
         <!--terminals controls-->
-        <button id="esri_networkanalysis_ShowModifyDeviceBtn"
-                caption="Terminal Paths" extendedCaption="Show Modify Device Terminal pane."
+        <button id="esri_networkanalysis_ShowModifyTerminalPathsBtn"
+                caption="Terminal Paths" extendedCaption="Show Modify Terminal Paths pane."
                 condition="esri_networkanalysis_utility_ModifyAssociations_Condition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyDevice32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyDevice16.png"
-                className="esri_networkanalysis_utility_module:ShowModifyDeviceTerminalWindow"
+                className="esri_networkanalysis_utility_module:ShowModifyTerminalPathsWindow"
                 keytip="TP">
           <tooltip heading="Terminal Configuration Paths">
             Show the Modify Terminal Paths pane.<disabledText></disabledText>
@@ -661,23 +677,23 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyStartingPointsAndBarriersView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifySourcePane"
+        <dockPane id="esri_networkanalysis_utility_ModifyControllerPane"
                   caption="Modify Subnetwork Controller"
-                  className="ModifySourceViewModel"
+                  className="ModifyControllerViewModel"
                   dock="group"
                   initiallyVisible="false"
                   delayLoadMessage="Open a map to get started."
                   dockWith="esri_core_projectDockPane">
-          <content className="ModifySourceView" />
+          <content className="ModifyControllerView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyDeviceTerminalPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyTerminalPathsPane"
                   caption="Modify Terminal Paths"
-                  className="ModifyDeviceTerminalViewModel"
+                  className="ModifyTerminalPathsViewModel"
                   dock="group"
                   initiallyVisible="false"
                   delayLoadMessage="Open a map to get started."
                   dockWith="esri_core_projectDockPane">
-          <content className="ModifyDeviceTerminalView" />
+          <content className="ModifyTerminalPathsView" />
         </dockPane>
         <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionsPane"
                  caption="Modify Terminal Connections"
@@ -735,6 +751,10 @@
             insert="after">
         <content className="TracingOptionsView"/>
       </page>
+      <page id="esri_networkanalysis_sharingOptionsPropertyPage" caption="Sharing" className="SharingOptionsViewModel" condition="esri_networkanalysis_TN_OR_UN_Trace_Configurations_Condition"
+            insert="after">
+        <content className="SharingOptionsView"/>
+      </page>
     </insertSheet>
     <insertSheet id="esri_traceNetwork_optionsPropertySheet" caption="Network Options" resizable="true" pageHeight="540" pageWidth="792" hasGroups="false">
       <page id="esri_networkDiagrams_optionsPropertyPage" caption="Network Diagrams" className="ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.NetworkDiagramsOptionsViewModel" assembly="Extensions\NetworkAnalysis\ArcGIS.Desktop.NetworkAnalysis.NetworkDiagrams.dll">
@@ -752,6 +772,9 @@
       <page id="esri_networkanalysis_traceOptionsPropertyPage" caption="Tracing" className="TracingOptionsViewModel"
             insert="after">
         <content className="TracingOptionsView"/>
+      </page>
+      <page id="esri_networkanalysis_sharingOptionsPropertyPage" caption="Sharing" className="SharingOptionsViewModel" insert="after">
+        <content className="SharingOptionsView"/>
       </page>
     </insertSheet>
   </propertySheets>
@@ -797,9 +820,12 @@
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
         <state id="esri_map_utilityNetwork" />
-        <not>
-          <state id="esri_map_utilityNetworkFeatureService" />
-        </not>
+        <or>
+          <state id="esri_map_utilityNetworkFGDB"/>
+          <not>
+            <state id="esri_map_utilityNetworkFeatureService" />
+          </not>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
@@ -812,7 +838,10 @@
     </insertCondition>
     <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
       <or>
-        <state id="esri_map_traceNetwork"/>
+        <and>
+          <state id="esri_map_traceNetwork" />
+          <state id="esri_map_traceNetworkFeatureService" />
+        </and>        
       </or>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
@@ -864,6 +893,33 @@
         <state id="esri_map_traceNetwork" />
       </and>
     </insertCondition>
-  </conditions>
- 
+    
+    <insertCondition id="esri_networkanalysis_UN_Trace_Configurations_Condition" caption="Utility network layer is active and is version 5 or newer">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkVersion5OrNewState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_TN_Trace_Configurations_Condition" caption="Trace network layer is active and is version 2 or newer">
+      <and>
+        <state id="esri_map_traceNetwork" />
+        <state id="esri_map_traceNetworkVersion2OrNewState" />
+      </and>
+    </insertCondition>
+    
+    <insertCondition id="esri_networkanalysis_TN_OR_UN_Trace_Configurations_Condition" caption="Utility network layer is active and is version 5 or newer Or Trace network layer is
+                        active and is version 2 or newer">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetwork" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+      </or>
+    </insertCondition>
+  </conditions>  
 </ArcGIS>

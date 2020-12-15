@@ -10,6 +10,7 @@
     <dependency name="ADGeoDatabase.daml" />
     <dependency name="TaskAssistant.daml" />
     <dependency name="ADSharing.daml" />
+    <dependency name="ADWorkflowClient.daml" />
   </dependencies>
 
   <products>
@@ -50,19 +51,7 @@
     <insertModule id="workflow_module" caption="Workflow Manager" className="WorkflowModule" autoLoad="false"
                   productID="esri_product_workflow">
       <tabs>
-        <!-- Core Tabs for Workflow View -->
-        <tab id="esri_workflow_viewTab" caption="View" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_sharing_noValidPaneShareTab" keytip="V">
-          <group refID="esri_workflow_dockWindows" />
-        </tab>
-        <tab id="esri_workflow_analysisTab" caption="Analysis" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_viewTab" keytip="A">
-          <group refID="esri_geoprocessing_analysisTools"/>
-          <group refID="esri_geoprocessing_analysis2"/>
-        </tab>
-        <tab id="esri_workflow_insertTab" caption="Insert" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_analysisTab" keytip="N">
-          <group refID="esri_core_projectData"/>
-          <group refID="esri_core_favoritesData"/>
-        </tab>
-        <tab id="esri_workflow_homeTab" caption="Workflow" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_workflow_insertTab" keytip="W">
+        <tab id="esri_workflow_homeTab" caption="Workflow" condition="esri_workflow_workflowPane" insert="before" placeWith="esri_core_insertTab" keytip="W">
           <group refID="esri_core_clipboardGroup" />
           <group refID="esri_workflow_navigateGroup" placeWith="esri_core_clipboardGroup" insert="after" />
           <group refID="esri_workflow_selectionGroup" />
@@ -72,19 +61,7 @@
           <!--<group refID="esri_workflow_notificationsGroup" />-->
         </tab>
 
-        <!-- Core Tabs for Job View -->
-        <tab id="esri_workflow_jobViewTab" caption="View" condition="esri_workflow_jobView" insert="before" placeWith="esri_sharing_noValidPaneShareTab" keytip="V">
-          <group refID="esri_workflow_dockWindows" />
-        </tab>
-        <tab id="esri_workflow_jobAnalysisTab" caption="Analysis" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobViewTab" keytip="A">
-          <group refID="esri_geoprocessing_analysisTools"/>
-          <group refID="esri_geoprocessing_analysis2"/>
-        </tab>
-        <tab id="esri_workflow_jobInsertTab" caption="Insert" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobAnalysisTab" keytip="N">
-          <group refID="esri_core_projectData"/>
-          <group refID="esri_core_favoritesData"/>
-        </tab>
-        <tab id="esri_workflow_jobHomeTab" caption="Job" condition="esri_workflow_jobView" insert="before" placeWith="esri_workflow_jobInsertTab" keytip="B">
+        <tab id="esri_workflow_jobHomeTab" caption="Job" condition="esri_workflow_jobView" insert="before" placeWith="esri_core_insertTab" keytip="B">
           <group refID="esri_core_clipboardGroup" />
           <group refID="esri_workflow_jobWorkflowViewGroup" />
           <group refID="esri_workflow_jobAssignGroup" />
@@ -149,6 +126,7 @@
           <button refID="esri_workflow_openJobPropertiesDockPaneButton" size="large" />
           <!--<menu refID="esri_workflow_jobRelationshipMenu" size="large" />-->
           <button refID="esri_workflow_closeJobButton" size="large" />
+          <button refID="esri_workflow_reopenJobButton" size="large" />
           <!--<menu refID="esri_workflow_exportMenu" size="large" />-->
           <button refID="esri_workflow_exportCSVButton" size="large" />
           <toolPalette refID="esri_workflow_deleteJobsPalette"/>
@@ -161,14 +139,6 @@
           <button refID="esri_workflow_subscribeToNotificationsButton" size="large" />
         </group>-->
         <!-- Workflow VIEW Tab Groups -->
-        <group id="esri_workflow_dockWindows" caption="Windows">
-          <button refID="esri_core_viewsPalette" size="large" />
-          <button refID="esri_core_showContentsDockPane" size="large" />
-          <button refID="esri_geoprocessing_pythonButton" size="large" />
-          <button refID="esri_geoprocessing_modelBuilderButton" size="large" />
-          <button refID="esri_tasks_ShowTasks" size="large" />
-          <button refID="esri_workflow_workflowViewPalette" size="large" />
-        </group>
 
         <!-- Job view HOME groups -->
         <group id="esri_workflow_job_selectionGroup" caption="Selection"
@@ -267,16 +237,7 @@
             Add a connection to a Workflow Manager (Classic) database to the project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_workflow_workflowConnectionOnlineButton" className="workflow_module:ConnectToOnlineWorkflow" caption="Add Workflow Server Connection"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnectionAdd32.png"
-                condition="esri_workflow_canAddOnlineWorkflowConnectionCondition" keytip="WC">
-          <tooltip heading="">
-            Add a connection to a Workflow server to the project.
-            <disabledText>Only one workflow connection can be openend at a time.</disabledText>
-          </tooltip>
-        </button>
-
+        
         <!-- Workflow Jobs buttons (Home Tab, Jobs Group) -->
         <button id="esri_workflow_openJobPropertiesDockPaneButton" className="WorkflowPane.Ribbon.OpenJobPropertiesDockPaneButton"
                caption="Job Properties" extendedCaption="Open Job Properties pane" keytip="JP"
@@ -290,20 +251,20 @@
           </tooltip>
         </button>
         <button id="esri_workflow_openWorkerDockPaneButton" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkerDockPaneButton"
-               caption="Workflow Pane" extendedCaption="Open Workflow pane" keytip="WP" condition="esri_workflow_workflowConnectionExistsState"
+               caption="Workflow Pane (Classic)" extendedCaption="Open Workflow pane" keytip="WP" condition="esri_workflow_workflowConnectionExistsState"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowPane16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowPane32.png">
-          <tooltip heading="Workflow Pane">
+          <tooltip heading="Workflow Pane (Classic)">
             Show the Workflow pane with jobs assigned to you and your group.
             <disabledText>No workflow connection in project</disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_workflowView" className="ArcGIS.Desktop.Internal.Workflow.WorkerPane.Ribbon.OpenWorkflowViewButton"
-                caption="Workflow View" extendedCaption="Open Workflow View" keytip="WV"
+                caption="Workflow View (Classic)" extendedCaption="Open Workflow View" keytip="WV"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowConnection16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkFlowConnection32.png"
                 condition="esri_workflow_isNotServerConnection">
-          <tooltip>
+          <tooltip heading="Workflow View (Classic)">
             Show the Workflow view with jobs in a list and map based on selected criteria.
             <disabledText>No workflow connection in project</disabledText>
           </tooltip>
@@ -317,6 +278,15 @@
             <disabledText>Current user does not have the Close Job privilege.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_workflow_reopenJobButton" className="WorkflowPane.Ribbon.ReopenJobButton" caption="Reopen" keytip="RJ" extendedCaption="Reopen Closed Job"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobOpen16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobOpen32.png"
+               condition="esri_workflow_ReopenJobEnabledCondition">
+          <tooltip>
+            Reopen closed workflow job(s).
+            <disabledText>Current user does not have the Reopen Close Job privilege.</disabledText>
+          </tooltip>
+        </button>        
         <button id="esri_workflow_exportCSVButton" className="esri_workflow_workflowPane:ExportCSV" caption="Export to CSV"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/JobExport32.png"
@@ -464,6 +434,13 @@
           <tooltip>
             Update individual login for a data workspace
             <disabledText>No data workspace with an individual login configured</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_workflow_workflowConnectionContextMenuOpenInAdminButton" className="workflow_module:OpenInAdmin" caption="Workflow Administrator" extendedCaption="Open in ArcGIS Workflow Manager Administrator"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowAdministrator16.png" condition="esri_workflow_workflowConnectionOpenAdminCondition">
+          <tooltip>
+            Open the current connection in ArcGIS Workflow Manager Administrator
+            <disabledText>ArcGIS Pro Administrator is not installed, the current user does not have the AdministratorAccess privilege or an online Workflow (Classic) connection is not available.</disabledText>
           </tooltip>
         </button>
         <button id="esri_workflow_workflowConnectionContextMenuAddUserToGroupButton" className="workflow_module:OpenUserConfiguration" caption="Update Users and Groups" extendedCaption="Add User to Workflow Groups - Context Menu"
@@ -729,6 +706,7 @@
         <menu id="esri_workflow_workflowConnectionContextMenu" caption="WorkflowConnection">
           <button refID="esri_workflow_workflowConnectionContextMenuOpenButton" />
           <button refID="esri_workflow_workflowConnectionContextMenuDataWorkspaceLoginButton" />
+          <button refID="esri_workflow_workflowConnectionContextMenuOpenInAdminButton" />
           <button refID="esri_workflow_workflowConnectionContextMenuAddUserToGroupButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_workflow_workflowConnectionContextMenuRemoveButton" separator="true" />
@@ -776,10 +754,6 @@
           <tool refID="esri_workflow_deleteJobsButton" />
           <tool refID="esri_workflow_deleteVersionsButton" />
           <tool refID="esri_workflow_deleteMapsButton" />
-        </toolPalette>
-        <toolPalette id="esri_workflow_workflowViewPalette" itemsInRow="1" showItemCaption="true" caption="Workflow Manager" extendedCaption="Workflow Manager palette" keytip="WVP">
-          <tool refID="esri_workflow_openWorkerDockPaneButton" />
-          <tool refID="esri_workflow_workflowView" />
         </toolPalette>
       </palettes>
 
@@ -845,6 +819,15 @@
         </updateGroup>
       </groups>
     </updateModule>
+
+    <updateModule refID="workflow_client_module">
+      <palettes>
+        <updateToolPalette refID="esri_workflow_workflowViewPalette">
+          <insertTool refID="esri_workflow_workflowView" insert="after" placeWith="esri_workflow_client_open_workflow_pane" />
+          <insertTool refID="esri_workflow_openWorkerDockPaneButton" insert="after" placeWith="esri_workflow_client_open_workflow_pane"/>
+        </updateToolPalette>
+      </palettes>
+    </updateModule>
   </modules>
 
   <conditions>
@@ -863,17 +846,6 @@
           <state id="esri_workflow_wmxStepState"/>
         </not>
         <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
-      </and>
-    </insertCondition>
-    <insertCondition id="esri_workflow_canAddOnlineWorkflowConnectionCondition" caption="A Workflow (Classic) Connection can be opened">
-      <and>
-        <not>
-          <state id="esri_workflow_workflowConnectionExistsState" />
-        </not>
-        <state id="esri_core_isSignedIn" />
-        <state id="esri_mapping_openProjectState"/>
-        <state id="esri_workflow_allowOnlineConnections"/>
-        <!-- Temporary restriction to only allow if registry key enables it -->
       </and>
     </insertCondition>
     <insertCondition id="esri_workflow_canAddWorkflowConnectionCondition" caption="A Workflow (Classic) Connection can be added">
@@ -911,9 +883,19 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_workflow_workflowConnectionOpenAdminCondition" caption="The user is able to open the Pro Admin">
+      <and>
+        <state id="esri_workflow_proAdminInstalledState" />
+        <state id="esri_workflow_workflowConnectionExistsState" />
+        <state id="esri_workflow_workflowAdministratorUserPrivilegeState" />
+        <state id="esri_mapping_openProjectState" />
+        <state id="esri_workflow_onlineState" />
+      </and>
+    </insertCondition>
+
     <!-- TODO Revisit using isEnabled property on buttons as alternative to using conditions -->
     <!-- Conditions for User Privileges -->
-    <!-- CreateJob, AssignAnyJob, ExportJobs, CloseJob, CanSubscribeToNotifications -->
+    <!-- CreateJob, AssignAnyJob, ExportJobs, CloseJob, ReopenJob, CanSubscribeToNotifications -->
     <insertCondition id="esri_workflow_isNotServerConnection" caption="Pro is connected to server">
       <and>
         <state id="esri_workflow_workflowConnectionExistsState" />
@@ -940,6 +922,9 @@
     <insertCondition id="esri_workflow_workflowCloseJobUserPrivilegeCondition" caption="A Worflow job can be closed">
       <state id="esri_workflow_workflowCloseJobUserPrivilegeState" />
     </insertCondition>
+    <insertCondition id="esri_workflow_workflowReopenJobUserPrivilegeCondition" caption="A Worflow job can be reopened">
+      <state id="esri_workflow_workflowCanReopenClosedJobsUserPrivilegeState" />
+    </insertCondition>    
     <insertCondition id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition" caption="A Worflow user can subscribe to notifications">
       <state id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeState" />
     </insertCondition>
@@ -950,14 +935,20 @@
       <state id="esri_workflow_workflowManagerAOIUserPrivilegeState"/>
     </insertCondition>
 
-    <insertCondition id ="esri_workflow_CloseJobEnabledCondition">
+    <insertCondition id="esri_workflow_CloseJobEnabledCondition">
       <and>
-        <state id ="esri_workflow_CloseJobEnabledState" />
+        <state id="esri_workflow_CloseJobEnabledState" />
         <state id="esri_workflow_workflowCloseJobUserPrivilegeState" />
       </and>
     </insertCondition>
-    <insertCondition id ="esri_workflow_ExportCSVEnabledCondition">
-      <state id ="esri_workflow_ExportCSVEnabledState" />
+    <insertCondition id="esri_workflow_ReopenJobEnabledCondition">
+      <and>
+        <state id="esri_workflow_ReopenJobEnabledState" />
+        <state id="esri_workflow_workflowCanReopenClosedJobsUserPrivilegeState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_ExportCSVEnabledCondition">
+      <state id="esri_workflow_ExportCSVEnabledState" />
     </insertCondition>
     <insertCondition id="esri_workflow_defineAOICondition" caption="A Workflow user is defining an LOI">
       <state id="esri_workflow_defineAOIState" />

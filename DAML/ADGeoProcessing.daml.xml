@@ -57,18 +57,12 @@
         <state id="esri_geoprocessing_modelBuilderPane"/>
         <state id="esri_geoprocessing_MBReportPane"/>
         <state id="esri_geoprocessing_proNotebookPane"/>
-        <state id="esri_geoprocessing_dataEngineeringPaneView"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_geoprocessing_container">
       <state id="esri_geoprocessing_container"/>
     </insertCondition>
 
-    <insertCondition id="esri_geoprocessing_anyDataEngineeringPane">
-      <or>
-        <state id="esri_geoprocessing_dataEngineeringPaneView"/>
-      </or>
-    </insertCondition>
   </conditions>
 
   <categories>
@@ -84,7 +78,7 @@
     <updateCategory refID="esri_project_historyControls">
       <insertComponent id="esri_geoprocessing_history_ctrl" className="GPHistoryViewModel" insert="before" placeWith="esri_raster_functionsHistory">
         <content title="Geoprocessing" iconImage="GeoprocessingHistory24.png"
-                 itemContextMenuID="esri_geoprocessing_historyItemMenu"/>
+                 />
       </insertComponent>
     </updateCategory>
 
@@ -133,6 +127,7 @@
           <tool name="intelligence.FindCotravelers"/>
           <tool name="intelligence.FindMeetingLocations"/>
           <tool name="intelligence.CompareAreas"/>
+		      <tool name="intelligence.ClassifyMovementEvents"/>
         </content>
       </component>
       <component id="icon_overlay_cloud_type">
@@ -156,6 +151,7 @@
           <tool name="3d.Viewshed2"/>
           <tool name="sa.Aspect"/>
           <tool name="3d.Aspect"/>
+          <tool name="3d.RegularizeBuildingFootprint"/>
           <tool name="ia.ClassifyPixelsUsingDeepLearning"/>
           <tool name="ia.DetectObjectsUsingDeepLearning"/>
           <tool name="management.GenerateRasterFromRasterFunction"/>
@@ -167,107 +163,76 @@
       <component id="icon_overlay_parallelproc_type">
         <content>
           <!--always show 'parallel processing' category icon -->
-          <tool name="sa.DistanceAccumulation"/>
-          <tool name="sa.DistanceAllocation"/>
-          <tool name="sa.AggregateMultidimensionalRaster"/>
-          <tool name="ia.AggregateMultidimensionalRaster"/>
-          <tool name="sa.GenerateMultidimensionalAnomaly"/>
-          <tool name="ia.GenerateMultidimensionalAnomaly"/>
-          <tool name="stats.SpatiallyConstrainedMultivariateClustering"/>
-          <tool name="stats.BuildBalancedZones"/>
-          <tool name="stats.ColocationAnalysis"/>
-          <tool name="stats.Forest"/>
-          <tool name="stats.LocalBivariateRelationships"/>
-          <tool name="stats.DensityBasedClustering"/>
           <tool name="stpm.CreateSpaceTimeCube"/>
           <tool name="stpm.CreateSpaceTimeCubeDefinedLocations"/>
           <tool name="stpm.CreateSpaceTimeCubeMDRasterLayer"/>
           <tool name="stpm.ForestBasedForecast"/>
           <tool name="stpm.LocalOutlierAnalysis"/>
           <tool name="stpm.TimeSeriesClustering"/>
+          <tool name="stats.BuildBalancedZones"/>
+          <tool name="stats.ColocationAnalysis"/>
+          <tool name="stats.DensityBasedClustering"/>
+          <tool name="stats.Forest"/>
+          <tool name="stats.LocalBivariateRelationships"/>
+          <tool name="stats.SpatiallyConstrainedMultivariateClustering"/>
+          <tool name="stats.SpatialOutlierDetection"/>
           <tool name="sa.Aggregate"/>
+          <tool name="sa.BoundaryClean"/>
+          <tool name="sa.AggregateMultidimensionalRaster"/>
+          <tool name="sa.ClassifyRaster"/>
           <tool name="sa.ComputeSegmentAttributes"/>
           <tool name="sa.Contour"/>
           <tool name="sa.ContourList"/>
-          <tool name="3d.Contour"/>
-          <tool name="3d.ContourList"/>
-          <tool name="sa.ClassifyRaster"/>
+          <tool name="sa.CostAllocation"/>
+          <tool name="sa.CostBackLink"/>
+          <tool name="sa.CostDistance"/>
+          <tool name="sa.DistanceAccumulation"/>
+          <tool name="sa.DistanceAllocation"/>
+          <tool name="sa.EucAllocation"/>
+          <tool name="sa.EucBackDirection"/>
+          <tool name="sa.EucDirection"/>
+          <tool name="sa.EucDistance"/>
           <tool name="sa.Expand"/>
+          <tool name="sa.Fill"/>
+          <tool name="sa.FlowAccumulation"/>
+          <tool name="sa.FlowDirection"/>
+          <tool name="sa.FlowDistance"/>
           <tool name="sa.FocalStatistics"/>
+          <tool name="sa.GenerateMultidimensionalAnomaly"/>
+          <tool name="sa.KernelDensity"/>
           <tool name="sa.InspectTrainingSamples"/>
           <tool name="sa.LinearSpectralUnmixing"/>
+          <tool name="sa.Nibble"/>
+          <tool name="sa.PathAllocation"/>
+          <tool name="sa.PathBackLink"/>
+          <tool name="sa.PathDistance"/>
           <tool name="sa.Reclassify"/>
           <tool name="sa.RemoveRasterSegmentTilingArtifacts"/>
           <tool name="sa.Sample"/>
           <tool name="sa.SegmentMeanShift"/>
           <tool name="sa.Shrink"/>
           <tool name="sa.Sink"/>
+          <tool name="sa.StorageCapacity"/>
           <tool name="sa.StreamLink"/>
-          <tool name="sa.Viewshed2"/>
           <tool name="sa.TrainIsoClusterClassifier"/>
           <tool name="sa.TrainSupportVectorMachineClassifier"/>
+          <tool name="sa.Viewshed2"/>
           <tool name="sa.Watershed"/>
           <tool name="sa.WeightedOverlay"/>
           <tool name="sa.WeightedSum"/>
           <tool name="sa.ZonalStatistics"/>
           <tool name="sa.ZonalStatisticsAsTable"/>
-          <tool name="sa.EucAllocation"/>
-          <tool name="sa.EucDirection"/>
-          <tool name="sa.EucDistance"/>
-          <tool name="sa.EucBackDirection"/>
-          <tool name="sa.Fill"/>
-          <tool name="sa.FlowAccumulation"/>
-          <tool name="sa.FlowDirection"/>
-          <tool name="sa.FlowDistance"/>
-          <tool name="sa.Nibble"/>
-          <tool name="sa.PathAllocation"/>
-          <tool name="sa.PathBackLink"/>
-          <tool name="sa.PathDistance"/>
-          <tool name="sa.CostAllocation"/>
-          <tool name="sa.CostBackLink"/>
-          <tool name="sa.CostDistance"/>
-          <tool name="locref.RemoveOverlappingCenterlines"/>
-          <tool name="locref.GenerateCalibrationPoints"/>
-          <tool name="ia.WeightedSum"/>
-          <tool name="ia.ZonalStatistics"/>
-          <tool name="ga.GALayer3DToNetCDF"/>
-          <tool name="ga.GALayer3DToMultidimensionalRaster"/>
-          <tool name="ga.ArealInterpolationLayerToPolygons"/>
-          <tool name="ga.CrossValidation"/>
-          <tool name="ga.DensifySamplingNetwork"/>
-          <tool name="ga.DiffusionInterpolationWithBarriers"/>
-          <tool name="ga.EBKRegressionPrediction"/>
-          <tool name="ga.EmpiricalBayesianKriging"/>
-          <tool name="ga.EmpiricalBayesianKriging3D"/>
-          <tool name="ga.GACreateGeostatisticalLayer"/>
-          <tool name="ga.GALayerToContour"/>
-          <tool name="ga.GALayerToGrid"/>
-          <tool name="ga.GALayerToPoints"/>
-          <tool name="ga.GALayerToRasters"/>
-          <tool name="ga.GAMovingWindowKriging"/>
-          <tool name="ga.GaussianGeostatisticalSimulations"/>
-          <tool name="ga.GenerateSubsetPolygons"/>
-          <tool name="ga.GlobalPolynomialInterpolation"/>
-          <tool name="ga.IDW"/>
-          <tool name="ga.KernelInterpolationWithBarriers"/>
-          <tool name="ga.LocalPolynomialInterpolation"/>
-          <tool name="management.SplitRaster"/>
-          <tool name="management.SynchronizeMosaicDataset"/>
-          <tool name="management.ImportTileCache"/>
-          <tool name="management.InterpolateFromPointCloud"/>
-          <tool name="management.ManageTileCache"/>
-          <tool name="management.MatchControlPoints"/>
-          <tool name="management.RegisterRaster"/>
-          <tool name="management.ExportMosaicDatasetItems"/>
-          <tool name="management.ExportTileCache"/>
-          <tool name="management.GeneratePointCloud"/>
-          <tool name="management.GenerateRasterCollection"/>
-          <tool name="management.GenerateRasterFromRasterFunction"/>
-          <tool name="management.GenerateTableFromRasterFunction"/>
-          <tool name="management.BuildFootprints"/>
+          <tool name="md.BuildMultidimensionalTranspose"/>
+          <tool name="md.MakeMultidimensionalRasterLayer"/>
+          <tool name="md.ManageMultidimensionalRaster"/>
+          <tool name="md.MergeMultidimensionalRasters"/>
+          <tool name="md.SubsetMultidimensionalRaster"/>
+          <tool name="management.AddRastersToMosaicDataset"/>
+          <tool name="management.AnalyzeMosaicDataset"/>
           <tool name="management.BuildBoundary"/>
-          <tool name="management.BuildMultidimensionalTranspose"/>
+          <tool name="management.BuildFootprints"/>
           <tool name="management.BuildMosaicDatasetItemCache"/>
+          <tool name="management.BuildMultidimensionalTranspose"/>
           <tool name="management.BuildOverviews"/>
           <tool name="management.BuildPyraminds"/>
           <tool name="management.BuildPyramindsandStatistics"/>
@@ -282,55 +247,57 @@
           <tool name="management.ComputeMosaicCandidates"/>
           <tool name="management.ComputeTiePoints"/>
           <tool name="management.CopyRaster"/>
+          <tool name="management.CreateMapTilePackage"/>
           <tool name="management.CreateOrthoCorrectedRasterDataset"/>
           <tool name="management.CreatePansharpenedRasterDataset"/>
           <tool name="management.DefineOverviews"/>
-          <tool name="management.AddRastersToMosaicDataset"/>
-          <tool name="management.AnalyzeMosaicDataset"/>
-          <tool name="management.CreateMapTilePackage"/>	
-          <tool name="management.ExtractSubDataset"/>	
-          <tool name="management.Flip"/>	
-          <tool name="management.Mirror"/>	
-          <tool name="management.MosaicToNewRaster"/>	
+          <tool name="management.ExportMosaicDatasetItems"/>
+          <tool name="management.ExportTileCache"/>
+          <tool name="management.ExtractSubDataset"/>
+          <tool name="management.Flip"/>
+          <tool name="management.GeneratePointCloud"/>
+          <tool name="management.GenerateRasterCollection"/>
+          <tool name="management.GenerateRasterFromRasterFunction"/>
+          <tool name="management.GenerateTableFromRasterFunction"/>
+          <tool name="management.ImportTileCache"/>
+          <tool name="management.InterpolateFromPointCloud"/>
+          <tool name="management.ManageTileCache"/>
+          <tool name="management.MatchControlPoints"/>
+          <tool name="management.Mirror"/>
+          <tool name="management.MosaicToNewRaster"/>
           <tool name="management.ProjectRaster"/>
-          <tool name="management.RepairMosaicDatasetPaths"/>	
-          <tool name="management.Resample"/>	
-          <tool name="management.Rescale"/>	
-          <tool name="management.Rotate"/>	
-          <tool name="management.Shift"/>	
-          <tool name="management.SubdividePolygon"/>	
+          <tool name="management.ReclassifyField"/>
+          <tool name="management.RegisterRaster"/>
+          <tool name="management.RepairMosaicDatasetPaths"/>
+          <tool name="management.Resample"/>
+          <tool name="management.Rescale"/>
+          <tool name="management.Rotate"/>
+          <tool name="management.Shift"/>
+          <tool name="management.SplitRaster"/>
+          <tool name="management.SubdividePolygon"/>
+          <tool name="management.SynchronizeMosaicDataset"/>
           <tool name="management.TransferFiles"/>
           <tool name="management.Warp"/>
           <tool name="management.WarpFromFile"/>
-          <tool name="md.BuildMultidimensionalTranspose"/>
-          <tool name="md.MakeMultidimensionalRasterLayer"/>
-          <tool name="md.SubsetMultidimensionalRaster"/>
-          <tool name="conversion.MultipatchToRaster"/>
-          <tool name="analysis.Erase"/>
-          <tool name="analysis.GraphicBuffer"/>
-          <tool name="analysis.Identity"/>
-          <tool name="analysis.Intersect"/>
-          <tool name="analysis.PairwiseBuffer"/>
-          <tool name="analysis.PairwiseDissolve"/>
-          <tool name="analysis.PairwiseIntersect"/>
-          <tool name="analysis.Split"/>
-          <tool name="analysis.Union"/>
-          <tool name="analysis.Update"/>
-          <tool name="analysis.Clip"/>
-          <tool name="3d.Viewshed2"/>
-          <tool name="3d.Reclassify"/>
-          <tool name="3d.RegularizeBuildingFootprint"/>
-          <tool name="3d.Intervisibility"/>
-          <tool name="3d.ClassifyLasBuilding"/>
+          <tool name="locref.GenerateCalibrationPoints"/>
+          <tool name="locref.RemoveOverlappingCenterlines"/>
+          <tool name="intelligence.ClassifyMovementEvents"/>
+          <tool name="intelligence.CompareAreas"/>
+          <tool name="intelligence.FindCotravelers"/>
+          <tool name="intelligence.FindMeetingLocations"/>
+          <tool name="ia.AggregateMultidimensionalRaster"/>
           <tool name="ia.AnalyzeChangesUsingCCDC"/>
+          <tool name="ia.AnalyzeChangesUsingLandTrendr"/>
           <tool name="ia.ClassifyObjectsUsingDeepLearning"/>
           <tool name="ia.ClassifyPixelsUsingDeepLearning"/>
           <tool name="ia.ClassifyRaster"/>
+          <tool name="ia.ComputeChangeRaster"/>
           <tool name="ia.ComputeSegmentAttributes"/>
           <tool name="ia.DetectChangeUsingChangeAnalysisRaster"/>
           <tool name="ia.DetectObjectsUsingDeepLearning"/>
           <tool name="ia.FindArgumentStatistics"/>
           <tool name="ia.FocalStatistics"/>
+          <tool name="ia.GenerateMultidimensionalAnomaly"/>
           <tool name="ia.GenerateTrendRaster"/>
           <tool name="ia.InspectTrainingSamples"/>
           <tool name="ia.LinearSpectralUnmixing"/>
@@ -341,10 +308,55 @@
           <tool name="ia.TrainDeepLearningModel"/>
           <tool name="ia.TrainIsoClusterClassifier"/>
           <tool name="ia.TrainSupportVectorMachineClassifier"/>
+          <tool name="ia.WeightedSum"/>
+          <tool name="ia.ZonalStatistics"/>
           <tool name="ia.ZonalStatisticsAsTable"/>
-          <tool name="intelligence.FindCotravelers"/>
-          <tool name="intelligence.FindMeetingLocations"/>
-          <tool name="intelligence.CompareAreas"/>
+          <tool name="ga.ArealInterpolationLayerToPolygons"/>
+          <tool name="ga.CrossValidation"/>
+          <tool name="ga.DensifySamplingNetwork"/>
+          <tool name="ga.DiffusionInterpolationWithBarriers"/>
+          <tool name="ga.EBKRegressionPrediction"/>
+          <tool name="ga.EmpiricalBayesianKriging"/>
+          <tool name="ga.EmpiricalBayesianKriging3D"/>
+          <tool name="ga.GACreateGeostatisticalLayer"/>
+          <tool name="ga.GALayer3DToMultidimensionalRaster"/>
+          <tool name="ga.GALayer3DToNetCDF"/>
+          <tool name="ga.GALayerToContour"/>
+          <tool name="ga.GALayerToGrid"/>
+          <tool name="ga.GALayerToPoints"/>
+          <tool name="ga.GALayerToRasters"/>
+          <tool name="ga.GAMovingWindowKriging"/>
+          <tool name="ga.GaussianGeostatisticalSimulations"/>
+          <tool name="ga.GenerateSubsetPolygons"/>
+          <tool name="ga.GlobalPolynomialInterpolation"/>
+          <tool name="ga.IDW"/>
+          <tool name="ga.KernelInterpolationWithBarriers"/>
+          <tool name="ga.LocalPolynomialInterpolation"/>
+          <tool name="conversion.MultipatchToRaster"/>
+          <tool name="analysis.ApportionPolygon"/>
+          <tool name="analysis.Buffer"/>
+          <tool name="analysis.Clip"/>
+          <tool name="analysis.Erase"/>
+          <tool name="analysis.GraphicBuffer"/>
+          <tool name="analysis.Identity"/>
+          <tool name="analysis.Intersect"/>
+          <tool name="analysis.PairwiseBuffer"/>
+          <tool name="analysis.PairwiseClip"/>
+          <tool name="analysis.PairwiseErase"/>
+          <tool name="analysis.PairwiseDissolve"/>
+          <tool name="analysis.PairwiseIntegrate"/>
+          <tool name="analysis.PairwiseIntersect"/>
+          <tool name="analysis.Split"/>
+          <tool name="analysis.Union"/>
+          <tool name="analysis.Update"/>
+          <tool name="3d.ClassifyLasBuilding"/>
+          <tool name="3d.Contour"/>
+          <tool name="3d.ContourList"/>
+          <tool name="3d.Intersect3DLines"/>
+          <tool name="3d.Intervisibility"/>
+          <tool name="3d.Reclassify"/>
+          <tool name="3d.RegularizeBuildingFootprint"/>
+          <tool name="3d.Viewshed2"/>
         </content>
       </component>
     </insertCategory>
@@ -372,6 +384,7 @@
           <tool name="geocoding.GeocodeAddresses"/>
           <tool name="geocoding.ReverseGeocode"/>
           <tool name="geocoding.CreateCompositeAddressLocator"/>
+          <tool name="ca.UpdateFeaturesWithIncidentRecords"/>
         </content>
       </component>
       <component id="_na" className="">
@@ -548,10 +561,15 @@
       <component id="DEWMSMap">
         <content filter="esri_browseDialogFilters_services_wms" />
       </component>
+      <component id="DEWMTS">
+        <content filter="esri_browseDialogFilters_services_wmts" />
+      </component>
       <component id="DEWorkspace">
         <content>
           <filter id="esri_browseDialogFilters_folders" />
           <filter id="esri_browseDialogFilters_geodatabases_file" />
+          <filter id="esri_browseDialogFilters_geodatabases_sqlite" />
+          <filter id="esri_browseDialogFilters_geodatabases_mobile" />
           <filter id="esri_browseDialogFilters_geodatabases_egdb_file_project" />
         </content>
       </component>
@@ -789,20 +807,6 @@
     </insertCategory>
     <!-- BIM Gallery Items -->
 
-    <!-- default Data Engineering analysys gallery Items-->
-    <!--<insertCategory id="esri_gpDefaultDataEngineeringGalleryTools">
-      <component id="_gpDefaultDataEngineeringGalleryTools">
-        <content>
-          <tool group="Manage Data" name="stpm.FillMissingValues"/>
-          <tool group="Manage Data" name="management.AddField"/>
-          <tool group="Manage Data" name="management.CalculateField"/>
-          <tool group="Location Base" name="analysis.Enrich"/>
-          <tool group="Location Base" name="analysis.SpatialJoin"/>
-          <tool group="Location Base" name="analysis.GenerateNearTable"/>
-        </content>
-      </component>
-    </insertCategory>-->
-    <!-- default data Engineering analysys Items-->
   </categories>
 
   <modules>
@@ -816,7 +820,7 @@
           <group refID="esri_geoprocessing_container_CreateGroup"/>
         </tab>
 
-        <tab id="esri_geoprocessing_ProNBTab" caption="Notebook" condition="esri_geoprocessing_proNotebookPane" keytip="N">
+        <tab id="esri_geoprocessing_ProNBTab" caption="Notebook" condition="esri_geoprocessing_proNotebookPane" insert="before" placeWith="esri_core_insertTab" keytip="N">
           <group refID="esri_python_savegroup"/>
         </tab>
 
@@ -830,7 +834,7 @@
           <!--<group refID="esri_modelbuilder_templateGroup"/>-->
         </tab>
 
-        <tab id="esri_geoprocessing_MBHomeTab" caption="ModelBuilder" condition="esri_geoprocessing_anyMBPane" keytip="MB">
+        <tab id="esri_geoprocessing_MBHomeTab" caption="ModelBuilder" insert="before" placeWith="esri_core_insertTab" condition="esri_geoprocessing_anyMBPane" keytip="MB">
           <group refID="esri_modelbuilder_editGroup"/>
           <group refID="esri_modelbuilder_newModelGroup" />
           <group refID="esri_modelbuilder_viewGroup"/>
@@ -841,29 +845,21 @@
           <group refID="esri_modelbuilder_exportGroup"/>
         </tab>
 
-        <tab id="esri_geoprocessing_MBInsertTab" caption="Insert" condition="esri_geoprocessing_anyGPPane" keytip="N">
+        <!--<tab id="esri_geoprocessing_MBInsertTab" caption="Insert" condition="esri_geoprocessing_anyGPPane" keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_core_favoritesData"/>
-        </tab>
-        <!--<tab id="esri_core_analysisTab" caption="Analysis" condition="esri_geoprocessing_modelBuilderPane" /> -->
-
-        <tab id="esri_geoprocessing_MBAnalysisTab" caption="Analysis" condition="esri_geoprocessing_anyGPPane" keytip="A">
+        </tab>-->
+        
+        <!--<tab id="esri_geoprocessing_MBAnalysisTab" caption="Analysis" condition="esri_geoprocessing_anyGPPane" keytip="A">
           <insertGroup refID="esri_geoprocessing_analysisTools"/>
           <insertGroup refID="esri_geoprocessing_ToolsGallery" />
           <insertGroup refID="esri_geoprocessing_portal" />
           <insertGroup refID="esri_geoprocessing_analysis2"/>
           <insertGroup refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
-        </tab>
-        <tab id="esri_geoprocessing_MBViewTab" caption="View" condition="esri_geoprocessing_anyGPPane" keytip="V">
+        </tab>-->
+        <!--<tab id="esri_geoprocessing_MBViewTab" caption="View" condition="esri_geoprocessing_anyGPPane" keytip="V">
           <group refID="esri_core_dockWindows" />
-        </tab>
-
-        <!--<tab id="esri_geoprocessing_dataEngineeringHomeTab" caption="Data Engineering" condition="esri_geoprocessing_anyDataEngineeringPane" tabGroupID="esri_geoprocessing_dataEngineeringTabGroup" keytip="DE">
-          <group refID="esri_dataEngineering_editGroup"/>
-          <group refID="esri_dataEngineering_dataGroup"/>
-          <group refID="esri_dataEngineering_functionsGroup"/>
-          <group refID="esri_dataEngineering_ViewGroup"/>
         </tab>-->
 
       </tabs>
@@ -881,11 +877,6 @@
           <borderColor A="0" R="230" G="226" B="240" />
         </tabGroup>
 
-        <!--<tabGroup id="esri_geoprocessing_dataEngineeringTabGroup" caption="Data Engineering">
-          <color A="255" R="230" G="230" B="0" />
-          <borderColor A="0" R="230" G="226" B="240" />
-        </tabGroup>-->
-
      </tabGroups>
 
       <subgroups>
@@ -902,6 +893,19 @@
         <subgroup id="esri_gp_ToolsSubGroup" size="AlwaysLarge">
           <customControl refID="esri_geoprocessingAnalysisButton_readytouse"/>
           <splitButton refID="esri_geoprocessing_toolsButton" size="large" />
+        </subgroup>
+        <subgroup id="esri_gp_WorkflowSubGroup_1" size="LargeThenMediumWhenSmall">
+          <button refID="esri_geoprocessing_suitabilityButton"/>
+          <button refID="esri_defense_showVisibilityDockPane"/>
+          <splitButton refID="esri_mapping_interactiveAnalysisSplitButton"/>
+        </subgroup>
+        <subgroup id="esri_gp_WorkflowSubGroup_2" size="LargeThenMediumWhenSmall">
+          <gallery refID="esri_networkanalysis_transportation_newnetworkanalysis_Gallery"/>
+          <customControl refID="esri_businessAnalystButton_baToolsDropdown"/>
+          <button refID="esri_geostatistics_WizardButton"/>
+        </subgroup>
+        <subgroup id="esri_gp_WorkflowSubGroup_3" size="LargeThenMediumWhenSmall">
+          <toolPalette refID="esri_dataInterop_FMEToolPalette"/>
         </subgroup>
       </subgroups>
 
@@ -936,15 +940,11 @@
           <customControl refID="esri_geoprocessingAnalysisButton_feature" size="large"/>
           <customControl refID="esri_geoprocessingAnalysisButton_raster" size="large"/>
         </group>
-        <group id="esri_geoprocessing_analysis2" caption="Workflows" sizePriorities="medium" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png">
-          <button refID="esri_geoprocessing_suitabilityButton"/>
-          <splitButton refID="esri_mapping_interactiveAnalysisSplitButton"/>
-          <gallery refID="esri_networkanalysis_transportation_newnetworkanalysis_Gallery"/>
-          <customControl refID="esri_businessAnalystButton_baToolsDropdown"/>
-          <button refID="esri_geostatistics_WizardButton"/>
-          <toolPalette refID="esri_dataInterop_FMEToolPalette"/>
+        <group id="esri_geoprocessing_analysis2" caption="Workflows" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png">
+          <subgroup refID="esri_gp_WorkflowSubGroup_1"/>
+          <subgroup refID="esri_gp_WorkflowSubGroup_2"/>
+          <subgroup refID="esri_gp_WorkflowSubGroup_3"/>
         </group>
-
         <group id="esri_modelbuilder_editGroup" caption="Clipboard" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png">
           <button refID="esri_modelbuilder_pasteElementsButton" size="large"/>
           <button refID="esri_modelbuilder_cutElementsButton" size="middle" />
@@ -1046,40 +1046,16 @@
         <button refID="esri_modelbuilder_saveButton" size="large" />
       </group>-->
 
-        <group id="esri_geoprocessing_cadToolsGroup" caption="Tools" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" >
+        <group id="esri_geoprocessing_cadToolsGroup" caption="Tools" extendedCaption="Geoprocessing tools for CAD files" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" >
           <gallery refID="esri_cadToolsGallery" inline="true"/>
         </group>
 
         <!-- Bim Tool Gallery Group -->
-        <group id="esri_geoprocessing_bimToolsGroup" caption="Tools" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" >
+        <group id="esri_geoprocessing_bimToolsGroup" caption="Tools" extendedCaption="Geoprocessing tools for BIM files" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool16.png" condition="esri_mapping_onlyBimCategoryLayerSelectedCondition">
           <gallery refID="esri_bimToolsGallery" inline="true"/>
         </group>
         <!-- Bim Tool Gallery Group -->
 
-        <!--
-
-        <group id="esri_dataEngineering_editGroup" caption="Clipboard" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png">
-          <button refID="esri_dataEngineering_pasteElementsButton" size="large"/>
-          <button refID="esri_dataEngineering_cutElementsButton" size="middle" />
-          <button refID="esri_dataEngineering_copyElementsButton" size="middle" />
-        </group>
-
-        <group id="esri_dataEngineering_dataGroup" caption="Data" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png">
-          <button refID="esri_dataEngineering_addButton" size="large"/>
-          <button refID="esri_dataEngineering_saveButton" size="middle" />
-          <button refID="esri_dataEngineering_importButton" size="middle" />
-          <button refID="esri_dataEngineering_exportButton" size="middle" />
-        </group>
-
-        <group id="esri_dataEngineering_functionsGroup" caption="Functions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png">
-          <gallery refID="esri_geoprocessingDEGallery" inline="true" />
-        </group>
-
-        <group id="esri_dataEngineering_ViewGroup" caption="View" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png">
-          <button refID="esri_dataEngineering_openDEFunctionsButton" size="large"/>
-          <button refID="esri_dataEngineering_openTable" size="large"/>
-        </group>
-        -->
       </groups>
 
       <toolbars>
@@ -1304,7 +1280,7 @@
 
 A model is a geoprocessing workflow represented as a diagram that strings together a sequence of tools, using the output of one tool as the input to another tool. You create, edit, and manage models in ModelBuilder.<disabledText>Not available yet.</disabledText></tooltip>
         </button>
-        <button id="esri_geoprocessing_pythonButton" caption="Python Window" keytip="PY" className="esri_geoprocessing_module:Commands.ShowPythonWindow" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" helpContextID="">
+        <button id="esri_geoprocessing_pythonButton" caption="Python window" keytip="PY" className="esri_geoprocessing_module:Commands.ShowPythonWindow" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" helpContextID="" disableIfBusy="false">
           <tooltip heading="Python">Show the Python window.
 
 A Python command line is available in this pane. You can execute geoprocessing tools, ArcPy functions, and any other Python functionality.<disabledText></disabledText></tooltip>
@@ -1401,9 +1377,9 @@ Common environments include: extent, output coordinate system, cell size, and ra
     <button id="esri_geoprocessing_copy_snippetHistory" hidden="true" caption="Copy Python command" className="esri_geoprocessing_module:Commands.OnCopySnippetToolHistory" helpContextID="">
       <tooltip heading="">Copy Python code that executes the tool to the clipboard.<disabledText></disabledText></tooltip>
     </button>
-    <button id="esri_geoprocessing_sendToPythonWindow" hidden="true" caption="Send To Python Window" className="esri_geoprocessing_module:Commands.OnSendSnippetPythonWindow" helpContextID=""
+    <button id="esri_geoprocessing_sendToPythonWindow" hidden="true" caption="Send To Python window" className="esri_geoprocessing_module:Commands.OnSendSnippetPythonWindow" helpContextID=""
             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png">
-       <tooltip heading="">Send Python code that executes the tool to the Python Window.<disabledText></disabledText></tooltip>
+       <tooltip heading="">Send Python code that executes the tool to the Python window.<disabledText></disabledText></tooltip>
     </button>
 
     <button id="esri_geoprocessing_makePythonScript" hidden="true" caption="Save As Python Script" className="esri_geoprocessing_module:Commands.OnMakePythonScript" helpContextID=""
@@ -1462,7 +1438,26 @@ Common environments include: extent, output coordinate system, cell size, and ra
         Add this tool to the Favorites section in the Geoprocessing pane.<disabledText></disabledText>
       </tooltip>
     </button>
-    <button id="esri_geoprocessing_addToGallery" hidden="true" caption="Add To Analysis Gallery" className="esri_geoprocessing_module:Commands.OnAddToGallery" helpContextID="">
+        
+    <button id="esri_geoprocessing_addToHistoryFavorities" hidden="true" caption="Add To History Favorites"
+            extendedCaption="Add tool to Favorites in Geoprocessing history pane"
+            className="esri_geoprocessing_module:Commands.OnAddToHistoryFavorities" helpContextID=""
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStar16.png">
+      <tooltip heading="">
+        Add this tool to the Favorites section in Geoprocessing History.<disabledText></disabledText>
+      </tooltip>
+    </button>
+
+    <button id="esri_geoprocessing_removefromHistoryFavorities" hidden="true" caption="Remove From History Favorites"
+            extendedCaption="Remove tool from favorites in Geoprocessing history pane"
+            className="esri_geoprocessing_module:Commands.OnRemoveFromHistoryFavorities" helpContextID=""
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarRemove16.png">
+      <tooltip heading="">
+        Remove this tool from the Favorites section in Geoprocessing History. <disabledText></disabledText>
+      </tooltip>
+    </button>
+        
+        <button id="esri_geoprocessing_addToGallery" hidden="true" caption="Add To Analysis Gallery" className="esri_geoprocessing_module:Commands.OnAddToGallery" helpContextID="">
       <tooltip heading="">
         Add this tool to the Analysis gallery.<disabledText></disabledText>
       </tooltip>
@@ -1698,13 +1693,13 @@ Common environments include: extent, output coordinate system, cell size, and ra
         </button>
         <button id="esri_modelbuilder_exportFromModelButton" caption="Export" extendedCaption="ModelBuilder" keytip="EM" className="esri_geoprocessing_module:Commands.ExportModelScript" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Export A Model">
-            Export a model to a Python file or send the code to Python Window.<disabledText></disabledText>
+            Export a model to a Python file or send the code to Python window.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_SentModelToPythonWindowButton" caption="Send To Python Window" extendedCaption="ModelBuilder" keytip="EPW" className="esri_geoprocessing_module:Commands.SendModelToPythonWindow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Send To Python Window">
-            Export model to a Python and add the code to Python Window.<disabledText></disabledText>
+        <button id="esri_modelbuilder_SentModelToPythonWindowButton" caption="Send To Python window" extendedCaption="ModelBuilder" keytip="EPW" className="esri_geoprocessing_module:Commands.SendModelToPythonWindow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Send To Python window">
+            Export model to a Python and add the code to Python window.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2036,6 +2031,11 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Iterates over workspaces in a folder.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_modelbuilder_iterateLayersButton" hidden="true" keytip="L" caption="Iterate Layers" extendedCaption="ModelBuilder" className="esri_geoprocessing_module:Commands.IterateLayers" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Iterate Layers">
+            Lists all the layers from a maps.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_modelbuilder_getFieldValueButton" hidden="true" caption="Get Field Value" extendedCaption="ModelBuilder" keytip="F" className="esri_geoprocessing_module:Commands.GetFieldValue" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Get Field Value">
             Gets the value of the first row of a table for the specified field.<disabledText></disabledText>
@@ -2235,7 +2235,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_datainterop_startWorkbench" className="esri_geoprocessing_module:Commands.OnStartWorkBench" caption="Workbench" keytip="WB"
+        <button id="esri_datainterop_startWorkbench" className="esri_geoprocessing_module:Commands.StartWorkBench" caption="Workbench" keytip="WB" 
         largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FME_WB32.png"
         smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FME_WB16.png" helpContextID=""
                 condition="esri_geoprocessing_DataInterop_installed">
@@ -2243,7 +2243,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Workbench is a powerful tool for data conversion, sharing, transformation, validation, and integration.<disabledText>Please check that the Data Interoperability Extension is installed and licensed. Administrators may download software from MyEsri according to the instructions in this article: https://support.esri.com/en/technical-article/000018698 </disabledText>
           </tooltip>
         </button>
-        <button id="esri_datainterop_dataInspector" className="esri_geoprocessing_module:Commands.OnStartDataInspector" caption="Data Inspector" keytip="DI"
+        <button id="esri_datainterop_dataInspector" className="esri_geoprocessing_module:Commands.StartDataInspector" caption="Data Inspector" keytip="DI"
                         largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FMEInspector32.png"
         smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FMEInspector16.png" helpContextID=""
                 condition="esri_geoprocessing_DataInterop_installed">
@@ -2351,71 +2351,6 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           </tooltip>
         </button>-->
 
-        <!-- Data Engineering Buttons -->
-        <!--<button id="esri_dataEngineering_openTable"  hidden  ="false" caption="Open Table" keytip="DE"  className="esri_geoprocessing_module:Commands.ShowTableDE" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png" helpContextID="">
-          <tooltip heading="Data Engineering">
-            Open table <disabledText></disabledText>
-          </tooltip>
-        </button>
-
-
-        <button id="esri_dataEngineering_openContentButton"  hidden  ="false" caption="Data Engineering" keytip="DE"  className="esri_geoprocessing_module:Commands.ShowDataEngineeringWindowUseCurrentMap" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" helpContextID="">
-          <tooltip heading="Data Engineering">
-            Show the Data Enginiering window.
-
-            Organize common operations to improve the data analysis.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_dataEngineering_addButton" caption="Set Data Source" extendedCaption="Data Engineering" keytip="VP" className="esri_geoprocessing_module:Commands.AddDataDE" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" loadOnClick="true" helpContextID="" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <tooltip heading="Add Data">
-            Add Data in Data Engineering.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_dataEngineering_saveButton" caption="Save" extendedCaption="Data Engineering" keytip="DS" className="esri_geoprocessing_module:Commands.SaveDE" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <tooltip heading="Save">
-            Save Data Engineering work flow.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_dataEngineering_importButton" caption="Import" extendedCaption="Data Engineering" keytip="DI" className="esri_geoprocessing_module:Commands.ImportDE" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <tooltip heading="Import">
-            Import a Data Engineering work flow.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_dataEngineering_exportButton" caption="Export" extendedCaption="Data Engineering" keytip="DE" className="esri_geoprocessing_module:Commands.ExportDE" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <tooltip heading="Export">
-            Export a Data Engineering work flow.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-
-        <button id="esri_dataEngineering_openDEFunctionsButton" caption="Data Engineering Functions" extendedCaption="Data Engineering" keytip="VF" className="esri_geoprocessing_module:Commands.OpenDEFunctions" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" loadOnClick="true" helpContextID="" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <tooltip heading="Data Engineering Functions">
-            Open Data Engineering Functions.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_dataEngineering_cutElementsButton" caption="Cut" extendedCaption="Data Engineering" keytip="X" className="esri_geoprocessing_module:Commands.CutElements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Cut">
-            Cut selected model elements.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_dataEngineering_copyElementsButton" caption="Copy" extendedCaption="Data Engineering" keytip="CP" className="esri_geoprocessing_module:Commands.CopyElements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Copy">
-            Copy selected model elements.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_dataEngineering_pasteElementsButton" caption="Paste" extendedCaption="Data Engineering" keytip="VP" className="esri_geoprocessing_module:Commands.PasteElements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Paste">
-            Paste the cut or copied model elements.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        -->
-        <!-- Data Engineering Buttons -->
-
       </controls>
 
       <panes>
@@ -2431,11 +2366,6 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <pane id="esri_geoprocessing_proNotebookPane" caption="ProNotebook" className="ProNotebookPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PythonNotebook16.png" isClosable="true">
           <content className="ProNotebookPaneView" />
         </pane>
-        
-        <!--<pane id="esri_geoprocessing_dataEngineeringPaneView" caption="Data Engineering" className="DEPaneViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingModel16.png" isClosable="true" defaultTab="esri_geoprocessing_dataEngineeringHomeTab">
-          <content className="DEPaneView" />
-        </pane>-->
-      
       </panes>
 
       <dockPanes>
@@ -2445,9 +2375,6 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <dockPane id="esri_geoprocessing_pythonWindow" caption="Python" className="PythonWindowDockPaneViewModel" dock="bottom" initiallyVisible="false" minheight="64" height="124" hasHelp="true" helpContextID="120001016">
           <content className="PythonWindowView" />
         </dockPane>
-        <!--<dockPane id="esri_geoprocessing_dataEngineeringDockPaneFunction" caption="Data Engineering Functions" className="DEDockPaneFunctionViewModel" dock="right" initiallyVisible="false" minheight="64" height="124" hasHelp="true" condition="esri_geoprocessing_anyDataEngineeringPane">
-          <content className="DEDockPaneFunction" />
-        </dockPane>-->
       </dockPanes>
 
       <palettes>
@@ -2525,6 +2452,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_modelbuilder_iterateDatasetsButton" />
           <button refID="esri_modelbuilder_iterateFeatureClassesButton" />
           <button refID="esri_modelbuilder_iterateFilesButton" />
+          <button refID="esri_modelbuilder_iterateLayersButton" />
           <button refID="esri_modelbuilder_iterateRastersButton" />
           <button refID="esri_modelbuilder_iterateTablesButton" />
           <button refID="esri_modelbuilder_iterateWorkspacesButton" />
@@ -2739,7 +2667,21 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <menu id="esri_geoprocessing_historyItemMenu" hidden="true" caption="History" extendedCaption="Geoprocessing History" contextMenu="true">
           <button refID="esri_geoprocessing_openToolHistory"/>
           <button refID="esri_geoprocessing_runToolFromHistory"/>
-          <button refID="esri_geoprocessing_addToModelBuilder" />
+          <button refID="esri_geoprocessing_addToModelBuilder" seperator="true"/>
+          <button refID="esri_geoprocessing_addToHistoryFavorities" seperator="true"/>
+          <button refID="esri_geoprocessing_showResult"/>
+          <button refID="esri_geoprocessing_copy_snippetHistory" separator="true"/>
+          <button refID="esri_geoprocessing_sendToPythonWindow"/>
+          <button refID="esri_geoprocessing_makePythonScript"/>
+          <button refID="esri_geoprocessing_helpCommand" separator="true"/>
+          <button refID="esri_geoprocessing_removeToolHistory" separator="true"/>
+        </menu>
+
+        <menu id="esri_geoprocessing_historyItemMenuUnPin" hidden="true" caption="History" extendedCaption="Geoprocessing History" contextMenu="true">
+          <button refID="esri_geoprocessing_openToolHistory"/>
+          <button refID="esri_geoprocessing_runToolFromHistory"/>
+          <button refID="esri_geoprocessing_addToModelBuilder" seperator="true"/>
+          <button refID="esri_geoprocessing_removefromHistoryFavorities" seperator="true"/>
           <button refID="esri_geoprocessing_showResult"/>
           <button refID="esri_geoprocessing_copy_snippetHistory" separator="true"/>
           <button refID="esri_geoprocessing_sendToPythonWindow"/>
@@ -2832,7 +2774,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_geoprocessing_editToolProperties" separator="true"/>
         </menu>
-
+        
         <menu id="esri_geoprocessing_ToolModelMenu" hidden="true" caption="Tool Model Item" contextMenu="true">
           <button refID="esri_geoprocessing_openTool" />
           <button refID="esri_geoprocessing_editTool" />
@@ -3132,14 +3074,8 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </menu>
         <!-- Bim Gallery Menu-->
 
-        <!-- Data Engineering Gallery Menu-->
-        <!--<menu id="esri_geoprocessing_DataEngineeringGalleryItemMenu" hidden="true" caption="Gallery Item" contextMenu="true">
-          <button refID="esri_geoprocessing_DataEngineeringOpenTool" />
-          <button refID="esri_geoprocessing_DataEngineeringRemoveFromGallery" />
-        </menu>-->
-        <!-- Data Engineering Gallery Menu-->
-
       </menus>
+
       <!--<splitButtons>
       <splitButton id="esri_modelbuilder_SaveSplitButton" keytip="SA" extendedCaption="Save the Current Model">
         <button refID="esri_modelbuilder_saveButton"/>
@@ -3244,30 +3180,13 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           </tooltip>
           <button refID="esri_geoprocessing_toolsButtonFromGallery" />
         </gallery>
-       <!-- Data Engineering Gallery-->
-        
-        <!--<gallery id="esri_geoprocessingDEGallery" className="FavoritesDEGalleryViewModel" caption="Data Engineering Gallery" keytip="DG"
-           itemsInRow="7" itemWidth="76" itemHeight="62"
-           dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.GeoProcessing;component/Favorites and Gallery/GalleryTemplate.xaml"
-           templateID="GalleryItemTemplate" showItemCaption="true"
-           showGroup="true"
-           condition="esri_geoprocessing_anyDataEngineeringPane"
-           showItemCaptionBelow="true"
-            disableIfBusy="false"
-            resizable="true"
-            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
-            helpContextID="">
-          <tooltip heading="">
-            A gallery of data engineering tools.<disabledText></disabledText>
-          </tooltip>
-        </gallery>-->
 
       </galleries>
     </insertModule>
     <!-- Bim Tool Gallery -->
 
     <updateModule refID="esri_core_module">
-      <tabs>
+      <!--<tabs>
         <updateTab refID="esri_core_analysis_NoPanes">
           <insertGroup refID="esri_geoprocessing_analysisTools" />
           <insertGroup refID="esri_geoprocessing_ToolsGallery" />
@@ -3285,7 +3204,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </updateTab>
-      </tabs>
+      </tabs>-->
 
       <groups>
         <updateGroup refID="esri_core_dockWindows">
@@ -3297,14 +3216,14 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
 
     <updateModule refID="esri_mapping">
       <tabs>
-        <updateTab refID="esri_mapping_analysisTab">
+        <!--<updateTab refID="esri_mapping_analysisTab">
           <insertGroup refID="esri_geoprocessing_analysisTools" />
           <insertGroup refID="esri_geoprocessing_ToolsGallery" />
           <insertGroup refID="esri_geoprocessing_portal" />
           <insertGroup refID="esri_geoprocessing_analysis2" />
           <insertGroup refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
-        </updateTab>
+        </updateTab>-->
 
         <!-- Cad Tool Gallery -->
         <updateTab refID="esri_mapping_featureLayerCadTab">
@@ -3358,6 +3277,9 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         <updateMenu refID="esri_mapping_layerContextMenu">
           <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
         </updateMenu>
+        <updateMenu refID="esri_mapping_unregisteredLayerContextMenu">
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
+        </updateMenu>
 
         <updateMenu refID="esri_mapping_subtypeValueLayerContextMenu">
           <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
@@ -3368,6 +3290,12 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertButton refID="esri_geoprocessing_tableDisplayXYDataButton" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_JoinsRelatesMenu" separator="true"/>
           <insertButton refID="esri_geoprocessing_tableGeocodeAddresses" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_tableDisplayXYDataButton" separator="false"/>
         </updateMenu>
+        <updateMenu refID="esri_mapping_unregisteredStandaloneTableContextMenu">
+          <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
+          <insertButton refID="esri_geoprocessing_tableDisplayXYDataButton" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_JoinsRelatesMenu" separator="true"/>
+          <insertButton refID="esri_geoprocessing_tableGeocodeAddresses" insert="after" condition="esri_mapping_validMapMemberSelectedState" placeWith="esri_geoprocessing_tableDisplayXYDataButton" separator="false"/>
+        </updateMenu>
+        
         <updateMenu refID="esri_mapping_rasterLayerContextMenu">
           <insertMenu refID="esri_geoprocessing_JoinsRelatesMenu" insert="after" placeWith="esri_reports_newLayerReport" separator="true"/>
         </updateMenu>
@@ -3380,7 +3308,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
     </updateModule>
 
     <updateModule refID="esri_layouts">
-      <tabs>
+      <!--<tabs>
         <updateTab refID="esri_layouts_analysisTab">
           <insertGroup refID="esri_geoprocessing_analysisTools" />
           <insertGroup refID="esri_geoprocessing_ToolsGallery" />
@@ -3389,7 +3317,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_datasourcesraster_rasterLayerTemplateGroup"/>
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </updateTab>
-      </tabs>
+      </tabs>-->
       <groups>
         <updateGroup refID="esri_layouts_dockWindows">
           <insertButton refID="esri_geoprocessing_pythonButton" />
@@ -3397,7 +3325,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
       </groups>
     </updateModule>
 
-    <updateModule refID="esri_knowledgeGraph_module">
+    <!--<updateModule refID="esri_knowledgeGraph_module">
       <tabs>
         <updateTab refID="esri_knowledgeGraph_analysisTab">
           <insertGroup refID="esri_geoprocessing_analysisTools" />
@@ -3405,9 +3333,9 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_geoprocessing_portal" />
         </updateTab>
       </tabs>
-    </updateModule>
+    </updateModule>-->
 
-    <updateModule refID="esri_reports_module">
+    <!--<updateModule refID="esri_reports_module">
       <tabs>
         <updateTab refID="esri_reports_analysisTab">
           <insertGroup refID="esri_geoprocessing_analysisTools" />
@@ -3418,7 +3346,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </updateTab>
       </tabs>
-    </updateModule>
+    </updateModule>-->
 
     <!--<updateModule refID="esri_geodatabase_module">
       <menus>
