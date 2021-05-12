@@ -395,7 +395,7 @@ namespace CartoFeatures.ProSnippet
             }
             #endregion
         }
-        #region ProSnippet Group: Symbol search
+        #region ProSnippet Group: Symbol Search
         #endregion
         //symbol search
         #region How to search for a specific item in a style

@@ -542,6 +542,10 @@ namespace ProSnippetsGeometry
         builderEx = new MapPointBuilderEx(1.0, 2.0, true, 3.0, true, 4.0, false, 0);
         pt = builderEx.ToGeometry() as MapPoint;
 
+
+        // or use a builderEx convenience method
+        pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, 3.0, 4.0);
+
         #endregion
       }
 
@@ -614,6 +618,19 @@ namespace ProSnippetsGeometry
         isEmpty = builderEx.IsEmpty;     // isEmpty = false
 
         MapPoint point4 = builderEx.ToGeometry() as MapPoint;
+
+
+        // builderEx convenience methods don't need to run on the MCT.
+        MapPoint point5 =MapPointBuilderEx.CreateMapPoint(point1);
+        x = point5.X;              // x = 1.0
+        y = point5.Y;              // y = 2.0
+        z = point5.Z;              // z = 3.0
+        m = point5.M;              // m = Nan
+        ID = point5.ID;            // ID = 0
+        hasZ = point5.HasZ;        // hasZ = true
+        hasM = point5.HasM;        // hasM = false
+        hasID = point5.HasID;      // hasID = false
+        isEmpty = point5.IsEmpty;     // isEmpty = false
 
         #endregion
       }
@@ -707,6 +724,17 @@ namespace ProSnippetsGeometry
             Polyline polyline2 = pb.ToGeometry();
           }
         });
+
+
+        // buildEx constructors don't need to run on the MCT
+        PolylineBuilderEx pBuilder = new PolylineBuilderEx(list);
+        pBuilder.SpatialReference = SpatialReferences.WGS84;
+        Polyline polyline3 = pBuilder.ToGeometry() as Polyline;
+
+
+        // builderEx convenience methods don't need to run on the MCT
+        //     use AttributeFlags.NoAttributes because we only have 2d points in the list
+        Polyline polyline4 = PolylineBuilderEx.CreatePolyline(list, AttributeFlags.NoAttributes);
 
         #endregion
       }
@@ -870,13 +898,24 @@ namespace ProSnippetsGeometry
             pBuilder.AddPart(nextPoints);
 
             Polyline polyline = pBuilder.ToGeometry();
-            // polyline p has 2 parts
+            // polyline has 2 parts
 
             pBuilder.RemovePart(0);
             polyline = pBuilder.ToGeometry();
-            // polyline p has 1 part
+            // polyline has 1 part
           }
         });
+
+
+        // or use a builderEx constructor - doesn't need to run on MCT
+        PolylineBuilderEx pbuilderEx = new PolylineBuilderEx(firstPoints);
+        pbuilderEx.AddPart(nextPoints);
+        Polyline polyline2 = pbuilderEx.ToGeometry() as Polyline;
+        // polyline2 has 2 parts
+
+        pbuilderEx.RemovePart(0);
+        polyline2 = pbuilderEx.ToGeometry() as Polyline;
+        // polyline2 has 1 part
 
         #endregion
       }
@@ -884,14 +923,17 @@ namespace ProSnippetsGeometry
       Geometry sketchGeometry = null;
       {
         #region StartPoint of a Polyline
-        //Method 1: Get the start point of the polyline by converting the polyline into a collection of points and getting the first point
-        //sketchGeometry is a Polyline
-        //get the sketch as a point collection
+        // Method 1: Get the start point of the polyline by converting the polyline 
+        //    into a collection of points and getting the first point
+
+        // sketchGeometry is a Polyline
+        // get the sketch as a point collection
         var pointCol = ((Multipart)sketchGeometry).Points;
-        //Get the start point of the line
+        // Get the start point of the line
         var firstPoint = pointCol[0];
 
-        //Method 2: Convert polyline into a collection of linesegments and getting the "StartPoint" of the first line segment.
+        // Method 2: Convert polyline into a collection of line segments 
+        //   and get the "StartPoint" of the first line segment.
         var polylineGeom = sketchGeometry as ArcGIS.Core.Geometry.Polyline;
         var polyLineParts = polylineGeom.Parts;
 
@@ -1059,6 +1101,15 @@ namespace ProSnippetsGeometry
           }
         });
 
+
+        // builderEx constructor's don't need to run on the MCT
+        PolygonBuilderEx polygonBuilderEx = new PolygonBuilderEx(list);
+        polygonBuilderEx.SpatialReference = SpatialReferences.WGS84;
+        polygon = polygonBuilderEx.ToGeometry() as Polygon;
+
+        // builderEx convenience methods don't need to run on the MCT
+        //     use AttributeFlags.NoAttributes because we only have 2d points in the list
+        polygon = PolygonBuilderEx.CreatePolygon(list, AttributeFlags.NoAttributes);
         #endregion
       }
 
@@ -1085,6 +1136,14 @@ namespace ProSnippetsGeometry
             polygonFromEnv = polygonBuilder.ToGeometry();
           }
         });
+
+        // builderEx constructors don't need to run on the MCt
+        PolygonBuilderEx polygonBuilderEx = new PolygonBuilderEx(env);
+        polygonBuilderEx.SpatialReference = SpatialReferences.WGS84;
+        polygonFromEnv = polygonBuilderEx.ToGeometry() as Polygon;
+
+        // builderEx convenience methods don't need to run on MCT
+        polygonFromEnv = PolygonBuilderEx.CreatePolygon(env);
 
         #endregion Create a Polygon from an Envelope
       }
@@ -1150,6 +1209,13 @@ namespace ProSnippetsGeometry
       outerCoordinates.Add(new Coordinate2D(20.0, 20.0));
       outerCoordinates.Add(new Coordinate2D(20.0, 10.0));
 
+      // define the inner polygon as anti-clockwise
+      List<Coordinate2D> innerCoordinates = new List<Coordinate2D>();
+      innerCoordinates.Add(new Coordinate2D(13.0, 13.0));
+      innerCoordinates.Add(new Coordinate2D(17.0, 13.0));
+      innerCoordinates.Add(new Coordinate2D(17.0, 17.0));
+      innerCoordinates.Add(new Coordinate2D(13.0, 17.0));
+
       // Builder constructors need to run on the MCT.
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
@@ -1159,13 +1225,6 @@ namespace ProSnippetsGeometry
           Polygon donut = pb.ToGeometry();
           double area = donut.Area;       // area = 100
 
-          // define the inner polygon as anti-clockwise
-          List<Coordinate2D> innerCoordinates = new List<Coordinate2D>();
-          innerCoordinates.Add(new Coordinate2D(13.0, 13.0));
-          innerCoordinates.Add(new Coordinate2D(17.0, 13.0));
-          innerCoordinates.Add(new Coordinate2D(17.0, 17.0));
-          innerCoordinates.Add(new Coordinate2D(13.0, 17.0));
-
           pb.AddPart(innerCoordinates);
           donut = pb.ToGeometry();
 
@@ -1174,6 +1233,20 @@ namespace ProSnippetsGeometry
           area = GeometryEngine.Instance.Area(donut);    // area = 84.0
         }
       });
+
+
+      // builderEx constructors don't need to run on the MCt
+      PolygonBuilderEx pbEx = new PolygonBuilderEx(outerCoordinates);
+      Polygon donutEx = pbEx.ToGeometry() as Polygon;
+      double areaEx = donutEx.Area;       // area = 100
+
+      pbEx.AddPart(innerCoordinates);
+      donutEx = pbEx.ToGeometry() as Polygon;
+
+      areaEx = donutEx.Area;    // area = 84.0
+
+      areaEx = GeometryEngine.Instance.Area(donutEx);    // area = 84.0
+
 
       #endregion
     }
@@ -1271,6 +1344,9 @@ namespace ProSnippetsGeometry
       // builderEx constructors don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(minPt, maxPt);
       envelope = builderEx.ToGeometry() as Envelope;
+
+      // builderEx convenience methods don't need to run on the MCT
+      envelope = EnvelopeBuilderEx.CreateEnvelope(minPt, maxPt);
 
       #endregion
 
@@ -1410,6 +1486,9 @@ namespace ProSnippetsGeometry
       Coordinate2D minCoord = new Coordinate2D(1, 3);
       Coordinate2D maxCoord = new Coordinate2D(2, 4);
 
+      Coordinate2D c1 = new Coordinate2D(0, 5);
+      Coordinate2D c2 = new Coordinate2D(1, 3);
+
       // Builder constructors need to run on the MCT.
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
@@ -1452,14 +1531,69 @@ namespace ProSnippetsGeometry
           // builder.XMin, YMin, ZMin, MMin  = 3, 2, -5, double.Nan
           // builder.XMax, YMax, ZMax, MMax = 3, 4, 8, double.Nan
 
-          Coordinate2D c1 = new Coordinate2D(0, 5);
-          Coordinate2D c2 = new Coordinate2D(1, 3);
+
           builder.SetXYCoords(c1, c2);
           // builder.XMin, YMin, ZMin, MMin  = 0, 3, -5, double.Nan
           // builder.XMax, YMax, ZMax, MMax = 1, 5, 8, double.Nan
 
+
+          builder.HasM = true;
+          builder.SetMCoords(2, 5);
+
+          var geom = builder.ToGeometry();
         }
       });
+
+      // or use the EnvelopeBuilderEx.  This constructor doesn't need to run on the MCT.
+
+      EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(minCoord, maxCoord);
+      // builderEx.XMin, YMin, Zmin, MMin  = 1, 3, 0, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 2, 4, 0, double.Nan
+
+      // set XMin.  if XMin > XMax; both XMin and XMax change
+      builderEx.XMin = 6;
+      // builderEx.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 6, 4, 0, double.Nan
+
+      // set XMax
+      builderEx.XMax = 8;
+      // builderEx.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 8, 4, 0, double.Nan
+
+      // set XMax.  if XMax < XMin, both XMin and XMax change
+      builderEx.XMax = 3;
+      // builderEx.XMin, YMin, ZMin, MMin  = 3, 3, 0, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
+
+      // set YMin
+      builderEx.YMin = 2;
+      // builderEx.XMin, YMin, ZMin, MMin  = 3, 2, 0, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
+
+      // set ZMin.  if ZMin > ZMax, both ZMin and ZMax change
+      builderEx.ZMin = 3;
+      // builderEx.XMin, YMin, ZMin, MMin  = 3, 2, 3, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 3, 4, 3, double.Nan
+
+      // set ZMax.  if ZMax < ZMin. both ZMin and ZMax change
+      builderEx.ZMax = -1;
+      // builderEx.XMin, YMin, ZMin, MMin  = 3, 2, -1, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 3, 4, -1, double.Nan
+
+      builderEx.SetZCoords(8, -5);
+      // builderEx.XMin, YMin, ZMin, MMin  = 3, 2, -5, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 3, 4, 8, double.Nan
+
+
+      builderEx.SetXYCoords(c1, c2);
+      // builderEx.XMin, YMin, ZMin, MMin  = 0, 3, -5, double.Nan
+      // builderEx.XMax, YMax, ZMax, MMax = 1, 5, 8, double.Nan
+
+
+      builderEx.HasM = true;
+      builderEx.SetMCoords(2, 5);
+
+      var geomEx = builderEx.ToGeometry();
       #endregion
     }
 
@@ -1495,10 +1629,110 @@ namespace ProSnippetsGeometry
         }
       });
 
-      // or use the builderEx constructors = don't need to run on the MCT.
+      // or use the builderEx constructors - don't need to run on the MCT.
       MultipointBuilderEx builderEx = new MultipointBuilderEx(list);
       multiPoint = builderEx.ToGeometry() as Multipoint;
       ptCount = builderEx.PointCount;
+
+
+      // builderEx convenience methods dont need to run on the MCT
+      //  use AttributeFlags.NoAttributes - we have 2d points in the list
+      multiPoint = MultipointBuilderEx.CreateMultipoint(list, AttributeFlags.NoAttributes);
+
+      #endregion
+    }
+
+    public void MultipointBuilderEx_()
+    {
+      #region Construct a Multipoint - using MultipointBuilderEx
+
+      Coordinate2D[] coordinate2Ds = new Coordinate2D[] { new Coordinate2D(1, 2), new Coordinate2D(-1, -2) };
+      SpatialReference sr = SpatialReferences.WGS84;
+
+      MultipointBuilderEx builder = new MultipointBuilderEx(coordinate2Ds, sr);
+
+      // builder.Coords.Count = 2
+
+      builder.HasZ = true;
+      // builder.Zs.Count = 2
+      // builder.Zs[0] = 0
+      // builder.Zs[1] = 0
+
+      builder.HasM = true;
+      // builder.Ms.Count = 2
+      // builder.Ms[0] = NaN
+      // builder.Ms[1] = NaN
+
+      builder.HasID = true;
+      // builder.IDs.Count = 2
+      // builder.IDs[0] = 0
+      // builder.IDs[1] = 0
+
+      // set it empty
+      builder.SetEmpty();
+      // builder.Coords.Count = 0
+      // builder.Zs.Count = 0
+      // builder.Ms.Count = 0
+      // builder.IDs.Count = 0
+
+
+      // reset coordinates
+      List<Coordinate2D> inCoords = new List<Coordinate2D>() { new Coordinate2D(1, 2), new Coordinate2D(3, 4), new Coordinate2D(5, 6) };
+      builder.Coords = inCoords;
+      // builder.Coords.Count = 3
+      // builder.HasZ = true
+      // builder.HasM = true
+      // builder.HasID = true
+
+      double[] zs = new double[] { 1, 2, 1, 2, 1, 2 };
+      builder.Zs = zs;   
+      // builder.Zs.Count = 6
+
+      double[] ms = new double[] { 0, 1 };
+      builder.Ms = ms;   
+      // builder.Ms.Count = 2
+
+      // coordinates are now   (x, y, z, m, id)
+      //  (1, 2, 1, 0, 0), (3, 4, 2, 1, 0) (5, 6, 1, NaN, 0)
+
+      MapPoint mapPoint = builder.GetPoint(2);
+      // mapPoint.HasZ = true
+      // mapPoint.HasM = true
+      // mapPoint.HasID = true
+      // mapPoint.Z  = 1
+      // mapPoint.M = NaN
+      // mapPoint.ID = 0
+
+      // add an M to the list
+      builder.Ms.Add(2);
+      // builder.Ms.count = 3
+
+      // coordinates are now   (x, y, z, m, id)
+      //  (1, 2, 1, 0, 0), (3, 4, 2, 1, 0) (5, 6, 1, 2, 0)
+
+      // now get the 2nd point again; it will now have an M value
+      mapPoint = builder.GetPoint(2);
+      // mapPoint.M = 2
+
+
+      int[] ids = new int[] { -1, -2, -3 };
+      // assign ID values
+      builder.IDs = ids;
+
+      // coordinates are now   (x, y, z, m, id)
+      //  (1, 2, 1, 0, -1), (3, 4, 2, 1, -2) (5, 6, 1, 2, -3)
+
+
+      // create a new point
+      MapPoint point = MapPointBuilder.CreateMapPoint(-300, 400, 4);
+      builder.SetPoint(2, point);
+
+      // coordinates are now   (x, y, z, m, id)
+      //  (1, 2, 1, 0, -1), (3, 4, 2, 1, -2) (-300, 400, 4, NaN, 0)
+
+
+      builder.RemovePoints(1, 3);
+      // builder.PointCount = 1
 
       #endregion
     }
@@ -1612,9 +1846,34 @@ namespace ProSnippetsGeometry
         {
           // do something with the builder
 
-          LineSegment lineFromLineSegment = lb.ToSegment();
+          anotherLineFromLineSegment = lb.ToSegment();
         }
       });
+
+
+      // builderEx constructors don't need to run on the MCT
+      LineBuilderEx lbEx = new LineBuilderEx(startPt, endPt);
+      lineFromMapPoint = lbEx.ToSegment() as LineSegment;
+
+      lbEx = new LineBuilderEx(start2d, end2d);
+      lineFromCoordinate2D = lbEx.ToSegment() as LineSegment;
+
+      lbEx = new LineBuilderEx(start3d, end3d);
+      lineFromCoordinate3D = lbEx.ToSegment() as LineSegment;
+
+      lbEx = new LineBuilderEx(startPt, endPt);
+      lineFromMapPoint = lbEx.ToSegment() as LineSegment;
+
+      lbEx = new LineBuilderEx(lineFromCoordinate3D);
+      anotherLineFromLineSegment = lbEx.ToSegment() as LineSegment;
+
+
+      // builderEx convenience methods don't need to run on the MCT
+      lineFromMapPoint = LineBuilderEx.CreateLineSegment(startPt, endPt);
+      lineFromCoordinate2D = LineBuilderEx.CreateLineSegment(start2d, end2d);
+      lineFromCoordinate3D = LineBuilderEx.CreateLineSegment(start3d, end3d);
+      anotherLineFromLineSegment = LineBuilderEx.CreateLineSegment(lineFromCoordinate3D);
+
       #endregion
 
       LineSegment lineSegment = null;
@@ -1643,6 +1902,25 @@ namespace ProSnippetsGeometry
           LineSegment anotherLineSegment = lb.ToSegment();
         }
       });
+
+      // builderEx constructors don't need to run on the MCT
+      LineBuilderEx lbuilderEx = new LineBuilderEx(lineSegment);
+      // find the existing coordinates
+      lbuilderEx.QueryCoords(out startPt, out endPt);
+
+      // or use 
+      //startPt = lb.StartPoint;
+      //endPt = lb.EndPoint;
+
+      // update the coordinates
+      lbuilderEx.SetCoords(GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint, GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint);
+
+      // or use 
+      //lb.StartPoint = GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint;
+      //lb.EndPoint = GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint;
+
+      LineSegment segment2 = lbuilderEx.ToSegment() as LineSegment;
+
       #endregion
     }
 
@@ -1671,9 +1949,17 @@ namespace ProSnippetsGeometry
         {
           // do something with the builder
 
-          CubicBezierSegment anotherBezier = cbb.ToSegment();
+          bezier = cbb.ToSegment();
         }
       });
+
+
+      // builderEx constructors dont need to run on the MCT
+      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt.ToMapPoint(), ctrl2Pt.ToMapPoint(), endPt);
+      bezier = cbbEx.ToSegment() as CubicBezierSegment;
+
+      // builderEx convenience methods dont need to run on the MCt
+      bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
 
       #endregion
     }
@@ -1691,7 +1977,7 @@ namespace ProSnippetsGeometry
       MapPoint ctrl2Pt = MapPointBuilder.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84);
 
       // Builder convenience methods don't need to run on the MCT
-      CubicBezierSegment anotherBezier = CubicBezierBuilder.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
+      CubicBezierSegment bezier = CubicBezierBuilder.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
 
       // Builder constructors need to run on the MCT
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -1700,9 +1986,17 @@ namespace ProSnippetsGeometry
         {
           // do something with the builder
 
-          CubicBezierSegment bezier = cbb.ToSegment();
+          bezier = cbb.ToSegment();
         }
       });
+
+
+      // builderEx constructors dont need to run on the MCT
+      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt, ctrl2Pt, endPt);
+      bezier = cbbEx.ToSegment() as CubicBezierSegment;
+
+      // builderEx convenience methods dont need to run on the MCt
+      bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
 
       #endregion
     }
@@ -1739,6 +2033,13 @@ namespace ProSnippetsGeometry
         }
       });
 
+      // builderEx constructors dont need to run on the MCT
+      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(listMapPoints);
+      bezier = cbbEx.ToSegment() as CubicBezierSegment;
+
+      // builderEx convenience methods dont need to run on the MCt
+      bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(listMapPoints);
+
       #endregion
     }
 
@@ -1764,6 +2065,14 @@ namespace ProSnippetsGeometry
         }
       });
 
+      CubicBezierBuilder cbbEx = new CubicBezierBuilder(bezierSegment);
+      MapPoint startPtEx = cbbEx.StartPoint;
+      Coordinate2D ctrlPt1Ex = cbbEx.ControlPoint1;
+      Coordinate2D ctrlPt2Ex = cbbEx.ControlPoint2;
+      MapPoint endPtEx = cbbEx.EndPoint;
+     
+      // or use the QueryCoords method
+      cbbEx.QueryCoords(out startPtEx, out ctrlPt1Ex, out ctrlPt2Ex, out endPtEx);
       #endregion
     }
 
@@ -2612,7 +2921,7 @@ namespace ProSnippetsGeometry
       try
       {
         var model = ArcGIS.Core.Geometry.MultipatchBuilderEx.From3DModelFile(@"c:\Temp\My3dModelFile.dae");
-        bool isEMpty = model.IsEmpty;
+        bool modelIsEmpty = model.IsEmpty;
       }
       catch (FileNotFoundException)
       {

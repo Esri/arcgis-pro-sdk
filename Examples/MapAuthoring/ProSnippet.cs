@@ -26,6 +26,7 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Desktop.Mapping.DeviceLocation;
+using ArcGIS.Desktop.Mapping.Offline;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,11 +55,10 @@ namespace MapAuthoring.ProSnippet
       #region Create a new map with a default basemap layer
 
       await QueuedTask.Run(() =>
-    {
-      var map = MapFactory.Instance.CreateMap(mapName, basemap: Basemap.ProjectDefault);
-      //TODO: use the map...
-
-    });
+      {
+        var map = MapFactory.Instance.CreateMap(mapName, basemap: Basemap.ProjectDefault);
+        //TODO: use the map...
+      });
 
       #endregion
     }
@@ -185,8 +185,20 @@ namespace MapAuthoring.ProSnippet
       //QueuedTask.Run(() => map?.SetBasemapLayers(portalBaseMaps[0]));
 
       #endregion
+    }
+
+    private void SaveMap()
+    {
+      Map map = null;
+
+      #region Save Map as MapX
+
+      map.SaveAsFile(@"C:\Data\MyMap.mapx");
+
+      #endregion
 
     }
+
     private void ClipMap()
     {
       QueuedTask.Run(() =>
@@ -402,6 +414,212 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
+		#region ProSnippet Group: Offline Map
+		#endregion
+
+    public void OfflineMaps1()
+		{
+      #region Check Map Has Sync-Enabled Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        var hasSyncEnabledContent = GenerateOfflineMap.Instance.GetCanGenerateReplicas(map);
+        if (hasSyncEnabledContent)
+				{
+          //TODO - use status...
+				}
+      });
+      #endregion
+    }
+
+    public void OfflineMaps2()
+    {
+      #region Generate Replicas for Sync-Enabled Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var extent = MapView.Active.Extent;
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Check map has sync-enabled content that can be taken offline
+        var hasSyncEnabledContent = GenerateOfflineMap.Instance.GetCanGenerateReplicas(map);
+        if (hasSyncEnabledContent)
+        {
+          //Generate Replicas and take the content offline
+          //sync-enabled content gets copied local into a SQLite DB
+          var gen_params = new GenerateReplicaParams()
+          {
+            Extent = extent, //SR of extent must match map SR
+
+            //DestinationFolder can be left blank, if specified,
+            //it must exist. Defaults to project offline maps location
+            DestinationFolder = @"C:\Data\Offline"
+          };
+          //Sync-enabled layer content will be resourced to point to the
+          //local replica content.
+          GenerateOfflineMap.Instance.GenerateReplicas(map, gen_params);
+
+        }
+      });
+      #endregion
+    }
+
+    public void OfflineMaps3()
+    {
+      #region Check Map Has Local Syncable Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Check map has local syncable content
+        var canSyncContent = GenerateOfflineMap.Instance.GetCanSynchronizeReplicas(map);
+        if (canSyncContent)
+        {
+          //TODO - use status
+        }
+      });
+      #endregion
+    }
+
+    public void OfflineMaps4()
+    {
+      #region Synchronize Replicas for Syncable Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Check map has local syncable content
+        var canSyncContent = GenerateOfflineMap.Instance.GetCanSynchronizeReplicas(map);
+        if (canSyncContent)
+        {
+          //Sync Replicas - changes since last sync are pushed to the
+          //parent replica. Parent changes are pulled to the client.
+          //Unsaved edits are _not_ sync'd. 
+          GenerateOfflineMap.Instance.SynchronizeReplicas(map);
+        }
+      });
+      #endregion
+    }
+
+    public void OfflineMaps5()
+    {
+      #region Remove Replicas for Syncable Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var extent = MapView.Active.Extent;
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Check map has local syncable content
+        //Either..
+        //var canSyncContent = GenerateOfflineMap.Instance.GetCanSynchronizeReplicas(map);
+        //Or...both accomplish the same thing...
+        var canRemove = GenerateOfflineMap.Instance.GetCanRemoveReplicas(map);
+        if (canRemove)
+        {
+          //Remove Replicas - any unsync'd changes are lost
+          //Call sync _first_ to push any outstanding changes if
+          //needed. Local syncable content is re-sourced
+          //to point to the service
+          GenerateOfflineMap.Instance.RemoveReplicas(map);
+        }
+      });
+      #endregion
+    }
+
+    public void OfflineMaps6()
+    {
+      #region Export Map Raster Tile Cache Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var extent = MapView.Active.Extent;
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Does the map have any exportable raster content?
+        var canExport = GenerateOfflineMap.Instance.GetCanExportRasterTileCache(map);
+        if (canExport)
+        {
+          //Check the available LOD scale ranges
+          var scales = GenerateOfflineMap.Instance.GetExportRasterTileCacheScales(map, extent);
+          //Pick the desired LOD scale
+          var max_scale = scales[scales.Count() / 2];
+
+          //Configure the export parameters
+          var export_params = new ExportTileCacheParams()
+          {
+            Extent = extent,//Use same extent as was used to retrieve scales
+            MaximumUserDefinedScale = max_scale
+            //DestinationFolder = .... (optional)
+          };
+          //If DestinationFolder is not set, output defaults to project
+          //offline maps location set in the project properties. If that is 
+          //not set, output defaults to the current project folder location.
+
+          //Do the export. Depending on the MaximumUserDefinedScale and the
+          //area of the extent requested, this can take minutes for tile packages
+          //over 1 GB or less if your network speed is slow...
+          GenerateOfflineMap.Instance.ExportRasterTileCache(map, export_params);
+        }
+      });
+      #endregion
+    }
+
+    public void OfflineMaps7()
+    {
+      #region Export Map Vector Tile Cache Content
+
+      //namespace ArcGIS.Desktop.Mapping.Offline
+      var extent = MapView.Active.Extent;
+      var map = MapView.Active.Map;
+
+      //await if needed...
+      QueuedTask.Run(() =>
+      {
+        //Does the map have any exportable vector tile content?
+        var canExport = GenerateOfflineMap.Instance.GetCanExportVectorTileCache(map);
+        if (canExport)
+        {
+          //Check the available LOD scale ranges
+          var scales = GenerateOfflineMap.Instance.GetExportVectorTileCacheScales(map, extent);
+          //Pick the desired LOD scale
+          var max_scale = scales[scales.Count() / 2];
+
+          //Configure the export parameters
+          var export_params = new ExportTileCacheParams()
+          {
+            Extent = extent,//Use same extent as was used to retrieve scales
+            MaximumUserDefinedScale = max_scale,
+            DestinationFolder = @"C:\Data\Offline"
+          };
+          //If DestinationFolder is not set, output defaults to project
+          //offline maps location set in the project properties. If that is 
+          //not set, output defaults to the current project folder location.
+
+          //Do the export. Depending on the MaximumUserDefinedScale and the
+          //area of the extent requested, this can take minutes for tile packages
+          //over 1 GB or less if your network speed is slow...
+          GenerateOfflineMap.Instance.ExportVectorTileCache(map, export_params);
+        }
+      });
+      #endregion
+    }
 
     #region ProSnippet Group: Create Layer
     #endregion
@@ -769,8 +987,50 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
     }
+    #region ProSnippet Group: Basemap Layers
+    #endregion
+
+    private void BaseMap()
+    {
+      Map aMap = null;
+
+      #region Update a map's basemap layer
+      aMap.SetBasemapLayers(Basemap.Gray);
+      #endregion
+
+      #region Remove basemap layer from a map
+      aMap.SetBasemapLayers(Basemap.None);
+      #endregion    
+    }
+
     #region ProSnippet Group: Working with Layers
     #endregion
+
+    public void Simple()
+    {
+      Map aMap = null;
+
+      #region Get a list of layers filtered by layer type from a map
+      List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
+      #endregion
+
+      #region Find a layer
+      //Finds layers by name and returns a read only list of Layers
+      IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
+
+      //Finds a layer using a URI.
+      //The Layer URI you pass in helps you search for a specific layer in a map
+      var lyrFindLayer = MapView.Active.Map.FindLayer("CIMPATH=map/u_s__states__generalized_.xml");
+
+      //This returns a collection of layers of the "name" specified. You can use any Linq expression to query the collection.  
+      var lyrExists = MapView.Active.Map.GetLayersAsFlattenedList()
+                         .OfType<FeatureLayer>().Any(f => f.Name == "U.S. States (Generalized)");
+      #endregion
+
+      #region Find a standalone table
+      IReadOnlyList<StandaloneTable> tables = aMap.FindStandaloneTables("addresses");
+      #endregion    
+    }
     public List<Layer> FindLayersWithPartialName(string partialName)
     {
 
@@ -787,6 +1047,54 @@ namespace MapAuthoring.ProSnippet
 
       return layers;
     }
+
+    public void CreateLyrx()
+    {
+      Layer layer = null;
+      #region Create a Lyrx file
+
+      LayerDocument layerDocument = new LayerDocument(layer);
+      layerDocument.Save(@"c:\Data\MyLayerDocument.lyrx");
+      #endregion
+    }
+    public void MiscOneLiners()
+    {
+      Map aMap = MapView.Active.Map;
+
+      #region Count the features selected in a map
+      var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      var noFeaturesSelected = lyr.SelectionCount;
+      #endregion
+    }
+
+    public void AccessDisplayField()
+    {
+      #region Access the display field for a layer
+      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        // get the CIM definition from the layer
+        var cimFeatureDefinition = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
+        // get the view of the source table underlying the layer
+        var cimDisplayTable = cimFeatureDefinition.FeatureTable;
+        // this field is used as the 'label' to represent the row
+        var displayField = cimDisplayTable.DisplayField;
+      });
+      #endregion
+    }
+
+    public void EnableLabeling()
+    {
+      #region Enable labeling on a layer
+      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        // toggle the label visibility
+        featureLayer.SetLabelVisibility(!featureLayer.IsLabelVisible);
+      });
+      #endregion
+    }
+
     public static void MoveLayerTo3D()
     {
       #region Move a layer in the 2D group to the 3D Group in a Local Scene
@@ -893,65 +1201,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
     }
-    public void MiscOneLiners()
-    {
-      Map aMap = MapView.Active.Map;
 
-      #region Update a map's basemap layer
-      aMap.SetBasemapLayers(Basemap.Gray);
-      #endregion
-
-      #region Remove basemap layer from a map
-      aMap.SetBasemapLayers(Basemap.None);
-      #endregion
-
-      #region Find a layer
-      //Finds layers by name and returns a read only list of Layers
-      IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
-
-      //Finds a layer using a URI.
-      //The Layer URI you pass in helps you search for a specific layer in a map
-      var lyrFindLayer = MapView.Active.Map.FindLayer("CIMPATH=map/u_s__states__generalized_.xml");
-
-      //This returns a collection of layers of the "name" specified. You can use any Linq expression to query the collection.  
-      var lyrExists = MapView.Active.Map.GetLayersAsFlattenedList()
-                         .OfType<FeatureLayer>().Any(f => f.Name == "U.S. States (Generalized)");
-      #endregion
-
-      #region Count the features selected in a map
-      var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      var noFeaturesSelected = lyr.SelectionCount;
-      #endregion
-
-      #region Get a list of layers filtered by layer type from a map
-      List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
-      #endregion
-
-      #region Find a standalone table
-      IReadOnlyList<StandaloneTable> tables = aMap.FindStandaloneTables("addresses");
-      #endregion
-    }
-    public static Task<object> ActiveCellContents()
-    {
-      #region Retrieve the values of selected cell in the attribute table
-      if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
-      {
-        var mapMember = tablePane.MapMember;
-        var oid = tablePane.ActiveObjectID;
-        if (oid.HasValue && oid.Value != -1 && mapMember != null)
-        {
-          var activeField = tablePane.ActiveColumn;
-          return QueuedTask.Run<object>(() =>
-          {
-            // TODO: Use core objects to retrieve record and get value
-
-            return null;
-          });
-        }
-      }
-      #endregion
-      return Task.FromResult<object>(null);
-    }
     public static void GetRotationFieldOfRenderer()
     {
       #region Get the attribute rotation field of a layer
@@ -963,34 +1213,6 @@ namespace MapAuthoring.ProSnippet
         var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
         var rotationExpression = rotationInfoZ.ValueExpressionInfo.Expression; // this expression stores the field name  
             });
-      #endregion
-    }
-    public void EnableLabeling()
-    {
-      #region Enable labeling on a layer
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-              // toggle the label visibility
-              featureLayer.SetLabelVisibility(!featureLayer.IsLabelVisible);
-      });
-      #endregion
-    }
-
-
-    public void AccessDisplayField()
-    {
-      #region Access the display field for a layer
-      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-              // get the CIM definition from the layer
-              var cimFeatureDefinition = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
-              // get the view of the source table underlying the layer
-              var cimDisplayTable = cimFeatureDefinition.FeatureTable;
-              // this field is used as the 'label' to represent the row
-              var displayField = cimDisplayTable.DisplayField;
-      });
       #endregion
     }
 
@@ -1182,6 +1404,45 @@ namespace MapAuthoring.ProSnippet
 
 
     #endregion
+
+    #region ProSnippet Group: Attribute Table - ITablePane
+    #endregion
+
+    public void SetTablePaneZoom()
+    {
+      #region Set zoom level for Attribute Table
+      if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
+      {
+        var currentZoomLevel = tablePane.ZoomLevel;
+
+        var newZoomLevel = currentZoomLevel + 50;
+        tablePane.SetZoomLevel(newZoomLevel);
+      }
+
+      #endregion
+    }
+
+    public static Task<object> ActiveCellContents()
+    {
+      #region Retrieve the values of selected cell in the attribute table
+      if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
+      {
+        var mapMember = tablePane.MapMember;
+        var oid = tablePane.ActiveObjectID;
+        if (oid.HasValue && oid.Value != -1 && mapMember != null)
+        {
+          var activeField = tablePane.ActiveColumn;
+          return QueuedTask.Run<object>(() =>
+          {
+            // TODO: Use core objects to retrieve record and get value
+
+            return null;
+          });
+        }
+      }
+      #endregion
+      return Task.FromResult<object>(null);
+    }
 
     #region ProSnippet Group: Metadata
     #endregion
@@ -1820,7 +2081,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
-      #region Update the sort order (mosaic method) on a mosaic layer
+      #region Update the sort order - mosaic method on a mosaic layer
       await QueuedTask.Run(() =>
       {
         // Get the image sub-layer from the mosaic layer.
@@ -1834,7 +2095,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
-      #region Update the resolve overlap (mosaic operator) on a mosaic layer
+      #region Update the resolve overlap - mosaic operator on a mosaic layer
       await QueuedTask.Run(() =>
       {
         // Get the image sub-layer from the mosaic layer.
@@ -1957,7 +2218,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
-      #region Update the sort order (mosaic method) on an image service layer
+      #region Update the sort order - mosaic method on an image service layer
       await QueuedTask.Run(() =>
       {
         // Get the mosaic rule of the image service.
@@ -1969,7 +2230,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
-      #region Update the resolve overlap (mosaic operator) on an image service layer
+      #region Update the resolve overlap - mosaic operator on an image service layer
       await QueuedTask.Run(() =>
       {
         // Get the mosaic rule of the image service.

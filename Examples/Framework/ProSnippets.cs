@@ -558,11 +558,33 @@ namespace Framework.Snippets {
 
         #endregion
 
+    }  
 
-
-
-    }
 
 }
+internal class Module1 : Module
+{
+  #region Suggested command options in CommandSearch when a tab is activated.
+  //In the module class..
+  public override string[] GetSuggestedCMDIDs(string activeTabID)
+  {
+    //Return the static list of daml ids you want to be the (suggested) 
+    //defaults relevant to the given tab. It can be none, some, or all of the
+    //commands associated with the activeTabID.
+    //In this example, there are two tabs. This example arbitrarily
+    //identifies just one command on each tab to be a default to show in the
+    //command search list (when _that_ particular tab is active)
+    switch (activeTabID)
+    {
+      case "CommandSearch_Example_Tab1":
+        return new string[] { "CommandSearch_Example_Button2" };
+      case "CommandSearch_Example_Tab2":
+        return new string[] { "CommandSearch_Example_Button4" };
+    }
+    return new string[] { "" };
+  }
+  #endregion
+}
+
 
 

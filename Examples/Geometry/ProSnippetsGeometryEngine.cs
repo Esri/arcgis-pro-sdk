@@ -1056,6 +1056,24 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void Generalize()
+    {
+      Polyline polylineWithZ = null;
+
+      #region Generalize
+
+      Polyline generalizedPolyline = GeometryEngine.Instance.Generalize(polylineWithZ, 200) as Polyline;
+      // generalizedPolyline.HasZ = true
+
+      Polygon generalized3DPolyline = GeometryEngine.Instance.Generalize3D(polylineWithZ, 200) as Polygon;
+      // generalized3DPolyline.HasZ = true
+
+      // note that generalized3DPolyline and generalizedPolyline will have different definitions
+      //  ie generalizedPolyline.IsEqual(generalized3DPolyline) = false
+
+      #endregion 
+    }
+
     public void GeodesicArea()
     {
       #region Calculate the Geodesic Area of a polygon
@@ -1248,6 +1266,35 @@ namespace ProSnippetsGeometry
       // densify the polygon (in km)
       double maxSegmentLength = maxLen / 10000;
       densifiedPoly = GeometryEngine.Instance.GeodeticDensifyByLength(polygon, maxSegmentLength, LinearUnit.Kilometers, GeodeticCurveType.Geodesic) as Polygon;
+
+      #endregion
+    }
+
+    public void GeodeticDistanceAndAzimuth()
+    {
+      #region Calculate geodetic distance, azimuth between two points
+
+      SpatialReference sr = SpatialReferences.WGS84;
+
+      MapPoint p1 = MapPointBuilder.CreateMapPoint(111, 55, sr);
+      MapPoint p2 = MapPointBuilder.CreateMapPoint(95.5845, 64.2285, sr);
+
+      double distance, az12, az21;
+
+      distance = GeometryEngine.Instance.GeodeticDistanceAndAzimuth(p1, p2, GeodeticCurveType.Geodesic, out az12, out az21);
+      // distance - 1339728.0303777338
+      // az12 - 326.235780421405
+      // az21 - 132.87425637913955
+
+      distance = GeometryEngine.Instance.GeodeticDistanceAndAzimuth(p1, p2, GeodeticCurveType.Loxodrome, out az12, out az21);
+      // distance - 1342745.9687172563
+      // az12 - 319.966400332104
+      // az21- 139.96640033210397
+
+      distance = GeometryEngine.Instance.GeodeticDistanceAndAzimuth(p1, p2, GeodeticCurveType.GreatElliptic, out az12, out az21);
+      // distance - 1339728.038837946
+      // az12 - 326.22479262335418
+      // az21 - 132.88558894347742
 
       #endregion
     }
@@ -1465,6 +1512,28 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void Length_Length3D()
+    {
+      #region Determine Length, Length3D of line
+
+      MapPoint c1 = MapPointBuilder.CreateMapPoint(1, 2, 3);
+      MapPoint c2 = MapPointBuilder.CreateMapPoint(4, 2, 4);
+
+      // line segment
+      LineSegment line = LineBuilder.CreateLineSegment(c1, c2);
+      double len = line.Length;     // = 3
+      double len3D = line.Length3D;   // = Math.Sqrt(10)
+
+      // polyline
+      Polyline p = PolylineBuilder.CreatePolyline(line);
+      double p_len = p.Length;        // = len = 3
+      double p_len3D = p.Length3D;    // = len3D = Math.Sqrt(10)
+
+      double ge_len = GeometryEngine.Instance.Length(p);      // = p_len = len = 3
+      double ge_len3d = GeometryEngine.Instance.Length3D(p);    // = p_len3D = len3D = Math.Sqrt(10)
+      #endregion
+    }
+
     public void GetMinMaxM()
     {
       // GetMinMaxM, GetMMonotonic, GetPointsAtM, GetSubCurveBetweenMs, GetNormalsAtM, SetMsAsDistance, SetAndInterpolateMsBetween
@@ -1607,6 +1676,31 @@ namespace ProSnippetsGeometry
       line = segments[0] as LineSegment;
       // line.StartCoordinate = (1000, -1000)
       // line.EndCoordinate = (900, -1000)
+      #endregion
+    }
+
+    public void GetMsAtDistance()
+    {
+      #region Get the M values at the specified distance along the multipart
+
+      string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2]],[[-2000,-2000,1],[-2000,1000,2]]],\"spatialReference\":{\"wkid\":3857}}";
+      Polyline polyline = PolylineBuilder.FromJson(json);
+      
+      // polyline has 2 parts
+
+      double m1, m2;
+      GeometryEngine.Instance.GetMsAtDistance(polyline, 0, AsRatioOrLength.AsLength, out m1, out m2);
+      // m1 = -3
+      // m2 = NaN
+
+      GeometryEngine.Instance.GetMsAtDistance(polyline, 500, AsRatioOrLength.AsLength, out m1, out m2);
+      // m1 = -2.5
+      // m2 = NaN
+
+      GeometryEngine.Instance.GetMsAtDistance(polyline, 1000, AsRatioOrLength.AsLength, out m1, out m2);
+      // m1 = -2
+      // m2 = 1     // m2 has a value because distance 1000 is at the end of the first part, beginning of the second part
+
       #endregion
     }
 
@@ -2440,6 +2534,55 @@ namespace ProSnippetsGeometry
       // polygonZReplaced.Points[0].Z = -1
       // polygonZReplaced.Points[1].Z = 3
       // polygonZReplaced.Points[2].Z = -1
+      #endregion
+    }
+
+    public void Reshape()
+    {
+      #region Reshape a polygon
+
+      List<Coordinate2D> polygon1Coords = new List<Coordinate2D>()
+      {
+        new Coordinate2D(0, -11000),
+        new Coordinate2D(1000, -11000),
+        new Coordinate2D(1000, -12000),
+        new Coordinate2D(0, -12000),
+        new Coordinate2D(0, -11000)
+      };
+
+      // reshaper coordinates intersect the polygon
+      List<Coordinate2D> reshaperCoords = new List<Coordinate2D>()
+      {
+        new Coordinate2D(1500, -11800),
+        new Coordinate2D(-2600, -11800)
+      };
+
+      SpatialReference sr = SpatialReferenceBuilder.CreateSpatialReference(102010);
+      Polygon polygon1 = PolygonBuilder.CreatePolygon(polygon1Coords, sr);
+      Polyline reshaper = PolylineBuilder.CreatePolyline(reshaperCoords, sr);
+
+      Polygon outPolygon = GeometryEngine.Instance.Reshape(polygon1, reshaper) as Polygon;
+      // outPolygon.PartCount = 1
+
+      ReadOnlySegmentCollection segments = outPolygon.Parts[0];
+      // segments.Count = 4
+      // outPolygon.PointCount = 5
+
+      string json = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportSkipCRS, outPolygon);
+      // json = "{\"rings\":[[[0,-11800],[0,-11000],[1000,-11000],[1000,-11800],[0,-11800]]]}";
+
+
+      // example where the Reshaper polyline doesn't intersect the input
+
+      reshaperCoords.Clear();
+      reshaperCoords.Add(new Coordinate2D(1000, 1000));
+      reshaperCoords.Add(new Coordinate2D(2000, 1000));
+
+      reshaper = PolylineBuilder.CreatePolyline(reshaperCoords, sr);
+
+      outPolygon = GeometryEngine.Instance.Reshape(polygon1, reshaper) as Polygon;
+      // outPolygon = null
+
       #endregion
     }
 

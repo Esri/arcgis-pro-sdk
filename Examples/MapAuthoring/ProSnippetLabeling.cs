@@ -145,7 +145,7 @@ namespace LabelingSnippets
         }
 
         /// <summary>
-        /// Modify the Placement/Position of labels (Point geometry)
+        /// Modify the Placement/Position of labels - Point geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -159,7 +159,7 @@ namespace LabelingSnippets
                 return Task.FromResult(0);
             return  QueuedTask.Run(() =>
             {
-                #region Modify the Placement/Position of labels (Point geometry)
+                #region Modify the Placement/Position of labels - Point geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -181,7 +181,7 @@ namespace LabelingSnippets
             });
         }
         /// <summary>
-        /// Modify the Placement/Position of labels (Line geometry)
+        /// Modify the Placement/Position of labels - Line geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -192,7 +192,7 @@ namespace LabelingSnippets
                 return Task.FromResult(0);
             return QueuedTask.Run(() =>
             {
-                #region Modify the Placement/Position of labels (Line geometry)
+                #region Modify the Placement/Position of labels - Line geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -227,7 +227,7 @@ namespace LabelingSnippets
             });
         }
         /// <summary>
-        /// Modify the Placement/Position of labels (Polygon geometry)
+        /// Modify the Placement/Position of labels - Polygon geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -237,7 +237,7 @@ namespace LabelingSnippets
                 return Task.FromResult(0);
             return QueuedTask.Run(() =>
             {
-                #region Modify the Placement/Position of labels (Polygon geometry)
+                #region Modify the Placement/Position of labels - Polygon geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -272,7 +272,7 @@ namespace LabelingSnippets
         }
 
         /// <summary>
-        /// Modify Orientation of a label using the MaplexEngine (Points and Polygon geometry)
+        /// Modify Orientation of a label using the MaplexEngine - Points and Polygon geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -289,7 +289,7 @@ namespace LabelingSnippets
                 CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
                 if (labelEngine is CIMStandardGeneralPlacementProperties)
                     return;
-                #region Modify Orientation of a label using the MaplexEngine (Points and Polygon geometry)
+                #region Modify Orientation of a label using the MaplexEngine - Points and Polygon geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -307,7 +307,7 @@ namespace LabelingSnippets
         }
 
         /// <summary>
-        /// Modify Orientation of a label using the MaplexEngine (Line geometry)
+        /// Modify Orientation of a label using the MaplexEngine - Line geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -321,7 +321,7 @@ namespace LabelingSnippets
                 CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
                 if (labelEngine is CIMStandardGeneralPlacementProperties)
                     return;
-                #region Modify Orientation of a label using the MaplexEngine (Line geometry)
+                #region Modify Orientation of a label using the MaplexEngine - Line geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -351,7 +351,7 @@ namespace LabelingSnippets
                 CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
                 if (labelEngine is CIMStandardGeneralPlacementProperties)
                     return;
-                #region Modify label Rotation (Point geometry)
+                #region Modify label Rotation - Point geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -409,7 +409,7 @@ namespace LabelingSnippets
             });
         }
         /// <summary>
-        /// Modify label's Leader Line Anchor point properties (Polygon geometry)
+        /// Modify label's Leader Line Anchor point properties - Polygon geometry
         /// </summary>
         /// <param name="featureLayer"></param>
         /// <returns></returns>
@@ -423,7 +423,7 @@ namespace LabelingSnippets
                 CIMGeneralPlacementProperties labelEngine = MapView.Active.Map.GetDefinition().GeneralPlacementProperties;
                 if (labelEngine is CIMStandardGeneralPlacementProperties)
                     return;
-                #region Modify label's Leader Line Anchor point properties (Polygon geometry)
+                #region Modify label's Leader Line Anchor point properties - Polygon geometry
                 //Note: call within QueuedTask.Run()
                 //Get the layer's definition
                 var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;

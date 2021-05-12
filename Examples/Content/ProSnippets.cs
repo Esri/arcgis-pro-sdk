@@ -160,8 +160,8 @@ namespace Content.Snippets
 
       #endregion
 
-      #region ProSnippet Group: Project Items
-      #endregion
+  #region ProSnippet Group: Project Items
+  #endregion
 
       #region Adds item to the current project
       //Adding a folder connection
@@ -326,6 +326,30 @@ namespace Content.Snippets
                   @"ArcGIS\Projects");
 
       #endregion
+
+      var contentItem = Project.Current.GetItems<FolderConnectionProjectItem>().First();
+
+      #region Refresh an Item's Children
+      //var contentItem = ...
+      //Check if the MCT is required for Refresh()
+      if (contentItem.IsMainThreadRequired)
+			{
+        //QueuedTask.Run must be used if item.IsMainThreadRequired
+        //returns true
+        QueuedTask.Run(() => contentItem.Refresh());
+			}
+      else
+			{
+        //if item.IsMainThreadRequired returns false, any
+        //thread can be used to invoke Refresh(), though
+        //BackgroundTask is preferred.
+        contentItem.Refresh();
+
+        //Or, via BackgroundTask
+        ArcGIS.Core.Threading.Tasks.BackgroundTask.Run(() =>
+          contentItem.Refresh(), ArcGIS.Core.Threading.Tasks.BackgroundProgressor.None);
+      }
+      #endregion
     }
 
     public void ContentSnippet3()
@@ -394,7 +418,7 @@ namespace Content.Snippets
     public static void ItemFindAndSelection()
     {
 
-      #region Select project containers (for use with SelectItemAsync)
+      #region Select project containers - for use with SelectItemAsync
 
       //Use Project.Current.ProjectItemContainers
       var folderContainer = Project.Current.ProjectItemContainers.First(c => c.Path == "FolderConnection");
@@ -461,6 +485,137 @@ namespace Content.Snippets
       #endregion
 
     }
+
+    #region ProSnippet Group: Favorites
+
+    public void Favorites()
+    {
+      void AddFavorite()
+      {
+        #region Add a Favorite - Folder
+
+        var itemFolder = ItemFactory.Instance.Create(@"d:\data");
+
+        // is the folder item already a favorite?
+        var fav = FavoritesManager.Current.GetFavorite(itemFolder);
+        if (fav == null)
+        {
+          if (FavoritesManager.Current.CanAddAsFavorite(itemFolder))
+          {
+            fav = FavoritesManager.Current.AddFavorite(itemFolder);
+          }
+        }
+
+        #endregion
+      }
+
+      void InsertFavorite()
+      {
+        #region Insert a Favorite - Geodatabase path
+
+        string gdbPath = "@C:\\myDataFolder\\myData.gdb";
+
+        var itemGDB = ItemFactory.Instance.Create(gdbPath);
+
+        // is the item already a favorite?
+        var fav = FavoritesManager.Current.GetFavorite(itemGDB);
+        // no; add it with IsAddedToAllNewProjects set to true
+        if (fav != null)
+        {
+          if (FavoritesManager.Current.CanAddAsFavorite(itemGDB))
+            FavoritesManager.Current.InsertFavorite(itemGDB, 1, true);
+        }
+        #endregion
+      }
+
+      void AddFavoriteStyle()
+      {
+        #region Add a Favorite - Style project item
+
+        StyleProjectItem styleItem = Project.Current.GetItems<StyleProjectItem>().
+                                FirstOrDefault(style => (style.Name == "ArcGIS 3D"));
+
+        if (FavoritesManager.Current.CanAddAsFavorite(styleItem))
+        {
+          // add to favorites with IsAddedToAllNewProjects set to false
+          FavoritesManager.Current.AddFavorite(styleItem);
+        }
+
+        #endregion
+      }
+
+
+      void ToggleFavoriteFlag()
+      {
+        #region Toggle the flag IsAddedToAllNewProjects for a favorite
+
+        var itemFolder = ItemFactory.Instance.Create(@"d:\data");
+
+        // is the folder item already a favorite?
+        var fav = FavoritesManager.Current.GetFavorite(itemFolder);
+        if (fav != null)
+        {
+          if (fav.IsAddedToAllNewProjects)
+            FavoritesManager.Current.ClearIsAddedToAllNewProjects(fav.Item);
+          else
+            FavoritesManager.Current.SetIsAddedToAllNewProjects(fav.Item);
+        }
+        #endregion
+      }
+
+      void GetFavorites()
+      {
+        #region Get the set of favorites and iterate
+        var favorites = FavoritesManager.Current.GetFavorites();
+        foreach (var favorite in favorites)
+        {
+          bool isAddedToAllProjects = favorite.IsAddedToAllNewProjects;
+          // retrieve the underlying item of the favorite
+          Item item = favorite.Item;
+
+          // Item properties
+          var itemType = item.TypeID;
+          var path = item.Path;
+
+          // if it's a folder item
+          if (item is FolderConnectionProjectItem)
+          {
+          }
+          // if it's a goedatabase item
+          else if (item is GDBProjectItem)
+          {
+          }
+          // else 
+        }
+
+        #endregion
+      }
+
+      void RemoveAllFavorites()
+      {
+        #region Remove All Favorites
+
+        var favorites = FavoritesManager.Current.GetFavorites();
+        foreach (var favorite in favorites)
+          FavoritesManager.Current.RemoveFavorite(favorite.Item);
+
+        #endregion
+      }
+
+      void FavoriteEventt()
+      {
+        #region FavoritesChangedEvent
+
+        ArcGIS.Desktop.Core.Events.FavoritesChangedEvent.Subscribe((args) =>
+        {
+          // favorites have changed
+          int count = FavoritesManager.Current.GetFavorites().Count;
+        });
+
+        #endregion
+      }
+    }
+    #endregion
 
     #region ProSnippet Group: Metadata
     #endregion

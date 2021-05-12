@@ -2,6 +2,7 @@
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
+using ArcGIS.Desktop.Framework.Contracts;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Layouts;
 using ArcGIS.Desktop.Mapping;
@@ -32,18 +33,71 @@ namespace ReportAPITesting
 
         }
 
-        public static Report GetReport(string reportName)
+        public static async void GetReport(string reportName)
         {
             #region Get a specific report
             ReportProjectItem reportProjItem = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault(item => item.Name.Equals(reportName));
-            return reportProjItem?.GetReport();
+            Report report =  reportProjItem?.GetReport();
+            #endregion
+            #region Open a Report project item in a new view
+            //Open a report project item in a new view.
+            //A report project item may exist but it may not be open in a view. 
+
+            //Reference a report project item by name
+            ReportProjectItem reportPrjItem = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault(item => item.Name.Equals("MyReport"));
+
+            //Get the report associated with the report project item
+            Report reportToOpen = await QueuedTask.Run(() => reportPrjItem.GetReport());
+
+            //Create the new pane
+            IReportPane iNewReporttPane = await ProApp.Panes.CreateReportPaneAsync(reportToOpen); //GUI thread
             #endregion
 
-        }
+    }
+    public static void ReportMethods()
+        {
+          #region Activate an already open report view
+          Report report = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault().GetReport();
+          var reportPane = FrameworkApplication.Panes.FindReportPanes(report).Last();
+          if (reportPane == null)
+            return;
+          //Activate the pane
+          (reportPane as ArcGIS.Desktop.Framework.Contracts.Pane).Activate();
+         //Get the "ReportView" associated with the Report Pane.
+          ReportView reportView = reportPane.ReportView;
+          #endregion
+          #region Reference the active report view
+          //Confirm if the current, active view is a report view.  If it is, do something.
+          ReportView activeReportView = ReportView.Active;
+          if (activeReportView != null)
+          {
+            // do something
+          }
+          #endregion
+          #region Refresh the report view
+          if (reportView == null)
+                return;
+          QueuedTask.Run(() => reportView.Refresh());
+          #endregion
+          #region Zoom to whole page
+          QueuedTask.Run(() => reportView.ZoomToWholePage());
+      #endregion
+      #region Zoom to specific location on Report view
+        //On the QueuedTask
+        var detailsSection = report.Elements.OfType<ReportSection>().FirstOrDefault().Elements.OfType<ReportDetails>().FirstOrDefault();
+        var bounds = detailsSection.GetBounds();
+        ReportView.Active.ZoomTo(bounds);
+      #endregion
+      #region Zoom to page width
+      //Process on worker thread
+      QueuedTask.Run(() => reportView.ZoomToPageWidth());     
+          #endregion
+    }
 
-        #region ProSnippet Group: Create Report
-        #endregion
-        public static async void GenerateReport(FeatureLayer featureLayer)
+
+    #region ProSnippet Group: Create Report
+    #endregion
+    public static async void GenerateReport(FeatureLayer featureLayer)
         {
             #region Create report
             //Note: Call within QueuedTask.Run()
@@ -136,9 +190,9 @@ namespace ReportAPITesting
         }
         #region ProSnippet Group: Modify Reports 
         #endregion
-        public static void ModifyReport(string reportName, FeatureLayer featureLayer)
+        public static void ModifyReport(Report report, string reportName, FeatureLayer featureLayer)
         {
-            var report = GetReport(reportName);
+            
             #region Rename Report
             //Note: Call within QueuedTask.Run()
             ReportProjectItem reportProjItem = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault(item => item.Name.Equals(reportName));
@@ -161,7 +215,6 @@ namespace ReportAPITesting
             var defQuery = "STATE_NAME LIKE 'C%'";
             report.SetDefinitionQuery(defQuery);
             #endregion
-
 
             #region Modify the report Page
             //Note: Call within QueuedTask.Run()
@@ -217,105 +270,112 @@ namespace ReportAPITesting
             return reportStyle;
         }
 
-    #region ProSnippet Group: Element Factory
-    public static void ElementFactory()
+    #region ProSnippet Group: Report Elements
+    #endregion
+    public static void ElementFactory(Report report, ReportView reportView)
     {
-      #region Find the active report view
-      Report report = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault().GetReport();
-      var reportPane = FrameworkApplication.Panes.FindReportPanes(report).Last();
-      if (reportPane == null)
-        return;
+      #region Get various Report sections
+      //Get the "ReportSection element"
+      //ReportSectionElement contains the ReportHeader, ReportPageHeader, ReportDetails. ReportPageFooter, ReportFooter sections.
+      var mainReportSection = report.Elements.OfType<ReportSection>().FirstOrDefault();
 
-      ReportView reportView = reportPane.ReportView;
+      //Get the ReportHeader
+      var reportHeader = mainReportSection?.Elements.OfType<ReportHeader>().FirstOrDefault();
+
+      //Get the ReportHeader
+      var reportPageHeader = mainReportSection?.Elements.OfType<ReportPageHeader>().FirstOrDefault();
+
+      //Get the "ReportDetails" within the ReportSectionElement. ReportDetails is where "fields" are.
+      var reportDetailsSection = mainReportSection?.Elements.OfType<ReportDetails>().FirstOrDefault();
+
+      //Get the ReportPageFooter
+      var reportPageFooter = mainReportSection?.Elements.OfType<ReportPageFooter>().FirstOrDefault();
+
+      //Get the ReportFooter
+      var reportFooter = mainReportSection?.Elements.OfType<ReportFooter>().FirstOrDefault();
       #endregion
 
-      #region Refresh the report view
-      if (reportView == null)
-        return;
-
-      QueuedTask.Run(() =>
-      {
-        reportView.Refresh();
-      });
-
-
+      #region Select elements
+      //ReportDetailsSection contains the "Fields"
+      var elements = reportDetailsSection.GetElementsAsFlattenedList();
+      reportDetailsSection.SelectElements(elements);
       #endregion
 
       #region Select all elements
-      var pageFooterSection = report.Elements.Where(elm => elm is ReportPageFooter).FirstOrDefault() as ReportPageFooter;
-
+      //Select all elements in the Report Footer.
+      ReportPageFooter pageFooterSection = report.Elements.OfType<ReportSection>().FirstOrDefault().Elements.OfType<ReportPageFooter>().FirstOrDefault();
       pageFooterSection.SelectAllElements();
       #endregion
 
+      #region Get selected elements
+      IReadOnlyList<Element> selectedElements = report.GetSelectedElements();
+      //Can also use the active ReportView
+      IReadOnlyList<Element> selectedElementsFromView = ReportView.Active.GetSelectedElements();
+      #endregion
+
       #region Zoom to selected elements
-      //Process on worker thread
-       QueuedTask.Run(() =>
-      {
-        reportView.ZoomToSelectedElements();
-      });
+      QueuedTask.Run(() => reportView.ZoomToSelectedElements());
       #endregion Zoom to selected elements
 
       #region Clear element selection
       reportView.ClearElementSelection();
       #endregion
 
-      #region Zoom to whole page
-      //Process on worker thread
-      QueuedTask.Run(() =>
-      {
-        reportView.ZoomToWholePage();
-      });
+      #region Find specific elements in the report based on their Name.
+      var reportElementsToFind = new List<string> { "ReportText1", "ReportText2" };
+      var textReportElements = report.FindElements(reportElementsToFind);
       #endregion
 
-      #region Select elements
-      // Select text elements from the report footer
-      var reportFooterSection = report.Elements.Where(elm => elm is ReportFooter).FirstOrDefault() as ReportFooter;
-      var elements = reportFooterSection.GetElementsAsFlattenedList();
-
-      reportFooterSection.SelectElements(elements);
-      #endregion
-
-      #region Get selected elements
-      IReadOnlyList<Element> selectedElements = reportFooterSection.GetSelectedElements();
-      #endregion
-
-      #region Refresh report view
-      //Process on worker thread
-      QueuedTask.Run(() =>
-      {
-        reportView.Refresh();
-      });
-      #endregion
-
-      #region Zoom to
-      var detailsSection = report.Elements.Where(elm => elm is ReportDetails).FirstOrDefault() as ReportDetails;
-      var bounds = detailsSection.GetBounds();
-
-      Coordinate2D ll = new Coordinate2D(bounds.XMin, bounds.YMin);
-      Coordinate2D ur = new Coordinate2D(bounds.XMax, bounds.YMax);
-      Envelope env = EnvelopeBuilder.CreateEnvelope(ll, ur);
-
-      //Process on worker thread
-      QueuedTask.Run(() =>
-      {
-        reportView.ZoomTo(env);
-      });
-      #endregion
-
-      #region Zoom to page width
-      //Process on worker thread
-      QueuedTask.Run(() =>
-      {
-        reportView.ZoomToPageWidth();
-      });
+      #region Delete Elements
+      report.DeleteElements(textReportElements);
       #endregion
     }
-    #endregion
 
+    private static void CreateField(Report report)
+    {
+      #region Create a new field in the report
+      //This is the gap between two fields.
+      double fieldIncrement = 0.9388875113593206276389;
+      //On the QueuedTask
+      //New field to add.
+      var newReportField = new CIMReportField
+      {
+        Name = "POP1990",
+        FieldOrder = 2,
+      };
+      //Get the "ReportSection element"				
+      var mainReportSection = report.Elements.OfType<ReportSection>().FirstOrDefault();
+      if (mainReportSection == null) return;
 
+      //Get the "ReportDetails" within the ReportSectionElement. ReportDetails is where "fields" are.
+      var reportDetailsSection = mainReportSection?.Elements.OfType<ReportDetails>().FirstOrDefault();
+      if (reportDetailsSection == null) return;
 
+      //Within ReportDetails find the envelope that encloses a field.
+      //We get the first CIMParagraphTextGraphic in the collection so that we can add the new field next to it.					
+      var lastFieldGraphic = reportDetailsSection.Elements.FirstOrDefault((r) =>
+      {
+        var gr = r as GraphicElement;
+        if (gr == null) return false;
+        return (gr.GetGraphic() is CIMParagraphTextGraphic ? true : false);
+      });
+      //Get the Envelope of the last field
+      var graphicBounds = lastFieldGraphic.GetBounds();
 
+      //Min and Max values of the envelope
+      var xMinOfFieldEnvelope = graphicBounds.XMin;
+      var yMinOfFieldEnvelope = graphicBounds.YMin;
 
+      var xMaxOfFieldEnvelope = graphicBounds.XMax;
+      var YMaxOfFieldEnvelope = graphicBounds.YMax;
+      //create the new Envelope to be offset from the existing field
+      MapPoint newMinPoint = MapPointBuilder.CreateMapPoint(xMinOfFieldEnvelope + fieldIncrement, yMinOfFieldEnvelope);
+      MapPoint newMaxPoint = MapPointBuilder.CreateMapPoint(xMaxOfFieldEnvelope + fieldIncrement, YMaxOfFieldEnvelope);
+      Envelope newFieldEnvelope = EnvelopeBuilder.CreateEnvelope(newMinPoint, newMaxPoint);
 
+      //Create field
+      GraphicElement fieldGraphic = ReportElementFactory.Instance.CreateFieldValueTextElement(reportDetailsSection, newFieldEnvelope, newReportField);
+      #endregion
+    }
   }
 }

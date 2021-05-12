@@ -109,3 +109,4 @@ UpgradeLog*.XML
 /Examples/app.config
 /.vs/slnx.sqlite
 /.vs
+/Examples/RegionToExampleMap.csv

@@ -78,7 +78,7 @@ namespace GraphicsLayer.GraphicsLayer
 
     public void CreateGraphicElementUsingCIMGraphic()
     {
-      #region Graphic Element using CIMGraphic
+      #region Point Graphic Element using CIMGraphic
       var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList()
   .OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
       if (graphicsLayer == null)
@@ -103,7 +103,101 @@ namespace GraphicsLayer.GraphicsLayer
       });
       #endregion
     }
+    public void CreateLineGraphic()
+    {
+      
+      var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
+      if (graphicsLayer == null)
+        return;
+      QueuedTask.Run(() =>
+      {
+        #region Line Graphic Element using CIMGraphic
+        //On the QueuedTask
+        //Place a line symbol using the extent's lower left and upper right corner.
+        var extent = MapView.Active.Extent;
+        //get the lower left corner of the extent
+        var pointFromCoordinates = new Coordinate2D(extent.XMin, extent.YMin);
+        //get the upper right corner of the extent
+        var pointToCoordinates = new Coordinate2D(extent.XMax, extent.YMax);
+        List<Coordinate2D> points = new List<Coordinate2D> { pointFromCoordinates, pointToCoordinates };
+        //create the polyline
+        var lineSegment = PolylineBuilder.CreatePolyline(points);
 
+        //specify a symbol
+        var line_symbol = SymbolFactory.Instance.ConstructLineSymbol(
+                              ColorFactory.Instance.GreenRGB);
+
+        //create a CIMGraphic 
+        var graphic = new CIMLineGraphic()
+        {
+          Symbol = line_symbol.MakeSymbolReference(),
+          Line = lineSegment,
+        };
+        graphicsLayer.AddElement(graphic);
+        #endregion
+      });
+    }
+    public void CreatePolyGraphic()
+    {
+      var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
+      if (graphicsLayer == null)
+        return;
+      QueuedTask.Run(() =>
+      {
+        #region Polygon Graphic Element using CIMGraphic
+        //On the QueuedTask
+        //Place a polygon symbol using the mapview extent geometry
+        var extent = MapView.Active.Extent;
+        //Contract the extent
+        var polygonEnv = extent.Expand(-100000, -90000, false);
+        //create a polygon using the envelope
+        var polygon = PolygonBuilder.CreatePolygon(polygonEnv);
+
+        //specify a symbol
+        var poly_symbol = SymbolFactory.Instance.ConstructPolygonSymbol(
+                              ColorFactory.Instance.GreenRGB);
+
+        //create a CIMGraphic 
+        var graphic = new CIMPolygonGraphic()
+        {
+          Symbol = poly_symbol.MakeSymbolReference(),
+          Polygon = polygon,
+        };
+        graphicsLayer.AddElement(graphic);
+        #endregion
+      });
+    }
+    public void CreateMultiPointGraphics()
+    {
+      var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();
+      if (graphicsLayer == null)
+        return;
+      QueuedTask.Run(() =>
+      {
+        #region Multi-point Graphic Element using CIMGraphic
+        //On the QueuedTask
+        //Place a multipoint graphic using the mapview extent geometry
+        var extent = MapView.Active.Extent;
+        //Contract the extent
+        var polygonEnv = extent.Expand(-100000, -90000, false);
+        //create a polygon using the envelope
+        var polygon = PolygonBuilder.CreatePolygon(polygonEnv);
+        //Create MultipPoints from the polygon
+        var multiPoints = MultipointBuilder.CreateMultipoint(polygon);
+        //specify a symbol
+        var point_symbol = SymbolFactory.Instance.ConstructPointSymbol(
+                              ColorFactory.Instance.GreenRGB);
+
+        //create a CIMGraphic 
+        var graphic = new CIMMultipointGraphic
+        {
+          Symbol = point_symbol.MakeSymbolReference(),
+          Multipoint = multiPoints
+        };
+        graphicsLayer.AddElement(graphic);
+        #endregion
+      });
+    }
     public void CreateGraphicElementUsingCIMSymbol()
     {
       #region Graphic Element using CIMSymbol

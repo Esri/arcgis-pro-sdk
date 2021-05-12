@@ -1,4 +1,4 @@
-﻿/*
+/*
 
    Copyright 2018 Esri
 
@@ -661,7 +661,7 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
-			#region Delete Isosurface(s)
+			#region Delete Isosurface- s
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
@@ -725,7 +725,7 @@ namespace MapAuthoring.VoxelLayers
 			VoxelLayer voxelLayer = null;
 			var my_slice_id = "";
 
-			#region Get a Slice(s)
+			#region Get a Slice- s
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()

@@ -22,6 +22,10 @@
     <insertAccelerator refID="esri_mapping_selectContext" flags="Ctrl+Alt" key="S" />
     <insertAccelerator refID="esri_mapping_exploreContext" flags="Ctrl+Alt" key="C" />
     <insertAccelerator refID="esri_core_CommandSearchControl" flags="Alt" key="Q" />
+    <insertAccelerator refID="esri_core_groupContext" flags="Ctrl" key="G" />
+    <insertAccelerator refID="esri_core_ungroupContext" flags="Ctrl+Shift" key="G" />
+    <insertAccelerator refID="esri_core_exportContext" flags="Ctrl" key="E" />
+    <insertAccelerator refID="esri_core_printContext" flags="Ctrl" key="P" />
   </accelerators>
   
   <DockPaneSets>
@@ -107,27 +111,12 @@
             <portalSubGroup displayName="Layer Files" type="layerfiles"/>
           </portalGroup>
           <portalGroup displayName="Scenes" type="scenes"/>
-          <!--<portalGroup displayName="Apps" type="apps">
-            <portalSubGroup displayName="Web Apps" type="webapps"/>
-            <portalSubGroup displayName="Dashboards" type="dashboards"/>
-            <portalSubGroup displayName="Sites" type="sites"/>
-            <portalSubGroup displayName="StoryMaps" type="storymaps"/>
-            <portalSubGroup displayName="Web AppBuilder Apps" type="webbuilderapps"/>
-            <portalSubGroup displayName="Mobile Apps" type="mobileapps"/>
-            <portalSubGroup displayName="Desktop Apps" type="desktopapps"/>
-          </portalGroup>-->
           <portalGroup displayName="Tools" type="tools">
             <portalSubGroup displayName="Locators" type="locators"/>
-            <!--<portalSubGroup displayName="Geodatabase Access" type="geodatabaseaccess"/>
-            <portalSubGroup displayName="Geometric Operations" type="geometricoperations"/>-->
             <portalSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
             <portalSubGroup displayName="Network Analysis" type="networkanalysis"/>
           </portalGroup>
-          <!--<portalGroup displayName="Files" type="files">
-            <portalSubGroup displayName="Documents" type="documents"/>
-            <portalSubGroup displayName="Images" type="images"/>
-            <portalSubGroup displayName="PDFs" type="pdf"/>
-          </portalGroup>-->
+          <portalGroup displayName="Notebooks" type="notebooks"/>
         </content>
       </component>
     </insertCategory>
@@ -589,7 +578,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </customControl>
 
-        <customControl id="esri_core_notificationControl" caption="test" isDropDown="false" className="ArcGIS.Desktop.Framework.NotificationControlViewModel"
+        <customControl id="esri_core_notificationControl" isDropDown="false" className="ArcGIS.Desktop.Framework.NotificationControlViewModel"
             assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="W">
           <content className="ArcGIS.Desktop.Framework.NotificationControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
           <tooltip heading="Notifications">
@@ -597,11 +586,11 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </customControl>
 
-        <customControl id="esri_core_CommandSearchControl" caption="CommandSearch" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel"
+        <customControl id="esri_core_CommandSearchControl" caption="CommandSearch" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel" helpContextID="120002723"
                   assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="H">
         <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
         <tooltip heading="Command Search">
-          Just start typing here to bring features to your fingertips and get help.<disabledText></disabledText>
+          Search for and execute commands, tools, and help.<disabledText></disabledText>
         </tooltip>
       </customControl>
         <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" flipImageRTL="true" keytip="CT" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow16.png">
@@ -649,17 +638,17 @@ The copy of the portal item in the project is deleted, and the current version o
         <button id="esri_core_HideItemTooltips" className="ArcGIS.Desktop.Internal.Core.HideTooltips"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable32"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable16"
-                caption="Hide Pop-ups" extendedCaption="Show pop-ups in the catalog pane and view." keytip="NP" loadOnClick="false">
+                caption="Hide Pop-ups" extendedCaption="Show pop-ups in the catalog pane." keytip="NP" loadOnClick="false">
           <tooltip heading="Hide Pop-ups">
-            Do not show information such as an item's location in a pop-up when you mouse over it in the Catalog pane and view.
+            Do not show information such as an item's location in a pop-up when you mouse over it in the Catalog pane.
           </tooltip>
         </button>
         <button id="esri_core_ShowItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowItemTooltips"
-                caption="Show Pop-ups" extendedCaption="Show simple pop-ups in the catalog pane and view." keytip="SP" loadOnClick="false"
+                caption="Show Pop-ups" extendedCaption="Show simple pop-ups in the catalog pane." keytip="SP" loadOnClick="false"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp32"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp16">
           <tooltip heading="Show Pop-ups">
-            Show information such as an item's location in a pop-up when you mouse over it in the Catalog pane and view.
+            Show information such as an item's location in a pop-up when you mouse over it in the Catalog pane.
           </tooltip>
         </button>
         <button id="esri_core_ShowDetailedItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowDetailedItemTooltips"
@@ -719,16 +708,17 @@ Show information such as an item's thumbnail and tags as well as its location in
           </tooltip>
         </button>
 
-        <button id="esri_core_refresh" caption="Refresh" keytip="RF" className="RefreshCmd" loadOnClick="false"
-                extendedCaption="Refresh the selected item."
+        <button id="esri_core_refresh" caption="Refresh" keytip="RF" className="RefreshCmd" loadOnClick="false" 
+                extendedCaption="Refresh the selected item" helpContextID="120002719"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png">
-          <tooltip heading="">Update the contents list to include any items that were recently added to this location.
+          <tooltip heading="Refresh">Update the contents of a location or selected item.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_openButton" caption="Open" keytip="O" className="OpenCmd" loadOnClick="false"
+                extendedCaption="Browse into the selected item"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/launch32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/launch16.png">
           <tooltip heading="Open">Open the item in its view or pane, or browse into the item to see its contents.
@@ -791,6 +781,24 @@ Show information such as an item's thumbnail and tags as well as its location in
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
           <tooltip heading="">Sort the contents list alphabetically by name. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_sortPath" caption="Path" keytip="P" className="SortPathCmd"
+        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+          <tooltip heading="">
+            Sort the contents list alphabetically by path. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_sortSize" caption="Size" keytip="S" className="SortSizeCmd"
+        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+          <tooltip heading="">
+            Sort the contents list alphabetically by size. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
@@ -858,6 +866,10 @@ Show information such as an item's thumbnail and tags as well as its location in
           </tooltip>
         </dynamicMenu>
 
+        <button id="esri_core_groupContext" className="esri_core_module:GroupAsync" caption="Group" extendedCaption="Group selected items based on context."/>
+        <button id="esri_core_ungroupContext" className="esri_core_module:UngroupAsync" caption="Ungroup" extendedCaption="Ungroup selected items based on context."/>
+        <button id="esri_core_exportContext" className="esri_core_module:Export" caption="Export" extendedCaption="Export based on context."/>
+        <button id="esri_core_printContext" className="esri_core_module:Print" caption="Print" extendedCaption="Print based on context."/>
       </controls>
 
       <galleries>
@@ -937,7 +949,6 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_core_editCutButton"/>-->
         </menu>
 
-        <!--Todo - DG - #regkey-->
         <menu id="esri_projectDefaultContextMenu_withKnowledgeGraph" caption="-">
           <button refID="esri_mapping_newMapButton" />
           <button refID="esri_mapping_newSceneButton" />
@@ -952,8 +963,7 @@ Show information such as an item's thumbnail and tags as well as its location in
 
           <button refID="esri_projectItemAddExistingACSConnection" />
           <button refID="esri_projectItemAddNewACSConnection"/>
-          <button refID="esri_projectItemAddNewBIMConnection" separator="true"/>
-          <button refID="esri_knowledgeGraph_newKnowledgeGraph" separator="true"/>
+          <button refID="esri_projectItemAddNewBIMConnection"/>
 
           <!--<button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editPasteButton"/>-->

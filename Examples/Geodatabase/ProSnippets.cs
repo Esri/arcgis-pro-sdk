@@ -1,4 +1,4 @@
-﻿/*
+/*
 
    Copyright 2018 Esri
 
@@ -31,8 +31,8 @@ using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Mapping;
 using Version = ArcGIS.Core.Data.Version;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
-using ArcGIS.Core.Internal.Data.DDL;
-using FieldDescription = ArcGIS.Core.Internal.Data.DDL.FieldDescription;
+using ArcGIS.Core.Data.DDL;
+using FieldDescription = ArcGIS.Core.Data.DDL.FieldDescription;
 
 
 namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
@@ -859,7 +859,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     #endregion Evaluating a QueryDef on a INNER join
 
 
-    #region Evaluating a QueryDef on a nested (INNER & OUTER) join
+    #region Evaluating a QueryDef on a nested - INNER  and  OUTER join
 
     public async Task EvaluatingQueryDefWithNestedJoin()
     {
@@ -2170,7 +2170,6 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     public void CreateTableSnippet(Geodatabase geodatabase, CodedValueDomain inspectionResultsDomain)
     {
       #region Creating a Table
-      // Geodatabase DDL is pre-release for Pro 2.7. See https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-DDL for more information
 
       // Create a PoleInspection table with the following fields
       //  GlobalID
@@ -2229,7 +2228,6 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     public void CreateFeatureClassSnippet(Geodatabase geodatabase, FeatureClass existingFeatureClass, SpatialReference spatialReference)
     {
       #region Creating a feature class
-      // Geodatabase DDL is pre-release for Pro 2.7. See https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-DDL for more information
 
       // Create a Cities feature class with the following fields
       //  GlobalID
@@ -2319,6 +2317,39 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
+    public void CreateMemoryGeodtabaseSnippet()
+    {
+      #region Creating a memory Geodatabase
+
+      // Create the memory connection properties to connect to  default memory geodatabase
+      MemoryConnectionProperties memoryConnectionProperties = new MemoryConnectionProperties();
+
+      // Alternatively create the memory connection properties to connect to memory geodatabase named as 'InterimMemoryGeodatabase'
+      // MemoryConnectionProperties memoryConnectionProperties = new MemoryConnectionProperties("InterimMemoryGeodatabase");
+
+      // Create and use the memory geodatabase
+      using (Geodatabase geodatabase = SchemaBuilder.CreateGeodatabase(memoryConnectionProperties))
+      {
+        // Create additional schema here
+      }
+
+      #endregion
+    }
+
+    public void DeleteMemoryGeodatabaseSnippet()
+    {
+      #region Deleting a memory Geodatabase
+
+      // Create the memory connection properties to connect to default memory geodatabase
+      MemoryConnectionProperties memoryConnectionProperties = new MemoryConnectionProperties();
+
+      // Delete the memory geodatabase
+      SchemaBuilder.DeleteGeodatabase(memoryConnectionProperties);
+
+      #endregion
+    }
+
+
     public void CreateFeatureGeodatabaseSnippet()
     {
       #region Creating a File Geodatabase
@@ -2345,6 +2376,381 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
+    public void CreateRangeDomainSnippet(Geodatabase geodatabase)
+    {
+      #region Creating a Range domain
+     
+      // Create a range description with minimum value = 0 and maximum value = 1000
+      RangeDomainDescription rangeDomainDescriptionMinMax = new RangeDomainDescription("RangeDomain_0_1000", 
+        FieldType.Integer, 0, 1000) 
+        { Description = "Domain value ranges from 0 to 1000" };
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create  a range domain 
+      schemaBuilder.Create(rangeDomainDescriptionMinMax); 
+      schemaBuilder.Build();
+
+      #endregion
+    }
+
+    public void CreateCodedDomainSnippet(Geodatabase geodatabase)
+    {
+      #region Creating a CodedValue domain 
+
+      // Create a CodedValueDomain description for water pipes
+      CodedValueDomainDescription codedValueDomainDescription = new CodedValueDomainDescription("WaterPipeTypes", FieldType.String,
+        new SortedList<object, string> { { "Copper", "C_1" }, 
+          { "Steel", "S_2" } })
+      {
+        SplitPolicy = SplitPolicy.Duplicate,
+        MergePolicy = MergePolicy.DefaultValue
+      };
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create a coded value domain 
+      CodedValueDomainToken codedValueDomainToken = schemaBuilder.Create(codedValueDomainDescription);
+      schemaBuilder.Build();
+
+      #endregion
+
+    }
+
+    public void CreateFeatureDatasetSnippet(Geodatabase geodatabase)
+    {
+      #region Creating a FeatureDataset
+
+      // Creating a FeatureDataset named as 'Parcel_Information'
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create a FeatureDataset named as 'Parcel Information'
+      FeatureDatasetDescription featureDatasetDescription = new FeatureDatasetDescription("Parcel_Information", SpatialReferences.WGS84);
+      schemaBuilder.Create(featureDatasetDescription);
+
+      // Build status
+      bool buildStatus = schemaBuilder.Build();
+
+      // Build errors
+      if (!buildStatus)
+      {
+        IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+      }
+
+      #endregion
+    }
+
+    public void DeleteFeatureDatasetSnippet(Geodatabase geodatabase)
+    {
+      #region Deleting a FeatureDataset
+
+      // Deleting a FeatureDataset named as 'Parcel_Information'
+
+      FeatureDatasetDefinition featureDatasetDefinition = geodatabase.GetDefinition<FeatureDatasetDefinition>("Parcel_Information");
+      FeatureDatasetDescription featureDatasetDescription = new FeatureDatasetDescription(featureDatasetDefinition);
+      
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Delete an existing feature dataset named as 'Parcel_Information'
+      schemaBuilder.Delete(featureDatasetDescription);
+      schemaBuilder.Build();
+
+      #endregion
+    }
+
+    public void RenameFeatureDatasetSnippet(Geodatabase geodatabase)
+    {
+      #region Renaming a FeatureDataset
+
+      // Renaming a FeatureDataset from 'Parcel_Information' to 'Parcel_Information_With_Tax_Jurisdiction'
+
+      string originalDatasetName = "Parcel_Information";
+      string datasetRenameAs = "Parcel_Information_With_Tax_Jurisdiction";
+
+      FeatureDatasetDefinition originalDatasetDefinition = geodatabase.GetDefinition<FeatureDatasetDefinition>(originalDatasetName);
+      FeatureDatasetDescription originalFeatureDatasetDescription = new FeatureDatasetDescription(originalDatasetDefinition);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Rename the existing FeatureDataset, 'Parcel_Information' to 'Parcel_Information_With_Tax_Jurisdiction'
+      schemaBuilder.Rename(originalFeatureDatasetDescription, datasetRenameAs);
+      schemaBuilder.Build();
+
+      #endregion
+    }
+
+    public void CreateFeatureDatasetWithFeatureClassSnippet(Geodatabase geodatabase)
+    {
+      #region Creating a FeatureDataset with a FeatureClass in one operation
+
+      // Creating a FeatureDataset named as 'Parcel_Information' and a FeatureClass with name 'Parcels' in one operation
+
+      string featureDatasetName = "Parcel_Information";
+      string featureClassName = "Parcels";
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create a FeatureDataset token
+      FeatureDatasetDescription featureDatasetDescription = new FeatureDatasetDescription(featureDatasetName, SpatialReferences.WGS84);
+      FeatureDatasetToken featureDatasetToken = schemaBuilder.Create(featureDatasetDescription);
+
+      // Create a FeatureClass description
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription(featureClassName, 
+        new List<FieldDescription>()
+        {
+          new FieldDescription("Id", FieldType.Integer),
+          new FieldDescription("Address", FieldType.String)
+        }, 
+        new ShapeDescription(GeometryType.Point, SpatialReferences.WGS84));
+
+        // Create a FeatureClass inside a FeatureDataset
+        FeatureClassToken featureClassToken = schemaBuilder.Create(new FeatureDatasetDescription(featureDatasetToken), featureClassDescription);
+
+        // Build status
+        bool buildStatus = schemaBuilder.Build();
+
+        // Build errors
+        if (!buildStatus)
+        {
+          IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+        }
+
+        #endregion
+    }
+
+    public void CreateFeatureClassInsideFeatureDatasetSnippet(Geodatabase geodatabase)
+    {
+      #region Creating a FeatureClass in existing FeatureDataset 
+
+      // Creating a FeatureClass named as 'Tax_Jurisdiction' in existing FeatureDataset with name 'Parcels_Information'
+
+      string featureDatasetName = "Parcels_Information";
+      string featureClassName = "Tax_Jurisdiction";
+
+      // Create a FeatureClass description
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription(featureClassName,
+        new List<FieldDescription>()
+        {
+          new FieldDescription("Tax_Id", FieldType.Integer),
+          new FieldDescription("Address", FieldType.String)
+        },
+        new ShapeDescription(GeometryType.Point, SpatialReferences.WGS84));
+
+      FeatureDatasetDefinition featureDatasetDefinition = geodatabase.GetDefinition<FeatureDatasetDefinition>(featureDatasetName);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create a FeatureClass inside a FeatureDataset using a FeatureDatasetDefinition
+      schemaBuilder.Create(new FeatureDatasetDescription(featureDatasetDefinition), featureClassDescription);
+
+      // Build status
+      bool buildStatus = schemaBuilder.Build();
+
+      // Build errors
+      if (!buildStatus)
+      {
+        IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+      }
+
+      #endregion
+
+    }
+    
+    public void AddFeatureClassToFeatureDatasetSnippet(Geodatabase geodatabase)
+    {
+      #region Adding a FeatureClass to a FeatureDataset
+
+      // Adding a FeatureClass with name 'Tax_Jurisdiction' into a FeatureDataset named as 'Parcels_Information'
+
+      string featureDatasetName = "Parcels_Information";
+      string featureClassNameToAdd = "Tax_Jurisdiction";
+
+      FeatureDatasetDefinition featureDatasetDefinition = geodatabase.GetDefinition<FeatureDatasetDefinition>(featureDatasetName);
+      FeatureDatasetDescription featureDatasetDescription = new FeatureDatasetDescription(featureDatasetDefinition);
+
+      FeatureClassDefinition featureClassDefinition = geodatabase.GetDefinition<FeatureClassDefinition>(featureClassNameToAdd);
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription(featureClassDefinition);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the 'Tax_Jurisdiction' FeatureClass to the 'Parcels_Information' FeatureDataset 
+      schemaBuilder.AddFeatureClass(featureDatasetDescription, featureClassDescription);
+      bool addStatus = schemaBuilder.Build();
+
+      if (!addStatus)
+      {
+        IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+      }
+
+      #endregion
+    }
+
+    public void RenameTableSnippet(Geodatabase geodatabase)
+    {
+      #region Renaming a Table
+      
+      //Renaming a table from 'Original_Table' to 'Renamed_Table'
+
+      string tableToBeRenamed = "Original_Table";
+      string tableRenameAs = "Renamed_Table";
+
+      TableDefinition tableDefinition = geodatabase.GetDefinition<TableDefinition>(tableToBeRenamed);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Table rename 
+      schemaBuilder.Rename(new TableDescription(tableDefinition), tableRenameAs);
+      schemaBuilder.Build();
+
+      #endregion
+    }
+    
+    public void AddFieldsInFeatureClassSnippet(Geodatabase geodatabase)
+    {
+      #region Adding fields to a FeatureClass
+      
+      // Adding following fields to the 'Parcels' FeatureClass
+      // Global ID
+      // Parcel_ID
+      // Tax_Code
+      // Parcel_Address
+      
+
+      // The FeatureClass to add fields
+      string featureClassName = "Parcels";
+
+      FeatureClassDefinition originalFeatureClassDefinition = geodatabase.GetDefinition<FeatureClassDefinition>(featureClassName);
+      FeatureClassDescription originalFeatureClassDescription = new FeatureClassDescription(originalFeatureClassDefinition);
+
+      // The four new fields to add on the 'Parcels' FeatureClass
+      FieldDescription globalIdField = FieldDescription.CreateGlobalIDField();
+      FieldDescription parcelIdDescription = new FieldDescription("Parcel_ID", FieldType.GUID);
+      FieldDescription taxCodeDescription = FieldDescription.CreateIntegerField("Tax_Code");
+      FieldDescription addressDescription = FieldDescription.CreateStringField("Parcel_Address", 150);
+
+      List<FieldDescription> fieldsToAdd = new List<FieldDescription> { globalIdField, parcelIdDescription, 
+        taxCodeDescription, addressDescription };
+
+      // Add new fields on the new FieldDescription list
+      List<FieldDescription> modifiedFieldDescriptions = new List<FieldDescription>(originalFeatureClassDescription.FieldDescriptions);
+      modifiedFieldDescriptions.AddRange(fieldsToAdd);
+
+      // The new FeatureClassDescription with additional fields
+      FeatureClassDescription modifiedFeatureClassDescription = new FeatureClassDescription(originalFeatureClassDescription.Name,
+        modifiedFieldDescriptions, originalFeatureClassDescription.ShapeDescription);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Update the 'Parcels' FeatureClass with newly added fields
+      schemaBuilder.Modify(modifiedFeatureClassDescription);
+      bool modifyStatus = schemaBuilder.Build();
+
+      if (!modifyStatus)
+      {
+        IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+      }
+
+      #endregion
+    }
+
+    public void AddFieldWithDomainSnippet(Geodatabase geodatabase)
+    {
+      #region Adding a Field that uses a domain
+
+      // Adding a field,'PipeType', which uses the coded value domain to the 'Pipes' FeatureClass
+
+      //The FeatureClass to add field
+      string featureClassName = "Pipes";
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Create a CodedValueDomain description for water pipes
+      CodedValueDomainDescription pipeDomainDescription = new CodedValueDomainDescription("WaterPipeTypes", FieldType.String,
+        new SortedList<object, string> { { "Copper", "C_1" },
+          { "Steel", "S_2" } })
+      {
+        SplitPolicy = SplitPolicy.Duplicate,
+        MergePolicy = MergePolicy.DefaultValue
+      };
+
+      // Create a coded value domain token
+      CodedValueDomainToken codedValueDomainToken = schemaBuilder.Create(pipeDomainDescription);
+
+      // Create a new description from domain token
+      CodedValueDomainDescription codedValueDomainDescription = new CodedValueDomainDescription(codedValueDomainToken);
+
+      // Create a field named as 'PipeType' using a domain description
+      FieldDescription domainFieldDescription = new FieldDescription("PipeType", FieldType.String)
+      { DomainDescription = codedValueDomainDescription };
+
+      //Retrieve existing information for 'Pipes' FeatureClass
+      FeatureClassDefinition originalFeatureClassDefinition = geodatabase.GetDefinition<FeatureClassDefinition>(featureClassName);
+      FeatureClassDescription originalFeatureClassDescription = new FeatureClassDescription(originalFeatureClassDefinition);
+
+      // Add domain field on existing fields
+      List<FieldDescription> modifiedFieldDescriptions = new List<FieldDescription>(originalFeatureClassDescription.FieldDescriptions) { domainFieldDescription };
+
+      // Create a new description with updated fields for 'Pipes' FeatureClass 
+      FeatureClassDescription featureClassDescription = new FeatureClassDescription(originalFeatureClassDescription.Name, modifiedFieldDescriptions,
+        originalFeatureClassDescription.ShapeDescription);
+
+      // Update the 'Pipes' FeatureClass with domain field
+      schemaBuilder.Modify(featureClassDescription);
+
+      // Build status
+      bool buildStatus = schemaBuilder.Build();
+
+      // Build errors
+      if (!buildStatus)
+      {
+        IReadOnlyList<string> errors = schemaBuilder.ErrorMessages;
+      }
+
+
+      #endregion
+    }
+
+    public void RemoveFieldTableSnippet(Geodatabase geodatabase)
+    {
+      #region Removing fields from a Table
+
+      // Removing all fields from 'Parcels' table except following 
+      // Tax_Code
+      // Parcel_Address
+      
+
+      // The table to remove fields
+      string tableName = "Parcels";
+
+      TableDefinition tableDefinition = geodatabase.GetDefinition<TableDefinition>(tableName);
+      IReadOnlyList<Field> fields = tableDefinition.GetFields();
+
+      // Existing fields from 'Parcels' table
+      Field taxCodeField = fields.First(f => f.Name.Equals("Tax_Code"));
+      Field parcelAddressField = fields.First(f => f.Name.Equals("Parcel_Address"));
+
+      FieldDescription taxFieldDescription = new FieldDescription(taxCodeField);
+      FieldDescription parcelAddressFieldDescription = new FieldDescription(parcelAddressField);
+      
+      // Fields to retain in modified table
+      List<FieldDescription> fieldsToBeRetained =new List<FieldDescription>()
+      {
+        taxFieldDescription, parcelAddressFieldDescription 
+      };
+
+      // New description of the 'Parcels' table with the 'Tax_Code' and 'Parcel_Address' fields
+      TableDescription modifiedTableDescription = new TableDescription(tableName, fieldsToBeRetained);
+
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Remove all fields except the 'Tax_Code' and 'Parcel_Address' fields
+      schemaBuilder.Modify(modifiedTableDescription);
+      schemaBuilder.Build();
+
+
+      #endregion
+    }
 
 
   }

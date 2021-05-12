@@ -324,39 +324,39 @@
       </tabs>
 
       <groups>
-        <group id="esri_dataReviewer_NewRulesGroup" caption="New Rule">
+        <group id="esri_dataReviewer_NewRulesGroup" hidden="true" caption="New Rule">
           <gallery refID="esri_dataReviewer_newRulesGallery" inline="true"/>
           <!--<button refID="esri_dataReviewer_ImportRules" size="large" />-->
         </group>
 
-        <group id ="esri_dataReviewer_DataReviewerGroup" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ">
+        <group id ="esri_dataReviewer_DataReviewerGroup" hidden="true" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ">
           <button refID="esri_dataReviewer_ManageQuality" size="large"/>
         </group>
 
-        <group id="esri_dataReviewer_RulesClipboardGroup" caption="Clipboard">
+        <group id="esri_dataReviewer_RulesClipboardGroup" hidden="true" caption="Clipboard">
           <button refID="esri_dataReviewer_DeleteReviewerRules" size="large"  />
         </group>
 
-        <group id ="esri_dataReviewer_Selection" caption="Selection">
+        <group id ="esri_dataReviewer_Selection" hidden="true" caption="Selection">
           <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
           <button refID="esri_geoprocessing_selectByAttributeButton" size="large"/>
           <button refID="esri_geoprocessing_selectByLocationButton" size="large"/>
           <button refID="esri_mapping_clearSelectionButton" size="middle" />
         </group>
 
-        <group id ="esri_dataReviewer_AutomatedReviewGroup" caption="Automated Review">
+        <group id ="esri_dataReviewer_AutomatedReviewGroup" hidden="true" caption="Automated Review">
           <customControl refID="esri_dataReviewer_RunRules" size="large" />
           <!--<button refID="esri_dataReviewer_RunRules" size="large"/>-->
           <customControl refID="esri_dataReviewer_ValidationResultsHistory" size="large" />
         </group>
-        <group id ="esri_dataReviewer_Results" caption="Results">
+        <group id ="esri_dataReviewer_Results" hidden="true" caption="Results">
           <button refID="esri_dataReviewer_Symbolize" size="large"/>
         </group>
-        <group id="esri_dataReviewer_VisualReviewGroup" caption="Semi-Automated Review">
+        <group id="esri_dataReviewer_VisualReviewGroup" hidden="true" caption="Semi-Automated Review">
           <button refID="esri_dataReviewer_evalFeaturesButton" size="large"/>
           <customControl refID="esri_dataReviewer_FlagMissingFeatures" size="large" />
         </group>
-        <group id ="esri_dataReviewer_CloseGroup" caption="Close">
+        <group id ="esri_dataReviewer_CloseGroup" hidden="true" caption="Close">
           <button refID="esri_dataReviewer_CloseManageQuality" size="large"/>
         </group>
 
@@ -368,8 +368,7 @@
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerResourcesAdd32.png" keytip="RR">
           <tooltip heading="Add Data Reviewer Results">
             Add Data Reviewer quality control results to your project. Results represent a feature or row that has been marked as an anomaly by data validation or manual inspection.  It contains information about the source of the anomaly and may include a geometry.
-
-            Results are organized by session and stored in feature classes and tables in either a file or enterprise geodatabase.  The project saves a reference to the workspace and associated sessions.
+Results are organized by session and stored in feature classes and tables in either a file or enterprise geodatabase.  The project saves a reference to the workspace and associated sessions.
             <disabledText>
               Data Reviewer results have already been added to the project. You can access Reviewer Results from the Catalog pane
             </disabledText>
@@ -382,96 +381,96 @@
           <tooltip heading="Add Data Reviewer Batch Jobs">Add existing Batch Jobs to the project.</tooltip>
         </button>
         <!-- Review Results context menu buttons-->
-        <button id="esri_dataReviewer_ReviewResults_AddSession" caption="Add Session" keytip="A" extendedCaption = "Add Reviewer Sessions to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_AddSession" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
+        <button id="esri_dataReviewer_ReviewResults_AddSession" hidden="true" caption="Add Session" keytip="A" extendedCaption = "Add Reviewer Sessions to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_AddSession" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
           <tooltip heading="Add Session">
             Add an existing Reviewer session to the project. This allows you to view the results in the Reviewer Results pane. You can add more than one session to the connection, but can only view the results for one session at a time.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_NewSession" caption="New Session" keytip="S" extendedCaption = "Create a new Reviewer Session to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_NewSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew16.png">
+        <button id="esri_dataReviewer_ReviewResults_NewSession" hidden="true" caption="New Session" keytip="S" extendedCaption = "Create a new Reviewer Session to Project" className="esri_dataReviewer_dataReviewerModule:OnClick_NewSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerSessionNew16.png">
           <tooltip heading="New Session">
             Create a new Reviewer session to the project.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_UpdateConnection" caption="Update Results Connection..." extendedCaption = "Update connection to Reviewer Results in Project" className="esri_dataReviewer_dataReviewerModule:OnClick_UpdateReviewResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerConnection16.png">
+        <button id="esri_dataReviewer_ReviewResults_UpdateConnection" hidden="true" caption="Update Results Connection..." extendedCaption = "Update connection to Reviewer Results in Project" className="esri_dataReviewer_dataReviewerModule:OnClick_UpdateReviewResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerConnection16.png">
           <tooltip heading="Update Results Connection">
             Update a connection to results referenced by the project.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_RemoveConnection" caption="Remove Results Connection" extendedCaption = "Remove Reviewer Results from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_dataReviewer_ReviewResults_RemoveConnection" hidden="true" caption="Remove Results Connection" extendedCaption = "Remove Reviewer Results from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
           <tooltip heading="Remove Results Connection">
             Remove a connection to results stored in an existing Reviewer workspace.
             <disabledText></disabledText>
           </tooltip>
         </button>
         <!-- Review Batch Job context menu buttons-->
-        <button id="esri_dataReviewer_batchJob_fullDatabase" caption="Full Database"  extendedCaption = "Executes Reviewer Batch Job on Full Database" className="ArcGIS.Desktop.Internal.DataReviewer.BatchJobItemMenuCommands" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksFullDatabase16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksFullDatabase32.png" condition="esri_dataReviewer_executeBatchJobCondition" loadOnClick="false">
+        <button id="esri_dataReviewer_batchJob_fullDatabase" hidden="true" caption="Full Database"  extendedCaption = "Executes Reviewer Batch Job on Full Database" className="ArcGIS.Desktop.Internal.DataReviewer.BatchJobItemMenuCommands" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksFullDatabase16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksFullDatabase32.png" condition="esri_dataReviewer_executeBatchJobCondition" loadOnClick="false">
           <tooltip heading="Full Database">
             Run batch job on all data sources in the active map using the Execute Reviewer Batch Job geoprocessing tool.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_batchJob_currentMapExtent" caption="Active Map Extent" extendedCaption = "Executes Reviewer Batch Job on Active Map Extent" className="ArcGIS.Desktop.Internal.DataReviewer.BatchJobItemMenuCommands"   smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksActivMap16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksActivMap16.png" condition="esri_dataReviewer_executeBatchJobCondition" loadOnClick="false">
+        <button id="esri_dataReviewer_batchJob_currentMapExtent" hidden="true" caption="Active Map Extent" extendedCaption = "Executes Reviewer Batch Job on Active Map Extent" className="ArcGIS.Desktop.Internal.DataReviewer.BatchJobItemMenuCommands"   smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksActivMap16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerExecuteBatchChecksActivMap16.png" condition="esri_dataReviewer_executeBatchJobCondition" loadOnClick="false">
           <tooltip heading="Active Map Extent">
             Run batch job on all data sources in the active map extent using the Execute Reviewer Batch Job geoprocessing tool.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_BatchJob_Remove" caption="Remove" extendedCaption = "Remove Reviewer Batch Job from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveBatchJob" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_dataReviewer_BatchJob_Remove" hidden="true" caption="Remove" extendedCaption = "Remove Reviewer Batch Job from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveBatchJob" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
           <tooltip heading="Remove">
             Remove the reference to the selected Data Reviewer Batch Job from the project.
             <disabledText></disabledText>
           </tooltip>
         </button>
         <!-- Review Sessions context menu buttons-->
-        <button id="esri_dataReviewer_Session_OpenResults" caption="Open" extendedCaption = "Open Reviewer Results pane with results from the Session" className="esri_dataReviewer_dataReviewerModule:OnClick_OpenResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerResultsShow16.png">
+        <button id="esri_dataReviewer_Session_OpenResults" hidden="true" caption="Open" extendedCaption = "Open Reviewer Results pane with results from the Session" className="esri_dataReviewer_dataReviewerModule:OnClick_OpenResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerResultsShow16.png">
           <tooltip heading="Open">
             View the session results in the Reviewer Results pane.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_Session_RemoveSession" caption="Remove" extendedCaption = "Remove Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveSession" condition="esri_dataReviewer_RemoveSessionCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_dataReviewer_Session_RemoveSession" hidden="true" caption="Remove" extendedCaption = "Remove Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveSession" condition="esri_dataReviewer_RemoveSessionCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
           <tooltip heading="Remove">
             Remove the reference to the session from the project.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_Session_MakeDefault" caption="Make Default" extendedCaption="Set the selected Session as default" className="esri_dataReviewer_dataReviewerModule:OnClick_MakeSessionDefault" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png" helpContextID="">
+        <button id="esri_dataReviewer_Session_MakeDefault" hidden="true" caption="Make Default" extendedCaption="Set the selected Session as default" className="esri_dataReviewer_dataReviewerModule:OnClick_MakeSessionDefault" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png" helpContextID="">
           <tooltip heading="Make Default">
             Make this Session the default Session for the project that is currently open.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_Session_DeleteSession" caption="Delete..." extendedCaption = "Delete Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_DeleteSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_dataReviewer_Session_DeleteSession" hidden="true" caption="Delete..." extendedCaption = "Delete Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_DeleteSession" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
           <tooltip heading="Delete">
             Delete the item from the project. The project's reference to the selected session is removed from the project and permanantly deleted from the Data Reviewer workspace.
             <disabledText></disabledText>
           </tooltip>
         </button>
         <!-- Reviewer Table context menu buttons-->
-        <button id="esri_dataReviewer_ZoomToSelectedItems" caption="Zoom To Results" extendedCaption = "Zoom to Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:ZoomToSelectedItems" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToSelectedItems16.png" >
+        <button id="esri_dataReviewer_ZoomToSelectedItems" hidden="true" caption="Zoom To Results" extendedCaption = "Zoom to Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:ZoomToSelectedItems" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToSelectedItems16.png" >
           <tooltip heading="Zoom To">
             Zoom to result geometry. If result geometry is empty it will zoom to the feature geometry.
             <disabledText></disabledText>
           </tooltip>
           <content type="ReviewerMenuItem" group="FeatureItemsOnly"/>
         </button>
-        <button id="esri_dataReviewer_PanToSelectedItems" caption="Pan To Results" extendedCaption = "Pan to Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:PanToSelectedItems" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanToSelectedItems16.png" >
+        <button id="esri_dataReviewer_PanToSelectedItems" hidden="true" caption="Pan To Results" extendedCaption = "Pan to Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:PanToSelectedItems" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanToSelectedItems16.png" >
           <tooltip heading="Pan To">
             Pan to result geometry. If result geometry is empty it will pan to the feature geometry.
             <disabledText></disabledText>
           </tooltip>
           <content type="ReviewerMenuItem" group="FeatureItemsOnly"/>
         </button>
-        <button id="esri_dataReviewer_ActivateUpdateResultsPane" caption="Update Results" extendedCaption = "Open Update Results pane with selected results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:ActivateUpdateResultsPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerUpdateResults16.png">
+        <button id="esri_dataReviewer_ActivateUpdateResultsPane" hidden="true" caption="Update Results" extendedCaption = "Open Update Results pane with selected results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:ActivateUpdateResultsPane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerUpdateResults16.png">
           <tooltip heading="Update Results">
             Open update results pane to update result status.
             <disabledText></disabledText>
           </tooltip>
           <content type="ReviewerMenuItem" group="AllResultItems"/>
         </button>
-        <button id="esri_dataReviewer_OpenMetadataSelectedItems" caption="Open" extendedCaption = "Open metadata of the Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:OpenSelectedItemMetadata" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MetadataDocument32.png" >
+        <button id="esri_dataReviewer_OpenMetadataSelectedItems" hidden="true" caption="Open" extendedCaption = "Open metadata of the Reviewer Results from Reviewer Results pane" className="esri_dataReviewer_dataReviewerModule:OpenSelectedItemMetadata" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MetadataDocument32.png" >
           <tooltip heading="Open Metadata">
             Open the metadata of the selected item.
             <disabledText></disabledText>
@@ -479,41 +478,46 @@
           <content type="ReviewerMenuItem" group="FeatureItemsOnly"/>
         </button>
         <!-- End Reviewer Table context menu buttons-->
-        <button id="esri_dataReviewer_batchJobAddToProjectButton" className="esri_dataReviewer_dataReviewerModule:OnClick_AddToProject" caption="Add To Project" extendedCaption = "Add Reviewer Batch Job to Project from Folder" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" helpContextID="">
+        <button id="esri_dataReviewer_batchJobAddToProjectButton" className="esri_dataReviewer_dataReviewerModule:OnClick_AddToProject" hidden="true" caption="Add To Project" extendedCaption = "Add Reviewer Batch Job to Project from Folder" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" helpContextID="">
           <tooltip heading="">
             Add an existing reviewer batch job to the project. The project saves a reference to the reviewer batch job file.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <!-- Reviewer Layer Validation context menu buttons-->
-        <button id="esri_dataReviewer_OpenRulesViewButton" className="esri_dataReviewer_dataReviewerModule:OpenRulesViewAsync" loadOnClick="false" caption="Reviewer Rules" keytip="RR"
+        <button id="esri_dataReviewer_OpenRulesViewButton" className="esri_dataReviewer_dataReviewerModule:OpenRulesViewAsync" loadOnClick="false" hidden="true" caption="Reviewer Rules" keytip="RR"
                 extendedCaption = "Open Reviewer rules view for the selected layer" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule16.png" helpContextID=""
                 condition="esri_dataReviewer_RelevantLayersCondition">
           <tooltip heading="Reviewer Rules">
             Show the Reviewer Rules view.
-
-            A Reviewer Rule enables you to detect data which does not comply with quality requirements defined by your organization. Non-compliant data are returned as Reviewer Results to assist in corrective workflows that improve quality.
+A Reviewer Rule enables you to detect data which does not comply with quality requirements defined by your organization. Non-compliant data are returned as Reviewer Results to assist in corrective workflows that improve quality.
             <disabledText></disabledText>
           </tooltip>
         </button>
         <!-- End Reviewer Layer Validation context menu buttons-->
 
         <!-- Import Rules buttons-->
-        <button id="esri_dataReviewer_ImportRules" className="esri_dataReviewer_dataReviewerModule:ImportRulesAsync" loadOnClick="false" caption="Import..." extendedCaption = "TBD" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules32.png"  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules16.png" helpContextID="">
+        <button id="esri_dataReviewer_ImportRules" className="esri_dataReviewer_dataReviewerModule:ImportRulesAsync" loadOnClick="false" hidden="true" caption="Import..." extendedCaption = "TBD" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules32.png"  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules16.png" helpContextID="">
           <tooltip heading="">
             TDB.<disabledText></disabledText>
           </tooltip>
         </button>
         <!-- End Import Rules buttons-->
 
-        <customControl id="esri_dataReviewer_RunRules" caption="Run Reviewer Rules" extendedCaption = "Run Reviewer Validation Rules for the Active Map" condition="esri_dataReviewer_MapOrTableViewCondition" keytip="RR"
+        <!-- adding a dummy button to the popup menu which is showing up when clicking the burger button on ReviewerResultPane -->
+        <!-- this is a workaround solution for issue 1340. https://devtopia.esri.com/ArcGISPro/ps-data-reviewer/issues/1340 -->
+        <!-- this button will be removed once the Popup menu is loaded -->
+        <button id="esri_dataReviewer_dummyButton" />
+        <!-- End Dummy button-->
+        
+        <customControl id="esri_dataReviewer_RunRules" hidden="true" caption="Run Reviewer Rules" extendedCaption = "Run Reviewer Validation Rules for the Active Map" condition="esri_dataReviewer_MapOrTableViewCondition" keytip="RR"
                        loadOnClick="false" className="ArcGIS.Desktop.Internal.DataReviewer.Controls.RunRulesOptionsControl.RunRulesOptionsSplitViewModel" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.DataReviewer.Controls.RunRulesOptionsControl.RunRulesOptionsSplitView" />
           <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
         </customControl>
 
-        <customControl id="esri_dataReviewer_ValidationResultsHistory" caption="History" extendedCaption = "View Validation history for the Active Map" keytip="H"
+        <customControl id="esri_dataReviewer_ValidationResultsHistory" hidden="true" caption="History" extendedCaption = "View Validation history for the Active Map" keytip="H"
                      loadOnClick="false" className="ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultsItemViewModel"  hideTooltip="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Geodatabase32.png"   >
           <content className="ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultItemsView" />
           <tooltip heading="">
@@ -523,21 +527,21 @@
         </customControl>
 
         <!-- delete rviewer rules button-->
-        <button id="esri_dataReviewer_DeleteReviewerRules" caption="Delete" extendedCaption = "Delete selected Reviewer rules" className="esri_dataReviewer_dataReviewerModule:DeleteReviewerRules" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" condition="esri_dataReviewer_deleteRuleCondition" keytip="D">
+        <button id="esri_dataReviewer_DeleteReviewerRules" hidden="true" caption="Delete" extendedCaption = "Delete selected Reviewer rules" className="esri_dataReviewer_dataReviewerModule:DeleteReviewerRules" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" condition="esri_dataReviewer_deleteRuleCondition" keytip="D">
           <tooltip heading="Delete Rules">
             Delete selected rules.
             <disabledText>Select one or more rules to delete.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_ManageQuality" caption="Manage Quality" extendedCaption = "Manage the quality of the data" className="esri_dataReviewer_dataReviewerModule:ManageQuality" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified16.png" condition="esri_mapping_mapPane" keytip="Q">
+        <button id="esri_dataReviewer_ManageQuality" hidden="true" caption="Manage Quality" extendedCaption = "Manage the quality of the data" className="esri_dataReviewer_dataReviewerModule:ManageQuality" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified16.png" condition="esri_mapping_mapPane" keytip="Q">
           <tooltip heading="Manage Quality">
             Improve data quality using automated tools to detect, track and report errors.
             <disabledText>Authorize and enable the Data Reviewer Extension to access this functionality.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_CloseManageQuality" caption="Close Manage Quality" extendedCaption = "Close Manage Quality tab" className="esri_dataReviewer_dataReviewerModule:CloseManageQuality" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close16.png" keytip="CM">
+        <button id="esri_dataReviewer_CloseManageQuality" hidden="true" caption="Close Manage Quality" extendedCaption = "Close Manage Quality tab" className="esri_dataReviewer_dataReviewerModule:CloseManageQuality" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close16.png" keytip="CM">
           <tooltip heading="Close Manage Quality">
             Close the Manage Quality ribbon.
             <disabledText></disabledText>
@@ -547,7 +551,7 @@
         <!-- End Run Rules buttons-->
 
         <!-- Symbolize Reviewer Results buttons-->
-        <customControl id="esri_dataReviewer_Symbolize" caption="Symbolize" extendedCaption = "Symbolize Reviewer Results" condition="esri_dataReviewer_SymbolizationCondition" keytip="SY"
+        <customControl id="esri_dataReviewer_Symbolize" hidden="true" caption="Symbolize" extendedCaption = "Symbolize Reviewer Results" condition="esri_dataReviewer_SymbolizationCondition" keytip="SY"
                        className="ArcGIS.Desktop.Internal.DataReviewer.Symbolization.ResultsSymbolizationOptionsSplitViewModel" hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.DataReviewer.Symbolization.ResultsSymbolizationOptionsSplitView" />
           <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
@@ -562,28 +566,28 @@
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_EvalFeaturesZoomTo" caption="Zoom To" extendedCaption="Zoom to selected features" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_ZoomTo" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToSelectedItems16.png">
+        <button id="esri_dataReviewer_EvalFeaturesZoomTo" hidden="true" caption="Zoom To" extendedCaption="Zoom to selected features" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_ZoomTo" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToSelectedItems16.png">
           <tooltip heading="Zoom To">
             Zoom to selected features
             <disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_EvalFeaturesPanTo" caption="Pan To" extendedCaption="Pan to selected features" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_PanTo" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanToSelectedItems16.png">
+        <button id="esri_dataReviewer_EvalFeaturesPanTo" hidden="true" caption="Pan To" extendedCaption="Pan to selected features" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_PanTo" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanToSelectedItems16.png">
           <tooltip heading="Pan To">
             Pan to selected features
             <disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_EvalFeaturesFlash" caption="Flash" extendedCaption = "Flash selected feature" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_Flash" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png">
+        <button id="esri_dataReviewer_EvalFeaturesFlash" hidden="true" caption="Flash" extendedCaption = "Flash selected feature" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_Flash" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png">
           <tooltip heading="Flash Feature">
             Flash selected feature
             <disabledText></disabledText>
           </tooltip>
         </button>
 
-        <tool id="esri_dataReviewer_evalfeaturesmapcoord" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.MapCoordinateTool" loadOnClick="false" />
+        <tool id="esri_dataReviewer_evalfeaturesmapcoord" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.MapCoordinateTool" hidden="true" loadOnClick="false" />
 
         <!-- Flag missing features tool-->
         <customControl id="esri_dataReviewer_FlagMissingFeatures" caption="Flag Missing Features" extendedCaption = "Flag missing features as Reviewer results" condition="esri_dataReviewer_FlagMissingFeaturesCondition" keytip="FM"
@@ -630,8 +634,10 @@
         </menu>
 
 
-        <!--menu for reviewer results pane burger button. Current only view definitions are in this menu and they are added programmatically-->
-        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane"/>
+        <!--menu for reviewer results pane burger button. Current only view definitions are in this menu and they are added programmatically-->   
+        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane">
+          <button refID ="esri_dataReviewer_dummyButton"/>
+        </menu>
         <!--context menu for selected items in results grid-->
         <menu id="esri_dataReviewer_SelectedResultsContextMenu" caption="Selected Results Context Menu" extendedCaption = "Context menu for actions to perform on selected results">
           <button refID="esri_dataReviewer_ZoomToSelectedItems" />
@@ -692,7 +698,7 @@
 
       <galleries>
         <!-- Gallery for Reviewer Checks-->
-        <gallery id="esri_dataReviewer_newRulesGallery" caption="New Rule"
+        <gallery id="esri_dataReviewer_newRulesGallery" hidden="true" caption="New Rule"
                  className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.GalleryItemsViewModel"
                  itemsInRow="7" itemWidth="240"
                  showItemCaption="true"

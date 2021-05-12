@@ -698,7 +698,7 @@ namespace ProSnippetsTasks
     }
 
 
-        #region ProSnippet Group: Layout Elements & Selection
+        #region ProSnippet Group: Layout Elements  and  Selection
         #endregion
         public void snippets_elements( Layout layout)
     {

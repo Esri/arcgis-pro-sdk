@@ -528,8 +528,8 @@
         </button>
 
         <!--esri_networkanalysis_utility_menus_group-->
-        <button id="esri_networkanalysis_utility_NavigateTo_NetworkElement" className="Tools.NavigateToNetworkElement" caption="Feature Properties" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties16.png"  helpContextID="">
-          <tooltip heading="Feature Properties">Pan to the feature and query its properties.<disabledText></disabledText></tooltip>
+        <button id="esri_networkanalysis_utility_NavigateTo_NetworkElement" className="Tools.NavigateToNetworkElement" caption="Navigate to Network Feature" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FeatureProperties16.png"  helpContextID="">
+          <tooltip heading="Navigate to Network Feature">Pan to the feature and query its properties.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_networkanalysis_utility_PanTo_NetworkElement" className="Tools.PanToNetworkElement" caption="Pan" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanTool_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PanTool_B_16.png" helpContextID="">
           <tooltip heading="">Pan to the network object position on the geographic map.<disabledText></disabledText></tooltip>
@@ -725,13 +725,16 @@
           <!--<button refID="esri_networkanalysis_utility_Identify_Feature" />-->
         </menu>
         <!--esri connectivity info menus-->
-        <menu id="esri_networkanalysis_utility_ConnectivityInfo_ContextMenu" caption="Utility Network connectivity info menu" contextMenu="true">
+        <menu id="esri_networkanalysis_utility_Spatial_ConnectivityInfo_ContextMenu" caption="Utility Network connectivity info menu" contextMenu="true">
           <button refID="esri_networkanalysis_utility_NavigateTo_NetworkElement" />
           <button refID="esri_networkanalysis_utility_PanTo_NetworkElement" />
           <button refID="esri_networkanalysis_utility_ZoomTo_NetworkElement" />
           <button refID="esri_networkanalysis_utility_Flash_NetworkElement" />
           <button refID="esri_networkanalysis_utility_Select_NetworkElement" />
           <!--<button refID="esri_networkanalysis_utility_Identify_Feature" />-->
+        </menu>
+        <menu id="esri_networkanalysis_utility_Nonspatial_ConnectivityInfo_ContextMenu" caption="Utility Network connectivity info menu" contextMenu="true">
+          <button refID="esri_networkanalysis_utility_NavigateTo_NetworkElement" />
         </menu>
       </menus>
 
@@ -818,31 +821,38 @@
       </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <or>
-          <state id="esri_map_utilityNetworkFGDB"/>
-          <not>
-            <state id="esri_map_utilityNetworkFeatureService" />
-          </not>
-        </or>
-      </and>
-    </insertCondition>
-    <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <or>
         <and>
           <state id="esri_map_utilityNetwork" />
-          <state id="esri_map_utilityNetworkFeatureService" />
+          <or>
+            <state id="esri_map_utilityNetworkFGDB"/>
+            <not>
+              <state id="esri_map_utilityNetworkFeatureService" />
+            </not>
+          </or>
+        </and>
+        <and>
+          <state id="esri_map_traceNetwork" />
+          <or>
+            <state id="esri_map_traceNetworkFGDB"/>
+            <not>
+              <state id="esri_map_traceNetworkFeatureService" />
+            </not>
+          </or>
         </and>
       </or>
     </insertCondition>
+    <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
+      <and>
+        <state id="esri_map_utilityNetwork" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+      </and>
+    </insertCondition>
     <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
-      <or>
-        <and>
-          <state id="esri_map_traceNetwork" />
-          <state id="esri_map_traceNetworkFeatureService" />
-        </and>        
-      </or>
+      <and>
+        <state id="esri_map_traceNetwork" />
+        <state id="esri_map_traceNetworkFeatureService" />
+      </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <or>
@@ -921,5 +931,6 @@
         </and>
       </or>
     </insertCondition>
-  </conditions>  
+
+  </conditions>
 </ArcGIS>

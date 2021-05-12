@@ -858,14 +858,14 @@ namespace EditingSDKExamples
       var parentEditOp = obj.Operation;
 
       // set up some attributes
-      var attribues = new Dictionary<string, object> { };
-      attribues.Add("Layer", "Parcels");
-      attribues.Add("Description", "OID: " + obj.Row.GetObjectID().ToString() + " " + DateTime.Now.ToShortTimeString());
+      var attribs = new Dictionary<string, object> { };
+      attribs.Add("Layer", "Parcels");
+      attribs.Add("Description", "OID: " + obj.Row.GetObjectID().ToString() + " " + DateTime.Now.ToShortTimeString());
 
       //create a record in an audit table
       var sTable = MapView.Active.Map.FindStandaloneTables("EditHistory").First();
       var table = sTable.GetTable();
-      parentEditOp.Create(table, attribues);
+      parentEditOp.Create(table, attribs);
     }
     #endregion
 
@@ -1221,7 +1221,7 @@ namespace EditingSDKExamples
       FeatureLayer fLayer = null;
       IEnumerable<FeatureLayer> layerList = null;
 
-      #region Configure Snapping (Turn Snapping on or off)
+      #region Configure Snapping - Turn Snapping on or off
 
       //enable snapping
       ArcGIS.Desktop.Mapping.Snapping.IsEnabled = true;
@@ -1232,7 +1232,7 @@ namespace EditingSDKExamples
       #endregion
 
 
-      #region Configure Snapping (Application SnapModes)
+      #region Configure Snapping - Application SnapModes
 
       // set only Point and Edge snapping modes, clear everything else
       ArcGIS.Desktop.Mapping.Snapping.SetSnapModes(SnapMode.Point, SnapMode.Edge); 
@@ -1258,7 +1258,7 @@ namespace EditingSDKExamples
       #endregion
 
 
-      #region Configure Snapping (Layer Snappability)
+      #region Configure Snapping - Layer Snappability
 
       // is the layer snappable?
       bool isSnappable = fLayer.IsSnappable;
@@ -1287,7 +1287,7 @@ namespace EditingSDKExamples
       });
       #endregion
 
-      #region Configure Snapping (LayerSnapModes)
+      #region Configure Snapping - LayerSnapModes
 
       layerList = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
 
@@ -1357,7 +1357,7 @@ namespace EditingSDKExamples
 
       #endregion
 
-      #region Configure Snapping (Combined Example)
+      #region Configure Snapping - Combined Example
 
       // interested in only snapping to the vertices of a specific layer of interest and not the vertices of other layers
       //  all other snapModes should be off.
@@ -1396,6 +1396,11 @@ namespace EditingSDKExamples
       snapOptions.XYTolerance = 100;
       snapOptions.ZToleranceEnabled = true;
       snapOptions.ZTolerance = 0.6;
+
+      // snapTip
+      snapOptions.ShowSnapTip = true;
+      snapOptions.GeometricFeedbackColor = ColorFactory.Instance.RedRGB;
+
       ArcGIS.Desktop.Mapping.Snapping.SetOptions(myMap, snapOptions);
 
       #endregion

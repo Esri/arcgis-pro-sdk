@@ -71,7 +71,7 @@ namespace EditingSDKExamples
         //get the shape of the feature
         var myGeometry = insp.Shape;
 
-        //get an attribue value by name
+        //get an attribute value by name
         var propValue = insp["Prop_value"];
 
         //set an attribute value by name

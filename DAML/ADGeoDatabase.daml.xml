@@ -472,7 +472,7 @@
         </not>
       </and>
     </insertCondition>
-    <insertCondition id="esri_projectItem_openVersionsCondition" caption="">
+    <insertCondition id="esri_projectItem_openVersionsCondition" caption=""> 
       <and>
         <state id="esri_mapping_openProjectState" />
         <or>
@@ -482,6 +482,12 @@
         <not>
           <state id="esri_projectItem_isInvalid"/>
         </not>
+        <or>
+          <state id="esri_projectItem_connectedAsAdmin" />
+          <not>
+            <state id="esri_projectItem_connectedBranch" />
+          </not>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_projectItem_openSubtypesCondition" caption="">
@@ -572,6 +578,15 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_projectItem_SelectedItemIsNotParcelCurrentVersionCondition">
+      <and>
+        <state id="esri_license_hasStandardLicenseState" />
+        <not>
+          <state id="esri_projectItem_SelectedItemIsParcelCurrentVersionGeneration"/>
+        </not>
+      </and>
+    </insertCondition>
+
     <insertCondition id="esri_replica_SelectedIsNotCheckoutCondition">
       <not>
           <state id="esri_replica_SelectedIsCheckout"/>
@@ -602,6 +617,10 @@
       <not>
         <state id="esri_projectItem_SelectedIsInSpatiaLite"/>
       </not>
+    </insertCondition>
+
+    <insertCondition id="esri_projectItem_adminCondition">
+      <state id ="esri_projectItem_admin"/>
     </insertCondition>
     
   </conditions>
@@ -823,7 +842,7 @@
             <type id="fgdb_gn" />
             <type id="network_general" contextMenuID="gdbItemNetworkGeneralTypeMenu" />
             <type id="fgdb_network" contextMenuID="fgdbItemNetworkDatasetTypeMenu" />
-            <type id="fgdb_facility_network" contextMenuID="fgdbItemFacilityNetworkTypeMenu" />
+            <type id="fgdb_utility_network" contextMenuID="fgdbItemUtilityNetworkTypeMenu" />
             <type id="fgdb_trace_network" contextMenuID="fgdbItemTraceNetworkTypeMenu" />
             <type id="fgdb_diagram_dataset" contextMenuID="gdbItemDiagramDatasetTypeMenu" />
             <type id="fgdb_network_diagram" contextMenuID="gdbItemNetworkDiagramTypeMenu" />
@@ -844,6 +863,8 @@
             <type id="mgdb_fc_dimension" contextMenuID="mgdbItemFeatureClassTypeMenu" />
             <type id="mgdb_relationship" contextMenuID="mgdbItemRelationshipClassTypeMenu" />
             <type id="mgdb_table" contextMenuID="mgdbItemTableTypeMenu" />
+            <type id="mgdb_utility_network" contextMenuID="mgdbItemUtilityNetworkTypeMenu" />
+            <type id="mgdb_trace_network" contextMenuID="mgdbItemTraceNetworkTypeMenu" />
             <type id="excel_table" contextMenuID="excelItemTableTypeMenu" />
             <type id="fgdb_locationReferencing_dataset" contextMenuID="gdbItemLocationReferencingDatasetItemMenu"/>
           </supportedTypeIDs>
@@ -868,7 +889,7 @@
             <type id="egdb_relationship" contextMenuID="egdbItemRelationshipTypeMenu" />
             <type id="egdb_gn" />
             <type id="egdb_network" contextMenuID="egdbItemNetworkDatasetTypeMenu" />
-            <type id="egdb_facility_network" contextMenuID="egdbItemFacilityNetworkTypeMenu" />
+            <type id="egdb_utility_network" contextMenuID="egdbItemUtilityNetworkTypeMenu" />
             <type id="egdb_trace_network" contextMenuID="egdbItemTraceNetworkTypeMenu" />
             <type id="egdb_diagram_dataset" contextMenuID="gdbItemDiagramDatasetTypeMenu" />
             <type id="egdb_network_diagram" contextMenuID="gdbItemNetworkDiagramTypeMenu" />
@@ -995,7 +1016,7 @@
             <type id="service_workflow" />
             <type id="service_wms" contextMenuID="serviceItemMenu" />
             <type id="service_wfs" contextMenuID="serviceItemMenu" />
-            <!--type id="service_ogcapi" contextMenuID="serviceItemMenu" / postpone2.8-->
+            <type id="service_ogcapi" contextMenuID="serviceItemMenu" />
             <type id="service_wmts" contextMenuID="esri_core_projectItemTypeMenu" />
             <type id="service_wcs" contextMenuID="esri_core_projectItemTypeMenu" />
             <type id="service_scene" contextMenuID="esri_core_projectItemTypeMenu" />
@@ -1019,7 +1040,7 @@
             <type id="service_wms_groupLayer" contextMenuID="esri_core_projectItemTypeMenu" />
             <type id="service_wms_layer" contextMenuID="serviceContentItemMenu" />
             <type id="service_wfs_layer" contextMenuID="serviceContentItemMenu" />
-            <!-- type id="service_ogcapi_layer" contextMenuID="serviceContentItemMenu" /postpone2.8-->
+            <type id="service_ogcapi_layer" contextMenuID="serviceContentItemMenu" />
             <type id="service_wmts_layer" contextMenuID="serviceContentItemMenu" />
             <type id="service_wcs_coverage" contextMenuID="serviceContentItemMenu" />
 
@@ -1235,6 +1256,22 @@
         </content>
       </insertComponent>
 
+      <insertComponent id="esri_itemInfoType_WellKnownFolder" className="ArcGIS.Desktop.Internal.Catalog.DesktopItem" containerType="FolderConnection">
+        <content>
+          <supportedTypeIDs>
+            <type id="folder_wellknown"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_itemInfoType_WellKnownFolder2" className="ArcGIS.Desktop.Internal.Catalog.SubDesktopItem" containerType="FolderConnection">
+        <content>
+          <supportedTypeIDs>
+            <type id="folder_wellknownchild"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+
       <!-- cim fgdb items -->
       <insertComponent id="esri_itemInfoType_GDBProjectItem" className="ArcGIS.Desktop.Catalog.GDBProjectItem" containerType="GDB">
         <content>
@@ -1260,7 +1297,7 @@
             <type id="serverConnection_wcs" contextMenuID="wcsServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" />
             <type id="serverConnection_wms" contextMenuID="wmsServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" />
             <type id="serverConnection_wfs" contextMenuID="wfsServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" />
-            <!--type id="serverConnection_ogcapi" contextMenuID="ogcapiServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" /postpone2.8-->
+            <type id="serverConnection_ogcapi" contextMenuID="ogcapiServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" />
             <type id="serverConnection_wmts" contextMenuID="wmtsServerConnectionFileTypeMenu" contextMenuID_ProjectItem="ServerConnectionItemMenu" />
           </supportedTypeIDs>
         </content>
@@ -1689,13 +1726,15 @@
 
       <controls>
         <button id="esri_bimCloudItemSaveManifestButton" className="esri_bim_module:SaveItemManifest" caption="Save Manifest to Project Folder" keytip="m"
-                extendedCaption="Save a metadata listing to the project; on context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
+                extendedCaption="Save a metadata listing to the project; on context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png"
+                hidden="true">
           <tooltip heading="">
             Save metadata to the project folder.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_bimCloudItemSaveToProjectButton" className="esri_bim_module:SaveToProjectDirectory" caption="Download to Project Folder" keytip="b"
-                extendedCaption="Download a CAD drawing or bimfile to the project directory; on context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
+                extendedCaption="Download a CAD drawing or bimfile to the project directory; on context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png"
+                hidden="true">
           <tooltip heading="">
             Download to the project folder.<disabledText></disabledText>
           </tooltip>
@@ -1707,12 +1746,30 @@
             <disabledText>The current project already contains a BIM Cloud Connection.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_bimCloudItemAddToActiveMapButton" className="ArcGIS.Desktop.Mapping.AddToActiveMapButton" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" caption="Download and Add To Current Map" keytip="a" extendedCaption="Download the selected item and add it to the active map; on context menu" condition="esri_mapping_openProjectState" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" loadOnClick="false">
+        <button id="esri_bimCloudItemAddToActiveMapButton"
+                className="ArcGIS.Desktop.Mapping.AddToActiveMapButton"
+                assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll"
+                caption="Download and Add To Current Map" keytip="a"
+                extendedCaption="Download the selected item and add it to the active map; on context menu"
+                condition="esri_mapping_openProjectState"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png"
+                loadOnClick="false"
+                hidden="true">
           <tooltip heading="">
             Download and add data to the active map.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_bimCloudItemAddToNewMapButton" className="ArcGIS.Desktop.Mapping.AddToNewMapButton" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" caption="Map" keytip="N" extendedCaption="Download and Add the selected item to a new map; on context menu" condition="esri_mapping_openProjectState" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapAdd16.png" helpContextID="" loadOnClick="false">
+        <button id="esri_bimCloudItemAddToNewMapButton"
+                className="ArcGIS.Desktop.Mapping.AddToNewMapButton"
+                assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll"
+                caption="Map" keytip="N"
+                extendedCaption="Download and Add the selected item to a new map; on context menu"
+                condition="esri_mapping_openProjectState"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapAdd32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapAdd16.png"
+                helpContextID="" loadOnClick="false"
+                hidden="true">
           <tooltip heading="">
             Download and add data to a new map.<disabledText></disabledText>
           </tooltip>
@@ -1722,96 +1779,114 @@
                 extendedCaption="Download and Add the selected item to a new scene; on context menu"
                 condition="esri_mapping_openProjectState" loadOnClick="false"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGlobeAdd32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGlobeAdd16.png" >
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGlobeAdd16.png"
+                hidden="true">
           <tooltip heading="">
             Download and add data to a new scene.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_bimCloudItemAddToNewLocalSceneButton" className="ArcGIS.Desktop.Mapping.AddToNewLocalSceneButton" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" caption="Local Scene" keytip="L" extendedCaption="Download and Add the selected item to a new local scene; on context menu" condition="esri_mapping_openProjectState" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcSceneAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcSceneAdd16.png" helpContextID="" loadOnClick="false">
+        <button id="esri_bimCloudItemAddToNewLocalSceneButton"
+                className="ArcGIS.Desktop.Mapping.AddToNewLocalSceneButton"
+                assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll"
+                caption="Local Scene" keytip="L"
+                extendedCaption="Download and Add the selected item to a new local scene; on context menu"
+                condition="esri_mapping_openProjectState"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcSceneAdd32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcSceneAdd16.png" helpContextID=""
+                loadOnClick="false"
+                hidden="true">
           <tooltip heading="">
             Download and add data to a new local scene.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_bimCloudSignInButton" className="esri_bim_module:SignIn" caption="Sign In" keytip="SI"
-                extendedCaption="Sign in to BIM Cloud" loadOnClick="false">
+                extendedCaption="Sign in to BIM Cloud" loadOnClick="false"
+                hidden="true">
           <tooltip heading="">
             Sign in to BIM Cloud.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_bimCloudSignOutButton" className="esri_bim_module:SignOut" caption="Sign Out" keytip="SO"
-              extendedCaption="Sign out from BIM Cloud" loadOnClick="false">
+                extendedCaption="Sign out from BIM Cloud" loadOnClick="false"
+                hidden="true">
           <tooltip heading="">
             Sign out from BIM Cloud.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_bimCloudItemGetStatus" className="esri_bim_module:GetStatus" caption="Get Status"
-        extendedCaption="Get the version status of this item"
-        condition="esri_mapping_openProjectState" keytip="S">
+                extendedCaption="Get the version status of this item"
+                condition="esri_mapping_openProjectState" keytip="S"
+                hidden="true">
           <tooltip heading="">
             Check if the source item on the BIM Cloud is on a newer version.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_bimFileUpgradeMenuButton" className="esri_bim_module:UpgradeFile" caption="Upgrade to Latest Version"
                 extendedCaption="Upgrade this file to the latest supported version"
-                loadOnClick="false" keytip="U">
+                loadOnClick="false" keytip="U"
+                hidden="true">
           <tooltip heading="">
             Upgrade this file to the latest supported version.<disabledText>This file is already being upgraded or is at the latest version.</disabledText>
           </tooltip>
         </button>
         <!-- BIM Cloud Synchronization -->
-        <dynamicMenu id="esri_bimCloud_syncDataMenu" className="ArcGIS.Desktop.Internal.Catalog.APIConnections.SyncDynamicMenu" caption="Synchronize" extendedCaption="Allows you to update the selected local CAD or BIM file from the Cloud source; on context menu" />
+        <dynamicMenu id="esri_bimCloud_syncDataMenu"
+                     className="ArcGIS.Desktop.Internal.Catalog.APIConnections.SyncDynamicMenu"
+                     caption="Synchronize"
+                     extendedCaption="Allows you to update the selected local CAD or BIM file from the Cloud source; on context menu" />
       </controls>
 
       <menus>
         <!-- Download and Add Data -->
         <menu id="esri_bimCloud_addDataMenu" caption="Download and Add To New" extendedCaption="Download and add to new menu" keytip="AD"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png"
-            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png">
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png"
+              hidden="true">
           <button refID="esri_bimCloudItemAddToNewMapButton" />
           <button refID="esri_bimCloudItemAddToNewSceneButton" />
           <button refID="esri_bimCloudItemAddToNewLocalSceneButton" />
         </menu>
         <!-- BIM Cloud Container -->
-        <menu id ="bimCloud_containerMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connection container">
+        <menu id ="bimCloud_containerMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connection container" hidden="true">
           <button refID="esri_projectItemAddNewBIMConnection"/>
         </menu>
         <!-- BIM Cloud Connection from Project -->
-        <menu id="bimCloud_connectionProjectMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connections">
+        <menu id="bimCloud_connectionProjectMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connections" hidden="true">
           <button refID="esri_bimCloudSignInButton"/>
           <button refID="esri_bimCloudSignOutButton"/>
           <button refID="esri_core_addToProject" separator="true"/>
           <button refID="esri_itemInfoRefreshButton" separator="true" />
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
         </menu>
         <!-- BIM Cloud Connection from Folder -->
-        <menu id="bimCloud_connectionMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connections">
+        <menu id="bimCloud_connectionMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Connections" hidden="true">
           <button refID="esri_bimCloudSignInButton"/>
           <button refID="esri_bimCloudSignOutButton"/>
           <button refID="esri_core_addToProject" separator="true"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton"/>
         </menu>
         <!-- BIM Cloud Project -->
-        <menu id="bimCloud_projectMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Projects">
+        <menu id="bimCloud_projectMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Projects" hidden="true">
           <button refID="esri_itemInfoRefreshButton" />
         </menu>
         <!-- BIM Cloud Folder -->
-        <menu id="bimCloud_folderMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Folders">
+        <menu id="bimCloud_folderMenu" caption="Default" extendedCaption="Context menu for BIM Cloud Folders" hidden="true">
           <button refID="esri_bimCloudItemSaveManifestButton" />
           <button refID="esri_itemInfoRefreshButton" />
         </menu>
         <!-- BIM Cloud Item -->
-        <menu id="bimCloud_itemMenu" caption="BIM Cloud Item" extendedCaption="Context menu for layers accessed from BIM Cloud">
-          <button refID="esri_bimCloudItemSaveToProjectButton" />
-          <button refID="esri_bimCloudItemSaveManifestButton" />
-          <button refID="esri_bimCloudItemAddToActiveMapButton" />
+        <menu id="bimCloud_itemMenu" caption="BIM Cloud Item" extendedCaption="Context menu for layers accessed from BIM Cloud" hidden="true">
+          <button refID="esri_bimCloudItemSaveToProjectButton"/>
+          <button refID="esri_bimCloudItemSaveManifestButton"/>
+          <button refID="esri_bimCloudItemAddToActiveMapButton"/>
           <menu refID="esri_bimCloud_addDataMenu" />
         </menu>
         <!-- IFC File Item -->
-        <menu id="esri_ifcItemMenu" caption="Industry Foundation Classes Item" extendedCaption="Context menu for IFC File Items">
+        <menu id="esri_ifcItemMenu" caption="Industry Foundation Classes Item" extendedCaption="Context menu for IFC File Items" hidden="true">
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
         </menu>
       </menus>
 
@@ -1994,18 +2069,18 @@
           <button refID="esri_core_rename" />
           <button refID="esri_core_editCopyPaths" />
           <button refID ="esri_GDBPasteToFolder"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <!-- TODO: <button refID="esri_folderConnectionMakeDefaultButton" />-->
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
 
-        <menu id="locatorItemMenu" caption="Locator File Item" extendedCaption="Context menu for locator files in a folder connection and ArcGIS Server geocoding services">
+        <menu id="locatorItemMenu" hidden="true" caption="Locator File Item" extendedCaption="Context menu for locator files in a folder connection and ArcGIS Server geocoding services">
           <dynamicMenu refID="esri_projectItemLocatorsMenu" inline="true"/>
         </menu>
 
-        <menu id="locatorPackageItemMenu" caption="Locator Package Item" extendedCaption="Context menu for locator packages">
+        <menu id="locatorPackageItemMenu" hidden="true" caption="Locator Package Item" extendedCaption="Context menu for locator packages">
           <button refID="esri_itemInfoAddPackageToProjectButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
@@ -2119,12 +2194,12 @@
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
           <button refID="EGDBProjectItemMenuExportMenu"/>
           <button refID="esri_WorkspaceDomainsViewButton" separator="true"/>
-          <button refID="esri_VersionsViewButton"/>
+          <button refID="EGDBAdministrationMenu"/>
           <button refID="EGDBDistributedGeodatabaseMenu"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_core_rename"  />
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2146,7 +2221,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_core_rename"  />
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2165,12 +2240,12 @@
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
           <button refID="EGDBProjectItemMenuExportMenu"/>
           <button refID="esri_WorkspaceDomainsViewButton" separator="true"/>
-          <button refID="esri_VersionsViewButton"/>
+          <button refID="EGDBAdministrationMenu"/>
           <button refID="EGDBDistributedGeodatabaseMenu"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_core_rename"  />
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2201,7 +2276,7 @@
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2220,8 +2295,8 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem" />
-          <!--<button refID="esri_core_rename"/>-->
+          <button refID="esri_core_editDeleteButton" />
+          <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton" />
           <!--<button refID="esri_projectItemViewMetadata" separator="true" />
           <button refID="esri_projectItemEditMetadata" separator="false"/>-->
@@ -2239,7 +2314,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2260,33 +2335,33 @@
           <!--<button refID="esri_addProjectItemToNewProjectsButton" />-->
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_OLEDBDatabaseConnectionPropertiesButton" separator="true"/>
           <button refID="esri_DatabasePropertiesButton" separator="true"/>
         </menu>
 
-        <menu id="bimFileWorkspaceItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file models accessed from a folder connection">
+        <menu id="bimFileWorkspaceItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file models accessed from a folder connection" hidden="true">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_itemInfoRefreshButton" separator="true" />
           <!--<dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>-->
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_bimFileUpgradeMenuButton" separator="true"/>
           <dynamicMenu refID="esri_bimCloud_syncDataMenu" inline="true" />
         </menu>
-        <menu id="bimFileDatasetItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file datasets accessed from a folder connection">
+        <menu id="bimFileDatasetItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file datasets accessed from a folder connection" hidden="true">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_itemInfoRefreshButton" separator="true" />
           <!--<dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>-->
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
-        <menu id="bimFileFeatureClassItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file feature classes accessed from a folder connection">
+        <menu id="bimFileFeatureClassItemTypeMenu" caption="BIMFile" extendedCaption="Context menu for BIM file feature classes accessed from a folder connection" hidden="true">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_itemInfoRefreshButton" separator="true" />
           <!--<dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>-->
@@ -2316,7 +2391,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToFeatureDataset"/>
           <button refID="esri_GDBPasteSpecialToFeatureDataset"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_itemInfoRefreshButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
@@ -2333,7 +2408,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToFeatureDataset"/>
           <button refID="esri_GDBPasteSpecialToFeatureDataset"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_itemInfoRefreshButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -2350,7 +2425,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToFeatureDataset"/>
           <button refID="esri_GDBPasteSpecialToFeatureDataset"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_itemInfoRefreshButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
@@ -2364,7 +2439,7 @@
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageFGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2375,7 +2450,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_RenameItem"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2387,7 +2462,7 @@
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageMGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2398,7 +2473,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <menu refID="manageGDBRelationshipClassMenu" separator="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2409,7 +2484,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <menu refID="manageGDBRelationshipClassMenu" separator="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2420,7 +2495,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2431,7 +2506,7 @@
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true" />
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true" />
           <menu refID="ManageGDBItemMenu" separator="true" />
           <button refID="esri_projectItemViewMetadata" separator="true" />
@@ -2442,7 +2517,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <menu refID="manageGDBRelationshipClassMenu" separator="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2454,7 +2529,7 @@
           <button refID="EGDBGeneralItemFeatureClassTypeExportItemMenu" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <menu refID="ManageGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2466,7 +2541,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <menu refID="ManageGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2476,7 +2551,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageFGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2488,7 +2563,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <menu refID="ManageGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2502,7 +2577,7 @@
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageMGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2514,7 +2589,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageFGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2526,7 +2601,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <menu refID="ManageGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2538,7 +2613,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_GDBBuildNetworkDatasetButton" separator="true"/>
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
@@ -2550,7 +2625,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <!--<button refID="esri_core_editCopyButton" separator="true"/>-->
           <!--<button refID="esri_core_rename"/>-->
-          <!--<button refID="esri_DeleteItem"/>-->
+          <!--<button refID="esri_core_editDeleteButton"/>-->
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2559,7 +2634,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_GDBBuildNetworkDatasetButton" separator="true"/>
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
@@ -2567,10 +2642,26 @@
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
-        <menu id="fgdbItemFacilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for file geodatabase network utility datasets">
+        <menu id="fgdbItemUtilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for file geodatabase utility network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="mgdbItemUtilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for sqlite geodatabase utility network datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="egdbItemUtilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for enterprise geodatabase utility network datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2578,7 +2669,15 @@
         <menu id="fgdbItemTraceNetworkTypeMenu" caption="Geodatabase Trace Network Dataset" extendedCaption="Context menu for file geodatabase trace network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="mgdbItemTraceNetworkTypeMenu" caption="Geodatabase Trace Network Dataset" extendedCaption="Context menu for sqlite geodatabase trace network datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2586,15 +2685,7 @@
         <menu id="egdbItemTraceNetworkTypeMenu" caption="Geodatabase Trace Network Dataset" extendedCaption="Context menu for enterprise geodatabase trace network datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
-          <button refID="esri_projectItemPropertiesButton" separator="true"/>
-        </menu>
-        <menu id="egdbItemFacilityNetworkTypeMenu" caption="Geodatabase Utility Network Dataset" extendedCaption="Context menu for enterprise geodatabase network utility datasets">
-          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2603,7 +2694,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2615,7 +2706,7 @@
           <button refID="esri_mapping_generalGeocodeTableButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageFGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2626,7 +2717,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_RenameItem"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2639,7 +2730,7 @@
           <button refID="esri_mapping_generalGeocodeTableButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="ManageGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2653,7 +2744,7 @@
           <button refID="esri_mapping_generalGeocodeTableButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <menu refID="manageMGDBItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2677,7 +2768,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_ValidateTopologyButton" separator="true"/>
@@ -2687,9 +2778,9 @@
         </menu>
         <menu id="tinItemMenu" caption="TIN Dataset" extendedCaption="Context menu for TIN datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <!--<button refID="esri_DeleteItem"/>-->
+          <!--<button refID="esri_core_editDeleteButton"/>-->
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2697,7 +2788,7 @@
         </menu>
         <menu id="gdbItemParcelFabricItemMenu" caption="GDB Parcel Fabric" extendedCaption="Context menu for file geodatabase parcel fabrics">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -2705,7 +2796,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <menu refID="esri_manageParcelFabricItemMenu" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2713,14 +2804,14 @@
         </menu>
         <menu id="gdbItemLocationReferencingDatasetItemMenu" caption="GDB Location Referencing Dataset" extendedCaption="Context menu for location referencing dataset">
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_showLRSHierarchyButton" separator="true"/>
         </menu>
         <menu id="lasDatasetItemMenu" caption="LAS Dataset" extendedCaption="Context menu for LAS datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <!--<button refID="esri_core_editCopyButton" separator="true"/>-->
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2731,7 +2822,7 @@
           <button refID="esri_core_addToProject" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_DeleteItem" separator="true"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -2740,7 +2831,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
           <button refID="esri_core_Remove" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -2759,7 +2850,7 @@
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="ShapefileItemMenuExportItemMenu" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2773,16 +2864,16 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editDeleteButton"/>
         </menu>
-        <menu id="cadfileItemMenu" caption="Cad" extendedCaption="Context menu for CAD feature classes">
+        <menu id="cadfileItemMenu" caption="Cad" extendedCaption="Context menu for CAD feature classes" hidden="true">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
-        <menu id="cadDatasetItemMenu" caption="Cad Dataset" extendedCaption="Context menu for CAD datasets">
+        <menu id="cadDatasetItemMenu" caption="Cad Dataset" extendedCaption="Context menu for CAD datasets" hidden="true">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -2874,10 +2965,10 @@
         </menu>
         <menu id="onlineTaskItemMenu" caption="ArcGIS Task File" extendedCaption="Context menu for Task File">
           <button refID="esri_taskItemTaskImportOpenButton"/>
-          <button refID="esri_DeleteItem" separator="true"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
         </menu>
         <menu id="portalDLPKPackageItemMenu" caption="Deep Learning Package" extendedCaption="Context menu for Deep Learning Package">
-          <button refID="esri_DeleteItem" separator="true"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
         </menu>
         <menu id="itemInfoGenericMenu" caption="Generic Item" extendedCaption="Context menu for items that don't have a unique context menu">
           <button refID="esri_itemInfoRefreshButton" />
@@ -2886,39 +2977,40 @@
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
-        <menu id="locatorsConnectionContainerMenu" caption="Locators Container" extendedCaption="Context menu for the Locators container in the project">
+        <menu id="locatorsConnectionContainerMenu" hidden="true" caption="Locators Container" extendedCaption="Context menu for the Locators container in the project">
           <button refID="esri_geodatabase_addLocatorButton" />
           <button refID="esri_geodatabase_refreshLocatorsButton" separator="true"/>
         </menu>
-        <menu id="LocatorsConnectionItemMenu" caption="Locator Item" extendedCaption="Context menu for locators that have been added to a project">
-          <button refID="esri_locatorsConnectionRemoveButton" />
+        <menu id="LocatorsConnectionItemMenu" caption="Locator Item" extendedCaption="Context menu for locators that have been added to a project" hidden="true">
+          <button refID="esri_locatorsConnectionRemoveButton" /> 
           <button refID="esri_mapping_LocatorProperties" />
         </menu>
-        <menu id="LocatorsConnectionCompositeItemMenu" caption="Composite Locator Item" extendedCaption="Context menu for locators that have been added to a project">
+        <menu id="LocatorsConnectionCompositeItemMenu" caption="Composite Locator Item" extendedCaption="Context menu for locators that have been added to a project" hidden="true">
           <button refID="esri_locatorsConnectionRemoveButton" />
           <button refID="esri_mapping_compositeLocatorProperties" />
         </menu>
-        <menu id="LocatorsConnectionServerItemMenu" caption="Locator Item" extendedCaption="Context menu for locators located on server that have been added to a project">
+        <menu id="LocatorsConnectionServerItemMenu" hidden="true" caption="Locator Item" extendedCaption="Context menu for locators located on server that have been added to a project">
           <button refID="esri_locatorsConnectionRemoveButton" />
           <button refID="esri_mapping_serverLocatorProperties" />
         </menu>
-        <menu id="LocatorsConnectionPortalItemMenu" caption="Locator Item" extendedCaption="Context menu for locators services that have been added to a project">
+        <menu id="LocatorsConnectionPortalItemMenu" caption="Locator Item" extendedCaption="Context menu for locators services that have been added to a project" hidden="true">
           <button refID="esri_mapping_portalLocatorProperties" />
         </menu>
-        <menu id="LocatorsConnectionPortalItemLocatorMenu" caption="Portal Locator Item" extendedCaption="Context menu for portal item locators services that have been added to a project">
+        <menu id="LocatorsConnectionPortalItemLocatorMenu" caption="Portal Locator Item" extendedCaption="Context menu for portal item locators services that have been added to a project" hidden="true">
           <button refID="esri_locatorsConnectionRemoveButton" />
         </menu>
 
-        <menu id="LocatorsConnectionEagleItemMenu" caption="Locator Item" extendedCaption="Context menu for locators services that have been added to a project">
+        <menu id="LocatorsConnectionEagleItemMenu" caption="Locator Item" extendedCaption="Context menu for locators services that have been added to a project" hidden="true">
           <button refID="esri_locatorsConnectionRemoveButton" />
           <button refID="esri_mapping_LocatorEagleProperties" />
         </menu>
 
-        <menu id="LocatorsConnectionXYItemMenu" caption="Locator Item" extendedCaption="Context menu for locator_xy services">
+        <menu id="LocatorsConnectionXYItemMenu" caption="Locator Item" extendedCaption="Context menu for locator_xy services" hidden="true">
           <button refID="esri_mapping_xyLocatorProperties" />
         </menu>
         <menu id="folderConnectionContainerMenu" caption="Project Folders Container" extendedCaption="Context menu for the Folders container in the project">
           <button refID="esri_folderConnectionAddButton" />
+          <button refID="esri_core_refresh" separator="true" />
         </menu>
         <menu id="folderConnectionItemMenu" caption="Folder Connection" extendedCaption="Context menu for folder connections">
           <button refID="FolderConnectionProjectNewItemMenu" />
@@ -2934,26 +3026,26 @@
         </menu>
 
         <menu id="deepLearningPackageMenu" caption="Deep learning Package" extendedCaption="Context menu for geodatabase raster datasets">
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
         </menu>
 
         <!-- Raster, Mosaic dataset, Image service etc menu items -->
         <menu id="rasterItemMenu" caption="Raster" extendedCaption="Context menu for file-based raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <!--  <button refID="esri_DeleteItem" /> -->
+          <!--  <button refID="esri_core_editDeleteButton" /> -->
         </menu>
         <menu id="gdbItemRasterItemMenu" caption="GDB Raster" extendedCaption="Context menu for geodatabase raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="EGDBRasterDatasetExportItemMenu" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
         </menu>
         <menu id="gdbItemMosaicDatasetTypeMenu" caption="Mosaic Dataset" contextMenu="true" extendedCaption="Context menu for mosaic datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
         <menu id="imageServiceItemMenu" caption="Image Service" contextMenu="true" extendedCaption="Context menu for ArcGIS Server image services">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
@@ -2966,7 +3058,7 @@
         </menu>
         <menu id="rasterProductItemMenu" caption="Raster Product" contextMenu="true" extendedCaption="Context menu for raster products and function rasters">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <!-- <button refID="esri_DeleteItem" /> -->
+          <!-- <button refID="esri_core_editDeleteButton" /> -->
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -2979,7 +3071,7 @@
           <!--<dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>-->
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -3028,7 +3120,7 @@
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
           <button refID="EGDBProjectItemMenuExportMenu"/>
           <button refID="esri_WorkspaceDomainsViewButton" separator="true"/>
-          <button refID="esri_VersionsViewButton"/>
+          <button refID="EGDBAdministrationMenu"/>
           <button refID="EGDBDistributedGeodatabaseMenu"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
@@ -3071,7 +3163,7 @@
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
           <button refID="EGDBProjectItemMenuExportMenu"/>
           <button refID="esri_WorkspaceDomainsViewButton" separator="true"/>
-          <button refID="esri_VersionsViewButton"/>
+          <button refID="EGDBAdministrationMenu"/>
           <button refID="EGDBDistributedGeodatabaseMenu"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
@@ -3097,7 +3189,7 @@
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
           <button refID="esri_core_editDeleteButton"/>
-          <!--<button refID="esri_core_rename"  />-->
+          <button refID="esri_core_rename"/>
           <button refID="esri_itemInfoRefreshButton" />
           <button refID="esri_GDBRemoveButton"/>
           <button refID="esri_SqlitePropertiesButton" separator="true" />
@@ -3115,7 +3207,7 @@
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_DeleteItem" separator="true"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"  />
           <button refID="esri_itemInfoRefreshButton" separator="true" />
           <button refID="esri_GDBRemoveButton" />
@@ -3143,6 +3235,7 @@
           <button refID="esri_geodatabase_databaseConnectionButton_contextMenu" />
           <button refID="esri_geodatabase_newOLEDBConnectionButton"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
+          <button refID="esri_core_refresh" separator="true" />
           <!-- TODO: will come later
           <button refID="esri_core_editCutButton"/>-->
         </menu>
@@ -3152,9 +3245,10 @@
           <button refID="esri_projectItemAddWCSConnection"/>
           <button refID="esri_projectItemAddWMSConnection"/>
           <button refID="esri_projectItemAddWFSConnection"/>
-          <!-- button refID="esri_projectItemAddOGCAPIConnection"/postpone2.8-->
+          <button refID="esri_projectItemAddOGCAPIConnection"/>
           <button refID="esri_projectItemAddWMTSConnection"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
+          <button refID="esri_core_refresh" separator="true" />
         </menu>
 
         <menu id="NotebookContainerMenu" caption="Project Notebook Container" extendedCaption="Context menu for the Notebook container in the project">
@@ -3194,13 +3288,13 @@
           <!--<button refID="esri_core_editCopyButton" separator="true" />-->
           <!--<button refID="esri_core_rename" separator="true" />-->
           <button refID="esri_core_Remove" separator="true" />
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
           <button refID="esri_projectItemViewMetadata" separator="true" />
           <button refID="esri_projectItemEditMetadata" />
           <button refID="esri_projectItemPropertiesButton" separator="true" />
         </menu>
 
-        <menu id="StatisticalDataCollectionItemMenu" caption="Statistical Data Collection" extendedCaption="Context menu for an ArcGIS Statistica Data Collection added to the project">
+        <menu id="StatisticalDataCollectionItemMenu" caption="Statistical Data Collection" extendedCaption="Context menu for an ArcGIS Statistica Data Collection added to the project" hidden="true">
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_projectItemSDCXItemRemove" separator="true"/>
@@ -3209,92 +3303,92 @@
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
-        <menu id="StatisticalDataCollectionFileItemMenu" caption="Statistical Data Collection" extendedCaption="Context menu for an ArcGIS Statistica Data Collection file.">
-          <button refID="esri_projectItemAddToProjectButton" />
+        <menu id="StatisticalDataCollectionFileItemMenu" caption="Statistical Data Collection" extendedCaption="Context menu for an ArcGIS Statistica Data Collection file." hidden="true">
+          <button refID="esri_core_addToProject" />
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
-        <menu id="StatisticalDataCollectionContainerMenu" caption="Project Statistica Data Collections Container" extendedCaption="Context menu for the statistical data collections container in the project">
+        <menu id="StatisticalDataCollectionContainerMenu" caption="Project Statistica Data Collections Container" extendedCaption="Context menu for the statistical data collections container in the project" hidden="true">
           <button refID="esri_projectItemAddExistingStatisticalDataCollection" />
           <button refID="esri_projectItemCreateStatisticalDataCollectionButton" />
           <button refID="esri_core_editPasteButton" separator="true"/>
         </menu>
-        <menu id="TargetMarketingContainerMenu" caption="Project Target Marketing  Container" extendedCaption="Context menu for the target marketing container in the project">
+        <menu id="TargetMarketingContainerMenu" caption="Project Target Marketing  Container" extendedCaption="Context menu for the target marketing container in the project" hidden="true">
         </menu>
-        <menu id="SegmentationTargetGroupItemMenu" caption="Segmentation Target Group" extendedCaption="Context menu for an ArcGIS Segmentation Target Group added to the project">
+        <menu id="SegmentationTargetGroupItemMenu" caption="Segmentation Target Group" extendedCaption="Context menu for an ArcGIS Segmentation Target Group added to the project" hidden="true">
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_projectItemSegmentationTargetGroupItemRemove" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
         </menu>
-        <menu id="SegmentationTargetGroupFileItemMenu" caption="Segmentation Target Group" extendedCaption="Context menu for an ArcGIS Segmentation Target Group file.">
-          <button refID="esri_projectItemAddToProjectButton" />
+        <menu id="SegmentationTargetGroupFileItemMenu" caption="Segmentation Target Group" extendedCaption="Context menu for an ArcGIS Segmentation Target Group file." hidden="true">
+          <button refID="esri_core_addToProject" />
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
-        <menu id="SegmentationProfileItemMenu" caption="Segmentation Profile" extendedCaption="Context menu for an ArcGIS Segmentation Profile added to the project">
+        <menu id="SegmentationProfileItemMenu" caption="Segmentation Profile" extendedCaption="Context menu for an ArcGIS Segmentation Profile added to the project" hidden="true">
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_projectItemSegmentationProfileItemRemove" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
         </menu>
-        <menu id="SegmentationProfileFileItemMenu" caption="Segmentation Profile" extendedCaption="Context menu for an ArcGIS Segmentation Profile file.">
-          <button refID="esri_projectItemAddToProjectButton" />
+        <menu id="SegmentationProfileFileItemMenu" caption="Segmentation Profile" extendedCaption="Context menu for an ArcGIS Segmentation Profile file." hidden="true">
+          <button refID="esri_core_addToProject" />
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
-        <menu id="HuffModelItemMenu" caption="HuffModel" extendedCaption="Context menu for an ArcGIS Huff Model added to the project">
-          <button refID="esri_addFavoriteButton"/>
-          <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_projectItemHuffModelItemRemove" separator="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true"/>
-        </menu>
-        <menu id="HuffModelFileItemMenu" caption="HuffModel" extendedCaption="Context menu for an ArcGIS Huff Model file.">
-          <button refID="esri_projectItemAddToProjectButton" />
-          <button refID="esri_addFavoriteButton"/>
-          <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_DeleteItem" />
-        </menu>
-        <menu id="VariableListItemMenu" caption="VariableList" extendedCaption="Context menu for an ArcGIS Variable List added to the project">
+        <menu id="HuffModelItemMenu" caption="HuffModel" extendedCaption="Context menu for an ArcGIS Huff Model added to the project" hidden="true">
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_projectItemHuffModelItemRemove" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
         </menu>
-        <menu id="VariableListFileItemMenu" caption="VariableList" extendedCaption="Context menu for an ArcGIS Variable List file.">
-          <button refID="esri_projectItemAddToProjectButton" />
+        <menu id="HuffModelFileItemMenu" caption="HuffModel" extendedCaption="Context menu for an ArcGIS Huff Model file." hidden="true">
+          <button refID="esri_core_addToProject" />
           <button refID="esri_addFavoriteButton"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
-        <menu id="HuffModelContainerMenu" caption="Project Huff Model  Container" extendedCaption="Context menu for the huff model container in the project">
+        <menu id="VariableListItemMenu" caption="VariableList" extendedCaption="Context menu for an ArcGIS Variable List added to the project" hidden="true">
+          <button refID="esri_addFavoriteButton"/>
+          <button refID="esri_addProjectItemToNewProjectsButton"/>
+          <button refID="esri_projectItemVariableListItemRemove" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
         </menu>
-        <menu id="VariableListContainerMenu" caption="Project Huff Model  Container" extendedCaption="Context menu for the huff model container in the project">
+        <menu id="VariableListFileItemMenu" caption="VariableList" extendedCaption="Context menu for an ArcGIS Variable List file." hidden="true">
+          <button refID="esri_core_addToProject" />
+          <button refID="esri_addFavoriteButton"/>
+          <button refID="esri_addProjectItemToNewProjectsButton"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_rename" separator="true"/>
+          <button refID="esri_core_editDeleteButton" />
         </menu>
-        <menu id="BusinessAnalystContainerAddSubMenu" caption="Add" extendedCaption="Add Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
+        <menu id="HuffModelContainerMenu" caption="Project Huff Model  Container" extendedCaption="Context menu for the huff model container in the project" hidden="true">
         </menu>
-        <menu id="BusinessAnalystContainerNewSubMenu" caption="New" extendedCaption="Create new Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
+        <menu id="VariableListContainerMenu" caption="Project Huff Model  Container" extendedCaption="Context menu for the huff model container in the project" hidden="true">
         </menu>
-        <menu id="BusinessAnalystContainerMenu" caption="Project Business Analyst Container" extendedCaption="Context menu for the business analyst container in the project">
+        <menu id="BusinessAnalystContainerAddSubMenu" caption="Add" extendedCaption="Add Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" hidden="true">
+        </menu>
+        <menu id="BusinessAnalystContainerNewSubMenu" caption="New" extendedCaption="Create new Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png" hidden="true">
+        </menu>
+        <menu id="BusinessAnalystContainerMenu" caption="Project Business Analyst Container" extendedCaption="Context menu for the business analyst container in the project" hidden="true">
           <menu refID="BusinessAnalystContainerAddSubMenu" />
           <menu refID="BusinessAnalystContainerNewSubMenu" />
         </menu>
@@ -3332,8 +3426,6 @@
           <button refID="esri_GDBCreateRasterDatasetButton" />
           <button refID="esri_GDBCreateMosaicDatasetButton" />
           <button refID="esri_GDBCreateNewToolboxButtonInFolder" separator="true"/>
-          <!--<button refID="esri_GDBCreateAddressLocatorButton" />
-          <button refID="esri_GDBCreateCompositeAddressLocatorButton" />-->
         </menu>
         <menu id="NewGeodatabaseItemMenu" caption="New Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for adding new local datasources" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png" keytip="NG">
           <button refID="esri_geodatabase_newGeoDatabaseButton_contextMenu"/>
@@ -3355,14 +3447,22 @@
           <button refID="esri_GDBImportFeatureClassButton" />
           <button refID="esri_GDBImportFeatureClassesButton" />
         </menu>
-        <menu id ="FGDBDistributedGeodatabaseMenu" caption="Distributed Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for managing items for a distributed Geodatabase">
+        <menu id="FGDBDistributedGeodatabaseMenu" caption="Distributed Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for managing items for a distributed Geodatabase">
           <button refID="esri_SynchronizeReplicasButton"/>
           <button refID="esri_ReplicasViewButton"/>
         </menu>
-        <menu id ="EGDBDistributedGeodatabaseMenu" caption="Distributed Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for managing items for a distributed Geodatabase">
+        <menu id="EGDBDistributedGeodatabaseMenu" caption="Distributed Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for managing items for a distributed Geodatabase">
           <button refID="esri_CreateReplicaButton"/>
           <button refID="esri_SynchronizeReplicasButton"/>
           <button refID="esri_ReplicasViewButton"/>
+        </menu>
+        <menu id="EGDBAdministrationMenu" caption="Administration" contextMenu="true" extendedCaption="Context menu submenu for administration options for a distributed geodatabase">
+          <button refID="esri_VersionsViewButton"/>
+          <button refID="esri_ConnectedUsersButton" />
+          <button refID="esri_WorkspaceLocksButton"/>
+          <button refID="esri_CompressEnterpriseGdbButton"/>
+          <button refID="esri_CreateDatabaseUserButton" />
+          <button refID="esri_CreateRoleButton"/>
         </menu>
 
         <!--egdb export -->
@@ -3391,7 +3491,7 @@
           <button refID="esri_GDBFeatureClassesExportToCADButton"/>
           <button refID="esri_GDBFeatureClassesExportToGeodatabaseButton"/>
           <button refID="esri_GDBFeatureClassesExportToShapefileButton"/>
-          <button refID="esri_GDBGeodatabaseExportToXMLWorkspaceDocumentsButton" separator="true"/>
+          <button refID="esri_GDBFeatureDatasetsExportToXMLWorkspaceDocumentsButton" separator="true"/>
         </menu>
 
         <menu id="FileGDBAndEGDBFeatureClassExportItemMenu" caption="Export" contextMenu="true" extendedCaption="Context menu submenu for exporting data in a geodatabase">
@@ -3485,7 +3585,8 @@
         <menu id="ManageGDBItemMenu" caption="Manage" extendedCaption="Context menu submenu providing enterprise geodatabase management options" contextMenu="true">
           <button refID="esri_RegisterWithGdbButton"/>
           <button refID="esri_AddGlobalIDButton" separator="true"/>
-          <button refID="esri_PrivilegesButton" separator="true"/>
+          <button refID="esri_PrivilegesButton"  separator="true"/>
+          <menu refID="esri_EGDBItemLocksButton"/>
           <button refID="esri_RegisterAsVersionedButton" separator="true"/>
           <button refID="esri_UnregisterAsVersionedButton"/>
           <button refID="esri_EnableArchivingButton" separator="true"/>
@@ -3493,14 +3594,14 @@
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_EnableAttachmentsButton" separator="true"/>
-          <button refID="esri_DisableAttachementsButton"/>
+          <button refID="esri_DisableAttachmentsButton"/>
         </menu>
         <menu id="manageMGDBItemMenu" caption="Manage" extendedCaption="Context menu submenu providing mobile geodatabase management options" contextMenu="true">
           <button refID="esri_AddGlobalIDButton"/>
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_EnableAttachmentsButton" separator="true"/>
-          <button refID="esri_DisableAttachementsButton"/>
+          <button refID="esri_DisableAttachmentsButton"/>
         </menu>
         <menu id="manageFGDBMenu" caption="Manage" extendedCaption="Context menu submenu providing file geodatabase management options" contextMenu="true">
           <button refID="esri_CompactFileGdbButton"/>
@@ -3512,7 +3613,7 @@
           <button refID="esri_EnableEditorTrackingButton" separator="true"/>
           <button refID="esri_DisableEditorTrackingButton"/>
           <button refID="esri_EnableAttachmentsButton" separator="true"/>
-          <button refID="esri_DisableAttachementsButton"/>
+          <button refID="esri_DisableAttachmentsButton"/>
           <button refID="esri_CompressFileGdbItemButton" separator="true"/>
           <button refID="esri_UncompressFileGdbItemButton"/>
         </menu>
@@ -3530,12 +3631,13 @@
           <button refID="esri_geodatabase_newMobileGeoDatabaseButton"/>
           <button refID="esri_geodatabase_databaseConnectionButton"/>
           <button refID="esri_geodatabase_newOLEDBConnectionButton"/>
+          <button refID="esri_bdc_newBigDataConnectionButton" separator="true"/>
           <button refID="esri_mapping_AddExistingServerConnectionButton" separator="true"/>
           <button refID="esri_mapping_AGSConnectionButton"/>
           <button refID="esri_mapping_WCSConnectionButton" />
           <button refID="esri_mapping_WMSConnectionButton"/>
           <button refID="esri_mapping_WFSConnectionButton"/>
-          <!-- button refID="esri_mapping_OGCAPIConnectionButton"/postpone2.8-->
+          <button refID="esri_mapping_OGCAPIConnectionButton"/>
           <button refID="esri_mapping_WMTSConnectionButton"/>
           <button refID="esri_projectItemAddExistingACSConnection" separator="true"/>
           <button refID="esri_projectItemAddNewACSConnection"/>
@@ -3561,7 +3663,7 @@
           <button refID="esri_mapping_WCSConnectionToFavoritesButton" />
           <button refID="esri_mapping_WMSConnectionToFavoritesButton"/>
           <button refID="esri_mapping_WFSConnectionToFavoritesButton"/>
-          <!-- button refID="esri_mapping_OGCAPIConnectionToFavoritesButton"/postpone2.8-->
+          <button refID="esri_mapping_OGCAPIConnectionToFavoritesButton"/>
           <button refID="esri_mapping_WMTSConnectionToFavoritesButton"/>
           <!--<button refID="esri_projectItemAddExistingACSConnectionToFavorites" separator="true"/>
           <button refID="esri_projectItemAddNewACSConnectionToFavorites"/>-->
@@ -3572,11 +3674,11 @@
         </menu>
         <menu id="esri_geodatabase_ProjectMultiselectContextMenu" caption="Item" contextMenu="true" extendedCaption="Context menu for many selected items in the Project pane">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_DeleteItem"/>
+          <button refID="esri_core_editDeleteButton"/>
         </menu>
 
         <menu id="esri_geodatabase_DeleteContextMenu" caption="Item" contextMenu="true" extendedCaption="Context menu for many deleting geodatabase items">
-          <button refID="esri_DeleteItem" />
+          <button refID="esri_core_editDeleteButton" />
         </menu>
 
         <menu id="portalRFTItemMenu" caption="Raster Function Template" extendedCaption="Context menu for raster function templates on portal">
@@ -3603,6 +3705,7 @@
         <menu id="esri_manageParcelFabricItemMenu" caption="Manage" extendedCaption="Context menu submenu providing parcel fabric management options" contextMenu="true">
           <button refID="esri_GDBAddParcelTypeButton"/>
           <button refID="esri_GDBRemoveParcelTypeButton"/>
+          <button refID="esri_GDBUpgradeParcelDatasetButton" separator="true"/>
         </menu>
       </menus>
 
@@ -3734,36 +3837,49 @@ The project saves a reference to the statistical data collection file.
                 caption="Remove" extendedCaption="Remove a statistical data collection from the project"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID=""
+                hidden="true">
           <tooltip heading="">Remove the statistical data collection from the project.</tooltip>
         </button>
         <button id="esri_projectItemSDCXItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove" extendedCaption="Remove a Statistical Data Collection item from the project; on Statistical Data Collection context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID=""
+                hidden="true">
           <tooltip heading="">Remove the Statistical Data Collection item from the project.</tooltip>
         </button>
         <button id="esri_projectItemSegmentationTargetGroupItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove" extendedCaption="Remove a Segmentation Target Group item from the project; on Remove a Segmentation Target Group context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID=""
+                hidden="true">
           <tooltip heading="">Remove the Segmentation Target Group item from the project.</tooltip>
         </button>
         <button id="esri_projectItemSegmentationProfileItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove" extendedCaption="Remove a Segmentation Profile item from the project; on Remove a Segmentation Profile context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID=""
+                hidden="true">
           <tooltip heading="">Remove the Segmentation Profile item from the project.</tooltip>
         </button>
         <button id="esri_projectItemHuffModelItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
-                caption="Remove" extendedCaption="Remove a Segmentation Profile item from the project; on Remove a Huff Model Calibration context menu"
+                caption="Remove" extendedCaption="Remove a Huff Model Calibration item from the project; on Remove a Huff Model Calibration context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID=""
+                hidden="true">
           <tooltip heading="">Remove the Huff Model Calibration item from the project.</tooltip>
+        </button>
+        <button id="esri_projectItemVariableListItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
+                caption="Remove" extendedCaption="Remove a Variable List item from the project; on Remove a Variable List context menu"
+                condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
+                helpContextID=""
+                hidden="true">
+          <tooltip heading="">Remove the Variable List item from the project.</tooltip>
         </button>
         <button id="esri_folderConnectionAddButton" className="AddFolderConnectionCmd" loadOnClick="false"
                 caption="Add Folder Connection" keytip="AF"
@@ -3990,7 +4106,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
-        <button id="esri_GDBFeatureClassesExportToShapefileButton" className="esri_geodatabase_module:gdbExportFeatureClassToShapfile" loadOnClick="false"
+        <button id="esri_GDBFeatureClassesExportToShapefileButton" className="esri_geodatabase_module:gdbExportFeatureClassToShapefile" loadOnClick="false"
                 caption="Feature Class(es) To Shapefile(s)..."
                 condition="esri_projectItem_isValidCondition"
                 extendedCaption="Export one or more feature classes into shapefile.; in Export context menu for geodatabases and feature datasets"
@@ -4067,31 +4183,42 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
-        <button id="esri_GDBTableExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportGeodatabaseToXMLDocument"
-                caption="Table To XML Workspace Document..." loadOnClick="false"
-                extendedCaption="Export data from this table into an XML document.; in Export context menu for geodatabases and feature datasets"
-                condition="esri_projectItem_StandardLicenseAndTableRegisteredCondition" smallImage="" helpContextID="">
+        <button id="esri_GDBTableExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportDataElementToXMLDocument"
+                caption="Table(s) To XML Workspace Document..." loadOnClick="false"
+                extendedCaption="Export data from one or more tables into an XML document.; in Export context menu for geodatabases and feature datasets"
+                condition="esri_license_HasStandardLicenseAndNotNonGDBItemCondition" smallImage="" helpContextID="">
           <tooltip heading="">
-            Export data from this table into an XML document.<disabledText></disabledText>
+            Export data from one or more tables into an XML document.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_GDBRasterDatasetExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportGeodatabaseToXMLDocument"
-                caption="Raster To XML Workspace Document..." loadOnClick="false"
-                extendedCaption="Export data from this table into an XML document.; in Export context menu for geodatabases and feature datasets"
+        <button id="esri_GDBRasterDatasetExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportDataElementToXMLDocument"
+                caption="Raster(s) To XML Workspace Document..." loadOnClick="false"
+                condition="esri_license_HasStandardLicenseAndNotNonGDBItemCondition"
+                extendedCaption="Export data from one or more raster datasets into an XML document.; in Export context menu for geodatabases and feature datasets"
                 smallImage="" helpContextID="">
           <tooltip heading="">
-            Export data from this table into an XML document.<disabledText></disabledText>
+            Export data from one or more raster datasets into an XML document.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_GDBFeatureClassesExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportGeodatabaseToXMLDocument"
+        <button id="esri_GDBFeatureClassesExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportDataElementToXMLDocument"
                 caption="Feature Class(es) To XML Workspace Document..." loadOnClick="false"
                 condition="esri_license_HasStandardLicenseAndNotNonGDBItemCondition"
                 extendedCaption="Export data from one or more feature classes into an XML document.; in Export context menu for geodatabases and feature datasets"
                 smallImage="" helpContextID="">
           <tooltip heading="">
             Export data from one or more feature classes into an XML document.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_GDBFeatureDatasetsExportToXMLWorkspaceDocumentsButton" className="esri_geodatabase_module:gdbExportDataElementToXMLDocument"
+                caption="Feature Dataset(s) To XML Workspace Document..." loadOnClick="false"
+                condition="esri_license_HasStandardLicenseAndNotNonGDBItemCondition"
+                extendedCaption="Export data from one or more feature datasets into an XML document.; in Export context menu for geodatabases and feature datasets"
+                smallImage="" helpContextID="">
+          <tooltip heading="">
+            Export data from one or more feature datasets into an XML document.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -4181,16 +4308,6 @@ The project saves a reference to the statistical data collection file.
                 helpContextID="" keytip="M">
           <tooltip heading="">
             Create a new mosaic dataset in the geodatabase.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_GDBCreateAddressLocatorButton" className="esri_geoprocessing_module:Commands.gdbCreateAddressLocator" caption="Locator" extendedCaption="Create a new locator in a geodatabase; not currently included in New context menu for geodatabases" condition="esri_projectItem_IsLocalGDBorEnterpriseGDBWithStandardLicenseCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png" helpContextID="" keytip="A">
-          <tooltip heading="">
-            Create a new locator in the geodatabase.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_GDBCreateCompositeAddressLocatorButton" className="esri_geoprocessing_module:Commands.gdbCreateCompositeAddressLocator" caption="Composite Locator" extendedCaption="Create a new locator in a geodatabase; not currently included in New context menu for geodatabases" condition="esri_projectItem_IsLocalGDBorEnterpriseGDBWithStandardLicenseCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png" helpContextID="" keytip="C">
-          <tooltip heading="">
-            Create a new composite locator in the geodatabase.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_GDBCreateNewToolboxButton"
@@ -4402,39 +4519,49 @@ The project saves a reference to the statistical data collection file.
             Disables topology on a parcel fabric. System-defined parcel rules and topology rules and parcel fabric feature classes will be removed from the topology.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_GDBUpgradeParcelDatasetButton" className="esri_geoprocessing_module:Commands.gdbUpgradeDataset"
+                caption="Upgrade Dataset" extendedCaption="Add a new parcel type to a parcel fabric; on parcel dataset context menu"
+                condition="esri_projectItem_SelectedItemIsNotParcelCurrentVersionCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericUpgrade16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericUpgrade32.png"
+                helpContextID="" keytip="U">
+          <tooltip heading="">
+            Upgrades the schema of the parcel fabric to the latest ArcGIS Pro release version. Upgrade the parcel fabric to to use the latest released functionality.<disabledText>The parcel fabric is upgraded to the latest ArcGIS Pro release version.</disabledText>
+          </tooltip>
+        </button>
 
         <button id="esri_itemInfoAddToProjectButton" className="esri_core_module:AddProjectItem" caption="Add To Project"
                 extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
-                helpContextID="">
+                helpContextID="" hidden="true">
           <tooltip heading="">
             Add the locator or geocode service to a project. The project saves a reference to the locator. The added locators can be found in the Locators folder on the Project pane.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_LocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_LocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
           <tooltip heading="">
             Displays the properties of the selected locator.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_LocatorEagleProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_LocatorEagleProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
           <tooltip heading="">
             Displays the properties of the selected locator.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_compositeLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_compositeLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
           <tooltip heading="">
             Displays the properties of the selected locator.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_portalLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_portalLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 condition="esri_geodatabase_dummyConditionWhichIsAlwaysFalse"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
@@ -4442,7 +4569,7 @@ The project saves a reference to the statistical data collection file.
             Locator properties are not currently supported for portal locators.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_serverLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_serverLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 condition="esri_geodatabase_dummyConditionWhichIsAlwaysFalse"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
@@ -4450,13 +4577,13 @@ The project saves a reference to the statistical data collection file.
             Locator properties are not currently supported for server locators.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_locatorFileLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_locatorFileLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png">
           <tooltip>
             Displays the properties of the selected locator.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_xyLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false"
+        <button id="esri_mapping_xyLocatorProperties" className="esri_mapping:ShowLocatorProperties" loadOnClick="false" hidden="true"
                 caption="Locator Properties" extendedCaption="Add a locator to the project; on locator and geocoding service context menu"
                 condition="esri_geodatabase_dummyConditionWhichIsAlwaysFalse"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LocatorProperties16.png" helpContextID="">
@@ -4464,18 +4591,18 @@ The project saves a reference to the statistical data collection file.
             Displays the properties of the selected locator.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_annotationFeatureClassProperties" className="esri_mapping:ShowAnnotationFeatureClassDockPane" caption="Annotation Feature Class Properties" extendedCaption="Annotation Feature Class Properties" condition="esri_project_annotationFeatureClassSelectedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnnotationFeatureClassProperties16.png" helpContextID="" loadOnClick="false">
+        <button id="esri_mapping_annotationFeatureClassProperties" hidden="true" className="esri_mapping:ShowAnnotationFeatureClassDockPane" caption="Annotation Feature Class Properties" extendedCaption="Annotation Feature Class Properties" condition="esri_project_annotationFeatureClassSelectedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnnotationFeatureClassProperties16.png" helpContextID="" loadOnClick="false">
           <tooltip heading="">
             Show annotation feature class properties.
           </tooltip>
         </button>
-        <button id="esri_mapping_dimensionFeatureClassProperties" className="esri_mapping:ShowAnnotationFeatureClassDockPane" caption="Dimension Feature Class Properties" extendedCaption="Dimension Feature Class Properties" condition="esri_project_dimensionFeatureClassSelectedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DimensionFeatureClassProperties16.png" helpContextID="" loadOnClick="false">
+        <button id="esri_mapping_dimensionFeatureClassProperties" hidden="true" className="esri_mapping:ShowAnnotationFeatureClassDockPane" caption="Dimension Feature Class Properties" extendedCaption="Dimension Feature Class Properties" condition="esri_project_dimensionFeatureClassSelectedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DimensionFeatureClassProperties16.png" helpContextID="" loadOnClick="false">
           <tooltip heading="">
             Show dimension feature class properties.
           </tooltip>
         </button>
         <button id="esri_itemInfoAddPackageToProjectButton" className="esri_core_module:AddProjectItem"
-                caption="Add To Project"
+                hidden="true" caption="Add To Project"
                 extendedCaption="Add locator package to the project; on locator package context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png"
@@ -4756,6 +4883,12 @@ The project saves a reference to the statistical data collection file.
                 helpContextID="">
           <tooltip heading="">Create a new OLE DB Connection to the project. The project saves a reference to the OLE DB connection file.</tooltip>
         </button>
+        <button id="esri_bdc_newBigDataConnectionButton" className="esri_bdc_module:Commands.newBigDataConnection" loadOnClick="false" caption="New Big Data Connection" extendedCaption="Create a new Big Data Connection" keytip="BDC" licenseLevel="advanced"
+
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BigDataFileShare32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BigDataFileShare16.png"
+                helpContextID="">
+          <tooltip heading="">Create a new Big Data Connection to the project. The project saves a reference to the Big Data connection file.</tooltip>
+        </button>
         <button id="esri_geodatabase_newGeoDatabaseToFavoritesButton" className="esri_database_module:AddNewGeodatabaseToFavorites" caption="New File Geodatabase" extendedCaption="Create a new file geodatabase and add it to project favorites; on ribbon" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png" helpContextID="" keytip="G">
           <tooltip heading="New File Geodatabase To Favorites">
             Create a new file geodatabase in your roaming profile or a shared location on the network. The new geodatabase is added to project favorites. Project favorites saves a reference to the file geodatabase.<disabledText></disabledText>
@@ -4884,7 +5017,7 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_mapping_OGCAPIConnectionButton" className="esri_geodatabase_module:AddOGCAPIConnection" caption="New OGC API Server" extendedCaption="Create a new OGC API connection and add it to the project; on ribbon" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerOGCNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerOGCNew16.png" helpContextID="" keytip="OG">
           <tooltip heading="New OGC API Server Connection">
-            Connect to a OGC server. The new connection is added to the project. A new server connection file is created in the project's home folder and is referenced by the project.<disabledText></disabledText>
+            Connect to a OGC API server. The new connection is added to the project. A new server connection file is created in the project's home folder and is referenced by the project.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_mapping_WMSConnectionToFavoritesButton" className="esri_geodatabase_module:AddWMSConnectionToFavorites" caption="New WMS Server" extendedCaption="Create a new OGC WMS connection in your roaming profile and add it to project favorites; on ribbon" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerWMSNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerWMSNew16.png" helpContextID="" keytip="MS">
@@ -4916,7 +5049,8 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_mapping_AddExistingStatisticalDataCollectionToFavoritesButton" className="esri_geodatabase_module:AddExistingStatisticalDataCollectionToFavorites" caption="Add Statistical Data Collection" extendedCaption="Add an existing Statistical Data Collection file to the project; on ribbon." condition="esri_mapping_openProjectCondition" helpContextID="" keytip="SD"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxFavorite16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxFavorite32.png">
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxFavorite32.png"
+                hidden="true">
           <tooltip heading="Add Statistical Data Collection">
             Add an existing Statistical Data Collection file to project favorites.
 
@@ -4965,7 +5099,7 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_VersionsViewButton" className="esri_geodatabase_module:openVersionsView" caption="Versions" extendedCaption="Open Versions view for the selected geodatabase item; on context menu" condition="esri_projectItem_openVersionsCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/VersionManager16.png" helpContextID="">
           <tooltip heading="">
-            Edit versions.<disabledText></disabledText>
+            Edit versions.<disabledText>Only available for geodatabase administrators for branch versioning connections.</disabledText>
           </tooltip>
         </button>
         <button id="esri_geodatabase_ReplicasViewButton" className="esri_geodatabase_module:gdbLaunchManageReplicasPane" caption="Manage Replicas" extendedCaption="Open Replicas pane for the selected geodatabase item; on context menu" condition="esri_projectItem_openWorkspaceReplicaCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ManageReplica32.png" helpContextID="" loadOnClick="false" keytip="RP">
@@ -5100,7 +5234,7 @@ The project saves a reference to the statistical data collection file.
             </disabledText>
           </tooltip>
         </button>
-        <button id="esri_DisableAttachementsButton" loadOnClick="false"
+        <button id="esri_DisableAttachmentsButton" loadOnClick="false"
                 className="esri_geodatabase_module:disableAttachments"
                 condition="esri_projectItem_SelectedItemAttachmentsCondition"
                 caption="Disable Attachments"
@@ -5208,6 +5342,67 @@ The project saves a reference to the statistical data collection file.
             </disabledText>
           </tooltip>
         </button>
+        <button id="esri_CompressEnterpriseGdbButton" className="esri_geodatabase_module:compressEnterpriseGdb"
+                caption="Compress" loadOnClick="false" extendedCaption="Compresses the data on the selected item"
+                helpContextID="" condition="esri_projectItem_isValidCondition" >
+          <tooltip heading="Compress.">
+            Compress this data.
+            <disabledText>
+              Compress this data.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_CreateDatabaseUserButton" className="esri_geodatabase_module:createDatabaseUser"
+                caption="Create Database User" loadOnClick="false" extendedCaption="Create Database User for selected item"
+                helpContextID="" condition="esri_projectItem_isValidCondition" >
+          <tooltip heading="Create database user.">
+            Create database user for this data.
+            <disabledText>
+              Create database user for this data.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_CreateRoleButton" className="esri_geodatabase_module:createRole"
+                caption="Create Role" loadOnClick="false" extendedCaption="Create role for selected item"
+                helpContextID="" condition="esri_projectItem_isValidCondition" >
+          <tooltip heading="Create role user.">
+            Create role for this data.
+            <disabledText>
+              Create role for this data.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_ConnectedUsersButton" className="esri_geodatabase_module:openConnectedUsersView"
+                condition="esri_projectItem_adminCondition"
+                caption="Connections" loadOnClick="false" extendedCaption="Open the connected users view"
+                helpContextID="">
+          <tooltip heading="Open the connected users view.">
+            Open the connected users dialog by admins for this data.
+            <disabledText>
+              Open the connected users dialog by admins for this data.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_WorkspaceLocksButton" className="esri_geodatabase_module:openWorkspaceLocksView"
+                caption="Locks" loadOnClick="false" extendedCaption="Open the locks view"
+                helpContextID="" condition="esri_projectItem_isValidCondition" >
+          <tooltip heading="Open the locks view.">
+            Open the locks view for this data.
+            <disabledText>
+              Open the locks for this data.
+            </disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_EGDBItemLocksButton" className="esri_geodatabase_module:openEGDBItemLocksView"
+                caption="Locks" loadOnClick="false" extendedCaption="Open the locks view"
+                helpContextID="" condition="esri_projectItem_isValidCondition" >
+          <tooltip heading="Open the locks view.">
+            Open the locks view for this data.
+            <disabledText>
+              Open the locks for this data.
+            </disabledText>
+          </tooltip>
+        </button>
         <button id="esri_mapping_AddOnlineStyleButton" className="esri_mapping:AddOnlineStyle"
                 caption="Add To Project"
                 loadOnClick="false"
@@ -5242,19 +5437,8 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
-        <button id="esri_catalog_CreateSceneLayerPackageButton" className="LaunchCreateSceneLayerWizardCmd"
-                caption="Scene Layer Package" loadOnClick="false"
-                extendedCaption="Creates scene layer package based on given input"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SceneLayerPackage16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SceneLayerPackage32.png"
-                helpContextID="" keytip="SL">
-          <tooltip heading="">
-            Create a scene layer package.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
         <button id="esri_CreateNewLocatorButton" caption="Locator" className="esri_geoprocessing_module:Commands.gdbCreateLocator"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeocodeAddressLocator16.png">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeocodeAddressLocator16.png" hidden="true">
           <tooltip heading="">
             Create a new locator<disabledText></disabledText>
           </tooltip>
@@ -5326,7 +5510,7 @@ The project saves a reference to the statistical data collection file.
         <dynamicMenu id="esri_projectItemOpenDesignViewSubtypesMenu" className="OpenDesignViewSubtypesDynamicMenu" caption="Subtypes View" extendedCaption="Subtypes view for the selected project item."/>
         <dynamicMenu id="esri_projectItemOpenDesignViewAttributeRulesMenu" className="OpenDesignViewAttributeRulesDynamicMenu" caption="Attribute Rules View" extendedCaption="Attribute Rules view for the selected project item."/>
         <dynamicMenu id="esri_projectItemOpenDesignViewContingentValueMenu" className="OpenDesignViewContingentValuesDynamicMenu" caption="Contingent Values View" extendedCaption="Contingent Values view for the selected project item."/>
-        <dynamicMenu id="esri_projectItemLocatorsMenu"  className="LocatorFileDynamicMenu" caption="Locators Menu" extendedCaption="Locators Menu for the selected project item."/>
+        <dynamicMenu id="esri_projectItemLocatorsMenu"  className="LocatorFileDynamicMenu" caption="Locators Menu" extendedCaption="Locators Menu for the selected project item." hidden="true"/>
         <dynamicMenu id="esri_favoritesItemPersistDynamicMenu" className="OpenFavoritesPersistDynamicMenu" caption="Add or Remove New Projects" extendedCaption=""/>
         <dynamicMenu id="esri_favoritesGeodatabasePropertyMenu" className="OpenFavoritesGeodatabasePropertyDynamicMenu" caption="Add or Remove New Projects" extendedCaption=""/>
       </controls>

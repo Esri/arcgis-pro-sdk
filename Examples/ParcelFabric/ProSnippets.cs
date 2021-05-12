@@ -622,6 +622,107 @@ namespace ParcelFabricSDKSamples
       if (!string.IsNullOrEmpty(errorMessage))
         MessageBox.Show(errorMessage, "Change Parcel Type.");
     }
+    protected async void GetParcelFeatures()
+    {
+      #region Get parcel features
+      string sReportResult = "Polygon Information --" + Environment.NewLine;
+      string sParcelTypeName = "tax";
+      string errorMessage = await QueuedTask.Run(async () =>
+      {
+        var myParcelFabricLayer =
+          MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+        //if there is no fabric in the map then bail
+        if (myParcelFabricLayer == null)
+          return "There is no fabric layer in the map.";
+
+        //first get the parcel type feature layer
+        var featSrcLyr = myParcelFabricLayer.GetParcelPolygonLayerByTypeName(sParcelTypeName).Result.FirstOrDefault();
+
+        if (featSrcLyr.SelectionCount == 0)
+          return "There is no selection on the " + sParcelTypeName + " layer.";
+
+        sReportResult += " Parcel Type: " + sParcelTypeName + Environment.NewLine;
+        sReportResult += " Poygons: " + featSrcLyr.SelectionCount + Environment.NewLine + Environment.NewLine;
+
+        try
+        {
+          // ------- get the selected parcels ---------
+          var ids = new List<long>((featSrcLyr as FeatureLayer).GetSelection().GetObjectIDs());
+          var myKVP = new KeyValuePair<MapMember, List<long>>(featSrcLyr, ids);
+          var sourceParcels = new List<KeyValuePair<MapMember, List<long>>> { myKVP };
+          //---------------------------------------------
+          ParcelFeatures parcFeatures =
+                          await myParcelFabricLayer.GetParcelFeatures(sourceParcels);
+          //since we know that we want to report on Tax lines only, and for this functionality 
+          // we can use any of the Tax line layer instances (if there happens to be more than one)
+          // we can get the first instance as follows
+          FeatureLayer myLineFeatureLyr =
+              myParcelFabricLayer.GetParcelLineLayerByTypeName(sParcelTypeName).Result.FirstOrDefault();
+          if (myLineFeatureLyr == null)
+            return sParcelTypeName + " line layer not found";
+
+          FeatureLayer myPointFeatureLyr =
+              myParcelFabricLayer.GetPointsLayerAsync().Result.FirstOrDefault();
+          if (myPointFeatureLyr == null)
+            return "fabric point layer not found";
+
+          var LineInfo = parcFeatures.Lines; //then get the line information from the parcel features object
+          //... and then do some work for each of the lines
+          int iRadiusAttributeCnt = 0;
+          int iDistanceAttributeCnt = 0;
+          sReportResult += "Line Information --";
+          foreach (KeyValuePair<string, List<long>> kvp in LineInfo)
+          {
+            if (kvp.Key.ToLower() != sParcelTypeName)
+              continue; // ignore any other lines from different parcel types
+
+            foreach (long oid in kvp.Value)
+            {
+              var insp = myLineFeatureLyr.Inspect(oid);
+              var dRadius = insp["RADIUS"];
+              var dDistance = insp["DISTANCE"];
+
+              if (dRadius != DBNull.Value)
+                iRadiusAttributeCnt++;
+              if (dDistance != DBNull.Value)
+                iDistanceAttributeCnt++;
+              //Polyline poly = (Polyline)insp["SHAPE"];
+            }
+            sReportResult += Environment.NewLine + " Distance attributes: " + iDistanceAttributeCnt.ToString();
+            sReportResult += Environment.NewLine + " Radius attributes: " + iRadiusAttributeCnt.ToString();
+          }
+
+          var PointInfo = parcFeatures.Points; //get the point information from the parcel features object
+          //... and then do some work for each of the points
+          sReportResult += Environment.NewLine + Environment.NewLine + "Point Information --";
+          int iFixedPointCnt = 0;
+          int iNonFixedPointCnt = 0;
+          foreach (long oid in PointInfo)
+          {
+            var insp = myPointFeatureLyr.Inspect(oid);
+            var isFixed = insp["ISFIXED"];
+            if (isFixed == DBNull.Value || (int)isFixed == 0)
+              iNonFixedPointCnt++;
+            else
+              iFixedPointCnt++;
+            // var pt = insp["SHAPE"];
+
+          }
+          sReportResult += Environment.NewLine + " Fixed Points: " + iFixedPointCnt.ToString();
+          sReportResult += Environment.NewLine + " Non-Fixed Points: " + iNonFixedPointCnt.ToString();
+        }
+        catch (Exception ex)
+        {
+          return ex.Message;
+        }
+        return "";
+      });
+      if (!string.IsNullOrEmpty(errorMessage))
+        MessageBox.Show(errorMessage, "Get Parcel Features");
+      else
+        MessageBox.Show(sReportResult, "Get Parcel Features");
+      #endregion
+    }
     #region Get parcel type name from feature layer
     private async Task<string> GetParcelTypeNameFromFeatureLayer(ParcelLayer myParcelFabricLayer, FeatureLayer featLayer, GeometryType geomType)
     {

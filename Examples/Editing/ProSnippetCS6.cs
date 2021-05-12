@@ -287,6 +287,25 @@ namespace EditingSDKExamples
 
     }
 
+    public void TemplateChanged()
+    {
+      #region Active Template Changed
+
+      ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEvent.Subscribe(OnActiveTemplateChanged);
+
+      async void OnActiveTemplateChanged(ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEventArgs args)
+      {
+        // return if incoming template is null
+        if (args.IncomingTemplate == null)
+          return;
+
+        // Activate two-point line tool for Freeway template in the Layers map
+        if (args.IncomingTemplate.Name == "Freeway" && args.IncomingMapView.Map.Name == "Layers")
+          await args.IncomingTemplate.ActivateToolAsync("esri_editing_SketchTwoPointLineTool");
+      }
+      #endregion
+    }
+
     #region ProSnippet Group: Annotation
     #endregion
 
