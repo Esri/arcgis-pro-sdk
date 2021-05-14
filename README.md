@@ -49,6 +49,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [ProConcept: Localization](../../wiki/ProConcept-Localization)
 * [ProGuide: Content and image resources](../../wiki/ProGuide-content-and-image-resources)
 * [ProGuide: Diagnosing ArcGIS Pro Add-ins](../wiki/ProGuide-Diagnosing-ArcGIS-Pro-Add-ins)
+* [ProGuide: Regression Testing](../wiki/ProGuide-Regression-Testing)
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Configurations**
 
@@ -531,6 +532,7 @@ Updates to the SDK Resources include, but are not limited to:
 * [ProConcepts: Map Authoring](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Map-Authoring)
 * [ProConcepts: Reports](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Reports)
 * [ProConcepts: Geometry](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Reports)
+* [ProGuide: Regression Testing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Regression-Testing)
 * The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets) have new samples and snippets.
 * The API Changes section of the [What’s New for Developers 2.8](https://pro.arcgis.com/en/pro-app/sdk/api-reference/#topic15120.html) page. 
 
