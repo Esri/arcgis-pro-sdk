@@ -48,6 +48,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 * [Pro Guide: Your first add-in](../../wiki/ProGuide-Build-Your-First-Add-in)
 * [ProConcept: Localization](../../wiki/ProConcept-Localization)
 * [ProGuide: Content and image resources](../../wiki/ProGuide-content-and-image-resources)
+* [ProGuide: Embedding Toolboxes](../../wiki/ProGuide-content-and-image-resources#embedding-toolboxes)
 * [ProGuide: Diagnosing ArcGIS Pro Add-ins](../../wiki/ProGuide-Diagnosing-ArcGIS-Pro-Add-ins)
 * [ProGuide: Regression Testing](../../wiki/ProGuide-Regression-Testing)
 
@@ -149,6 +150,7 @@ Extend ArcGIS Pro with ArcGIS Pro SDK for .NET. ArcGIS Pro SDK for .NET is based
 
 * [ProSnippets: Geoprocessing](../../wiki/ProSnippets-Geoprocessing)
 * [ProConcepts: Geoprocessing](../../wiki/ProConcepts-Geoprocessing)
+* [ProGuide: Embedding Toolboxes](../../wiki/ProGuide-content-and-image-resources#embedding-toolboxes)
 
 --------------------------
 
