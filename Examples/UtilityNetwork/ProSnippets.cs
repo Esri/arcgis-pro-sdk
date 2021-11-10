@@ -212,6 +212,52 @@ namespace UtilityNetworkProSnippets {
 
     }
 
+    #region ProSnippet Group: Traverse Associations
+    #endregion
+
+    #region Get traverse associations result from downward traversal
+    public static void GetTraverseAssociationsResultFromDownwardTraversal(UtilityNetwork utilityNetwork, IReadOnlyList<Element> startingElements)
+    {
+      // Set downward traversal with maximum depth
+      TraverseAssociationsDescription traverseAssociationsDescription = new TraverseAssociationsDescription(TraversalDirection.Descending);
+
+      // Get traverse associations result from the staring element up to maximum depth
+      TraverseAssociationsResult traverseAssociationsResult = utilityNetwork.TraverseAssociations(startingElements, traverseAssociationsDescription);
+
+      // Get associations participated in traversal
+      IReadOnlyList<Association> associations = traverseAssociationsResult.Associations;
+    }
+    #endregion
+
+    #region Get traverse associations result from upward traversal with depth limit
+    public static void GetTraverseAssociationsResultFromUpwardTraversalWithDepthLimit(UtilityNetwork utilityNetwork, IReadOnlyList<Element> startingElements)
+    {
+      // List of fields whose values will be fetched as name-values pairs during association traversal operation
+      List<string> additionalFieldsToFetch = new List<string> { "ObjectId", "AssetName", "AssetGroup", "AssetType" };
+
+      // Set downward traversal with maximum depth level of 3 
+      TraverseAssociationsDescription traverseAssociationsDescription = new TraverseAssociationsDescription(TraversalDirection.Ascending, 3) { AdditionalFields = additionalFieldsToFetch };
+
+      // Get traverse associations result from the staring element up to depth level 3
+      TraverseAssociationsResult traverseAssociationsResult = utilityNetwork.TraverseAssociations(startingElements, traverseAssociationsDescription);
+
+      // List of associations participated in traversal
+      IReadOnlyList<Association> associations = traverseAssociationsResult.Associations;
+
+      // KeyValue mapping between involved elements and their field name-values 
+      IReadOnlyDictionary<Element, IReadOnlyList<AssociationElementFieldValue>> associationElementValuePairs = traverseAssociationsResult.AdditionalFieldValues;
+
+      foreach (KeyValuePair<Element, IReadOnlyList<AssociationElementFieldValue>> keyValuePair in associationElementValuePairs)
+      {
+        // Element 
+        Element element = keyValuePair.Key;
+
+        // List of field names and their values 
+        IReadOnlyList<AssociationElementFieldValue> elementFieldValues = keyValuePair.Value;
+      }
+    }
+    #endregion
+
     #region ProSnippet Group: Subnetworks and Tiers
     #endregion
 
@@ -395,8 +441,7 @@ namespace UtilityNetworkProSnippets {
       #endregion
 
     }
-
-
+    
     private void ApplyFunction(UtilityNetworkDefinition utilityNetworkDefinition, TraceConfiguration traceConfiguration)
     {
       #region Create a Function
@@ -491,6 +536,60 @@ namespace UtilityNetworkProSnippets {
       #endregion
 
     }
+
+    #region Fetch a named trace configuration by name
+    private void GetNamedTraceConfigurationsByName(UtilityNetwork utilityNetwork, string configurationName)
+    {
+      // Query to find named trace configurations
+      NamedTraceConfigurationQuery namedTraceConfigurationQuery = new NamedTraceConfigurationQuery { Names = new List<string> { configurationName } };
+
+      // Get the trace manager from the utility network
+      using (TraceManager traceManager = utilityNetwork.GetTraceManager())
+      {
+        // A set of named trace configurations specified by the named traced configuration query 
+        IReadOnlyList<NamedTraceConfiguration> namedTraceConfigurations = traceManager.GetNamedTraceConfigurations(namedTraceConfigurationQuery);
+
+        foreach (NamedTraceConfiguration namedTraceConfiguration in namedTraceConfigurations)
+        {
+          // Use NamedTraceConfiguration's object
+        }
+      }
+    }
+    #endregion
+
+    #region Fetch named trace configurations from a utility network layer
+    private void GetNamedTraceConfigurationsFromUtilityNetworkLayer(UtilityNetworkLayer utilityNetworkLayer)
+    {
+      // Get all named trace configurations in the utility network
+      IReadOnlyList<NamedTraceConfiguration> namedTraceConfigurations = utilityNetworkLayer.GetNamedTraceConfigurations();
+
+      foreach (NamedTraceConfiguration namedTraceConfiguration in namedTraceConfigurations)
+      {
+        // Use NamedTraceConfiguration's object
+      }
+    }
+
+    #endregion
+
+    #region Trace a utility network using a named trace configuration
+
+    private void TraceUtilityNetworkUsingNamedTraceConfiguration(UtilityNetwork utilityNetwork, NamedTraceConfiguration namedTraceConfiguration, Element startElement)
+    {
+      // Get the trace manager from the utility network
+      using (TraceManager traceManager = utilityNetwork.GetTraceManager())
+      {
+        // Get a tracer from the trace manager using the named trace configuration
+        Tracer upstreamTracer = traceManager.GetTracer(namedTraceConfiguration);
+        
+        // Trace argument holding the trace input parameters
+        TraceArgument upstreamTraceArgument = new TraceArgument(namedTraceConfiguration, new List<Element> {startElement});
+        
+        // Trace results 
+        IReadOnlyList<Result> upstreamTraceResults = upstreamTracer.Trace(upstreamTraceArgument);
+      }
+    }
+
+    #endregion
 
     #region ProSnippet Group: Network Diagrams
     #endregion

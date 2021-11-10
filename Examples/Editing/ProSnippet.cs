@@ -24,6 +24,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Editing;
@@ -71,6 +72,7 @@ namespace EditingSDKExamples
       var modifyLine = cutLine;
       var oid = 1;
       var layer = featureLayer;
+      var standaloneTable = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
 
       #region Edit Operation Create Features
 
@@ -171,6 +173,15 @@ namespace EditingSDKExamples
         // execute the edit (feature creation) operation
         return createOperation.Execute();
       });
+      #endregion
+
+      #region Edit Operation Create row in a table using a table template
+      var tableTemplate = standaloneTable.GetTemplates().FirstOrDefault();
+      var createRow = new EditOperation();
+      createRow.Name = "Create a row in a table";
+      //Creating a new row in a standalone table using the table template of your choice
+      createRow.Create(tableTemplate);
+      createRow.Execute();
       #endregion
 
       #region Edit Operation Clip Features
@@ -1058,6 +1069,78 @@ namespace EditingSDKExamples
       #endregion
     }
 
+    #region ProSnippet Group: Accessing Raster Fields
+    #endregion
+
+    public static void WriteImageToRasterField()
+    {
+      #region Write an image to a raster field
+      QueuedTask.Run(()=>
+      { 
+      var sel = MapView.Active.Map.GetSelection();
+
+      //Insert an image into a raster field
+      //Image will be written with no compression
+      var op = new EditOperation();
+      op.Name = "Raster Inspector";
+      var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+      insp.Load(sel.Keys.First(), sel.Values.First());
+      insp["Photo"] = @"e:\temp\Hydrant.jpg";
+      op.Modify(insp);
+      op.Execute();
+      });
+      #endregion
+    }
+
+    public static void WriteCompImageToRasterField()
+    {
+      #region Write a compressed image to a raster field
+      QueuedTask.Run(() =>
+      {
+        //Open the raster dataset on disk and create a compressed raster value dataset object
+        var dataStore = new ArcGIS.Core.Data.FileSystemDatastore(new ArcGIS.Core.Data.FileSystemConnectionPath(new System.Uri(@"e:\temp"), ArcGIS.Core.Data.FileSystemDatastoreType.Raster));
+        var fileRasterDataset = dataStore.OpenDataset<ArcGIS.Core.Data.Raster.RasterDataset>("Hydrant.jpg");
+        var rv = new ArcGIS.Core.Data.Raster.RasterValue();
+        rv.SetRasterDataset(fileRasterDataset);
+        var storageDef = new ArcGIS.Core.Data.Raster.RasterStorageDef();
+        storageDef.SetCompressionType(ArcGIS.Core.Data.Raster.RasterCompressionType.JPEG);
+        storageDef.SetCompressionQuality(90);
+        rv.SetRasterStorageDef(storageDef);
+
+        var sel = MapView.Active.Map.GetSelection();
+
+        //insert a raster value object into the raster field
+        var op = new EditOperation();
+        op.Name = "Raster Inspector";
+        var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+        insp.Load(sel.Keys.First(), sel.Values.First());
+        insp["Photo"] = rv;
+        op.Modify(insp);
+        op.Execute();
+      });
+      #endregion
+    }
+
+    public static void ReadFromRasterField()
+    {
+      #region Read from a raster field
+      QueuedTask.Run(() =>
+      {
+        var sel = MapView.Active.Map.GetSelection();
+
+        //Read a raster from a raster field as an InteropBitmap
+        //the bitmap can then be used as an imagesource or written to disk
+        var op = new EditOperation();
+        op.Name = "Raster Inspector";
+        var insp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
+        insp.Load(sel.Keys.First(), sel.Values.First());
+        var ibmp = insp["Photo"] as System.Windows.Interop.InteropBitmap;
+        op.Modify(insp);
+        op.Execute();
+      });
+      #endregion
+    }
+
     #region ProSnippet Group: Working with the Sketch
     #endregion
 
@@ -1211,8 +1294,59 @@ namespace EditingSDKExamples
 
     #endregion
 
+    #region Customizing the Sketch Symbol of a Custom Sketch Tool
+
+    //Custom tools have the ability to change the symbology used when sketching a new feature. 
+    //Both the Sketch Segment Symbol and the Vertex Symbol can be modified using the correct set method. 
+    //This is set in the activate method for the tool.
+    protected override Task OnToolActivateAsync(bool active)
+    {
+      QueuedTask.Run(() =>
+      {
+        //Getting the current symbology options of the segment
+        var segmentOptions = GetSketchSegmentSymbolOptions();
+        //Modifying the primary and secondary color and the width of the segment symbology options
+        var deepPurple = new CIMRGBColor();
+        deepPurple.R = 75;
+        deepPurple.G = 0;
+        deepPurple.B = 110;
+        segmentOptions.PrimaryColor = deepPurple;
+        segmentOptions.Width = 4;
+        segmentOptions.HasSecondaryColor = true;
+        var pink = new CIMRGBColor();
+        pink.R = 219;
+        pink.G = 48;
+        pink.B = 130;
+        segmentOptions.SecondaryColor = pink;
+        //Creating a new vertex symbol options instance with the values you want
+        var vertexOptions = new VertexSymbolOptions(VertexSymbolType.RegularUnselected);
+        var yellow = new CIMRGBColor();
+        yellow.R = 255;
+        yellow.G = 215;
+        yellow.B = 0;
+        var purple = new CIMRGBColor();
+        purple.R = 148;
+        purple.G = 0;
+        purple.B = 211;
+        vertexOptions.AngleRotation = 45;
+        vertexOptions.Color = yellow;
+        vertexOptions.MarkerType = VertexMarkerType.Star;
+        vertexOptions.OutlineColor = purple;
+        vertexOptions.OutlineWidth = 3;
+        vertexOptions.Size = 5;
+
+        //Setting the value of the segment symbol options
+        SetSketchSegmentSymbolOptions(segmentOptions);
+        //Setting the value of the vertex symbol options of the regular unselected vertices using the vertexOptions instance created above.
+        SetSketchVertexSymbolOptions(VertexSymbolType.RegularUnselected, vertexOptions);
+      });
+
+        return base.OnToolActivateAsync(active);
+    }
+    #endregion
+
     #region ProSnippet Group: Snapping
-      #endregion
+    #endregion
 
 
     private async void Snapping()
@@ -1397,8 +1531,15 @@ namespace EditingSDKExamples
       snapOptions.ZToleranceEnabled = true;
       snapOptions.ZTolerance = 0.6;
 
-      // snapTip
-      snapOptions.ShowSnapTip = true;
+      //turn on snap tip display parts
+      snapOptions.SnapTipDisplayParts = (int)SnapTipDisplayPart.SnapTipDisplayLayer + (int)SnapTipDisplayPart.SnapTipDisplayType;
+
+      //turn off all snaptips
+      //snapOptions.SnapTipDisplayParts = (int)SnapTipDisplayPart.SnapTipDisplayNone;
+        
+      //turn on layer display only
+      //snapOptions.SnapTipDisplayParts = (int)SnapTipDisplayPart.SnapTipDisplayLayer;
+
       snapOptions.GeometricFeedbackColor = ColorFactory.Instance.RedRGB;
 
       ArcGIS.Desktop.Mapping.Snapping.SetOptions(myMap, snapOptions);

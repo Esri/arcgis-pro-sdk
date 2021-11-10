@@ -1,4 +1,4 @@
-﻿using ArcGIS.Core.CIM;
+using ArcGIS.Core.CIM;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework;
@@ -56,6 +56,7 @@ namespace ReportAPITesting
     }
     public static void ReportMethods()
         {
+          // cref: Activate an already open report view;ArcGIS.Desktop.Reports.ReportView
           #region Activate an already open report view
           Report report = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault().GetReport();
           var reportPane = FrameworkApplication.Panes.FindReportPanes(report).Last();
@@ -74,20 +75,24 @@ namespace ReportAPITesting
             // do something
           }
           #endregion
+          // cref: Refresh the report view;ArcGIS.Desktop.Reports.ReportView.Refresh
           #region Refresh the report view
           if (reportView == null)
                 return;
           QueuedTask.Run(() => reportView.Refresh());
           #endregion
+          // cref: Zoom to whole page;ArcGIS.Desktop.Reports.ReportView.ZoomToWholePage
           #region Zoom to whole page
           QueuedTask.Run(() => reportView.ZoomToWholePage());
       #endregion
+      // cref: Zoom to specific location on Report view;ArcGIS.Desktop.Reports.ReportView.ZoomTo(ArcGIS.Core.Geometry.Geometry)
       #region Zoom to specific location on Report view
         //On the QueuedTask
         var detailsSection = report.Elements.OfType<ReportSection>().FirstOrDefault().Elements.OfType<ReportDetails>().FirstOrDefault();
         var bounds = detailsSection.GetBounds();
         ReportView.Active.ZoomTo(bounds);
       #endregion
+      // cref: Zoom to page width;ArcGIS.Desktop.Reports.ReportView.ZoomToPageWidth
       #region Zoom to page width
       //Process on worker thread
       QueuedTask.Run(() => reportView.ZoomToPageWidth());     
@@ -234,6 +239,23 @@ namespace ReportAPITesting
             #endregion
 
         }
+
+    public static void AddSubReport()
+    {
+      QueuedTask.Run(() => {
+        #region Add SubReport
+        //Note: Call within QueuedTask.Run()
+        var mainReport = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault(r => r.Name == "USAReports")?.GetReport();
+
+        if (mainReport == null) return;
+        //Add sub report
+        var vermontReportItem = Project.Current.GetItems<ReportProjectItem>().FirstOrDefault(r => r.Name == "Vermont");
+        if (vermontReportItem == null) return;
+        Report vermontReport = vermontReportItem.GetReport();
+        mainReport.AddSubReport(vermontReportItem, -1, true); //  If -1, the subreport is added to the end of the report.
+        #endregion
+      });
+    }
         #region ProSnippet Group: Report Design
         #endregion
 
@@ -295,28 +317,33 @@ namespace ReportAPITesting
       var reportFooter = mainReportSection?.Elements.OfType<ReportFooter>().FirstOrDefault();
       #endregion
 
+      // cref: Select elements;ArcGIS.Desktop.Reports.ReportView.SelectElements(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Layouts.Element})
       #region Select elements
       //ReportDetailsSection contains the "Fields"
       var elements = reportDetailsSection.GetElementsAsFlattenedList();
       reportDetailsSection.SelectElements(elements);
       #endregion
 
+      // cref: Select all elements;ArcGIS.Desktop.Reports.ReportView.SelectAllElements
       #region Select all elements
       //Select all elements in the Report Footer.
       ReportPageFooter pageFooterSection = report.Elements.OfType<ReportSection>().FirstOrDefault().Elements.OfType<ReportPageFooter>().FirstOrDefault();
       pageFooterSection.SelectAllElements();
       #endregion
 
+      // cref: Get selected elements;ArcGIS.Desktop.Reports.ReportView.GetSelectedElements
       #region Get selected elements
       IReadOnlyList<Element> selectedElements = report.GetSelectedElements();
       //Can also use the active ReportView
       IReadOnlyList<Element> selectedElementsFromView = ReportView.Active.GetSelectedElements();
       #endregion
 
+      // cref: Zoom to selected elements;ArcGIS.Desktop.Reports.ReportView.ZoomToSelectedElements
       #region Zoom to selected elements
       QueuedTask.Run(() => reportView.ZoomToSelectedElements());
       #endregion Zoom to selected elements
 
+      // cref: Clear element selection;ArcGIS.Desktop.Reports.ReportView.ClearElementSelection
       #region Clear element selection
       reportView.ClearElementSelection();
       #endregion

@@ -18,6 +18,7 @@
 */
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
+using ArcGIS.Core.Data.Parcels;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
@@ -723,6 +724,115 @@ namespace ParcelFabricSDKSamples
         MessageBox.Show(sReportResult, "Get Parcel Features");
       #endregion
     }
+    protected async void GetParcelFabricDatasetFromParcelLayer()
+    {
+      #region Get parcel fabric dataset controller from parcel layer
+      string errorMessage = await QueuedTask.Run(() =>
+      {
+        try
+        {
+          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+          //if there is no fabric in the map then bail
+          if (myParcelFabricLayer == null)
+            return "There is no fabric in the map.";
+          var myParcelFabricDataset = myParcelFabricLayer.GetParcelFabric();
+        }
+        catch (Exception ex)
+        {
+          return ex.Message;
+        }
+        return "";
+      });
+      if (!string.IsNullOrEmpty(errorMessage))
+        MessageBox.Show(errorMessage, "Get Parcel Fabric Dataset from layer.");
+      #endregion
+    }
+    protected async void GetTopologyFromParcelFabricDataset()
+    {
+      #region Get parcel topology of parcel fabric dataset
+      string errorMessage = await QueuedTask.Run(() =>
+      {
+        try
+        {
+          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+          //if there is no fabric in the map then bail
+          if (myParcelFabricLayer == null)
+            return "There is no fabric in the map.";
+          var myParcelFabricDataset = myParcelFabricLayer.GetParcelFabric();
+          var myTopology = myParcelFabricDataset.GetParcelTopology();
+        }
+        catch (Exception ex)
+        {
+          return ex.Message;
+        }
+        return "";
+      });
+      if (!string.IsNullOrEmpty(errorMessage))
+        MessageBox.Show(errorMessage, "Get Parcel Fabric Topology.");
+      #endregion
+    }
+    protected async void GetPointLineRecordFeatureClassesFromParcelFabricDataset()
+    {
+      #region Get point, connection, and record feature classes from the parcel fabric dataset
+      string errorMessage = await QueuedTask.Run(() =>
+      {
+        try
+        {
+          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+          //if there is no fabric in the map then bail
+          if (myParcelFabricLayer == null)
+            return "There is no fabric in the map.";
+          var myParcelFabricDataset = myParcelFabricLayer.GetParcelFabric();
+          FeatureClass myPointsFC = myParcelFabricDataset.GetSystemTable(SystemTableType.Points) as FeatureClass;
+          FeatureClass myCoonectionsFC = myParcelFabricDataset.GetSystemTable(SystemTableType.Connections) as FeatureClass;
+          FeatureClass myRecordsFC = myParcelFabricDataset.GetSystemTable(SystemTableType.Records) as FeatureClass;
+        }
+        catch (Exception ex)
+        {
+          return ex.Message;
+        }
+        return "";
+      });
+      if (!string.IsNullOrEmpty(errorMessage))
+        MessageBox.Show(errorMessage, "Get point, connection, and record feature classes.");
+      #endregion
+    }
+    protected async void GetParcelTypeFeatureClassesFromParcelFabricDataset()
+    {
+      #region Get parcel type feature classes from the parcel fabric dataset
+      string errorMessage = await QueuedTask.Run(() =>
+      {
+        try
+        {
+          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+          //if there is no fabric in the map then bail
+          if (myParcelFabricLayer == null)
+            return "There is no fabric in the map.";
+          string myParcelTypeName = "Tax";
+          var myParcelFabricDataset = myParcelFabricLayer.GetParcelFabric();
+          var typeInfo = myParcelFabricDataset.GetParcelTypeInfo();
+          FeatureClass lineFCType = null;
+          FeatureClass polyFCType = null;
+          foreach (var info in typeInfo)
+          {
+            if (info.Name.ToLower() == myParcelTypeName.ToLower())
+            { 
+              lineFCType = info.LineFeatureTable as FeatureClass;
+              polyFCType = info.PolygonFeatureTable as FeatureClass;
+              break;
+            }
+          }
+        }
+        catch (Exception ex)
+        {
+          return ex.Message;
+        }
+        return "";
+      });
+      if (!string.IsNullOrEmpty(errorMessage))
+        MessageBox.Show(errorMessage, "Get Parcel Type feature classes.");
+      #endregion
+    }
     #region Get parcel type name from feature layer
     private async Task<string> GetParcelTypeNameFromFeatureLayer(ParcelLayer myParcelFabricLayer, FeatureLayer featLayer, GeometryType geomType)
     {
@@ -757,6 +867,30 @@ namespace ParcelFabricSDKSamples
         }
       }
       return String.Empty;
+    }
+    #endregion
+    #region Get Parcel Fabric from Table
+    public static ParcelFabric GetParcelFabricFromTable(Table table)
+    {
+      ParcelFabric myParcelFabricDataset = null;
+      if (table.IsControllerDatasetSupported())
+      {
+        // Tables can belong to multiple controller datasets, but at most one of them will be a parcel fabric
+
+        IReadOnlyList<Dataset> controllerDatasets = table.GetControllerDatasets();
+        foreach (Dataset controllerDataset in controllerDatasets)
+        {
+          if (controllerDataset is ParcelFabric)
+          {
+            myParcelFabricDataset = controllerDataset as ParcelFabric;
+          }
+          else
+          {
+            controllerDataset.Dispose();
+          }
+        }
+      }
+      return myParcelFabricDataset;
     }
     #endregion
   }

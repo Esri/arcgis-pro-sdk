@@ -44,6 +44,7 @@ namespace Examples
   /// <example>
   /// <code title="Set Sketch Symbol" description="Change the default symbol used while sketching." region="Sketch Symbol" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapTool_examples.cs" lang="CS"/>
   /// </example>
+  // cref: Sketch Symbol;ArcGIS.Desktop.Mapping.MapTool.SketchSymbol
   #region Sketch Symbol
   internal class SketchTool_WithSymbol : MapTool
   {
@@ -75,6 +76,8 @@ namespace Examples
   /// <code source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\EmbeddedControlViewModel.cs" lang="CS"/>
   /// <code source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\EmbeddableControl.daml" lang="XML"/>
   /// </example>
+  // cref: Embeddable Control;ArcGIS.Desktop.Mapping.MapTool.ControlID
+  // cref: Embeddable Control;ArcGIS.Desktop.Mapping.MapTool.EmbeddableControl
   #region Embeddable Control
   internal class MapTool_WithControl : MapTool
   {
@@ -112,6 +115,8 @@ namespace Examples
   /// <code source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\EmbeddedControlViewModel.cs" lang="CS"/>
   /// <code source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\EmbeddableControl.daml" lang="XML"/>
   /// </example>
+  // cref: Overlay Embeddable Control;ArcGIS.Desktop.Mapping.MapTool.OverlayControlID
+  // cref: Overlay Embeddable Control;ArcGIS.Desktop.Mapping.MapTool.OverlayEmbeddableControl
   #region Overlay Embeddable Control
   internal class MapTool_WithOverlayControl : MapTool
   {

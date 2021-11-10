@@ -26,6 +26,7 @@ using ArcGIS.Desktop.Framework.Contracts;
 
 namespace Layout_HelpExamples
 {
+  // cref: CIMGraphic;ArcGIS.Desktop.Layouts.GraphicElement
   #region CIMGraphic
   //This example references a graphic element on a layout and sets its Transparency property (which is not available in the managed API)
   //by accessing the element's CIMGraphic.

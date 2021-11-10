@@ -46,6 +46,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //GetMapProjectItems
 
+      // cref: GetFolderConnectionProjectItems;ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
       #region GetFolderConnectionProjectItems
 
       /// Get all the folder connections in a project
@@ -53,6 +54,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //GetFolderConnectiontProjectItems
 
+      // cref: GetServerConnectionProjectItems;ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
       #region GetServerConnectionProjectItems
 
       /// Get all the server connections in a project
@@ -60,6 +62,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //GetServerConnectionProjectItems
 
+      // cref: GetLocatorConnectionProjectItems;ArcGIS.Desktop.Catalog.LocatorsConnectionProjectItem
       #region GetLocatorConnectionProjectItems
 
       /// Get all the locator connections in a project
@@ -90,6 +93,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //AddFolderConnectionProjectItem
 
+      // cref: AddGDBProjectItem;ArcGIS.Desktop.Catalog.GDBProjectItem
       #region AddGDBProjectItem
 
       /// Add a file geodatabase or a SQLite or enterprise database connection to a project
@@ -100,6 +104,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
 
 
+      // cref: RemoveFolderConnectionFromProject;ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
       #region RemoveFolderConnectionFromProject
 
       /// Remove a folder connection from a project; the folder stored on the local disk 

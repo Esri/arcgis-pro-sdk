@@ -31,6 +31,8 @@ namespace Examples
     /// <example>
     /// <code title="Step Map Time" description="Step forward in time by 1 month in the active map view." region="Step Map Time" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Time_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Step Map Time;ArcGIS.Desktop.Mapping.TimeRange.Offset(ArcGIS.Desktop.Mapping.TimeDelta)
+    // cref: Step Map Time;ArcGIS.Desktop.Mapping.MapView.Time
     #region Step Map Time
     public void StepMapTime()
     {

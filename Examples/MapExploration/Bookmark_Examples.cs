@@ -43,6 +43,7 @@ namespace Examples
     /// <example>
     /// <code title="Get Project Bookmarks" description="Get the collection of bookmarks for the project." region="Get Project Bookmarks" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Get Project Bookmarks;ArcGIS.Desktop.Core.ProjectExtender.GetBookmarks(ArcGIS.Desktop.Core.Project)
     #region Get Project Bookmarks
     public Task<ReadOnlyObservableCollection<Bookmark>> GetProjectBookmarksAsync()
     {
@@ -55,6 +56,7 @@ namespace Examples
     /// <example>
     /// <code title="Get Map Bookmarks" description="Get the collection of bookmarks for a map." region="Get Map Bookmarks" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Get Map Bookmarks;ArcGIS.Desktop.Mapping.Map.GetBookmarks
     #region Get Map Bookmarks
     public Task<ReadOnlyObservableCollection<Bookmark>> GetActiveMapBookmarksAsync()
     {
@@ -75,6 +77,8 @@ namespace Examples
     /// <example>
     /// <code title="Add New Bookmark from MapView" description="Create a new bookmark from the active map view." region="Add New Bookmark from MapView" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Add New Bookmark from MapView;ArcGIS.Desktop.Mapping.Map.AddBookmark(ArcGIS.Desktop.Mapping.MapView,System.String)
+    // cref: Add New Bookmark from MapView;ArcGIS.Desktop.Mapping.Map.AddBookmark(ArcGIS.Desktop.Mapping.MapView,System.String,System.String)
     #region Add New Bookmark from MapView
     public Task<Bookmark> AddBookmarkAsync(string name)
     {
@@ -95,6 +99,7 @@ namespace Examples
     /// <example>
     /// <code title="Add New Bookmark from CIMBookmark" description="Create a new bookmark from a camera." region="Add New Bookmark from CIMBookmark" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Add New Bookmark from CIMBookmark;ArcGIS.Desktop.Mapping.Map.AddBookmark(ArcGIS.Core.CIM.CIMBookmark)
     #region Add New Bookmark from CIMBookmark
     public Task<Bookmark> AddBookmarkFromCameraAsync(Camera camera, string name)
     {
@@ -130,6 +135,7 @@ namespace Examples
     /// <example>
     /// <code title="Remove Bookmark with Name" description="Remove a bookmark for a map with a given name." region="Remove Bookmark with Name" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Remove Bookmark with Name;ArcGIS.Desktop.Mapping.Map.RemoveBookmark(ArcGIS.Desktop.Mapping.Bookmark)
     #region Remove Bookmark with Name
     public Task RemoveBookmarkAsync(Map map, string name)
     {
@@ -150,6 +156,7 @@ namespace Examples
     /// <example>
     /// <code title="Move Bookmark to the Top" description="Move a bookmark for a map with a given name to the top." region="Move Bookmark to the Top" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Move Bookmark to the Top;ArcGIS.Desktop.Mapping.Map.MoveBookmark(ArcGIS.Desktop.Mapping.Bookmark,System.Int32)
     #region Move Bookmark to the Top
     public Task MoveBookmarkToTopAsync(Map map, string name)
     {
@@ -170,6 +177,8 @@ namespace Examples
     /// <example>
     /// <code title="Set Bookmark Definition" description="Update the definition of a bookmark using a new extent." region="Update Extent for a Bookmark" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Update Extent for a Bookmark;ArcGIS.Desktop.Mapping.Bookmark.GetDefinition
+    // cref: Update Extent for a Bookmark;ArcGIS.Desktop.Mapping.Bookmark.SetDefinition(ArcGIS.Core.CIM.CIMBookmark)
     #region Update Extent for a Bookmark
     public Task UpdateBookmarkExtentAsync(Bookmark bookmark, ArcGIS.Core.Geometry.Envelope envelope)
     {
@@ -194,6 +203,7 @@ namespace Examples
     /// <example>
     /// <code title="Find Map Bookmarks" description="Find all bookmarks associated with a particular map." region="Find Map Bookmarks" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Find Map Bookmarks;ArcGIS.Desktop.Mapping.Bookmark.MapURI
     #region Find Map Bookmarks
     public IEnumerable<Bookmark> FindMapBookmarks(List<Bookmark> bookmarks, Map map)
     {
@@ -206,6 +216,7 @@ namespace Examples
     /// <example>
     /// <code title="Update Bookmark" description="Update a bookmark using the active map view." region="Update Bookmark" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Update Bookmark;ArcGIS.Desktop.Mapping.Bookmark.Update(ArcGIS.Desktop.Mapping.MapView)
     #region Update Bookmark
     public Task UpdateBookmarkAsync(Bookmark bookmark)
     {
@@ -226,6 +237,7 @@ namespace Examples
     /// <example>
     /// <code title="Rename Bookmark" description="Rename a bookmark." region="Rename Bookmark" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Rename Bookmark;ArcGIS.Desktop.Mapping.Bookmark.Rename(System.String)
     #region Rename Bookmark
     public Task RenameBookmarkAsync(Bookmark bookmark, string newName)
     {
@@ -237,6 +249,7 @@ namespace Examples
     /// <example>
     /// <code title="Change Thumbnail" description="Set the thumbnail for a bookmark." region="Change Thumbnail" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Bookmark_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Change Thumbnail;ArcGIS.Desktop.Mapping.Bookmark.SetThumbnail(System.Windows.Media.Imaging.BitmapSource)
     #region Change Thumbnail
     public Task SetThumbnailAsync(Bookmark bookmark, string imagePath)
     {

@@ -1,4 +1,4 @@
-﻿/*
+/*
 
    Copyright 2018 Esri
 
@@ -41,6 +41,7 @@ namespace MapAuthoring.RealtimeProSnippet
       Map map = MapView.Active.Map;
       await QueuedTask.Run(() =>
       {
+        // cref: Create Stream Layer with URI;ArcGIS.Desktop.Mapping.StreamLayer
         #region Create Stream Layer with URI
         //Must be on the QueuedTask
         var url = "https://geoeventsample1.esri.com:6443/arcgis/rest/services/AirportTraffics/StreamServer";
@@ -64,6 +65,7 @@ namespace MapAuthoring.RealtimeProSnippet
       await QueuedTask.Run(() =>
       {
         
+        // cref: Create a stream layer with a definition query;ArcGIS.Desktop.Mapping.StreamLayer
         #region Create a stream layer with a definition query
         //Must be on the QueuedTask
         var url = "https://geoeventsample1.esri.com:6443/arcgis/rest/services/AirportTraffics/StreamServer";
@@ -118,6 +120,7 @@ namespace MapAuthoring.RealtimeProSnippet
         //StreamLayer streamLayer = null;
         //
 
+        // cref: Setting a unique value renderer for latest observations;ArcGIS.Desktop.Mapping.StreamLayer
         #region Setting a unique value renderer for latest observations
 
         var url = @"https://geoeventsample1.esri.com:6443/arcgis/rest/services/AirportTraffics/StreamServer";
@@ -254,6 +257,7 @@ namespace MapAuthoring.RealtimeProSnippet
       }
       #endregion
 
+      // cref: Set the Maximum Count of Previous Observations to be Stored in Memory;ArcGIS.Desktop.Mapping.StreamLayer.SetExpirationMaxCount(System.UInt64)
       #region Set the Maximum Count of Previous Observations to be Stored in Memory
 
       //Must be on QueuedTask
@@ -339,6 +343,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
         #endregion
 
+        // cref: Setting a unique value renderer for latest observations;ArcGIS.Desktop.Mapping.StreamLayer
         #region Setting a unique value renderer for latest observations
 
         //Define the classes by hand to avoid using CreateRenderer(...)
@@ -379,6 +384,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
         #endregion
 
+        // cref: Setting a unique value renderer for previous observations;ArcGIS.Desktop.Mapping.StreamLayer
         #region Setting a unique value renderer for previous observations
         //The layer must be track aware and spatial
         if (streamLayer.TrackType != TrackType.Spatial)
@@ -426,6 +432,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
         #endregion
 
+        // cref: Setting a simple renderer to draw track lines;ArcGIS.Desktop.Mapping.StreamLayer
         #region Setting a simple renderer to draw track lines
         //The layer must be track aware and spatial
         if (streamLayer.TrackType != TrackType.Spatial)
@@ -459,6 +466,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
         #endregion
 
+        // cref: Make Track Lines and Previous Observations Visible;ArcGIS.Desktop.Mapping.StreamLayer
         #region Make Track Lines and Previous Observations Visible
         //The layer must be track aware and spatial for these settings
         //to have an effect
@@ -516,6 +524,8 @@ namespace MapAuthoring.RealtimeProSnippet
       StreamLayer streamLayer = null;
       QueryFilter qfilter = null;
 
+      // cref: Search And Subscribe for Streaming Data;ArcGIS.Core.Data.Realtime.RealtimeFeatureClass.SearchAndSubscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
+      // cref: Search And Subscribe for Streaming Data;ArcGIS.Desktop.Mapping.StreamLayer.SearchAndSubscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
       #region Search And Subscribe for Streaming Data
 
       await QueuedTask.Run(async () =>
@@ -648,6 +658,8 @@ namespace MapAuthoring.RealtimeProSnippet
 
     public async void CreateStreamLayerFromDatastore()
     {
+      // cref: Connect to a real-time feature class from a real-time datastore;ArcGIS.Core.Data.Realtime.RealtimeDatastore.#ctor(ArcGIS.Core.Data.Realtime.RealtimeServiceConnectionProperties)
+      // cref: Connect to a real-time feature class from a real-time datastore;ArcGIS.Core.Data.Realtime.RealtimeFeatureClass
       #region Connect to a real-time feature class from a real-time datastore
       var url = "https://geoeventsample1.esri.com:6443/arcgis/rest/services/AirportTraffics/StreamServer";
      
@@ -717,6 +729,8 @@ namespace MapAuthoring.RealtimeProSnippet
       StreamLayer streamLayer = null;
       QueryFilter qfilter = null;
 
+      // cref: Subscribe to Streaming Data;ArcGIS.Core.Data.Realtime.RealtimeFeatureClass.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
+      // cref: Subscribe to Streaming Data;ArcGIS.Desktop.Mapping.StreamLayer.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
       #region Subscribe to Streaming Data
 
       //Note: with feature class we can also use a System Task to subscribe and

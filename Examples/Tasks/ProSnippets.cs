@@ -42,6 +42,7 @@ namespace ProSnippetsTasks
 
       #endregion
 
+      // cref: Open a Task File - .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskAsync(System.String)
       #region Open a Task File - .esriTasks file
       // Open a task file
       try
@@ -60,6 +61,7 @@ namespace ProSnippetsTasks
 
       #endregion
 
+      // cref: Open a Project Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskItemAsync(System.Guid)
       #region Open a Project Task Item
       // get the first project task item
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -83,6 +85,9 @@ namespace ProSnippetsTasks
 
     public void CloseTaskItem()
     {
+      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.CloseTaskAsync(System.Guid)
+      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.IsOpen
+      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.TaskItemGuid
       #region Close a Task Item
       // find the first project task item which is open
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault(t => t.IsOpen == true);
@@ -99,6 +104,7 @@ namespace ProSnippetsTasks
 
     public async void ExportTaskItem()
     {
+      // cref: Export a Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.ExportTaskAsync(System.Guid,System.String)
       #region Export a Task Item
       // get the first project task item
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -122,6 +128,11 @@ namespace ProSnippetsTasks
 
     public async void GetTaskItemInfo_ProjectItem()
     {
+      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.GetTasks
+      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.GetTaskItemInfoAsync
+      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Description
+      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Guid
+      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Name
       #region Get Task Information - from a TaskProjectItem
 
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -173,6 +184,7 @@ namespace ProSnippetsTasks
 
     public async void GetTaskItemInfo_EsriTasksFile()
     { 
+      // cref: Get Task Information - from an .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.GetTaskItemInfoAsync(System.String)
       #region Get Task Information - from an .esriTasks file
 
       // TODO - substitute your own .esriTasks file
@@ -205,6 +217,7 @@ namespace ProSnippetsTasks
 
     public async void OpenSpecificTask()
     {
+      // cref: Open a specific Task in a Task File - .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskAsync(System.String,System.Guid)
       #region Open a specific Task in a Task File - .esriTasks file
 
       // TODO - substitute your own .esriTasks file to be opened
@@ -245,6 +258,27 @@ namespace ProSnippetsTasks
       #endregion
     }
 
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Completed
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Duration
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.EndTime
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.ProjectName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.StartTime
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskGuid
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemGuid
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemVersion
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.UserID
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.ProjectName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.StartTime
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskGuid
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemGuid
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemVersion
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskName
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.UserID
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEvent
+    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEvent
     #region Subscribe to Task Events
     public void TaskEvents()
     {

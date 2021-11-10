@@ -28,6 +28,9 @@ using ArcGIS.Core.Geometry;
 
 namespace Layout_HelpExamples
 {
+  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
+  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
+  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.LayoutFactory
   #region CreateLayoutExample1
   //This example creates a new layout using a minimum set of parameters.
 
@@ -59,6 +62,8 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: CreateLayoutExample2;ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
+  // cref: CreateLayoutExample2;ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
   #region CreateLayoutExample2
   //This example creates a new layout using a CIM page definion with rulers and guides included.
 

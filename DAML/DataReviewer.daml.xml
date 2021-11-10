@@ -485,7 +485,7 @@ Results are organized by session and stored in feature classes and tables in eit
         </button>
 
         <!-- Reviewer Layer Validation context menu buttons-->
-        <button id="esri_dataReviewer_OpenRulesViewButton" className="esri_dataReviewer_dataReviewerModule:OpenRulesViewAsync" loadOnClick="false" hidden="true" caption="Reviewer Rules" keytip="RR"
+        <button id="esri_dataReviewer_OpenRulesViewButton" className="esri_dataReviewer_dataReviewerModule:OpenRulesViewAsync" loadOnClick="false" hidden="false" caption="Reviewer Rules" keytip="RR"
                 extendedCaption = "Open Reviewer rules view for the selected layer" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule16.png" helpContextID=""
                 condition="esri_dataReviewer_RelevantLayersCondition">
@@ -635,7 +635,7 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
 
 
         <!--menu for reviewer results pane burger button. Current only view definitions are in this menu and they are added programmatically-->   
-        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane">
+        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" hidden="true" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane">
           <button refID ="esri_dataReviewer_dummyButton"/>
         </menu>
         <!--context menu for selected items in results grid-->
@@ -720,14 +720,6 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
     In order  order to accomplish this, please work with the core team to add our icons to ArcGIS.Desktop.Resources project and then pack/reference it in DataReviewer.daml file-->
     <!-- All Update modules should go here -->
     <!-- Update core module for adding Reviewer menus in Insert Ribbon -->
-    <updateModule refID="esri_geodatabase_module">
-      <menus>
-        <updateMenu refID="esri_geodatabase_insertMenu">
-          <insertButton refID="esri_dataReviewer_addBatchJobsButton" placeWith="esri_geodatabase_addLocatorButton" insert="after" separator="true"/>
-          <insertButton refID="esri_dataReviewer_addReviewerConnectionButton"/>
-        </updateMenu>
-      </menus>
-    </updateModule>
 
     <updateModule refID="esri_editing_EditingModule">
       <tabs>
@@ -737,13 +729,13 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
       </tabs>
     </updateModule>
 
-    <updateModule refID="esri_core_module">
+    <!--<updateModule refID="esri_core_module">
       <groups>
         <updateGroup refID="esri_core_dockWindows">
           <insertButton refID="esri_dataReviewer_OpenRulesViewButton" size="large" />
         </updateGroup>
       </groups>
-    </updateModule>
+    </updateModule>-->
   </modules>
 
 

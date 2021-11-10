@@ -53,6 +53,7 @@ namespace Layout_HelpExamples
       #endregion MapFrame_SetCamera_Camera
 
 
+      // cref: MapFrame_SetCamera_Bookmark;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Desktop.Mapping.Bookmark)
       #region MapFrame_SetCamera_Bookmark
       //Set the extent of a map frame to a bookmark.
 
@@ -72,6 +73,7 @@ namespace Layout_HelpExamples
       #endregion MapFrame_SetCamera_Bookmark
 
 
+      // cref: MapFrame_SetCamera_Envelope;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Core.Geometry.Envelope)
       #region MapFrame_SetCamera_Envelope
       //Set the extent of a map frame to the envelope of a feature.
 

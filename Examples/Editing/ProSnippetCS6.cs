@@ -34,6 +34,7 @@ using ArcGIS.Core.Data;
 using Attribute = ArcGIS.Desktop.Editing.Attributes.Attribute;
 using ArcGIS.Desktop.Framework;
 using System.Windows.Input;
+using ArcGIS.Desktop.Core;
 
 namespace EditingSDKExamples
 {
@@ -87,6 +88,23 @@ namespace EditingSDKExamples
 
         var mainTemplate = map.FindLayers("main").FirstOrDefault()?.GetTemplate("Distribution");
         var mhTemplate = map.FindLayers("Manhole").FirstOrDefault()?.GetTemplate("Active");
+      });
+      #endregion
+    }
+
+    public void FindTableTemplate()
+    {
+      #region Find table templates belonging to a standalone table
+      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        var map = ArcGIS.Desktop.Mapping.MapView.Active.Map;
+        if (map == null)
+          return;
+        //Get a particular table template
+        var tableTemplate = map.FindStandaloneTables("Address Points").FirstOrDefault()?.GetTemplate("Residences");
+        //Get all the templates of a standalone table
+        var ownersTableTemplates = map.FindStandaloneTables("Owners").FirstOrDefault()?.GetTemplates();
+        var statisticsTableTemplates = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().First(l => l.Name.Equals("Trading Statistics")).GetTemplates();
       });
       #endregion
     }
@@ -205,6 +223,38 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      #region Create New Table Template using table.CreateTemplate
+      var table = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
+      if (table == null)
+        return;
+      QueuedTask.Run(() =>
+      {
+        var tableTemplate = table.GetTemplate("Template1");
+        
+        var definition = tableTemplate.GetDefinition();
+        definition.Description = "New definition";
+        definition.Name = "New name";
+        //Create new table template using this definition
+        table.CreateTemplate(definition);
+
+        //You can also create a new table template using this extension method. You can use this method the same way you use the layer.CreateTemplate method.
+        table.CreateTemplate("New template name", "Template description", tags: new string[] { "tag 1", "tag 2" });
+      });
+      #endregion
+
+      #region Update a Table Template
+      QueuedTask.Run(() =>
+      {
+        var tableTemplate = table.GetTemplate("Template1");
+
+        var definition = tableTemplate.GetDefinition();
+        definition.Description = "New definition";
+        definition.Name = "New name";
+        // update the definition
+        tableTemplate.SetDefinition(definition);
+      });
+      #endregion
+
       #region Create Annotation Template
 
       // get an anno layer
@@ -285,6 +335,23 @@ namespace EditingSDKExamples
 
       #endregion
 
+    }
+
+    public void RemoveTemplate()
+    {
+      #region Remove a table template
+      var table = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
+      if (table == null)
+        return;
+      QueuedTask.Run(() =>
+      {
+        var tableTemplate = table.GetTemplate("Template1");
+        //Removing a table template
+        table.RemoveTemplate(tableTemplate);
+        //Removing a template by name
+        table.RemoveTemplate("Template2");
+      });
+      #endregion
     }
 
     public void TemplateChanged()
@@ -472,6 +539,200 @@ namespace EditingSDKExamples
         op.Modify(insp);
         bool result = op.Execute();
       });
+
+      #endregion
+    }
+
+    #region ProSnippet Group: EditingOptions
+    #endregion
+
+    public void EditingOptions()
+		{
+      #region Get/Set Editing Options
+
+      //toggle, switch option values
+      var options = ApplicationOptions.EditingOptions;
+
+      options.EnforceAttributeValidation = !options.EnforceAttributeValidation;
+      options.WarnOnSubtypeChange = !options.WarnOnSubtypeChange;
+      options.InitializeDefaultValuesOnSubtypeChange = !options.InitializeDefaultValuesOnSubtypeChange;
+      options.UncommitedAttributeEdits = (options.UncommitedAttributeEdits == 
+        UncommitedEditMode.AlwaysPrompt) ? UncommitedEditMode.Apply : UncommitedEditMode.AlwaysPrompt;
+
+      options.StretchGeometry = !options.StretchGeometry;
+      options.StretchTopology = !options.StretchTopology;
+      options.UncommitedGeometryEdits = (options.UncommitedGeometryEdits == 
+        UncommitedEditMode.AlwaysPrompt) ? UncommitedEditMode.Apply : UncommitedEditMode.AlwaysPrompt;
+
+      options.ActivateMoveAfterPaste = !options.ActivateMoveAfterPaste;
+      options.ShowFeatureSketchSymbology = !options.ShowFeatureSketchSymbology;
+      options.FinishSketchOnDoubleClick = !options.FinishSketchOnDoubleClick;
+      options.AllowVertexEditingWhileSketching = !options.AllowVertexEditingWhileSketching;
+      options.ShowDeleteDialog = !options.ShowDeleteDialog;
+      options.EnableStereoEscape = !options.EnableStereoEscape;
+      options.DragSketch = !options.DragSketch;
+      options.ShowDynamicConstraints = !options.ShowDynamicConstraints;
+      options.IsDeflectionDefaultDirectionConstraint = 
+        !options.IsDeflectionDefaultDirectionConstraint;
+      options.IsDirectionDefaultInputConstraint = !options.IsDirectionDefaultInputConstraint;
+      options.ShowEditingToolbar = !options.ShowEditingToolbar;
+      options.ToolbarPosition = (options.ToolbarPosition == ToolbarPosition.Bottom) ? 
+                ToolbarPosition.Right : ToolbarPosition.Bottom;
+      options.ToolbarSize = (options.ToolbarSize == ToolbarSize.Medium) ? 
+                ToolbarSize.Small : ToolbarSize.Medium;
+      options.MagnifyToolbar = !options.MagnifyToolbar;
+
+      options.EnableEditingFromEditTab = !options.EnableEditingFromEditTab;
+      options.AutomaticallySaveEdits = !options.AutomaticallySaveEdits;
+      options.AutoSaveByTime = !options.AutoSaveByTime;
+      options.SaveEditsInterval = (options.AutomaticallySaveEdits) ? 20 : 10;
+      options.SaveEditsOperations = (options.AutomaticallySaveEdits) ? 60 : 30;
+      options.SaveEditsOnProjectSave = !options.SaveEditsOnProjectSave;
+      options.ShowSaveEditsDialog = !options.ShowSaveEditsDialog;
+      options.ShowDiscardEditsDialog = !options.ShowDiscardEditsDialog;
+      options.DeactivateToolOnSaveOrDiscard = !options.DeactivateToolOnSaveOrDiscard;
+      options.NewLayersEditable = !options.NewLayersEditable;
+
+      #endregion
+
+    }
+
+    public void SymbologyOptions()
+		{
+      #region Get Sketch Vertex Symbology Options
+
+      var options = ApplicationOptions.EditingOptions;
+
+      //Must use QueuedTask
+      QueuedTask.Run(() =>
+      {
+        //There are 4 vertex symbol settings - selected, unselected and the
+        //current vertex selected and unselected.
+        var reg_select = options.GetVertexSymbolOptions(VertexSymbolType.RegularSelected);
+        var reg_unsel = options.GetVertexSymbolOptions(VertexSymbolType.RegularUnselected);
+        var curr_sel = options.GetVertexSymbolOptions(VertexSymbolType.CurrentSelected);
+        var curr_unsel = options.GetVertexSymbolOptions(VertexSymbolType.CurrentUnselected);
+
+        //to convert the options to a symbol use
+        //GetPointSymbol
+        var reg_sel_pt_symbol = reg_select.GetPointSymbol();
+        //ditto for reg_unsel, curr_sel, curr_unsel
+      });
+
+      #endregion
+
+      #region Get Sketch Segment Symbology Options
+
+      //var options = ApplicationOptions.EditingOptions;
+      QueuedTask.Run(() =>
+      {
+        var seg_options = options.GetSegmentSymbolOptions();
+        //to convert the options to a symbol use
+        //SymbolFactory. Note: this is approximate....sketch isn't using the
+        //CIM directly for segments
+        var layers = new List<CIMSymbolLayer>();
+        var stroke0 = SymbolFactory.Instance.ConstructStroke(seg_options.PrimaryColor, 
+          seg_options.Width, SimpleLineStyle.Dash);
+        layers.Add(stroke0);
+        if (seg_options.HasSecondaryColor) {
+          var stroke1 = SymbolFactory.Instance.ConstructStroke(
+            seg_options.SecondaryColor, seg_options.Width, SimpleLineStyle.Solid);
+          layers.Add(stroke1);
+        }
+        //segment symbology only
+        var sketch_line = new CIMLineSymbol() {
+          SymbolLayers = layers.ToArray()
+        };
+      });
+      #endregion
+
+      #region Set Sketch Vertex Symbol Options
+
+      //var options = ApplicationOptions.EditingOptions;
+      QueuedTask.Run(() =>
+      {
+        //change the regular unselected vertex symbol
+        //default is a green, hollow, square, 5pts. Change to
+        //Blue outline diamond, 10 pts
+        var vertexSymbol = new VertexSymbolOptions(VertexSymbolType.RegularUnselected);
+        vertexSymbol.OutlineColor = ColorFactory.Instance.BlueRGB;
+        vertexSymbol.MarkerType = VertexMarkerType.Diamond;
+        vertexSymbol.Size = 10;
+
+        //Are these valid?
+        if (options.CanSetVertexSymbolOptions(
+             VertexSymbolType.RegularUnselected, vertexSymbol)) {
+          //apply them
+          options.SetVertexSymbolOptions(VertexSymbolType.RegularUnselected, vertexSymbol);
+				}
+      });
+
+      #endregion
+
+      #region Set Sketch Segment Symbol Options
+
+      //var options = ApplicationOptions.EditingOptions;
+      QueuedTask.Run(() =>
+      {
+        //change the segment symbol primary color to green and
+        //width to 1 pt
+        var segSymbol = options.GetSegmentSymbolOptions();
+        segSymbol.PrimaryColor = ColorFactory.Instance.GreenRGB;
+        segSymbol.Width = 1;
+
+        //Are these valid?
+        if (options.CanSetSegmentSymbolOptions(segSymbol)) {
+          //apply them
+          options.SetSegmentSymbolOptions(segSymbol);
+				}
+      });
+
+      #endregion
+
+      #region Set Sketch Vertex Symbol Back to Default
+
+      //var options = ApplicationOptions.EditingOptions;
+      QueuedTask.Run(() =>
+      {
+        //ditto for reg selected and current selected, unselected
+        var def_reg_unsel = 
+          options.GetDefaultVertexSymbolOptions(VertexSymbolType.RegularUnselected);
+        //apply default
+        options.SetVertexSymbolOptions(
+          VertexSymbolType.RegularUnselected, def_reg_unsel);
+      });
+
+      #endregion
+
+      #region Set Sketch Segment Symbol Back to Default
+
+      //var options = ApplicationOptions.EditingOptions;
+      QueuedTask.Run(() =>
+      {
+        var def_seg = options.GetDefaultSegmentSymbolOptions();
+        options.SetSegmentSymbolOptions(def_seg);
+      });
+
+      #endregion
+    }
+
+    #region ProSnippet Group: VersioningOptions
+    #endregion
+
+    public void VersioningOptions()
+		{
+
+			#region Get and Set Versioning Options
+
+			var vOptions = ApplicationOptions.VersioningOptions;
+
+      vOptions.DefineConflicts = (vOptions.DefineConflicts == ConflictDetectionType.ByRow) ? 
+        ConflictDetectionType.ByColumn : ConflictDetectionType.ByRow;
+      vOptions.ConflictResolution = (
+        vOptions.ConflictResolution == ConflictResolutionType.FavorEditVersion) ? 
+          ConflictResolutionType.FavorTargetVersion : ConflictResolutionType.FavorEditVersion;
+      vOptions.ShowConflictsDialog = !vOptions.ShowConflictsDialog;
+      vOptions.ShowReconcileDialog = !vOptions.ShowReconcileDialog;
 
       #endregion
     }

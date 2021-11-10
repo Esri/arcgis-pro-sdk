@@ -56,6 +56,7 @@ namespace Layout_HelpExamples
 
 
       TextElement elm = layout.FindElement("Text") as TextElement;
+      // cref: Layout_DeleteElement;ArcGIS.Desktop.Layouts.Layout.DeleteElement(ArcGIS.Desktop.Layouts.Element)
       #region Layout_DeleteElement
       //Delete a single layout element.
 
@@ -67,6 +68,7 @@ namespace Layout_HelpExamples
       #endregion Layout_DeleteElement
 
 
+      // cref: Layout_DeleteElements;ArcGIS.Desktop.Layouts.Layout.DeleteElements(System.Func{ArcGIS.Desktop.Layouts.Element,System.Boolean})
       #region Layout_DeleteElements
       //Delete multiple layout elements.
 
@@ -78,6 +80,7 @@ namespace Layout_HelpExamples
       #endregion Layout_DeleteElements
 
 
+      // cref: Layout_FindElement;ArcGIS.Desktop.Layouts.Layout.FindElement(System.String)
       #region Layout_FindElement
       //Find a layout element.  The example below is referencing an existing text element.
 
@@ -85,6 +88,8 @@ namespace Layout_HelpExamples
       #endregion Layout_FindElement
 
 
+      // cref: Layout_GetSetDefinition;ArcGIS.Desktop.Layouts.Layout.GetDefinition
+      // cref: Layout_GetSetDefinition;ArcGIS.Desktop.Layouts.Layout.SetDefinition(ArcGIS.Core.CIM.CIMLayout)
       #region Layout_GetSetDefinition
       //Modify a layout's CIM definition
 
@@ -100,6 +105,8 @@ namespace Layout_HelpExamples
       #endregion Layout_GetSetDefinition
 
 
+      // cref: Layout_GetSetPage;ArcGIS.Desktop.Layouts.Layout.GetPage
+      // cref: Layout_GetSetPage;ArcGIS.Desktop.Layouts.Layout.SetPage(ArcGIS.Core.CIM.CIMPage)
       #region Layout_GetSetPage
       //Modify a layouts page settings.
 
@@ -179,6 +186,7 @@ namespace Layout_HelpExamples
       #endregion Layout_ExportMS_TIFF
 
 
+      // cref: Layout_RefreshMapSeries;ArcGIS.Desktop.Layouts.Layout.RefreshMapSeries
       #region Layout_RefreshMapSeries
       //Refresh the map series associated with the layout.
 
@@ -190,6 +198,7 @@ namespace Layout_HelpExamples
       #endregion Layout_RefreshMapSeries
 
 
+      // cref: Layout_SaveAsFile;ArcGIS.Desktop.Layouts.Layout.SaveAsFile(System.String,System.Boolean)
       #region Layout_SaveAsFile
       //Save a layout to a pagx file.
 
@@ -201,6 +210,7 @@ namespace Layout_HelpExamples
       #endregion Layout_SaveAsFile
 
 
+      // cref: Layout_SetName;ArcGIS.Desktop.Layouts.Layout.SetName(System.String)
       #region Layout_SetName
       //Change the name of a layout.
 
@@ -213,6 +223,7 @@ namespace Layout_HelpExamples
 
 
       SpatialMapSeries SMS = null;
+      // cref: Layout_SetMapSeries;ArcGIS.Desktop.Layouts.Layout.SetMapSeries(ArcGIS.Desktop.Layouts.MapSeries)
       #region Layout_SetMapSeries
       //Change the properities of a spacial map series.
 
@@ -224,6 +235,7 @@ namespace Layout_HelpExamples
       #endregion Layout_SetMapSeries
 
 
+      // cref: Layout_ShowProperties;ArcGIS.Desktop.Layouts.Layout.ShowProperties
       #region Layout_ShowProperties
       //Open the layout properties dialog.
 

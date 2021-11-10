@@ -52,6 +52,8 @@ namespace MapAuthoring.ProSnippet
     public async Task CreateMapAsync(string mapName)
     {
 
+      // cref: Create a new map with a default basemap layer;ArcGIS.Desktop.Mapping.MapFactory.CreateMap(System.String,ArcGIS.Core.CIM.MapType,ArcGIS.Core.CIM.MapViewingMode,ArcGIS.Desktop.Mapping.Basemap)
+      // cref: Create a new map with a default basemap layer;ArcGIS.Desktop.Mapping.Map
       #region Create a new map with a default basemap layer
 
       await QueuedTask.Run(() =>
@@ -63,6 +65,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
+    // cref: Find a map within a project and open it;ArcGIS.Desktop.Mapping.Map
     #region Find a map within a project and open it
     public static async Task<Map> FindOpenExistingMapAsync(string mapName)
     {
@@ -91,6 +94,8 @@ namespace MapAuthoring.ProSnippet
     public async Task<Map> OpenWebMapAsync()
     {
 
+      // cref: Open a webmap;ArcGIS.Desktop.Mapping.MapFactory.CreateMapFromItem(ArcGIS.Desktop.Core.Item)
+      // cref: Open a webmap;ArcGIS.Desktop.Mapping.Map
       #region Open a webmap
       Map map = null;
 
@@ -197,9 +202,19 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      #region Save 2D Map as WebMap on Disk
+
+      //2D maps only
+      //Must be on the QueuedTask.Run(...)
+      if (map.DefaultViewingMode == MapViewingMode.Map)
+        //Only webmap compatible layers will be saved out to the file
+        map.SaveAsWebMapFile(@"C:\Data\MyMap.json");
+
+      #endregion
+
     }
 
-    private void ClipMap()
+		private void ClipMap()
     {
       QueuedTask.Run(() =>
       {
@@ -627,6 +642,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: Create and add a layer to the active map;ArcGIS.Desktop.Mapping.LayerFactory
+      // cref: Create and add a layer to the active map;ArcGIS.Desktop.Mapping.Map
       #region Create and add a layer to the active map
 
       /*
@@ -648,6 +665,7 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      // cref: Create layer with create-params;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
       #region Create layer with create-params
       var flyrCreatnParam = new FeatureLayerCreationParams(new Uri(@"c:\data\world.gdb\cities"))
       {
@@ -787,6 +805,8 @@ namespace MapAuthoring.ProSnippet
     private void CreateSubTypeLayers()
     {
 
+      // cref: Create a new SubTypeGroupLayer;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
+      // cref: Create a new SubTypeGroupLayer;ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams
       #region Create a new SubTypeGroupLayer
       var subtypeGroupLayerCreateParam = new SubtypeGroupLayerCreationParams
       (
@@ -833,6 +853,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: create layer from a lyrx file;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
+      // cref: create layer from a lyrx file;ArcGIS.Desktop.Mapping.LayerDocument
       #region Create layer from a lyrx file
       var lyrDocFromLyrxFile = new LayerDocument(@"d:\data\cities.lyrx");
       var cimLyrDoc = lyrDocFromLyrxFile.GetCIMLayerDocument();
@@ -918,6 +940,8 @@ namespace MapAuthoring.ProSnippet
     }
     public async Task AddQuerylayerAsync()
     {
+      // cref: Create a query layer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(ArcGIS.Core.CIM.CIMDataConnection,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: Create a query layer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(ArcGIS.Core.CIM.CIMDataConnection,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
       #region Create a query layer
       await QueuedTask.Run(() =>
       {
@@ -939,6 +963,8 @@ namespace MapAuthoring.ProSnippet
     public async Task AddFeatureLayerClasBreaksAsync()
     {
 
+      // cref: Create a feature layer with class breaks renderer with defaults;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: Create a feature layer with class breaks renderer with defaults;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
       #region Create a feature layer with class breaks renderer with defaults
       await QueuedTask.Run(() =>
         LayerFactory.Instance.CreateFeatureLayer(
@@ -954,6 +980,8 @@ namespace MapAuthoring.ProSnippet
     public async Task AddFeatureLayerClasBreaksExAsync()
     {
 
+      // cref: Create a feature layer with class breaks renderer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: Create a feature layer with class breaks renderer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
       #region Create a feature layer with class breaks renderer
 
       string colorBrewerSchemesName = "ColorBrewer Schemes (RGB)";
@@ -998,6 +1026,7 @@ namespace MapAuthoring.ProSnippet
       aMap.SetBasemapLayers(Basemap.Gray);
       #endregion
 
+      // cref: Remove basemap layer from a map;ArcGIS.Desktop.Mapping.Map.SetBasemapLayers(ArcGIS.Desktop.Mapping.Basemap)
       #region Remove basemap layer from a map
       aMap.SetBasemapLayers(Basemap.None);
       #endregion    
@@ -1010,10 +1039,12 @@ namespace MapAuthoring.ProSnippet
     {
       Map aMap = null;
 
+      // cref: Get a list of layers filtered by layer type from a map;ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
       #region Get a list of layers filtered by layer type from a map
       List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
       #endregion
 
+      // cref: Find a layer;ArcGIS.Desktop.Mapping.Map.FindLayer(System.String,System.Boolean)
       #region Find a layer
       //Finds layers by name and returns a read only list of Layers
       IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
@@ -1034,6 +1065,7 @@ namespace MapAuthoring.ProSnippet
     public List<Layer> FindLayersWithPartialName(string partialName)
     {
 
+      // cref: Find a layer using partial name search;ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
       #region Find a layer using partial name search
 
       Map map = MapView.Active.Map;
@@ -1141,6 +1173,7 @@ namespace MapAuthoring.ProSnippet
     public async Task ChangeGDBVersion2Async()
     {
 
+      // cref: Change Geodatabase Version of layers off a specified version in a map;ArcGIS.Desktop.Mapping.Map.ChangeVersion(ArcGIS.Core.Data.Version,ArcGIS.Core.Data.Version)
       #region Change Geodatabase Version of layers off a specified version in a map
 
       await QueuedTask.Run(() =>
@@ -1174,6 +1207,9 @@ namespace MapAuthoring.ProSnippet
     public async void SearchAndGetFeatureCount()
     {
 
+      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter)
+      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter,ArcGIS.Desktop.Mapping.TimeRange,ArcGIS.Desktop.Mapping.RangeExtent)
+      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter,ArcGIS.Desktop.Mapping.TimeRange,ArcGIS.Desktop.Mapping.RangeExtent,ArcGIS.Core.CIM.CIMFloorFilterSettings)
       #region Querying a feature layer
 
       var count = await QueuedTask.Run(() =>
@@ -1492,6 +1528,7 @@ namespace MapAuthoring.ProSnippet
     {
 
 
+      // cref: Set unique value renderer to the selected feature layer of the active map;ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
       #region Set unique value renderer to the selected feature layer of the active map
 
       await QueuedTask.Run(() =>
@@ -1575,6 +1612,7 @@ namespace MapAuthoring.ProSnippet
     }
     public async void CreateHeatMapRenderer()
     {
+      // cref: Create a Heatmap Renderer;ArcGIS.Desktop.Mapping.HeatMapRendererDefinition
       #region Create a Heatmap Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1607,6 +1645,7 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateUnclassedRenderer()
     {
+      // cref: Create an Unclassed Renderer;ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition
       #region Create an Unclassed Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1644,6 +1683,7 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateProportionaRenderer()
     {
+      // cref: Create a Proportion Renderer with max and min symbol size capped;ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
       #region Create a Proportion Renderer with max and min symbol size capped
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1677,6 +1717,7 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateTrueProportionaRenderer()
     {
+      // cref: Create a True Proportion Renderer;ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
       #region Create a True Proportion Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -2242,6 +2283,257 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+    }
+
+    #region ProSnippet Group: Working with Standalone Tables
+    #endregion
+
+    public void StandaloneTables1()
+		{
+      #region Create a StandaloneTable
+
+      //container can be a map or group layer
+      var container = MapView.Active.Map;
+      //var container =  MapView.Active.Map.GetLayersAsFlattenedList()
+      //                                  .OfType<GroupLayer>().First();
+      QueuedTask.Run(() =>
+      {
+        //use a local path
+        var table = StandaloneTableFactory.Instance.CreateStandaloneTable(
+            new Uri(@"C:\Temp\Data\SDK.gdb\EarthquakeDamage", UriKind.Absolute),
+            container);
+        //use a URI to a feature service table endpoint
+        var table2 = StandaloneTableFactory.Instance.CreateStandaloneTable(
+          new Uri(@"https://bexdog.esri.com/server/rest/services/FeatureServer" + "/2", UriKind.Absolute),
+          container);
+        //Use an item
+        var item = ItemFactory.Instance.Create(@"C:\Temp\Data\SDK.gdb\ParcelOwners");
+        var table3 = StandaloneTableFactory.Instance.CreateStandaloneTable(item, container);
+
+        //use table creation params
+        var table_params = new StandaloneTableCreationParams(item)
+        {
+          DefinitionFilter = new CIMDefinitionFilter()
+          {
+            //optional - use a filter
+            DefinitionExpression = "LAND_USE = 3"
+          }
+        };
+        var table4 = StandaloneTableFactory.Instance.CreateStandaloneTable(table_params, 
+                                 container);
+
+      });
+
+      #endregion
+
+    }
+
+    public void StandaloneTables2()
+    {
+      #region Retrieve a table from its container
+      var container = MapView.Active.Map;
+
+      //the map standalone table collection
+      var table = container.GetStandaloneTablesAsFlattenedList()
+                              .FirstOrDefault(tbl => tbl.Name == "EarthquakeDamage");
+
+      //or from a group layer
+      var grp_layer = MapView.Active.Map.FindLayers("GroupLayer1").First() as GroupLayer;
+      var table2 = grp_layer.FindStandaloneTables("EarthquakeDamage").First();
+      //or         grp_layer.GetStandaloneTablesAsFlattenedList().First()
+      //or         grp_layer.StandaloneTables.Where(...).First(), etc.
+
+      //show the table in a table view 
+      //use FrameworkApplication.Current.Dispatcher.BeginInvoke if not on the UI thread
+      FrameworkApplication.Panes.OpenTablePane(table2);
+
+      #endregion
+    }
+
+    public void StandaloneTables3()
+		{
+      #region Move a Standalone table
+
+      //get the first group layer that has at least one table
+      var grp_layer = MapView.Active.Map.GetLayersAsFlattenedList()
+        .OfType<GroupLayer>().First(g => g.StandaloneTables.Count > 0);
+      var map = MapView.Active.Map;//assumes non-null
+      QueuedTask.Run(() =>
+      {
+        //move the first table to the bottom of the container
+        grp_layer.MoveStandaloneTable(grp_layer.StandaloneTables.First(), -1);
+
+        //move the last table in the map standalone tables to a group
+        //layer and place it at position 3. If 3 is invalid, the table
+        //will be placed at the bottom of the target container
+        //assumes the map has at least one standalone table...
+        var table = map.StandaloneTables.Last();
+        map.MoveStandaloneTable(table, grp_layer, 3);
+
+        //move a table from a group layer to the map standalone tables
+        //collection - assumes a table called 'Earthquakes' exists
+        var table2 = grp_layer.FindStandaloneTables("Earthquakes").First();
+        //move to the map container
+        map.MoveStandaloneTable(table2, 0);//will be placed at the top
+      });
+
+      #endregion
+
+    }
+
+    public void StandaloneTables4()
+		{
+      #region Remove a Standalone table
+
+      //get the first group layer that has at least one table
+      var grp_layer = MapView.Active.Map.GetLayersAsFlattenedList()
+        .OfType<GroupLayer>().First(g => g.StandaloneTables.Count > 0);
+      var map = MapView.Active.Map;//assumes non-null
+
+      QueuedTask.Run(() =>
+      {
+        //get the tables from the map container
+        var tables = map.GetStandaloneTablesAsFlattenedList();
+        //delete the first...
+        if (tables.Count() > 0)
+				{
+          map.RemoveStandaloneTable(tables.First());
+          //or delete all of them
+          map.RemoveStandaloneTables(tables);
+        }
+
+        //delete a table from a group layer
+        //assumes it has at least one table...
+        grp_layer.RemoveStandaloneTable(grp_layer.StandaloneTables.First());
+      });
+
+      #endregion
+    }
+
+    #region ProSnippet Group: Symbol Layer Drawing, SLD
+    #endregion
+
+    public void SLD1()
+		{
+      FeatureLayer featLayer = null;
+      GroupLayer groupLayer = null;
+
+      #region Add SLD
+
+      QueuedTask.Run(() =>
+      {
+        //check if it can be added to the layer
+        if (featLayer.CanAddSymbolLayerDrawing())
+          featLayer.AddSymbolLayerDrawing();
+
+        //ditto for a group layer...must have at least
+        //one child feature layer that can participate
+        if (groupLayer.CanAddSymbolLayerDrawing())
+          groupLayer.AddSymbolLayerDrawing();
+      });
+
+      #endregion
+
+      #region Determine if a layer has SLD added
+
+      //SLD can be added to feature layers and group layers
+      //For a group layer, SLD controls all child feature layers
+      //that are participating in the SLD
+
+      //var featLayer = ...;//retrieve the feature layer
+      //var groupLayer = ...;//retrieve the group layer
+      QueuedTask.Run(() =>
+      {
+        //Check if the layer has SLD added -returns a tuple
+        var tuple = featLayer.HasSymbolLayerDrawingAdded();
+        if (tuple.addedOnLayer)
+				{
+          //SLD is added on the layer
+				}
+        else if (tuple.addedOnParent)
+				{
+          //SLD is added on the parent (group layer) - 
+          //check parent...this can be recursive
+          var parentLayer = GetParentLayerWithSLD(featLayer.Parent as GroupLayer);
+          /*
+           * 
+         //Recursively get the parent with SLD
+         public GroupLayer GetParentLayerWithSLD(GroupLayer groupLayer) 
+         {
+           if (groupLayer == null)
+             return null;
+           //Must be on QueuedTask
+           var sld_added = groupLayer.HasSymbolLayerDrawingAdded();
+           if (sld_added.addedOnLayer)
+             return groupLayer;
+           else if (sld_added.addedOnParent)
+             return GetParentLayerWithSLD(groupLayer.Parent as GroupLayer);
+           return null;
+         }
+        */
+        }
+      });
+
+      #endregion
+
+      #region Enable/Disable SLD
+
+      QueuedTask.Run(() =>
+      {
+        //A layer may have SLD added but is not using it
+        //HasSymbolLayerDrawingAdded returns a tuple - to check
+        //the layer has SLD (not its parent) check addedOnLayer
+        if (featLayer.HasSymbolLayerDrawingAdded().addedOnLayer)
+				{
+          //the layer has SLD but is the layer currently using it?
+          //GetUseSymbolLayerDrawing returns a tuple - useOnLayer for 
+          //the layer (and useOnParent for the parent layer)
+          if (!featLayer.GetUseSymbolLayerDrawing().useOnLayer)
+					{
+            //enable it
+            featLayer.SetUseSymbolLayerDrawing(true);
+					}
+				}
+
+        //Enable/Disable SLD on a layer parent
+        if (featLayer.HasSymbolLayerDrawingAdded().addedOnParent)
+        {
+          //check parent...this can be recursive
+          var parent = GetParentLayerWithSLD(featLayer.Parent as GroupLayer);
+          if (parent.GetUseSymbolLayerDrawing().useOnLayer)
+            parent.SetUseSymbolLayerDrawing(true);
+        }
+        /*
+         * 
+         //Recursively get the parent with SLD
+         public GroupLayer GetParentLayerWithSLD(GroupLayer groupLayer) 
+         {
+           if (groupLayer == null)
+             return null;
+           //Must be on QueuedTask
+           var sld_added = groupLayer.HasSymbolLayerDrawingAdded();
+           if (sld_added.addedOnLayer)
+             return groupLayer;
+           else if (sld_added.addedOnParent)
+             return GetParentLayerWithSLD(groupLayer.Parent as GroupLayer);
+           return null;
+         }
+        */
+      });
+
+      #endregion
+    }
+
+    public GroupLayer GetParentLayerWithSLD(GroupLayer groupLayer)
+    {
+      if (groupLayer == null)
+        return null;
+      var sld_added = groupLayer.HasSymbolLayerDrawingAdded();
+      if (sld_added.addedOnLayer)
+        return groupLayer;
+      else if (sld_added.addedOnParent)
+        return GetParentLayerWithSLD(groupLayer.Parent as GroupLayer);
+      return null;
     }
 
 

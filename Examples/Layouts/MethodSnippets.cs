@@ -394,11 +394,13 @@ namespace Layout_HelpExamples
 
       await QueuedTask.Run(() =>
       {
+        // cref: GraphicElement_Clone;ArcGIS.Desktop.Layouts.GraphicElement.Clone(System.String)
         #region GraphicElement_Clone
         //Note: call within QueuedTask.Run() 
         GraphicElement cloneElm = graElm.Clone("Clone");
         #endregion GraphicElement_Clone
 
+        // cref: GraphicElement_SetGraphic;ArcGIS.Desktop.Layouts.GraphicElement.SetGraphic(ArcGIS.Core.CIM.CIMGraphic)
         #region GraphicElement_SetGraphic
         //Note: call within QueuedTask.Run() 
         graElm.SetGraphic(CIMGra);
@@ -424,6 +426,7 @@ namespace Layout_HelpExamples
 
     async public static void PictureElementSnippets()
     {
+      // cref: PictureElement_SetSourcePath;ArcGIS.Desktop.Layouts.PictureElement.SetSourcePath(System.String)
       #region PictureElement_SetSourcePath
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
       await QueuedTask.Run(() => 
@@ -438,6 +441,7 @@ namespace Layout_HelpExamples
 
     async public static void MapSurroundSnippets()
     {
+      // cref: MapSurround_SetMapFrame;ArcGIS.Desktop.Layouts.MapSurround.SetMapFrame(ArcGIS.Desktop.Layouts.MapFrame)
       #region MapSurround_SetMapFrame
       await QueuedTask.Run(() =>
       {
@@ -458,42 +462,52 @@ namespace Layout_HelpExamples
       Layout lyt = await QueuedTask.Run(() => layoutItem.GetLayout());
       MapFrame mf = lyt.FindElement("Map1 Map Frame") as MapFrame;
 
+      // cref: BMP_Constructor;ArcGIS.Desktop.Mapping.BMPFormat.#ctor
       #region BMP_Constructor
       BMPFormat BMP = new BMPFormat();
       #endregion BMP_Constructor
 
+      // cref: EMF_Constructor;ArcGIS.Desktop.Mapping.EMFFormat.#ctor
       #region EMF_Constructor
       EMFFormat EMF = new EMFFormat();
       #endregion EMF_Constructor
 
+      // cref: EPS_Constructor;ArcGIS.Desktop.Mapping.EPSFormat.#ctor
       #region EPS_Constructor
       EPSFormat EPS = new EPSFormat();
       #endregion EPS_Constructor
 
+      // cref: GIF_Constructor;ArcGIS.Desktop.Mapping.GIFFormat.#ctor
       #region GIF_Constructor
       GIFFormat GIF = new GIFFormat();
       #endregion GIF_Constructor
 
+      // cref: JPEG_Constructor;ArcGIS.Desktop.Mapping.JPEGFormat.#ctor
       #region JPEG_Constructor
       JPEGFormat JPEG = new JPEGFormat();
       #endregion JPEG_Constructor
 
+      // cref: PNG_Constructor;ArcGIS.Desktop.Mapping.PNGFormat.#ctor
       #region PNG_Constructor
       PNGFormat PNG = new PNGFormat();
       #endregion PNG_Constructor
 
+      // cref: PDF_Constructor;ArcGIS.Desktop.Mapping.PDFFormat.#ctor
       #region PDF_Constructor
       PDFFormat PDF = new PDFFormat();
       #endregion PDF_Constructor
 
+      // cref: SVG_Constructor;ArcGIS.Desktop.Mapping.SVGFormat.#ctor
       #region SVG_Constructor
       SVGFormat SVG = new SVGFormat();
       #endregion SVG_Constructor
 
+      // cref: TGA_Constructor;ArcGIS.Desktop.Mapping.TGAFormat.#ctor
       #region TGA_Constructor
       TGAFormat TGA = new TGAFormat();
       #endregion TGA_Constructor
 
+      // cref: TIFF_Constructor;ArcGIS.Desktop.Mapping.TIFFFormat.#ctor
       #region TIFF_Constructor
       TIFFFormat TIFF = new TIFFFormat();
       #endregion TIFF_Constructor

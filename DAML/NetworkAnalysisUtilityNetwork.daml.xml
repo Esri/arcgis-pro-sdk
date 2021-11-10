@@ -3,6 +3,7 @@
 
   <dependencies>
     <dependency name="ADGeoProcessing.daml" />
+    <dependency name="Editing.daml" />
   </dependencies>
 
   <categories>
@@ -58,6 +59,7 @@
         </group>
         <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
           <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
+          <button refID="esri_editing_ShowUNErrorsErrorInspectorBtn" size="large" />
           <button refID="esri_networkanalysis_ShowModifyTerminalPathsBtn" size="large"/>
           <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
         </group>
@@ -783,101 +785,129 @@
   </propertySheets>
   
   <conditions>
+
     <insertCondition id="esri_networkanalysis_utility_TerminalConnections_Condition" caption="Geographic map is active and utility network layer is selected">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <or>
-          <state id="esri_map_utilityNetworkFeatureService" />
-          <and>
-            <state id="esri_mapping_layerSelectedState"/>
-            <not>
-              <state id="esri_mapping_mapMemberSelectedIsVersionedState" />
-            </not>
-          </and>
-        </or>
-      </and>
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+        <and>
+          <state id="esri_map_utilityNetworkEGDB" />
+          <not>
+            <state id="esri_mapping_mapMemberSelectedIsVersionedState" />
+          </not>
+        </and>
+      </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
       <or>
-        <and>
-          <state id="esri_map_utilityNetwork" />
-          <state id="esri_map_utilityNetworkFeatureService" />
-        </and>
-        <state id="esri_map_traceNetwork"/>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+        <state id="esri_map_traceNetworkFGDB"/>
+        <state id="esri_map_traceNetworkMGDB" />
+        <state id="esri_map_traceNetworkFeatureService" />
       </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
-      <and>
-        <state id="esri_map_utilityNetwork" />
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
         <state id="esri_map_utilityNetworkFeatureService" />
-      </and>
+      </or>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_DisplayContent_Condition" caption="Geographic map is active and utility network layer is selected">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <not>
-          <state id="esri_networkanalysis_utility_active_container_state" />
-        </not>
-      </and>
+      <or>
+        <and>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkMGDB" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+      </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
       <or>
-        <and>
-          <state id="esri_map_utilityNetwork" />
-          <or>
-            <state id="esri_map_utilityNetworkFGDB"/>
-            <not>
-              <state id="esri_map_utilityNetworkFeatureService" />
-            </not>
-          </or>
-        </and>
-        <and>
-          <state id="esri_map_traceNetwork" />
-          <or>
-            <state id="esri_map_traceNetworkFGDB"/>
-            <not>
-              <state id="esri_map_traceNetworkFeatureService" />
-            </not>
-          </or>
-        </and>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkEGDB" />
+        <state id="esri_map_traceNetworkFGDB"/>
+        <state id="esri_map_traceNetworkMGDB" />
+        <state id="esri_map_traceNetworkEGDB" />
       </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
-      <and>
-        <state id="esri_map_utilityNetwork" />
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
         <state id="esri_map_utilityNetworkFeatureService" />
-      </and>
+      </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
-      <and>
-        <state id="esri_map_traceNetwork" />
+      <or>
+        <state id="esri_map_traceNetworkFGDB" />
+        <state id="esri_map_traceNetworkMGDB" />
         <state id="esri_map_traceNetworkFeatureService" />
-      </and>
+      </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <or>
-        <and>
-          <state id="esri_map_utilityNetwork" />
-          <state id="esri_map_utilityNetworkFeatureService" />
-        </and>
-        <state id="esri_map_traceNetwork"/>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+        <state id="esri_map_traceNetworkFGDB" />
+        <state id="esri_map_traceNetworkMGDB" />
+        <state id="esri_map_traceNetworkFeatureService" />
       </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_OpenContainer_Condition" caption="Utility network layer is active and a selection exists">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <not>
-          <state id="esri_networkanalysis_utility_active_container_state" />      
-        </not>
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </and>
+      <or>
+        <and>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkMGDB" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <not>
+            <state id="esri_networkanalysis_utility_active_container_state" />
+          </not>
+        </and>
+      </or>
     </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_Container_Activated_Condition" caption="Utility network layer has an active container">
       <and>
         <state id="esri_networkanalysis_utility_active_container_state" />
       </and>
     </insertCondition>
-    
+
     <insertCondition id="esri_networkanalysis_utility_Implemented_Condition" caption="Not yet implemented">
       <and>
         <state id="esri_networkanalysis_utility_comingSoonState" />
@@ -885,48 +915,96 @@
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_PropagateSelection_Condition" caption="Utility network layer is active and a selection exists">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
-      </and>
-    </insertCondition>    
-    
+      <or>
+        <and>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkMGDB" />
+          <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <state id="esri_mapping_activeMapView_hasFeatureSelectionState" />
+        </and>
+      </or>
+    </insertCondition>
+
     <insertCondition id="esri_networkanalysis_utility_ViewAssociations_Condition" caption="Utility network layer is active and the map scale is valid.">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-      </and>
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+      </or>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_FlowDirections_Condition" caption="Utility or Trace network layer is active and the map scale is valid.">
-      <and>
-        <!--<state id="esri_map_utilityNetwork" />--> <!-- disable for now -->
-        <state id="esri_map_traceNetwork" />
-      </and>
+      <or>
+        <state id="esri_map_traceNetworkFGDB" />
+        <state id="esri_map_traceNetworkMGDB" />
+        <state id="esri_map_traceNetworkFeatureService" />
+      </or>
     </insertCondition>
     
     <insertCondition id="esri_networkanalysis_UN_Trace_Configurations_Condition" caption="Utility network layer is active and is version 5 or newer">
-      <and>
-        <state id="esri_map_utilityNetwork" />
-        <state id="esri_map_utilityNetworkVersion5OrNewState" />
-      </and>
-    </insertCondition>
-
-    <insertCondition id="esri_networkanalysis_TN_Trace_Configurations_Condition" caption="Trace network layer is active and is version 2 or newer">
-      <and>
-        <state id="esri_map_traceNetwork" />
-        <state id="esri_map_traceNetworkVersion2OrNewState" />
-      </and>
-    </insertCondition>
-    
-    <insertCondition id="esri_networkanalysis_TN_OR_UN_Trace_Configurations_Condition" caption="Utility network layer is active and is version 5 or newer Or Trace network layer is
-                        active and is version 2 or newer">
       <or>
         <and>
-          <state id="esri_map_utilityNetwork" />
+          <state id="esri_map_utilityNetworkFGDB" />
           <state id="esri_map_utilityNetworkVersion5OrNewState" />
         </and>
         <and>
-          <state id="esri_map_traceNetwork" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+      </or>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_TN_Trace_Configurations_Condition" caption="Trace network layer is active and is version 2 or newer">
+      <or>
+        <and>
+          <state id="esri_map_traceNetworkFGDB" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkMGDB" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkFeatureService" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+      </or>
+    </insertCondition>
+    
+    <insertCondition id="esri_networkanalysis_TN_OR_UN_Trace_Configurations_Condition" caption="Utility network layer is active and is version 5 or newer Or Trace network layer is active and is version 2 or newer">
+      <or>
+        <and>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_utilityNetworkFeatureService" />
+          <state id="esri_map_utilityNetworkVersion5OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkFGDB" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkMGDB" />
+          <state id="esri_map_traceNetworkVersion2OrNewState" />
+        </and>
+        <and>
+          <state id="esri_map_traceNetworkFeatureService" />
           <state id="esri_map_traceNetworkVersion2OrNewState" />
         </and>
       </or>

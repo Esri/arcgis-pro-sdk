@@ -45,6 +45,7 @@ namespace LayoutEvents
     {
       LayoutView lytView = LayoutView.Active;
       await ProApp.Panes.CreateLayoutPaneAsync(lytView.Layout);
+      // cref: ActivateMapFrameEvent;ArcGIS.Desktop.Layouts.Events.ActivateMapFrameEvent
       #region ActivateMapFrameEvent
       //Report the event args when a map frame is activated or deactivated.
 
@@ -60,6 +61,7 @@ namespace LayoutEvents
       });
       #endregion ActivateMapFrameEvent
 
+      // cref: ActiveLayoutViewChangedEvent;ArcGIS.Desktop.Layouts.Events.ActiveLayoutViewChangedEvent
       #region ActiveLayoutViewChangedEvent
       //Report the event args when a the layout view has changed.
 
@@ -73,6 +75,7 @@ namespace LayoutEvents
       });
       #endregion ActiveLayoutViewChangedEvent
 
+      // cref: ElementAddedEvent;ArcGIS.Desktop.Layouts.Events.ElementAddedEvent
       #region ElementAddedEvent
       //Report the event args when an element is added to the layout.
 
@@ -92,6 +95,7 @@ namespace LayoutEvents
       });
       #endregion ElementAddedEvent
 
+      // cref: ElementRemovedEvent;ArcGIS.Desktop.Layouts.Events.ElementRemovedEvent
       #region ElementRemovedEvent
       //Report the event args when an element is removed from the layout.
 
@@ -111,6 +115,7 @@ namespace LayoutEvents
       });
       #endregion ElementRemovedEvent
 
+      // cref: ElementsPlacementChangedEvent;ArcGIS.Desktop.Layouts.Events.ElementsPlacementChangedEvent
       #region ElementsPlacementChangedEvent
       //Report the event args when an element's placement properties are changed.
 
@@ -130,6 +135,7 @@ namespace LayoutEvents
       });
       #endregion ElementsPlacementChangedEvent
 
+      // cref: ElementStyleChangedEvent;ArcGIS.Desktop.Layouts.Events.ElementStyleChangedEvent
       #region ElementStyleChangedEvent
       //Report the event args when an element's style is changed.
 
@@ -149,6 +155,7 @@ namespace LayoutEvents
       });
       #endregion ElementStyleChangedEvent
 
+      // cref: ElementsUpdatedEvent;ArcGIS.Desktop.Layouts.Events.ElementsUpdatedEvent
       #region ElementsUpdatedEvent
       //Report the event args when an element has been updated.
 
@@ -168,6 +175,7 @@ namespace LayoutEvents
       });
       #endregion ElementsUpdatedEvent
 
+      // cref: LayoutAddedEvent;ArcGIS.Desktop.Layouts.Events.LayoutAddedEvent
       #region LayoutAddedEvent
       //Report the event args when a layout is added.
 
@@ -179,6 +187,7 @@ namespace LayoutEvents
       });
       #endregion LayoutAddedEvent
 
+      // cref: LayoutChangedEvent;ArcGIS.Desktop.Layouts.Events.LayoutChangedEvent
       #region LayoutChangedEvent
       //Report the event args when a layout is changed.
 
@@ -190,6 +199,7 @@ namespace LayoutEvents
       });
       #endregion LayoutChangedEvent
 
+      // cref: LayoutClosedEvent;ArcGIS.Desktop.Layouts.Events.LayoutClosedEvent
       #region LayoutClosedEvent
       //Report the event args when a layout is closed.
 
@@ -201,6 +211,7 @@ namespace LayoutEvents
       });
       #endregion LayoutClosedEvent
 
+      // cref: LayoutClosingEvent;ArcGIS.Desktop.Layouts.Events.LayoutClosingEvent
       #region LayoutClosingEvent
       //Report the event args when a layout is closing.
 
@@ -214,6 +225,7 @@ namespace LayoutEvents
       });
       #endregion LayoutClosingEvent
 
+      // cref: LayoutPauseDrawingChangedEvent;ArcGIS.Desktop.Layouts.Events.LayoutPauseDrawingChangedEvent
       #region LayoutPauseDrawingChangedEvent
       //Report the event args when a layout's paused state is changed.
 
@@ -227,6 +239,7 @@ namespace LayoutEvents
       });
       #endregion LayoutPauseDrawingChangedEvent
 
+      // cref: LayoutRemovedEvent;ArcGIS.Desktop.Layouts.Events.LayoutRemovedEvent
       #region LayoutRemovedEvent
       //Report the event args when a layout is removed.
 
@@ -238,6 +251,7 @@ namespace LayoutEvents
       });
       #endregion LayoutRemovedEvent
 
+      // cref: LayoutRemovingEvent;ArcGIS.Desktop.Layouts.Events.LayoutRemovingEvent
       #region LayoutRemovingEvent
       //Report the event args when a layout is about to be removed.
 
@@ -251,6 +265,7 @@ namespace LayoutEvents
       });
       #endregion LayoutRemovingEvent
 
+      // cref: LayoutSelectionChangedEvent;ArcGIS.Desktop.Layouts.Events.LayoutSelectionChangedEvent
       #region LayoutSelectionChangedEvent
       //Report the event args when a layout's selection has changed.
 
@@ -269,6 +284,7 @@ namespace LayoutEvents
       });
       #endregion LayoutSelectionChangedEvent
 
+      // cref: LayoutViewEvent;ArcGIS.Desktop.Layouts.Events.LayoutViewEvent
       #region LayoutViewEvent
       //Report the event args for the different types of layout view events.
 
@@ -282,6 +298,7 @@ namespace LayoutEvents
       });
       #endregion LayoutViewEvent
 
+      // cref: MapSeriesEvent;ArcGIS.Desktop.Layouts.Events.MapSeriesEvent
       #region MapSeriesEvent
       //Report the event args when the map series properties have changed.
 
@@ -299,6 +316,7 @@ namespace LayoutEvents
       });
       #endregion MapSeriesEvent
 
+      // cref: PageChangedEvent;ArcGIS.Desktop.Layouts.Events.PageChangedEvent
       #region PageChangedEvent
       //Report the event args when a layout page properties are changed.
 

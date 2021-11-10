@@ -39,6 +39,8 @@ namespace EditingSDKExamples
     {
     }
 
+    // cref: editevent;ArcGIS.Desktop.Editing.Events.EditCompletedEvent
+    // cref: editevent;ArcGIS.Desktop.Editing.Events.EditCompletedEventArgs
     #region editevent
     protected void subEditEvents()
     {
@@ -56,6 +58,13 @@ namespace EditingSDKExamples
     }
     #endregion
 
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowChangedEvent.Subscribe(System.Action{ArcGIS.Desktop.Editing.Events.RowChangedEventArgs},ArcGIS.Core.Data.Table,System.Boolean)
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowCreatedEvent.Subscribe(System.Action{ArcGIS.Desktop.Editing.Events.RowChangedEventArgs},ArcGIS.Core.Data.Table,System.Boolean)
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowDeletedEvent.Subscribe(System.Action{ArcGIS.Desktop.Editing.Events.RowChangedEventArgs},ArcGIS.Core.Data.Table,System.Boolean)
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowChangedEvent
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowChangedEventArgs
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowCreatedEvent
+    // cref: rowevent;ArcGIS.Desktop.Editing.Events.RowDeletedEvent
     #region rowevent
     protected void subRowEvent()
     {
@@ -116,13 +125,13 @@ namespace EditingSDKExamples
       var fldIdx = row.FindField("POLICE_DISTRICT");
       if (fldIdx != -1)
       {
-        //Validate any change to “police district”
+        //Validate any change to ï¿½police districtï¿½
         //   cancel the edit if validation on the field fails
         if (row.HasValueChanged(fldIdx))
         {
           if (FailsValidation(row["POLICE_DISTRICT"].ToString()))
           {
-            //Cancel edits with invalid “police district” values
+            //Cancel edits with invalid ï¿½police districtï¿½ values
             args.CancelEdit($"Police district {row["POLICE_DISTRICT"]} is invalid");
           }
         }

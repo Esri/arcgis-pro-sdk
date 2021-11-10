@@ -45,6 +45,7 @@ namespace Examples
     /// <example>
     /// <code title="Project Camera" description="Project a camera into a new spatial reference." region="Project Camera" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Camera_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Project Camera;ArcGIS.Desktop.Mapping.Camera.SpatialReference
     #region Project Camera
     public Task<Camera> ProjectCamera(Camera camera, ArcGIS.Core.Geometry.SpatialReference spatialReference)
     {

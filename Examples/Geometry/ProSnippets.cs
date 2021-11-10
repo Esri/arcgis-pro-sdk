@@ -36,6 +36,9 @@ namespace ProSnippetsGeometry
     public void SpatialReference()
     {
       {
+        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32)
+        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32)
+        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ToSpatialReference
         #region Construct a SpatialReference - from a well-known ID
 
         // Use a builder convenience method or use a builder constructor.
@@ -58,6 +61,8 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct a SpatialReference - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.String)
+        // cref: Construct a SpatialReference - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.String)
         #region Construct a SpatialReference - from a string
 
         // Use a builder convenience method or use a builder constructor.
@@ -82,6 +87,9 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReference.IsGeographic
+        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReference.IsProjected
+        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReferences.WGS84
         #region Use WGS84 SpatialReference
 
         SpatialReference wgs84 = SpatialReferences.WGS84;
@@ -92,6 +100,10 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.Int32)
+        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.Int32)
+        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkid
+        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkt
         #region Construct a SpatialReference with a vertical coordinate system - from well-known IDs
 
         // Use a builder convenience method or use a builder constructor.
@@ -125,6 +137,10 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.String)
+        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.String)
+        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReference.VcsWkid
+        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReference.VcsWkt
         #region Construct a SpatialReference with a vertical coordinate system - from a string 
 
         // Use a builder convenience method or use a builder constructor.
@@ -154,6 +170,9 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.Gcs
+        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.GcsWkid
+        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.GcsWkt
         #region Construct a SpatialReference with a custom PCS - from a string
 
         // Use a builder convenience method or use a builder constructor.
@@ -188,6 +207,39 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseM
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseX
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseY
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseZ
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.HasVcs
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.MScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.MTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Name
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Unit
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Wkid
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Wkt
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYResolution
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZUnit
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseM
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseX
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseY
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseZ
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.MScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.MTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Name
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Unit
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkid
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkt
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYResolution
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZScale
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZTolerance
+        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZUnit
         #region SpatialReference Properties
 
         // Builder constructors need to run on the MCT.
@@ -251,6 +303,10 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReference.ToJson
+        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReference.ToXML
+        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromJson(System.String)
+        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromXML(System.String)
         #region Import and Export Spatial Reference
 
         SpatialReference srWithVertical = SpatialReferenceBuilder.CreateSpatialReference(4326, 6916);
@@ -269,6 +325,7 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Determine grid convergence for a SpatialReference at a given point;ArcGIS.Core.Geometry.SpatialReference.ConvergenceAngle(ArcGIS.Core.Geometry.Coordinate2D)
         #region Determine grid convergence for a SpatialReference at a given point
 
         Coordinate2D coordinate = new Coordinate2D(10, 30);
@@ -305,6 +362,14 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.Name
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidFlattening
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidName
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidSemiMajorAxis
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidSemiMinorAxis
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidWkid
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.Wkid
+        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.SpatialReference.Datum
         #region SpatialReference Datum and datum properties
 
         // Get datum of a spatial reference
@@ -339,6 +404,9 @@ namespace ProSnippetsGeometry
 
     public void Coordinate3D()
     {
+      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.QueryComponents
+      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.QueryPolarComponents
+      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.SetPolarComponents(System.Double,System.Double,System.Double)
       #region Vector Polar Coordinates
       Coordinate3D polarVector = new Coordinate3D(0, 7, 0);
       Tuple<double, double, double> polarComponents = polarVector.QueryPolarComponents();
@@ -354,6 +422,8 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: Getting vector inclination;ArcGIS.Core.Geometry.Coordinate3D.SetComponents(System.Double,System.Double,System.Double)
+      // cref: Getting vector inclination;ArcGIS.Core.Geometry.Coordinate3D.Inclination
       #region Getting vector inclination
 
       Coordinate3D v = new Coordinate3D(0, 0, 7);
@@ -367,6 +437,7 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: Getting vector azimuth;ArcGIS.Core.Geometry.Coordinate3D.Azimuth
       #region Getting vector azimuth
       Coordinate3D vector = new Coordinate3D(0, 7, 0);
       double azimuth = vector.Azimuth;      // azimuth = 0
@@ -384,6 +455,13 @@ namespace ProSnippetsGeometry
 
     public void Coordinate3D_Operations()
     {
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.#ctor(System.Double,System.Double,System.Double)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.AddCoordinate3D(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.CrossProduct(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.DotProduct(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Move(System.Double,System.Double,System.Double)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Rotate(System.Double,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Scale(System.Double)
       #region Vector Operations
 
       // Easy 3D vectors
@@ -428,6 +506,78 @@ namespace ProSnippetsGeometry
       // w.Y = 4
       // w.Z = 0
       // w.Magnitude = 5
+
+
+      Coordinate3D emptyVector = new Coordinate3D();
+      // emptyVector = (0, 0, 0)
+      emptyVector.SetEmpty();
+      // emptyVector = (Nan, Nan, Nan)
+
+      Coordinate3D c1 = new Coordinate3D(2, 3, 4);
+      Coordinate3D c2 = new Coordinate3D(9, -1, 3);
+
+      var result_add = c1 + c2;
+      // result_add = (11, 2, 7)
+      var result_sub = c1 - c2;
+      // result_sub = (-7, 4, 1)
+
+      var b = result_sub != result_add;
+      // b = true
+
+      result_add = emptyVector + c1;
+      // result_add = (Nan, Nan, Nan)
+
+      b = result_add == emptyVector;
+      // b = true
+
+      #endregion
+    }
+
+    public void Coordinate2D()
+    {
+      #region 2D Vector Operations
+      Coordinate2D v = new Coordinate2D(0, 1);
+      // v.Magnitude = 1
+
+      Coordinate2D other = new Coordinate2D(-1, 0);
+      double dotProduct = v.DotProduct(other);
+      // dotProduct = 0
+
+      Coordinate2D w = v + other;
+      // w = (-1, 1)
+
+      w += other;
+      // w = (-2, 1)
+
+      w -= other;
+      // w = (-1, 1)
+
+      w = v;
+      w.Rotate(Math.PI, other);
+      // w = (-2, -1)
+
+      w = other;
+
+      w.Scale(-4);
+      // w = (4, 0)
+      // w.Magnitude = 4
+
+      w.Move(-1, 4);
+      // w = (3, 4)
+      // w.Magnitude = 5
+
+      w.Move(-6, -1);
+      Tuple<double, double> components = w.QueryComponents();
+      // components = (-3, 3)
+      // w.Magnitude = 3 * Math.Sqrt(2)
+
+      Coordinate2D unitVector = w.GetUnitVector();
+      // w = (-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2)
+      // w.Magnitude = 1
+
+
+      w.SetComponents(3, 4);
+
       #endregion
     }
 
@@ -436,6 +586,11 @@ namespace ProSnippetsGeometry
 
     public void Builders()
     {
+      // cref: Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasM
+      // cref: Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasZ
+      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasID
+      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasM
+      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasZ
       #region Builder Properties
 
       // list of points
@@ -505,6 +660,14 @@ namespace ProSnippetsGeometry
     public void MapPoint()
     {
       {
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.Geometry.Clone
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double)
+        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry(ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a MapPoint
 
         // Use a builder convenience method or use a builder constructor.
@@ -550,6 +713,38 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint)
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(ArcGIS.Core.Geometry.SpatialReference)
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.SetValues(System.Double,System.Double,System.Double)
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint)
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.ToGeometry
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasM
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasZ
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasID
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasM
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasZ
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.IsEmpty
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.IsEmpty
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.M
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.X
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.Y
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.Z
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.M
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.X
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.Y
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.Z
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasID
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasM
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasZ
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.ID
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.IsEmpty
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.M
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.X
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.Y
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.Z
+        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry(ArcGIS.Core.Geometry.SpatialReference)
         #region MapPoint Builder Properties
 
         // Use a builder convenience method or use a builder constructor.
@@ -636,6 +831,7 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: MapPoint IsEqual;ArcGIS.Core.Geometry.MapPoint.IsEqual(ArcGIS.Core.Geometry.MapPoint)
         #region MapPoint IsEqual
 
         MapPoint pt1 = MapPointBuilder.CreateMapPoint(1, 2, 3, 4, 5);
@@ -701,6 +897,8 @@ namespace ProSnippetsGeometry
     public void Polyline()
     {
       {
+        // cref: Construct a Polyline - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a Polyline - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a Polyline - from an enumeration of MapPoints
 
         // Use a builder convenience method or use a builder constructor.
@@ -742,6 +940,15 @@ namespace ProSnippetsGeometry
       {
         Polyline polyline = null;
 
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipatch.Copy3DCoordinatesToList
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy2DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy3DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.CopyPointsToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.MapPoint}@)
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.GetEnumerator
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.PointCount
+        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Points
         #region Get the points of a Polyline
 
         // get the points as a readonly Collection
@@ -787,6 +994,8 @@ namespace ProSnippetsGeometry
 
         #endregion
 
+        // cref: Get the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.PartCount
+        // cref: Get the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.Parts
         #region Get the parts of a Polyline
 
         int numParts = polyline.PartCount;
@@ -795,6 +1004,10 @@ namespace ProSnippetsGeometry
 
         #endregion
 
+        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPartCollection.GetEnumerator
+        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Segment.Length
+        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Segment.SegmentType
         #region Enumerate the parts of a Polyline
 
         ReadOnlyPartCollection polylineParts = polyline.Parts;
@@ -843,6 +1056,9 @@ namespace ProSnippetsGeometry
         }
         #endregion
 
+        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.ReverseOrientation
+        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(ArcGIS.Core.Geometry.Polyline)
+        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.ToGeometry
         #region Reverse the order of points in a Polyline
 
         // Builder constructors need to run on the MCT.
@@ -857,6 +1073,8 @@ namespace ProSnippetsGeometry
 
         #endregion
 
+        // cref: Get the segments of a Polyline;ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
+        // cref: Get the segments of a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
         #region Get the segments of a Polyline
 
         ICollection<Segment> collection = new List<Segment>();
@@ -876,6 +1094,9 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.RemovePart(System.Int32)
+        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
         #region Build a multi-part Polyline
 
         List<MapPoint> firstPoints = new List<MapPoint>();
@@ -951,6 +1172,8 @@ namespace ProSnippetsGeometry
 
     public void ClothoidByAngle()
     {
+      // cref: Construct a Clothoid by Angle;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.esriCurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Clothoid by Angle;ArcGIS.Core.Geometry.PolylineBuilder.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Clothoid by Angle
 
       MapPoint startPoint = MapPointBuilder.CreateMapPoint(0, 0);
@@ -978,6 +1201,8 @@ namespace ProSnippetsGeometry
 
     public void ClothoidByLength()
     {
+      // cref: Construct a Clothoid by Length;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.esriCurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Clothoid by Length;ArcGIS.Core.Geometry.PolylineBuilder.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Clothoid by Length
 
       MapPoint startPoint = MapPointBuilder.CreateMapPoint(0, 0);
@@ -1023,6 +1248,8 @@ namespace ProSnippetsGeometry
 
     public void SplitPolyline()
     {
+      // cref: Split Polyline at distance;ArcGIS.Core.Geometry.MultipartBuilder`1.SplitAtDistance(System.Double,System.Boolean,System.Boolean)
+      // cref: Split Polyline at distance;ArcGIS.Core.Geometry.MultipartBuilder`1.SplitPartAtDistance(System.Int32,System.Double,System.Boolean,System.Boolean)
       #region Split Polyline at distance
 
       // create list of points
@@ -1077,6 +1304,8 @@ namespace ProSnippetsGeometry
     public void ConstructPolygon()
     {
       {
+        // cref: Construct a Polygon - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolygonBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+        // cref: Construct a Polygon - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a Polygon - from an enumeration of MapPoints
 
         // Use a builder convenience method or use a builder constructor.
@@ -1114,6 +1343,9 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a Polygon - from an Envelope
 
         // Use a builder convenience method or use a builder constructor.
@@ -1151,6 +1383,10 @@ namespace ProSnippetsGeometry
       {
         Polygon polygon = null;
 
+        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
+        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
+        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipatch.Copy3DCoordinatesToList
+        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Points
         #region Get the points of a Polygon
 
         // get the points as a readonly Collection
@@ -1166,12 +1402,14 @@ namespace ProSnippetsGeometry
         IReadOnlyList<Coordinate3D> coordinates3D = polygon.Copy3DCoordinatesToList();
         #endregion
 
+        // cref: Get the parts of a Polygon;ArcGIS.Core.Geometry.Multipart.Parts
         #region Get the parts of a Polygon
         // get the parts as a readonly collection
         ReadOnlyPartCollection parts = polygon.Parts;
 
         #endregion
 
+        // cref: Enumerate the parts of a Polygon;ArcGIS.Core.Geometry.Multipart.Parts
         #region Enumerate the parts of a Polygon
 
         int numSegments = 0;
@@ -1188,6 +1426,8 @@ namespace ProSnippetsGeometry
 
         #endregion
 
+        // cref: Get the segments of a Polygon;ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
+        // cref: Get the segments of a Polygon;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
         #region Get the segments of a Polygon
 
         List<Segment> segmentList = new List<Segment>(30);
@@ -1201,6 +1441,13 @@ namespace ProSnippetsGeometry
         #endregion
       }
 
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.Coordinate2D.#ctor(System.Double,System.Double)
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.GeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.IGeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.MultipartBuilder`1.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D})
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.PolygonBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.PolygonBuilder.ToGeometry
+      // cref: Build a donut polygon;ArcGIS.Core.Geometry.Polygon.Area
       #region Build a donut polygon
 
       List<Coordinate2D> outerCoordinates = new List<Coordinate2D>();
@@ -1294,6 +1541,10 @@ namespace ProSnippetsGeometry
 
     #endregion
 
+    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.GetExteriorRing(System.Int32,System.Boolean)
+    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.GetExteriorRings(System.Boolean)
+    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.IsExteriorRing(System.Int32)
+    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.ExteriorRingCount
     #region Get the exterior rings of a polygon - polygon.GetExteriorRing
     public void GetExteriorRings(Polygon inputPolygon)
     {
@@ -1320,6 +1571,10 @@ namespace ProSnippetsGeometry
 
     public void ConstructEnvelope()
     {
+      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ToGeometry
+      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Construct an Envelope 
 
       // Use a builder convenience method or use a builder constructor.
@@ -1350,6 +1605,7 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: Construct an Envelope - from a JSON string;ArcGIS.Core.Geometry.EnvelopeBuilder.FromJson(System.String)
       #region Construct an Envelope - from a JSON string
 
       string jsonString = "{ \"xmin\" : 1, \"ymin\" : 2,\"xmax\":3,\"ymax\":4,\"spatialReference\":{\"wkid\":4326}}";
@@ -1359,6 +1615,42 @@ namespace ProSnippetsGeometry
     }
     public void EnvelopeUnion()
     { 
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IsEqual(ArcGIS.Core.Geometry.Envelope)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Union(ArcGIS.Core.Geometry.Envelope)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Union(ArcGIS.Core.Geometry.Envelope)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Union(ArcGIS.Core.Geometry.Envelope)
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Area
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Center
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.CenterCoordinate
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Depth
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Height
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IDMax
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IDMin
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IsEmpty
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Length
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.MMax
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.MMin
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.PointCount
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Width
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.XMax
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.XMin
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.YMax
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.YMin
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.ZMax
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.ZMin
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Center
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.CenterCoordinate
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Depth
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Height
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Width
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Center
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.CenterCoordinate
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Depth
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Height
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.IsEmpty
+      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Width
       #region Union two Envelopes
 
       // use the convenience builders - don't need to run on the MCT.
@@ -1421,6 +1713,12 @@ namespace ProSnippetsGeometry
 
     public void EnvelopeIntersection()
     {
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.Envelope.Intersection(ArcGIS.Core.Geometry.Envelope)
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.Envelope.Intersects(ArcGIS.Core.Geometry.Envelope)
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Intersection(ArcGIS.Core.Geometry.Envelope)
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Intersects(ArcGIS.Core.Geometry.Envelope)
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersection(ArcGIS.Core.Geometry.Envelope)
+      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersects(ArcGIS.Core.Geometry.Envelope)
       #region Intersect two Envelopes
 
       // use the convenience builders - don't need to run on the MCT.
@@ -1449,6 +1747,10 @@ namespace ProSnippetsGeometry
 
     public void EnvelopeExpand()
     {
+      // cref: Expand an Envelope;ArcGIS.Core.Geometry.Envelope.Expand(System.Double,System.Double,System.Boolean)
+      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.Expand(System.Double,System.Double,System.Boolean)
+      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
       #region Expand an Envelope
 
       // Use a builder convenience method or use a builder constructor.
@@ -1481,6 +1783,30 @@ namespace ProSnippetsGeometry
 
     public void EnvelopeUpdate()
     {
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetMCoords(System.Double,System.Double)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetXYCoords(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetZCoords(System.Double,System.Double)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetMCoords(System.Double,System.Double)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetXYCoords(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetZCoords(System.Double,System.Double)
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.MMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.MMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.XMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.XMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.YMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.YMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ZMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ZMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.HasM
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMin
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMax
+      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMin
       #region Update Coordinates of an Envelope
 
       Coordinate2D minCoord = new Coordinate2D(1, 3);
@@ -1602,6 +1928,11 @@ namespace ProSnippetsGeometry
 
     public void ConstructMultiPoint()
     {
+      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilder.CreateMultipoint(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.ToGeometry
+      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.PointCount
       #region Construct a Multipoint - from an enumeration of MapPoints
 
       // Use a builder convenience method or use a builder constructor.
@@ -1644,6 +1975,17 @@ namespace ProSnippetsGeometry
 
     public void MultipointBuilderEx_()
     {
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoints(System.Int32,System.Int32)
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.SetEmpty
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.SetPoint(System.Int32,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Coords
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasID
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasM
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasZ
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.IDs
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Ms
+      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Zs
       #region Construct a Multipoint - using MultipointBuilderEx
 
       Coordinate2D[] coordinate2Ds = new Coordinate2D[] { new Coordinate2D(1, 2), new Coordinate2D(-1, -2) };
@@ -1740,6 +2082,15 @@ namespace ProSnippetsGeometry
     public void ModifyMultipoint()
     {
       Multipoint multipoint = null;
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.#ctor(ArcGIS.Core.Geometry.Multipoint)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.Add(ArcGIS.Core.Geometry.MapPoint)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.GetMapPoint(System.Int32)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.RemovePoint(System.Int32)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.ToGeometry
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipoint)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.AddPoint(ArcGIS.Core.Geometry.MapPoint)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.GetPoint(System.Int32)
+      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoint(System.Int32)
       #region Modify the points of a Multipoint
 
       // Builder constructors need to run on the MCT.
@@ -1793,6 +2144,15 @@ namespace ProSnippetsGeometry
 
     public void ConstructLineSegment()
     {
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.LineSegment)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.LineSegment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.ToSegment
       #region Construct a LineSegment using two MapPoints
 
       // Use a builder convenience method or use a builder constructor.
@@ -1877,6 +2237,10 @@ namespace ProSnippetsGeometry
       #endregion
 
       LineSegment lineSegment = null;
+      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.MapPoint@)
+      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.SetCoords(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.EndPoint
+      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.StartPoint
       #region Alter LineSegment Coordinates
 
       // Builder constructors need to run on the MCT.
@@ -1929,6 +2293,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructCubicBezier()
     {
+      // cref: Construct a Cubic Bezier - from Coordinates;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct a Cubic Bezier - from Coordinates;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Cubic Bezier - from Coordinates
 
       // Use a builder convenience method or a builder constructor.
@@ -1966,6 +2332,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructCubicBezier2()
     {
+      // cref: Construct a Cubic Bezier - from MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct a Cubic Bezier - from MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Cubic Bezier - from MapPoints
 
       // Use a builder convenience method or a builder constructor.
@@ -2003,6 +2371,9 @@ namespace ProSnippetsGeometry
 
     public void ConstructCubicBezier3()
     {
+      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.ToSegment
       #region Construct a Cubic Bezier - from an enumeration of MapPoints
 
       // Use a builder convenience method or use a builder constructor.
@@ -2047,6 +2418,12 @@ namespace ProSnippetsGeometry
     {
       CubicBezierSegment bezierSegment = null;
 
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.CubicBezierSegment)
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.MapPoint@)
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.ControlPoint1
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.ControlPoint2
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.EndPoint
+      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.StartPoint
       #region Cubic Bezier Builder Properties
 
       // Builder constructors need to run on the MCT.
@@ -2080,6 +2457,12 @@ namespace ProSnippetsGeometry
     {
       CubicBezierSegment bezierSegment = null;
 
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint1
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint2
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.IsCurve
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.Length
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.Segment.EndPoint
+      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.Segment.StartPoint
       #region Cubic Bezier Properties
 
       // retrieve the bezier curve's control points
@@ -2106,6 +2489,9 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcUsingInteriorPt()
     {
+      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.ToSegment
       #region Construct a Circular Arc - using an interior point
 
       // Construct a circular arc from (2, 1) to (1, 2) with interior pt (1 + sqrt(2)/2, 1 + sqrt(2)/2).
@@ -2134,6 +2520,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcUsingChordAndBearing()
     {
+      // cref: Construct a Circular Arc - using a chord length and bearing;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using a chord length and bearing;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Circular Arc - using a chord length and bearing
 
       // Construct a circular arc counterclockwise from (2, 1) to (1, 2) such that the embedded 
@@ -2166,6 +2554,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcUsingCenterPtAngleAndRadius()
     {
+      // cref: Construct a Circular Arc - using a center point, angle and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using a center point, angle and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Circular Arc - using a center point, angle and radius
 
       // Construct a circular arc with center point at (0, 0), from angle = 0, 
@@ -2197,6 +2587,9 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcCenterPtRotationAngle()
     {
+      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.GetAxes(System.Double@,System.Double@)
       #region Construct a Circular Arc - using a center point and rotation angle
 
       // Construct an elliptic arc centered at (1,1), startAngle = 0, centralAngle = PI/2, 
@@ -2229,6 +2622,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcCenterPtOrientation()
     {
+      // cref: Construct a Circular Arc - using a center point and orientation;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using a center point and orientation;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Circular Arc - using a center point and orientation
 
       // Construct a circular arc from (2, 1) to (1, 2) 
@@ -2258,6 +2653,9 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcSegmentsRadius()
     {
+      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.QueryFilletRadiusRange(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Coordinate2D)
       #region Construct a Circular Arc - using two segments and radius
 
       // Construct a segment from (100, 100) to (50, 50) and another segment from (100, 100) to (150, 50).
@@ -2294,6 +2692,9 @@ namespace ProSnippetsGeometry
 
     public void ConstructCircle()
     {
+      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
       #region Construct a Circle
 
       // Construct a circle with center at (-1,-1), radius = 2, and oriented clockwise.
@@ -2334,6 +2735,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructEllipse()
     {
+      // cref: Construct an Ellipse;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct an Ellipse;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct an Ellipse
 
       // Construct an ellipse centered at (1, 2) with rotationAngle = -pi/6,  
@@ -2363,6 +2766,17 @@ namespace ProSnippetsGeometry
     {
       EllipticArcSegment arcSegment = null;
 
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.EllipticArcSegment)
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.CenterPoint
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.CentralAngle
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.EndAngle
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.EndPoint
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.IsCircular
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.IsMinor
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.Orientation
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.RotationAngle
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.StartAngle
+      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.StartPoint
       #region Elliptic Arc Builder Properties
 
       // Builder constructors need to run on the MCT.
@@ -2391,6 +2805,21 @@ namespace ProSnippetsGeometry
     {
       EllipticArcSegment arcSegment = null;
 
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.GetAxes(System.Double@,System.Double@)
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.CenterPoint
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.CentralAngle
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.EndAngle
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCircular
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCounterClockwise
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCurve
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsMinor
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.Length
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.MinorMajorRatio
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.RotationAngle
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.SemiMajorAxis
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.SemiMinorAxis
+      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.StartAngle
       #region Elliptic Arc Properties
 
       // retrieve the curve's control points
@@ -2431,6 +2860,17 @@ namespace ProSnippetsGeometry
     public void GeometryBag()
     {
       {
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.IsEqual(ArcGIS.Core.Geometry.GeometryBag)
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.#ctor(ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.AddGeometry(ArcGIS.Core.Geometry.Geometry)
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.InsertGeometry(System.Int32,ArcGIS.Core.Geometry.Geometry)
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.RemoveGeometry(System.Int32)
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.ToGeometry
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.Geometries
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.IsEmpty
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.PartCount
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.PointCount
+        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.CountGeometries
         #region Construct GeometryBag
 
         // Builder constructors need to run on the MCT.
@@ -2491,6 +2931,8 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct GeometryBag - from an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Construct GeometryBag - from an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.CreateGeometryBag(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
         #region Construct GeometryBag - from an enumeration of geometries
 
         // Use a builder convenience method or use a builder constructor.
@@ -2527,6 +2969,8 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Construct GeometryBag - from JSON, Xml;ArcGIS.Core.Geometry.GeometryBagBuilder.FromJson(System.String)
+        // cref: Construct GeometryBag - from JSON, Xml;ArcGIS.Core.Geometry.GeometryBagBuilder.FromXML(System.String)
         #region Construct GeometryBag - from JSON, Xml
 
         const string jsonString = "{\"geometries\":[{\"x\":1,\"y\":2},{\"rings\":[[[0,0],[0,4],[3,4],[3,0],[0,0]]]}],\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}";
@@ -2541,6 +2985,9 @@ namespace ProSnippetsGeometry
 
     public void GeometryBagInsert()
     {
+      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.AddGeometries(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.InsertGeometries(System.Int32,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.CountGeometries
       #region Construct GeometryBag - adding or inserting an enumeration of geometries
 
       MapPoint point = MapPointBuilder.CreateMapPoint(10, 20);
@@ -2582,6 +3029,16 @@ namespace ProSnippetsGeometry
 
     public void Multipatch()
     {
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
       #region Construct Multipatch via Extrusion of Polygon or Polyline
 
       // build a polygon
@@ -2620,6 +3077,21 @@ namespace ProSnippetsGeometry
       Multipatch multiPatch = null;
       int patchIndex = 0;
 
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchPointCount(System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchPriority(System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchStartPointIndex(System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinate(System.Int32,System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinates(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureVertexCount(System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchType(System.Int32)
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.HasMaterials
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.HasTextures
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.IsEmpty
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.MaterialCount
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.PartCount
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.PointCount
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.Points
+      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.TextureVertexCount
       #region Multipatch Properties
 
       // standard geometry properties
@@ -2714,6 +3186,12 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToBinaryXML
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToEsriShape
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromBinaryXML(System.String)
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromXML(System.String)
+      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToEsriShape(System.Byte[]@)
       #region Construct Multipatch
 
       // export to binary xml
@@ -2735,6 +3213,23 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.#ctor
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.MakePatch(ArcGIS.Core.Geometry.esriPatchType)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithMaterial(ArcGIS.Core.Geometry.Material)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.ToGeometry
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.Color
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.CullBackFace
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.EdgeColor
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.Shininess
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipatch)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchBuilderEx)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.SpatialReference)
       #region Construct Multipatch via MultipatchBuilderEx
 
       var coords_face1 = new List<Coordinate3D>()
@@ -2868,6 +3363,18 @@ namespace ProSnippetsGeometry
       MapPoint newPoint = null;
       var coords = new List<Coordinate3D>();
 
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipatch)
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPatchPointCount(System.Int32)
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPoint(System.Int32,System.Int32)
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithTexture(ArcGIS.Core.Geometry.TextureResource)
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.SetPoint(System.Int32,System.Int32,ArcGIS.Core.Geometry.MapPoint)
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.SynchronizeAttributeAwareness
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasID
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasM
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasNormals
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasZ
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.IsEmpty
+      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.Patches
       #region Construct Multipatch from another Multipatch
 
       // create the multipatchBuilderEx object
@@ -2916,7 +3423,7 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      #region Construct Multipoint from a 3D model file
+      #region Construct Multipatch from a 3D model file
 
       try
       {
@@ -2932,11 +3439,63 @@ namespace ProSnippetsGeometry
         // File extension is unsupported or cannot read the file
       }
       #endregion
+
+      #region Construct 3D special Multipatch shapes
+
+      var sr = MapView.Active.Map.SpatialReference;
+
+      var extent = MapView.Active.Extent;
+      var center = extent.Center;
+      var centerZ = MapPointBuilderEx.CreateMapPoint(center.X, center.Y, 500, sr);
+
+      // cube
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Cube, centerZ, 200, sr);
+      // tetrahedron
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Tetrahedron, centerZ, 200, sr);
+      // diamond
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Diamond, centerZ, 200, sr);
+      // hexagon
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Hexagon, centerZ, 200, sr);
+
+      // sphere frame
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.SphereFrame, centerZ, 200, 0.8, sr);
+      // sphere
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Sphere, centerZ, 200, 0.8, sr);
+      // cylinder
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Cylinder, centerZ, 200, 0.8, sr);
+      // cone
+      multipatch = ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(MultipatchConstructType.Cone, centerZ, 200, 0.8, sr);
+
+
+      // use the builder to add materials or textures
+      //   - create a cone with a material
+      builder = new MultipatchBuilderEx(MultipatchConstructType.Cone, centerZ, 200, 0.8, sr);
+
+      BasicMaterial faceMaterial = new BasicMaterial();
+      faceMaterial.Color = System.Windows.Media.Color.FromRgb(255, 0, 0);
+      faceMaterial.Shininess = 150;
+      faceMaterial.TransparencyPercent = 50;
+      faceMaterial.EdgeWidth = 20;
+
+      foreach (var patch in builder.Patches)
+        patch.Material = faceMaterial;
+
+      multipatch = builder.ToGeometry() as Multipatch;
+      #endregion
+
     }
 
     public void Material()
     {
       {
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.#ctor
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.Color
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.CullBackFace
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.EdgeColor
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.Shininess
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
+        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
         #region Create BasicMaterial
 
         // Create BasicMaterial with default values
@@ -2959,6 +3518,12 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.#ctor(System.Byte[])
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.BasicMaterial.TextureResource
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.BytesPerPixel
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.ColumnCount
+        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.RowCount
         #region Create BasicMaterial with JPEG texture
 
         // read the jpeg into a buffer
@@ -2984,6 +3549,11 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
+        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.#ctor(System.Byte[],System.Int32,System.Int32,System.Byte)
+        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.BytesPerPixel
+        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.ColumnCount
+        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.RowCount
         #region Create BasicMaterial with Uncompressed texture
 
         UncompressedTexture uncompressedTexture1 = new UncompressedTexture(new byte[10 * 12 * 3], 10, 12, 3);
@@ -3002,6 +3572,10 @@ namespace ProSnippetsGeometry
       }
     }
 
+    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTexture(System.Int32)
+    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureCompressionType(System.Int32)
+    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.IsMaterialTextured(System.Int32)
+    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.esriTextureCompressionType
     #region Get the texture image of a multipatch 
 
     // <summary>
@@ -3027,6 +3601,8 @@ namespace ProSnippetsGeometry
 
     #endregion
 
+    // cref: Get the normal coordinate of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchNormal(System.Int32,System.Int32)
+    // cref: Get the normal coordinate of a multipatch;ArcGIS.Core.Geometry.Multipatch.HasNormals
     #region Get the normal coordinate of a multipatch 
 
     // <summary>
@@ -3053,6 +3629,7 @@ namespace ProSnippetsGeometry
 
     #endregion
 
+    // cref: Get the normals of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchNormals(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
     #region Get the normals of a multipatch 
 
     // <summary>
@@ -3082,6 +3659,13 @@ namespace ProSnippetsGeometry
 
     #endregion
 
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialColor(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureBytesPerPixel(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureColumnCount(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureRowCount(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTransparencyPercent(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchMaterialIndex(System.Int32)
+    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.IsMaterialCullBackface(System.Int32)
     #region Get the material properties of a multipatch 
 
     /// <summary>
@@ -3316,6 +3900,10 @@ namespace ProSnippetsGeometry
     public void ImportExport()
     {
       {
+        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WKTExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WKTImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WKTExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WKTImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
         #region Import and Export Geometries to well-known Text
 
         // create a point with z, m
@@ -3375,6 +3963,14 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WKBImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WKBImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
         #region Import and Export Geometries to well-known Binary
 
         // create a polyline
@@ -3411,6 +4007,17 @@ namespace ProSnippetsGeometry
 
     public void ImportExportEsriShape()
     {
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.Envelope.ToEsriShape
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.EnvelopeBuilder.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.Envelope.ToEsriShape(System.Byte[]@)
       #region Import and Export Geometries to EsriShape
 
       // create an envelope
@@ -3459,6 +4066,15 @@ namespace ProSnippetsGeometry
 
     public void ImportExportJson()
     {
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.Geometry.ToJson(System.Boolean)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.GeometryEngine.ExportToJSON(ArcGIS.Core.Geometry.JSONExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.GeometryEngine.ImportFromJSON(ArcGIS.Core.Geometry.JSONImportFlags,System.String)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.IGeometryEngine.ExportToJSON(ArcGIS.Core.Geometry.JSONExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromJSON(ArcGIS.Core.Geometry.JSONImportFlags,System.String)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.MapPointBuilder.FromJson(System.String)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.MultipointBuilder.FromJson(System.String)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.PolygonBuilder.FromJson(System.String)
+      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.PolylineBuilder.FromJson(System.String)
       #region Import and Export Geometries to JSON
 
       // MapPoint
@@ -3594,6 +4210,10 @@ namespace ProSnippetsGeometry
 
     public void ImportExportXML()
     {
+      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.EnvelopeBuilder.FromXML(System.String)
+      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.Geometry.ToXML
+      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.MapPointBuilder.FromXML(System.String)
+      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.MultipointBuilder.FromXML(System.String)
       #region Import and Export Geometries to XML
 
       MapPoint minPoint = MapPointBuilder.CreateMapPoint(1, 1, 1, 1, 3);
@@ -3644,6 +4264,13 @@ namespace ProSnippetsGeometry
 
     public void Create_GeographicTransformation()
     {
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Create(System.Int32,System.Boolean)
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Create(System.String,System.Boolean)
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.GetInverse
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.IsForward
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Name
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Wkid
+      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Wkt
       #region Create Geographic Transformation
 
       // create from wkid
@@ -3664,6 +4291,15 @@ namespace ProSnippetsGeometry
 
     public void Create_CompositeGeographicTransformation()
     {
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.GeographicTransformation})
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Int32,System.Boolean)
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.String,System.Boolean)
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.GetInverse
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.ToJson
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Count
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Item(System.Int32)
+      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Transformations
       #region Create Composite Geographic Transformation
 
       // Create singleton from wkid
@@ -3698,6 +4334,9 @@ namespace ProSnippetsGeometry
 
     public void Create_ProjectionTransformation()
     {
+      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.GeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
+      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.IGeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
+      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.ProjectionTransformation.Create(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope)
       #region Create Projection Transformation
 
       // methods need to be on the MCT
@@ -3729,6 +4368,13 @@ namespace ProSnippetsGeometry
 
     public void Create_HVDatumTransformation()
     {
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.Int32,System.Boolean)
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.String,System.Boolean)
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.GetInverse
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.IsForward
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Name
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Wkid
+      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Wkt
       #region Create HV Datum Transformation
 
       // Create from wkid
@@ -3750,6 +4396,17 @@ namespace ProSnippetsGeometry
 
     public void Create_CompositeHVDatumTransformation()
     {
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.HVDatumTransformation})
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Int32,System.Boolean)
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.String,System.Boolean)
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.CreateFromXML(System.String)
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.GetInverse
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToJson
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToXML
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Count
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Item(System.Int32)
+      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Transformations
       #region Create Composite HV Datum Transformation
 
       HVDatumTransformation hv1 = HVDatumTransformation.Create(108034);
@@ -3780,6 +4437,7 @@ namespace ProSnippetsGeometry
 
     public void Determine_Transformations()
     {
+      // cref: Determine Transformations;ArcGIS.Core.Geometry.ProjectionTransformation.FindTransformations(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope,System.Int32,System.Boolean)
       #region Determine Transformations
 
       // methods need to run on the MCT
@@ -3914,6 +4572,11 @@ namespace ProSnippetsGeometry
 
     public void GeoCoordinateStringConversion()
     {
+      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.MapPoint.ToGeoCoordinateString(ArcGIS.Core.Geometry.ToGeoCoordinateParameter)
+      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.MapPointBuilder.FromGeoCoordinateString(System.String,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.FromGeoCoordinateMode)
+      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType)
+      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode)
+      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode,System.Int32,System.Boolean,System.Boolean)
       #region MapPoint - GeoCoordinateString Conversion
 
       SpatialReference sr = SpatialReferences.WGS84;
@@ -3975,6 +4638,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: AngularUnit
       #endregion
 
+      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
+      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.ConvertToRadians(System.Double)
+      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.Degrees
       #region AngularUnit - Convert between degrees and radians
 
       // convert 45 degrees to radians
@@ -3985,6 +4651,13 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.Int32)
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.ConversionFactor
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.Name
       #region AngularUnit - Create an AngularUnit with a factory code
 
       try
@@ -4011,6 +4684,12 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String)
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String,System.Double)
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
+      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.Unit.FactoryCode
       #region AngularUnit - Create a Custom AngularUnit
 
       // custom unit - 3 radians per unit
@@ -4042,6 +4721,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: LinearUnit
       #endregion
 
+      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
+      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
+      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.Feet
       #region LinearUnit - Convert between feet and meters
       // convert 10 feet to meters
       double metres = LinearUnit.Feet.ConvertToMeters(10);
@@ -4050,6 +4732,10 @@ namespace ProSnippetsGeometry
       double feet = LinearUnit.Feet.ConvertFromMeters(20.0);
       #endregion
 
+      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
+      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.Centimeters
+      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.Millimeters
       #region LinearUnit - Convert between centimeters and millimeters
 
       // convert 11 centimeters to millimeters
@@ -4063,6 +4749,12 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.Int32)
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.MetersPerUnit
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.ConversionFactor
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.Name
       #region LinearUnit - Create a LinearUnit with a factory code
 
       try
@@ -4089,6 +4781,11 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String)
+      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String,System.Double)
+      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.Unit.ToString
+      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.Unit.FactoryCode
       #region LinearUnit - Create a Custom LinearUnit
 
       // create a custom linear unit - there are 0.33 meters per myLinearUnit
@@ -4116,6 +4813,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: AreaUnit
       #endregion
 
+      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.ConvertFromSquareMeters(System.Double)
+      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.ConvertToSquareMeters(System.Double)
+      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.SquareFeet
       #region AreaUnit - Convert between square feet and square meters
 
       // convert 700 square meters to square feet
@@ -4125,6 +4825,8 @@ namespace ProSnippetsGeometry
       double sqMeters = AreaUnit.SquareFeet.ConvertToSquareMeters(1000);
       #endregion
 
+      // cref: AreaUnit - Convert between hectares and acres;ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: AreaUnit - Convert between hectares and acres;ArcGIS.Core.Geometry.AreaUnit.Hectares
       #region AreaUnit - Convert between hectares and acres
 
       // convert 2 hectares to acres
@@ -4132,11 +4834,14 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: AreaUnit - Convert between hectares and square miles;ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: AreaUnit - Convert between hectares and square miles;ArcGIS.Core.Geometry.AreaUnit.Hectares
       #region AreaUnit - Convert between hectares and square miles
       // convert 300 hectares to square miles
       double sqMiles = AreaUnit.Hectares.ConvertTo(300, AreaUnit.SquareMiles);
       #endregion
 
+      // cref: AreaUnit - How many Square meters in various units;ArcGIS.Core.Geometry.AreaUnit.SquareMetersPerUnit
       #region AreaUnit - How many Square meters in various units
 
       double sqMetersPerUnit = AreaUnit.Acres.SquareMetersPerUnit;
@@ -4148,6 +4853,9 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.Int32)
+      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String)
+      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String,System.Double)
       #region AreaUnit - Create an AreaUnit 
 
       try

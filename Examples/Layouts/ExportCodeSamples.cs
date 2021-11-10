@@ -74,6 +74,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportBMP_Layout;ArcGIS.Desktop.Mapping.BMPFormat
   #region ExportBMP_Layout
   //This example demonstrates how to export a layout to BMP.
 
@@ -192,6 +193,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportEMF_Layout;ArcGIS.Desktop.Mapping.EMFFormat
   #region ExportEMF_Layout
   //This example demonstrates how to export a layout to EMF.
 
@@ -308,6 +310,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportEPS_Layout;ArcGIS.Desktop.Mapping.EPSFormat
   #region ExportEPS_Layout
   //This example demonstrates how to export a layout to EPS.
 
@@ -424,6 +427,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportGIF_Layout;ArcGIS.Desktop.Mapping.GIFFormat
   #region ExportGIF_Layout
   //This example demonstrates how to export a layout to GIF.
 
@@ -542,6 +546,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportJPEG_Layout;ArcGIS.Desktop.Mapping.JPEGFormat
   #region ExportJPEG_Layout
   //This example demonstrates how to export a layout to JPEG.
 
@@ -660,6 +665,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportPDF_Layout;ArcGIS.Desktop.Mapping.PDFFormat
   #region ExportPDF_Layout
   //This example demonstrates how to export a layout to PDF.
 
@@ -777,6 +783,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportPNG_Layout;ArcGIS.Desktop.Mapping.PNGFormat
   #region ExportPNG_Layout
   //This example demonstrates how to export a layout to PNG.
 
@@ -893,6 +900,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportSVG_Layout;ArcGIS.Desktop.Mapping.SVGFormat
   #region ExportSVG_Layout
   //This example demonstrates how to export a layout to SVG.
 
@@ -1009,6 +1017,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportTGA_Layout;ArcGIS.Desktop.Mapping.TGAFormat
   #region ExportTGA_Layout
   //This example demonstrates how to export a layout to TGA.
 
@@ -1125,6 +1134,7 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ExportTIFF_Layout;ArcGIS.Desktop.Mapping.TIFFFormat
   #region ExportTIFF_Layout
   //This example demonstrates how to export a layout to TIFF.
 

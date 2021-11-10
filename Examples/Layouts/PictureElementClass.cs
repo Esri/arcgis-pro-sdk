@@ -26,6 +26,7 @@ using ArcGIS.Desktop.Framework.Contracts;
 
 namespace Layout_HelpExamples
 {
+  // cref: PictureElementExample;ArcGIS.Desktop.Layouts.PictureElement
   #region PictureElementExample
   ///This example references a PictureElement on a layout and changes the picture by setting a path to a file on disk using the
 

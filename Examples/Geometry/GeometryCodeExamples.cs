@@ -46,6 +46,7 @@ namespace ForGeometryAPI {
 
             #endregion Example1
 			
+			      // cref: Example2;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate3D},ArcGIS.Core.Geometry.SpatialReference)
 			      #region Example2
 
             // methods need to run on the MCT

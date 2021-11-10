@@ -27,6 +27,14 @@
     <insertAccelerator refID="esri_core_exportContext" flags="Ctrl" key="E" />
     <insertAccelerator refID="esri_core_printContext" flags="Ctrl" key="P" />
   </accelerators>
+  <shortcutTables>
+    <insertShortcutTable id="CatalogView" category="Catalog" refID="esri_core_resourcesPane">
+      <shortcut refID="esri_core_LivingAtlas" key="L" flags="Ctrl+Alt+Shift"/>
+      <shortcut refID="esri_core_Folders" key="F"/>
+      <shortcut refID="esri_core_Maps" key="M"/>
+      
+    </insertShortcutTable>
+  </shortcutTables>
   
   <DockPaneSets>
     
@@ -153,9 +161,9 @@
 
   <ribbonToolbar>
     <control refID="esri_core_CommandSearchControl" size="middle"/>
+    <control refID="esri_activeTool" size="middle"/>
     <control refID="esri_core_signOnControl" size="middle"/>
     <control refID="esri_core_notificationControl" size="small"/>
-    <!--<control refID="esri_core_notificationButton" size="small"/>-->
   </ribbonToolbar>
   
   <quickAccessToolbar>
@@ -168,7 +176,6 @@
     <control refID="esri_mapping_exploreTool" size ="small" isChecked="false"/>
     <control refID="esri_mapping_rectangleZoom" size ="small" isChecked="false"/>
     <control refID="esri_mapping_showLocateDockPane" size ="small" isChecked="false"/>
-    <!--<control refID="esri_core_notificationButton" size="small"/>-->
   </quickAccessToolbar>
 
   <modules>
@@ -240,11 +247,14 @@
           <group refID="esri_mapping_profileViewGroup" insert="after"/>
           <group refID="esri_mapping_navigation" insert="after"/>
           <group refID="esri_layouts_thumbnailGroup"/>
+          <group refID="esri_mapping_thumbnailGroup"/>
           
         </tab>
-        <tab id="esri_core_previewTab" caption="Preview" condition="esri_core_previewActiveCondition" tabGroupID="esri_core_previewTabGroup" keytip="P" insert="after">
+        
+        <tab id="esri_core_previewTab" caption="Preview" condition="esri_core_previewActiveCondition" tabGroupID="esri_core_previewTabGroup" keytip="W" insert="after">
           <group refID="esri_core_previewNavigateGroup" />
           <group refID="esri_core_previewPreviewGroup" />
+          <group refID="esri_core_previewThumbnail" />
         </tab>
       </tabs>
 
@@ -321,7 +331,10 @@
 
         <group id="esri_core_previewPreviewGroup" caption="Preview">
           <button refID="esri_core_previewShowBasemap" size="middle" />
-          <button refID="esri_core_previewCaptureThumbnail" size="middle" />
+        </group>
+
+        <group id="esri_core_previewThumbnail" caption="Thumbnail">
+          <button refID="esri_core_previewCaptureThumbnail" size="large" />
         </group>
       </groups>
 
@@ -341,6 +354,16 @@
     </palettes>
 
       <controls>
+        <button id="esri_core_LivingAtlas" className="LivingAtlasCmd" caption="Living Atlas">
+          <tooltip>Set the current location to the Living Atlas</tooltip>
+        </button>
+        <button id="esri_core_Folders" className="FoldersCmd" caption="Folders">
+          <tooltip>Set the current location to Folder Connections</tooltip>
+        </button>
+        <button id="esri_core_Maps" className="MapsCmd" caption="Maps">
+          <tooltip>Set the current location to the Maps container</tooltip>
+        </button>
+        
         <button id="esri_itemInfoRefreshButton" className="RefreshCmd" loadOnClick="false"
           caption="Refresh" extendedCaption="Refresh the selected container in the Project pane; on context menu"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png" helpContextID="">
@@ -551,7 +574,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
 
         <!--Dockpane control-->
-        <dynamicMenu id="esri_dockPaneSetDynamicMenu" className="ArcGIS.Desktop.Framework.DockPaneSetChooser" assembly="ArcGIS.Desktop.Framework.dll" caption="Reset Panes" extendedCaption="Reset application panes to a predefined set; on View tab and quick access toolbar" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes16.png" keytip="RP">
+        <dynamicMenu id="esri_dockPaneSetDynamicMenu" className="ArcGIS.Desktop.Framework.DockPaneSetChooser" assembly="ArcGIS.Desktop.Framework.dll" caption="Reset Panes" extendedCaption="Reset application panes to a predefined set; on View tab and quick access toolbar" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes16.png" keytip="RP" hidden="false">
           <tooltip heading="Reset Panes">
             Reset application panes to a predefined set.
             <disabledText></disabledText>
@@ -570,7 +593,37 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </button>
 
+        <button id="esri_core_rename_alias" caption="Change Alias" keytip="CA" extendedCaption="Change the selected item's alias"
+                className="RenameAliasCmd"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil32.png"
+                loadOnClick="false">
+          <tooltip heading="Change Alias">
+            Change the selected item's alias.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_remove_alias" caption="Remove Alias" keytip="RA" extendedCaption="Remove the selected item's alias"
+                className="RemoveAliasCmd"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack32.png"
+                loadOnClick="false">
+          <tooltip heading="Remove Alias">
+            Remove the selected item's alias.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <!--ribbonToolbar controls-->
+        <customControl id="esri_activeTool" isDropDown="false" className="ArcGIS.Desktop.Framework.Controls.ActiveToolControlViewModel"
+                       assembly="ArcGIS.Desktop.Framework.dll"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png"
+                       loadOnClick="false">
+          <content className="ArcGIS.Desktop.Framework.Controls.ActiveTool" assembly="ArcGIS.Desktop.Framework.dll"/>
+          <tooltip heading="Active Tool">
+            The current active tool. Click to see the active short-cuts.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
+        
         <customControl id="esri_core_signOnControl" staysOpenOnClick="true" isDropDown="true" caption="Not Signed In" extendedCaption="Sign in or out of your organization; on ribbon" className="SignOnUserControlViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="L">
           <content className="SignOnUserControlView"/>
           <tooltip heading="Sign-in Status">
@@ -586,7 +639,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
           </tooltip>
         </customControl>
 
-        <customControl id="esri_core_CommandSearchControl" caption="CommandSearch" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel" helpContextID="120002723"
+        <customControl id="esri_core_CommandSearchControl" caption="Command Search" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel" helpContextID="120002723"
                   assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="H">
         <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
         <tooltip heading="Command Search">
@@ -608,9 +661,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
 
         <button id="esri_core_syncPortalItemButton" className="esri_core_module:SyncPortalItem" caption="Update" extendedCaption="Delete the copy of the item in the project and re-add the original portal item; on map context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOnlineSync16.png" loadOnClick="false">
           <tooltip heading="Update Map or Scene">
-            Update this map or scene with changes made to the source web map or web scene on the active portal.
-
-The copy of the portal item in the project is deleted, and the current version of the original portal item is added to the project. For example, update the copy of the web map in your project so you have the latest changes to its symbology.<disabledText></disabledText>
+            Delete this map or scene and replace it with the current version of its linked portal item. To preserve changes you have made in ArcGIS Pro, make a copy of the map or scene, or save it as a map file, before you update.
+            <disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -693,14 +745,14 @@ Show information such as an item's thumbnail and tags as well as its location in
             Go to the next extent.<disabledText></disabledText>
           </tooltip>
         </button>
-        <checkBox id="esri_core_previewShowBasemap" condition="esri_core_previewShowBasemapCondition"
+        <checkBox id="esri_core_previewShowBasemap" condition="esri_core_previewShowBasemapCondition" keytip="SB"
                   caption="Show Basemap" extendedCaption="" className="CorePreviewItemShowBasemapCheckBox" loadOnClick="false">
           <tooltip heading="">
             Toggles visibility of the basemap in preview.<disabledText></disabledText>
           </tooltip>
         </checkBox>
-        <button id="esri_core_previewCaptureThumbnail" caption="Create Thumbnail" className="CorePreviewItemCaptureThumbnail"
-                condition="esri_core_previewCaptureThumbnail_condition"
+        <button id="esri_core_previewCaptureThumbnail" caption="Create" className="CorePreviewItemCaptureThumbnail"
+                condition="esri_core_previewCaptureThumbnail_condition" keytip="TC"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png" >
           <tooltip heading="">
@@ -769,7 +821,7 @@ Show information such as an item's thumbnail and tags as well as its location in
           </tooltip>
         </button>
 
-        <button id="esri_core_sortDate" caption="Date" keytip="D" className="SortDateCmd"
+        <button id="esri_core_sortDate" caption="Date Modified" keytip="D" className="SortDateCmd"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
           <tooltip heading="">Sort the contents list by date. Items are initially sorted in from newest to oldest. When sorted by date a second time, items are arranged from oldest to newest.
@@ -781,6 +833,14 @@ Show information such as an item's thumbnail and tags as well as its location in
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
           <tooltip heading="">Sort the contents list alphabetically by name. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_sortAlias" caption="Alias" keytip="A" className="SortAliasCmd"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+          <tooltip heading="">Sort the contents list alphabetically by alias. Items are initially sorted in ascending order. When sorted by alias a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
@@ -915,9 +975,55 @@ Show information such as an item's thumbnail and tags as well as its location in
       </subgroups>
 
       <menus>
+        <menu id="esri_core_NewMaps" caption="New Map" keytip="NM"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapNew16.png">
+          <tooltip heading="New Map options"/>
+          <button refID="esri_mapping_newMapButton"/>
+          <button refID="esri_mapping_newSceneButton"/>
+          <button refID="esri_mapping_newLocalSceneButton"/>
+          <button refID="esri_mapping_newStereoMapButton"/>
+          <button refID="esri_mapping_newBasemapButton"/>
+        </menu>
+        <menu id="esri_core_NewDatabases" caption="New Database" keytip="ND"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png">
+          <tooltip heading="New Database options"/>
+          <button refID="esri_geodatabase_newGeoDatabaseButton"/>
+          <button refID="esri_geodatabase_newMobileGeoDatabaseButton"/>
+          <button refID="esri_geodatabase_databaseConnectionButton"/>
+          <button refID="esri_geodatabase_newOLEDBConnectionButton"/>
+        </menu>
+        <menu id="esri_core_NewToolboxes" caption="New Toolbox" keytip="NT"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew16.png">
+          <tooltip heading="New Toolbox options"/>
+          <button refID="esri_geoprocessing_newToolboxButton_atbx"/>
+          <button refID="esri_geoprocessing_newToolboxButton"/>
+          <button refID="esri_geoprocessing_newPythonToolboxButton"/>
+        </menu>
+        <menu id="esri_coreNewServer" caption="New Server" keytip="NS"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerArcGISNew16.png">
+          <tooltip heading="New Server options"/>
+          <button refID="esri_mapping_AGSConnectionButton"/>
+          <button refID="esri_mapping_OGCAPIConnectionButton"/>
+          <button refID="esri_mapping_WCSConnectionButton"/>
+          <button refID="esri_mapping_WFSConnectionButton"/>
+          <button refID="esri_mapping_WMSConnectionButton"/>
+          <button refID="esri_mapping_WMTSConnectionButton"/>
+        </menu>
+        
         <menu id="esri_BrowseDialog_SingleItem" caption="Browse Dialog Single Rename Item">
           <button refID="esri_core_rename"/>
+          <button refID="esri_core_editCopyPaths"/>          
+        </menu>
+
+        <menu id="esri_BrowseDialog_SingleItemWithAlias" caption="Browse Dialog Single Item Rename And Alias">
+          <button refID="esri_core_rename"/>
+          <button refID="AliasProjectItemMenu"/>
           <button refID="esri_core_editCopyPaths"/>
+        </menu>
+
+        <menu id="esri_BrowseDialog_SingleItemAliasOnly" caption="Browse Dialog Single Item Alias">
+          <button refID="esri_core_rename_alias"/>
+          <button refID="esri_core_remove_alias" />
         </menu>
 
         <menu id="esri_BrowseDialog_FolderGeneral" caption="Folder General Item" extendedCaption="Context menu for folders within a folder connection">
@@ -943,28 +1049,7 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_projectItemAddExistingACSConnection" />
           <button refID="esri_projectItemAddNewACSConnection" />
           <button refID="esri_projectItemAddNewBIMConnection" separator="true"/>
-          <!--<button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_editPasteButton"/>-->
-          <!-- TODO: cut will come later
-          <button refID="esri_core_editCutButton"/>-->
-        </menu>
-
-        <menu id="esri_projectDefaultContextMenu_withKnowledgeGraph" caption="-">
-          <button refID="esri_mapping_newMapButton" />
-          <button refID="esri_mapping_newSceneButton" />
-          <button refID="esri_mapping_newLocalSceneButton"/>
-          <button refID="esri_mapping_newStereoMapButton" />
-          <button refID="esri_mapping_newBasemapButton" />
-
-          <button refID="esri_folderConnectionAddButton" separator="true"/>
-          <button refID="esri_geodatabase_existingGeoDatabaseButton" />
-          <button refID="esri_geodatabase_databaseConnectionButton" />
-          <button refID="esri_projectItemAddAGSConnection" />
-
-          <button refID="esri_projectItemAddExistingACSConnection" />
-          <button refID="esri_projectItemAddNewACSConnection"/>
-          <button refID="esri_projectItemAddNewBIMConnection"/>
-
+          
           <!--<button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editPasteButton"/>-->
           <!-- TODO: cut will come later
@@ -1005,13 +1090,19 @@ Show information such as an item's thumbnail and tags as well as its location in
   
   
   <propertySheets>
-    <insertSheet id="esri_core_optionsPropertySheet" caption="Options" resizable="true" pageHeight="565" pageWidth="792" hasGroups="true">
+    <insertSheet id="esri_core_optionsPropertySheet" caption="Options" resizable="true" pageHeight="565" pageWidth="792" hasGroups="true" hidden="false">
       <page id="esri_core_ProjectOptionsPropertyPage" caption="Current Settings" className="ProjectOptionsViewModel" group="Project">
         <content className="ProjectOptionsView" />
       </page>
       <page id="esri_core_ApplicationOptionsPropertyPage" caption="General" className="ApplicationOptionsViewModel" group="Application">
         <content className="ApplicationOptionsView" />
       </page>
+
+      <page id="esri_core_CatalogBrowsingOptionsPropertyPage" caption="Catalog Browsing" className="CatalogBrowsingOptionsViewModel" group="Application">
+        <content className="CatalogBrowsingOptionsView"/>
+      </page>
+      
+      
 <!--      <page id="esri_core_ApplicationNotificationsPropertyPage" caption="Notifications" assembly="ArcGIS.Desktop.Framework.dll"
             className="ArcGIS.Desktop.Framework.ApplicationNotificationsViewModel" group="Application" insert="after" placeWith="esri_core_ApplicationOptionsPropertyPage">
         <content assembly="ArcGIS.Desktop.Framework.dll" className="ArcGIS.Desktop.Framework.ApplicationNotificationsView"/>
@@ -1242,6 +1333,5 @@ Show information such as an item's thumbnail and tags as well as its location in
     <control refID="esri_core_saveProjectButton" size="small"/>
     <control refID="esri_core_undoSplitButton" size="small"/>
     <control refID="esri_core_redoSplitButton" size="small"/>
-    <!--<control refID="esri_core_notificationButton" size="small"/>-->
   </quickAccessToolbar>
 </ArcGIS>

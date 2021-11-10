@@ -27,6 +27,7 @@ namespace Carto_SDK_Examples
   {
     public async void Examples()
     {
+      // cref: Get symbol from SymbolStyleItem;ArcGIS.Desktop.Mapping.SymbolStyleItem.Symbol
       #region Get symbol from SymbolStyleItem
       SymbolStyleItem symbolItem = null;
       CIMSymbol symbol = await QueuedTask.Run<CIMSymbol>(() =>
@@ -35,6 +36,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get color from ColorStyleItem;ArcGIS.Desktop.Mapping.ColorStyleItem.Color
       #region Get color from ColorStyleItem
       ColorStyleItem colorItem = null;
       CIMColor color = await QueuedTask.Run<CIMColor>(() =>
@@ -43,6 +45,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get color ramp from ColorRampStyleItem;ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp
       #region Get color ramp from ColorRampStyleItem
       ColorRampStyleItem colorRampItem = null;
       CIMColorRamp colorRamp = await QueuedTask.Run<CIMColorRamp>(() =>
@@ -51,6 +54,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get north arrow from NorthArrowStyleItem;ArcGIS.Desktop.Mapping.NorthArrowStyleItem.NorthArrow
       #region Get north arrow from NorthArrowStyleItem
       NorthArrowStyleItem northArrowItem = null;
       CIMNorthArrow northArrow = await QueuedTask.Run<CIMNorthArrow>(() =>
@@ -59,6 +63,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get scale bar from ScaleBarStyleItem;ArcGIS.Desktop.Mapping.ScaleBarStyleItem.ScaleBar
       #region Get scale bar from ScaleBarStyleItem
       ScaleBarStyleItem scaleBarItem = null;
       CIMScaleBar scaleBar = await QueuedTask.Run<CIMScaleBar>(() =>
@@ -67,6 +72,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get label placement from LabelPlacementStyleItem;ArcGIS.Desktop.Mapping.LabelPlacementStyleItem.LabelPlacement
       #region Get label placement from LabelPlacementStyleItem
       LabelPlacementStyleItem labelPlacementItem = null;
       CIMLabelPlacementProperties labelPlacement = await QueuedTask.Run<CIMLabelPlacementProperties>(() =>
@@ -75,6 +81,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get grid from GridStyleItem;ArcGIS.Desktop.Mapping.GridStyleItem.Grid
       #region Get grid from GridStyleItem
       GridStyleItem gridItem = null;
       CIMMapGrid grid = await QueuedTask.Run<CIMMapGrid>(() =>
@@ -83,14 +90,25 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get legend from LegendStyleItem;ArcGIS.Desktop.Mapping.LegendStyleItem.Legend
       #region Get legend from LegendStyleItem
-      LegendStyleItem legendItem = null;
+      LegendStyleItem legendStyleItem = null;
       CIMLegend legend = await QueuedTask.Run<CIMLegend>(() =>
       {
-        return legendItem.Legend;
+        return legendStyleItem.Legend;
       });
       #endregion
 
+      // cref: Get legend item from LegendItemStyleItem;ArcGIS.Desktop.Mapping.LegendItemStyleItem.LegendItem
+      #region Get legend item from LegendItemStyleItem
+      LegendItemStyleItem legendItemStyleItem = null;
+      CIMLegendItem legendItem = await QueuedTask.Run<CIMLegendItem>(() =>
+      {
+        return legendItemStyleItem.LegendItem;
+      });
+      #endregion
+
+      // cref: Get table frame from TableFrameStyleItem;ArcGIS.Desktop.Mapping.TableFrameStyleItem.TableFrame
       #region Get table frame from TableFrameStyleItem
       TableFrameStyleItem tableFrameItem = null;
       CIMTableFrame tableFrame = await QueuedTask.Run<CIMTableFrame>(() =>
@@ -99,6 +117,16 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get table frame field from TableFrameFieldStyleItem;ArcGIS.Desktop.Mapping.TableFrameFieldStyleItem.TableFrameField
+      #region Get table frame field from TableFrameFieldStyleItem
+      TableFrameFieldStyleItem tableFrameFieldItem = null;
+      CIMTableFrameField tableFrameField = await QueuedTask.Run<CIMTableFrameField>(() =>
+      {
+        return tableFrameFieldItem.TableFrameField;
+      });
+      #endregion
+
+      // cref: Get map surround from MapSurroundStyleItem;ArcGIS.Desktop.Mapping.MapSurroundStyleItem.MapSurround
       #region Get map surround from MapSurroundStyleItem
       MapSurroundStyleItem mapSurroundItem = null;
       CIMMapSurround mapSurround = await QueuedTask.Run<CIMMapSurround>(() =>
@@ -107,6 +135,7 @@ namespace Carto_SDK_Examples
       });
       #endregion
 
+      // cref: Get dimension style from DimensionStyleStyleItem;ArcGIS.Desktop.Mapping.DimensionStyleStyleItem.DimensionStyle
       #region Get dimension style from DimensionStyleStyleItem
       DimensionStyleStyleItem dimensionStyleStyleItem = null;
       CIMDimensionStyle dimensionStyle = await QueuedTask.Run<CIMDimensionStyle>(() =>
@@ -118,6 +147,7 @@ namespace Carto_SDK_Examples
     }
 
 
+    // cref: GetSetObject;ArcGIS.Desktop.Mapping.StyleItem.SetObject(System.Object)
     #region GetSetObject
     //Creates a new style item and sets its properties from an existing style item
     public Task<StyleItem> CreateNewStyleItemAsync(StyleItem existingItem)

@@ -50,6 +50,8 @@ namespace CartoFeatures.ProSnippet
 
     public async void CreateNewStyle()
     {
+      // cref: How to create a new style;ArcGIS.Desktop.Mapping.StyleHelper.CreateMobileStyle(ArcGIS.Desktop.Core.Project,System.String)
+      // cref: How to create a new style;ArcGIS.Desktop.Mapping.StyleHelper.CreateStyle(ArcGIS.Desktop.Core.Project,System.String)
       #region How to create a new style
 
       //Full path for the new style file (.stylx) to be created
@@ -60,6 +62,7 @@ namespace CartoFeatures.ProSnippet
 
     public async void AddStyleToProject()
     {
+      // cref: How to add a style to project;ArcGIS.Desktop.Mapping.StyleHelper.AddStyle(ArcGIS.Desktop.Core.Project,System.String)
       #region How to add a style to project
 
       //For ArcGIS Pro system styles, just pass in the name of the style to add to the project
@@ -74,6 +77,7 @@ namespace CartoFeatures.ProSnippet
 
     public async void RemoveStyleFromProject()
     {
+      // cref: How to remove a style from project;ArcGIS.Desktop.Mapping.StyleHelper.RemoveStyle(ArcGIS.Desktop.Core.Project,System.String)
       #region How to remove a style from project
 
       //For ArcGIS Pro system styles, just pass in the name of the style to remove from the project
@@ -86,6 +90,7 @@ namespace CartoFeatures.ProSnippet
       #endregion
     }
 
+    // cref: How to add a style item to a style;ArcGIS.Desktop.Mapping.StyleHelper.AddItem(ArcGIS.Desktop.Mapping.StyleProjectItem,ArcGIS.Desktop.Mapping.StyleItem)
     #region How to add a style item to a style
     public Task AddStyleItemAsync(StyleProjectItem style, StyleItem itemToAdd)
     {
@@ -100,6 +105,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to remove a style item from a style;ArcGIS.Desktop.Mapping.StyleHelper.RemoveItem(ArcGIS.Desktop.Mapping.StyleProjectItem,ArcGIS.Desktop.Mapping.StyleItem)
     #region How to remove a style item from a style
     public Task RemoveStyleItemAsync(StyleProjectItem style, StyleItem itemToRemove)
     {
@@ -178,6 +184,7 @@ namespace CartoFeatures.ProSnippet
     #endregion
     public async Task ConstructPointSymbol_1()
     {
+      // cref: How to construct a point symbol of a specific color and size;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPointSymbol(ArcGIS.Core.CIM.CIMColor,System.Double)
       #region How to construct a point symbol of a specific color and size
 
       await QueuedTask.Run(() =>
@@ -189,6 +196,7 @@ namespace CartoFeatures.ProSnippet
 
     public async Task ConstructPointSymbol_2()
     {
+      // cref: How to construct a point symbol of a specific color, size and shape;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPointSymbol(ArcGIS.Core.CIM.CIMColor,System.Double,ArcGIS.Desktop.Mapping.SimpleMarkerStyle)
       #region How to construct a point symbol of a specific color, size and shape
 
       await QueuedTask.Run(() =>
@@ -200,6 +208,8 @@ namespace CartoFeatures.ProSnippet
 
     public async Task ConstructPointSymbol_3()
     {
+      // cref: How to construct a point symbol from a marker;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarker(ArcGIS.Core.CIM.CIMColor,System.Double,ArcGIS.Desktop.Mapping.SimpleMarkerStyle)
+      // cref: How to construct a point symbol from a marker;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPointSymbol(ArcGIS.Core.CIM.CIMMarker)
       #region How to construct a point symbol from a marker
 
       await QueuedTask.Run(() =>
@@ -212,6 +222,8 @@ namespace CartoFeatures.ProSnippet
 
     public async Task ConstructPointSymbol_4()
     {
+      // cref: How to construct a point symbol from a file on disk;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarkerFromBitmapSource(System.Windows.Media.Imaging.BitmapSource)
+      // cref: How to construct a point symbol from a file on disk;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarkerFromFile(System.String)
       #region How to construct a point symbol from a file on disk
 
       //The following file formats can be used to create the marker: DAE, 3DS, FLT, EMF, JPG, PNG, BMP, GIF
@@ -241,6 +253,7 @@ namespace CartoFeatures.ProSnippet
     //construct polygon symbol
     public void ConstructPolygonSymbol_1()
     {
+      // cref: How to construct a polygon symbol of specific color and fill style;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPolygonSymbol(ArcGIS.Core.CIM.CIMColor,ArcGIS.Desktop.Mapping.SimpleFillStyle)
       #region How to construct a polygon symbol of specific color and fill style
 
       CIMPolygonSymbol polygonSymbol = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB, SimpleFillStyle.Solid);
@@ -250,6 +263,7 @@ namespace CartoFeatures.ProSnippet
 
     public void ConstructPolygonSymbol_2()
     {
+      // cref: How to construct a polygon symbol of specific color, fill style and outline;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPolygonSymbol(ArcGIS.Core.CIM.CIMColor,ArcGIS.Desktop.Mapping.SimpleFillStyle,ArcGIS.Core.CIM.CIMStroke)
       #region How to construct a polygon symbol of specific color, fill style and outline
 
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.Solid);
@@ -270,6 +284,7 @@ namespace CartoFeatures.ProSnippet
     //construct line symbol
     public void ContructLineSymbol_1()
     {
+      // cref: How to construct a line symbol of specific color, size and line style;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructLineSymbol(ArcGIS.Core.CIM.CIMColor,System.Double,ArcGIS.Desktop.Mapping.SimpleLineStyle)
       #region How to construct a line symbol of specific color, size and line style
 
       CIMLineSymbol lineSymbol = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.BlueRGB, 4.0, SimpleLineStyle.Solid);
@@ -279,6 +294,8 @@ namespace CartoFeatures.ProSnippet
 
     public void ContructLineSymbol_2()
     {
+      // cref: How to construct a line symbol from a stroke;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructLineSymbol(ArcGIS.Core.CIM.CIMStroke)
+      // cref: How to construct a line symbol from a stroke;ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke(ArcGIS.Core.CIM.CIMColor,System.Double)
       #region How to construct a line symbol from a stroke
 
       CIMStroke stroke = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 2.0);
@@ -331,6 +348,7 @@ namespace CartoFeatures.ProSnippet
     //symbol reference
     public void GetSymbolReference()
     {
+      // cref: How to get symbol reference from a symbol;ArcGIS.Desktop.Mapping.SymbolExtensionMethods.MakeSymbolReference(ArcGIS.Core.CIM.CIMSymbol)
       #region How to get symbol reference from a symbol
 
       CIMPolygonSymbol symbol = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB);
@@ -358,7 +376,76 @@ namespace CartoFeatures.ProSnippet
         var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(cimMarker);
         #endregion
     }
-    private static Task CreateSymbolSwatch()
+
+private void Fonts()
+		{
+      #region Get a List of Available Fonts
+      //Must use QueuedTask.Run(...)
+      //returns a tuple per font: (string fontName, List<string> fontStyles)
+      var fonts = SymbolFactory.Instance.GetAvailableFonts();
+      foreach(var font in fonts)
+			{
+        var styles = string.Join(",", font.fontStyles);
+        System.Diagnostics.Debug.WriteLine($"{font.fontName}, styles: {styles}");
+			}
+
+      #endregion
+
+      #region Get/Set Default Font
+
+      //Must use QueuedTask.Run(...)
+      var def_font = SymbolFactory.Instance.DefaultFont;
+      System.Diagnostics.Debug.WriteLine($"{def_font.fontName}, styles: {def_font.styleName}");
+
+      //set default font - set through application options
+      //Must use QueuedTask
+      ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultFont("tahoma");
+      ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultFont("tahoma","bold");
+
+      #endregion
+
+      #region Construct a Text Symbol With Options
+
+      QueuedTask.Run(() =>
+      {
+        //using the default font
+        var textSym1 = SymbolFactory.Instance.ConstructTextSymbol();
+        var textSym2 = SymbolFactory.Instance.ConstructTextSymbol(
+                           ColorFactory.Instance.BlueRGB, 14);
+
+        //using a specific font
+        var textSym3 = SymbolFactory.Instance.ConstructTextSymbol("Arial");
+        var textSym4 = SymbolFactory.Instance.ConstructTextSymbol(
+                          "Arial", "Narrow Bold");
+
+        //or query available fonts to ensure the font is there
+        var all_fonts = SymbolFactory.Instance.GetAvailableFonts();
+        var font = all_fonts.FirstOrDefault(f => f.fontName == "Arial");
+        if (!string.IsNullOrEmpty(font.fontName))
+        {
+          var textSym5 = SymbolFactory.Instance.ConstructTextSymbol(font.fontName);
+          //or with a font+style
+          var textSym6 = SymbolFactory.Instance.ConstructTextSymbol(
+                                          font.fontName, font.fontStyles.First());
+        }
+
+        //overloads - font + color and size, etc
+        var textSym7 = SymbolFactory.Instance.ConstructTextSymbol(
+                        ColorFactory.Instance.BlueRGB, 14, "Times New Roman", "Italic");
+
+        //custom symbol - black stroke, red fill
+        var poly_symbol = SymbolFactory.Instance.ConstructPolygonSymbol(
+          SymbolFactory.Instance.ConstructSolidFill(ColorFactory.Instance.RedRGB),
+          SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 1));
+        var textSym8 = SymbolFactory.Instance.ConstructTextSymbol(
+                poly_symbol, 14, "Georgia", "Bold");
+
+      });
+
+
+      #endregion
+    }
+		private static Task CreateSymbolSwatch()
     {
         return QueuedTask.Run(() => {
             #region Create a Swatch for a given symbol
@@ -376,6 +463,7 @@ namespace CartoFeatures.ProSnippet
             #endregion
         });
     }
+
 
         private static void SymbolLookup(FeatureLayer featureLayer)
         {
@@ -398,6 +486,7 @@ namespace CartoFeatures.ProSnippet
         #region ProSnippet Group: Symbol Search
         #endregion
         //symbol search
+        // cref: How to search for a specific item in a style;ArcGIS.Desktop.Mapping.StyleHelper.LookupItem(ArcGIS.Desktop.Mapping.StyleProjectItem,ArcGIS.Desktop.Mapping.StyleItemType,System.String)
         #region How to search for a specific item in a style
         public Task<SymbolStyleItem> GetSymbolFromStyleAsync(StyleProjectItem style, string key)
     {
@@ -413,6 +502,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for point symbols in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchSymbols(ArcGIS.Desktop.Mapping.StyleProjectItem,ArcGIS.Desktop.Mapping.StyleItemType,System.String)
     #region How to search for point symbols in a style
     public Task<IList<SymbolStyleItem>> GetPointSymbolsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -446,6 +536,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for colors in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchColors(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
     #region How to search for colors in a style
     public async Task<IList<ColorStyleItem>> GetColorsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -457,6 +548,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for color ramps in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchColorRamps(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
     #region How to search for color ramps in a style
     public async Task<IList<ColorRampStyleItem>> GetColorRampsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -470,6 +562,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for north arrows in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchNorthArrows(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
     #region How to search for north arrows in a style
     public Task<IList<NorthArrowStyleItem>> GetNorthArrowsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -481,6 +574,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for scale bars in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchScaleBars(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
     #region How to search for scale bars in a style
     public Task<IList<ScaleBarStyleItem>> GetScaleBarsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -492,6 +586,7 @@ namespace CartoFeatures.ProSnippet
     }
     #endregion
 
+    // cref: How to search for label placements in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchLabelPlacements(ArcGIS.Desktop.Mapping.StyleProjectItem,ArcGIS.Desktop.Mapping.StyleItemType,System.String)
     #region How to search for label placements in a style
     public Task<IList<LabelPlacementStyleItem>> GetLabelPlacementsFromStyleAsync(StyleProjectItem style, string searchString)
     {
@@ -501,15 +596,81 @@ namespace CartoFeatures.ProSnippet
       //Search for standard label placement
       return QueuedTask.Run(() => style.SearchLabelPlacements(StyleItemType.StandardLabelPlacement, searchString));
     }
-        #endregion
-    
+    #endregion
+
+    // cref: How to search for legends in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchLegends(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for legends in a style
+    public Task<IList<LegendStyleItem>> GetLegendFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchLegends(searchString));
+    }
+    #endregion
+
+    // cref: How to search for legend items in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchLegendItems(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for legend items in a style
+    public Task<IList<LegendItemStyleItem>> GetLegendItemsFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchLegendItems(searchString));
+    }
+    #endregion
+
+    // cref: How to search for grids in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchGrids(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for grids in a style
+    public Task<IList<GridStyleItem>> GetGridsFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchGrids(searchString));
+    }
+    #endregion
+
+    // cref: How to search for map surrounds in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchMapSurrounds(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for map surrounds in a style
+    public Task<IList<MapSurroundStyleItem>> GetMapSurroundsFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchMapSurrounds(searchString));
+    }
+    #endregion
+
+    // cref: How to search for table frames in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchTableFrames(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for table frames in a style
+    public Task<IList<TableFrameStyleItem>> GetTableFramesFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchTableFrames(searchString));
+    }
+    #endregion
+
+    // cref: How to search for table frame fields in a style;ArcGIS.Desktop.Mapping.StyleHelper.SearchTableFrameFields(ArcGIS.Desktop.Mapping.StyleProjectItem,System.String)
+    #region How to search for table frame fields in a style
+    public Task<IList<TableFrameFieldStyleItem>> GetTableFrameFieldsFromStyleAsync(StyleProjectItem style, string searchString)
+    {
+      if (style == null)
+        throw new System.ArgumentNullException();
+
+      return QueuedTask.Run(() => style.SearchTableFrameFields(searchString));
+    }
+    #endregion
+
     #region ProSnippet Group: Feature Layer Symbology
     #endregion
 
-        //feature layer symbology
-        #region How to set symbol for a feature layer symbolized with simple renderer
+    //feature layer symbology
+    #region How to set symbol for a feature layer symbolized with simple renderer
 
-        public Task SetFeatureLayerSymbolAsync(FeatureLayer ftrLayer, CIMSymbol symbolToApply)
+    public Task SetFeatureLayerSymbolAsync(FeatureLayer ftrLayer, CIMSymbol symbolToApply)
     {
       if (ftrLayer == null || symbolToApply == null)
         throw new System.ArgumentNullException();

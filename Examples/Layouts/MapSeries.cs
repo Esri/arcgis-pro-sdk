@@ -1,4 +1,4 @@
-﻿/*
+/*
 
    Copyright 2018 Esri
 
@@ -45,6 +45,7 @@ namespace Layout_HelpExamples
   {
     async public static void MethodSnippets()
     {
+      // cref: MapSeries_Constructor1;ArcGIS.Desktop.Layouts.MapSeriesExportOptions.#ctor
       #region MapSeries_Constructor1
       //Set up map series export options
 
@@ -71,6 +72,7 @@ namespace Layout_HelpExamples
 
 
 
+      // cref: MapSeries_FindpageNumber;ArcGIS.Desktop.Layouts.MapSeries.FindPageNumber(System.String)
       #region MapSeries_FindPageNumber
       //Return the page number that corresponds to the page name field for an index feature
 
@@ -86,6 +88,8 @@ namespace Layout_HelpExamples
       #endregion MapSeries_FindPageNumber
 
 
+      // cref: MapSeries_GetSetDefinition;ArcGIS.Desktop.Layouts.MapSeries.GetDefinition
+      // cref: MapSeries_GetSetDefinition;ArcGIS.Desktop.Layouts.MapSeries.SetDefinition(ArcGIS.Core.CIM.CIMMapSeries)
       #region MapSeries_GetSetDefinition 
       //Get and modify a map series CIM definition and set the changes back to the layout
 
@@ -101,6 +105,7 @@ namespace Layout_HelpExamples
       #endregion MapSeries_GetSetDefinition
 
 
+      // cref: MapSeries_SetCurrentPageNumber;ArcGIS.Desktop.Layouts.MapSeries.SetCurrentPageNumber(System.String)
       #region MapSeries_SetCurrentPageNumber
       //Set the current page to match a specific page number
 

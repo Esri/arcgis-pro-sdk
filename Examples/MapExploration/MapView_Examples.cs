@@ -33,6 +33,7 @@ namespace Examples
     /// <example>
     /// <code title="Get Active Map's Name" description="Get the active map's name." region="Get Active Map's Name" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Get Active Map's Name;ArcGIS.Desktop.Mapping.MapView.Map
     #region Get Active Map's Name
     public string GetActiveMapName()
     {
@@ -50,6 +51,7 @@ namespace Examples
     /// <example>
     /// <code title="Select All Feature Layers in TOC" description="Select all the feature layers in the TOC for the active map." region="Select All Feature Layers in TOC" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Select All Feature Layers in TOC;ArcGIS.Desktop.Mapping.MapView.SelectLayers(System.Collections.Generic.IReadOnlyCollection{ArcGIS.Desktop.Mapping.Layer})
     #region Select All Feature Layers in TOC
     public void SelectAllFeatureLayersInTOC()
     {
@@ -68,6 +70,8 @@ namespace Examples
     /// <example>
     /// <code title="Go To Previous Camera" description="Zoom to the previous camera position." region="Go To Previous Camera" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Go To Previous Camera;ArcGIS.Desktop.Mapping.MapView.HasPreviousCamera
+    // cref: Go To Previous Camera;ArcGIS.Desktop.Mapping.MapView.PreviousCameraAsync(System.Nullable{System.TimeSpan})
     #region Go To Previous Camera
     public Task<bool> ZoomToPreviousCameraAsync()
     {
@@ -88,6 +92,8 @@ namespace Examples
     /// <example>
     /// <code title="Go To Next Camera" description="Zoom to the previous camera position." region="Go To Next Camera" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Go To Next Camera;ArcGIS.Desktop.Mapping.MapView.HasNextCamera
+    // cref: Go To Next Camera;ArcGIS.Desktop.Mapping.MapView.NextCameraAsync(System.Nullable{System.TimeSpan})
     #region Go To Next Camera
     public Task<bool> ZoomToNextCameraAsync()
     {
@@ -108,6 +114,8 @@ namespace Examples
     /// <example>
     /// <code title="Flash Selected Features" description="Flash the map's selcted features." region="Flash Selected Features" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Flash Selected Features;ArcGIS.Desktop.Mapping.Map.GetSelection
+    // cref: Flash Selected Features;ArcGIS.Desktop.Mapping.MapView.FlashFeature(System.Collections.Generic.IReadOnlyDictionary{ArcGIS.Desktop.Mapping.BasicFeatureLayer,System.Collections.Generic.List{System.Int64}})
     #region Flash Selected Features
     public Task FlashSelectedFeaturesAsync()
     {
@@ -134,6 +142,8 @@ namespace Examples
     /// <example>
     /// <code title="Set ViewingMode" description="Change the active map view's viewing mode to SceneLocal." region="Set ViewingMode" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Set ViewingMode;ArcGIS.Desktop.Mapping.MapView.CanSetViewingMode(ArcGIS.Core.CIM.MapViewingMode)
+    // cref: Set ViewingMode;ArcGIS.Desktop.Mapping.MapView.SetViewingModeAsync(ArcGIS.Core.CIM.MapViewingMode)
     #region Set ViewingMode
     public void SetViewingModeToSceneLocal()
     {
@@ -152,6 +162,7 @@ namespace Examples
     /// <example>
     /// <code title="Is View 3D" description="Test if the view is 3D." region="Is View 3D" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Is View 3D;ArcGIS.Desktop.Mapping.MapView.ViewingMode
     #region Is View 3D
     public bool IsView3D()
     {
@@ -169,6 +180,7 @@ namespace Examples
     /// <example>
     /// <code title="Enable View Linking" description="Set the View Linking mode to Center and Scale." region="Enable View Linking" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Enable View Linking;ArcGIS.Desktop.Mapping.MapView.LinkMode
     #region Enable View Linking
     public void EnableViewLinking()
     {
@@ -189,6 +201,7 @@ namespace Examples
     /// <example>
     /// <code title="Rotate Map View" description="Rotate the active map view." region="Rotate Map View Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Rotate Map View Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomTo(ArcGIS.Desktop.Mapping.Camera,System.Nullable{System.TimeSpan})
     #region Rotate Map View Synchronous
     public Task<bool> RotateViewAsync(double heading)
     {
@@ -211,6 +224,8 @@ namespace Examples
     /// <example>
     /// <code title="Expand Extent" description="Expand the active map view's extent." region="Expand Extent Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Expand Extent Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomTo(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan},System.Boolean)
+    // cref: Expand Extent Synchronous;ArcGIS.Desktop.Mapping.MapView.Extent
     #region Expand Extent Synchronous
     public Task<bool> ExpandExtentAsync(double dx, double dy)
     {
@@ -233,6 +248,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom to Bookmark" description="Zoom the active map view to a bookmark with a given name." region="Zoom To Bookmark Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Bookmark Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomTo(ArcGIS.Desktop.Mapping.Bookmark,System.Nullable{System.TimeSpan})
     #region Zoom To Bookmark Synchronous
     public Task<bool> ZoomToBookmarkAsync(string bookmarkName)
     {
@@ -258,6 +274,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Visible Layers" description="Zoom to all visible layers in the map." region="Zoom To Visible Layers Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Visible Layers Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomTo(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.Layer},System.Boolean,System.Nullable{System.TimeSpan},System.Boolean)
     #region Zoom To Visible Layers Synchronous
     public Task<bool> ZoomToAllVisibleLayersAsync()
     {
@@ -279,6 +296,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Full Extent" description="Zoom to the map's full extent." region="Zoom To Full Extent Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Full Extent Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToFullExtent(System.Nullable{System.TimeSpan})
     #region Zoom To Full Extent Synchronous
     public Task<bool> ZoomToFullExtentAsync()
     {
@@ -299,6 +317,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Selected" description="Zoom to the map's selected features." region="Zoom To Selected Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Selected Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToSelected(System.Nullable{System.TimeSpan},System.Boolean)
     #region Zoom To Selected Synchronous
     public Task<bool> ZoomToSelectedAsync()
     {
@@ -319,6 +338,7 @@ namespace Examples
     /// <example>
     /// <code title="Fixed Zoom In" description="Zoom in to the map view by a fixed amount." region="Fixed Zoom In Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Fixed Zoom In Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomInFixed(System.Nullable{System.TimeSpan})
     #region Fixed Zoom In Synchronous
     public Task<bool> ZoomInFixedAsync()
     {
@@ -340,6 +360,7 @@ namespace Examples
     /// <example>
     /// <code title="Fixed Zoom Out" description="Zoom out in the map view by a fixed amount." region="Fixed Zoom Out Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Fixed Zoom Out Synchronous;ArcGIS.Desktop.Mapping.MapView.ZoomOutFixed(System.Nullable{System.TimeSpan})
     #region Fixed Zoom Out Synchronous
     public Task<bool> ZoomOutFixedAsync()
     {
@@ -361,6 +382,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan to Extent" description="Pan the active map view to an extent." region="Pan To Extent Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Extent Synchronous;ArcGIS.Desktop.Mapping.MapView.PanTo(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan})
     #region Pan To Extent Synchronous
     public Task<bool> PanToExtentAsync(double xMin, double yMin, double xMax, double yMax, ArcGIS.Core.Geometry.SpatialReference spatialReference)
     {
@@ -382,6 +404,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan to Bookmark" description="Pan the active map view to a bookmark with a given name." region="Pan To Bookmark Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Bookmark Synchronous;ArcGIS.Desktop.Mapping.MapView.PanTo(ArcGIS.Desktop.Mapping.Bookmark,System.Nullable{System.TimeSpan})
     #region Pan To Bookmark Synchronous
     public Task<bool> PanToBookmarkAsync(string bookmarkName)
     {
@@ -407,6 +430,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan To Visible Layers" description="Pan to all visible layers in the map." region="Pan To Visible Layers Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Visible Layers Synchronous;ArcGIS.Desktop.Mapping.MapView.PanTo(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.Layer},System.Boolean,System.Nullable{System.TimeSpan})
     #region Pan To Visible Layers Synchronous
     public Task<bool> PanToAllVisibleLayersAsync()
     {
@@ -428,6 +452,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan To Selected" description="Pan to the map's selected features." region="Pan To Selected Synchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Selected Synchronous;ArcGIS.Desktop.Mapping.MapView.PanToSelected(System.Nullable{System.TimeSpan})
     #region Pan To Selected Synchronous
     public Task<bool> PanToSelectedAsync()
     {
@@ -451,6 +476,11 @@ namespace Examples
     /// <example>
     /// <code title="Rotate Map View" description="Rotate the active map view." region="Rotate Map View Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Rotate Map View Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToAsync(ArcGIS.Desktop.Mapping.Camera,System.Nullable{System.TimeSpan})
+    // cref: Rotate Map View Asynchronous;ArcGIS.Desktop.Mapping.Camera.Heading
+    // cref: Rotate Map View Asynchronous;ArcGIS.Desktop.Mapping.MapView.Active
+    // cref: Rotate Map View Asynchronous;ArcGIS.Desktop.Mapping.MapView.Camera
+    // cref: Rotate Map View Asynchronous;ArcGIS.Desktop.Mapping.MapView
     #region Rotate Map View Asynchronous
     public void RotateView(double heading)
     {
@@ -470,6 +500,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom to Extent" description="Zoom the active map view to an extent." region="Zoom To Extent Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Extent Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToAsync(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan},System.Boolean)
     #region Zoom To Extent Asynchronous
     public async Task<bool> ZoomToExtentAsync(double xMin, double yMin, double xMax, double yMax, ArcGIS.Core.Geometry.SpatialReference spatialReference)
     {
@@ -490,6 +521,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom to Bookmark" description="Zoom the active map view to a bookmark with a given name." region="Zoom To Bookmark Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Bookmark Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToAsync(ArcGIS.Desktop.Mapping.Bookmark,System.Nullable{System.TimeSpan})
     #region Zoom To Bookmark Asynchronous
     public async Task<bool> ZoomToBookmarkAsync(string bookmarkName)
     {
@@ -512,6 +544,8 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Selected Layers" description="Zoom to the selected layers in the TOC." region="Zoom To Selected Layers Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Selected Layers Asynchronous;ArcGIS.Desktop.Mapping.MapView.GetSelectedLayers
+    // cref: Zoom To Selected Layers Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToAsync(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.Layer},System.Boolean,System.Nullable{System.TimeSpan},System.Boolean)
     #region Zoom To Selected Layers Asynchronous
     public Task<bool> ZoomToTOCSelectedLayersAsync()
     {
@@ -530,6 +564,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Full Extent" description="Zoom to the map's full extent." region="Zoom To Full Extent Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Full Extent Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToFullExtentAsync(System.Nullable{System.TimeSpan})
     #region Zoom To Full Extent Asynchronous
     public Task<bool> ZoomToFullExtentAsync()
     {
@@ -547,6 +582,7 @@ namespace Examples
     /// <example>
     /// <code title="Zoom To Selected" description="Zoom to the map's selected features." region="Zoom To Selected Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Zoom To Selected Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomToSelectedAsync(System.Nullable{System.TimeSpan},System.Boolean)
     #region Zoom To Selected Asynchronous
     public Task<bool> ZoomToSelectedAsync()
     {
@@ -564,6 +600,7 @@ namespace Examples
     /// <example>
     /// <code title="Fixed Zoom In" description="Zoom in to the map view by a fixed amount." region="Fixed Zoom In Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Fixed Zoom In Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomInFixedAsync(System.Nullable{System.TimeSpan})
     #region Fixed Zoom In Asynchronous
     public Task<bool> ZoomInFixedAsync()
     {
@@ -581,6 +618,7 @@ namespace Examples
     /// <example>
     /// <code title="Fixed Zoom Out" description="Zoom out in the map view by a fixed amount." region="Fixed Zoom Out Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Fixed Zoom Out Asynchronous;ArcGIS.Desktop.Mapping.MapView.ZoomOutFixedAsync(System.Nullable{System.TimeSpan})
     #region Fixed Zoom Out Asynchronous
     public Task<bool> ZoomOutFixedAsync()
     {
@@ -598,6 +636,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan to Extent" description="Pan the active map view to an extent." region="Pan To Extent Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Extent Asynchronous;ArcGIS.Desktop.Mapping.MapView.PanToAsync(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan})
     #region Pan To Extent Asynchronous
     public async Task<bool> PanToExtentAsync(double xMin, double yMin, double xMax, double yMax, ArcGIS.Core.Geometry.SpatialReference spatialReference)
     {
@@ -618,6 +657,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan to Bookmark" description="Pan the active map view to a bookmark with a given name." region="Pan To Bookmark Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Bookmark Asynchronous;ArcGIS.Desktop.Mapping.MapView.PanToAsync(ArcGIS.Desktop.Mapping.Bookmark,System.Nullable{System.TimeSpan})
     #region Pan To Bookmark Asynchronous
     public async Task<bool> PanToBookmarkAsync(string bookmarkName)
     {
@@ -640,6 +680,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan To Selected Layers" description="Pan to the selected layers in the TOC." region="Pan To Selected Layers Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Selected Layers Asynchronous;ArcGIS.Desktop.Mapping.MapView.PanToAsync(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.Layer},System.Boolean,System.Nullable{System.TimeSpan})
     #region Pan To Selected Layers Asynchronous
     public Task<bool> PanToTOCSelectedLayersAsync()
     {
@@ -658,6 +699,7 @@ namespace Examples
     /// <example>
     /// <code title="Pan To Selected" description="Pan to the map's selected features." region="Pan To Selected Asynchronous" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\MapView_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Pan To Selected Asynchronous;ArcGIS.Desktop.Mapping.MapView.PanToSelectedAsync(System.Nullable{System.TimeSpan})
     #region Pan To Selected Asynchronous
     public Task<bool> PanToSelectedAsync()
     {

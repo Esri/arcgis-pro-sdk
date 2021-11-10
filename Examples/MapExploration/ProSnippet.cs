@@ -239,9 +239,26 @@ namespace Snippets
             });
             #endregion
         }
-        #region ProSnippet Group: Features
-        #endregion
-        private static void Masking()
+
+    private static void OpenTablePane()
+    {
+      #region Display Table pane for Map Member
+      var mapMember = MapView.Active.Map.GetLayersAsFlattenedList().OfType<MapMember>().FirstOrDefault();
+      //Gets or creates the CIMMapTableView for a MapMember.
+      var tableView = FrameworkApplication.Panes.GetMapTableView(mapMember);
+      //Configure the table view
+      tableView.DisplaySubtypeDomainDescriptions = false;
+      tableView.SelectionMode = false;
+      tableView.ShowOnlyContingentValueFields = true;
+      tableView.HighlightInvalidContingentValueFields = true;
+      //Open the table pane using the configured tableView. If a table pane is already open it will be activated.
+      //You must be on the UI thread to call this function.
+      var tablePane = FrameworkApplication.Panes.OpenTablePane(tableView);
+      #endregion
+    }
+    #region ProSnippet Group: Features
+    #endregion
+    private static void Masking()
         {
             QueuedTask.Run(() => {
                 #region Mask feature

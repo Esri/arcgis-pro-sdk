@@ -1,4 +1,4 @@
-﻿/*
+/*
 
    Copyright 2020 Esri
 
@@ -29,6 +29,8 @@ namespace GeodatabaseSDK.Topo
 {
   class ProSnippetTopology
   {
+    // cref: OpenTopologyAndProcessDefinition;ArcGIS.Core.Data.Topology.Topology.GetDefinition
+    // cref: OpenTopologyAndProcessDefinition;ArcGIS.Core.Data.Topology.TopologyDefinition.GetFeatureClassNames
     #region OpenTopologyAndProcessDefinition
 
     public void OpenTopologyAndProcessDefinition()
@@ -95,6 +97,7 @@ namespace GeodatabaseSDK.Topo
       using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\TestData\GrandTeton.gdb"))))
       using (Topology topology = geodatabase.OpenDataset<Topology>("Backcountry_Topology"))
       {
+        // cref: GetTopologyRules;ArcGIS.Core.Data.Topology.TopologyDefinition.GetRules
         #region GetTopologyRules
 
         using (TopologyDefinition topologyDefinition = topology.GetDefinition())
@@ -126,6 +129,7 @@ namespace GeodatabaseSDK.Topo
       }
     }
 
+    // cref: ValidateTopology;ArcGIS.Core.Data.Topology.Topology.Validate(ArcGIS.Core.Data.Topology.ValidationDescription)
     #region ValidateTopology
 
     public void ValidateTopology()
@@ -229,6 +233,7 @@ namespace GeodatabaseSDK.Topo
       using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\TestData\GrandTeton.gdb"))))
       using (Topology topology = geodatabase.OpenDataset<Topology>("Backcountry_Topology"))
       {
+        // cref: GetTopologyErrors;ArcGIS.Core.Data.Topology.Topology.GetErrors(ArcGIS.Core.Data.Topology.ErrorDescription)
         #region GetTopologyErrors
 
         // Get all the errors and exceptions currently associated with the topology.
@@ -247,6 +252,8 @@ namespace GeodatabaseSDK.Topo
 
         #endregion GetTopologyErrors
 
+        // cref: MarkAndUnmarkAsErrors;ArcGIS.Core.Data.Topology.Topology.MarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
+        // cref: MarkAndUnmarkAsErrors;ArcGIS.Core.Data.Topology.Topology.UnmarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
         #region MarkAndUnmarkAsErrors
 
         // Get all the errors due to features violating the "PointProperlyInsideArea" topology rule.
@@ -299,6 +306,7 @@ namespace GeodatabaseSDK.Topo
       }
     }
 
+    // cref: ExploreTopologyGraph;ArcGIS.Core.Data.Topology.Topology.BuildGraph(ArcGIS.Core.Geometry.Geometry,System.Action{ArcGIS.Core.Data.Topology.TopologyGraph})
     #region ExploreTopologyGraph
 
     public void ExploreTopologyGraph()
@@ -379,6 +387,7 @@ namespace GeodatabaseSDK.Topo
 
     #endregion ExploreTopologyGraph
 
+    // cref: FindClosestElement;ArcGIS.Core.Data.Topology.TopologyGraph.FindClosestElement``1(ArcGIS.Core.Geometry.MapPoint,System.Double)
     #region FindClosestElement
 
     public void FindClosestElement()

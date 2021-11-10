@@ -34,6 +34,7 @@ using ArcGIS.Core.CIM;
 
 namespace Layout_HelpExamples
 {
+  // cref: MapSurroundExample;ArcGIS.Desktop.Layouts.MapSurround
   #region MapSurroundExample
   //Added references
   using ArcGIS.Desktop.Core;                         //Project
@@ -88,6 +89,7 @@ public class TableFrameClassSamples
 
   async public static void CreateNew()
   {
+    // cref: TableFrame_CreateNew;ArcGIS.Desktop.Layouts.TableFrame
     #region TableFrame_CreateNew
     //Create a new table frame on the active layout.
 

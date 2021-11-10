@@ -41,6 +41,8 @@ namespace ProSnippetsTasks
         #endregion
         async public void snippets_ProjectItems()
     {
+      // cref: Reference layout project items and their associated layout;ArcGIS.Desktop.Layouts.Layout
+      // cref: Reference layout project items and their associated layout;ArcGIS.Desktop.Layouts.LayoutProjectItem
       #region Reference layout project items and their associated layout
       //Reference layout project items and their associated layout.
       //A layout project item is an item that appears in the Layouts folder in the Catalog pane.
@@ -52,6 +54,10 @@ namespace ProSnippetsTasks
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("MyLayout"));
       #endregion
 
+      // cref: Open a layout project item in a new view;ArcGIS.Desktop.Core.LayoutFrameworkExtender.CreateLayoutPaneAsync(ArcGIS.Desktop.Framework.PaneCollection,ArcGIS.Desktop.Layouts.Layout)
+      // cref: Open a layout project item in a new view;ArcGIS.Desktop.Layouts.LayoutProjectItem.GetLayout
+      // cref: Open a layout project item in a new view;ArcGIS.Desktop.Core.LayoutFrameworkExtender
+      // cref: Open a layout project item in a new view;ArcGIS.Desktop.Layouts.LayoutView
       #region Open a layout project item in a new view
       //Open a layout project item in a new view.
       //A layout project item may exist but it may not be open in a view. 
@@ -200,15 +206,15 @@ namespace ProSnippetsTasks
         {
           //Get the layout
           Layout lyt = lytItem.GetLayout();
-          if (layout != null)
+          if (lyt != null)
           {
             //Change properties
-            CIMPage page = layout.GetPage();
+            CIMPage page = lyt.GetPage();
             page.Width = 8.5;
             page.Height = 11;
 
             //Apply the changes to the layout
-            layout.SetPage(page);
+            lyt.SetPage(page);
           }
         });
       }
@@ -299,7 +305,7 @@ namespace ProSnippetsTasks
             var graphic = new CIMPointGraphic()
             {
               Symbol = pointSymbol.MakeSymbolReference(),
-              Location = point //center of map
+              Location = point 
             };
             listGraphics.Add(graphic);
           }
@@ -309,6 +315,9 @@ namespace ProSnippetsTasks
         #endregion
       });
 
+      // cref: Create point graphic with symbology;ArcGIS.Desktop.Layouts.IElementFactory.CreatePointGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.CIM.CIMPointSymbol)
+      // cref: Create point graphic with symbology;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePointGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.CIM.CIMPointSymbol)
+      // cref: Create point graphic with symbology;ArcGIS.Desktop.Layouts.LayoutElementFactory
       #region Create point graphic with symbology
       //Create a simple 2D point graphic and apply an existing point style item as the symbology.
 
@@ -335,6 +344,8 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create line graphic with symbology;ArcGIS.Desktop.Layouts.IElementFactory.CreateLineGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
+      // cref: Create line graphic with symbology;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateLineGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
       #region Create line graphic with symbology
       //Create a simple 2D line graphic and apply an existing line style item as the symbology.
 
@@ -366,6 +377,8 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create rectangle graphic with simple symbology;ArcGIS.Desktop.Layouts.IElementFactory.CreateRectangleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create rectangle graphic with simple symbology;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateRectangleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create rectangle graphic with simple symbology
       //Create a simple 2D rectangle graphic and apply simple fill and outline symbols.
 
@@ -385,6 +398,13 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.IElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.IElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.IElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String,ArcGIS.Core.CIM.CIMTextSymbol,ArcGIS.Core.CIM.Anchor)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePointTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,System.String,ArcGIS.Core.CIM.CIMTextSymbol,ArcGIS.Core.CIM.Anchor)
+      // cref: Create text element with basic font properties;ArcGIS.Desktop.Layouts.TextElement
       #region Create text element with basic font properties
       //Create a simple point text element and assign basic symbology and text settings.
 
@@ -408,6 +428,10 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create rectangle text with more advanced symbol settings;ArcGIS.Desktop.Layouts.IElementFactory.CreateRectangleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String)
+      // cref: Create rectangle text with more advanced symbol settings;ArcGIS.Desktop.Layouts.IElementFactory.CreateRectangleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create rectangle text with more advanced symbol settings;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateRectangleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String)
+      // cref: Create rectangle text with more advanced symbol settings;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateRectangleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
       #region Create rectangle text with more advanced symbol settings
       //Create rectangle text with background and border symbology.  
 
@@ -440,6 +464,9 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create a new picture element with advanced symbol settings;ArcGIS.Desktop.Layouts.IElementFactory.CreatePictureGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String)
+      // cref: Create a new picture element with advanced symbol settings;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateAttachmentFrameElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String)
+      // cref: Create a new picture element with advanced symbol settings;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePictureGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,System.String)
       #region Create a new picture element with advanced symbol settings
       //Create a picture element and also set background and border symbology.
 
@@ -470,6 +497,11 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create a map frame and zoom to a bookmark;ArcGIS.Desktop.Layouts.IElementFactory.CreateMapFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Mapping.Map)
+      // cref: Create a map frame and zoom to a bookmark;ArcGIS.Desktop.Layouts.IElementFactory.CreateMapFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Desktop.Mapping.Map)
+      // cref: Create a map frame and zoom to a bookmark;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateMapFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Mapping.Map)
+      // cref: Create a map frame and zoom to a bookmark;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateMapFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Desktop.Mapping.Map)
+      // cref: Create a map frame and zoom to a bookmark;ArcGIS.Desktop.Layouts.MapFrame
       #region Create a map frame and zoom to a bookmark
       //Create a map frame and set its camera by zooming to the extent of an existing bookmark.
 
@@ -484,11 +516,12 @@ namespace ProSnippetsTasks
         //Reference map, create MF and add to layout
         MapProjectItem mapPrjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map"));
         Map mfMap = mapPrjItem.GetMap();
+        Bookmark bookmark = mfMap.GetBookmarks().FirstOrDefault(b => b.Name == "Great Lakes");
+
         MapFrame mfElm = LayoutElementFactory.Instance.CreateMapFrame(layout, mf_env, mfMap);
         mfElm.SetName("New Map Frame");
 
         //Zoom to bookmark
-        Bookmark bookmark = mfElm.Map.GetBookmarks().FirstOrDefault(b => b.Name == "Great Lakes");
         mfElm.SetCamera(bookmark);
       });
       #endregion
@@ -525,6 +558,9 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create a legend for a specific map frame;ArcGIS.Desktop.Layouts.IElementFactory.CreateLegend(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Layouts.MapFrame)
+      // cref: Create a legend for a specific map frame;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateLegend(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Layouts.MapFrame)
+      // cref: Create a legend for a specific map frame;ArcGIS.Desktop.Layouts.Legend
       #region Create a legend for a specific map frame
       //Create a legend for an associated map frame.
 
@@ -548,6 +584,7 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Creating empty group elements;ArcGIS.Desktop.Layouts.GroupElement
       #region Creating empty group elements
       //Create an empty group element at the root level of the contents pane
 
@@ -672,6 +709,8 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create a table frame;ArcGIS.Desktop.Layouts.IElementFactory.CreateTableFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.MapMember,System.String[])
+      // cref: Create a table frame;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateTableFrame(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.MapMember,System.String[])
       #region Create a table frame
       //Create a table frame.
 
@@ -702,6 +741,7 @@ namespace ProSnippetsTasks
         #endregion
         public void snippets_elements( Layout layout)
     {
+      // cref: Find an element on a layout;ArcGIS.Desktop.Layouts.Element
       #region Find an element on a layout
       //Find an element on a layout.
 
@@ -713,7 +753,7 @@ namespace ProSnippetsTasks
         {
           // Reference and load the layout associated with the layout item
           Layout mylayout = layoutItem.GetLayout();
-          if (layout != null)
+          if (mylayout != null)
           {
             //Find a single specific element
             Element rect = mylayout.FindElement("Rectangle") as Element;
@@ -741,6 +781,7 @@ namespace ProSnippetsTasks
         //Find all line graphics in the Graphics Layer
         var lineGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMLineGraphic);
         ////Find all polygon graphics in the Graphics Layer
+        var polyGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMPolygonGraphic);
         ////Find all text graphics in the Graphics Layer
         var textGraphics = graphicElements.Where(elem => elem.GetGraphic() is CIMTextGraphic);
         ////Find all picture graphics in the Graphics Layer
@@ -928,7 +969,7 @@ namespace ProSnippetsTasks
         #endregion
 
         #region Un-Group Graphic Elements
-        var selectedElements = layout.GetSelectedElements().ToList(); ;
+        var selectedElements = layout.GetSelectedElements().ToList(); 
         if (selectedElements?.Any() == false)//must be at least 1.
           return;
         var elementsToUnGroup = new List<GroupElement>();
@@ -994,6 +1035,8 @@ namespace ProSnippetsTasks
       double x = 0;
       double y = 0;
 
+      // cref: Update text element properties;ArcGIS.Desktop.Layouts.TextElement.SetTextProperties(ArcGIS.Desktop.Layouts.TextProperties)
+      // cref: Update text element properties;ArcGIS.Desktop.Layouts.TextProperties.#ctor(System.String,System.String,System.Double,System.String)
       #region Update text element properties
       //Update text element properties for an existing text element.
 
@@ -1169,6 +1212,7 @@ namespace ProSnippetsTasks
     {
       Layout layout = LayoutView.Active.Layout;
 
+      // cref: Change the map associated with a map frame;ArcGIS.Desktop.Layouts.MapFrame.SetMap(ArcGIS.Desktop.Mapping.Map)
       #region Change the map associated with a map frame
       //Change the map associated with a map frame
 
@@ -1187,6 +1231,7 @@ namespace ProSnippetsTasks
 
       #endregion
 
+      // cref: Change map frame camera settings;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Desktop.Mapping.Camera)
       #region Change map frame camera settings
       //Change a map frame's camera settings.
 
@@ -1205,6 +1250,7 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Zoom map frame to extent of a single layer;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Desktop.Mapping.Layer,System.Boolean)
       #region Zoom map frame to extent of a single layer
       //Zoom map frame to the extent of a single layer.
 
@@ -1223,6 +1269,7 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Change map frame extent to selected features in multiple layers;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.Layer},System.Boolean)
       #region Change map frame extent to selected features in multiple layers
       //Change the extent of a map frame to the selected features multiple layers.
 
@@ -1355,6 +1402,8 @@ namespace ProSnippetsTasks
     {
       Layout layout = LayoutView.Active.Layout;
 
+      // cref: Modify an existing map series;ArcGIS.Desktop.Layouts.MapSeries
+      // cref: Modify an existing map series;ArcGIS.Desktop.Layouts.SpatialMapSeries
       #region Modify an existing map series
       //Modify the currently active map series and changes its sort field and page number field.
 
@@ -1371,6 +1420,7 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Create a new spatial map series;ArcGIS.Desktop.Layouts.MapSeries.CreateSpatialMapSeries(ArcGIS.Desktop.Layouts.Layout,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.BasicFeatureLayer,System.String)
       #region Create a new spatial map series
       // This example create a new spatial map series and then applies it to the active layout. This will automatically 
       // overwrite an existing map series if one is already present.
@@ -1406,6 +1456,7 @@ namespace ProSnippetsTasks
       Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
       String filePath = null;
 
+      // cref: Export a layout to PDF;ArcGIS.Desktop.Layouts.Layout.Export(ArcGIS.Desktop.Mapping.ExportFormat)
       #region Export a layout to PDF
       //Export a single page layout to PDF.
 
@@ -1430,6 +1481,7 @@ namespace ProSnippetsTasks
       }
       #endregion
 
+      // cref: Export a map frame to JPG;ArcGIS.Desktop.Layouts.MapFrame.Export(ArcGIS.Desktop.Mapping.ExportFormat)
       #region Export a map frame to JPG
       //Export a map frame to JPG.
 
@@ -1459,6 +1511,7 @@ namespace ProSnippetsTasks
       });
       #endregion
 
+      // cref: Export the map view associated with a map frame to BMP;ArcGIS.Desktop.Layouts.MapFrame.GetMapView(ArcGIS.Desktop.Layouts.LayoutView)
       #region Export the map view associated with a map frame to BMP
       //Export the map view associated with a map frame to BMP.
 
@@ -1502,6 +1555,9 @@ namespace ProSnippetsTasks
       Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
       String filePath = null;
 
+      // cref: Export a map series to single PDF;ArcGIS.Desktop.Layouts.Layout.Export(ArcGIS.Desktop.Mapping.ExportFormat,ArcGIS.Desktop.Layouts.MapSeriesExportOptions)
+      // cref: Export a map series to single PDF;ArcGIS.Desktop.Layouts.ExportPages
+      // cref: Export a map series to single PDF;ArcGIS.Desktop.Layouts.MapSeriesExportOptions
       #region Export a map series to single PDF
       //Export a map series with multiple pages to a single PDF.
 
@@ -1571,5 +1627,109 @@ namespace ProSnippetsTasks
       });
       #endregion
     }
+
+    #region ProSnippet Group: LayoutOptions
+    #endregion
+
+    public void LayoutOptions1()
+		{
+      #region Get LayoutOptions
+      
+      var lastToolActive = ApplicationOptions.LayoutOptions.KeepLastToolActive;
+      var warnOnSurrounds = ApplicationOptions.LayoutOptions.WarnAboutAssociatedSurrounds;
+      //eg <Install_Path>\Resources\LayoutTemplates\en-US
+      var gallery_path = ApplicationOptions.LayoutOptions.LayoutTemplatePath;
+
+      #endregion
+
+      #region Set LayoutOptions
+
+      //keep graphic element insert tool active
+      ApplicationOptions.LayoutOptions.KeepLastToolActive = true;
+      //no warning when deleting a map frame results in other elements being deleted
+      ApplicationOptions.LayoutOptions.WarnAboutAssociatedSurrounds = false;
+      //path to .pagx files used as templates
+      ApplicationOptions.LayoutOptions.LayoutTemplatePath = @"D:\data\layout_templates";
+
+      #endregion
+
+    }
+
+
+		#region ProSnippet Group: TextAndGraphicsElementsOptions
+		#endregion
+
+    public void TextAndGraphicsElementsOptions()
+		{
+      #region Get All Available Fonts
+
+      //Note: see also SymbolFactory.Instance.GetAvailableFonts() which returns the
+      //same list. Use for TextAndGraphicsElementsOptions.GetAvailableFonts() convenience
+
+      QueuedTask.Run(() =>
+      {
+        //A list of tuples of Font name + associated Font Styles, one tuple per
+        //font, is returned
+        var fonts = ApplicationOptions.TextAndGraphicsElementsOptions.GetAvailableFonts();
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Pro Fonts\r\n============================");
+        foreach (var font in fonts)
+        {
+          var styles = string.Join(",", font.fontStyles);
+          sb.AppendLine($"{font.fontName}, [{styles}]");
+        }
+        System.Diagnostics.Debug.WriteLine(sb.ToString());
+      });
+
+      #endregion
+
+      #region Get TextAndGraphicsElementsOptions
+
+      QueuedTask.Run(() =>
+      {
+        //Get the default font (see also 'SymbolFactory.Instance.DefaultFont')
+        var def_font = ApplicationOptions.TextAndGraphicsElementsOptions.GetDefaultFont();
+        System.Diagnostics.Debug.WriteLine(
+          $"\r\ndefault font: {def_font.fontName}, {def_font.styleName}");
+
+        //Get the default graphics element symbols - point, line, poly, text
+        var ptSymbol = ApplicationOptions.TextAndGraphicsElementsOptions.GetDefaultPointSymbol();
+        var lineSymbol = ApplicationOptions.TextAndGraphicsElementsOptions.GetDefaultLineSymbol();
+        var polySymbol = ApplicationOptions.TextAndGraphicsElementsOptions.GetDefaultPolygonSymbol();
+        var textSymbol = ApplicationOptions.TextAndGraphicsElementsOptions.GetDefaultTextSymbol();
+      });
+
+      #endregion
+
+      #region Set TextAndGraphicsElementsOptions
+
+      QueuedTask.Run(() =>
+      {
+        //Set a default font. Use its default style
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultFont("tahoma");
+        //or specify an explicit style
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultFont("tahoma", "bold");
+
+        //Create symbols
+        var ptSymbol2 = SymbolFactory.Instance.ConstructPointSymbol(
+          ColorFactory.Instance.RedRGB, 14, SimpleMarkerStyle.Diamond);
+        var lineSymbol2 = SymbolFactory.Instance.ConstructLineSymbol(
+          ColorFactory.Instance.RedRGB, 2, SimpleLineStyle.Dash);
+        var polySymbol2 = SymbolFactory.Instance.ConstructPolygonSymbol(
+          ColorFactory.Instance.RedRGB, SimpleFillStyle.DiagonalCross);
+        var textSymbol2 = SymbolFactory.Instance.ConstructTextSymbol(
+          ColorFactory.Instance.RedRGB, 12);
+
+        //Set default point, line, poly, text graphics element symbols
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultPointSymbol(ptSymbol2);
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultLineSymbol(lineSymbol2);
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultPolygonSymbol(polySymbol2);
+        ApplicationOptions.TextAndGraphicsElementsOptions.SetDefaultTextSymbol(textSymbol2);
+      });
+
+      #endregion
+    }
+
+
   }
 }

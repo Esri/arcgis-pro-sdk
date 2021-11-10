@@ -43,6 +43,10 @@ namespace EditingSDKExamples
       //var featLayer = MappingModule.ActiveTOC.SelectedLayers[0] as FeatureLayer;
       var featLayer = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
       
+      // cref: AddValidate;ArcGIS.Desktop.Editing.Attributes.Attribute.AddValidate(System.Func{System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError}})
+      // cref: AddValidate;ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create(System.String,ArcGIS.Desktop.Editing.Attributes.Severity)
+      // cref: AddValidate;ArcGIS.Desktop.Editing.Attributes.Inspector.#ctor(System.Boolean)
+      // cref: AddValidate;ArcGIS.Desktop.Editing.Attributes.Inspector
       #region AddValidate
       var insp = new Inspector();
       insp.LoadSchema(featLayer);
@@ -62,6 +66,9 @@ namespace EditingSDKExamples
       var featLayer = MapView.Active.GetSelectedLayers().First() as FeatureLayer;
       Int64 oid = 42;
     
+      // cref: inspectorclass;ArcGIS.Desktop.Editing.Attributes.Inspector.#ctor(System.Boolean)
+      // cref: inspectorclass;ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Desktop.Editing.Attributes.Inspector)
+      // cref: inspectorclass;ArcGIS.Desktop.Editing.Attributes.Inspector
       #region inspectorclass
       QueuedTask.Run(() =>
       {

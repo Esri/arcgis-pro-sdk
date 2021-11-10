@@ -13,6 +13,7 @@
 
   <accelerators>
     <insertAccelerator refID="esri_editing_table_openTablePaneButton" flags="Ctrl" key="T" />
+    <insertAccelerator refID="esri_editing_externalTable_openTablePaneButton" flags="Ctrl+Shift" key="T" />
   </accelerators>
 
   <conditions>
@@ -54,12 +55,28 @@
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_EditingCondition">
-      <or>
-        <state id="esri_mapping_mapPane" />
-        <state id="esri_editing_tablePane"/>
-        <state id="esri_editing_versionConflictsPane"/>
-        <state id="NoPanes" />
-      </or>
+      <and>
+        <or>
+          <state id="esri_mapping_mapPane" />
+          <state id="esri_editing_tablePane"/>
+          <state id="esri_editing_versionConflictsPane"/>
+          <state id="NoPanes" />
+        </or>
+        <not>
+          <state id="esri_mapping_mapTypeLinkChartState" />
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_editing_EditingKGLinkChartCondition">
+      <and>
+        <or>
+          <state id="esri_mapping_mapPane" />
+          <state id="esri_editing_tablePane"/>
+          <state id="esri_editing_versionConflictsPane"/>
+          <state id="NoPanes" />
+        </or>
+        <state id="esri_mapping_mapTypeLinkChartState" />
+      </and>
     </insertCondition>
     <insertCondition id="esri_editing_MapCondition">
       <and>
@@ -151,6 +168,9 @@
       <and>
         <state id="esri_mapping_mapPane"/>
         <state id="esri_editing_2DMap"/>
+        <not>
+          <state id="esri_editing_StereoView"/>
+        </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_2DMapCondition">
@@ -345,6 +365,12 @@
     <insertCondition id="esri_editing_parcelToolsVisibleCondition">
       <state id="esri_editing_HasParcelFabric"/>
     </insertCondition>
+    <insertCondition id="esri_editing_constructParcelBoundariesVisibleCondition">
+      <and>
+        <state id="esri_editing_ReconstructParcelBoundariesEnabled"/>
+        <state id="esri_editing_HasParcelFabric"/>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_editing_traverseCanSetClosingCondition">
       <state id ="esri_editing_traverseCanSetClosing"/>
     </insertCondition>
@@ -389,6 +415,9 @@
           <state id="esri_editing_HasParcelCopyTo_LinesSelected"/>
         </or>
       </and>
+    </insertCondition>
+    <insertCondition id="esri_editing_HighlightingGapsAndOverlapsSettingsCondition">
+      <state id="esri_editing_HighlightingGapsAndOverlapsSettingsAreValid"/>
     </insertCondition>
     <insertCondition id="esri_editing_HasEditsCondition">
       <state id="esri_editing_HasEdits" />
@@ -474,6 +503,7 @@
           <or>
             <state id="esri_mapping_dataSourceSelectedIsHistoricalVersionState"/>
             <state id="esri_mapping_dataSourceSelectedIsConnectedAsBranchClientServerState"/>
+            <state id="esri_mapping_TOCItemSelectedIsDefaultVersion"/>
           </or>
         </not>
       </and>
@@ -565,9 +595,6 @@
     </insertCondition>
 
     <!-- Tool Conditions -->
-    <insertCondition id="esri_editing_SelectTopologyToolActive_condtion">
-      <state id="esri_editing_SelectTopologyToolActive_state"/>
-    </insertCondition>
     <insertCondition id="esri_editing_slice_move_visible_condition">
       <state id="esri_editing_slice_move_visible_state"/>
     </insertCondition>
@@ -576,8 +603,17 @@
     </insertCondition>
 
     <!-- Table - Conditions -->
-    <insertCondition id="esri_editing_tableOpenCondition" caption="The table is open.">
+    <insertCondition id="esri_editing_tableOpenCondition" caption="The table or external table is open.">
       <state id="esri_editing_tableOpenState" />
+    </insertCondition>
+    <insertCondition id="esri_editing_anyTablePaneOpenCondition" caption="The table or external table is open.">
+      <or>
+        <state id="esri_editing_tableOpenState" />
+        <state id="esri_editing_externalTableOpenState" />
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_editing_externalTableOpenCondition" caption="The table is open.">
+      <state id="esri_editing_externalTableOpenState" />
     </insertCondition>
     <insertCondition id="esri_editing_tables_spatialCondition" caption="The table has a spatial source.">
       <state id="esri_editing_tables_spatialSourceState" />
@@ -591,7 +627,6 @@
     <insertCondition id="esri_editing_tablePane_AttachmentsCondition" caption="The table has attachments">
       <and>
         <state id="esri_editing_tables_currentRowState"/>
-        <state id="esri_editing_tables_canInteractWithMapViewState" />
         <state id="esri_editing_tablePane_Attachments" />
       </and>
     </insertCondition>
@@ -643,6 +678,21 @@
     </insertCondition>
     <insertCondition id="esri_editing_HaveTopologySelectionCondition">
       <state id="esri_editing_HaveTopologySelection"/>
+    </insertCondition>
+    <insertCondition id="esri_editing_HasTableTemplates">
+      <and>
+        <not>
+          <state id="esri_editing_editorDisabled" />
+        </not>
+        <not>
+          <state id="esri_editing_editingNotAvailable"/>
+        </not>
+        <not>
+          <state id="esri_charts_chartsPane" />
+        </not>
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_editing_HasTableTemplatesState"/>
+      </and>
     </insertCondition>
   </conditions>
 
@@ -817,6 +867,9 @@
       <component id="esri_editing_construction_knowledge_graph_relationship_tools">
         <content L_name="Knowledge Graph Relationship tools"/>
       </component>
+      <component id="esri_editing_construction_group_table_tools">
+        <content L_name="Table tools"/>
+      </component>
     </insertCategory>
 
     <insertCategory id="esri_editing_construction_point"/>
@@ -828,6 +881,7 @@
     <insertCategory id="esri_editing_construction_dimension"/>
     <insertCategory id="esri_editing_construction_knowledge_graph_entity"/>
     <insertCategory id="esri_editing_construction_knowledge_graph_relationship"/>
+    <insertCategory id="esri_editing_construction_table"/>
 
     <!--construction tool options-->
     <insertCategory id="esri_editing_tool_options">
@@ -876,6 +930,9 @@
       <component id="esri_editing_gdbGDBValidationErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorGeodatabaseFeatureValidationErrorType" >
         <content L_name="Geodatabase Features"/>
       </component>
+      <component id="esri_editing_gdbUtilityNetworkErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorUNErrorType" >
+        <content L_name="Utility Network"/>
+      </component>
     </insertCategory>
 
     <insertCategory id="esri_editing_ErrorInspector_Tabs">
@@ -883,6 +940,9 @@
         <content L_name="Preview"/>
       </component>
       <component id="esri_editing_ErrorInspector_DetailsTab" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.DetailsViewModel" >
+        <content L_name="Details"/>
+      </component>
+      <component id="esri_editing_ErrorInspector_UNDetailsTab" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.UtilityNetworkDetailsViewModel" >
         <content L_name="Details"/>
       </component>
       <component id="esri_editing_ErrorInspector_FixTab" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.FixErrorViewModel" >
@@ -925,6 +985,7 @@
     </insertCategory>
 
     <insertCategory id="esri_editing_CommandList" />
+    <insertCategory id="esri_editing_KnowledgeGraphCommandList"/>
 
     <updateCategory refID="esri_mapping_tocViews">
 
@@ -975,8 +1036,8 @@
       <shortcut refID="esri_editing_tableFlashButton" key="NumPad8" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFlashButton" key="D8" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_table_fieldsShowAliasButton" key="N" flags="Ctrl+Shift" onKeyUp="false"/>
-      <shortcut refID="esri_editing_table_tableCustomSortButton" key="S" flags="Ctrl+Shift" onKeyUp="false"/>
-      <shortcut refID="esri_editing_table_tableClearSortButton" key="U" flags="Ctrl+Shift" onKeyUp="false"/>
+      <shortcut refID="esri_editing_tableSortCustomButton" key="S" flags="Ctrl+Shift" onKeyUp="false"/>
+      <shortcut refID="esri_editing_tableSortClearButton" key="U" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_table_tableCopySelectedRowsButton" key="C" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_table_refreshTableButton" key="F5" flags="None" onKeyUp="false"/>
       <shortcut refID="esri_editing_table_loadAllButton" key="L" flags="Ctrl" onKeyUp="false"/>
@@ -1186,6 +1247,9 @@
       <shortcut refID="esri_editing_geometryViewSelectAllButton" key="A" flags="Ctrl" onKeyUp="true"/>
       <shortcut refID="esri_editing_geometryViewClearSelectionButton" key="A" flags="Ctrl+Shift" onKeyUp="true"/>
       <shortcut refID="esri_editing_geometryViewSwitchSelectionButton" key="U" flags="Ctrl" onKeyUp="true"/>
+      <shortcut refID="esri_editing_geometryViewZoomToButton" key="OemPlus" flags="Ctrl+Shift" onKeyUp="true"/>
+      <shortcut refID="esri_editing_geometryViewFlashButton" key="NumPad8" flags="Ctrl" onKeyUp="true"/>
+      <shortcut refID="esri_editing_geometryViewFlashButton" key="D8" flags="Ctrl" onKeyUp="true"/>
     </insertShortcutTable>
 
     <insertShortcutTable id="esri_editing_shortcutList_GridSetRotation">
@@ -1210,6 +1274,10 @@
           <insertGroup refID="esri_editing_tableFilterGroup" />
           <insertGroup refID="esri_editing_tableExportGroup" />
         </updateTab>
+        <updateTab refID="esri_mapping_linearReferencingTab">
+          <insertGroup refID="esri_editing_linearReferencingEditsGroup" placeWith="esri_mapping_linearReferencing_selectionGroup" insert="after"/>
+          <insertGroup refID="esri_editing_linearReferencingEditingGroup" placeWith="esri_editing_linearReferencingEditsGroup" insert="after"/>
+        </updateTab>
       </tabs>
       <groups>
         <updateGroup refID="esri_mapping_selectionGroup">
@@ -1218,6 +1286,10 @@
         <updateGroup refID="esri_mapping_featureLayerAttributeGroup">
           <insertButton refID="esri_editing_table_openTablePaneButton" size="large" />
           <insertButton refID="esri_editing_table_openSelectedTablePaneButton" size="large" />
+        </updateGroup>
+        <updateGroup refID="esri_mapping_layerVersioningManageEditsGroup">
+          <insertButton refID="esri_editing_SaveEditsBtn" size="large" />
+          <insertButton refID="esri_editing_DiscardEditsBtn" size="large" />
         </updateGroup>
         <updateGroup refID="esri_mapping_layerVersioningGroup">
           <insertButton refID="esri_editor_reconcileVersionButton" size="large"/>
@@ -1228,6 +1300,9 @@
         <updateGroup refID="esri_mapping_versionMapViewGroup">
           <insertButton refID="esri_editor_versionRefreshMapButton" size="large" />
         </updateGroup>
+        <updateGroup refID="esri_mapping_linearReferencing_selectionGroup">
+          <insertButton refID="esri_editing_ShowAttributes" placeWith="esri_mapping_clearSelectionButton" insert="before" size="middle" />
+        </updateGroup>
       </groups>
       <menus>
         <updateMenu refID="esri_mapping_selection2DContextMenu">
@@ -1236,6 +1311,8 @@
           <insertButton refID="esri_core_editDeleteButton" separator="true"/>
           <insertButton refID="esri_mapping_exploreContext" separator="true"/>
           <insertButton refID="esri_mapping_locateReverseGeocode" separator="true"/>
+          <insertButton refID="esri_mapping_copyCoordinates"/>
+          <insertMenu   refID="esri_mapping_ConvertCoordinatesMenu"/>
           <insertButton refID="esri_mapping_selectContext" separator="true"/>
           <insertButton refID="esri_editing_selectAllInLayer"/>
           <insertButton refID="esri_mapping_zoomToSelectionButton"/>
@@ -1253,6 +1330,8 @@
           <insertButton refID="esri_core_editDeleteButton" separator="true"/>
           <insertButton refID="esri_mapping_exploreContext" separator="true"/>
           <insertButton refID="esri_mapping_locateReverseGeocode" separator="true"/>
+          <insertButton refID="esri_mapping_copyCoordinates"/>
+          <insertMenu   refID="esri_mapping_ConvertCoordinatesMenu"/>
           <insertButton refID="esri_mapping_selectContext" separator="true"/>
           <insertButton refID="esri_editing_selectAllInLayer"/>
           <insertButton refID="esri_mapping_zoomToSelectionButton"/>
@@ -1265,9 +1344,6 @@
           <insertButton refID="esri_editing_ReplaceMultiPatchContextCommand"/>
           <insertButton refID="esri_editing_EditVerticesModifyFeature"/>
           <insertButton refID="esri_editing_ShowAttributes" separator="true"/>
-        </updateMenu>
-        <updateMenu refID="esri_mapping_tocContextMenu">
-          <insertButton refID="esri_editing_ShowEditablityTOC" placeWith="esri_mapping_showSelectionTOC" insert="after"/>
         </updateMenu>
         
         <updateMenu refID="esri_mapping_layerContextMenu">
@@ -1336,17 +1412,70 @@
       </menus>
     </updateModule>
 
+    <updateModule refID="esri_geodatabase_module">
+      <menus>
+        <updateMenu refID="fgdbItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="mgdbItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="egdbItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="fgdbAnnotationItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="mgdbAnnotationFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="egdbAnnotationItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="fgdbDimensionItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="mgdbDimensionFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="egdbDimensionItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="fgdbItemTableTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="egdbItemTableTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="mgdbItemTableTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="shapefileItemMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="ShapefileItemMenuExportItemMenu" insert="before" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="onlineSubLayerItemMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="excelItemTableTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="tableItemMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="sqliteItemFeatureClassTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="sqliteItemTableTypeMenu">
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
+        </updateMenu>
+      </menus>
+    </updateModule>
+
     <insertModule id="esri_editing_EditingModule"
                   caption="Editing"
                   className="EditingModule">
 
       <panes>
-        <pane id="esri_editing_tablePane_old" caption="Table" className="TablePaneViewModel"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png" isClosable="true"
-              defaultTab="esri_editing_tableHomeTab" hasCloseAllButThisCommand="false" isDropTarget="false">
-          <content className="TablePaneView" />
-        </pane>
-
         <pane id="esri_editing_versionConflictsPane" caption="Conflicts" className="ArcGIS.Desktop.Editing.VersionConflictManagementViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/VersionConflictsWindow16.png" isClosable="true" defaultTab="esri_editing_EditingTab" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll">
           <content className="ArcGIS.Desktop.Editing.VersionConflictManagementView" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll" />
         </pane>
@@ -1359,6 +1488,12 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png"
               defaultTab="esri_editing_tableHomeTab" hasCloseAllButThisCommand="false" isDropTarget="false">
           <content className="TableCorePaneView" />
+        </pane>
+
+        <pane id="esri_editing_externalTable_Pane" caption="Table" className="TableExternalPaneViewModel"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFromSource16.png"
+              defaultTab="esri_editing_externalTable_homeTab" hasCloseAllButThisCommand="true" isDropTarget="false">
+          <content className="TableExternalPaneView" />
         </pane>
       </panes>
 
@@ -1663,14 +1798,6 @@
                 className="esri_editing_EditingModule:CustomizeGallery" >
           <tooltip heading="Customize Tool Gallery">
             Add groups, reorder, or remove the tools in the Tool gallery.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_ShowEditablityTOC"
-                caption="Editing" extendedCaption="Show List by Editing view of Contents pane."
-                condition="esri_mapping_mapPane"
-                className="EditingViewButton" hidden="true">
-          <tooltip heading="Editing">
-            Show layers in the table of contents by whether they're editable.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_MakeOnlyEditableLayerCommand" hidden="true"
@@ -2333,6 +2460,86 @@
           </tooltip>
           <content guid="901B1952-1773-4428-BA07-4DAD8C368ABD" />
         </tool>
+        <!-- knowledge graph move tool -->
+        <tool id="esri_editing_KGMoveTool" hidden="true"
+              className="SketchKGMoveTool"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool16.png"
+              caption="Select"
+              condition="esri_editing_EditingMapCondition"
+              loadOnClick="false">
+          <tooltip heading="Select">
+            Select and move entities and relationships.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <button id="esri_editing_LinkChartSelectTool"
+                caption="Select" extendedCaption="Link Chart Select"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveTool16.png"
+                className="LinkChartSelectCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="SE">
+          <tooltip heading="Select">
+            Select and move entities and relationships.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="move;knowledge;" />
+        </button>
+        <button id="esri_editing_LinkChartRectangleSelect"
+                caption="Rectangle" extendedCaption="Link Chart Rectangle Select"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveTool16.png"
+                className="LinkChartRectangleSelectCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="R">
+          <tooltip heading="Rectangle Select">
+            Select and optionally Move features by clicking them or drawing a box around them.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="move;knowledge;" />
+        </button>
+        <button id="esri_editing_LinkChartLassoSelect"
+                caption="Lasso" extendedCaption="Link Chart Lasso Select"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveLassoTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveLassoTool16.png"
+                className="LinkChartLassoSelectCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="L">
+          <tooltip heading="Lasso Select">
+            Select and optionally Move features by clicking them or drawing a freehand shape around them.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="move;knowledge;" />
+        </button>
+        <button id="esri_editing_LinkChartCircleSelect"
+                caption="Circle" extendedCaption="Link Chart Circle Select"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveCircleTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectMoveCircleTool16.png"
+                className="LinkChartCircleSelectCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="C">
+          <tooltip heading="Circle Select">
+            Select and optionally Move features by clicking them or drawing a circle around them.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="move;knowledge;" />
+        </button>
+        <button id="esri_editing_LinkChartSelect"
+                caption="Select" extendedCaption="Link Chart Select"
+                className="KGSelectCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="S">
+          <tooltip heading="Select">
+            In this mode, features can only be selected.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="select;knowledge;" />
+        </button>
+        <button id="esri_editing_LinkChartSelectAndMove"
+                caption="Select and Move" extendedCaption="Link Chart Select and Move"
+                className="KGSelectAndMoveCommand"
+                condition="esri_editing_EditingMapCondition"
+                loadOnClick="false" keytip="M">
+          <tooltip heading="Select and Move">
+            In this mode, features can be selected and moved.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="move;knowledge;" />
+        </button>
 
         <!--dimension construction-->
         <tool id="esri_editing_AlignedDimensionTool" hidden="true"
@@ -2441,6 +2648,21 @@
           </tooltip>
           <content keywords="Topology;Snap;node;edge;multipatch;annotation" HelpContextID="120000849"/>
         </button>
+
+        <button id="esri_editing_EditVerticesMoveKG"
+            caption="Move" extendedCaption="Move selected features."
+            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingMoveTool32.png"
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingMoveTool16.png"
+            className="EditVerticesMoveModeCommand"
+            categoryRefID="esri_editing_KnowledgeGraphCommandList"
+            condition="esri_editing_EditingMapCondition"
+            loadOnClick="false">
+          <tooltip heading="Move">
+            Move the selected features.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="Topology;Snap;node;edge;multipatch;annotation" HelpContextID="120000849"/>
+        </button>
+        
         <button id="esri_editing_EditVerticesRotate"
                 caption="Rotate" extendedCaption="Rotate selected features."
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRotateTool32.png"
@@ -2455,6 +2677,21 @@
           </tooltip>
           <content keywords="Topology;revolve;turn;spin;twirl;swivel;circle;pivot;multipatch;annotation" HelpContextID="120000849"/>
         </button>
+        <button id="esri_editing_EditVerticesRotateKG"
+                caption="Rotate" extendedCaption="Rotate selected features."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRotateTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRotateTool16.png"
+                className="EditVerticesRotateModeCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_KnowledgeGraphCommandList"
+                loadOnClick="false">
+          <tooltip heading="Rotate">
+            Rotate the selected features interactively or by an angular measurement. Press S to show the secondary anchor and press and hold Ctrl to drag it. Press A to rotate by a value.
+            <disabledText></disabledText>
+          </tooltip>
+          <content keywords="Topology;revolve;turn;spin;twirl;swivel;circle;pivot;multipatch;annotation" HelpContextID="120000849"/>
+        </button>
+        
         <button id="esri_editing_EditVerticesScale"
                 caption="Scale" extendedCaption="Scale selected features."
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingScaleTool32.png"
@@ -2469,6 +2706,21 @@
           </tooltip>
           <content keywords="Topology;resize;expand;enlarge;shrink;grow;reduce;decrease;shorten;multipatch;annotation" HelpContextID="120000849"/>
         </button>
+        <button id="esri_editing_EditVerticesScaleKG"
+                caption="Scale" extendedCaption="Scale selected features."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingScaleTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingScaleTool16.png"
+                className="EditVerticesScaleModeCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_KnowledgeGraphCommandList"
+                loadOnClick="false">
+          <tooltip heading="Scale">
+            Scale the selected features interactively or by a scale factor. Press S to show the secondary anchor and press and hold Ctrl to drag it. Press F to scale by a factor.
+            <disabledText></disabledText>
+          </tooltip>
+          <content keywords="Topology;resize;expand;enlarge;shrink;grow;reduce;decrease;shorten;multipatch;annotation" HelpContextID="120000849"/>
+        </button>
+
         <button id="esri_editing_Transform"
                 caption="Transform" extendedCaption="Transform feature's based on links."
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAdjustmentAdjust32.png"
@@ -2552,6 +2804,21 @@
           </tooltip>
           <content keywords="Topology;vertex;sketch;edit sketch;node;edge;multipatch;annotation;baseline;measure;vertices" HelpContextID="120001885"/>
         </button>
+
+        <button id="esri_editing_EditVerticesModifyFeatureKG"
+                caption="Edit Vertices" extendedCaption="Edit feature vertices."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingEditVertices16.png"
+                className="EditVerticesVerticesModeCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_KnowledgeGraphCommandList"
+                loadOnClick="false">
+          <tooltip heading="Edit Vertices">
+            Add, move, or delete vertices and segments for the selected feature.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="Topology;vertex;sketch;edit sketch;node;edge;multipatch;annotation;baseline;measure;vertices" HelpContextID="120001885"/>
+        </button>
+
         <tool id="esri_editing_ReshapeFeature" hidden="true"
               caption="Reshape"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingReshapeFeatureTool32.png"
@@ -2575,6 +2842,21 @@
           </tooltip>
           <content keywords="Topology;reshape feature;reshape feature tool;shape;alter;edge" HelpContextID="120001886"/>
         </button>
+
+        <button id="esri_editing_ReshapeCommandKG"
+                caption="Reshape"  extendedCaption="Reshape features."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingReshapeFeatureTool32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingReshapeFeatureTool16.png"
+                className="ReshapeCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_KnowledgeGraphCommandList"
+                loadOnClick="false">
+          <tooltip heading="Reshape">
+            Reshape an existing line or polygon feature by drawing the new shape and  crossing the existing feature in at least two places.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="Topology;reshape feature;reshape feature tool;shape;alter;edge" HelpContextID="120001886"/>
+        </button>
+
         <button id="esri_editing_EditVerticesText"
                 caption="Annotation" extendedCaption="Edit Annotation features"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoEditTool32.png"
@@ -2683,7 +2965,7 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementCircle16.png"
               caption="Replace Circle"
               condition="esri_editing_EditingMapCondition" loadOnClick="false">
-          <tooltip heading="Circle">Create a finished circular polygon feature.</tooltip>
+          <tooltip heading="Replace Circle">Replace feature geometry with a finished circular polygon.</tooltip>
         </button>
         <button id="esri_editing_ReplaceRectanglePolygon" hidden="true"
               className="ReplaceRectanglePolygonCommand"
@@ -3164,6 +3446,20 @@
           <content keywords="attribute transfer;spatial adjustment;copy attributes" HelpContextID="120001907"/>
         </button>
 
+        <button id="esri_editing_AttributeTransferKG"
+                caption="Transfer Attributes"  extendedCaption="Transfer Attributes"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAdjustmentAttributeTransfer32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAdjustmentAttributeTransfer16.png"
+                className="AttributeTransferCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_KnowledgeGraphCommandList"
+                loadOnClick="false">
+          <tooltip heading="Transfer Attributes">
+            Copy attribute values from one feature to another.
+          </tooltip>
+          <content keywords="attribute transfer;spatial adjustment;copy attributes" HelpContextID="120001907"/>
+        </button>
+
         <button id="esri_editing_TraverseCommand"
                caption="Traverse"  extendedCaption="Create features by entering a traverse."
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Traverse32.png"
@@ -3368,29 +3664,6 @@
             Reshape a topological edge.<disabledText></disabledText>
           </tooltip>
         </tool>
-        <tool id="esri_editing_SelectTopologyTool" hidden="true"
-            caption="Select Topology"
-            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectTopology32.png"
-            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectTopology16.png"
-            className="SelectTopologyTool"
-            condition="esri_editing_EditingMapCondition">
-          <tooltip heading="Select Topology">
-            Select a topology element.<disabledText></disabledText>
-          </tooltip>
-        </tool>
-        <!--nc removed as per CR325523 -->
-        <!--<button id="esri_editing_SelectTopologyCommand"
-                caption="Select Topology" extendedCaption="Select topological edges."
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectTopology32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectTopology16.png"
-                className="SelectTopologyCommand"
-                condition="esri_editing_EditingMapCondition"
-                checkedCondition="esri_editing_SelectTopologyToolActive_condtion"
-                categoryRefID="esri_editing_CommandList">
-          <tooltip heading="Select Topology">
-            Select a topological element.<disabledText></disabledText>
-          </tooltip>
-        </button>-->
         <button id="esri_editing_StretchTopology"
                 caption="Stretch Topology"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingStretchTopology32.png"
@@ -3412,6 +3685,17 @@
                 condition="esri_editing_MapCondition">
           <tooltip heading="Stretch Proportionately">
             Keep the general shape of a feature when moving a vertex. Other vertices move to preserve the segment proportions. When this option is off, a vertex moves independently when dragged.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_MidSketchVertexEditing"
+                caption="Vertex Editing" extendedCaption="Vertex Editing while sketching"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectVertex32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSelectVertex16.png"
+                className="SetMidSketchVertexEditingCommand"
+                loadOnClick="false"
+                condition="esri_editing_MapCondition">
+          <tooltip heading="Vertex Editing">
+            Allow editing of vertices and segments while sketching. When this option is off, position of vertices and segments cannot be modified.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_UtilityDisconnect"
@@ -3546,7 +3830,7 @@
               categoryRefID="esri_editing_CommandList"
               loadOnClick="false">
           <tooltip heading="Construct Polygons">
-            Create new polygons from the shapes of selected line features.<disabledText>This tool is not available in 3D views.</disabledText>
+            Create new polygons from the shapes of selected features.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
           <content keywords="closed;loop;build" HelpContextID="120001902"/>
         </button>
@@ -3795,7 +4079,7 @@
           <tooltip heading="Copy Lines To">
             Copy selected parcels or lines to the parcel type chosen on the Copy Lines To dialog box. Use the copied features to create new parcels in the active record.<disabledText>Available only when there is an active record set in the map and there are selected features.</disabledText>
           </tooltip>
-          <content L_group="Parcel" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>/>
+          <content L_group="Parcel" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric;Construct from parent" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>/>
         </button>
 
         <button id="esri_editing_createParcelSeeds"
@@ -3852,13 +4136,28 @@
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteParcels32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteParcels16.png"
                 licenseLevel="standard"
-                condition="esri_editing_EditingMapCondition"
+                condition="esri_editing_parcelPolygonsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
           <tooltip heading="Delete Parcels">
-            Delete the selected parcels.<disabledText></disabledText>
+            Delete the selected parcels.<disabledText>Available only when there are selected parcels.</disabledText>
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+        </button>
+
+        <button id="esri_editing_reconstructParcelBoundaries"
+            caption="Reconstruct Boundaries" extendedCaption=""
+            className="ArcGIS.Desktop.Editing.ReconstructParcelBoundariesCommand"
+            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateBacklot32.png"
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateBacklot16.png"
+            licenseLevel="standard"
+            condition="esri_editing_parcelPolygonsSelectedCondition"
+            categoryRefID="esri_editing_CommandList"
+            disableIfBusy="true">
+          <tooltip heading="Reconstruct Boundaries">
+            Reconstruct Parcel Boundaries.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_constructParcelBoundariesVisibleCondition"/>
         </button>
 
         <button id="esri_editing_zoomToActiveRecord" hidden="true"
@@ -3887,7 +4186,7 @@
           <tooltip heading="Create Record">
             Create a new parcel fabric record. Records store information about the legal record such as record type and recorded date. Parcels are organized in the parcel fabric by their associated record.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric"/>
+          <content keywords="Parcel;Parcels;Fabric;Plan"/>
         </button>
 
         <button id="esri_editing_MergeCollinearParcelBoundariesButton"
@@ -3903,7 +4202,7 @@
           <tooltip heading="Merge Collinear Parcel Boundaries">
             Merges collinear parcel boundaries.<disabledText>Available only when there are selected parcel lines or connection lines.</disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+          <content keywords="Parcel;Parcels;Fabric;Merge courses" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
         <button id="esri_editing_MergeParcelPoints"
@@ -3919,7 +4218,7 @@
           <tooltip heading="Merge Parcel Points">
             Merge Parcel Points.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+          <content keywords="Parcel;Parcels;Fabric;Mean Points" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
         <button id="esri_editing_SimplifyBySLACAButton"
@@ -4412,6 +4711,18 @@
         </tool>
         <!-- end of 3D Geometry shapes-->
 
+        <tool id="esri_editing_InsertRowTool"
+                caption="Insert Row" extendedCaption="Insert Row"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddNewRows32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddNewRows16.png"
+                className="InsertRowTool"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_construction_table">
+          <tooltip heading="Insert Row">
+            Insert one or more rows into the table.<disabledText></disabledText>
+          </tooltip>
+          <content guid="EA2ECD82-D947-4D01-BF74-125DC09AA695" />
+        </tool>
 
         <button id="esri_editing_ConstructPointsAlongLineCommand"
                 caption="Create Points Along Line" extendedCaption="Create points along an existing line."
@@ -4754,7 +5065,7 @@
         </button>
         <button id="esri_editing_VerticalContextMenuItem" caption="Vertical" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingZDirectionConstuctor32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingZDirectionConstuctor16.png" className="VerticalCommand" loadOnClick="false">
           <tooltip heading="Vertical">
-            Set the z coordinate.<disabledText></disabledText>
+            Set the z coordinate.<disabledText>This command is only available in 3D views.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_AddDeviceLocationCommand" caption="Add Device Location"
@@ -5121,8 +5432,8 @@
         </button>
 
         <button id="esri_editing_templateRevertOverrides" caption="Revert changes" extendedCaption="Revert template attribute overrides in Create Features pane." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_16.png" className="Templates.ClearTemplateOverridesContextCommand" loadOnClick="false">
-          <tooltip heading="Restore value">
-            Restore this value to the value defined by the source data.<disabledText>This command is disabled if the template does not have any overrides.</disabledText>
+          <tooltip heading="Revert changes">
+            Restore updated overrides to the values defined in the template properties.<disabledText>This command is disabled if the template does not have any overrides.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_templateSaveAs" caption="Save As" extendedCaption="Save template as a new template." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSaveAs32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSaveAs16.png" className="Templates.SaveToNewTemplateContextCommand" loadOnClick="false" helpContextID="">
@@ -5148,7 +5459,7 @@
 
         <!-- Template folders context menus -->
         <button id="esri_editing_templateRemoveFromFolder" caption="Remove" extendedCaption="Remove a Feature Template." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" className="Templates.DeleteTemplateFromFolderContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="Delete Template">
+          <tooltip heading="Remove Template">
             Remove the selected template from its containing folder.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -5274,47 +5585,162 @@
         <!--end of Annotation Editing context menu-->
 
         <!--Manage Template toolbar-->
-        <button id="esri_editing_templateNew" caption="New Group Template" extendedCaption="New Group Template."
+        <button id="esri_editing_templateNew" caption="Template" extendedCaption="Template"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNew32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNew16.png"
-                className="Templates.NewGroupTemplateContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="New Group Template">
-            Create a new group template using the selected template as primary template.<disabledText></disabledText>
+                className="Templates.NewTemplateContextCommand" loadOnClick="false" helpContextID="">
+          <tooltip heading="Create a new feature template for the selected layer.">
+            <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_templateNewFromFeature" caption="New Group Template" extendedCaption="New Group Template."
+        <button id="esri_editing_templateNewFromFeature" caption="Template From Feature" extendedCaption="Template From Feature"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingNewTemplateFromFeature32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingNewTemplateFromFeature16.png"
-                className="Templates.NewGroupTemplateContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="New Group Template">
-            Create a new group template using the selected template as primary template.<disabledText></disabledText>
+                className="Templates.NewTemplateFromFeatureContextCommand" loadOnClick="false" helpContextID="">
+          <tooltip heading="Create a new feature template for the selected layer based on a feature you select in your map.">
+            <disabledText>This command is available when you select one feature.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_templateNewForLayer" caption="New Group Template" extendedCaption="New Group Template."
+        <button id="esri_editing_templateNewForLayer" caption="Template For Layer" extendedCaption="Template For Layer"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingNewTemplatesForLayer32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingNewTemplatesForLayer16.png"
-                className="Templates.NewGroupTemplateContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="New Group Template">
-            Create a new group template using the selected template as primary template.<disabledText></disabledText>
+                className="Templates.NewSelectedLayerTemplateContextCommand" loadOnClick="false" helpContextID="">
+          <tooltip heading="Create a new feature template for each symbol defined for the selected layer." >
+            <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_templateNewGroup" caption="New Group Template" extendedCaption="New Group Template."
+        <button id="esri_editing_templateNewGroup" caption="Group Template" extendedCaption="Group Template"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNewGroup32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNewGroup16.png"
                 className="Templates.NewGroupTemplateContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="New Group Template">
-            Create a new group template using the selected template as primary template.<disabledText></disabledText>
+          <tooltip heading="Create a new group template using the selected template as primary template.">
+            <disabledText>This command is available when you click an existing feature template.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_templateNewPreset" caption="New Group Template" extendedCaption="New Group Template."
+        <button id="esri_editing_templateNewPreset" caption="Preset Template from Selected Features" extendedCaption="Preset Template from Selected Features"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_New_Preset_Template_from_Features32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_New_Preset_Template_from_Features16.png"
-                className="Templates.NewGroupTemplateContextCommand" loadOnClick="false" helpContextID="">
-          <tooltip heading="New Group Template">
-            Create a new group template using the selected template as primary template.<disabledText></disabledText>
+                className="Templates.NewPresetTemplateContextCommand" loadOnClick="false" helpContextID="">
+          <tooltip heading="Create a preset template from the selected features.">
+            <disabledText>This command is available when you select features.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_editing_MFT_Properties" caption="Properties" extendedCaption="Open template properties." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" className="Templates.TemplatePropertiesCommand" helpContextID="">
+          <tooltip heading="Template Properties">
+            Change the template settings, including tools, description, tags, and more.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_MFT_Duplicate" caption="Duplicate" extendedCaption="Duplicate a template." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png" className="Templates.TemplateDuplicateCommand" loadOnClick="false" helpContextID="">
+          <tooltip heading="Duplicate Template">
+            Copy the selected template.<disabledText></disabledText>
           </tooltip>
         </button>
         <!--end of Manage Template toolbar-->
+
+
+        <!--GeometryView Vertex and Part ContextMenu items  -  awaiting icons - https://devtopia.esri.com/ArcGISPro/editing/issues/349 -->
+
+        <button id="esri_editing_gvVertexInsertBefore_Command" caption="Insert Before" extendedCaption="Insert Before Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClassBreakInsertAbove32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClassBreakInsertAbove16.png"
+                className="GV_VertexInsertBeforeCommand">
+          <tooltip heading="Insert Before"> Insert before the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvVertexInsertAfter_Command" caption="Insert After" extendedCaption="Insert after Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClassBreakInsertBelow32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClassBreakInsertBelow16.png"
+                className="GV_VertexInsertAfterCommand">
+          <tooltip heading="Insert After"> Insert after the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvVertexFlash_Command" caption="Flash" extendedCaption="Flash Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png"
+                className="GV_VertexFlashCommand">
+          <tooltip heading="Flash"> Flash the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvVertexZoomTo_Command" caption="Zoom To" extendedCaption="Zoom To Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection16.png"
+                className="GV_VertexZoomToCommand">
+          <tooltip heading="Zoom To"> Zoom to the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvVertexPanTo_Command" caption="Pan To" extendedCaption="Pan To Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection16.png"
+                className="GV_VertexPanToCommand">
+          <tooltip heading="Pan To"> Pan to the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvVertexDelete_Command" caption="Delete" extendedCaption="Delete Selected Sketch Vertices."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
+                className="GV_VertexDeleteCommand">
+          <tooltip heading="Delete"> Delete the selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartZoomTo_Command" caption="Zoom To Part" extendedCaption="Zoom To Selected Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection16.png"
+                className="GV_PartZoomToCommand">
+          <tooltip heading="Zoom To Part"> Zoom to the part or parts of all currently selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartPanTo_Command" caption="Pan To Part" extendedCaption="Pan To Selected Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection16.png"
+                className="GV_PartPanToCommand">
+          <tooltip heading="Pan To Part"> Pan to the part or parts of all currently selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartSelectAll_Command" caption="Select All" extendedCaption="Select All Vertices Within Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableShowSelectedRecords32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableShowSelectedRecords16.png"
+                className="GV_PartSelectAllCommand">
+          <tooltip heading="Select All"> Select all vertices within the part or parts of all currently selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartDelete_Command" caption="Delete Part" extendedCaption="Delete Selected Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDeleteSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDeleteSelection16.png"
+                className="GV_PartDeleteCommand">
+          <tooltip heading="Delete Part"> Delete the part or parts of all currently selected vertices.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartHeaderZoomTo_Command" caption="Zoom To Part" extendedCaption="Zoom To Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection16.png"
+                className="GV_PartHeaderZoomToCommand">
+          <tooltip heading="Zoom To Part"> Zoom to the part.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartHeaderPanTo_Command" caption="Pan To Part" extendedCaption="Pan To Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TablePantoSelection16.png"
+                className="GV_PartHeaderPanToCommand">
+          <tooltip heading="Pan To Part"> Pan to the part.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartHeaderSelectAll_Command" caption="Select All" extendedCaption="Select All Vertices Within Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableShowSelectedRecords32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableShowSelectedRecords16.png"
+                className="GV_PartHeaderSelectAllCommand">
+          <tooltip heading="Select All"> Select all vertices within the part.<disabledText /> </tooltip>
+        </button>
+        <button id="esri_editing_gvPartHeaderDelete_Command" caption="Delete Part" extendedCaption="Delete Geometry Part."
+                hidden="true" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDeleteSelection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDeleteSelection16.png"
+                className="GV_PartHeaderDeleteCommand">
+          <tooltip heading="Delete part"> Delete the geometry part.<disabledText /> </tooltip>
+        </button>
+
+        <!--end of GeometryView Vertex and Part ContextMenu items-->
 
 
         <button id="esri_editing_DeleteVertices_Command" caption="Delete Vertices" extendedCaption="Delete Selected Sketch Vertices." hidden="true"
@@ -5407,7 +5833,8 @@
         </button>
 
 
-        <button id="esri_editing_addFavoriteCommand" hidden="true" caption="Add to Favorites" extendedCaption="Add command to favorites in Modify Features pane." className="AddFavoritesContextCommand" loadOnClick="false" helpContextID="">
+        <button id="esri_editing_addFavoriteCommand" hidden="true" caption="Add to Favorites" extendedCaption="Add command to favorites in Modify Features pane."
+                className="AddFavoritesContextCommand" loadOnClick="false" helpContextID="" condition="esri_editing_EditingCondition">
           <tooltip heading="Add to Favorite">
             Add to favorite commands.<disabledText></disabledText>
           </tooltip>
@@ -5851,6 +6278,16 @@
             Add a new nonspatial object to be contained within the selected container.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_Attributes_AddRowContextMenuItem" hidden="true" caption="Insert Row"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddNewRows32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddNewRows16.png"
+                loadOnClick="false"
+                condition="esri_editing_HasTableTemplates"
+                className="Attributes.AddRowCommand">
+          <tooltip heading="Insert Row">
+            Add a new row by specifying a table template.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_editing_Attributes_RemoveAllFromRelationshipContextMenuItem" hidden="true" caption="Remove All From Relationship"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRelationshipRemove32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRelationshipRemove16.png"
@@ -6005,6 +6442,11 @@
         <button id="esri_editing_table_openStandaloneTablePaneButton" caption="Open" extendedCaption="Open standalone Table." className="esri_editing_EditingModule:TableManager.OnOpenTablePane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen32.png" loadOnClick="false">
           <tooltip heading="Open Table">Open a viewer for the selected table.</tooltip>
         </button>
+        <button id="esri_editing_externalTable_openTablePaneButton" keytip="TV" caption="Open Table" extendedCaption="Open Table View for a data item." className="esri_editing_EditingModule:TableManager.OnOpenExternalTablePane" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFromSource16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFromSource32.png">
+          <tooltip heading="Open Table View">
+            Open the attribute table for this data item.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
         <!-- Table Fields Buttons -->
         <button id="esri_editing_table_fieldsShowAllButton" caption="Show All" extendedCaption="Show all fields for this table." className="esri_editing_EditingModule:TableManager.ShowAllFields" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsTurnAllOn16.png" condition="esri_editing_tablePane" loadOnClick="true">
@@ -6026,18 +6468,6 @@
         <button id="esri_editing_table_tableAddFieldButton" caption="Add" extendedCaption="Add a new field in this table." className="esri_editing_EditingModule:TableManager.AddField" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableAddField16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableAddField32.png" loadOnClick="false" keytip="FN">
           <tooltip heading="Add Field">
             Add a new field in this table.<disabledText>The project has unsaved edits or the table or its schema is read only.</disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_table_tableCustomSortButton" caption="Custom Sort" extendedCaption="" className="esri_editing_EditingModule:TableManager.CustomSort"
-                loadOnClick="false" >
-          <tooltip heading="Custom Sort">
-            <disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_table_tableClearSortButton" caption="Clear Sort" extendedCaption="" className="esri_editing_EditingModule:TableManager.ClearSort"
-                loadOnClick="false">
-          <tooltip heading="Clear Sort">
-            <disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_table_tableCopySelectedRowsButton" caption="Copy" extendedCaption="" className="esri_editing_EditingModule:TableManager.CopySelectedRows" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopySelectedRows16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopySelectedRows32.png"
@@ -6073,6 +6503,11 @@
         <button id="esri_editing_tableSortCustomButton" caption="Custom Sort" extendedCaption="Custom field sorting." className="esri_editing_EditingModule:TableManager.CustomSort" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png" loadOnClick="true" keytip="C">
           <tooltip heading="Custom Sort (Ctrl+Shift+S)">
             Sort the table by multiple fields or make the sort case sensitive.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableSortClearButton" caption="Clear Sort" extendedCaption="Clear table sort order." className="esri_editing_EditingModule:TableManager.ClearSort" loadOnClick="true" keytip="C">
+          <tooltip heading="Clear Sort (Ctrl+Shift+U)">
+            Clear the sort order from all fields in the table.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_table_timeFilterButton" caption="Time" extendedCaption="Filter the table by time." className="TableTimeFilterButton"
@@ -6349,7 +6784,7 @@
           </tooltip>
         </button>
 
-        <button id="esri_editing_tableselectByAttributeButton" className="esri_editing_EditingModule:TableManager.OnSelectByAttributes" caption="Select By Attributes" extendedCaption="Active table view" keytip="SBA" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectByAttributes16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectByAttributes32.png" condition="esri_editing_tableOpenCondition" helpContextID="">
+        <button id="esri_editing_tableselectByAttributeButton" className="esri_editing_EditingModule:TableManager.OnSelectByAttributes" caption="Select By Attributes" extendedCaption="Active table view" keytip="SBA" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectByAttributes16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectByAttributes32.png" condition="esri_editing_anyTablePaneOpenCondition" helpContextID="">
           <tooltip heading="">
             Select features by their attribute values.<disabledText></disabledText>
           </tooltip>
@@ -6409,7 +6844,7 @@
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/VersionReconcile32.png"
                 condition="esri_mapping_TOCSelectionValidForReconcile_condition" disableIfBusy="true" keytip="RC">
           <tooltip heading="">
-            Reconcile the versions.<disabledText>Reconcile disabled.</disabledText>
+            Reconcile the versions.<disabledText>You must be connected to a child version.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editor_PostVersionButton" caption="Post"
@@ -6439,7 +6874,7 @@
                 condition="esri_mapping_TOCSelectionValidForReconcile_condition">
           <!--condition="esri_mapping_TOCSelectionValidForReconcileAndNotFeatureService_condition">-->
           <tooltip heading="">
-            View changes.<disabledText>Unable to view changes.</disabledText>
+            View changes.<disabledText>You must be connected to a child version.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editor_versionRefreshMapButton" caption="Refresh" extendedCaption="Refresh the version of the selected layer, table or datasource." className="esri_editing_EditingModule:RefreshSelectedVersion"
@@ -6479,6 +6914,15 @@
                 condition=""  disableIfBusy="true">
           <tooltip heading="">
             Show the Error Inspector. This enables you to find, sort and fix geodatabase validation errors.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_ShowUNErrorsErrorInspectorBtn" caption="Error Inspector" extendedCaption="Utility Network Error Inspector"  className="esri_editing_EditingModule:ShowUNErrorInspectorWindow"
+                keytip="EI"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ErrorInspector16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ErrorInspector32.png"
+                condition=""  disableIfBusy="true">
+          <tooltip heading="">
+            Show the Error Inspector. This enables you to find, sort and fix utility network errors.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -6528,7 +6972,7 @@
         </button>
         <!--Topology Buttons - End -->
 
-        <!-- Geometry View Selection Buttons -->
+        <!-- Geometry View Keyboard Shortcuts -->
         <button id="esri_editing_geometryViewSelectAllButton" hidden="true" caption="All" extendedCaption="Select all rows within the geometry view." className="esri_editing_EditingModule:OnSelectAllVertices"                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSelectAll16.png" loadOnClick="true" keytip="SA">
           <tooltip heading="Select All (Ctrl+A)">
             Select all vertices.<disabledText></disabledText>
@@ -6544,6 +6988,17 @@
             Switch selected vertices.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_geometryViewZoomToButton" hidden="true" caption="Zoom To" extendedCaption="Zoom to selected sketch vertices."
+                className="esri_editing_EditingModule:OnZoomToVertexSelection"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableZoomtoSelection16.png" loadOnClick="true" keytip="SZ">
+          <tooltip heading="Zoom To Selection (Ctrl+Shift+=)"> Zoom in and center the map on the extent of the selected vertices. <disabledText/> </tooltip>
+        </button>
+        <button id="esri_editing_geometryViewFlashButton" hidden="true" caption="Flash" extendedCaption="Flash in map the selected sketch vertices."
+                className="esri_editing_EditingModule:OnFlashVertexSelection"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericFlash16.png" loadOnClick="true" keytip="RF">
+          <tooltip heading="Flash (Ctrl+8)"> Flash the selected sketch vertices in the map.<disabledText/> </tooltip>
+        </button>
+
 
         <!--error inspector context menu items-->
         <button id="esri_editing_errorInspectorFlashButton" caption="Flash" extendedCaption="Flash in map the error feature in the current row within table"
@@ -7172,7 +7627,7 @@
           <tooltip heading="Align Parcels">
             Show the Align Parcels pane. This allows you to make adjacent parcels coincident using an alignment tolerance and links.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric"
+          <content keywords="Parcel;Parcels;Fabric;Join"
                    visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
@@ -7223,6 +7678,29 @@
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAlignToShape16.png" helpContextID="">
           <tooltip heading="Align Features">
             Align Features closes gaps between adjacent polyline or polygon features using a traced line and a buffer tolerance.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_editing_HighlightGapsAndOverlaps" caption="Highlight" loadOnClick="false" className="HighlightGapsAndOverlapsCommand"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HighlightGapsAndOverlaps32.png"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HighlightGapsAndOverlaps16.png"
+          condition="esri_editing_HighlightingGapsAndOverlapsSettingsCondition" helpContextID="">
+          <tooltip heading="Highlight Gaps and Overlaps">
+            Highlight gaps and overlaps in the current extent.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <customControl id="esri_editing_HighlightGapsAndOverlapsOptions" hidden="true"
+                loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                className="HighlightGapsAndOverlapsOptionsViewModel">
+          <content className="HighlightGapsAndOverlapsOptionsView" />
+        </customControl>
+
+        <button id="esri_editing_ClearHighlightedGapsAndOverlaps" caption="Clear" loadOnClick="false" className="ClearHighlightedGapsAndOverlapsCommand"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClearHighlight32.png"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClearHighlight16.png" helpContextID="">
+          <tooltip heading="Clear highlight">
+            Clear highlight.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -7426,7 +7904,7 @@
                 condition="esri_editing_parcelFabricFeaturesExtendedSelectedCondition"
                 disableIfBusy="true">
           <tooltip heading="Activate Record of Selected Feature">
-            Activates Record using a single selected parcel.<disabledText>No parcel features are selected. Select at least one parcel feature (point, line, polygon, or record).</disabledText>
+            Activate the record of the selected feature.<disabledText>No parcel features are selected. Select at least one parcel feature (point, line, polygon, or record).</disabledText>
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric"/>
         </button>
@@ -7557,6 +8035,19 @@
           <group refID="esri_editing_correctionGroup" />
         </tab>
 
+        <tab id="esri_editing_EditingKGTab"
+             caption="Edit"
+             condition="esri_editing_EditingKGLinkChartCondition"
+             keytip="E">
+          <group refID="esri_core_clipboardGroup" />
+          <group refID="esri_editing_ManageNoTopology" />
+          <group refID="esri_editing_ManageEditSessionNoTopology"/>
+          <group refID="esri_editing_Snapping" />
+          <group refID="esri_editing_Entities" />
+          <group refID="esri_editing_selectionGroup" />
+          <group refID="esri_editing_EditKGGallery" />
+        </tab>
+
         <!-- ParcelFabric -->
         <tab id="esri_editing_parcelRecordsTab"
              caption="Records"
@@ -7577,11 +8068,21 @@
              keytip="Q">
           <group refID="esri_editing_parcelManageEditsGroup"/>
           <group refID="esri_editing_parcelEvaluationGroup"/>
+          <group refID="esri_editing_parcelGapsAndOverlapsGroup"/>
           <group refID="esri_editing_parcelSelectionGroup"/>
           <group refID="esri_editing_parcelQualityGallery"/>
           <group refID="esri_editing_parcelLeastSquaresGroup"/>
         </tab>
         <!--ParceFabric End-->
+        <tab id="esri_editing_externalTable_homeTab" caption="Table" condition="esri_editing_externalTable_Pane" keytip="T" placeWith="esri_core_insertTab" insert="before">
+          <group refID="esri_core_clipboardGroup" />
+          <group refID="esri_editing_tableFieldsGroup" />
+          <group refID="esri_editing_externalTable_editingGroup" />
+          <group refID="esri_editing_externalTable_editingGroupEditSession" />
+          <group refID="esri_editing_externalTable_SelectionGroup" />
+          <group refID="esri_editing_tableToolsGroup" />
+          <group refID="esri_editing_tableExportGroup" />
+        </tab>
       </tabs>
 
       <groups>
@@ -7594,6 +8095,13 @@
           <button refID="esri_editing_ShowStatusBtn" size="middle" />
           <button refID="esri_editing_ShowErrorInspectorBtn" size="middle" />
         </group>
+        <group id="esri_editing_ManageNoTopology" caption="Manage Edits"
+               launcherButtonID="esri_editing_openEditingOptionsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInfo16.png" launcherKeytip="EO"
+               condition="esri_editing_EditingDoesntRequireStartCondition">
+          <button refID="esri_editing_SaveEditsBtn" size="large" />
+          <button refID="esri_editing_DiscardEditsBtn" size="large" />
+        </group>
+
         <group id="esri_editing_ManageEditSession" caption="Manage Edits" extendedCaption="With Edit Session On"
                launcherButtonID="esri_editing_openEditingOptionsButton"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInfo16.png"
@@ -7607,10 +8115,25 @@
           <button refID="esri_editing_ShowStatusBtn" size="middle" />
           <button refID="esri_editing_ShowErrorInspectorBtn" size="middle" />
         </group>
+        <group id="esri_editing_ManageEditSessionNoTopology" caption="Manage Edits" extendedCaption="With Edit Session On"
+               launcherButtonID="esri_editing_openEditingOptionsButton"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInfo16.png"
+               launcherKeytip="EO"
+               condition="esri_editing_EditingRequiresStartCondition"
+               hidden="true">
+          <button refID="esri_editing_ToggleEditingBtn" size="large"/>
+          <button refID="esri_editing_SaveEditsBtn" size="large" separator="true"/>
+          <button refID="esri_editing_DiscardEditsBtn" size="large" />
+        </group>
         <group id="esri_editing_Snapping" caption="Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListBySnapping16.png">
           <customControl refID="esri_mapping_snappingSplitButton" size="large" />
         </group>
         <group id="esri_editing_Features" caption="Features" launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png">
+          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large" />
+          <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
+          <button refID="esri_editing_DelSelFeaturesBtn" size="large" />
+        </group>
+        <group id="esri_editing_Entities" caption="Entities" launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png">
           <button refID="esri_editing_ShowCreateFeaturesBtn" size="large" />
           <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
           <button refID="esri_editing_DelSelFeaturesBtn" size="large" />
@@ -7625,6 +8148,12 @@
                caption="Tools"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingToolBarShow16.png">
           <gallery refID="esri_EditFeaturesGallery" inline="true" />
+        </group>
+        <group id="esri_editing_EditKGGallery"
+               launcherButtonID="esri_editing_openEditingSettingsButton"
+               caption="Tools"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingToolBarShow16.png">
+          <gallery refID="esri_EditKnowledgeGraphGallery" inline="true"/>
         </group>
         <group id="esri_editing_correctionGroup" caption="Corrections"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool16.png">
@@ -7654,6 +8183,30 @@
           <button refID="esri_editing_tableselectByAttributeButton" size="large" />
           <subgroup refID="esri_editing_table_selectSubGroup1"/>
           <subgroup refID="esri_editing_table_selectSubGroup2"/>
+        </group>
+
+        <group id="esri_editing_externalTable_editingGroup" caption="Manage Edits" keytip="ET"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInfo16.png"
+               launcherButtonID="esri_editing_openEditingOptionsButton"
+               condition="esri_editing_EditingDoesntRequireStartCondition">
+          <insertButton refID="esri_editing_SaveEditsBtn" size="large" />
+          <insertButton refID="esri_editing_DiscardEditsBtn" size="large" />
+        </group>
+
+        <group id="esri_editing_externalTable_editingGroupEditSession" caption="Manage Edits" extendedCaption="With Edit Session On" keytip="ET"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInfo16.png"
+               launcherButtonID="esri_editing_openEditingOptionsButton"
+               condition="esri_editing_EditingRequiresStartCondition"
+               hidden="true">
+          <button refID="esri_editing_ToggleEditingBtn" size="large"/>
+          <insertButton refID="esri_editing_SaveEditsBtn" size="large" separator="true"/>
+          <insertButton refID="esri_editing_DiscardEditsBtn" size="large" />
+        </group>
+
+        <group id="esri_editing_externalTable_SelectionGroup" caption="Selection" keytip="ZS" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpenSelected16.png">
+          <button refID="esri_editing_tableselectByAttributeButton" size="large" />
+          <subgroup refID="esri_editing_table_selectSubGroup1"/>
+          <subgroup refID="esri_editing_externalTable_selectSubGroup2"/>
         </group>
         <group id="esri_editing_tableToolsGroup" caption="Tools" keytip="ZT" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableCalculateField16.png">
           <subgroup refID="esri_editing_table_toolsSubGroup"/>
@@ -7709,14 +8262,13 @@
           <toolbar refID="esri_editing_AlignParcelValueToolbar" size="middle"/>
           <button refID="esri_editing_SwitchParcelSelection" size="middle"/>
           <splitButton refID="esri_editing_alignParcelsSplitButton" size="large" />
-          <button refID="esri_editing_SwitchParcelSelection" size="middle"/>
         </group>
 
         <group id="esri_editing_parcelEvaluationGroup" caption="Evaluation">
+          <gallery refID="esri_editing_ParcelLayersGallery" inline="false" size="large"/>
           <customControl refID="esri_editing_TopologySelectionComboBox" size="middle" />
-          <toolPallete refID="esri_editing_ValidateSplitPallete" size="large" />
+          <toolPallete refID="esri_editing_ValidateSplitPallete" size="middle" />
           <button refID="esri_editing_ShowErrorInspectorBtn" size="large"/>
-          <button refID="esri_editing_TopologyFixTool" size="large"/>
         </group>
 
         <group id="esri_editing_parcelLeastSquaresGroup" caption="Least Squares">
@@ -7724,8 +8276,29 @@
           <button refID="esri_editing_LeastSquaresAdjustmentWeightedButton" size="large"/>
           <button refID="esri_editing_LeastSquaresAdjustmentApplyButton" size="large"/>
         </group>
+
+        <group id="esri_editing_parcelGapsAndOverlapsGroup" caption="Gaps and Overlaps">
+          <splitButton refID="esri_editing_HighlightGapsAndOverlapsSplitButton" size="large" />
+          <button refID="esri_editing_ClearHighlightedGapsAndOverlaps" size="large"/>
+        </group>
         <!--ParcelFabric End-->
 
+        <!-- Linear Referencing groups -->
+        <group id="esri_editing_linearReferencingEditsGroup" caption="Manage Edits"
+               launcherButtonID="esri_editing_openEditingOptionsButton" launcherKeytip=""
+               condition="esri_editing_EditingDoesntRequireStartCondition">
+          <button refID="esri_editing_SaveEditsBtn" size="large" />
+          <button refID="esri_editing_DiscardEditsBtn" size="large" />
+        </group>
+
+        <group id="esri_editing_linearReferencingEditingGroup" caption="Editing"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png"
+               launcherButtonID="esri_editing_ShowManageTemplatesBtn">
+          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large" />
+          <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
+          <button refID="esri_editing_DelSelFeaturesBtn" size="large" />
+        </group>
+        
       </groups>
 
       <!-- Table Pane subgroups -->
@@ -7752,6 +8325,9 @@
         <subgroup id="esri_editing_table_selectSubGroup2" size="MediumThenSmallWhenSmall">
           <button refID="esri_editing_tableZoomToSelectedButton"/>
           <button refID="esri_editing_tablePanToSelectedButton"/>
+          <button refID="esri_editing_tableDeleteSelected"/>
+        </subgroup>
+        <subgroup id="esri_editing_externalTable_selectSubGroup2" size="MediumThenSmallWhenSmall">
           <button refID="esri_editing_tableDeleteSelected"/>
         </subgroup>
         <subgroup id="esri_editing_table_toolsSubGroup" size="Default">
@@ -7789,29 +8365,21 @@
         </toolbar>
         <!--ParcelFabric End-->
 
-        <!--Manage Template toolbar- ->        
+        <!--Manage Template toolbar-->        
         <toolbar id="esri_editing_MFT_ToolBar" >
-          <buttonPalette refID="esri_editing_MFT_NewPalette"  />
+          <menu refID="esri_editing_MFT_Menu"  />
           <button refID="esri_editing_templateDelete" />
-          <button refID="esri_editing_templateDuplicate" />
-          <button refID="esri_editing_templateProperties" />
+          <button refID="esri_editing_MFT_Duplicate" />
+          <button refID="esri_editing_MFT_Properties" />
         </toolbar>
-      <!- -e-o-Manage Template toolbar-->
+      <!--e-o-Manage Template toolbar-->
 
       </toolbars>
 
       <palettes>
-        <!--
-        <buttonPalette id="esri_editing_MFT_NewPalette" 
-                       caption="New Template" extendedCaption="New Feature Template"
-                       showItemCaption="true" dropDown="true" menuStyle="true">
-          <button refID="esri_editing_templateNew" />
-          <button refID="esri_editing_templateNewFromFeature" />
-          <button refID="esri_editing_templateNewForLayer" />
-          <button refID="esri_editing_templateNewGroup" />
-          <button refID="esri_editing_templateNewPreset" />
-        </buttonPalette>
-        -->
+        
+        
+        
 
         <buttonPalette id="esri_editing_ArcConstructorPalette"
                        caption="Arc Constructors" extendedCaption="Editing Sketch arc constructors"
@@ -7899,6 +8467,24 @@
           <tool refID="esri_mapping_selectByLineTool" />
           <tool refID="esri_mapping_selectByTraceTool"/>
         </toolPalette>
+
+        <buttonPalette id="esri_editing_LinkChartButtonPalette"  menuStyle="false">
+          <button refID="esri_editing_LinkChartSelectTool"/>
+          <button refID="esri_editing_LinkChartRectangleSelect"/>
+          <button refID="esri_editing_LinkChartLassoSelect"/>
+          <button refID="esri_editing_LinkChartCircleSelect"/>
+          <button refID="esri_editing_LinkChartSelectAndMove" separator="true"/>
+          <button refID="esri_editing_LinkChartSelect"/>
+        </buttonPalette>
+
+        <toolPalette id="esri_editing_LinkChartToolPalette">
+          <button refID="esri_editing_LinkChartSelectTool"/>
+          <button refID="esri_editing_LinkChartRectangleSelect"/>
+          <button refID="esri_editing_LinkChartLassoSelect"/>
+          <button refID="esri_editing_LinkChartCircleSelect"/>
+          <button refID="esri_editing_LinkChartSelectAndMove" separator="true"/>
+          <button refID="esri_editing_LinkChartSelect"/>
+        </toolPalette>
       </palettes>
 
       <miniToolbars>
@@ -7932,7 +8518,10 @@
             <buttonPallete refID="esri_editing_LinePalette"/>
             <buttonPallete refID="esri_editing_ArcConstructorPalette"/>
             <button refID="esri_editing_TraceConstructorPalette"/>
-            <button refID="esri_editing_StretchVertices" separator="true" />
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
+            <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true"/>
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -7978,10 +8567,10 @@
         <miniToolbar id="esri_editing_ManageTemplatesToolbar">
           <!-- FOOBAR this is in progress to replace the hardcoded toolbar in Manage Templates-->
           <row>
-            <menu refID="esri_editing_newTemplateMenu"/>
-            <button refID="esri_editing_deleteTemplate"/>
-            <button refID="esri_editing_duplicateTemplate"/>
-            <button refID="esri_editing_propertiesTemplate"/>
+            <menu refID="esri_editing_MFT_Menu"  />
+            <button refID="esri_editing_templateDelete"/>
+            <button refID="esri_editing_MFT_Duplicate"/>
+            <button refID="esri_editing_MFT_Properties"/>
           </row>
         </miniToolbar>
         <miniToolbar id="esri_editing_GeometryInspector_Points_Toolbar">
@@ -8040,6 +8629,12 @@
             <button refID="esri_editing_FinishSketch" separator="true"/>
           </row>
         </miniToolbar>
+        <miniToolbar id="esri_editing_DefineLinePortionContextToolbar">
+          <row>
+            <button refID="esri_editing_FinishSketch" />
+            <button refID="esri_editing_ClearSketch" />
+          </row>
+        </miniToolbar>
         <miniToolbar id="esri_editing_MultipointContextToolbar">
           <row>
             <button refID="esri_editing_FinishSketch" />
@@ -8052,18 +8647,8 @@
             <button refID="esri_editing_EditVerticesAdd" />
             <button refID="esri_editing_EditVerticesDelete" />
             <button refID="esri_editing_EditVerticesContinue" />
-            <button refID="esri_editing_StretchVertices" separator="true"/>
-            <button refID="esri_editing_StretchTopology"/>
-            <button refID="esri_editing_FinishSketch" separator="true" />
-            <button refID="esri_editing_ClearSketch" />
-          </row>
-        </miniToolbar>
-        <miniToolbar id="esri_editing_SketchUtilityToolbar">
-          <row>
-            <buttonPallete refID="esri_editing_EditVerticesNormalMenu" />
-            <button refID="esri_editing_EditVerticesAdd" />
-            <button refID="esri_editing_EditVerticesDelete" />
-            <button refID="esri_editing_EditVerticesContinue" />
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
@@ -8071,6 +8656,12 @@
           </row>
         </miniToolbar>
 
+        <miniToolbar id="esri_editing_CurveAnnoSketchToolbar">
+          <row>
+            <button refID="esri_editing_FinishSketch" />
+            <button refID="esri_editing_ClearSketch" />
+          </row>
+        </miniToolbar>
         <miniToolbar id="esri_editing_TextEditToolbar">
           <row>
             <!--<button refID="esri_editing_annotationFlipAnnotationToolbarButton" />
@@ -8082,7 +8673,7 @@
         </miniToolbar>
         <miniToolbar id="esri_editing_DimensionEditToolbar">
           <row>
-            <button refID="esri_editing_FinishSketch"/>
+            <button refID="esri_editing_FinishSketch" />
             <button refID="esri_editing_ClearSketch" />
           </row>
         </miniToolbar>
@@ -8100,8 +8691,10 @@
             <buttonPallete refID="esri_editing_EditVerticesNormalMenu" />
             <button refID="esri_editing_EditVerticesAdd" />
             <button refID="esri_editing_EditVerticesDelete" />
-            <button refID="esri_editing_StretchVertices" separator="true"/>
-            <button refID="esri_editing_StretchTopology"/>
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
+            <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8111,8 +8704,10 @@
             <buttonPallete refID="esri_editing_VertexEditModeMenu" />
             <button refID="esri_editing_VertexEditAdd" />
             <button refID="esri_editing_VertexEditDelete" />
-            <button refID="esri_editing_StretchVertices" separator="true"/>
-            <button refID="esri_editing_StretchTopology"/>
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
+            <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8122,7 +8717,10 @@
             <button refID="esri_editing_EditVerticesMove" />
             <button refID="esri_editing_EditVerticesRotate" />
             <button refID="esri_editing_EditVerticesScale" />
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8132,16 +8730,8 @@
             <button refID="esri_editing_EditVerticesMove" />
             <!--<button refID="esri_editing_EditVerticesRotate" />
             <button refID="esri_editing_EditVerticesScale" />-->
-            <button refID="esri_editing_StretchTopology" separator="true"/>
-            <button refID="esri_editing_FinishSketch" separator="true" />
-            <button refID="esri_editing_ClearSketch" />
-          </row>
-        </miniToolbar>
-        <miniToolbar id="esri_editing_MoveUtilityToolbar">
-          <row>
-            <button refID="esri_editing_EditVerticesMove" />
-            <button refID="esri_editing_EditVerticesRotate" />
-            <button refID="esri_editing_EditVerticesScale" />
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
@@ -8200,6 +8790,10 @@
             <button refID="esri_editing_AddDeviceLocationCommand"/>
             <button refID="esri_editing_PointConstructor"  separator="true"/>
             <buttonPallete refID="esri_editing_PointPalette"/>
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
+            <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8256,6 +8850,7 @@
           <customControl refID="esri_editing_GroundToGridSplitOpenTrayButton"/>
         </splitButton>
 
+
         <splitButton id="esri_editing_ElevationModeSplitButton"
                      extendedCaption="Choose how to add Z"
                      keytip="EN" condition="esri_editing_MapCondition"
@@ -8263,6 +8858,26 @@
           <button refID="esri_editing_ToggleElevationModeButton"/>
           <button refID="esri_editing_ConstantElevationModeButton"/>
           <button refID="esri_editing_SurfaceElevationModeButton"/>
+        </splitButton>
+
+        <splitButton id="esri_editing_HighlightGapsAndOverlapsSplitButton"
+                     caption="Highlight" extendedCaption="Highlight Gaps and Overlaps"
+                     condition="esri_editing_MapCondition"
+                     loadOnClick="false" helpContextID="" hideTooltip="true" >
+          <button refID="esri_editing_HighlightGapsAndOverlaps"/>
+          <customControl refID="esri_editing_HighlightGapsAndOverlapsOptions"/>
+        </splitButton>
+
+        <splitButton id="esri_editing_LinkChartSplitButton"
+                     caption="Select and Move" extendedCaption="Link Chart Select and Move"
+                     condition="esri_editing_mapCondition"
+                     helpContextID="" hideToolTip="true" keytip="SE" >
+          <button refID="esri_editing_LinkChartSelectTool"/>
+          <button refID="esri_editing_LinkChartRectangleSelect"/>
+          <button refID="esri_editing_LinkChartLassoSelect"/>
+          <button refID="esri_editing_LinkChartCircleSelect"/>
+          <button refID="esri_editing_LinkChartSelectAndMove" separator="true"/>
+          <button refID="esri_editing_LinkChartSelect"/>
         </splitButton>
       </splitButtons>
 
@@ -8424,6 +9039,16 @@
           <button refID="esri_editing_MergeParcelPoints"/>
           <button refID="esri_editing_MergeCollinearParcelBoundariesButton"/>
           <button refID="esri_editing_SimplifyBySLACAButton"/>
+          <button refID="esri_editing_reconstructParcelBoundaries"/>
+        </menu>
+
+        <menu id="esri_editing_toolGroupKnowledgeGraph" caption="Tools" contextMenu="false">
+          <button refID="esri_editing_EditVerticesMoveKG"/>
+          <button refID="esri_editing_EditVerticesRotateKG"/>
+          <button refID="esri_editing_EditVerticesScaleKG"/>
+          <button refID="esri_editing_EditVerticesModifyFeatureKG"/>
+          <button refID="esri_editing_ReshapeCommandKG"/>
+          <button refID="esri_editing_AttributeTransferKG"/>
         </menu>
 
         <!--ordering of All Tools groups-->
@@ -8437,12 +9062,45 @@
           <button refID="esri_editing_toolGroupCogo"/>
           <button refID="esri_editing_toolGroupRoute"/>
           <button refID="esri_editing_toolGroupValidate"/>
+          <button refID="esri_editing_toolGroupKnowledgeGraph"/>
         </menu>
 
         <!---->
         <!--end of Tool ordering -->
         <!---->
 
+
+        <menu id="esri_editing_gvPartHeaderContextMenu" caption="Part" contextMenu="true">
+          <button refID="esri_editing_gvPartHeaderZoomTo_Command" />
+          <button refID="esri_editing_gvPartHeaderPanTo_Command"/>
+          <!--  removing b/c right-clicking the part header auto-selects all vertices in the part anyway
+          <button refID="esri_editing_gvPartHeaderSelectAll_Command"  separator="true"/>
+          -->
+          <button refID="esri_editing_gvPartHeaderDelete_Command"  separator="true" />
+        </menu>
+        <menu id="esri_editing_gvPartContextMenu" caption="Part" contextMenu="true">
+          <button refID="esri_editing_gvPartZoomTo_Command" />
+          <button refID="esri_editing_gvPartPanTo_Command"/>
+          <button refID="esri_editing_gvPartSelectAll_Command"  separator="true"/>
+          <button refID="esri_editing_gvPartDelete_Command" />
+        </menu>
+        <menu id="esri_editing_gvPartAndVertexContextMenu" caption="Vertex" contextMenu="true">
+          <button refID="esri_editing_gvVertexInsertBefore_Command" />
+          <button refID="esri_editing_gvVertexInsertAfter_Command"/>
+          <button refID="esri_editing_gvVertexFlash_Command"  separator="true"/>
+          <button refID="esri_editing_gvVertexZoomTo_Command"/>
+          <button refID="esri_editing_gvVertexPanTo_Command"/>
+          <menu refID="esri_editing_gvPartContextMenu" separator="true" />
+          <button refID="esri_editing_gvVertexDelete_Command" />
+        </menu>
+        <menu id="esri_editing_gvVertexContextMenu" caption="Vertex" contextMenu="true">
+          <button refID="esri_editing_gvVertexInsertBefore_Command" />
+          <button refID="esri_editing_gvVertexInsertAfter_Command"/>
+          <button refID="esri_editing_gvVertexFlash_Command"  separator="true"/>
+          <button refID="esri_editing_gvVertexZoomTo_Command"/>
+          <button refID="esri_editing_gvVertexPanTo_Command"/>
+          <button refID="esri_editing_gvVertexDelete_Command" separator="true" />
+        </menu>
 
         <menu id="esri_editing_GridContextMenu" caption="Grid" contextMenu="true">
           <button refID="esri_editing_GridSetOriginAndRotationCommand" />
@@ -8515,11 +9173,13 @@
         <menu id="esri_editing_Attributes_TableContextMenu" caption="Standalone Table" contextMenu="true">
           <button refID="esri_editing_Attributes_CopyAttributesContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_PasteAttributesContextMenuItem" />
-          <button refID="esri_editing_Attributes_ClearSelectionContextMenuItem" separator="true" />
+          <button refID="esri_editing_Attributes_OnlySelectThisContextMenuItem" separator="true"/>
+          <button refID="esri_editing_Attributes_ClearSelectionContextMenuItem"/>
           <button refID="esri_editing_Attributes_UnselectValidFeaturesMenuItem" />
           <button refID="esri_editing_Attributes_DeleteSelectionContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableWithSelectionContextMenuItem" />
+          <button refID="esri_editing_Attributes_AddRowContextMenuItem" />
           <button refID="esri_editing_Attributes_StandaloneTablePropertiesContextMenuItem" separator="true"/>
         </menu>
 
@@ -8952,6 +9612,18 @@
           <button refID="esri_editing_ClearSketch" />
         </menu>
 
+        <menu id="esri_editing_MFT_Menu" caption="New"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNew32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingTemplateNew16.png"
+                >
+          <button refID="esri_editing_templateNew" />
+          <button refID="esri_editing_templateNewFromFeature" />
+          <button refID="esri_editing_templateNewForLayer" />
+          <button refID="esri_editing_templateNewGroup" separator="true"/>
+          <button refID="esri_editing_templateNewPreset" />
+          <tooltip heading="Create a template" />
+        </menu>
+        
         <!--<menu id="esri_editing_SegmentMSketchContextMenu" caption="Segment M Sketch Context Menu" contextMenu="true">
           <menu refID="esri_editing_RouteMeasureMenu" />
           <button refID="esri_editing_InsertVertexContextMenuItem" separator="true" />
@@ -9123,6 +9795,17 @@
           <button refID="esri_editing_tableOpenAttachmentsButton" />
           <button refID="esri_editing_tableDeleteRow" />
         </menu>
+        <menu id="esri_editing_externalTableAllRowContextMenu" caption="Row" contextMenu="true">
+          <button refID="esri_editing_tableSelectRowButton" />
+          <button refID="esri_editing_tableOpenAttachmentsButton" />
+          <button refID="esri_editing_tableDeleteRow" />
+        </menu>
+        <menu id="esri_editing_externalTableSelectedRowContextMenu" caption="Row" contextMenu="true">
+          <button refID="esri_editing_tableSelectRowButton" />
+          <button refID="esri_editing_tableHighlightRowButton" />
+          <button refID="esri_editing_tableOpenAttachmentsButton" />
+          <button refID="esri_editing_tableDeleteRow" />
+        </menu>
         <menu id="esri_editing_tableJoinsMenu" caption="Joins" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableJoins32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableJoins16.png" keytip="RJ">
           <tooltip heading="Joins">
             Menu to create, remove, or remove all joins.<disabledText></disabledText>
@@ -9144,6 +9827,12 @@
           <button refID="esri_editing_tablePasteCellButton" />
           <menu refID="esri_editing_tableColumnContextMenu" separator="true" />
           <menu refID="esri_editing_tableAllRowContextMenu" />
+        </menu>
+        <menu id="esri_editing_externalTableCellContextMenu" caption="Cell" contextMenu="true">
+          <button refID="esri_editing_tableCopyCellButton" />
+          <button refID="esri_editing_tablePasteCellButton" />
+          <menu refID="esri_editing_tableColumnContextMenu" separator="true" />
+          <menu refID="esri_editing_externalTableAllRowContextMenu" />
         </menu>
 
         <!-- Table Menus - End -->
@@ -9574,6 +10263,35 @@
           <button refID="esri_editing_ShowEditFeaturesFromGallery" />
           <button refID="esri_editing_CustomizeParcelQualityGalleryButton" />
         </gallery>
+        <gallery id="esri_editing_ParcelLayersGallery" hidden="true" 
+                 className="ParcelLayersGalleryViewModel"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddParcelLayer32.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddParcelLayer16.png"
+                 caption="Parcel Layers" extendedCaption="Set the symbology for parcel layers" keytip="PL"
+                 itemWidth="150" itemsInRow="1"
+                 showItemCaption="true" showGroup="true" showItemCaptionBelow="true" resizable="true"
+                 condition="esri_editing_parcelToolsVisibleCondition">
+          <tooltip heading="Parcel Layers">
+            Set the symbology for parcel layers.
+            <disabledText>Available only when there is a parcel fabric in the map.</disabledText>
+          </tooltip>
+        </gallery>
+
+        <gallery id="esri_EditKnowledgeGraphGallery" hidden="true"
+                className="KnowledgeGraphGalleryCommandListViewModel"
+                caption="Knowledge Graph tool gallery" keytip="TG"
+                itemWidth="72"
+                itemsInRow="4"
+                showItemCaption="true"
+                showGroup="true"
+                showItemCaptionBelow="true"
+                scrollToSelectedItemInRibbon="false"
+                resizable="true"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingToolBarShow32.png">
+          <tooltip heading="">
+            View a gallery of editing tools.<disabledText></disabledText>
+          </tooltip>
+        </gallery>
       </galleries>
 
     </insertModule>
@@ -9585,10 +10303,12 @@
   <propertySheets>
     <insertSheet id ="esri_editing_settingsPropertySheet" caption="Editor Settings"
                  pageHeight="500" pageWidth="640" resizable="true">
-      <!--<page id="esri_editing_SnappingPropertyPage"  caption="Snapping"
-                        className="SnapSettingsViewModel">
-        <content className="SnapSettingsView" />
-      </page>-->
+      <page id="esri_editing_SnappingPropertyPage"  caption="Snapping"
+                        className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsViewModel"
+                        assembly="ArcGIS.Desktop.Mapping.dll">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsView"
+                 assembly="ArcGIS.Desktop.Mapping.dll" />
+      </page>
       <page id="esri_editing_GridPropertyPage"  caption="Grid"
             className="GridSettingsViewModel">
         <content className="GridSettingsView" />
@@ -9683,6 +10403,15 @@
                   className="TableOptionsViewModel" placeWith="esri_mapping_applicationDisplayPropertyPage" insert="after"
                   group="Application">
         <content className="TableOptionsView" />
+      </insertPage>
+    </updateSheet>
+
+    <updateSheet refID="esri_core_optionsPropertySheet">
+      <insertPage id="esri_editing_versioningPropertyPage"
+                  caption="Versioning"
+                  className="VersionOptionsViewModel" placeWith="esri_editing_editingPropertyPage" insert="after"
+                  group="Application">
+        <content className="VersionOptionsView" />
       </insertPage>
     </updateSheet>
   </propertySheets>

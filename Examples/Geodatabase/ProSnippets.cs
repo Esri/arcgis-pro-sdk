@@ -22,6 +22,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Catalog;
@@ -32,6 +33,7 @@ using ArcGIS.Desktop.Mapping;
 using Version = ArcGIS.Core.Data.Version;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Core.Data.DDL;
+using ArcGIS.Core.Data.Mapping;
 using FieldDescription = ArcGIS.Core.Data.DDL.FieldDescription;
 
 
@@ -351,6 +353,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
+    // cref: Opening RelationshipClass between two Tables;ArcGIS.Core.Data.Geodatabase.OpenRelationshipClass(System.String,System.String)
     #region Opening RelationshipClass between two Tables
 
     // Must be called within QueuedTask.Run().  
@@ -401,6 +404,32 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Opening a FeatureClass from a ShapeFile Datastore
+
+    #region Opening a CAD Datastore
+
+    public async Task OpenCADFeatureClass()
+    {
+      await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() => {
+        var fileConnection = new FileSystemConnectionPath(new Uri("path\\to\\folder\\containing\\CAD"), FileSystemDatastoreType.Cad);
+        using (FileSystemDatastore cadDatastore = new FileSystemDatastore(fileConnection))
+        {
+          // note - extension is required
+          var cadDataset = cadDatastore.OpenDataset<FeatureClass>("hatchplayboundaries.dwg");
+          // take note of the pattern for referencing a feature class. 
+          var cadfeatureClass = cadDatastore.OpenDataset<FeatureClass>("hatchplayboundaries.dwg:Polyline"); 
+
+          int numRows = 0;
+          using (var cursor = cadfeatureClass.Search())
+          {
+            while (cursor.MoveNext())
+              numRows++;
+          }
+        }
+      });
+    }
+
+    #endregion Opening a CAD Datastore
+
 
     #region ProSnippet Group: Queries
     #endregion
@@ -1398,7 +1427,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
 
     #endregion Creating a Feature
-
+    
     #region Modifying a Row
 
     public async Task ModifyingARow()
@@ -1731,7 +1760,6 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #endregion Deleting Attachments
 
-
     #region Writing a Blob field
 
     public async Task WriteBlobField(Table table, string blobFieldName, string imageFileName)
@@ -1787,7 +1815,6 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       });
     }
     #endregion
-
 
     #region Getting Rows related by RelationshipClass
     public async Task GettingRowsRelatedByRelationshipClass()
@@ -1974,6 +2001,43 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       }
     }
     #endregion
+
+    #region Creating a new Annotation Feature in an Annotation FeatureClass using a RowBuffer
+    
+    public async Task CreatingAnAnnotationFeature(Geodatabase geodatabase)
+    {
+      await ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+      {
+        using (AnnotationFeatureClass annotationFeatureClass = geodatabase.OpenDataset<AnnotationFeatureClass>("Annotation // feature // class // name"))
+        using (AnnotationFeatureClassDefinition annotationFeatureClassDefinition = annotationFeatureClass.GetDefinition())
+        using (RowBuffer rowBuffer = annotationFeatureClass.CreateRowBuffer())
+        using (AnnotationFeature annotationFeature = annotationFeatureClass.CreateRow(rowBuffer))
+        {
+          annotationFeature.SetAnnotationClassID(0);
+          annotationFeature.SetStatus(AnnotationStatus.Placed);
+
+          // Get the annotation labels from the label collection
+          IReadOnlyList<CIMLabelClass> labelClasses = annotationFeatureClassDefinition.GetLabelClassCollection();
+
+          // Setup the symbol reference with the symbol id and the text symbol
+          CIMSymbolReference cimSymbolReference = new CIMSymbolReference();
+          cimSymbolReference.Symbol = labelClasses[0].TextSymbol.Symbol;
+          cimSymbolReference.SymbolName = labelClasses[0].TextSymbol.SymbolName;
+
+          // Setup the text graphic
+          CIMTextGraphic cimTextGraphic = new CIMTextGraphic();
+          cimTextGraphic.Text = "Charlotte, North Carolina";
+          cimTextGraphic.Shape = new MapPointBuilder(new Coordinate2D(-80.843, 35.234), SpatialReferences.WGS84).ToGeometry();
+          cimTextGraphic.Symbol = cimSymbolReference;
+
+          // Set the symbol reference on the graphic and store
+          annotationFeature.SetGraphic(cimTextGraphic);
+          annotationFeature.Store();
+        }
+      });
+    }
+
+    #endregion Creating a new Annotation Feature in an Annotation FeatureClass using a RowBuffer
 
     #region ProSnippet Group: Versioning
     #endregion
@@ -2169,6 +2233,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void CreateTableSnippet(Geodatabase geodatabase, CodedValueDomain inspectionResultsDomain)
     {
+      // cref: Creating a Table;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.TableDescription)
+      // cref: Creating a Table;ArcGIS.Core.Data.DDL.TableDescription.#ctor(System.String,System.Collections.Generic.IReadOnlyList{ArcGIS.Core.Data.DDL.FieldDescription})
       #region Creating a Table
 
       // Create a PoleInspection table with the following fields
@@ -2224,9 +2290,18 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
-
     public void CreateFeatureClassSnippet(Geodatabase geodatabase, FeatureClass existingFeatureClass, SpatialReference spatialReference)
     {
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FeatureClassDescription.#ctor(System.String,System.Collections.Generic.IReadOnlyList{ArcGIS.Core.Data.DDL.FieldDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FieldDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FieldDescription.CreateGlobalIDField
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FieldDescription.CreateIntegerField(System.String)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FieldDescription.CreateObjectIDField
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.FieldDescription.CreateStringField(System.String,System.Int32)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.SchemaBuilder.Build
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.FeatureClassDescription)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.ShapeDescription.#ctor(ArcGIS.Core.Data.FeatureClassDefinition)
+      // cref: Creating a feature class;ArcGIS.Core.Data.DDL.ShapeDescription.#ctor(ArcGIS.Core.Geometry.GeometryType,ArcGIS.Core.Geometry.SpatialReference)
       #region Creating a feature class
 
       // Create a Cities feature class with the following fields
@@ -2254,8 +2329,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       // Create a ShapeDescription object
       ShapeDescription shapeDescription = new ShapeDescription(GeometryType.Point, spatialReference);
 
-      // Alternately, ShapeDescriptions can be created from another feature class.  In this case, the new feature class will inherit the same shape properties of the existing class
-      ShapeDescription alternateShapeDescription = new ShapeDescription(existingFeatureClass.GetDefinition());
+      // Alternatively, ShapeDescriptions can be created from another feature class.  In this case, the new feature class will inherit the same shape properties of the existing class
+      ShapeDescription alternativeShapeDescription = new ShapeDescription(existingFeatureClass.GetDefinition());
 
       // Create a FeatureClassDescription object to describe the feature class to create
       FeatureClassDescription featureClassDescription = new FeatureClassDescription("Cities", fieldDescriptions, shapeDescription);
@@ -2317,8 +2392,9 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
-    public void CreateMemoryGeodtabaseSnippet()
+    public void CreateMemoryGeodatabaseSnippet()
     {
+      // cref: Creating a memory Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.CreateGeodatabase(ArcGIS.Core.Data.MemoryConnectionProperties)
       #region Creating a memory Geodatabase
 
       // Create the memory connection properties to connect to  default memory geodatabase
@@ -2338,6 +2414,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void DeleteMemoryGeodatabaseSnippet()
     {
+      // cref: Deleting a memory Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.DeleteGeodatabase(ArcGIS.Core.Data.MemoryConnectionProperties)
       #region Deleting a memory Geodatabase
 
       // Create the memory connection properties to connect to default memory geodatabase
@@ -2349,9 +2426,9 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
-
-    public void CreateFeatureGeodatabaseSnippet()
+    public void CreateFileGeodatabaseSnippet()
     {
+      // cref: Creating a File Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.CreateGeodatabase(ArcGIS.Core.Data.FileGeodatabaseConnectionPath)
       #region Creating a File Geodatabase
       // Create a FileGeodatabaseConnectionPath with the name of the file geodatabase you wish to create
       FileGeodatabaseConnectionPath fileGeodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-File-Geodatabase\YourName.gdb"));
@@ -2364,8 +2441,9 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
-    public void DeleteFeatureGeodatabaseSnippet()
+    public void DeleteFileGeodatabaseSnippet()
     {
+      // cref: Deleting a File Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.DeleteGeodatabase(ArcGIS.Core.Data.FileGeodatabaseConnectionPath)
       #region Deleting a File Geodatabase
       // Create a FileGeodatabaseConnectionPath with the name of the file geodatabase you wish to delete
       FileGeodatabaseConnectionPath fileGeodatabaseConnectionPath = new FileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-File-Geodatabase\YourName.gdb"));
@@ -2376,8 +2454,41 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
+    public void CreateMobileGeodatabase()
+    {
+      // cref: Creating a Mobile Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.CreateGeodatabase(ArcGIS.Core.Data.MobileGeodatabaseConnectionPath)
+      #region Creating a Mobile Geodatabase
+
+      // Create a MobileGeodatabaseConnectionPath with the name of the mobile geodatabase you wish to create
+      MobileGeodatabaseConnectionPath mobileGeodatabaseConnectionPath = new MobileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-Mobile-Geodatabase\YourName.geodatabase"));
+
+      // Create and use the mobile geodatabase
+      using (Geodatabase geodatabase = SchemaBuilder.CreateGeodatabase(mobileGeodatabaseConnectionPath))
+      {
+        // Create additional schema here
+      }
+
+      #endregion
+    }
+
+    public void DeleteMobileGeodatabase()
+    {
+      // cref: Deleting a Mobile Geodatabase;ArcGIS.Core.Data.DDL.SchemaBuilder.DeleteGeodatabase(ArcGIS.Core.Data.MobileGeodatabaseConnectionPath)
+      #region Deleting a Mobile Geodatabase
+
+      // Create a MobileGeodatabaseConnectionPath with the name of the mobile geodatabase you wish to delete
+      MobileGeodatabaseConnectionPath mobileGeodatabaseConnectionPath = new MobileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-Mobile-Geodatabase\YourName.geodatabase"));
+
+      // Delete the mobile geodatabase
+      SchemaBuilder.DeleteGeodatabase(mobileGeodatabaseConnectionPath);
+
+      #endregion
+    }
+
     public void CreateRangeDomainSnippet(Geodatabase geodatabase)
     {
+      // cref: Creating a Range domain;ArcGIS.Core.Data.DDL.RangeDomainDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType,System.Object,System.Object)
+      // cref: Creating a Range domain;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.RangeDomainDescription)
       #region Creating a Range domain
      
       // Create a range description with minimum value = 0 and maximum value = 1000
@@ -2396,6 +2507,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void CreateCodedDomainSnippet(Geodatabase geodatabase)
     {
+      // cref: Creating a CodedValue domain;ArcGIS.Core.Data.DDL.CodedValueDomainDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType,System.Collections.Generic.SortedList{System.Object,System.String})
+      // cref: Creating a CodedValue domain;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.CodedValueDomainDescription)
       #region Creating a CodedValue domain 
 
       // Create a CodedValueDomain description for water pipes
@@ -2419,6 +2532,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void CreateFeatureDatasetSnippet(Geodatabase geodatabase)
     {
+      // cref: Creating a FeatureDataset;ArcGIS.Core.Data.DDL.FeatureDatasetDescription.#ctor(System.String,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Creating a FeatureDataset;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.FeatureDatasetDescription)
       #region Creating a FeatureDataset
 
       // Creating a FeatureDataset named as 'Parcel_Information'
@@ -2443,6 +2558,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void DeleteFeatureDatasetSnippet(Geodatabase geodatabase)
     {
+      // cref: Deleting a FeatureDataset;ArcGIS.Core.Data.DDL.SchemaBuilder.Delete(ArcGIS.Core.Data.DDL.Description)
       #region Deleting a FeatureDataset
 
       // Deleting a FeatureDataset named as 'Parcel_Information'
@@ -2482,6 +2598,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void CreateFeatureDatasetWithFeatureClassSnippet(Geodatabase geodatabase)
     {
+      // cref: Creating a FeatureDataset with a FeatureClass in one operation;ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.FeatureDatasetDescription,ArcGIS.Core.Data.DDL.FeatureClassDescription)
       #region Creating a FeatureDataset with a FeatureClass in one operation
 
       // Creating a FeatureDataset named as 'Parcel_Information' and a FeatureClass with name 'Parcels' in one operation
@@ -2554,11 +2671,11 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       }
 
       #endregion
-
     }
     
     public void AddFeatureClassToFeatureDatasetSnippet(Geodatabase geodatabase)
     {
+      // cref: Adding a FeatureClass to a FeatureDataset;ArcGIS.Core.Data.DDL.SchemaBuilder.AddFeatureClass(ArcGIS.Core.Data.DDL.FeatureDatasetDescription,ArcGIS.Core.Data.DDL.FeatureClassDescription)
       #region Adding a FeatureClass to a FeatureDataset
 
       // Adding a FeatureClass with name 'Tax_Jurisdiction' into a FeatureDataset named as 'Parcels_Information'
@@ -2588,6 +2705,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void RenameTableSnippet(Geodatabase geodatabase)
     {
+      // cref: Renaming a Table;ArcGIS.Core.Data.DDL.SchemaBuilder.Rename(ArcGIS.Core.Data.DDL.Description,System.String)
       #region Renaming a Table
       
       //Renaming a table from 'Original_Table' to 'Renamed_Table'
@@ -2608,6 +2726,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     
     public void AddFieldsInFeatureClassSnippet(Geodatabase geodatabase)
     {
+      // cref: Adding fields to a FeatureClass;ArcGIS.Core.Data.DDL.SchemaBuilder.Modify(ArcGIS.Core.Data.DDL.FeatureClassDescription)
       #region Adding fields to a FeatureClass
       
       // Adding following fields to the 'Parcels' FeatureClass
@@ -2656,6 +2775,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void AddFieldWithDomainSnippet(Geodatabase geodatabase)
     {
+      // cref: Adding a Field that uses a domain;ArcGIS.Core.Data.DDL.FieldDescription.CreateDomainField(System.String,ArcGIS.Core.Data.DDL.DomainDescription)
       #region Adding a Field that uses a domain
 
       // Adding a field,'PipeType', which uses the coded value domain to the 'Pipes' FeatureClass
@@ -2713,6 +2833,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     public void RemoveFieldTableSnippet(Geodatabase geodatabase)
     {
+      // cref: Removing fields from a Table;ArcGIS.Core.Data.DDL.SchemaBuilder.Modify(ArcGIS.Core.Data.DDL.TableDescription)
       #region Removing fields from a Table
 
       // Removing all fields from 'Parcels' table except following 
@@ -2752,6 +2873,427 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
+    public void CreateStandAloneAnnotationFeatureClass(Geodatabase geodatabase, SpatialReference spatialReference)
+    {
+      // cref: Creating an annotation feature class;ArcGIS.Core.Data.DDL.AnnotationFeatureClassDescription.#ctor(System.String,System.Collections.Generic.IReadOnlyList{ArcGIS.Core.Data.DDL.FieldDescription},ArcGIS.Core.Data.DDL.ShapeDescription,ArcGIS.Core.CIM.CIMGeneralPlacementProperties,System.Collections.Generic.List{ArcGIS.Core.CIM.CIMLabelClass})
+      #region Creating an annotation feature class 
+
+      // Creating a Cities annotation feature class
+      // with following user defined fields
+      // Name 
+      // GlobalID
+
+      // Annotation feature class name
+      string annotationFeatureClassName = "CitiesAnnotation";
+
+      // Create user defined attribute fields for annotation feature class 
+      FieldDescription globalIDFieldDescription = FieldDescription.CreateGlobalIDField();
+      FieldDescription nameFieldDescription = FieldDescription.CreateStringField("Name", 255);
+
+      // Create a list of all field descriptions
+      List<FieldDescription> fieldDescriptions = new List<FieldDescription> { globalIDFieldDescription, nameFieldDescription };
+
+      // Create a ShapeDescription object
+      ShapeDescription shapeDescription = new ShapeDescription(GeometryType.Polygon, spatialReference);
+
+      // Create general placement properties for Maplex engine 
+      CIMMaplexGeneralPlacementProperties generalPlacementProperties =
+        new CIMMaplexGeneralPlacementProperties
+        {
+          AllowBorderOverlap = true,
+          PlacementQuality = MaplexQualityType.High,
+          DrawUnplacedLabels = true,
+          InvertedLabelTolerance = 1.0,
+          RotateLabelWithDisplay = true,
+          UnplacedLabelColor = new CIMRGBColor
+          {
+            R = 0,
+            G = 255,
+            B = 0,
+            Alpha = 0.5f // Green
+          }
+        };
+
+      // Create general placement properties for Standard engine
+
+      //CIMStandardGeneralPlacementProperties generalPlacementProperties =
+      //  new CIMStandardGeneralPlacementProperties
+      //  {
+      //    DrawUnplacedLabels = true,
+      //    InvertedLabelTolerance = 3.0,
+      //    RotateLabelWithDisplay = true,
+      //    UnplacedLabelColor = new CIMRGBColor
+      //    {
+      //      R = 255, G = 0, B = 0, Alpha = 0.5f // Red
+      //    } 
+      //   };
+
+
+      // Create annotation  label classes
+      // Green label
+      CIMLabelClass greenLabelClass = new CIMLabelClass
+      {
+        Name = "Green",
+        ExpressionTitle = "Expression-Green",
+        ExpressionEngine = LabelExpressionEngine.Arcade,
+        Expression = "$feature.OBJECTID",
+        ID = 1,
+        Priority = 0,
+        Visibility = true,
+        TextSymbol = new CIMSymbolReference
+        {
+          Symbol = new CIMTextSymbol()
+          {
+            Angle = 45,
+            FontType = FontType.Type1,
+            FontFamilyName = "Tahoma",
+            FontEffects = FontEffects.Normal,
+            HaloSize = 2.0,
+
+            Symbol = new CIMPolygonSymbol
+            {
+              SymbolLayers = new CIMSymbolLayer[]
+              {
+                new CIMSolidFill
+                {
+                  Color = CIMColor.CreateRGBColor(0, 255, 0)
+                }
+              },
+              UseRealWorldSymbolSizes = true
+            }
+          },
+          MaxScale = 0,
+          MinScale = 0,
+          SymbolName = "TextSymbol-Green"
+        },
+        StandardLabelPlacementProperties = new CIMStandardLabelPlacementProperties
+        {
+          AllowOverlappingLabels = true,
+          LineOffset = 1.0
+        },
+        MaplexLabelPlacementProperties = new CIMMaplexLabelPlacementProperties
+        {
+          AlignLabelToLineDirection = true,
+          AvoidPolygonHoles = true
+        }
+      };
+
+      // Blue label
+      CIMLabelClass blueLabelClass = new CIMLabelClass
+      {
+        Name = "Blue",
+        ExpressionTitle = "Expression-Blue",
+        ExpressionEngine = LabelExpressionEngine.Arcade,
+        Expression = "$feature.OBJECTID",
+        ID = 2,
+        Priority = 0,
+        Visibility = true,
+        TextSymbol = new CIMSymbolReference
+        {
+          Symbol = new CIMTextSymbol()
+          {
+            Angle = 45,
+            FontType = FontType.Type1,
+            FontFamilyName = "Consolas",
+            FontEffects = FontEffects.Normal,
+            HaloSize = 2.0,
+
+            Symbol = new CIMPolygonSymbol
+            {
+              SymbolLayers = new CIMSymbolLayer[]
+              {
+                new CIMSolidFill
+                {
+                  Color = CIMColor.CreateRGBColor(0, 0, 255)
+                }
+              },
+              UseRealWorldSymbolSizes = true
+            }
+          },
+          MaxScale = 0,
+          MinScale = 0,
+          SymbolName = "TextSymbol-Blue"
+        },
+        StandardLabelPlacementProperties = new CIMStandardLabelPlacementProperties
+        {
+          AllowOverlappingLabels = true,
+          LineOffset = 1.0
+        },
+        MaplexLabelPlacementProperties = new CIMMaplexLabelPlacementProperties
+        {
+          AlignLabelToLineDirection = true,
+          AvoidPolygonHoles = true
+        }
+      };
+
+      // Create a list of labels
+      List<CIMLabelClass> labelClasses = new List<CIMLabelClass> { greenLabelClass, blueLabelClass };
+
+      // Create an annotation feature class description object to describe the feature class to create
+      AnnotationFeatureClassDescription annotationFeatureClassDescription =
+        new AnnotationFeatureClassDescription(annotationFeatureClassName, fieldDescriptions, shapeDescription,
+          generalPlacementProperties, labelClasses)
+        {
+          IsAutoCreate = true,
+          IsSymbolIDRequired = false,
+          IsUpdatedOnShapeChange = true
+        };
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the creation of the Cities annotation feature class to the list of DDL tasks
+      schemaBuilder.Create(annotationFeatureClassDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      // Inspect error messages
+      if (!success)
+      {
+        IReadOnlyList<string> errorMessages = schemaBuilder.ErrorMessages;
+        //etc.
+      }
+      #endregion
+    }
+
+    public void CreateFeatureLinkedAnnotationFeatureClass(Geodatabase geodatabase, SpatialReference spatialReference)
+    {
+      // cref: Creating a feature-linked annotation feature class;ArcGIS.Core.Data.DDL.AnnotationFeatureClassDescription.#ctor(System.String,System.Collections.Generic.IReadOnlyList{ArcGIS.Core.Data.DDL.FieldDescription},ArcGIS.Core.Data.DDL.ShapeDescription,ArcGIS.Core.CIM.CIMGeneralPlacementProperties,System.Collections.Generic.List{ArcGIS.Core.CIM.CIMLabelClass},ArcGIS.Core.Data.DDL.FeatureClassDescription)
+      #region Creating a feature-linked annotation feature class 
+
+      // Creating a feature-linked annotation feature class between water pipe and valve in water distribution network
+      // with following user defined fields
+      // PipeName 
+      // GlobalID
+
+      // Annotation feature class name
+      string annotationFeatureClassName = "WaterPipeAnnotation";
+
+      // Create user defined attribute fields for annotation feature class
+      FieldDescription pipeGlobalID = FieldDescription.CreateGlobalIDField();
+      FieldDescription nameFieldDescription = FieldDescription.CreateStringField("Name", 255);
+
+      // Create a list of all field descriptions
+      List<FieldDescription> fieldDescriptions = new List<FieldDescription> { pipeGlobalID, nameFieldDescription };
+
+      // Create a ShapeDescription object
+      ShapeDescription shapeDescription = new ShapeDescription(GeometryType.Polygon, spatialReference);
+
+      // Create general placement properties for Maplex engine 
+      CIMMaplexGeneralPlacementProperties generalPlacementProperties = new CIMMaplexGeneralPlacementProperties
+      {
+        AllowBorderOverlap = true,
+        PlacementQuality = MaplexQualityType.High,
+        DrawUnplacedLabels = true,
+        InvertedLabelTolerance = 1.0,
+        RotateLabelWithDisplay = true,
+        UnplacedLabelColor = new CIMRGBColor
+        {
+          R = 255,
+          G = 0,
+          B = 0,
+          Alpha = 0.5f 
+        }
+      };
+
+      // Create annotation  label classes
+      // Green label
+      CIMLabelClass greenLabelClass = new CIMLabelClass
+      {
+        Name = "Green",
+        ExpressionTitle = "Expression-Green",
+        ExpressionEngine = LabelExpressionEngine.Arcade,
+        Expression = "$feature.OBJECTID",
+        ID = 1,
+        Priority = 0,
+        Visibility = true,
+        TextSymbol = new CIMSymbolReference
+        {
+          Symbol = new CIMTextSymbol()
+          {
+            Angle = 45,
+            FontType = FontType.Type1,
+            FontFamilyName = "Tahoma",
+            FontEffects = FontEffects.Normal,
+            HaloSize = 2.0,
+
+            Symbol = new CIMPolygonSymbol
+            {
+              SymbolLayers = new CIMSymbolLayer[]
+              {
+                new CIMSolidFill
+                {
+                  Color = CIMColor.CreateRGBColor(0, 255, 0)
+                }
+              },
+              UseRealWorldSymbolSizes = true
+            }
+          },
+          MaxScale = 0,
+          MinScale = 0,
+          SymbolName = "TextSymbol-Green"
+        },
+        StandardLabelPlacementProperties = new CIMStandardLabelPlacementProperties
+        {
+          AllowOverlappingLabels = true,
+          LineOffset = 1.0
+        },
+        MaplexLabelPlacementProperties = new CIMMaplexLabelPlacementProperties
+        {
+          AlignLabelToLineDirection = true,
+          AvoidPolygonHoles = true
+        }
+      };
+
+      // Blue label
+      CIMLabelClass blueLabelClass = new CIMLabelClass
+      {
+        Name = "Blue",
+        ExpressionTitle = "Expression-Blue",
+        ExpressionEngine = LabelExpressionEngine.Arcade,
+        Expression = "$feature.OBJECTID",
+        ID = 2,
+        Priority = 0,
+        Visibility = true,
+        TextSymbol = new CIMSymbolReference
+        {
+          Symbol = new CIMTextSymbol()
+          {
+            Angle = 45,
+            FontType = FontType.Type1,
+            FontFamilyName = "Consolas",
+            FontEffects = FontEffects.Normal,
+            HaloSize = 2.0,
+
+            Symbol = new CIMPolygonSymbol
+            {
+              SymbolLayers = new CIMSymbolLayer[]
+              {
+                new CIMSolidFill
+                {
+                  Color = CIMColor.CreateRGBColor(0, 0, 255)
+                }
+              },
+              UseRealWorldSymbolSizes = true
+            }
+          },
+          MaxScale = 0,
+          MinScale = 0,
+          SymbolName = "TextSymbol-Blue"
+        },
+        StandardLabelPlacementProperties = new CIMStandardLabelPlacementProperties
+        {
+          AllowOverlappingLabels = true,
+          LineOffset = 1.0
+        },
+        MaplexLabelPlacementProperties = new CIMMaplexLabelPlacementProperties
+        {
+          AlignLabelToLineDirection = true,
+          AvoidPolygonHoles = true
+        }
+      };
+
+      // Create a list of labels
+      List<CIMLabelClass> labelClasses = new List<CIMLabelClass> { greenLabelClass, blueLabelClass };
+
+
+      // Create linked feature description
+      // Linked feature class name
+      string linkedFeatureClassName = "WaterPipe";
+
+      // Create fields for water pipe
+      FieldDescription waterPipeGlobalID = FieldDescription.CreateGlobalIDField();
+      FieldDescription pipeName = FieldDescription.CreateStringField("PipeName", 255);
+
+      // Create a list of water pipe field descriptions
+      List<FieldDescription> pipeFieldDescriptions = new List<FieldDescription> { waterPipeGlobalID, pipeName };
+
+      // Create a linked feature class description
+      FeatureClassDescription linkedFeatureClassDescription = new FeatureClassDescription(linkedFeatureClassName, pipeFieldDescriptions,
+        new ShapeDescription(GeometryType.Polyline, spatialReference));
+      
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Add the creation of the linked feature class to the list of DDL tasks
+      FeatureClassToken linkedFeatureClassToken = schemaBuilder.Create(linkedFeatureClassDescription);
+
+      // Create an annotation feature class description object to describe the feature class to create
+      AnnotationFeatureClassDescription annotationFeatureClassDescription =
+        new AnnotationFeatureClassDescription(annotationFeatureClassName, fieldDescriptions, shapeDescription,
+          generalPlacementProperties, labelClasses, new FeatureClassDescription(linkedFeatureClassToken))
+        {
+          IsAutoCreate = true,
+          IsSymbolIDRequired = false,
+          IsUpdatedOnShapeChange = true
+        };
+
+      // Add the creation of the annotation feature class to the list of DDL tasks
+      schemaBuilder.Create(annotationFeatureClassDescription);
+
+      // Execute the DDL
+      bool success = schemaBuilder.Build();
+
+      // Inspect error messages
+      if (!success)
+      {
+        IReadOnlyList<string> errorMessages = schemaBuilder.ErrorMessages;
+        //etc.
+      }
+
+      #endregion
+    }
+
+    public void CreateAnnotationFeatureClassUsingExistingAnnotationFeatureClassInDataset(Geodatabase geodatabase)
+    {
+      // cref: Creating an annotation feature class inside feature dataset;ArcGIS.Core.Data.DDL.AnnotationFeatureClassDescription.#ctor(ArcGIS.Core.Data.Mapping.AnnotationFeatureClassDefinition)
+      #region Creating an annotation feature class inside feature dataset
+
+      // Create a Cities annotation feature class inside Places feature dataset using existing annotation feature class 
+      
+      // Feature dataset name
+      string featureDatasetName = "Places";
+
+      // Annotation feature class name
+      string annotationFeatureClassName = "CitiesAnnotation";
+
+      // Create a SchemaBuilder object
+      SchemaBuilder schemaBuilder = new SchemaBuilder(geodatabase);
+
+      // Open existing annotation feature class name
+      using (AnnotationFeatureClass existingAnnotationFeatureClass = geodatabase.OpenDataset<AnnotationFeatureClass>("ExistingAnnotationFeatureClass"))
+      {
+
+        // Create Feature dataset description
+        FeatureDatasetDescription featureDatasetDescription = new FeatureDatasetDescription(featureDatasetName, existingAnnotationFeatureClass.GetDefinition().GetSpatialReference());
+
+        // Add the creation of the Places dataset to DDL task
+        FeatureDatasetToken featureDatasetToken = schemaBuilder.Create(featureDatasetDescription);
+
+        // Create an annotation feature class description using existing annotation feature class
+        AnnotationFeatureClassDescription annotationFeatureClassDescription = new AnnotationFeatureClassDescription(annotationFeatureClassName, existingAnnotationFeatureClass.GetDefinition())
+        {
+          IsAutoCreate = true,
+          IsSymbolIDRequired = false,
+          IsUpdatedOnShapeChange = true
+        };
+
+        // Add the creation of the Cities annotation feature class inside Places feature dataset
+        schemaBuilder.Create(new FeatureDatasetDescription(featureDatasetToken) , annotationFeatureClassDescription);
+
+        // Execute the DDL
+        bool success = schemaBuilder.Build();
+
+        // Inspect error messages
+        if (!success)
+        {
+          IReadOnlyList<string> errorMessages = schemaBuilder.ErrorMessages;
+          //etc.
+        }
+      }
+      #endregion
+    }
 
   }
 }

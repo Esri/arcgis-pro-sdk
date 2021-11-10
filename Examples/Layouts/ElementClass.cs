@@ -52,6 +52,7 @@ namespace Layout_HelpExamples
       Element element = layout.FindElement("Group Element");
 
 
+      // cref: Element_ConvertToGraphics;ArcGIS.Desktop.Layouts.Element.ConvertToGraphics
       #region Element_ConvertToGraphics
       //Convert a legend to a graphic and move the Title to the bottom of the legend and also move
       //the label in the contents pane to the bottom of the list.
@@ -73,6 +74,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_ConvertToGraphics
 
+      // cref: Element_GetSetAnchor;ArcGIS.Desktop.Layouts.Element.GetAnchor
+      // cref: Element_GetSetAnchor;ArcGIS.Desktop.Layouts.Element.SetAnchor(ArcGIS.Core.CIM.Anchor)
       #region Element_GetSetAnchor
       //Change the element's anchor position
 
@@ -86,6 +89,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetAnchor
 
+      // cref: Element_GetCustomProperty;ArcGIS.Desktop.Layouts.Element.GetCustomProperties
+      // cref: Element_GetCustomProperty;ArcGIS.Desktop.Layouts.Element.GetCustomProperty(System.String)
       #region Element_GetCustomProperty
       //Get a custom property that has been previously set.
 
@@ -96,6 +101,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetCustomProperty
 
+      // cref: Element_GetSetDefinition;ArcGIS.Desktop.Layouts.Element.GetDefinition
+      // cref: Element_GetSetDefinition;ArcGIS.Desktop.Layouts.Element.SetDefinition(ArcGIS.Core.CIM.CIMElement)
       #region Element_GetSetDefinition
       //Modify an element's CIM properties.
 
@@ -110,6 +117,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetDefinition
 
+      // cref: Element_GetSetHeight;ArcGIS.Desktop.Layouts.Element.GetHeight
+      // cref: Element_GetSetHeight;ArcGIS.Desktop.Layouts.Element.SetHeight(System.Double)
       #region Element_GetSetHeight
       //Modify an element's hieght.
 
@@ -123,6 +132,7 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetHeight
 
+      // cref: Element_SetLocked;ArcGIS.Desktop.Layouts.Element.SetLocked(System.Boolean)
       #region Element_SetLocked
       //Modify an element's locked state if it isn't already
 
@@ -136,6 +146,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetLocked
 
+      // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Layouts.Element.GetLockedAspectRatio
+      // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Layouts.Element.SetLockedAspectRatio(System.Boolean)
       #region Element_GetSetLockedAspectRatio
       //Modify an element's aspect ratio. 
 
@@ -149,6 +161,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetLockedAspectRatio
 
+      // cref: Element_GetSetRotation;ArcGIS.Desktop.Layouts.Element.GetRotation
+      // cref: Element_GetSetRotation;ArcGIS.Desktop.Layouts.Element.SetRotation(System.Double)
       #region Element_GetSetRotation
       //Modify and element's rotation value.
 
@@ -162,6 +176,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetRotation
 
+      // cref: Element_GetSetWidth;ArcGIS.Desktop.Layouts.Element.GetWidth
+      // cref: Element_GetSetWidth;ArcGIS.Desktop.Layouts.Element.SetWidth(System.Double)
       #region Element_GetSetWidth
       //Modify an element's width.
 
@@ -175,6 +191,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetWidth
 
+      // cref: Element_GetSetX;ArcGIS.Desktop.Layouts.Element.GetX
+      // cref: Element_GetSetX;ArcGIS.Desktop.Layouts.Element.SetX(System.Double)
       #region Element_GetSetX
       //Modify an element's X position.
 
@@ -189,6 +207,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetX
 
+      // cref: Element_GetSetY;ArcGIS.Desktop.Layouts.Element.GetY
+      // cref: Element_GetSetY;ArcGIS.Desktop.Layouts.Element.SetY(System.Double)
       #region Element_GetSetY
       //Modify an element's Y position.
 
@@ -202,6 +222,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetY
 
+      // cref: Element_SetCustomProperty;ArcGIS.Desktop.Layouts.Element.SetCustomProperty(System.String,System.String)
+      // cref: Element_SetCustomProperty;ArcGIS.Desktop.Layouts.Element.SetCustomProperty(System.String[],System.String[])
       #region Element_SetCustomProperty
       //Set a custom property on an element.
 
@@ -212,6 +234,7 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetCustomProperty
 
+      // cref: Element_SetName;ArcGIS.Desktop.Layouts.Element.SetName(System.String)
       #region Element_SetName
       //Modify an element's name.
 
@@ -222,6 +245,7 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetName
 
+      // cref: Element_SetTOCPositionAbsolute;ArcGIS.Desktop.Layouts.Element.SetTOCPositionAbsolute(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Boolean)
       #region Element_SetTOCPositionAbsolute
       //Move an element to the top of the TOC
 
@@ -232,6 +256,7 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetTOCPositionAbsolute
 
+      // cref: Element_SetTOCPositionRelative;ArcGIS.Desktop.Layouts.Element.SetTOCPositionRelative(ArcGIS.Desktop.Layouts.Element,System.Boolean)
       #region Element_SetTOCPositionRelative
       //Move a layout element above an existing layout element.
 
@@ -242,6 +267,7 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetTOCPositionRelative
 
+      // cref: Element_SetVisible;ArcGIS.Desktop.Layouts.Element.SetVisible(System.Boolean)
       #region Element_SetVisible
       //Modify an element's visibility.
 
@@ -270,6 +296,8 @@ namespace Layout_HelpExamples
       LayoutView lytView = LayoutView.Active;
       Layout layout = lytView.Layout;
 
+      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.IElementFactory.CreateBezierCurveGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
+      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateBezierCurveGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
       #region Create_BezierCurve
       //Create a beizier curve element with a simple line style.
 
@@ -292,6 +320,8 @@ namespace Layout_HelpExamples
       });
       #endregion Create_BezierCurve
 
+      // cref: Create_freehand;ArcGIS.Desktop.Layouts.IElementFactory.CreateFreehandGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
+      // cref: Create_freehand;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateFreehandGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
       #region Create_freehand
       //Create a graphic freehand element with a simple line style.
 
@@ -317,6 +347,8 @@ namespace Layout_HelpExamples
       });
       #endregion Create_freehand
 
+      // cref: Create_polygon_poly;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create_polygon_poly;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create_polygon_poly
       //Create a polygon graphic with simple line and fill styles.
 
@@ -341,6 +373,8 @@ namespace Layout_HelpExamples
       });
       #endregion Create_polygon_poly
 
+      // cref: Create_polygon_env;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create_polygon_env;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create_polygon_env
       //Create a polygon graphic using an envelope with simple line and fill styles.
 
@@ -360,6 +394,8 @@ namespace Layout_HelpExamples
       });
       #endregion Create_polygon_env
 
+      // cref: Create_circle;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create_circle;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create_circle
       //Create a circle graphic element using a simple line and fill styles.
 
@@ -379,6 +415,8 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_ellipse;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create_ellipse;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create_ellipse
       //Create an ellipse graphic with simple line and fill styles.
 
@@ -398,6 +436,8 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_lasso;ArcGIS.Desktop.Layouts.IElementFactory.CreateLassoGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: Create_lasso;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateLassoGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
       #region Create_lasso
       //Create a graphic lasso element with simple line and fill styles.
 
@@ -425,6 +465,10 @@ namespace Layout_HelpExamples
       });
       #endregion Create_lasso
 
+      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String)
+      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String)
+      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
       #region Create_CurveText
       //Create curve text with basic text properties.
 
@@ -447,6 +491,10 @@ namespace Layout_HelpExamples
       });
       #endregion Create_CurveText
 
+      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String)
+      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String)
+      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
       #region Create_PolygonText
       //Create polygon paragraph text with basic text properties.
 
@@ -479,6 +527,10 @@ namespace Layout_HelpExamples
 
       #endregion Create_PolygonText
 
+      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
+      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
+      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
       #region Create_CircleText
       //Create circle paragraph text with basic text settings and optionally a modified border.
 
@@ -505,6 +557,10 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
+      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
+      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
       #region Create_EllipseText
       //Create ellipse paragraph text with basic text settings and optionally a modified border.
 
@@ -557,6 +613,9 @@ namespace Layout_HelpExamples
       });
       #endregion Create_MapFrame
 
+      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.IElementFactory.CreateScaleBar(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.ScaleBarStyleItem)
+      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateScaleBar(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.ScaleBarStyleItem)
+      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.ScaleBar
       #region Create_ScaleBar
       //Create a scale bar for a specific map frame and assign a scale bar style item.
 
@@ -585,6 +644,9 @@ namespace Layout_HelpExamples
       });
       #endregion Create_ScaleBar
 
+      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.IElementFactory.CreateNorthArrow(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.NorthArrowStyleItem)
+      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateNorthArrow(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.NorthArrowStyleItem)
+      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.NorthArrow
       #region Create_NorthArrow
       //Create a north arrow for a specific map frame and assign a north arrow style item.
 
@@ -613,6 +675,8 @@ namespace Layout_HelpExamples
       });
       #endregion Create_NorthArrow
 
+      // cref: Create_Empty_Group_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer)
+      // cref: Create_Empty_Group_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer)
       #region Create_Empty_Group_Root
       //Create an empty group element at the root level of the contents pane.
 
@@ -639,6 +703,8 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_Group_With_Single_Element_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Desktop.Layouts.Element)
+      // cref: Create_Group_With_Single_Element_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Desktop.Layouts.Element)
       #region Create_Group_With_Single_Element_Root
       //Create a group with a single element at the root level of the contents pane.
 
@@ -653,6 +719,8 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_Group_With_List_Elements_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Collections.Generic.IList{ArcGIS.Desktop.Layouts.Element})
+      // cref: Create_Group_With_List_Elements_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Collections.Generic.IList{ArcGIS.Desktop.Layouts.Element})
       #region Create_Group_With_List_Elements_Root
       //Create a group with a list of elements at the root level of the contents pane.
 
@@ -677,6 +745,8 @@ namespace Layout_HelpExamples
       });
       #endregion
 
+      // cref: Create_Group_With_List_Element_Names_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.String[])
+      // cref: Create_Group_With_List_Element_Names_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.String[])
       #region Create_Group_With_List_Element_Names_Root
       //Create a group using a list of element names at the root level of the contents pane.
 

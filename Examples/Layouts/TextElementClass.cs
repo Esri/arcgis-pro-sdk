@@ -85,6 +85,7 @@ namespace Layout_HelpExamples
     }
     async public static void TextPropertiesExample2() //TODO fis duplicated item above because of inconsistent region name use in TextElement.cs file in layout solution.
     {
+      // cref: Modify existing text properties;ArcGIS.Desktop.Layouts.TextProperties
       #region Modify existing text properties
       //Modify the text properties for an existing text element.
 

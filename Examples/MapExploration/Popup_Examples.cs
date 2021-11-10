@@ -35,6 +35,11 @@ namespace Examples
     /// <example>
     /// <code title="Show A Custom Pop-up" description="Show a custom pop-up." region="Show A Custom Pop-up" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Popup_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Show A Custom Pop-up;ArcGIS.Desktop.Mapping.MapView.ShowCustomPopup(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.PopupContent})
+    // cref: Show A Custom Pop-up;ArcGIS.Desktop.Mapping.PopupContent.#ctor(System.String,System.String)
+    // cref: Show A Custom Pop-up;ArcGIS.Desktop.Mapping.PopupContent.#ctor(System.Uri,System.String)
+    // cref: Show A Custom Pop-up;ArcGIS.Desktop.Mapping.PopupContent.HtmlURI
+    // cref: Show A Custom Pop-up;ArcGIS.Desktop.Mapping.PopupContent
     #region Show A Custom Pop-up
     public void ShowCustomPopup()
     {
@@ -56,6 +61,8 @@ namespace Examples
     /// <example>
     /// <code title="Show A Pop-up For A Feature" description="Show a pop-up for a feature." region="Show A Pop-up For A Feature" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Popup_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Show A Pop-up For A Feature;ArcGIS.Desktop.Mapping.MapView.ShowPopup(ArcGIS.Desktop.Mapping.MapMember,System.Int64)
+    // cref: Show A Pop-up For A Feature;ArcGIS.Desktop.Mapping.MapView.ShowPopup(ArcGIS.Desktop.Mapping.MapMember,System.Int64,ArcGIS.Desktop.Mapping.PopupDefinition)
     #region Show A Pop-up For A Feature
     public void ShowPopup(MapMember mapMember, long objectID)
     {
@@ -72,6 +79,12 @@ namespace Examples
     /// <example>
     /// <code title="Show A Pop-up With Custom Commands" description="Show a pop-up with custom commands." region="Show A Pop-up With Custom Commands" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Popup_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.MapView.ShowCustomPopup(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.PopupContent},System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.PopupCommand},System.Boolean)
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.MapView.ShowCustomPopup(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.PopupContent},System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Mapping.PopupCommand},System.Boolean,ArcGIS.Desktop.Mapping.PopupDefinition)
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.PopupCommand.#ctor(System.Action{ArcGIS.Desktop.Mapping.PopupContent},System.Func{ArcGIS.Desktop.Mapping.PopupContent,System.Boolean},System.String,System.Windows.Media.ImageSource)
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.PopupCommand.Image
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.PopupCommand.Tooltip
+    // cref: Show A Pop-up With Custom Commands;ArcGIS.Desktop.Mapping.PopupCommand
     #region Show A Pop-up With Custom Commands
     public void ShowCustomPopup(MapMember mapMember, long objectID)
     {
@@ -100,6 +113,8 @@ namespace Examples
     /// <example>
     /// <code title="Show A Dynamic Pop-up" description="Show a custom pop-up with dynamically generated content." region="Show A Dynamic Pop-up" source="..\..\ArcGIS\SharedArcGIS\SDK\Examples\ArcGIS.Desktop.Mapping\MapExploration\Popup_Examples.cs" lang="CS"/>
     /// </example>
+    // cref: Show A Dynamic Pop-up;ArcGIS.Desktop.Mapping.PopupContent.OnCreateHtmlContent
+    // cref: Show A Dynamic Pop-up;ArcGIS.Desktop.Mapping.PopupContent.IsDynamicContent
     #region Show A Dynamic Pop-up
     public void ShowDynamicPopup(MapMember mapMember, List<long> objectIDs)
     {

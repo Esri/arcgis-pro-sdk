@@ -37,6 +37,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // Variables not used in samples
       OpenItemDialog selectItemDialog = new OpenItemDialog(); // in #region BrowseDialogItems
 
+      // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Filter
+      // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.InitialLocation
+      // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Title
       #region OpenItemDialog
 
       /// Adds a single item to a map
@@ -49,6 +52,10 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //OpenItemDialog
 
+      // cref: Show_OpenItemDialog;ArcGIS.Desktop.Catalog.OpenItemDialog.ShowDialog
+      // cref: Show_OpenItemDialog;ArcGIS.Desktop.Catalog.SaveItemDialog.ShowDialog
+      // cref: Show_OpenItemDialog;ArcGIS.Desktop.Catalog.OpenItemDialog.Items
+      // cref: Show_OpenItemDialog;ArcGIS.Desktop.Catalog.OpenItemDialog.MultiSelect
       #region Show_OpenItemDialog
 
       OpenItemDialog addToProjectDialog = new OpenItemDialog();
@@ -68,6 +75,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //Show_OpenItemDialog
 
+      // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Filter
+      // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.InitialLocation
+      // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Title
       #region SaveItemDialog
 
       SaveItemDialog saveLayerFileDialog = new SaveItemDialog()
@@ -79,6 +89,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //SaveItemDialog
 
+      // cref: Show_SaveItemDialog;ArcGIS.Desktop.Catalog.SaveItemDialog.DefaultExt
+      // cref: Show_SaveItemDialog;ArcGIS.Desktop.Catalog.SaveItemDialog.FilePath
+      // cref: Show_SaveItemDialog;ArcGIS.Desktop.Catalog.SaveItemDialog.OverwritePrompt
       #region Show_SaveItemDialog
 
       SaveItemDialog saveMapFileDialog = new SaveItemDialog()
