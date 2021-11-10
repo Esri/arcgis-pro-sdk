@@ -425,7 +425,8 @@ At 2.9 you can take advantage of API enhancements for:
 ##### Map Exploration:
 * Table Control enhancements like “Go to” row, open + customize table pane/view.
 ##### Utility Network:
-* Named trace configurations can be stored and retrieved on server.
+* Support for retrieving and executing named trace configurations stored as part of a utility network.
+* Traverse multiple levels of utility network associations in a single call (crucial for some utility network data models such as telecommunications).
 
 For a detailed list of changes to the ArcGIS Pro API refer to the [What's new for developers at 2.9
 ](https://pro.arcgis.com/en/pro-app/latest/sdk/api-reference/#topic15120.html) topic in the [ArcGIS Pro  API Reference Guide](https://pro.arcgis.com/en/pro-app/latest/sdk/api-reference/#topic1.html).
