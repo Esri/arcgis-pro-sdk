@@ -27,6 +27,12 @@ using ArcGIS.Desktop.Framework.Contracts;
 namespace Layout_HelpExamples
 {
   // cref: CIMGraphic;ArcGIS.Desktop.Layouts.GraphicElement
+  // cref: CIMGraphic;ArcGIS.Desktop.Layouts.LayoutProjectItem
+  // cref: CIMGraphic;ArcGIS.Desktop.Layouts.LayoutProjectItem.GetLayout
+  // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic
+  // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT.SETGRAPHIC
+  // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+  // cref: ARCGIS.CORE.CIM.CIMGRAPHIC.TRANSPARENCY
   #region CIMGraphic
   //This example references a graphic element on a layout and sets its Transparency property (which is not available in the managed API)
   //by accessing the element's CIMGraphic.
@@ -71,6 +77,10 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT
+  // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT.CLONE
+  // cref: ArcGIS.Desktop.Layouts.Element.SETX
+  // cref: ArcGIS.Desktop.Layouts.Element.SETY
   #region CloneGraphic
   //This example finds a layout element by name and clones it a specified number of times and applies an accumlative offset for each 
   //cloned element.

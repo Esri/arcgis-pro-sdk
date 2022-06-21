@@ -184,7 +184,7 @@ namespace SDKExamples.GeodatabaseSDK
                 // Has to be called before any changes are made to the row
                 context.Invalidate(feature);
 
-                MapPoint newShape = new MapPointBuilder(mapPoint.X + 10, mapPoint.Y, mapPoint.SpatialReference).ToGeometry();
+                MapPoint newShape = new MapPointBuilderEx(mapPoint.X + 10, mapPoint.Y, mapPoint.SpatialReference).ToGeometry();
                 feature.SetShape(newShape);
 
                 // Will be true.

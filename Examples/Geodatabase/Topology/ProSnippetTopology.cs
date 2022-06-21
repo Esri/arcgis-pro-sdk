@@ -29,8 +29,12 @@ namespace GeodatabaseSDK.Topo
 {
   class ProSnippetTopology
   {
-    // cref: OpenTopologyAndProcessDefinition;ArcGIS.Core.Data.Topology.Topology.GetDefinition
-    // cref: OpenTopologyAndProcessDefinition;ArcGIS.Core.Data.Topology.TopologyDefinition.GetFeatureClassNames
+    // cref: ArcGIS.Core.Data.Topology.Topology
+    // cref: ArcGIS.Core.Data.Topology.Topology.GetDefinition
+    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition
+    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition.GetFeatureClassNames
+    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition.GetClusterTolerance
+    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition.GetZClusterTolerance
     #region OpenTopologyAndProcessDefinition
 
     public void OpenTopologyAndProcessDefinition()
@@ -64,7 +68,8 @@ namespace GeodatabaseSDK.Topo
         OutputDefinition(geodatabase, definitionViaTopology);
       }
 
-      using (TopologyDefinition definitionViaGeodatabase = geodatabase.GetDefinition<TopologyDefinition>("Backcountry_Topology"))
+      using (TopologyDefinition definitionViaGeodatabase = 
+        geodatabase.GetDefinition<TopologyDefinition>("Backcountry_Topology"))
       {
         OutputDefinition(geodatabase, definitionViaGeodatabase);
       }
@@ -97,7 +102,14 @@ namespace GeodatabaseSDK.Topo
       using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\TestData\GrandTeton.gdb"))))
       using (Topology topology = geodatabase.OpenDataset<Topology>("Backcountry_Topology"))
       {
-        // cref: GetTopologyRules;ArcGIS.Core.Data.Topology.TopologyDefinition.GetRules
+        // cref: ArcGIS.Core.Data.Topology.TopologyDefinition.GetRules
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.ID
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.OriginClass
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.OriginSubtype
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.DestinationClass
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.DestinationSubtype
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.RuleType
         #region GetTopologyRules
 
         using (TopologyDefinition topologyDefinition = topology.GetDefinition())
@@ -129,7 +141,11 @@ namespace GeodatabaseSDK.Topo
       }
     }
 
-    // cref: ValidateTopology;ArcGIS.Core.Data.Topology.Topology.Validate(ArcGIS.Core.Data.Topology.ValidationDescription)
+    // cref: ArcGIS.Core.Data.Topology.ValidationDescription.#ctor
+    // cref: ArcGIS.Core.Data.Topology.Topology.Validate(ArcGIS.Core.Data.Topology.ValidationDescription)
+    // cref: ArcGIS.Core.Data.Topology.Topology.GetExtent
+    // cref: ArcGIS.Core.Data.Topology.Topology.GetState
+    // cref: ArcGIS.Core.Data.Topology.ValidationResult
     #region ValidateTopology
 
     public void ValidateTopology()
@@ -233,7 +249,17 @@ namespace GeodatabaseSDK.Topo
       using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\TestData\GrandTeton.gdb"))))
       using (Topology topology = geodatabase.OpenDataset<Topology>("Backcountry_Topology"))
       {
-        // cref: GetTopologyErrors;ArcGIS.Core.Data.Topology.Topology.GetErrors(ArcGIS.Core.Data.Topology.ErrorDescription)
+        // cref: ArcGIS.Core.Data.Topology.Topology.GetErrors(ArcGIS.Core.Data.Topology.ErrorDescription)
+        // cref: ArcGIS.Core.Data.Topology.TopologyError
+        // cref: ArcGIS.Core.Data.Topology.ErrorDescription
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.OriginClassName
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.OriginObjectID
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.DestinationClassName
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.DestinationObjectID
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.RuleType
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.IsException
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.Shape
+        // cref: ArcGIS.Core.Data.Topology.TopologyError.RuleID
         #region GetTopologyErrors
 
         // Get all the errors and exceptions currently associated with the topology.
@@ -252,8 +278,17 @@ namespace GeodatabaseSDK.Topo
 
         #endregion GetTopologyErrors
 
-        // cref: MarkAndUnmarkAsErrors;ArcGIS.Core.Data.Topology.Topology.MarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
-        // cref: MarkAndUnmarkAsErrors;ArcGIS.Core.Data.Topology.Topology.UnmarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
+        // cref: ArcGIS.Core.Data.Topology.Topology.MarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
+        // cref: ArcGIS.Core.Data.Topology.Topology.UnmarkAsException(ArcGIS.Core.Data.Topology.TopologyError)
+        // cref: ArcGIS.Core.Data.Topology.Topology.GetExtent
+        // cref: ArcGIS.Core.Data.Topology.Topology.GetErrors
+        // cref: ArcGIS.Core.Data.Topology.TopologyRule.RuleType
+        // cref: ArcGIS.Core.Data.Topology.TopologyDefinition.GetRules
+        // cref: ArcGIS.Core.Data.Topology.TopologyRuleType
+        // cref: ArcGIS.Core.Data.Topology.ErrorDescription.TopologyRule
+        // cref: ArcGIS.Core.Data.Topology.ErrorDescription.ErrorType
+        // cref: ArcGIS.Core.Data.Topology.ErrorType
+        // cref: ArcGIS.Core.Data.Topology.TopologyError
         #region MarkAndUnmarkAsErrors
 
         // Get all the errors due to features violating the "PointProperlyInsideArea" topology rule.
@@ -306,7 +341,16 @@ namespace GeodatabaseSDK.Topo
       }
     }
 
-    // cref: ExploreTopologyGraph;ArcGIS.Core.Data.Topology.Topology.BuildGraph(ArcGIS.Core.Geometry.Geometry,System.Action{ArcGIS.Core.Data.Topology.TopologyGraph})
+    // cref: ArcGIS.Core.Data.Topology.Topology.BuildGraph(ArcGIS.Core.Geometry.Geometry,System.Action{ArcGIS.Core.Data.Topology.TopologyGraph})
+    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.GetEdges
+    // cref: ArcGIS.Core.Data.Topology.TopologyEdge.GetFromNode
+    // cref: ArcGIS.Core.Data.Topology.TopologyEdge.GetToNode
+    // cref: ArcGIS.Core.Data.Topology.TopologyEdge.GetLeftParentFeatures
+    // cref: ArcGIS.Core.Data.Topology.TopologyEdge.GetRightParentFeatures
+    // cref: ArcGIS.Core.Data.Topology.TopologyNode
+    // cref: ArcGIS.Core.Data.Topology.FeatureInfo
+    // cref: ArcGIS.Core.Data.Topology.FeatureInfo.FeatureClassName
+    // cref: ArcGIS.Core.Data.Topology.FeatureInfo.ObjectID
     #region ExploreTopologyGraph
 
     public void ExploreTopologyGraph()
@@ -387,7 +431,13 @@ namespace GeodatabaseSDK.Topo
 
     #endregion ExploreTopologyGraph
 
-    // cref: FindClosestElement;ArcGIS.Core.Data.Topology.TopologyGraph.FindClosestElement``1(ArcGIS.Core.Geometry.MapPoint,System.Double)
+    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.FindClosestElement
+    // cref: ArcGIS.Core.Data.Topology.BuildGraph
+    // cref: ArcGIS.Core.Data.Topology.GetExtent
+    // cref: ArcGIS.Core.Data.Topology.TopologyElement
+    // cref: ArcGIS.Core.Data.Topology.TopologyElement.GetParentFeatures
+    // cref: ArcGIS.Core.Data.Topology.FeatureInfo.FeatureClassName
+    // cref: ArcGIS.Core.Data.Topology.FeatureInfo.ObjectID
     #region FindClosestElement
 
     public void FindClosestElement()
@@ -408,9 +458,12 @@ namespace GeodatabaseSDK.Topo
 
           double searchRadius = 1.0;
 
-          TopologyElement topologyElementViaCampsites12 = topologyGraph.FindClosestElement<TopologyElement>(queryPointViaCampsites12, searchRadius);
+          TopologyElement topologyElementViaCampsites12 = 
+              topologyGraph.FindClosestElement<TopologyElement>(
+                        queryPointViaCampsites12, searchRadius);
 
-          System.Diagnostics.Debug.Assert(topologyElementViaCampsites12 != null, "There should be a topology element corresponding to 'queryPointViaCampsites12' within the 'searchRadius' units.");
+          System.Diagnostics.Debug.Assert(
+            topologyElementViaCampsites12 != null, "There should be a topology element corresponding to 'queryPointViaCampsites12' within the 'searchRadius' units.");
 
           IReadOnlyList<FeatureInfo> parentFeatures = topologyElementViaCampsites12.GetParentFeatures();
 

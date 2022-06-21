@@ -390,19 +390,23 @@ namespace Layout_HelpExamples
       Layout lyt = await QueuedTask.Run(() => layoutItem.GetLayout());
       GraphicElement graElm = lyt.FindElement("Rectangle") as GraphicElement;
 
-      CIMGraphic CIMGra = graElm.GetGraphic() as CIMGraphic;
-
       await QueuedTask.Run(() =>
       {
-        // cref: GraphicElement_Clone;ArcGIS.Desktop.Layouts.GraphicElement.Clone(System.String)
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.Clone(System.String)
         #region GraphicElement_Clone
         //Note: call within QueuedTask.Run() 
         GraphicElement cloneElm = graElm.Clone("Clone");
         #endregion GraphicElement_Clone
 
-        // cref: GraphicElement_SetGraphic;ArcGIS.Desktop.Layouts.GraphicElement.SetGraphic(ArcGIS.Core.CIM.CIMGraphic)
-        #region GraphicElement_SetGraphic
-        //Note: call within QueuedTask.Run() 
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.SetGraphic(ArcGIS.Core.CIM.CIMGraphic)
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic(ArcGIS.Core.CIM.CIMGraphic)
+        // cref: ArcGIS.Core.CIM.CIMGraphic
+        #region GraphicElement_Get_And_SetGraphic
+
+        //Note: must call within QueuedTask.Run() 
+        var CIMGra = graElm.GetGraphic() as CIMGraphic;
+        //TODO - make changes to CIMGraphic
+        //...
         graElm.SetGraphic(CIMGra);
         #endregion GraphicElement_SetGraphic
       });
@@ -411,22 +415,32 @@ namespace Layout_HelpExamples
     async public static void TextElementSnippets()
     {
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
-      Layout lyt = await QueuedTask.Run(() => layoutItem.GetLayout());
-      TextElement txtElm = lyt.FindElement("Text") as TextElement;
+      Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
+     
 
+      // cref: ArcGIS.Desktop.Layouts.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextProperties._CTOR
       #region TextElement_TextPropertiesConstructor
       TextProperties txtProp = new TextProperties("String", "Times New Roman", 24, "Regular");
       #endregion TextElement_TextPropertiesConstructor
 
+      // cref: ArcGIS.Desktop.Layouts.TextElement
+      // cref: ArcGIS.Desktop.Layouts.TextElement.SetTextProperties
       #region TextElement_SetTextProperties
-      txtElm.SetTextProperties(txtProp);
+      await QueuedTask.Run(() =>
+      {
+        TextElement txtElm = layout.FindElement("Text") as TextElement;
+        txtElm.SetTextProperties(txtProp);
+      });
+      
       #endregion TextElement_SetTextProperties
 
     }
 
     async public static void PictureElementSnippets()
     {
-      // cref: PictureElement_SetSourcePath;ArcGIS.Desktop.Layouts.PictureElement.SetSourcePath(System.String)
+      // cref: ArcGIS.Desktop.Layouts.PictureElement
+      // cref: ArcGIS.Desktop.Layouts.PictureElement.SetSourcePath(System.String)
       #region PictureElement_SetSourcePath
       LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
       await QueuedTask.Run(() => 
@@ -434,18 +448,20 @@ namespace Layout_HelpExamples
         Layout layout = layoutItem.GetLayout();
         PictureElement picElm = layout.FindElement("Rectangle") as PictureElement;
 
-        picElm.SetSourcePath(@"C:\Some\New\Path\And\file.ext");
+        picElm.SetSourcePath(@"C:\Some\New\Path\And\file_pic.png");
       });
       #endregion PictureElement_SetSourcePath
     }
 
     async public static void MapSurroundSnippets()
     {
-      // cref: MapSurround_SetMapFrame;ArcGIS.Desktop.Layouts.MapSurround.SetMapFrame(ArcGIS.Desktop.Layouts.MapFrame)
+      // cref: ArcGIS.Desktop.Layouts.MapSurround.SetMapFrame(ArcGIS.Desktop.Layouts.MapFrame)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame
       #region MapSurround_SetMapFrame
       await QueuedTask.Run(() =>
       {
-        LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
+        LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>()
+                    .FirstOrDefault(item => item.Name.Equals("Layout Name"));
         Layout lyt = layoutItem.GetLayout();
         MapFrame mf = lyt.FindElement("Map1 Map Frame") as MapFrame;
         MapSurround ms = lyt.FindElement("Scale Bar") as MapSurround;
@@ -457,56 +473,67 @@ namespace Layout_HelpExamples
 
     async public static void ExportSnippets()
     {
-      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("Layout Name"));
+      LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>()
+              .FirstOrDefault(item => item.Name.Equals("Layout Name"));
 
       Layout lyt = await QueuedTask.Run(() => layoutItem.GetLayout());
       MapFrame mf = lyt.FindElement("Map1 Map Frame") as MapFrame;
 
+      // cref: BMP_Constructor;ArcGIS.Desktop.Mapping.BMPFormat
       // cref: BMP_Constructor;ArcGIS.Desktop.Mapping.BMPFormat.#ctor
       #region BMP_Constructor
       BMPFormat BMP = new BMPFormat();
       #endregion BMP_Constructor
 
+      // cref: EMF_Constructor;ArcGIS.Desktop.Mapping.EMFFormat
       // cref: EMF_Constructor;ArcGIS.Desktop.Mapping.EMFFormat.#ctor
       #region EMF_Constructor
       EMFFormat EMF = new EMFFormat();
       #endregion EMF_Constructor
 
+      // cref: EPS_Constructor;ArcGIS.Desktop.Mapping.EPSFormat
       // cref: EPS_Constructor;ArcGIS.Desktop.Mapping.EPSFormat.#ctor
       #region EPS_Constructor
       EPSFormat EPS = new EPSFormat();
       #endregion EPS_Constructor
 
+      // cref: GIF_Constructor;ArcGIS.Desktop.Mapping.GIFFormat
       // cref: GIF_Constructor;ArcGIS.Desktop.Mapping.GIFFormat.#ctor
       #region GIF_Constructor
       GIFFormat GIF = new GIFFormat();
       #endregion GIF_Constructor
 
+      // cref: JPEG_Constructor;ArcGIS.Desktop.Mapping.JPEGFormat
       // cref: JPEG_Constructor;ArcGIS.Desktop.Mapping.JPEGFormat.#ctor
       #region JPEG_Constructor
       JPEGFormat JPEG = new JPEGFormat();
       #endregion JPEG_Constructor
 
+      // cref: PNG_Constructor;ArcGIS.Desktop.Mapping.PNGFormat
       // cref: PNG_Constructor;ArcGIS.Desktop.Mapping.PNGFormat.#ctor
       #region PNG_Constructor
       PNGFormat PNG = new PNGFormat();
       #endregion PNG_Constructor
 
+      // cref: PDF_Constructor;ArcGIS.Desktop.Mapping.PDFFormat
       // cref: PDF_Constructor;ArcGIS.Desktop.Mapping.PDFFormat.#ctor
       #region PDF_Constructor
       PDFFormat PDF = new PDFFormat();
       #endregion PDF_Constructor
 
+      // cref: SVG_Constructor;ArcGIS.Desktop.Mapping.SVGFormat
       // cref: SVG_Constructor;ArcGIS.Desktop.Mapping.SVGFormat.#ctor
       #region SVG_Constructor
       SVGFormat SVG = new SVGFormat();
       #endregion SVG_Constructor
 
+      // cref: TGA_Constructor;ArcGIS.Desktop.Mapping.TGAFormat
       // cref: TGA_Constructor;ArcGIS.Desktop.Mapping.TGAFormat.#ctor
       #region TGA_Constructor
       TGAFormat TGA = new TGAFormat();
       #endregion TGA_Constructor
 
+      // cref: TIFF_Constructor;ArcGIS.Desktop.Mapping.TIFFFormat
       // cref: TIFF_Constructor;ArcGIS.Desktop.Mapping.TIFFFormat.#ctor
       #region TIFF_Constructor
       TIFFFormat TIFF = new TIFFFormat();
@@ -515,8 +542,10 @@ namespace Layout_HelpExamples
 
       PDF.OutputFileName = @"C:\Temp\output.pdf";
 
+      // cref: ArcGIS.Desktop.Layouts.Layout.Export
       #region PDF_lyt_Export
-      lyt.Export(PDF);
+      await QueuedTask.Run(() => lyt.Export(PDF));
+      
       #endregion PDF_lyt_Export
 
     }

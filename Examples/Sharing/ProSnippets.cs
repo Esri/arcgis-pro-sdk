@@ -32,6 +32,11 @@ namespace Content.Sharing.ProSnippet
   {
     public static void EsriHttpClientMethods()
     {
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.Current
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetActivePortal()
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal.PortalUri
       #region ArcGISPortalManager: Get the Current Active Portal
 
       var active_portal = ArcGISPortalManager.Current.GetActivePortal();
@@ -39,6 +44,11 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.Current
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetPortals()
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal.PortalUri
       #region  ArcGISPortalManager: Get a list of all your Portals
 
       var portals = ArcGISPortalManager.Current.GetPortals();
@@ -47,6 +57,9 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.Current
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.AddPortal(System.Uri)
       #region ArcGISPortalManager: Add a portal to the list of portals
 
       var portalUri = new Uri("http://myportal.esri.com/portal/", UriKind.Absolute);
@@ -54,6 +67,15 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.Current
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetPortal(System.Uri)
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal.IsSignedOn()
+      // cref: ArcGIS.Desktop.Core.ArcGISPortal.SignIn()
+      // cref: ArcGIS.Desktop.Core.SignInResult
+      // cref: ArcGIS.Desktop.Core.SignInResult.success
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalManager.SetActivePortal(ArcGIS.Desktop.Core.ArcGISPortal)
       #region ArcGISPortalManager: Get a portal and Sign In, Set it Active
 
       //Find the portal to sign in with using its Uri...
@@ -71,6 +93,23 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.Events.ActivePortalChangedEvent
+      // cref: ArcGIS.Desktop.Core.Events.ActivePortalChangedEvent.Subscribe
+      // cref: ArcGIS.Desktop.Core.Events.ActivePortalChangedEventArgs
+      // cref: ArcGIS.Desktop.Core.Events.ActivePortalChangedEventArgs.ActivePortal
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalAddedEvent
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalAddedEvent.Subscribe
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalAddedEventArgs
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalAddedEventArgs.Portal
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalRemovedEvent
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalRemovedEvent.Subscribe
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalRemovedEventArgs
+      // cref: ArcGIS.Desktop.Core.Events.ArcGISPortalRemovedEventArgs.RemovedPortalUri
+      // cref: ArcGIS.Desktop.Core.Events.PortalSignOnChangedEvent
+      // cref: ArcGIS.Desktop.Core.Events.PortalSignOnChangedEvent.Subscribe
+      // cref: ArcGIS.Desktop.Core.Events.PortalSignOnChangedEventArgs
+      // cref: ArcGIS.Desktop.Core.Events.PortalSignOnChangedEventArgs.Portal
+      // cref: ArcGIS.Desktop.Core.Events.PortalSignOnChangedEventArgs.IsSignedOn
       #region ArcGISPortalManager: Listen for the Portal Events
 
       ArcGIS.Desktop.Core.Events.ActivePortalChangedEvent.Subscribe((args) =>
@@ -89,6 +128,13 @@ namespace Content.Sharing.ProSnippet
       ArcGIS.Desktop.Core.Events.ArcGISPortalRemovedEvent.Subscribe((args) =>
       {
         var old_uri = args.RemovedPortalUri;
+        //etc
+      });
+
+      ArcGIS.Desktop.Core.Events.PortalSignOnChangedEvent.Subscribe((args) =>
+      {
+        var portal = args.Portal;
+        var isSignedOn = args.IsSignedOn;
         //etc
       });
 

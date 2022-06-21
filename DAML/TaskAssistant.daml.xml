@@ -213,15 +213,7 @@
     </insertCondition>
   </conditions>
   
-  <modules>
-    <updateModule refID="esri_core_module">
-      <groups>
-        <updateGroup refID="esri_core_dockWindows">
-          <insertButton refID="esri_tasks_ShowTasks" size="large" />
-        </updateGroup>
-      </groups>
-    </updateModule>
-        
+  <modules>        
     <!--<updateModule refID="esri_layouts">
       <groups>
         <updateGroup refID="esri_layouts_dockWindows">
@@ -289,7 +281,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         <button id="esri_tasks_UpdateProjectTaskItem" caption="Check For Updates" className="ArcGIS.Desktop.Internal.TaskAssistant.UpdateTaskFileContextCommand" condition="esri_tasks_disabledCondition" helpContextID="">
           <tooltip heading="">Check for updates to the task item.<disabledText>Not available yet</disabledText></tooltip>
         </button>
-        <button id="esri_tasks_RemoveProjectTaskItem" caption="Delete" extendedCaption="Delete the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.RemoveTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
+        <button id="esri_tasks_RemoveProjectTaskItem" caption="Delete" extendedCaption="Delete the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.RemoveTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
           <tooltip heading="">Delete the task item.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_tasks_ProjectTaskItemProperties" caption="Properties" extendedCaption="View the properties of the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.TaskItemPropertiesContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
@@ -410,17 +402,20 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
           <tooltip heading="Task">Add task items to your project.</tooltip>
           <button refID="esri_tasks_NewProjectTaskItem" />
           <menu refID="esri_tasks_ImportTaskFileMenu"/>
+          <button refID="esri_core_editPasteButton"/>
         </menu>
 
         <menu id="TaskAssistantFileContainerContextMenu" caption="Tasks Container">
           <button refID="esri_tasks_NewProjectTaskItem" />
           <button refID="esri_tasks_ImportTaskFileBrowse" separator="true" />
+
         </menu>        
         <menu id="TaskAssistantProjectItemContextMenu" caption="Task Item">
           <button refID="esri_tasks_OpenProjectTaskItem" />
           <button refID="esri_tasks_EditProjectTaskItem" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_tasks_UpdateProjectTaskItem"  separator="true"/>
-          <menu refID="esri_tasks_ShareProjectItemContextMenu" inline="false" />
+          <menu refID="esri_tasks_ShareProjectItemContextMenu" inline="false"/>
           <button refID="esri_tasks_RemoveProjectTaskItem" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
@@ -428,11 +423,13 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         
         <menu id="TaskAssistantFileItemContextMenu" caption="Task File" extendedCaption="Task File context menu">
           <button refID="esri_tasks_ImportOpenTaskFile" />
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_tasks_ProjectTaskFileProperties" separator="true"/>
         </menu>
 

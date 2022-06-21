@@ -133,7 +133,7 @@ namespace SDKExamples.GeodatabaseSDK
                 {
                   relationshipClass.DeleteRelationship(jeffersoneAveViolation, relatedDestinationRow);
                 }
-                catch (GeodatabaseRelationshipClassException exception)
+                catch (ArcGIS.Core.Data.Exceptions.GeodatabaseRelationshipClassException exception)
                 {
                   Console.WriteLine(exception);
                 }

@@ -25,9 +25,9 @@ using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
 
 //Added references
-using ArcGIS.Core.CIM;                                   
-using ArcGIS.Desktop.Layouts;                 
-using ArcGIS.Desktop.Framework.Threading.Tasks;  
+using ArcGIS.Core.CIM;
+using ArcGIS.Desktop.Layouts;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Core.Data;
 
@@ -45,7 +45,13 @@ namespace Layout_HelpExamples
   {
     async public static void MethodSnippets()
     {
-      // cref: MapSeries_Constructor1;ArcGIS.Desktop.Layouts.MapSeriesExportOptions.#ctor
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportPages
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.CustomPages
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ShowSelectedSymbology
+      // cref: ArcGIS.Desktop.Mapping.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.ExportPages
       #region MapSeries_Constructor1
       //Set up map series export options
 
@@ -58,7 +64,12 @@ namespace Layout_HelpExamples
       };
       #endregion MapSeries_Constructor1
 
-
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportPages
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ShowSelectedSymbology
+      // cref: ArcGIS.Desktop.Mapping.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.ExportPages
       #region MapSeries_Constructor2
       //Set up map series export options
 
@@ -72,7 +83,13 @@ namespace Layout_HelpExamples
 
 
 
-      // cref: MapSeries_FindpageNumber;ArcGIS.Desktop.Layouts.MapSeries.FindPageNumber(System.String)
+      // cref: ArcGIS.Desktop.Layouts.MapSeries.FindPageNumber(System.String)
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Active
+      // cref: ArcGIS.Desktop.Layouts.Layout.MapSeries
+      // cref: ArcGIS.Desktop.Layouts.SpatialMapSeries
+      // cref: ArcGIS.Desktop.Layouts.SpatialMapSeries.CurrentRow
+      // cref: ArcGIS.Core.Data.Row.GetOriginalValue
+      // cref: ArcGIS.Core.Data.Row.FindField
       #region MapSeries_FindPageNumber
       //Return the page number that corresponds to the page name field for an index feature
 
@@ -87,9 +104,13 @@ namespace Layout_HelpExamples
       });
       #endregion MapSeries_FindPageNumber
 
-
-      // cref: MapSeries_GetSetDefinition;ArcGIS.Desktop.Layouts.MapSeries.GetDefinition
-      // cref: MapSeries_GetSetDefinition;ArcGIS.Desktop.Layouts.MapSeries.SetDefinition(ArcGIS.Core.CIM.CIMMapSeries)
+      // cref: ArcGIS.Desktop.Layouts.Layout.MapSeries
+      // cref: ArcGIS.Desktop.Layouts.MapSeries
+      // cref: ArcGIS.Desktop.Layouts.MapSeries.GetDefinition
+      // cref: ArcGIS.Desktop.Layouts.MapSeries.SetDefinition
+      // cref: ArcGIS.Core.CIM.CIMMapSeries
+      // cref: ArcGIS.Core.CIM.CIMMapSeries.Enabled
+      // cref: ArcGIS.Desktop.Layouts.Layout.SetMapSeries
       #region MapSeries_GetSetDefinition 
       //Get and modify a map series CIM definition and set the changes back to the layout
 
@@ -105,7 +126,8 @@ namespace Layout_HelpExamples
       #endregion MapSeries_GetSetDefinition
 
 
-      // cref: MapSeries_SetCurrentPageNumber;ArcGIS.Desktop.Layouts.MapSeries.SetCurrentPageNumber(System.String)
+      // cref: ArcGIS.Desktop.Layouts.MapSeries.SetCurrentPageNumber(System.String)
+      // cref: ArcGIS.Desktop.Layouts.Layout.MapSeries
       #region MapSeries_SetCurrentPageNumber
       //Set the current page to match a specific page number
 

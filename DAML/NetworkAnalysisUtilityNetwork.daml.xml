@@ -32,7 +32,7 @@
        </tabGroups>
 
        <tabs>
-         <tab id="esri_networkanalysis_utility_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_utility_TabGroup" condition="esri_mapping_utilityNetworkCondition" keytip="UN">
+         <tab id="esri_networkanalysis_utility_network_Tab" caption="Utility Network" tabGroupID="esri_networkanalysis_utility_TabGroup" condition="esri_mapping_utilityNetworkCondition" keytip="UN">
            <group refID="esri_networkanalysis_utility_Validate_Group" />
            <group refID="esri_networkanalysis_utility_Associations_Group" />
            <group refID="esri_networkanalysis_utility_Tools_Group"/>
@@ -41,9 +41,8 @@
            <group refID="esri_networkanalysis_utility_Drawing_Group" />
            <group refID="esri_networkanalysis_utility_SubnetworkManagement_Group" />
          </tab>
-         <tab id="esri_networkanalysis_trace_Data_Tab" caption="Data" tabGroupID="esri_networkanalysis_trace_TabGroup" condition="esri_mapping_traceNetworkCondition" keytip="TN">
+         <tab id="esri_networkanalysis_trace_network_Tab" caption="Trace Network" tabGroupID="esri_networkanalysis_trace_TabGroup" condition="esri_mapping_traceNetworkCondition" keytip="TN">
            <group refID="esri_networkanalysis_trace_Validate_Group" />
-           <group refID="esri_networkanalysis_trace_Associations_Group" />
            <group refID="esri_networkanalysis_trace_Tools_Group"/>
            <group refID="esri_networkanalysis_utility_Terminals_Group"/>
            <group refID="esri_networkanalysis_trace_Selection_Group"/>

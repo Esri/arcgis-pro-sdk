@@ -31,29 +31,19 @@ using ArcGIS.Desktop.Framework.Threading.Tasks;    //QueuedTask
 
 namespace Layout_HelpExamples
 {
-  internal class TextElementClass : Button
-  {
-    protected override void OnClick()
-    {
-      TextElementClassExamples.MethodSnippets();
-    }
-  }
 
   public class TextElementClassExamples
   {
-    public static void MethodSnippets()
-    {
-      #region TextElement_SetTextProperties
-      //see Prosnippets.cs: "Update text element properties"
-      #endregion
-
-      #region TextProperties_Constuctor
-      //see Prosnippets.cs: "Update text element properties"
-      #endregion
-    }
 
     async public static void TextPropertiesExample()
     {
+      // cref: ArcGIS.Desktop.Layouts.TextElement
+      // cref: ArcGIS.Desktop.Layouts.TextElement.SetTextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextElement.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.Font
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.FontSize
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.Text
       #region Modify existing text element properties
       //Modify the text properties for an existing text element.
 
@@ -85,7 +75,13 @@ namespace Layout_HelpExamples
     }
     async public static void TextPropertiesExample2() //TODO fis duplicated item above because of inconsistent region name use in TextElement.cs file in layout solution.
     {
-      // cref: Modify existing text properties;ArcGIS.Desktop.Layouts.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextElement
+      // cref: ArcGIS.Desktop.Layouts.TextElement.SetTextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextElement.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextProperties
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.Font
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.FontSize
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.Text
       #region Modify existing text properties
       //Modify the text properties for an existing text element.
 

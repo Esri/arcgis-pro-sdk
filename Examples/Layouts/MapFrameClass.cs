@@ -38,22 +38,10 @@ namespace Layout_HelpExamples
     {
       Layout layout = LayoutView.Active.Layout;
 
-      #region MapFrame_Export
-      //See ProSnippets.cs "Export a map frame to JPG"
-      #endregion MapFrame_Export
-
-
-      #region MapFrame_GetMapView
-      //see ProSnippets "Export the map view associated with a map frame to BMP"
-      #endregion MapFrame_GetMapView
-
-
-      #region MapFrame_SetCamera_Camera
-      // see ProSnippets "Change map frames camera settings"
-      #endregion MapFrame_SetCamera_Camera
-
-
-      // cref: MapFrame_SetCamera_Bookmark;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Desktop.Mapping.Bookmark)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Desktop.Mapping.Bookmark)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.Map
+      // cref: ArcGIS.Desktop.Mapping.Map.GetBookmarks
       #region MapFrame_SetCamera_Bookmark
       //Set the extent of a map frame to a bookmark.
 
@@ -73,7 +61,11 @@ namespace Layout_HelpExamples
       #endregion MapFrame_SetCamera_Bookmark
 
 
-      // cref: MapFrame_SetCamera_Envelope;ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetCamera(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.Map
+      // cref: ArcGIS.Desktop.Mapping.Map.FindLayers
+      // cref: ARCGIS.DESKTOP.MAPPING.LAYER.QUERYEXTENT
       #region MapFrame_SetCamera_Envelope
       //Set the extent of a map frame to the envelope of a feature.
 
@@ -94,18 +86,10 @@ namespace Layout_HelpExamples
       });
       #endregion MapFrame_SetCamera_Envelope
 
-
-      #region MapFrame_SetCamera_Layer
-      //See ProSnppets "Zoom map frame to extent of a single layer"
-      #endregion MapFrame_SetCamera_Layer
-
-
-      #region MapFrame_SetCamera_Layers
-      //See ProSnippets "Change map frame extent to selected features in multiple layers"
-      #endregion MapFrame_SetCamera_Layers
-
       MapFrame mf = null;
       Map map = null;
+
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetMap
       #region MapFrame_SetMap
       //Set the map that is associated with a map frame.
 

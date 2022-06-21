@@ -134,7 +134,7 @@ namespace SDKExamples.GeodatabaseSDK
             {
               Relationship failingRelationship = relationshipClass.CreateRelationship(overviewRowWithoutPKValue, projectsRow);
             }
-            catch (GeodatabaseRelationshipClassException exception)
+            catch (ArcGIS.Core.Data.Exceptions.GeodatabaseRelationshipClassException exception)
             {
               // This will have a message "Unable to obtain origin primary key value.". So, the origin row needs to have the origin *primary*   
               // key value referenced by the origin *foreign* key value in the RelationshipClass.

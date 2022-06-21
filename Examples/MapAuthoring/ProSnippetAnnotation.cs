@@ -88,8 +88,8 @@ namespace AnnotationSnippets
 				{
 				// create a polyline from a starting point
 				//use a tolerance to construct the second point
-				MapPoint pt2 = MapPointBuilder.CreateMapPoint(pt.X + tolerance, pt.Y, pt.SpatialReference);
-					return PolylineBuilder.CreatePolyline(new List<MapPoint>() { pt, pt2 });
+				MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(pt.X + tolerance, pt.Y, pt.SpatialReference);
+					return PolylineBuilderEx.CreatePolyline(new List<MapPoint>() { pt, pt2 });
 				});
 			}
 
@@ -103,6 +103,9 @@ namespace AnnotationSnippets
 			BasicFeatureLayer annoLayer = MapView.Active.Map.GetLayersAsFlattenedList().First() as BasicFeatureLayer;
 			var oid = 1;
 
+			// cref: ArcGIS.Desktop.Editing.Attributes.Attribute
+			// cref: ArcGIS.Desktop.Editing.Inspector.Load
+			// cref: ArcGIS.Desktop.Editing.EditOperation.Modify
 			#region Update Annotation Text via attribute. Caveat: The TEXTSTRING Anno attribute must exist
 
 			//See "Change Annotation Text Graphic" for an alternative if TEXTSTRING is missing from the schema
@@ -136,6 +139,12 @@ namespace AnnotationSnippets
 			});
 			#endregion
 
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature.GetGraphic()
+			// cref: ArcGIS.Core.CIM.CIMTextGraphic
+			// cref: ArcGIS.Core.CIM.CIMTextGraphicBase.Shape
+			// cref: ArcGIS.Core.Geometry.GeometryEngine.Centroid
+			// cref: ArcGIS.Core.Geometry.GeometryEngine.Rotate
 			#region Rotate or Move the Annotation
 
 			await QueuedTask.Run(() =>
@@ -161,7 +170,8 @@ namespace AnnotationSnippets
         {
           if (rowCursor.MoveNext())
           {
-            using (var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature)
+            using (var annoFeature = rowCursor.Current as 
+						ArcGIS.Core.Data.Mapping.AnnotationFeature)
             {
               var graphic = annoFeature.GetGraphic();
               var textGraphic = graphic as CIMTextGraphic;
@@ -183,69 +193,29 @@ namespace AnnotationSnippets
 
 			#endregion
 
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature.GetGraphic()
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetTable
 			#region Get the Annotation Text Graphic
 
 			await QueuedTask.Run(() =>
 			{
-				var rc = annoLayer.GetTable().Search();
-				rc.MoveNext();
-				var af = rc.Current as AnnotationFeature;
-				var graphic = af.GetGraphic();
-				var textGraphic = graphic as CIMTextGraphic;
-
-				//Note: 
-				//var outline_geom = af.GetGraphicOutline(); 
-				//gets the anno text outline geometry...
-				af.Dispose();
-				rc.Dispose();
-			});
-
-				#endregion
-
-				#region Change Annotation Text Graphic
-
-			await QueuedTask.Run(() =>
-			{
-
-				EditOperation op = new EditOperation();
-				op.Name = "Change annotation graphic";
-
-				//At 2.1 we must use an edit operation Callback...
-				op.Callback(context =>
+				using (var table = annoLayer.GetTable())
 				{
-					QueryFilter qf = new QueryFilter()
+					using (var rc = table.Search())
 					{
-						WhereClause = "OBJECTID = 1"
-					};
-          //Cursor must be non-recycling. Use the table ~not~ the layer..i.e. "GetTable().Search()"
-          //annoLayer is ~your~ Annotation layer
-          using (var rowCursor = annoLayer.GetTable().Search(qf, false))
-          {
-            if (rowCursor.MoveNext())
-            {
-              using (var annoFeature = rowCursor.Current as ArcGIS.Core.Data.Mapping.AnnotationFeature)
-              {
-                //Get the graphic from the anno feature
-                var graphic = annoFeature.GetGraphic();
-                var textGraphic = graphic as CIMTextGraphic;
+						rc.MoveNext();
+						using (var af = rc.Current as AnnotationFeature)
+						{
+							var graphic = af.GetGraphic();
+							var textGraphic = graphic as CIMTextGraphic;
 
-                // change the text and the color
-                textGraphic.Text = "hello world";
-                var symbol = textGraphic.Symbol.Symbol;
-                symbol.SetColor(ColorFactory.Instance.RedRGB);
-                textGraphic.Symbol = symbol.MakeSymbolReference();
-                // update the graphic
-                annoFeature.SetGraphic(textGraphic);
-                // store is required
-                annoFeature.Store();
-                //refresh layer cache
-                context.Invalidate(annoFeature);
-              }
-            }
-          }
-        }, annoLayer.GetTable());
-
-				op.Execute();
+							//Note: 
+							//var outline_geom = af.GetGraphicOutline(); 
+							//gets the anno text outline geometry...
+						}
+					}
+				}
 			});
 
 			#endregion
@@ -253,6 +223,8 @@ namespace AnnotationSnippets
 
 		public void Masking1()
 		{
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature
+			// cref: ArcGIS.Core.Data.Mapping.AnnotationFeature.GetGraphicOutline()
 			#region Get the Outline Geometry for an Annotation
 
 			var annoLayer = MapView.Active.Map.GetLayersAsFlattenedList()
@@ -264,18 +236,22 @@ namespace AnnotationSnippets
 			{
 				//get the first annotation feature...
 				//...assuming at least one feature gets selected
-				var rc = annoLayer.GetFeatureClass().Search();
-				rc.MoveNext();
-				var af = rc.Current as AnnotationFeature;
-				var outline_geom = af.GetGraphicOutline();
-				//TODO - use the outline...
+				using (var fc = annoLayer.GetFeatureClass())
+				{
+					using (var rc = fc.Search())
+					{
+						rc.MoveNext();
+						using (var af = rc.Current as AnnotationFeature)
+						{
+							var outline_geom = af.GetGraphicOutline();
+							//TODO - use the outline...
 
-				//Note: 
-				//var graphic = annoFeature.GetGraphic(); 
-				//gets the CIMTextGraphic...
-
-				af.Dispose();
-				rc.Dispose();
+							//Note: 
+							//var graphic = annoFeature.GetGraphic(); 
+							//gets the CIMTextGraphic...
+						}
+					}
+				}
 			});
 			#endregion
 
@@ -283,6 +259,8 @@ namespace AnnotationSnippets
 
 		public void Masking2()
 		{
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetDrawingOutline(System.Int64, ArcGIS.Desktop.Mapping.MapView, ArcGIS.Desktop.Mapping.DrawingOutlineType)
+			// cref: ArcGIS.Desktop.Mapping.AnnotationLayer.GetFeatureClass
 			#region Get the Mask Geometry for an Annotation
 
 			var annoLayer = MapView.Active.Map.GetLayersAsFlattenedList()
@@ -295,16 +273,24 @@ namespace AnnotationSnippets
 			{
 				//get the first annotation feature...
 				//...assuming at least one feature gets selected
-				var rc = annoLayer.GetFeatureClass().Search();
-				rc.MoveNext();
-				var oid = rc.Current.GetObjectID();
+				using (var fc = annoLayer.GetFeatureClass())
+				{
+					using (var rc = fc.Search())
+					{
+						rc.MoveNext();
+						using (var row = rc.Current)
+						{
+							var oid = row.GetObjectID();
 
-				//Use DrawingOutlineType.BoundingEnvelope to retrieve a generalized
-				//mask geometry or "Box". The mask will be in the same SpatRef as the map.
-				//The mask will be constructed using the anno class reference scale
-				var mask_geom = annoLayer.QueryDrawingOutline(oid, mv, DrawingOutlineType.Exact);
+							//Use DrawingOutlineType.BoundingEnvelope to retrieve a generalized
+							//mask geometry or "Box". The mask will be in the same SpatRef as the map.
+							//The mask will be constructed using the anno class reference scale
+							//At 2.x - var mask_geom = annoLayer.QueryDrawingOutline(oid, mv, DrawingOutlineType.Exact);
 
-				rc.Dispose();
+							var mask_geom = annoLayer.GetDrawingOutline(oid, mv, DrawingOutlineType.Exact);
+						}
+					}
+				}
 			});
 			#endregion
 

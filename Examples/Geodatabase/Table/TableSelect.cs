@@ -85,7 +85,7 @@ namespace SDKExamples.GeodatabaseSDK
         using (Selection selection = table.Select(queryFilter, SelectionType.ObjectID, SelectionOption.Normal))
         {
           //Number of records that match the QueryFilter criteria
-          int numberOfMatchingRecords = selection.GetCount();
+          long numberOfMatchingRecords = selection.GetCount();
 
           //The objectIDs which match the QueryFilter criteria 
           IReadOnlyList<long> readOnlyList = selection.GetObjectIDs();
@@ -121,7 +121,7 @@ namespace SDKExamples.GeodatabaseSDK
         using (Selection onlyOneSelection = enterpriseTable.Select(anotherQueryFilter, SelectionType.ObjectID, SelectionOption.OnlyOne))
         {
           // This will always be one.
-          int singleRecordCount = onlyOneSelection.GetCount();
+          long singleRecordCount = onlyOneSelection.GetCount();
 
           // This will always have one record.
           IReadOnlyList<long> listWithOneValue = onlyOneSelection.GetObjectIDs();
@@ -130,7 +130,7 @@ namespace SDKExamples.GeodatabaseSDK
           using (Selection emptySelection = enterpriseTable.Select(anotherQueryFilter, SelectionType.ObjectID, SelectionOption.Empty))
           {
             //This will always be zero.
-            int zeroCount = emptySelection.GetCount();
+            long zeroCount = emptySelection.GetCount();
 
             //This will always have zero record.
             IReadOnlyList<long> emptyList = emptySelection.GetObjectIDs();
@@ -140,7 +140,7 @@ namespace SDKExamples.GeodatabaseSDK
           using (Selection allRecordSelection = enterpriseTable.Select(null, SelectionType.ObjectID, SelectionOption.Normal))
           {
             //This will give the count of records in a table
-            int numberOfRecordsInATable = allRecordSelection.GetCount();
+            long numberOfRecordsInATable = allRecordSelection.GetCount();
           }
         }
       }

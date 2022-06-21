@@ -225,7 +225,7 @@ namespace SDKExamples
           }
         }
       }
-      catch (GeodatabaseFieldException fieldException)
+      catch (ArcGIS.Core.Data.Exceptions.GeodatabaseFieldException fieldException)
       {
         // One of the fields in the where clause might not exist. There are multiple ways this can be handled:
         // 1. You could rethrow the exception to bubble up to the caller after some debug or info logging 
@@ -256,7 +256,7 @@ namespace SDKExamples
       {
         table = geodatabase.OpenDataset<Table>(tableName);
       }
-      catch (GeodatabaseCatalogDatasetException exception)
+      catch (ArcGIS.Core.Data.Exceptions.GeodatabaseCatalogDatasetException exception)
       {
         // logger.Error(exception.Message);
         return null;

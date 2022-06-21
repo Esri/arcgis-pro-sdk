@@ -306,16 +306,8 @@
       <tabs>
         <!-- Core Tabs for Rules View -->
 
-        <!-- Reviewer Rules Tabs -->
-        <tab id="esri_dataReviewer_validationTab" caption="Reviewer Rules"  condition ="esri_dataReviewer_reviewerRulesPane" insert="before" placeWith="esri_core_insertTab" keytip="RR">
-          <group refID="esri_dataReviewer_RulesClipboardGroup"/>
-          <group refID="esri_dataReviewer_NewRulesGroup"/>
-        </tab>
-
         <!-- Reviewer Manage Quality Tabs -->
         <tab id="esri_dataReviewer_ManageQualityTab" caption="Manage Quality"  condition ="esri_dataReviewer_ManageQualityCondition" insert="before" placeWith="esri_mapping_homeTab" keytip="Q">
-          <group refID="esri_dataReviewer_Selection" />
-          <group refID="esri_dataReviewer_AutomatedReviewGroup"/>
           <group refID="esri_dataReviewer_VisualReviewGroup"/>
           <group refID="esri_dataReviewer_Results"/>
           <group refID="esri_dataReviewer_CloseGroup"/>
@@ -324,10 +316,6 @@
       </tabs>
 
       <groups>
-        <group id="esri_dataReviewer_NewRulesGroup" hidden="true" caption="New Rule">
-          <gallery refID="esri_dataReviewer_newRulesGallery" inline="true"/>
-          <!--<button refID="esri_dataReviewer_ImportRules" size="large" />-->
-        </group>
 
         <group id ="esri_dataReviewer_DataReviewerGroup" hidden="true" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ">
           <button refID="esri_dataReviewer_ManageQuality" size="large"/>
@@ -337,25 +325,15 @@
           <button refID="esri_dataReviewer_DeleteReviewerRules" size="large"  />
         </group>
 
-        <group id ="esri_dataReviewer_Selection" hidden="true" caption="Selection">
-          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
-          <button refID="esri_geoprocessing_selectByAttributeButton" size="large"/>
-          <button refID="esri_geoprocessing_selectByLocationButton" size="large"/>
-          <button refID="esri_mapping_clearSelectionButton" size="middle" />
-        </group>
-
-        <group id ="esri_dataReviewer_AutomatedReviewGroup" hidden="true" caption="Automated Review">
-          <customControl refID="esri_dataReviewer_RunRules" size="large" />
-          <!--<button refID="esri_dataReviewer_RunRules" size="large"/>-->
-          <customControl refID="esri_dataReviewer_ValidationResultsHistory" size="large" />
-        </group>
         <group id ="esri_dataReviewer_Results" hidden="true" caption="Results">
           <button refID="esri_dataReviewer_Symbolize" size="large"/>
         </group>
+
         <group id="esri_dataReviewer_VisualReviewGroup" hidden="true" caption="Semi-Automated Review">
           <button refID="esri_dataReviewer_evalFeaturesButton" size="large"/>
           <customControl refID="esri_dataReviewer_FlagMissingFeatures" size="large" />
         </group>
+
         <group id ="esri_dataReviewer_CloseGroup" hidden="true" caption="Close">
           <button refID="esri_dataReviewer_CloseManageQuality" size="large"/>
         </group>
@@ -424,6 +402,17 @@ Results are organized by session and stored in feature classes and tables in eit
             <disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_dataReviewer_ExportToAttributeRules"
+                className="esri_dataReviewer_dataReviewerModule:OnClick_ExportToAttributeRules"
+                caption="Export to Attribute Rules"
+                extendedCaption="Export to Attribute Rules"
+                keytip="EX"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportRules16.png">
+          <tooltip heading="">
+            Export Batch Job to Attribute Rules
+          </tooltip>
+        </button>
+
         <!-- Review Sessions context menu buttons-->
         <button id="esri_dataReviewer_Session_OpenResults" hidden="true" caption="Open" extendedCaption = "Open Reviewer Results pane with results from the Session" className="esri_dataReviewer_dataReviewerModule:OnClick_OpenResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerResultsShow16.png">
           <tooltip heading="Open">
@@ -481,56 +470,6 @@ Results are organized by session and stored in feature classes and tables in eit
         <button id="esri_dataReviewer_batchJobAddToProjectButton" className="esri_dataReviewer_dataReviewerModule:OnClick_AddToProject" hidden="true" caption="Add To Project" extendedCaption = "Add Reviewer Batch Job to Project from Folder" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" helpContextID="">
           <tooltip heading="">
             Add an existing reviewer batch job to the project. The project saves a reference to the reviewer batch job file.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <!-- Reviewer Layer Validation context menu buttons-->
-        <button id="esri_dataReviewer_OpenRulesViewButton" className="esri_dataReviewer_dataReviewerModule:OpenRulesViewAsync" loadOnClick="false" hidden="false" caption="Reviewer Rules" keytip="RR"
-                extendedCaption = "Open Reviewer rules view for the selected layer" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule16.png" helpContextID=""
-                condition="esri_dataReviewer_RelevantLayersCondition">
-          <tooltip heading="Reviewer Rules">
-            Show the Reviewer Rules view.
-A Reviewer Rule enables you to detect data which does not comply with quality requirements defined by your organization. Non-compliant data are returned as Reviewer Results to assist in corrective workflows that improve quality.
-            <disabledText></disabledText>
-          </tooltip>
-        </button>
-        <!-- End Reviewer Layer Validation context menu buttons-->
-
-        <!-- Import Rules buttons-->
-        <button id="esri_dataReviewer_ImportRules" className="esri_dataReviewer_dataReviewerModule:ImportRulesAsync" loadOnClick="false" hidden="true" caption="Import..." extendedCaption = "TBD" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules32.png"  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerImportRules16.png" helpContextID="">
-          <tooltip heading="">
-            TDB.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <!-- End Import Rules buttons-->
-
-        <!-- adding a dummy button to the popup menu which is showing up when clicking the burger button on ReviewerResultPane -->
-        <!-- this is a workaround solution for issue 1340. https://devtopia.esri.com/ArcGISPro/ps-data-reviewer/issues/1340 -->
-        <!-- this button will be removed once the Popup menu is loaded -->
-        <button id="esri_dataReviewer_dummyButton" />
-        <!-- End Dummy button-->
-        
-        <customControl id="esri_dataReviewer_RunRules" hidden="true" caption="Run Reviewer Rules" extendedCaption = "Run Reviewer Validation Rules for the Active Map" condition="esri_dataReviewer_MapOrTableViewCondition" keytip="RR"
-                       loadOnClick="false" className="ArcGIS.Desktop.Internal.DataReviewer.Controls.RunRulesOptionsControl.RunRulesOptionsSplitViewModel" hideTooltip="true">
-          <content className="ArcGIS.Desktop.Internal.DataReviewer.Controls.RunRulesOptionsControl.RunRulesOptionsSplitView" />
-          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
-        </customControl>
-
-        <customControl id="esri_dataReviewer_ValidationResultsHistory" hidden="true" caption="History" extendedCaption = "View Validation history for the Active Map" keytip="H"
-                     loadOnClick="false" className="ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultsItemViewModel"  hideTooltip="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Geodatabase32.png"   >
-          <content className="ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultItemsView" />
-          <tooltip heading="">
-            View history or cancel current validation<disabledText></disabledText>
-          </tooltip>
-          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
-        </customControl>
-
-        <!-- delete rviewer rules button-->
-        <button id="esri_dataReviewer_DeleteReviewerRules" hidden="true" caption="Delete" extendedCaption = "Delete selected Reviewer rules" className="esri_dataReviewer_dataReviewerModule:DeleteReviewerRules" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" condition="esri_dataReviewer_deleteRuleCondition" keytip="D">
-          <tooltip heading="Delete Rules">
-            Delete selected rules.
-            <disabledText>Select one or more rules to delete.</disabledText>
           </tooltip>
         </button>
 
@@ -617,6 +556,7 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
         <!--Reviewer Batch Jobs project item context menu-->
         <menu id="esri_dataReviewer_BatchJobsContextMenu" caption="Batch Jobs Menu" extendedCaption = "Context Menu for Reviewer Batch Job Project item" contextMenu="true">
           <menu refID="esri_dataReviewer_ExecuteBatchJobMenu" />
+          <button refID="esri_dataReviewer_ExportToAttributeRules"  separator="true" />
           <button refID="esri_dataReviewer_BatchJob_Remove"  separator="true" />
           <button refID="esri_projectItemViewMetadata"  separator="true" />
         </menu>
@@ -634,10 +574,6 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
         </menu>
 
 
-        <!--menu for reviewer results pane burger button. Current only view definitions are in this menu and they are added programmatically-->   
-        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" hidden="true" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane">
-          <button refID ="esri_dataReviewer_dummyButton"/>
-        </menu>
         <!--context menu for selected items in results grid-->
         <menu id="esri_dataReviewer_SelectedResultsContextMenu" caption="Selected Results Context Menu" extendedCaption = "Context menu for actions to perform on selected results">
           <button refID="esri_dataReviewer_ZoomToSelectedItems" />
@@ -684,37 +620,17 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
         <dockPane id="esri_dataReviewer_evaluateFeaturesPane" caption="Browse Features" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesViewModel" dock="right" keytip="Browse Features" initiallyVisible="false" >
           <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesView" />
         </dockPane>
+
+        <dockPane id="esri_mapping_exportBatchJobToAttributeRulesDockPane"
+                  caption="Export Batch Job to Attribute Rules"
+                  className="ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  initiallyVisible="false" showLoadingMessage="true" disableIfBusy="true" width="320" minwidth="108"
+                  delayLoadMessage="Loading...">
+          <content className="ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesView" />
+        </dockPane>
       </dockPanes>
-
-      <panes>
-        <pane id="esri_dataReviewer_reviewerRulesPane" caption="Reviewer Rules: " className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerRulesPaneViewModel"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRule16.png"
-              hasCloseAllButThisCommand="false" isDropTarget="false"
-              defaultTab="esri_dataReviewer_validationTab"
-              isClosable="true">
-          <content className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerRulesPaneView"  />
-        </pane>
-      </panes>
-
-      <galleries>
-        <!-- Gallery for Reviewer Checks-->
-        <gallery id="esri_dataReviewer_newRulesGallery" hidden="true" caption="New Rule"
-                 className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.GalleryItemsViewModel"
-                 itemsInRow="7" itemWidth="240"
-                 showItemCaption="true"
-                 showGroup="true"
-                 resizable="true"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerBatchChecksAdd32.png"
-                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.DataReviewer;component/ReviewerRules/GalleryTemplates.xaml"
-                 templateID="GalleryItemTemplate"
-                 keytip ="RC"
-                 >
-          <tooltip heading="Automated Check Gallery">
-            Data Reviewer checks are a series of data validation methods that enable you to automate the detection of features which do not comply with established data quality requirements defined by your organization.
-            <disabledText></disabledText>
-          </tooltip>
-        </gallery>
-      </galleries>
     </insertModule>
     <!-- ****IMPORTANT**** Any menus/buttons added to insert or other ribbons that core provides should ensure the icons are added from core ArcGIS.Desktop.Resources project instead of DataReviewer Project resources. 
     In order  order to accomplish this, please work with the core team to add our icons to ArcGIS.Desktop.Resources project and then pack/reference it in DataReviewer.daml file-->
@@ -728,14 +644,6 @@ A Reviewer Rule enables you to detect data which does not comply with quality re
         </updateTab>
       </tabs>
     </updateModule>
-
-    <!--<updateModule refID="esri_core_module">
-      <groups>
-        <updateGroup refID="esri_core_dockWindows">
-          <insertButton refID="esri_dataReviewer_OpenRulesViewButton" size="large" />
-        </updateGroup>
-      </groups>
-    </updateModule>-->
   </modules>
 
 

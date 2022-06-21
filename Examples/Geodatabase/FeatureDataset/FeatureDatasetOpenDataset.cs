@@ -153,7 +153,7 @@ namespace SDKExamples.GeodatabaseSDK
           Dataset badRelationshipClass           = enterpriseFeatureDataset.OpenDataset<RelationshipClass>("SomeGibberish");
           Dataset badAttributedRelationshipClass = enterpriseFeatureDataset.OpenDataset<AttributedRelationshipClass>("SomeGibberish");
         }
-        catch (GeodatabaseCatalogDatasetException exception)
+        catch (ArcGIS.Core.Data.Exceptions.GeodatabaseCatalogDatasetException exception)
         {
           // Thrown for RelationshipClass and AttributedRelationshipClass.
         }
@@ -163,7 +163,7 @@ namespace SDKExamples.GeodatabaseSDK
           // Trying to open non-existent FeatureClasses.
           Dataset badFeatureClass = enterpriseFeatureDataset.OpenDataset<FeatureClass>("SomeGibberish");
         }
-        catch (GeodatabaseDatasetException exception)
+        catch (ArcGIS.Core.Data.Exceptions.GeodatabaseDatasetException exception)
         {
           // Thrown for FeatureClasses.
         }

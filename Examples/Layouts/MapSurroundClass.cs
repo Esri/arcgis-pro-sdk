@@ -34,7 +34,9 @@ using ArcGIS.Core.CIM;
 
 namespace Layout_HelpExamples
 {
-  // cref: MapSurroundExample;ArcGIS.Desktop.Layouts.MapSurround
+  // cref: ArcGIS.Desktop.Layouts.MapSurround
+  // cref: ArcGIS.Desktop.Layouts.MapSurround.SetMapFrame
+  // cref: ArcGIS.Desktop.Layouts.MapFrame
   #region MapSurroundExample
   //Added references
   using ArcGIS.Desktop.Core;                         //Project
@@ -89,7 +91,16 @@ public class TableFrameClassSamples
 
   async public static void CreateNew()
   {
-    // cref: TableFrame_CreateNew;ArcGIS.Desktop.Layouts.TableFrame
+    // cref: ArcGIS.Desktop.Layouts.TableFrame
+    // cref: ArcGIS.Desktop.Layouts.TableFrameInfo
+    // cref: ArcGIS.Desktop.Layouts.TableFrameInfo.FieldNames
+    // cref: ArcGIS.Desktop.Layouts.MapSurroundInfo.MapFrameName
+    // cref: ArcGIS.Desktop.Layouts.MapSurroundInfo.MapMemberUri
+    // cref: ArcGIS.Desktop.Layouts.MapSurround.SetMapFrame
+    // cref: ArcGIS.Desktop.Layouts.MapFrame
+    // cref: ArcGIS.Desktop.Layouts.MapFrame.Map
+    // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateMapSurroundElement
+    // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateMapSurroundElement
     #region TableFrame_CreateNew
     //Create a new table frame on the active layout.
 
@@ -101,7 +112,8 @@ public class TableFrameClassSamples
       //Build 2D envelope geometry
       Coordinate2D rec_ll = new Coordinate2D(1.0, 3.5);
       Coordinate2D rec_ur = new Coordinate2D(7.5, 4.5);
-      Envelope rec_env = EnvelopeBuilder.CreateEnvelope(rec_ll, rec_ur);
+      //At 2.x - Envelope rec_env = EnvelopeBuilder.CreateEnvelope(rec_ll, rec_ur);
+      Envelope rec_env = EnvelopeBuilderEx.CreateEnvelope(rec_ll, rec_ur);
 
       //Reference map frame
       MapFrame mf = layout.FindElement("Map Frame") as MapFrame;
@@ -114,17 +126,27 @@ public class TableFrameClassSamples
       var fields = new[] { "NAME", "Shape_Area", "Shape_Length" };
 
       //Construct the table frame
-      TableFrame tabFrame = LayoutElementFactory.Instance.CreateTableFrame(layout, rec_env, mf, lyr, fields);
+      //At 2.x - TableFrame tabFrame = LayoutElementFactory.Instance.CreateTableFrame(layout, rec_env, mf, lyr, fields);
+      var surroundInfo = new TableFrameInfo()
+      {
+        FieldNames = fields,
+        MapFrameName = mf.Name,
+        MapMemberUri = lyr.URI
+      };
+      var tabFrame = ElementFactory.Instance.CreateMapSurroundElement(layout, rec_env, surroundInfo) as TableFrame;
     });
     #endregion TableFrame_CreateNew
 
   }
 
-
-
-
   async public static void ModifyExisting()
   {
+    // cref: ArcGIS.Desktop.Layouts.Element.GetDefinition
+    // cref: ArcGIS.Desktop.Layouts.Element.SetDefinition
+    // cref: ArcGIS.Desktop.Layouts.TableFrame
+    // cref: ArcGIS.Core.CIM.CIMTableFrame
+    // cref: ArcGIS.Core.CIM.CIMTableFrame.Alternate1RowBackgroundCount
+    // cref: ArcGIS.Core.CIM.CIMTableFrame.Alternate2RowBackgroundCount
     #region TableFrame_ModifyExisting 
     //Modify an existing tableframe using CIM properties.
 

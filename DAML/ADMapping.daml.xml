@@ -11,7 +11,7 @@
   </dependencies>
 
   <accelerators>
-    <insertAccelerator refID="esri_mapping_newMapButton" flags="Ctrl" key="M,N" />
+    <insertAccelerator refID="esri_mapping_newMapButton" flags="Ctrl" key="M" />
   </accelerators>
 
   <categories>
@@ -82,19 +82,23 @@
       </insertComponent>
 
       <insertComponent id="SceneServiceLayer" className="SceneServiceLayer">
-        <content type="CIMSceneServiceLayer" displayName="Scene Service Layer" TOCContextMenu="esri_mapping_scenelayerContextMenu" propertySheet="esri_mapping_sceneServicelayerPropertySheet" />
+        <content type="CIMIndexedSceneLayer" displayName="Scene Service Layer" TOCContextMenu="esri_mapping_scenelayerContextMenu" propertySheet="esri_mapping_sceneServicelayerPropertySheet" />
       </insertComponent>
 
-      <insertComponent id="DynamicServiceLayer" className="DynamicServiceLayer">
-        <content type="CIMDynamicServiceLayer" displayName="Dynamic Service Layer" TOCContextMenu="esri_mapping_serviceLayerContextMenu" propertySheet="esri_mapping_dynamicServiceLayerPropertySheet" />
+      <insertComponent id="WMSLayer" className="WMSLayer">
+        <content type="CIMWMSLayer" displayName="WMS Layer" TOCContextMenu="esri_mapping_serviceLayerContextMenu" propertySheet="esri_mapping_dynamicServiceLayerPropertySheet" />
+      </insertComponent>
+
+      <insertComponent id="MapImageLayer" className="MapImageLayer">
+        <content type="CIMMapImageLayer" displayName="MapImage Layer" TOCContextMenu="esri_mapping_serviceLayerContextMenu" propertySheet="esri_mapping_dynamicServiceLayerPropertySheet" />
       </insertComponent>
 
       <insertComponent id="ServiceSubLayer" className="ServiceSubLayer">
-        <content type="CIMDynamicServiceSubLayer" displayName="Dynamic Service SubLayer" propertySheet="esri_mapping_layerPropertySheet_None" />
+        <content type="CIMServiceSubLayer" displayName="Service SubLayer" propertySheet="esri_mapping_layerPropertySheet_None" />
       </insertComponent>
 
       <insertComponent id="ServiceCompositeSubLayer" className="ServiceCompositeSubLayer">
-        <content type="CIMDynamicServiceCompositeSubLayer" displayName="Dynamic Service Composite SubLayer" propertySheet="esri_mapping_layerPropertySheet_None" />
+        <content type="CIMServiceCompositeSubLayer" displayName="Service Composite SubLayer" propertySheet="esri_mapping_layerPropertySheet_None" />
       </insertComponent>
 
       <insertComponent id="ParcelFabricLayer" className="ArcGIS.Desktop.Internal.Mapping.ParcelFabricLayer">
@@ -202,7 +206,11 @@
       </insertComponent>
 
       <insertComponent id="CatalogLayer" className="ArcGIS.Desktop.Internal.Mapping.CatalogLayer">
-        <content type="CIMCatalogLayer" displayName="Catalog Layer" propertySheet="esri_mapping_layerPropertySheet_None"/>
+        <content type="CIMCatalogLayer" displayName="Catalog Layer" propertySheet="esri_mapping_catalogLayerPropertySheet" multiLayerPropertySheet="esri_mapping_layerPropertySheet_None"/>
+      </insertComponent>
+
+      <insertComponent id="ElevationSurfaceLayer" className="ArcGIS.Desktop.Mapping.ElevationSurfaceLayer">
+        <content type="CIMElevationSurfaceLayer" displayName="Elevation Surface Layer" propertySheet="esri_mapping_layerPropertySheet_None"/>
       </insertComponent>
       
     </updateCategory>
@@ -326,6 +334,12 @@
         </content>
       </component>
 
+      <component id="esri_mapping_RealityMappingView" className="ArcGIS.Desktop.Internal.Mapping.TOC.OrthoMappingView">
+        <content L_name="Reality Mapping" buttonTooltipHeader="List By Reality Mapping Entities" buttonTooltip="Layers are listed based on their source dataset's role in the Reality Mapping workspace."
+                 buttonImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/RasterImageAnalysisOrthoRectify32.png">
+        </content>
+      </component>
+
       <component id="esri_mapping_DrawingOrderView" className="ArcGIS.Desktop.Internal.Mapping.TOC.DrawingOrderView">
         <content L_name = "Drawing Order" buttonTooltipHeader="List By Drawing Order" buttonTooltip = "Layers are listed by drawing order. Drag and drop to change drawing order."
                  buttonImage ="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListByDrawingOrder24.png">
@@ -376,9 +390,6 @@
       <component id="esri_mapping_toc_kmlNodeLoader" className="ArcGIS.Desktop.Internal.Mapping.TOC.KMLNodeLoader">
         <content mapMemberType="ArcGIS.Desktop.Mapping.KMLLayer"/>
       </component>
-      <component id="esri_mapping_toc_elevationSourceLoader" className="ArcGIS.Desktop.Internal.Mapping.TOC.ElevationSourceLoader">
-        <content mapMemberType="ArcGIS.Desktop.Mapping.ElevationSurface"/>
-      </component>
       <component id="esri_mapping_toc_standaloneVideoGraphicElementLoader" className="ArcGIS.Desktop.Internal.Mapping.TOC.StandaloneVideoGraphicElementLoader">
         <content mapMemberType="ArcGIS.Desktop.Internal.Mapping.StandaloneVideo"/>
       </component>
@@ -397,12 +408,36 @@
 
     <insertCategory id="esri_mapping_measureToolGroup" />
     <insertCategory id="esri_mapping_measurePlanarOnlyToolGroup" />
+
+    <insertCategory id="esri_mapping_MapTrayButtons">
+      <component id="esri_mapping_SnappingTrayButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingTrayButton">
+        <content L_name="Snapping"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListBySnapping24.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListBySnapping16.png"
+                 L_tooltipHeading="Snapping"
+                 L_tooltip="Turn snapping on or off for interactive tools." />
+      </component>
+      <component id="esri_mapping_GridTrayButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.GridControl.GridTrayButton">
+        <content L_name="Grid"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/editingbackgroundgridtoggle16.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/editingbackgroundgridtoggle24.png"
+                 L_tooltipHeading="Grid"
+                 L_tooltip="Turn reference grid on or off for interactive tools." />
+      </component>
+      <component id="esri_mapping_ConstraintsTrayButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.ConstraintsControl.ConstraintsTrayButton">
+        <content L_name="Constraints"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDynamicConstraintsToggle24.png"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDynamicConstraintsToggle16.png"
+                 L_tooltipHeading="Constraints"
+                 L_tooltip="Turn on-screen constraints on or off for interactive map tools." />
+      </component>
+    </insertCategory>
   </categories>
 
   <modules>
     <insertModule id="esri_mapping" className="MappingModule" caption="Mapping" description="Mapping" autoLoad="false">
       <tabs>
-        <tab id="esri_mapping_StylesTab" caption="Styles" keytip="Y" condition="esri_StylesContainer" tabGroupID="esri_mapping_StyleTabGroup">
+        <tab id="esri_mapping_StylesTab" caption="Manage" keytip="Y" condition="esri_StylesContainer" tabGroupID="esri_mapping_StyleTabGroup">
           <group refID="esri_core_clipboardGroup"/>
           <group refID="esri_mapping_organizeStyles"/>
           <group refID="esri_project_styles_project"/>
@@ -410,13 +445,13 @@
           <group refID="esri_project_styles_manage"/>
         </tab>
 
-        <tab id="esri_mapping_MapContainer" caption="Mapping" keytip="M" condition="esri_MappingContainer" tabGroupID="esri_mapping_MappingTabGroup">
+        <tab id="esri_mapping_MapContainer" caption="Manage" keytip="M" condition="esri_MappingContainer" tabGroupID="esri_mapping_MappingTabGroup">
           <group refID="esri_core_clipboardGroup"/>
           <group refID="esri_core_organize"/>
           <group refID="esri_project_mapping_home"/>
         </tab>
 
-        <tab id="esri_mapping_tableTab" caption="View" condition="esri_editing_tableOpenCondition" tabGroupID="esri_mapping_TableViewTabGroup" keytip="TV">
+        <tab id="esri_mapping_tableTab" caption="Table" condition="esri_editing_tableOpenCondition" tabGroupID="esri_mapping_TableViewTabGroup" keytip="TV">
         </tab>
 
         <!-- Design View - Tabs -->
@@ -443,9 +478,7 @@
         </tab>
         <tab id="esri_mapping_homeVersionManagerViewTab" caption="Versions" condition="esri_mapping_versionsPane" keytip="O">
           <group refID="esri_mapping_filterVersionsGroup" />
-          <group refID="esri_mapping_mainVersionButtonGroup" />
           <group refID="esri_mapping_VersionChangesGroup"/>
-          <group refID="esri_mapping_changeVersionGroup" />
         </tab>
         <tab id="esri_mapping_homeAttributeRulesViewTab" caption="Attribute Rules" condition="esri_mapping_attributeRulesPane" keytip="R">
           <group refID="esri_mapping_designView_clipboardGroup" />
@@ -463,7 +496,6 @@
           <group refID="esri_mapping_designView_clipboardGroup" />
           <group refID="esri_contingentvalues_designViewGroup" />
           <group refID="esri_mapping_ContingentValuesGroup" />
-          <group refID="esri_mapping_FieldGroupsGroup"/>
         </tab>
         
         <!-- Core Tabs -->
@@ -529,19 +561,19 @@
         </tab>
 
         <!-- Subtype Layer Tabs-->
-        <tab id="esri_mapping_subtypeGroupLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlySubtypeGroupLayersSelectedCondition" tabGroupID="esri_mapping_subtypeGroupLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_subtypeGroupLayerAppearanceTab" caption="Subtype Group Layer" condition="esri_mapping_onlySubtypeGroupLayersSelectedCondition" tabGroupID="esri_mapping_subtypeGroupLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
           <group refID="esri_mapping_subtypeGroupLayerSymbology" />
         </tab>
-        <tab id="esri_mapping_subtypeGroupLayerDataTab" caption="Data" condition="esri_mapping_onlySubtypeGroupLayersSelectedCondition" tabGroupID="esri_mapping_subtypeGroupLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_subtypeGroupLayerDataTab" caption="Data" condition="esri_mapping_onlySubtypeGroupLayersSelectedCondition" tabGroupID="esri_mapping_subtypeGroupLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_layerToolsGroup"/>
         </tab>
 
         <!-- Stream Layer Tabs -->
-        <tab id="esri_mapping_streamLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_streamLayerAppearanceTab"  caption="Stream Layer" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -551,7 +583,7 @@
           <group refID="esri_mapping_streamLayerPreviousObservations"  />
         </tab>
 
-        <!--<tab id="esri_mapping_streamLayerWithTrackIdAppearanceTab" caption="Appearance" condition="esri_mapping_streamLayerCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JA">
+        <!--<tab id="esri_mapping_streamLayerWithTrackIdAppearanceTab" caption="Appearance" condition="esri_mapping_streamLayerCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -561,7 +593,7 @@
           <group refID="esri_mapping_streamLayerPreviousObservations"  />
         </tab>-->
 
-        <tab id="esri_mapping_streamLayerLabelingTab" caption="Labeling" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_streamLayerLabelingTab" caption="Labeling" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_labelingLabelClassGroup" />
           <group refID="esri_mapping_labelingScalesGroup" />
@@ -570,62 +602,66 @@
           <group refID="esri_mapping_labelingMapGroup" />
         </tab>
 
-        <tab id="esri_mapping_streamLayerDataTab" caption="Data" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_streamLayerDataTab" caption="Data" condition="esri_mapping_onlyStreamLayersSelectedCondition" tabGroupID="esri_mapping_streamLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_designViewGroupOnlyFieldsView"/>
           <group refID="esri_mapping_streamingDataGroup"/>
           <group refID="esri_mapping_layerToolsGroup"/>
-          <group refID="esri_mapping_localFeatureCache"/>
         </tab>
 
         <!-- Link Chart Aggregation Layer Tabs -->
-        <tab id="esri_mapping_linkChartAggregationLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_linkChartAggregationLayerAppearanceTab" caption="Link Chart Aggregation Layer" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerSymbology" />
         </tab>
-        <tab id="esri_mapping_linkChartAggregationLayerlabelingTab" caption="Labeling" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_linkChartAggregationLayerlabelingTab" caption="Labeling" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_labelingLabelClassGroup" />
           <group refID="esri_mapping_labelingTextSymbolGroup" />
           <group refID="esri_mapping_labelingPlacementStyleGroup" />
           <group refID="esri_mapping_labelingMapGroup" />
         </tab>
-        <tab id="esri_mapping_linkChartAggregationLayerDataTab" caption="Data" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_linkChartAggregationLayerDataTab" caption="Data" condition="esri_mapping_onlyLinkChartAggregationLayersSelectedCondition" tabGroupID="esri_mapping_linkChartAggregationLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
           <group refID="esri_mapping_designViewGroup"/>
           <group refID="esri_mapping_layerRelationshipsGroup"/>
           <group refID="esri_mapping_layerToolsGroup"/>
-          <group refID="esri_mapping_localFeatureCache"/>
         </tab>
 
         <!-- Link Chart Layer Tabs -->
-        <tab id="esri_mapping_linkChartLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_linkChartLayerAppearanceTab" caption="Link Chart Layer" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
           <group refID="esri_mapping_layerSymbology" />
         </tab>
-        <tab id="esri_mapping_linkChartLayerLabelingTab" caption="Labeling" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_linkChartLayerLabelingTab" caption="Labeling" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_labelingLabelClassGroup" />
           <group refID="esri_mapping_labelingTextSymbolGroup" />
           <group refID="esri_mapping_labelingPlacementStyleGroup" />
           <group refID="esri_mapping_labelingMapGroup" />
         </tab>
-        <tab id="esri_mapping_linkChartLayerDataTab" caption="Data" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_linkChartLayerDataTab" caption="Data" condition="esri_mapping_onlyLinkChartLayersSelectedCondition" tabGroupID="esri_mapping_linkChartLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
           <group refID="esri_mapping_designViewGroup"/>
           <group refID="esri_mapping_layerRelationshipsGroup"/>
           <group refID="esri_mapping_layerToolsGroup"/>
-          <group refID="esri_mapping_localFeatureCache"/>
         </tab>
 
         <!-- Feature Layer Tabs -->
-        <tab id="esri_mapping_featureLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_catalogLayerTab" caption="Catalog Layer" condition="esri_mapping_onlyCatalogLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="CL">
+          <group refID="esri_mapping_layerScaleVisibilityGroup"/>
+          <group refID="esri_mapping_layerEffectsGroup" />
+          <group refID="esri_mapping_layerCompareGroup"/>
+          <group refID="esri_mapping_layerDefQueryGroup" />
+          <group refID="esri_mapping_catalogLayerConfigurationGroup" />
+        </tab>
+        <tab id="esri_mapping_featureLayerAppearanceTab" caption="Feature Layer" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -634,7 +670,7 @@
           <group refID="esri_mapping_layer3DGroup" />
           <group refID="esri_mapping_lightingAndShadingGroup" />
         </tab>
-        <tab id="esri_mapping_labelingTab" caption="Labeling" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_labelingTab" caption="Labeling" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_labelingLabelClassGroup" />
           <group refID="esri_mapping_labelingScalesGroup" />
@@ -642,7 +678,7 @@
           <group refID="esri_mapping_labelingPlacementStyleGroup" />
           <group refID="esri_mapping_labelingMapGroup" />
         </tab>
-        <tab id="esri_mapping_featureLayerDataTab" caption="Data" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_featureLayerDataTab" caption="Data" condition="esri_mapping_onlyFeatureLayersSelectedCondition" tabGroupID="esri_mapping_featureLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
@@ -650,11 +686,10 @@
           <group refID="esri_mapping_archiveGroup"/>
           <group refID="esri_mapping_layerRelationshipsGroup"/>
           <group refID="esri_mapping_layerToolsGroup"/>
-          <group refID="esri_mapping_localFeatureCache"/>
         </tab>
 
         <!-- KG Layer Tabs -->
-        <tab id="esri_mapping_knowledgeGraphFeatureLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_knowledgeGraphFeatureLayerAppearanceTab" caption="Knowledge Graph Feature Layer" condition="esri_mapping_onlyMapKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -663,7 +698,7 @@
           <group refID="esri_mapping_layer3DGroup" />
           <group refID="esri_mapping_lightingAndShadingGroup" />
         </tab>
-        <tab id="esri_mapping_knowledgeGraphLabelingTab" caption="Labeling" condition="esri_mapping_onlyKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_knowledgeGraphLabelingTab" caption="Labeling" condition="esri_mapping_onlyMapKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_labelingLabelClassGroup" />
           <group refID="esri_mapping_labelingScalesGroup" />
@@ -671,17 +706,16 @@
           <group refID="esri_mapping_labelingPlacementStyleGroup" />
           <group refID="esri_mapping_labelingMapGroup" />
         </tab>
-        <tab id="esri_mapping_knowledgeGraphFeatureLayerDataTab" caption="Data" condition="esri_mapping_onlyKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_knowledgeGraphFeatureLayerDataTab" caption="Data" condition="esri_mapping_onlyMapKnowledgeGraphFeatureLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphfeatureLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
           <group refID="esri_mapping_designViewGroup"/>
           <group refID="esri_mapping_layerRelationshipsGroup"/>
           <group refID="esri_mapping_layerToolsGroup"/>
-          <group refID="esri_mapping_localFeatureCache"/>
         </tab>
 
-        <tab id="esri_mapping_knowledgeGraphDataLayerDataTab" caption="Data" condition="esri_mapping_onlyKnowledgeGraphTableLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphTableLayerTabGroup" keytip="JT">
+        <tab id="esri_mapping_knowledgeGraphDataLayerDataTab" caption="Knowledge Graph Table" condition="esri_mapping_onlyKnowledgeGraphTableLayersSelectedCondition" tabGroupID="esri_mapping_knowledgeGraphTableLayerTabGroup" keytip="JT" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
@@ -691,7 +725,7 @@
           <group refID="esri_mapping_geocodeToolsGroup"/>
         </tab>
 
-        <tab id="esri_mapping_dataLayerDataTab" caption="Data" condition="esri_mapping_onlyTableLayersSelectedCondition" tabGroupID="esri_mapping_tableLayerTabGroup" keytip="JT">
+        <tab id="esri_mapping_dataLayerDataTab" caption="Standalone Table" condition="esri_mapping_onlyTableLayersSelectedCondition" tabGroupID="esri_mapping_tableLayerTabGroup" keytip="JT" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
@@ -703,7 +737,7 @@
         </tab>
 
         <!-- Annotation Tabs -->
-        <tab id="esri_mapping_annotationLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyAnnotationLayersSelectedCondition" tabGroupID="esri_mapping_annotationLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_annotationLayerAppearanceTab" caption="Annotation Layer" condition="esri_mapping_onlyAnnotationLayersSelectedCondition" tabGroupID="esri_mapping_annotationLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -712,7 +746,7 @@
           <group refID="esri_mapping_layer3DGroup" />
         </tab>
 
-        <tab id="esri_mapping_annotationLayerDataTab" caption="Data" condition="esri_mapping_onlyAnnotationLayersSelectedCondition" tabGroupID="esri_mapping_annotationLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_annotationLayerDataTab" caption="Data" condition="esri_mapping_onlyAnnotationLayersSelectedCondition" tabGroupID="esri_mapping_annotationLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
@@ -722,7 +756,7 @@
         </tab>
 
         <!-- Dimension Tabs -->
-        <tab id="esri_mapping_dimensionLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyDimensionLayersSelectedCondition" tabGroupID="esri_mapping_dimensionLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_dimensionLayerAppearanceTab" caption="Dimension Layer" condition="esri_mapping_onlyDimensionLayersSelectedCondition" tabGroupID="esri_mapping_dimensionLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -731,7 +765,7 @@
           <group refID="esri_mapping_layer3DGroup" />
         </tab>
 
-        <tab id="esri_mapping_dimensionLayerDataTab" caption="Data" condition="esri_mapping_onlyDimensionLayersSelectedCondition" tabGroupID="esri_mapping_dimensionLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_dimensionLayerDataTab" caption="Data" condition="esri_mapping_onlyDimensionLayersSelectedCondition" tabGroupID="esri_mapping_dimensionLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_layerSelectionGroup"/>
@@ -741,7 +775,7 @@
         </tab>
 
         <!-- Raster Tabs-->
-        <tab id="esri_mapping_rasterLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyRasterLayersSelectedCondition" tabGroupID="esri_mapping_rasterLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_rasterLayerAppearanceTab" caption="Raster Layer" condition="esri_mapping_onlyRasterLayersSelectedCondition" tabGroupID="esri_mapping_rasterLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -751,7 +785,7 @@
           <group refID="esri_mapping_rasterLayerRotateGroup" />
         </tab>
 
-        <tab id="esri_mapping_rasterLayerDataTab" caption="Data" condition="esri_mapping_onlyRasterLayersSelectedCondition" tabGroupID="esri_mapping_rasterLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_rasterLayerDataTab" caption="Data" condition="esri_mapping_onlyRasterLayersSelectedCondition" tabGroupID="esri_mapping_rasterLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_rasterLayerToolsGroup"/>
         </tab>
 
@@ -762,7 +796,7 @@
         </tab>
 
         <!--Mosaic Tabs-->
-        <tab id="esri_mapping_mosaicLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyMosaicLayersSelectedCondition" tabGroupID="esri_mapping_mosaicLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_mosaicLayerAppearanceTab" caption="Mosaic Layer" condition="esri_mapping_onlyMosaicLayersSelectedCondition" tabGroupID="esri_mapping_mosaicLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -772,7 +806,7 @@
           <group refID="esri_mapping_rasterLayerRotateGroup" />
         </tab>
 
-        <tab id="esri_mapping_mosaicLayerDataTab" caption="Data" condition="esri_mapping_onlyMosaicLayersSelectedCondition" tabGroupID="esri_mapping_mosaicLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_mosaicLayerDataTab" caption="Data" condition="esri_mapping_onlyMosaicLayersSelectedCondition" tabGroupID="esri_mapping_mosaicLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_mosaicLayerSelectionGroup"/>
@@ -789,7 +823,7 @@
         </tab>
 
         <!--Mosaic Image sub layer tabs-->
-        <tab id="esri_mapping_mosaicImageSubLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyMosaicImageSubLayersSelectedCondition" tabGroupID="esri_mapping_mosaicImageSubLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_mosaicImageSubLayerAppearanceTab" caption="Mosaic Layer" condition="esri_mapping_onlyMosaicImageSubLayersSelectedCondition" tabGroupID="esri_mapping_mosaicImageSubLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -799,7 +833,7 @@
           <group refID="esri_mapping_rasterLayerRotateGroup" />
         </tab>
 
-        <tab id="esri_mapping_mosaicImageSubLayerDataTab" caption="Data" condition="esri_mapping_onlyMosaicImageSubLayersSelectedCondition" tabGroupID="esri_mapping_mosaicImageSubLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_mosaicImageSubLayerDataTab" caption="Data" condition="esri_mapping_onlyMosaicImageSubLayersSelectedCondition" tabGroupID="esri_mapping_mosaicImageSubLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_mosaicLayerSelectionGroup"/>
@@ -816,7 +850,7 @@
         </tab>
 
         <!--Image service tabs-->
-        <tab id="esri_mapping_imageServiceLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyImageServiceLayersSelectedCondition" tabGroupID="esri_mapping_imageServiceLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_imageServiceLayerAppearanceTab" caption="Image Service Layer" condition="esri_mapping_onlyImageServiceLayersSelectedCondition" tabGroupID="esri_mapping_imageServiceLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -826,7 +860,7 @@
           <group refID="esri_mapping_rasterLayerRotateGroup" />
         </tab>
 
-        <tab id="esri_mapping_imageServiceLayerDataTab" caption="Data" condition="esri_mapping_onlyImageServiceLayersSelectedCondition" tabGroupID="esri_mapping_imageServiceLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_imageServiceLayerDataTab" caption="Data" condition="esri_mapping_onlyImageServiceLayersSelectedCondition" tabGroupID="esri_mapping_imageServiceLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_featureLayerAttributeGroup" />
           <group refID="esri_mapping_mosaicLayerSelectionGroup"/>
@@ -843,19 +877,51 @@
         </tab>
 
         <!-- Mixed Layer Tabs -->
-        <tab id="esri_mapping_mixedLayerAppearanceTab" caption="Appearance" condition="esri_mapping_mixedLayersSelectedCondition" tabGroupID="esri_mapping_mixedLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_mixedLayerAppearanceTab" caption="Layer" condition="esri_mapping_mixedLayersSelectedCondition" tabGroupID="esri_mapping_mixedLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
           <group refID="esri_mapping_layerSymbologyMixedLayers" />
         </tab>
 
-        <!-- WMS Layer Tabs -->
-        <tab id="esri_mapping_wmsSubLayerAppearanceTab" caption="Appearance" condition="esri_mapping_WMSSubLayerSelectedCondition" tabGroupID="esri_mapping_wmsSubLayerTabGroup" keytip="JA">
+        <!-- WMS SubLayer Tabs -->
+        <tab id="esri_mapping_wmsSubLayerAppearanceTab" caption="WMS Sublayer" condition="esri_mapping_WMSSubLayerSelectedCondition" tabGroupID="esri_mapping_wmsSubLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
           <group refID="esri_mapping_layerSymbologyWMSSubLayers" />
+        </tab>
+
+        <!-- WMS Layer Tabs -->
+        <tab id="esri_mapping_wmsLayerAppearanceTab" caption="WMS Layer" condition="esri_mapping_WMSServiceLayerSelectedCondition" tabGroupID="esri_mapping_wmsLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
+          <group refID="esri_mapping_layerScaleVisibilityGroup" />
+          <group refID="esri_mapping_layerEffectsGroup" />
+          <group refID="esri_mapping_layerCompareGroup"/>
+          <group refID="esri_mapping_layerSymbologyMixedLayers" />
+        </tab>
+
+        <!-- Map Image Layer Tabs -->
+        <tab id="esri_mapping_mapImageLayerAppearanceTab" caption="Map Image Layer" condition="esri_mapping_MapImageLayerSelectedCondition" tabGroupID="esri_mapping_mapImageLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
+          <group refID="esri_mapping_layerScaleVisibilityGroup" />
+          <group refID="esri_mapping_layerEffectsGroup" />
+          <group refID="esri_mapping_layerCompareGroup"/>
+          <group refID="esri_mapping_layerSymbologyMixedLayers" />
+        </tab>
+
+        <!-- Group Layer Tabs -->
+        <tab id="esri_mapping_groupLayerAppearanceTab" caption="Group Layer" condition="esri_mapping_groupLayerSelectedState" tabGroupID="esri_mapping_groupLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
+          <group refID="esri_mapping_layerScaleVisibilityGroup" />
+          <group refID="esri_mapping_layerEffectsGroup" />
+          <group refID="esri_mapping_layerCompareGroup"/>
+          <group refID="esri_mapping_layerSymbologyMixedLayers" />
+        </tab>
+
+        <!-- Tiled Layer Tabs -->
+        <tab id="esri_mapping_tiledLayerAppearanceTab" caption="Tile Layer" condition="esri_mapping_TiledServiceLayerSelectedCondition" tabGroupID="esri_mapping_tiledLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
+          <group refID="esri_mapping_layerScaleVisibilityGroup" />
+          <group refID="esri_mapping_layerEffectsGroup" />
+          <group refID="esri_mapping_layerCompareGroup"/>
+          <group refID="esri_mapping_layerSymbologyMixedLayers" />
         </tab>
 
         <!-- Data Source Tabs -->
@@ -877,19 +943,19 @@
         </tab>
 
         <!--KML Tabs-->
-        <tab id="esri_mapping_kmlLayerAppearanceTab" caption="Appearance" condition="esri_mapping_kmlLayersSelectedCondition" tabGroupID="esri_mapping_kmlLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_kmlLayerAppearanceTab" caption="KML Layer" condition="esri_mapping_kmlLayersSelectedCondition" tabGroupID="esri_mapping_kmlLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
           <group refID="esri_mapping_layerSymbologyMixedLayers" />
         </tab>
-        <tab id="esri_mapping_kmlLayerLabelingTab" caption="Labeling" condition="esri_mapping_kmlLayersSelectedCondition" tabGroupID="esri_mapping_kmlLayerTabGroup" keytip="JL">
+        <tab id="esri_mapping_kmlLayerLabelingTab" caption="Labeling" condition="esri_mapping_kmlLayersSelectedCondition" tabGroupID="esri_mapping_kmlLayerTabGroup" keytip="JL" activationCategory="esri_Label">
           <group refID="esri_mapping_labelingLayerGroup" />
           <group refID="esri_mapping_kmlLayerLabelingTextSymbolGroup" />
         </tab>
 
         <!--Graphics Layer Tabs-->
-        <tab id="esri_mapping_graphicsLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyGraphicsLayersSelectedCondition" tabGroupID="esri_mapping_graphicsLayerTabGroup" keytip="GA">
+        <tab id="esri_mapping_graphicsLayerAppearanceTab" caption="Graphics Layer" condition="esri_mapping_onlyGraphicsLayersSelectedCondition" tabGroupID="esri_mapping_graphicsLayerTabGroup" keytip="GA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -902,7 +968,7 @@
         </tab>
 
         <!--VectorTileLayer Tabs-->
-        <tab id="esri_mapping_vectorTileLayerAppearanceTab" caption="Appearance" condition="esri_mapping_vectorTileLayersSelectedCondition" tabGroupID="esri_mapping_vectorTileLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_vectorTileLayerAppearanceTab" caption="Vector Tile Layer" condition="esri_mapping_vectorTileLayersSelectedCondition" tabGroupID="esri_mapping_vectorTileLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup" />
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -910,13 +976,13 @@
         </tab>
         
         <!-- BuildingSceneLayer Tabs-->
-        <tab id="esri_mapping_buildingSceneLayerDataTab" caption="Manage" condition="esri_mapping_buildingSceneLayersSelectedCondition" tabGroupID="esri_mapping_buildingSceneLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_buildingSceneLayerDataTab" caption="Building Scene Layer" condition="esri_mapping_buildingSceneLayersSelectedCondition" tabGroupID="esri_mapping_buildingSceneLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_sceneLayerSelectionGroup"/>
           <group refID="esri_mapping_layerObject3DRenderingFilterGroup"/>
         </tab>
 
         <!--Scene Layers - 3D Point, 3D Object Tabs-->
-        <tab id="esri_mapping_sceneLayerAppearanceTab" caption="Appearance" condition="esri_mapping_only3DObjectLayersOr3DPointLayersSelectedCondition" tabGroupID="esri_mapping_sceneLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_sceneLayerAppearanceTab" caption="Scene Layer" condition="esri_mapping_only3DObjectLayersOr3DPointLayersSelectedCondition" tabGroupID="esri_mapping_sceneLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -924,7 +990,7 @@
           <group refID="esri_mapping_layer3DGroup" />
           <group refID="esri_mapping_lightingAndShadingGroup" />
         </tab>
-        <tab id="esri_mapping_sceneLayerDataTab" caption="Data" condition="esri_mapping_only3DObjectLayersOr3DPointLayersSelectedCondition" tabGroupID="esri_mapping_sceneLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_sceneLayerDataTab" caption="Data" condition="esri_mapping_only3DObjectLayersOr3DPointLayersSelectedCondition" tabGroupID="esri_mapping_sceneLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_layerDataExclusionGroup" />
           <group refID="esri_mapping_sceneLayerSelectionGroup"/>
@@ -932,7 +998,7 @@
         </tab>
 
         <!--Scene Layers - Integrated Mesh Tabs-->
-        <tab id="esri_mapping_integratedMeshLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlyIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_integratedMeshLayerAppearanceTab" caption="Integrated Mesh Layer" condition="esri_mapping_onlyIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -940,12 +1006,12 @@
           <group refID="esri_mapping_lightingAndShadingGroup" />
         </tab>
 
-        <tab id="esri_mapping_integratedMeshLayerDataTab" caption="Data" condition="esri_mapping_onlyIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_integratedMeshLayerDataTab" caption="Data" condition="esri_mapping_onlyIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_integratedMeshLayerModificationGroup"/>
           <group refID="esri_mapping_integratedMeshLayerOperationGroup"/>
         </tab>
          <!-- smart mesh tabs-->
-        <tab id="esri_mapping_smartIntegratedMeshLayerAppearanceTab" caption="Appearance" condition="esri_mapping_onlySmartIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_smartIntegratedMeshLayerAppearanceTab" caption="Integrated Mesh Layer" condition="esri_mapping_onlySmartIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_layerScaleVisibilityGroup"/>
           <group refID="esri_mapping_layerEffectsGroup" />
           <group refID="esri_mapping_layerCompareGroup"/>
@@ -954,7 +1020,7 @@
           <group refID="esri_mapping_lightingAndShadingGroup" />
         </tab>
 
-        <tab id="esri_mapping_smartIntegratedMeshLayerDataTab" caption="Data" condition="esri_mapping_onlySmartIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_smartIntegratedMeshLayerDataTab" caption="Data" condition="esri_mapping_onlySmartIntegratedMeshLayersSelectedCondition" tabGroupID="esri_mapping_integratedMeshLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_layerDefQueryGroup" />
           <group refID="esri_mapping_layerDataExclusionGroup" />
           <group refID="esri_mapping_sceneLayerSelectionGroup"/>
@@ -964,21 +1030,21 @@
         
         
         <!--Voxel Layer Tabs-->
-        <tab id="esri_mapping_voxelLayerAppearanceTab" caption="Appearance" condition="esri_mapping_voxelLayersSelectedCondition" tabGroupID="esri_mapping_voxelLayerTabGroup" keytip="JA">
+        <tab id="esri_mapping_voxelLayerAppearanceTab" caption="Voxel Layer" condition="esri_mapping_voxelLayersSelectedCondition" tabGroupID="esri_mapping_voxelLayerTabGroup" keytip="JA" activationCategory="esri_Appearance">
           <group refID="esri_mapping_voxelLayerElevationGroup"/>
           <group refID="esri_mapping_voxelLayerVariableGroup" />
           <group refID="esri_mapping_voxelLayerDrawingGroup"/>
           <group refID="esri_mapping_voxelLayerLightingGroup"/>
         </tab>
-        <tab id="esri_mapping_voxelLayerDataTab" caption="Data" condition="esri_mapping_voxelLayersSelectedCondition" tabGroupID="esri_mapping_voxelLayerTabGroup" keytip="JD">
+        <tab id="esri_mapping_voxelLayerDataTab" caption="Data" condition="esri_mapping_voxelLayersSelectedCondition" tabGroupID="esri_mapping_voxelLayerTabGroup" keytip="JD" activationCategory="esri_Data">
           <group refID="esri_mapping_voxelLayerDataExploreGroup"/>
         </tab>
 
-        <!-- Elevation Surfaces Tab-->
-        <tab id="esri_mapping_elevationSurfacesAppearanceTab" caption="Appearance" condition="esri_mapping_ElevationSurfaceSelectedCondition" tabGroupID="esri_mapping_elevationSurfaceTabGroup" keytip="JA">
-          <group refID="esri_mapping_elevationEffectsGroup" />
-          <group refID="esri_mapping_elevationDrawingGroup" />
-          <group refID="esri_mapping_elevationSurfaceGroup" />
+        <!-- Elevation Surface Layers Tab-->
+        <tab id="esri_mapping_elevationSurfaceLayersAppearanceTab" caption="Elevation Surface Layer" condition="esri_mapping_ElevationSurfaceLayerSelectedCondition" tabGroupID="esri_mapping_elevationSurfaceLayersTabGroup" keytip="EA" activationCategory="esri_Appearance">
+          <group refID="esri_mapping_elevationLayerEffectsGroup" />
+          <group refID="esri_mapping_elevationLayerDrawingGroup" />
+          <group refID="esri_mapping_elevationSurfaceLayerGroup" />
         </tab>
 
         <!-- Georeference Tab -->
@@ -1002,14 +1068,14 @@
         </tab>
 
         <!-- Cad Contextual Tab  -->
-        <tab id="esri_mapping_featureLayerCadTab" caption="Manage" condition="esri_mapping_onlyCadLayerSelectedCondition" tabGroupID="esri_mapping_cadLayerTabGroup" keytip="CM">
+        <tab id="esri_mapping_featureLayerCadTab" caption="CAD Data" condition="esri_mapping_onlyCadLayerSelectedCondition" tabGroupID="esri_mapping_cadLayerTabGroup" keytip="CM">
           <group refID="esri_mapping_georeference_RasterGeoreferenceGroup"/>
           <group refID="esri_mapping_georeference_GeoreferenceGroup"/>
           <group refID="esri_mapping_bimCloudControlsGroup"/>
         </tab>
 
         <!-- BIM Contextual Tab -->
-        <tab id="esri_mapping_BimContextualTab" caption="Manage" condition="esri_mapping_onlyBimLayerSelectedCondition" tabGroupID="esri_mapping_bimLayerTabGroup" keytip="BM">
+        <tab id="esri_mapping_BimContextualTab" caption="BIM Data" condition="esri_mapping_onlyBimLayerSelectedCondition" tabGroupID="esri_mapping_bimLayerTabGroup" keytip="BM">
           <group refID="esri_mapping_georeference_RasterGeoreferenceGroup"/>
           <group refID="esri_mapping_georeference_GeoreferenceGroup"/>
           <group refID="esri_mapping_buildingLayerConversionGroup"/>
@@ -1045,8 +1111,8 @@
         </tab>
 
          <!-- Point Cloud Layer Tabs -->
-        <tab id="esri_mapping_pointCloudLayerAppearanceTab"
-             caption="Appearance"
+        <tab id="esri_mapping_pointCloudLayerAppearanceTab" activationCategory="esri_Appearance"
+             caption="Point Cloud Layer"
              condition="esri_mapping_onlyPointCloudLayersSelectedCondition"
              tabGroupID="esri_mapping_pointCloudLayerTabGroup"
              keytip="JA">
@@ -1066,7 +1132,7 @@
           <group refID="esri_mapping_location_locationNavigationGroup" />
         </tab>
         <!-- Linear Referencing Tab -->
-        <tab id="esri_mapping_linearReferencingTab" caption="Data"
+        <tab id="esri_mapping_linearReferencingTab" caption="Linear Referencing"
              tabGroupID="esri_mapping_linearReferencingTabGroup"
              keytip="G" placeWith="esri_core_insertTab" insert="after"
              condition="esri_mapping_LinearReferencingCondition">
@@ -1153,15 +1219,16 @@
           </group>
         </toolbar>
 
-        <toolbar id="elevationSurfaceDrawingToolbar">
+         <!-- elevation surface layer-->
+        <toolbar id="elevationSurfaceLayerDrawingToolbar">
           <group>
-            <customControl refID="esri_mapping_elevationSurfaceDrawing" size="small" />
+            <customControl refID="esri_mapping_elevationSurfaceLayerDrawing" size="small" />
           </group>
         </toolbar>
 
-        <toolbar id="elevationSurfaceRibbonToolbar">
+        <toolbar id="elevationSurfaceLayerRibbonToolbar">
           <group>
-            <customControl refID="esri_mapping_elevationSurfaceRibbon" size="small" />
+            <customControl refID="esri_mapping_elevationSurfaceLayerRibbon" size="small" />
             <customControl refID="esri_mapping_elevationSurface_ExcludeFromDraping" size="middle" />
           </group>
         </toolbar>
@@ -1333,6 +1400,22 @@
           <color A="200" R="201" G="107" B="75" />
           <borderColor A="0" R="224" G="223" B="216" />
         </tabGroup>
+        <tabGroup caption="WMS Layer" id="esri_mapping_wmsLayerTabGroup">
+          <color A="200" R="201" G="107" B="75" />
+          <borderColor A="0" R="224" G="223" B="216" />
+        </tabGroup>
+        <tabGroup caption="Map Image Layer" id="esri_mapping_mapImageLayerTabGroup">
+          <color A="200" R="201" G="107" B="75" />
+          <borderColor A="0" R="224" G="223" B="216" />
+        </tabGroup>
+        <tabGroup caption="Group Layer" id="esri_mapping_groupLayerTabGroup">
+          <color A="200" R="201" G="107" B="75" />
+          <borderColor A="0" R="224" G="223" B="216" />
+        </tabGroup>
+        <tabGroup caption="Tile Layer" id="esri_mapping_tiledLayerTabGroup">
+          <color A="200" R="201" G="107" B="75" />
+          <borderColor A="0" R="224" G="223" B="216" />
+        </tabGroup>
         <tabGroup caption="Legend Class" id="esri_mapping_legendClassTabGroup">
           <color A="255" R="104" G="170" B="103" />
           <borderColor A="200" R="221" G="238" B="219" />
@@ -1368,10 +1451,6 @@
         </tabGroup>
 
         <tabGroup caption="Voxel Layer" id="esri_mapping_voxelLayerTabGroup">
-          <color A="200" R="201" G="107" B="75" />
-          <borderColor A="0" R="224" G="223" B="216" />
-        </tabGroup>
-        <tabGroup caption="Elevation Surface" id="esri_mapping_elevationSurfaceTabGroup">
           <color A="200" R="201" G="107" B="75" />
           <borderColor A="0" R="224" G="223" B="216" />
         </tabGroup>
@@ -1414,7 +1493,12 @@
 
         <!-- Linear Referencing Tab Group -->
         <tabGroup id="esri_mapping_linearReferencingTabGroup" caption="Linear Referencing" >
-          <color A="255" R="203" G="106" B="74" />
+          <color A="255" R="58" G="158" B="108" />
+          <borderColor A="0" R="44" G="124" B="85" />
+        </tabGroup>
+        
+        <tabGroup id="esri_mapping_elevationSurfaceLayersTabGroup" caption="Elevation Surface Layer" >
+          <color A="255" R="213" G="166" B="189" />
           <borderColor A="0" R="0" G="0" B="0" />
         </tabGroup>
       </tabGroups>
@@ -1566,8 +1650,8 @@
         <group id="esri_mapping_selectionGroup" caption="Selection" launcherButtonID="esri_mapping_openSelectionOptionsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png" launcherKeytip="SG" keytip="S">
           <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
           <button refID="esri_mapping_clearSelectionButton" size="middle" />
-          <!--button refID="esri_mapping_zoomToSelectionButton" size="middle" />
-          <button refID="esri_mapping_panToSelectionButton" size="middle" />-->
+          <button refID="esri_mapping_zoomToSelectionButton" size="middle" />
+          <!--button refID="esri_mapping_panToSelectionButton" size="middle" />-->
         </group>
         <group id="esri_mapping_inquiryGroup" caption="Inquiry" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PopupChartInfographic16.png" keytip="I">
           <!--<tool refID="esri_mapping_infographicSplitButton" size="large" />-->
@@ -1600,6 +1684,9 @@
         </group>
         <group id="esri_mapping_layerDefQueryGroup" caption="Definition Query" launcherButtonID="esri_mapping_openDefQueryButton" launcherKeytip="DO" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SQLQuery16.png">
           <comboBox refID="esri_mapping_layerDefQueryComboBox" size="small" />
+        </group>
+        <group id="esri_mapping_catalogLayerConfigurationGroup" caption="Configuration" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SQLQuery16.png">
+          <comboBox refID="esri_mapping_catalogLayerMaxLayersComboBox" size="small" />
         </group>
         <group id="esri_mapping_layerDataExclusionGroup" caption="Exclusion">
           <button refID="esri_mapping_hideSelectedFeaturesButton" size="middle"/>
@@ -1640,7 +1727,7 @@
           <splitButton refID="esri_mapping_interactiveAnalysisSplitButton" size="large" />
           <button refID="esri_mapping_clearInteractiveAnalysisButton" />
         </group>-->
-        <group id="esri_mapping_profileViewGroup" caption="Profile Viewing" condition="esri_mapping_ViewingMode3DCondition" keytip="PV" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SliceInteractivePlane16.png">
+        <group id="esri_mapping_profileViewGroup" caption="Profile Viewing" condition="esri_mapping_SceneMapCondition" keytip="PV" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SliceInteractivePlane16.png">
           <tool refID="esri_mapping_profileViewSplitButton" size="large"/>
           <customControl refID="esri_mapping_profileViewControl"/>
         </group>
@@ -1713,8 +1800,7 @@
           <toolbar refID="esri_mapping_layerExtrusionToolbar" />
         </group>
         <group id="esri_mapping_navigation" caption="Navigation" keytip="ZN" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NavControl16.png" condition="esri_mapping_mapOrDesignViewOrConflictsPanes">
-          <button refID="esri_mapping_navigationControl"/>
-          <button refID="esri_mapping_cameraPropertiesControl"/>
+          <subgroup refID="esri_mapping_NavigationSubgroup"/>
         </group>
         <group id="esri_mapping_lightingAndShading_LAS_PCL" caption="Lighting and Shading" condition="esri_mapping_3DLightingAndShading"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerFaceCullingHideBack16.png">
@@ -1827,24 +1913,24 @@
 
         <!-- View Clipping -->
         <group id="esri_mapping_viewClippingGroup" caption="View Clipping" keytip="VC" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingClipFeatures16.png" condition="esri_mapping_mapOrDesignViewOrConflictsPanes">
-          <comboBox refID="esri_mapping_nearPlaneClippingMode" size="middle"/>
-          <spinner refID="esri_mapping_spinner_nearPlaneClippingDistance" size="middle"/>
+          <subgroup refID="esri_mapping_nearPlane"/>
         </group>
         <!-- Overprint -->
         <group id="esri_mapping_overprint" caption="Overprint" keytip="SO" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OverprintSimulate16.png">
           <button refID="esri_mapping_simulateOverprint" size="large"/>
         </group>
-        <!-- Elevation Surface Group-->
-        <group id="esri_mapping_elevationEffectsGroup" caption="Effects" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsTransparency16.png" keytip="ZE">
+
+        <!-- Elevation Surface Layer Group-->
+        <group id="esri_mapping_elevationLayerEffectsGroup" caption="Effects" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsTransparency16.png" keytip="ZE">
           <tool refID="esri_mapping_elevationSurfaceSwipeTool" size="large"/>
           <button refID="esri_mapping_layerFlickerButton" size="middle" />
           <spinner refID="esri_mapping_layerFlickerSpinner" size="small" />
         </group>
-        <group id="esri_mapping_elevationDrawingGroup" caption="Drawing" keytip="ZD">
-          <toolbar refID="elevationSurfaceDrawingToolbar" />
+        <group id="esri_mapping_elevationLayerDrawingGroup" caption="Drawing" keytip="ZD">
+          <toolbar refID="elevationSurfaceLayerDrawingToolbar" />
         </group>
-        <group id="esri_mapping_elevationSurfaceGroup" caption="Surface" keytip="ZS">
-          <toolbar refID="elevationSurfaceRibbonToolbar" />
+        <group id="esri_mapping_elevationSurfaceLayerGroup" caption="Surface" keytip="ZS">
+          <toolbar refID="elevationSurfaceLayerRibbonToolbar" />
         </group>
 
         <!-- Bookmarks -->
@@ -1868,7 +1954,7 @@
         <group id="esri_mapping_rasterLayerRenderingGroup" caption="Rendering" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericLayerSymbology16.png">
           <splitButton refID="esri_mapping_rasterLayerSymbologySplitButton" />
           <splitButton refID="esri_mapping_rasterLayerStretchTypeSplitButton" />
-          <customControl refID="esri_mapping_rasterStretchDRA" size="small" />
+          <customControl refID="esri_mapping_rasterStretchDRA" size="large" />
           <gallery refID="esri_mapping_rasterResamplingTypeGallery" inline="false" size="large" />
           <gallery refID="esri_mapping_rasterBandCombinationGallery" inline="false" size="large" />
           <customControl refID="esri_mapping_layerMasking" size="middle" />
@@ -2134,7 +2220,6 @@
         <group id="esri_mapping_georeference_PrepareGroup" caption="Prepare" extendedCaption="Georeferencing prepare tools for BIM/CAD data in a scene"
 								smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolGroup16.png" condition="esri_mapping_SceneGeoreferenceCondition">
           <button refID="esri_mapping_showLocateDockPane" size="middle"/>
-          <button refID="esri_mapping_georeference_LoadControlPointsButton" size="middle"/>
           <button refID="esri_mapping_georeference_MoveToDisplayButton" size="large"/>
           <button refID="esri_mapping_georeference_ElevateToGroundButton" size="large"/>
           <button refID="esri_mapping_georeference_MoveButton" size="middle"/>
@@ -2285,10 +2370,19 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png">
           <subgroup refID="esri_mapping_thumbnail_SubGroup"/>
         </group>
+        
+        <group id="esri_mapping_accessibilityGroup" hidden="true" caption="Accessibility" keytip="AS" condition="esri_mapping_ColorVisionCondition"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator16.png">
+          <splitButton refID="esri_mapping_colorVisionSplitButton"/>
+        </group>
       </groups>
 
       <subgroups>
-        <subgroup id="esri_mapping_thumbnail_SubGroup" size="AlwaysMedium">
+        <subgroup id="esri_mapping_NavigationSubgroup">
+          <button refID="esri_mapping_navigationControl"/>
+          <button refID="esri_mapping_cameraPropertiesControl"/>
+        </subgroup>
+        <subgroup id="esri_mapping_thumbnail_SubGroup" size="MediumThenSmallWhenSmall">
           <button refID="esri_mapping_createThumbnailButton" size="middle" />
           <button refID="esri_mapping_browseThumbnailButton" size="middle" />
         </subgroup>
@@ -2297,7 +2391,6 @@
           <splitButton refID="esri_mapping_addDataSplitButton" />
         </subgroup>
         <subgroup id="esri_mapping_secondLayerSubGroup" size="MediumThenSmallWhenSmall">
-          <gallery refID="esri_mapping_simpleLayerGallery" inline="false" />
           <button refID="esri_mapping_newGraphicsLayerButton" />
         </subgroup>        
         <subgroup id="esri_mapping_deviceLocationSubGroup" size="AlwaysLarge">
@@ -2317,14 +2410,19 @@
           <button refID="esri_fieldsview_sortDescendingButton"/>
           <button refID="esri_fieldsview_resetFieldOrderButton"/>
         </subgroup>
-        <subgroup id="esri_mapping_firstSceneSubGroup" size="AlwaysLarge">
+        <subgroup id="esri_mapping_firstSceneSubGroup" size="Default">
           <button refID="esri_mapping_depthPriorityButton" />
           <gallery refID="esri_mapping_sceneViewModeGallery"/>
           <splitButton refID="esri_mapping_illuminationTimeSplitButton" size="large"/>
         </subgroup>
-        <subgroup id="esri_mapping_secondSceneSubGroup">
+        <subgroup id="esri_mapping_secondSceneSubGroup" size="MediumThenSmallWhenSmall">
           <splitButton refID="esri_mapping_visualEffectSplitButton"/>
           <splitButton refID="esri_mapping_cameraEffectSplitButton"/>
+          <splitButton refID="esri_mapping_postprocessingEffectSplitButton"/>
+        </subgroup>
+        <subgroup id="esri_mapping_nearPlane" size="AlwaysMedium">
+          <comboBox refID="esri_mapping_nearPlaneClippingMode"/>
+          <spinner refID="esri_mapping_spinner_nearPlaneClippingDistance"/>
         </subgroup>
       </subgroups>
 
@@ -2399,7 +2497,7 @@
         </button>
 
         <button id="esri_mapping_StyleUnreferenceButton" className="UnreferenceSelectedStylesButton"
-                caption="Remove" extendedCaption="Disconnect style from project" keytip="RM" 
+                caption="Remove From Project" extendedCaption="Disconnect style from project" keytip="RM" 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack32.png"
                 loadOnClick="false">
@@ -2527,58 +2625,52 @@
           </tooltip>
         </button>
 
-        <button id="esri_mapping_copySelectedElevationSurfaceButton" className="esri_mapping:CopySelectedElevationSurfaces" caption="Copy"
-                extendedCaption="Elevation surfaces" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"
-                condition="esri_mapping_IsGroundSurfaceSelectedCondition">
+         <!-- new elevation buttons-->
+
+        <button id="esri_mapping_copySelectedElevationSurfaceLayerButton" className="esri_mapping:CopySelectedLayersAsync" caption="Copy"
+               extendedCaption="Elevation surface layers" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"
+               condition="esri_mapping_IsGroundSurfaceLayerSelectedCondition">
           <tooltip heading="">
-            Copy the selected elevation surfaces to the clipboard.<disabledText></disabledText>
+            Copy the selected elevation surface layers to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_cutSelectedElevationSurfaceButton" className="esri_mapping:CutSelectedElevationSurfaces" caption="Cut"
-                     extendedCaption="Elevation surfaces" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"
-                     condition="esri_mapping_IsGroundSurfaceSelectedCondition">
+        <button id="esri_mapping_cutSelectedElevationSurfaceLayerButton" className="esri_mapping:CutSelectedLayersAsync" caption="Cut"
+                     extendedCaption="Elevation surface layers" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"
+                     condition="esri_mapping_IsGroundSurfaceLayerSelectedCondition">
           <tooltip heading="">
-            Cut the selected elevation surfaces to the clipboard.<disabledText></disabledText>
+            Cut the selected elevation surface layers to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_copySelectedElevationSourcesButton" className="esri_mapping:CopySelectedElevationSources" caption="Copy" extendedCaption="Elevation sources"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"  condition="esri_mapping_ElevationSourceSelectedCondition">
+        <button id="esri_mapping_copySelectedElevationSourceLayerButton" className="esri_mapping:CopySelectedLayersAsync" caption="Copy" extendedCaption="Elevation source layers"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"  condition="esri_mapping_ElevationSourceLayerSelectedCondition">
           <tooltip heading="">
-            Copy the selected elevation sources to the clipboard.<disabledText></disabledText>
+            Copy the selected elevation source layers to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_cutSelectedElevationSourcesButton" className="esri_mapping:CutSelectedElevationSources" caption="Cut" extendedCaption="Elevation sources"
-                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"  condition="esri_mapping_ElevationSourceSelectedCondition">
+        <button id="esri_mapping_cutSelectedElevationSourceLayerButton" className="esri_mapping:CutSelectedLayersAsync" caption="Cut" extendedCaption="Elevation source layers"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"  condition="esri_mapping_ElevationSourceLayerSelectedCondition">
           <tooltip heading="">
-            Cut the selected elevation sources to the clipboard.<disabledText></disabledText>
+            Cut the selected elevation source layers to the clipboard.<disabledText></disabledText>
           </tooltip>
-        </button>    
+        </button>
 
-        <button id="esri_mapping_pasteSourcesIntoSurfaceButton" className="esri_mapping:PasteClipboardElevationSources" caption="Paste"
-                extendedCaption="Elevation sources into surface"
-                condition="esri_mapping_PasteElevationSourceSelectedCondition"
+        <button id="esri_mapping_pasteElevationSourceLayersButton" className="esri_mapping:PasteClipboardElevationSourceLayers" caption="Paste"
+                extendedCaption="Elevation source layers into surface"
+                condition="esri_mapping_PasteElevationSourceLayerSelectedCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
           <tooltip heading="">
-            Paste the copied elevation sources into an elevation surface.<disabledText>An elevation surface must be selected.</disabledText>
+            Paste the copied elevation source layers into an elevation surface.<disabledText>An elevation surface layer must be selected.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_ZoomToElevationSourceButton" className="esri_mapping:ZoomToSelectedElevationSources" caption="Zoom To Elevation Source"
-                 condition="esri_mapping_ElevationSourceSelectedCondition"
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerZoomTo16.png">
+        <button id="esri_mapping_PasteElevationSurfaceLayerButton" className="esri_mapping:PasteClipboardLayers"  caption="Paste"
+                extendedCaption="Elevation surface layers into map" condition="esri_mapping_PasteElevationSurfaceLayerSelectedCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
           <tooltip heading="">
-            Zoom to selected elevation sources in the map.
-          </tooltip>
-        </button>
-
-        <button id="esri_mapping_ZoomToElevationSurfaceButton" className="esri_mapping:ZoomToSelectedElevationSurfaces" caption="Zoom To Elevation Surface"
-                    condition="esri_mapping_ElevationSurfaceSelectedCondition"
-                    smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerZoomTo16.png">
-          <tooltip heading="">
-            Zoom to selected elevation surfaces in the map.
+            Paste the copied elevation surface layers into the map.<disabledText>An elevation surface layer must be copied.</disabledText>
           </tooltip>
         </button>
 
@@ -2641,7 +2733,7 @@
         </button>
 		
         <!--Map - Map-->
-        <button id="esri_mapping_addDataButton" className="esri_mapping:AddData" caption="Add Data" extendedCaption="To map or scene" condition="esri_mapping_mapPaneOrLayoutPane" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png">
+        <button id="esri_mapping_addDataButton" className="esri_mapping:AddData" caption="Add Data" extendedCaption="To map or scene" condition="esri_mapping_mapPaneOrLayoutPaneOrLinkChartWithGeographicLayout" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png">
           <tooltip heading="">
             Add data to the map.<disabledText></disabledText>
           </tooltip>
@@ -2731,7 +2823,7 @@
             Convert to a basemap.<disabledText>A map must be selected in the Catalog.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_mapContextMenuRemoveButton" extendedCaption="Project item"  className="esri_mapping:Remove" caption="Delete" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png" loadOnClick="false">
+        <button id="esri_mapping_mapContextMenuRemoveButton" extendedCaption="Project item"  className="esri_mapping:Remove" caption="Delete" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard32.png" loadOnClick="false">
           <tooltip heading="">
             Delete a project item.<disabledText></disabledText>
           </tooltip>
@@ -2877,6 +2969,32 @@
           </tooltip>
         </button>
 
+        <button id="esri_mapping_protanopiaContextButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ProtanopiaContextButton" caption="Protanopia (red-blind)" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ProtanopiaMode16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ProtanopiaMode32.png" keytip="RC">
+          <tooltip heading="Protanopia">
+            Activate protanopia mode which simulates red-blind vision. In this color vision mode, green, red and yellow hues are more easily confused.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_mapping_deuteranopiaContextButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.DeuteranopiaContextButton" caption="Deuteranopia (green-blind)" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeuteranopiaMode16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeuteranopiaMode32.png" keytip="GC">
+          <tooltip heading="Deuteranopia">
+            Activate deuteranopia mode which simulates green-blind vision. In this color vision mode, green, red and yellow hues are more easily confused.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_mapping_tritanopiaContextButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.TritanopiaContextButton" caption="Tritanopia (blue-blind)" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TritanopiaMode16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TritanopiaMode32.png" keytip="BC">
+          <tooltip heading="Tritanopia">
+            Activate tritanopia mode which simulates blue-blind vision. In this color vision mode, green, red, orange, purple and blue are more easily confused.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_mapping_colorVisionSimulatorButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ColorVisionDeficiencySimulatorButton" caption="Color Vision Simulator" helpContextID="120003689" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator32.png" condition="esri_mapping_ColorVisionCondition">
+          <tooltip heading="Color Vision Deficiency Simulator">
+            The active mode simulates the view as if color blind in one of three primary conditions; green-blind, red-blind, or blue-blind.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <dynamicMenu id="esri_mapping_colorVisionDynamicMenu" caption="Color Vision Simulator" extendedCaption="Menu" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ColorVisionDeficiencySimulatorMenu"/>
+        
         <button id="esri_mapping_gotoXYControl" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.GotoXYControlButton" caption="Go To XY" extendedCaption="Show/Hide Go To XY control" helpContextID="120001471" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GoToXY16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GoToXY32.png" keytip="T">
           <tooltip heading="Go To XY">
             Show or hide the Go To XY control.<disabledText></disabledText>
@@ -2915,7 +3033,19 @@
 
         <button id="esri_mapping_cameraEffectToggleButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.CameraEffectToggleButton" caption="Camera Effect" helpContextID="120002883" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CameraEffects16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CameraEffects32.png">
           <tooltip heading="Camera Effect">
-            A camera effect is a rendering technique that applies additional physical properties to scene view camera like depth of field.<disabledText>Camera effects are only available for scene views.</disabledText>
+            A camera effect is a rendering technique that applies additional physical properties to the scene view camera, like depth of field.<disabledText>Camera effects are only available for scene views.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_mapping_postprocessingEffectSettingsButton" condition="esri_mapping_EffectCondition" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.PostprocessingEffectSettingsButton" caption="Postprocessing Effects Settings" helpContextID="120003690" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CogWheel16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CogWheel32.png">
+          <tooltip heading="Postprocessing Effects Settings">
+            Change the active state of an effect and show its parameters.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_mapping_postprocessingEffectToggleButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.PostprocessingEffectToggleButton" caption="Postprocessing Effects" helpContextID="120003690" loadOnClick="false" disableIfBusy="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PostProcessingEffects16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PostProcessingEffects32.png">
+          <tooltip heading="Postprocessing Effects">
+            Postprocessing effects are rendering techniques used to enhance the final image after the scene has been drawn.<disabledText>Postprocessing effects are only available for scene views.</disabledText>
           </tooltip>
         </button>
 
@@ -2942,7 +3072,7 @@ Rotation of the linked views dynamically changes to match the rotation of the ac
 
         <button id="esri_mapping_linkCursorsButton" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.LinkCursorsButton" caption="Link Cursors" keytip="LP" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LinkCursors32.png" loadOnClick="false">
           <tooltip heading="Link Cursors">
-            Display the cursor in all views when drawing or measuring features.<disabledText></disabledText>
+            Show the cursor when editing features across multiple map views.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2981,38 +3111,38 @@ Ctrl+Alt+C = quick enable
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_fixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Fixed Zoom Out" keytip="ZO" className="esri_mapping:FixedZoomOut" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" loadOnClick="false">
+        <button id="esri_mapping_fixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Map View" keytip="ZO" className="esri_mapping:FixedZoomOut" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" loadOnClick="false">
           <tooltip heading="Fixed Zoom Out">
             Zoom out a fixed distance.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_fixedZoomInButton" caption="Fixed Zoom In" extendedCaption="Fixed Zoom In" keytip="ZI" className="esri_mapping:FixedZoomIn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomIn_B_16.png" loadOnClick="false">
+        <button id="esri_mapping_fixedZoomInButton" caption="Fixed Zoom In" extendedCaption="Map View" keytip="ZI" className="esri_mapping:FixedZoomIn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomIn_B_16.png" loadOnClick="false">
           <tooltip heading="Fixed Zoom In">
             Zoom in a fixed distance.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_zoomFullButton" caption="Zoom Full Extent" keytip="FE" className="esri_mapping:ZoomToFullExtent" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFullExtent16.png" loadOnClick="false">
+        <button id="esri_mapping_zoomFullButton" caption="Zoom Full Extent" extendedCaption="Map View" keytip="FE" className="esri_mapping:ZoomToFullExtent" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFullExtent16.png" loadOnClick="false">
           <tooltip heading="Full Extent">
             Zoom to the full extent of the data in the view.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_prevExtentButton" caption="Previous Extent" extendedCaption="Previous extent" keytip="PE" flipImageRTL="true" className="esri_mapping:PreviousNavigationPos" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueLeftArrowLongTail16.png" loadOnClick="false">
+        <button id="esri_mapping_prevExtentButton" caption="Previous Extent" extendedCaption="Map View" keytip="PE" flipImageRTL="true" className="esri_mapping:PreviousNavigationPos" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueLeftArrowLongTail16.png" loadOnClick="false">
           <tooltip heading="Previous Extent">
             Go to the previous extent.<disabledText>The earliest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_nextExtentButton" caption="Next Extent" extendedCaption="Next extent" keytip="NE" flipImageRTL="true" className="esri_mapping:NextNavigationPos" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail16.png" loadOnClick="false">
+        <button id="esri_mapping_nextExtentButton" caption="Next Extent" extendedCaption="Map View" keytip="NE" flipImageRTL="true" className="esri_mapping:NextNavigationPos" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail16.png" loadOnClick="false">
           <tooltip heading="Next Extent">
             Go to the next extent.<disabledText>The latest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_navigationOptionsButton" caption="Navigation Options" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.NavigationOptionsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
+        <button id="esri_mapping_navigationOptionsButton" caption="Navigation Options" extendedCaption="Map View" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.NavigationOptionsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" loadOnClick="false">
           <tooltip heading="Navigation Options">
             Set navigation options.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_zoomToSelectionButton" className="esri_mapping:ZoomToAllLayerSelection" caption="Zoom To Selection" extendedCaption="Zoom To Selected Features" keytip="ZS" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionZoomToSelected32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionZoomToSelected16.png">
-          <tooltip heading="">
+        <button id="esri_mapping_zoomToSelectionButton" className="esri_mapping:ZoomToAllLayerSelection" caption="Zoom To" extendedCaption="Zoom To Selected Features" keytip="ZS" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionZoomToSelected32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionZoomToSelected16.png">
+          <tooltip heading="Zoom To Selection">
             Zoom to the selected features of all layers.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -3139,11 +3269,6 @@ Ctrl+Alt+C = quick enable
         <button id="esri_onlineItemAddToActiveMapButton" className="ArcGIS.Desktop.Mapping.OnlineItemAddToActiveMapButton" caption="Add To Current Map" extendedCaption="Add the selected portal item to a the active map; on context menu" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" helpContextID="">
           <tooltip heading="">
             Add data to the active map.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_projectItemAddToNewDiagramMapButton" className="ArcGIS.Desktop.Mapping.AddToNewDiagramMapButton" caption="Add To New Diagram Map" extendedCaption="Add the selected item to a new diagram map; on context menu" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OpenDiagView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/OpenDiagView16.png" helpContextID="">
-          <tooltip heading="">
-            Add data to a new diagram map.<disabledText></disabledText>
           </tooltip>
         </button>
         <!--Map - Labeling Tab -->
@@ -3518,7 +3643,10 @@ Ctrl+Alt+C = quick enable
         </button>
         <tool id="esri_mapping_eyedropperTool" className="ArcGIS.Desktop.Internal.Mapping.Symbology.EyedropperTool" hidden="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EyeDropper32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EyeDropper16.png" caption="Eyedropper">
           <tooltip heading="Eyedropper">
-            Click a color in the active view to apply to the current symbol instead of choosing one from the gallery.<disabledText></disabledText>
+            Click a color in the active view to apply to the current symbol instead of choosing one from the gallery.
+            <disabledText>
+              The active view must be a map, scene, layout or report view.
+            </disabledText>
           </tooltip>
         </tool>
         <tool id="esri_mapping_focusDistanceTool" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.FocusDistanceTool" hidden="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_Background_Grid_Set_OriginRotation32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_Background_Grid_Set_OriginRotation16.png" caption="Focus Distance">
@@ -3595,36 +3723,6 @@ Ctrl+Alt+C = quick enable
         </tool>
 
 
-        <!--Map - Tools - Constraints -->
-        <button id="esri_mapping_constraintsOnButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.ConstraintsControl.ConstraintsMasterButton" caption="Constraints" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDynamicConstraintsToggle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingDynamicConstraintsToggle16.png" loadOnClick="false" condition="esri_mapping_mapPane">
-          <tooltip heading="Constraints">
-            Turn dynamic constraints on or off for interactive map tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <!--Map - Tools - Grid -->
-        <button id="esri_mapping_gridOnButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.GridControl.GridMasterButton" caption="Grid"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/editingbackgroundgridtoggle16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/editingbackgroundgridtoggle32.png"
-                loadOnClick="false" condition="esri_mapping_mapPane">
-          <tooltip heading="Grid">
-            Turn reference grid on or off for interactive tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <!--Map - Tools - GroundToGrid -->
-        <button id="esri_mapping_g2gOnButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.GroundToGridControl.G2GControlButton" caption="Ground to Grid Corrections" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool16.png" loadOnClick="false" condition="esri_mapping_mapPane">
-          <tooltip heading="Ground to Grid">
-            Turn Ground to Grid corrections on or off for interactive tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_mapping_inferenceOnButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.InferenceControl.G2GControlButton" caption="Inference" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle16.png" loadOnClick="false" condition="esri_mapping_mapPane">
-          <tooltip heading="Inference">
-            Turn inference on or off for interactive tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
         <!--Map - Tools - Snapping SplitButton components -->
         <button id="esri_mapping_snappingToggleButton"
                 caption="Snapping"
@@ -3643,68 +3741,47 @@ Ctrl+Alt+C = quick enable
           <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
         </customControl>
 
-        <button id="esri_mapping_snappingOnButton" caption="Snapping" keytip="SN" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListBySnapping32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowListBySnapping16.png" condition="esri_mapping_mapPane">
-          <tooltip heading="Snapping">
-            Turn snapping on or off for interactive tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_mapping_pointSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.PointSnappingButton" caption="Point Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingPoint32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingPoint16.png"
+        <button id="esri_mapping_pointSnappingButton" caption="Point Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingPoint32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingPoint16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_PointSnapping" loadOnClick="false">
           <tooltip heading="Point Snapping">Point snaps to the nearest point or LAS point feature.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_endSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.EndSnappingButton" caption="End Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEnd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEnd16.png"
+        <button id="esri_mapping_endSnappingButton" caption="End Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEnd32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEnd16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_EndSnapping" loadOnClick="false">
           <tooltip heading="End Snapping">Endpoint snaps to the nearest start or endpoint of a polyline feature.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_vertexSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.VertexSnappingButton" caption="Vertex Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingVertex32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingVertex16.png"
+        <button id="esri_mapping_vertexSnappingButton" caption="Vertex Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingVertex32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingVertex16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_VertexSnapping" loadOnClick="false">
           <tooltip heading="Vertex Snapping">Vertex snaps to the nearest vertex of a polyline or polygon feature.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_edgeSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.EdgeSnappingButton" caption="Edge Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEdge32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEdge16.png"
+        <button id="esri_mapping_edgeSnappingButton" caption="Edge Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEdge32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingEdge16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_EdgeSnapping" loadOnClick="false">
           <tooltip heading="Edge Snapping">Edge snaps to the nearest edge of a polyline or polygon segment.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_intersectionSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.IntersectionSnappingButton" caption="Intersection Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingIntersection32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingIntersection16.png"
+        <button id="esri_mapping_intersectionSnappingButton" caption="Intersection Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingIntersection32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingIntersection16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_IntersectionSnapping" loadOnClick="false">
           <tooltip heading="Intersection Snapping">Intersection snaps to the nearest intersection of two or more lines or edges.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_midpointSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.MidpointSnappingButton" caption="Midpoint Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingMidpoint32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingMidpoint16.png"
+        <button id="esri_mapping_midpointSnappingButton" caption="Midpoint Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingMidpoint32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingMidpoint16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_MidpointSnapping" loadOnClick="false">
           <tooltip heading="Midpoint Snapping">Midpoint snaps to the nearest midpoint of a polyline or polygon segment.<disabledText></disabledText></tooltip>
         </button>
-        <button id="esri_mapping_tangentSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.TangentSnappingButton" caption="Tangent Snapping" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingTangent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingTangent16.png"
+        <button id="esri_mapping_tangentSnappingButton" caption="Tangent Snapping"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingTangent32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingTangent16.png"
                 condition="esri_mapping_mapPane" checkedCondition="esri_mapping_TangentSnapping" loadOnClick="false">
           <tooltip heading="Tangent Snapping">Tangent snaps to the nearest point of tangency on an arc or curved segment.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_mapping_guideSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.GuideSnappingButton" caption="Guide Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingGuide16.png"
-                condition="esri_mapping_layoutPane" checkedCondition="esri_mapping_GuideSnapping" loadOnClick="false">
-          <tooltip heading="Guide Snapping">Snap to guides when using interactive layout tools.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_mapping_elementSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.ElementSnappingButton" caption="Element Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingElement16.png"
-                condition="esri_mapping_layoutPane" checkedCondition="esri_mapping_ElementSnapping" loadOnClick="false">
-          <tooltip heading="Element Snapping">Snap to other elements when using interactive layout tools.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_mapping_guideSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.GuideSnappingButton" caption="Guide Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SnappingGuide16.png"
-                condition="esri_mapping_layoutPane" checkedCondition="esri_mapping_GuideSnapping" loadOnClick="false">
-          <tooltip heading="Guide Snapping">Snap to guides when using interactive layout tools.<disabledText></disabledText></tooltip>
-        </button>
-        <button id="esri_mapping_marginsSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.MarginsSnappingButton" caption="Printer Margin Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PrintMarginSnapping16.png"
-                condition="esri_mapping_layoutPane" checkedCondition="esri_mapping_MarginSnapping" loadOnClick="false">
-          <tooltip heading="Margin Snapping">Snap to margins when using interactive layout tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_mapping_pageSnappingButton" className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.PageSnappingButton" caption="Page Snapping" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PageSnapping16.png"
-                condition="esri_mapping_layoutPane" checkedCondition="esri_mapping_PageSnapping" loadOnClick="false">
-          <tooltip heading="Page Snapping">
-            Snap to page boundaries when using interactive layout tools.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_mapping_snappingOptionsButton" className="esri_mapping:LaunchSnappingOptions" caption="Snapping Options"  extendedCaption="Open the Snapping Options dialog"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" condition="esri_mapping_mapPane">
-          <tooltip heading="Snapping Options">
-            Set additional snapping options.<disabledText></disabledText>
-          </tooltip>
         </button>
 
         <!--Map Device Location-->
@@ -4268,7 +4345,7 @@ Ctrl+Alt+C = quick enable
         <customControl id="esri_mapping_profileViewControl" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ProfileRibbonViewModel" condition="esri_mapping_ViewingMode3DCondition" disableIfBusy="false" loadOnClick="false" hideTooltip="true" hidden="true">
           <content className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ProfileViewingControlView" />
         </customControl>
-
+  
         <!--Layer-->
         <button id="esri_mapping_removeSelectedLayersButton" className="esri_mapping:RemoveSelectedLayersAsync" caption="Remove" extendedCaption="Selected layers" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerTreeDelete32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerTreeDelete16.png" condition="esri_mapping_canRemoveSelectedLayersCondition">
           <tooltip heading="">
@@ -4326,56 +4403,57 @@ Ctrl+Alt+C = quick enable
             Create a new graphics layer in the map.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_newElevationSurfaceButton" className="esri_mapping:AddCustomElevationSurface" caption="Add Elevation Surface"
-                extendedCaption="Add elevation surface" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png"
-                condition ="esri_mapping_canAddElevationSurfaceCondition">
+
+        <!-- new elevation buttons-->
+        <button id="esri_mapping_createSurfaceLayersFromSourcesButton" className="esri_mapping:CreateElevationSurfaceLayersFromSources" caption="Create Surface Layers From Sources"
+                     extendedCaption="Create Surface Layers From Sources" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
           <tooltip heading="">
-            Create a new custom elevation surface.<disabledText></disabledText>
-          </tooltip>
-        </button>
-       
-        <button id="esri_mapping_createSurfacesFromSourcesButton" className="esri_mapping:CreateElevationSurfacesFromSources" caption="Create Surfaces From Sources"
-                extendedCaption="Create Surfaces From Sources" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png">
-          <tooltip heading="">
-            Create a new surface for each source.<disabledText></disabledText>
+            Create a new surface layer for each source.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_PasteElevationSurfaceButton" className="esri_mapping:PasteClipboardElevationSurfaces"  caption="Paste"
-               extendedCaption="Elevation surfaces into map"  condition="esri_mapping_PasteElevationSurfacesSelectedCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+         <button id="esri_mapping_zoomToSelectedElevationLayersButton" className="esri_mapping:ZoomToSelectedLayers" caption="Zoom To" extendedCaption="Selected layers" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerZoomTo32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerZoomTo16.png">
           <tooltip heading="">
-            Paste the copied elevation surfaces into the map.<disabledText>An elevation surface must be copied.</disabledText>
+            Zoom to the extent of the selected layers.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+          <button id="esri_mapping_ElevationSourceLayerPropertiesButton" className="esri_mapping:ShowSelectedElevationSourceLayerProperties" caption="Properties" extendedCaption="Open elevation source layer properties" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerProperties32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerProperties16.png" condition="esri_mapping_ElevationSourceLayerSelectedCondition">
+          <tooltip heading="">
+            Show the properties for the selected source layers.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_mapping_newElevationSurfaceLayerButton" className="esri_mapping:AddNewElevationSurfaceLayer" caption="Add Elevation Surface Layer"
+                       extendedCaption="Add elevation surface layer" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" >
+
+          <tooltip heading="">
+            Create a new elevation surface layer.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_newElevationSourceButton" className="esri_mapping:AddElevationSource" caption="Add Elevation Source" extendedCaption="Add elevation source"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerElevationAdd16.png" condition="esri_mapping_ElevationSurfaceSelectedCondition"> 
+        <button id="esri_mapping_RemoveElevationSourceLayerButton" className="esri_mapping:RemoveSelectedElevationSourceLayers" caption="Remove" extendedCaption="Remove elevation source layer"
+                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerElevationRemove16.png" condition="esri_mapping_ElevationSourceLayerSelectedCondition">
           <tooltip heading="">
-            Add a new elevation source.<disabledText></disabledText>
+            Remove elevation source layer.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_RemoveElevationSourceButton" className="esri_mapping:RemoveElevationSource" caption="Remove" extendedCaption="Remove elevation source"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerElevationRemove16.png" condition="esri_mapping_ElevationSourceSelectedCondition">
+        <button id="esri_mapping_RemoveElevationSurfaceLayerButton" className="esri_mapping:RemoveSelectedElevationSurfaceLayersAsync" caption="Remove" extendedCaption="Remove elevation surface layer"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerElevationRemove16.png" condition="esri_mapping_CanRemoveSurfaceLayerCondition">
           <tooltip heading="">
-            Remove elevation source.<disabledText></disabledText>
+            Remove elevation surface layer.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_RemoveElevationSurfaceButton" className="esri_mapping:RemoveElevationSurface"  condition="esri_mapping_IsGroundSurfaceSelectedCondition"
-                caption="Remove" extendedCaption="Remove elevation surface" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_mapping_newElevationSourceLayerButton" className="esri_mapping:AddElevationSourceLayerAsync" caption="Add Elevation Source Layer" extendedCaption="Add elevation source layer"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerElevationAdd16.png"  condition="esri_mapping_ElevationSurfaceLayerSelectedCondition">
           <tooltip heading="">
-            Remove elevation surface.<disabledText></disabledText>
+            Add a new elevation source layer.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_mapping_selectedElevationSourcePropertiesButton" className="esri_mapping:ShowSelectedElevationSourceProperties" caption="Properties" extendedCaption="Open elevation source properties" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerProperties32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerProperties16.png" condition="esri_mapping_ElevationSourceSelectedCondition">
-          <tooltip heading="">
-            Show the properties for the selected sources.<disabledText></disabledText>
-          </tooltip>
-        </button>
 
         <button id="esri_mapping_groupSelectedLayersButton" className="esri_mapping:GroupSelectedItemsAsync" caption="Group" extendedCaption="Selected Layers" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerGroup16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerGroup32.png" condition="esri_mapping_CanGroupSelectedMapMembersCondition">
           <tooltip heading="">
@@ -4565,7 +4643,7 @@ Ctrl+Alt+C = quick enable
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/RouteEventMakeRoute16.png"
                 condition="esri_mapping_standaloneTableSelectedCondition">
           <tooltip heading="">
-            Open display route events geoprocessing tool with this table as input.<disabledText></disabledText>
+            Creates a temporary feature layer using routes and route events.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -4729,7 +4807,6 @@ Ctrl+Alt+C = quick enable
           </tooltip>
         </customControl>
 
-        <labelControl id="esri_mapping_flickerNameLabel" caption="Flicker" hasTwoLines="false" />
         <button id="esri_mapping_layerFlickerButton" keytip="CF" caption="Flicker" extendedCaption="Enable Layer Flicker" className="ArcGIS.Desktop.Internal.Mapping.FeatureLayers.Ribbon.FlickerButton" disableIfBusy="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsFlicker16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsFlicker32.png" loadOnClick="false">
           <tooltip heading="Flicker">
             Display the layers underneath a particular layer by quickly turning it on and off. This is useful for temporal change detection (especially of satellite images or aerial photographs taken at different times of the same location), data quality comparison, and other analysis where you want to see the difference between layers.<disabledText>In a 2D map, select one or more visible layers. In a 3D scene, select one or more visible 3D layers, or select a surface, like Ground.</disabledText>
@@ -4845,6 +4922,18 @@ Ctrl+Alt+C = quick enable
         </customControl>
 
         <!-- Layer - DATA -->
+        <customControl id="esri_mapping_catalogThresholdLayerScaleComboBox" keytip="LS" caption="Threshold Scale" extendedCaption="Threshold Scale" className="ArcGIS.Desktop.Internal.Mapping.FeatureLayers.Ribbon.CatalogLayerThresholdScaleComboBox" disableIfBusy="false" showHelp="true" >
+          <content className="ArcGIS.Desktop.Internal.Mapping.CommonControls.ScaleControls.ScaleControl" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" />
+          <tooltip heading="Threshold Scale">
+            Catalog layer threshold scale.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
+        <customControl id="esri_mapping_catalogLayerMaxLayersComboBox" keytip="LL" caption="Layer Limit" extendedCaption="Layer Limit" className="ArcGIS.Desktop.Internal.Mapping.FeatureLayers.Ribbon.CatalogLayerMaxLayersViewModel" disableIfBusy="false" showHelp="true" hidden="true" >
+          <content className="ArcGIS.Desktop.Internal.Mapping.FeatureLayers.Ribbon.CatalogLayerMaxLayersComboBox" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" />
+          <tooltip heading="Layer Limit">
+            Catalog layer limit.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
         <comboBox id="esri_mapping_layerDefQueryComboBox" keytip="DQ" caption="Layer Definition Query" extendedCaption="Set definition query for layer or table" hidden="true" className="ArcGIS.Desktop.Internal.Mapping.FeatureLayers.Ribbon.DefinitionQueryComboBox" isEditable="false" isTextSearchEnabled="false" itemWidth="140" itemHeight="22" resizable="false" condition="esri_mapping_queryDefSupportedLayersSelectedCondition">
           <tooltip heading="Definition Query">
             Define a query expression to display only a subset of features in the layer or table.<disabledText></disabledText>
@@ -5182,7 +5271,12 @@ Ctrl+Alt+C = quick enable
             Change the data source version.<disabledText>The selected data source must be an enterprise geodatabase and all map members must be connected.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_mapping_changeTimeButton" className="esri_mapping:ChangeHistoricalTime" caption="Change Moment" extendedCaption="Change the time moment for the selected datasource." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseConnectionTime32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseConnectionTime32.png" condition="esri_mapping_dataSourceSelectedIsValidForChangeMomentCondition" disableIfBusy="true" keytip="CV">
+        <button id="esri_mapping_changeToDefaultVersionButton" className="esri_mapping:ChangeVersionToDefault" caption="Change To Default" extendedCaption="Change the version to Default for the selected datasource." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ChangeVersion32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ChangeVersion16.png" condition="esri_mapping_dataSourceSelectedIsValidForChangeVersionToDefaultCondition" disableIfBusy="true" keytip="CD">
+          <tooltip heading="Change To Default Version">
+            Change the data source to the default version.<disabledText>The selected data source must be an enterprise geodatabase and all map members must be connected.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_mapping_changeTimeButton" className="esri_mapping:ChangeHistoricalTime" caption="Change Moment" extendedCaption="Change the time moment for the selected datasource." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseConnectionTime32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseConnectionTime32.png" condition="esri_mapping_dataSourceSelectedIsValidForChangeMomentCondition" disableIfBusy="true" keytip="CM">
           <tooltip heading="Change Moment">
             Change the data source time moment.<disabledText>The selected data source must be an enterprise geodatabase and all map members must be connected.</disabledText>
           </tooltip>
@@ -5212,7 +5306,7 @@ Ctrl+Alt+C = quick enable
           <tooltip heading="Fill feature cache for current map">
             Fill the feature cache for all visible layers in the current map based on the current extent.
 
-Fill only applies to web feature layers (feature services).<disabledText></disabledText>
+Fill only applies to web feature layers (feature services).<disabledText>After the Fill button has been pressed it will be disabled while the feature cache is filling.</disabledText>
           </tooltip>
         </button>
         <button id="esri_mapping_manualClearCacheButton" caption="Empty" extendedCaption="clear feature cache" keytip="CE" className="esri_mapping:ClearFeatureCacheManualMode" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClearFeatureCache32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ClearFeatureCache16.png" condition="esri_mapping_featureCachingEnabledWithActiveMapCondition">
@@ -5224,7 +5318,7 @@ Empty only applies to web feature layers (feature services).<disabledText></disa
         </button>
         <button id="esri_mapping_cancelExistingFillCacheRequestsButton" caption="Cancel" extendedCaption="cancel feature cache" keytip="CC" className="esri_mapping:CancelExistingFillCacheRequests" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableFeatureCache32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableFeatureCache16.png" condition="esri_mapping_fillCacheInProgressCondition">
           <tooltip heading="Cancel filling the feature cache">
-            Cancel any in progress fill cache requests.<disabledText>Enabled when a cache fill is in progress.</disabledText>
+            Cancel any in progress fill cache requests.<disabledText>Enabled after the Fill button has been pressed while the feature cache is filling.</disabledText>
           </tooltip>
         </button>
         <checkBox id="esri_mapping_autoFillCacheButton" caption="Auto Cache" extendedCaption="auto fill feature cache" keytip="CA" className="ArcGIS.Desktop.Internal.Mapping.FeatureCache.ToggleAutoFillFeatureCache" loadOnClick="false" condition="esri_mapping_featureCachingEnabledWithActiveMapCondition" >
@@ -5295,22 +5389,22 @@ Auto caching only applies to web feature layers (feature services).<disabledText
         </dynamicMenu>
 
         <!-- Bookmark Buttons - End -->
-
-        <!--Elevation Controls-->
-        <customControl id="esri_mapping_elevationSurfaceDrawing" caption="Drawing" extendedCaption="Elevation surface" keytip="SD" className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceDrawingViewModel"
-                          disableIfBusy="false" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" >
-          <content className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceDrawingView" />
+        
+        <!-- elevation surface layer -->
+        <customControl id="esri_mapping_elevationSurfaceLayerDrawing" caption="Drawing" extendedCaption="Elevation surface layer" keytip="SD" className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceLayerDrawingViewModel"
+                       disableIfBusy="false" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" >
+          <content className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceLayerDrawingView" />
         </customControl>
 
-        <customControl id="esri_mapping_elevationSurfaceRibbon" caption="Surface" keytip="SA" className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceSurfaceViewModel"
-                  disableIfBusy="false" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" >
-          <content className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceRibbonView" />
+        <customControl id="esri_mapping_elevationSurfaceLayerRibbon" caption="Surface Layer" keytip="SA" className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceLayerViewModel"
+                       disableIfBusy="false" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" >
+          <content className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ElevationSurfaceLayerRibbonView" />
         </customControl>
         
         <customControl id="esri_mapping_elevationSurface_ExcludeFromDraping" keytip="ED" caption="Exclude From Integrated Mesh" className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ExcludeFromDrapingLayerSelector"
-                     isDropDown="true" staysOpenOnClick="true" loadOnClick="false" disableIfBusy="true"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerMasking16.png"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerMasking32.png">
+                       isDropDown="true" staysOpenOnClick="true" loadOnClick="false" disableIfBusy="true"
+                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerMasking16.png"
+                       largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayerMasking32.png">
           <content className="ArcGIS.Desktop.Internal.Mapping.ElevationSurfaces.Ribbon.ExcludeFromDrapingLayerSelectorView" assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" />
           <tooltip heading="Exclude From Integrated Mesh">
             Exclude layers from draping on integrated mesh superseding the ground.<disabledText></disabledText>
@@ -5373,11 +5467,8 @@ Auto caching only applies to web feature layers (feature services).<disabledText
         </customControl>
 
         <!-- StretchDRA -->
-        <customControl id="esri_mapping_rasterStretchDRA" keytip="RA" caption="DRA" className="ArcGIS.Desktop.Internal.Mapping.Views.RasterLayer.Ribbon.DRASwitchViewModel">
-          <content className="ArcGIS.Desktop.Internal.Mapping.Views.RasterLayer.Ribbon.DRASwitchView" />
-          <tooltip heading="Dynamic Range Adjustment">
-            Adjust the stretch using only the data contained within the view.<disabledText>Symbology must be RGB or Stretch.</disabledText>
-          </tooltip>
+        <customControl id="esri_mapping_rasterStretchDRA"  className="ArcGIS.Desktop.Internal.Mapping.Views.RasterLayer.Ribbon.DRASwitchViewModel">
+          <content className="ArcGIS.Desktop.Internal.Mapping.Views.RasterLayer.Ribbon.DRASwitchView" />      
         </customControl>
 
         <!-- Background value -->
@@ -5595,7 +5686,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
 
-        <button id="esri_fieldview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current fields view." keytip="DO" className="esri_mapping_fieldsPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_fieldsView_canOpenDomains">
+        <button id="esri_fieldview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current fields view." keytip="AD" className="esri_mapping_fieldsPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_fieldsView_canOpenDomains">
           <tooltip heading="">
             Open a view of the domains in the layer or table.<disabledText></disabledText>
           </tooltip>
@@ -5666,7 +5757,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
         </button>
         <!-- Fields View Sort Buttons End-->
         <!-- Fields View Open Data Engineering-->
-        <button id="esri_fieldsview_openDataEngineering" className="ArcGIS.Desktop.Mapping.DesignView.DataEngineeringUtility" caption="Data Engineering" extendedCaption="Open Data Engineering." keytip="DE" disableIfBusy="true"  loadOnClick="false" hidden ="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataEngineeringGeneral32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataEngineeringGeneral16.png">
+        <button id="esri_fieldsview_openDataEngineering" className="ArcGIS.Desktop.Internal.Mapping.DesignView.DataEngineeringUtility" caption="Data Engineering" extendedCaption="Open Data Engineering." keytip="OO" disableIfBusy="true"  loadOnClick="false" hidden ="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataEngineeringGeneral32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataEngineeringGeneral16.png">
           <tooltip heading="">Open Data Engineering to explore, visualize, and prepare your data.</tooltip>
         </button>   
         <!-- Fields View Open Data Engineering-->
@@ -5696,7 +5787,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
         
-        <button id="esri_subtypeview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current subtypes view." keytip="DO" className="esri_mapping_subtypesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_subtypesPane">
+        <button id="esri_subtypeview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current subtypes view." keytip="AD" className="esri_mapping_subtypesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_subtypesPane">
           <tooltip heading="">
             Open a view of the domains in the layer or table.<disabledText></disabledText>
           </tooltip>
@@ -5871,7 +5962,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
 
-        <button id="esri_attributeRulesView_domainsButton" caption="Domains" extendedCaption="Open domains view from the current attribute rules view." keytip="DO" className="esri_mapping_attributeRulesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_attributeRulesPane">
+        <button id="esri_attributeRulesView_domainsButton" caption="Domains" extendedCaption="Open domains view from the current attribute rules view." keytip="AD" className="esri_mapping_attributeRulesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_attributeRulesPane">
           <tooltip heading="">
             Open a view of the fields in the layer or table.<disabledText></disabledText>
           </tooltip>
@@ -5889,7 +5980,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
 
-        <button id="esri_attributeRulesView_deleteRuleButton" className="esri_mapping_attributeRulesPane:OnDeleteRules" caption="Delete Rule" extendedCaption="Delete the selected rules in the current attribute rules view." keytip="DE" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteRules32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteRules16.png" condition="esri_mapping_attributeRulesView_rulesSelected_notCompositeRule">
+        <button id="esri_attributeRulesView_deleteRuleButton" className="esri_mapping_attributeRulesPane:OnDeleteRules" caption="Delete Rule" extendedCaption="Delete the selected rules in the current attribute rules view." keytip="RD" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteRules32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DeleteRules16.png" condition="esri_mapping_attributeRulesView_rulesSelected_notCompositeRule">
           <tooltip heading="">
             Delete the selected rule.<disabledText></disabledText>
           </tooltip>
@@ -5925,7 +6016,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
 
-        <button id="esri_attributeRulesView_disableRuleButton" className="esri_mapping_attributeRulesPane:DisableRule" caption="Disable Rule" extendedCaption="Save edits in the current versions view." keytip="DI" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableRules32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableRules16.png" condition="esri_mapping_attributeRulesView_enabled">
+        <button id="esri_attributeRulesView_disableRuleButton" className="esri_mapping_attributeRulesPane:DisableRule" caption="Disable Rule" extendedCaption="Save edits in the current versions view." keytip="RS" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableRules32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisableRules16.png" condition="esri_mapping_attributeRulesView_enabled">
           <tooltip heading="">
             Disable the selected rule.<disabledText>The selected rule must be enabled to disable it.</disabledText>
           </tooltip>
@@ -6020,7 +6111,7 @@ Click on the button to directly open the Histogram page.<disabledText></disabled
           </tooltip>
         </button>
 
-        <button id="esri_contingentvaluesview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current contingent values view." keytip="DO" className="esri_mapping_contingentValuesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_contingentValuesPane">
+        <button id="esri_contingentvaluesview_domainsButton" caption="Domains" extendedCaption="Open domains view from the current contingent values view." keytip="AD" className="esri_mapping_contingentValuesPane:OpenDomains" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableDomainsView16.png" condition="esri_mapping_contingentValuesPane">
           <tooltip heading="">
             Open a view of the domains in the layer or table.<disabledText></disabledText>
           </tooltip>
@@ -6289,18 +6380,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </button>
 
         <!-- Cad 3d Georeference Prep Controls -->
-        <button id="esri_mapping_georeference_LoadControlPointsButton"
-                keytip="I" caption="Import"
-                className="esri_mapping:Commands.ImportControlPoints"
-                loadOnClick="false"
-                condition="esri_mapping_GeoreferenceCondition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png"
-                hidden="true">
-          <tooltip heading="Import world file">
-            Import world file.
-          </tooltip>
-        </button>
         <button id="esri_mapping_georeference_MoveToDisplayButton"
                 keytip="MD" caption="Move To Display"
                 className="esri_mapping:Commands.MoveToDisplay"
@@ -6326,7 +6405,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </button>
         <tool id="esri_mapping_georeference_MoveButton"
               keytip="MO" caption="Move"
-              className="Georeference.Tools.MoveTool" loadOnClick="false"
+              className="ArcGIS.Desktop.Internal.Mapping.Georeference.Tools.MoveTool" loadOnClick="false"
               condition="esri_mapping_GeoreferenceCondition"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingMoveTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingMoveTool16.png"
@@ -6337,7 +6416,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </tool>
         <tool id="esri_mapping_georeference_ScaleButton"
               keytip="SC" caption="Scale"
-              className="Georeference.Tools.ScaleTool" loadOnClick="false"
+              className="ArcGIS.Desktop.Internal.Mapping.Georeference.Tools.ScaleTool" loadOnClick="false"
               condition="esri_mapping_GeoreferenceCondition"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingScaleTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingScaleTool16.png"
@@ -6348,7 +6427,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </tool>
         <tool id="esri_mapping_georeference_RotateButton"
               keytip="RO" caption="Rotate"
-              className="Georeference.Tools.RotateTool" loadOnClick="false"
+              className="ArcGIS.Desktop.Internal.Mapping.Georeference.Tools.RotateTool" loadOnClick="false"
               condition="esri_mapping_GeoreferenceCondition"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRotateTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingRotateTool16.png"
@@ -6542,7 +6621,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseBeingEdited16.png"
                 helpContextID="" keytip="DS">
           <tooltip heading="">
-           Open the Data Sources panel to review and update the data sources of all layers and stand-alone tables in the project simultaneously.<disabledText>This button appears dimmed when the Data Sources panel is already open. Find tools to work with the projects data sources under Manage on the Data Sources tab.</disabledText>
+           Open the Data Sources panel to review and update the data sources of all layers and stand-alone tables in the project simultaneously.<disabledText>This button appears dimmed when the Data Sources panel is already open. Find tools to work with the projects data sources on the Data Sources tab.</disabledText>
           </tooltip>
         </button>
 
@@ -6555,7 +6634,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseBeingEdited16.png"
                 helpContextID="">
           <tooltip heading="">
-            Open the Data Sources panel in a catalog view to review and update the data sources of all layers and stand-alone tables in the map simultaneously.<disabledText>This button appears dimmed when the Data Sources panel is already open. Find tools to work with the projects data sources under Manage on the Data Sources tab.</disabledText>
+            Open the Data Sources panel in a catalog view to review and update the data sources of all layers and stand-alone tables in the map simultaneously.<disabledText>This button appears dimmed when the Data Sources panel is already open. Find tools to work with the projects data sources on the Data Sources tab.</disabledText>
           </tooltip>
         </button>
 
@@ -6681,6 +6760,16 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           </tooltip>
         </button>
 
+        <button id="esri_bimCloudItemUploadSupportFilesMenuButton" className="ArcGIS.Desktop.Internal.Mapping.BimCloudUploadSupportFilesMenuButton" caption="Upload Support Files"
+                extendedCaption="Upload Support Files to the BIM Cloud"
+                condition="esri_mapping_openProjectState" keytip="G" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueUpArrowLongTail16.png"
+                hidden="true">
+          <tooltip heading="">
+            Upload the local copy of .PRJ, .WLD, and .WLD3 files to the BIM Cloud folder.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_bimCloudItemRefreshFromSourceRibbonButton" className="ArcGIS.Desktop.Internal.Mapping.BimCloudGetLatestRibbonButton" caption="Refresh From Source"
                 extendedCaption="Download and overwrite from the BIM Cloud"
                 condition="esri_mapping_openProjectState" keytip="RS" loadOnClick="false"
@@ -6802,13 +6891,13 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
             Zoom to, create, or manage bookmarks for maps within your project.<disabledText></disabledText>
           </tooltip>
         </gallery>
-        <gallery id="esri_fullmotionvideo_bookmarksNavigateGallery"
+        <gallery id="esri_motionimagery_bookmarksNavigateGallery"
                  className="ArcGIS.Desktop.Internal.Mapping.Ribbon.BookmarksNavigateGalleryViewModel"
                  caption="Bookmarks" keytip="BK" rows="4" itemsInRow="3" itemWidth="120" itemHeight="84"
                  loadOnClick="false" showGroup="true" showItemCaption="true" showItemCaptionBelow="true" resizable="true"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BookmarkCamera32.png"
-                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BookmarkCamera16.png"
-                 condition="esri_mapping_mapPaneOrLayoutPane">
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Bookmark32.png" 
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Bookmark16.png"
+                 condition="esri_motionimagery_videoPaneActive">
           <button refID="esri_mapping_createBookmark" />
           <button refID="esri_mapping_showBookmarksWindow" />
           <button refID="esri_mapping_exportBookmarksToFile" />
@@ -6982,18 +7071,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           </tooltip>
         </gallery>
 
-        <gallery id="esri_mapping_simpleLayerGallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.SimpleLayerGalleryViewModel" caption="Add Preset" extendedCaption="Layer" condition="esri_mapping_mapPane"
-                 keytip="AP" itemsInRow="2" helpContextID="" loadingMessage="Loading..." itemWidth="140" itemHeight="115"
-                 dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/Map/Ribbon/GalleryTemplates.xaml"
-                 templateID="SimpleLayerItemTemplate" showItemCaption="true" showItemCaptionBelow="true" resizable="false"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSimpleLayer32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSimpleLayer16.png">
-          <tooltip heading="">
-            Add a preset layer.<disabledText></disabledText>
-          </tooltip>
-        </gallery>
-
-
-        <gallery id="esri_mapping_addDataGallery" caption="Add Data" extendedCaption="View options" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.AddDataGallery" condition="esri_mapping_mapPane" showHelp="true" resizable="false" itemsInRow="1" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" itemWidth="225"
+        <gallery id="esri_mapping_addDataGallery" caption="Add Data" extendedCaption="View options" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.AddDataGallery" condition="esri_mapping_mapPaneOrLinkChartWithGeographicLayout" showHelp="true" resizable="false" itemsInRow="1" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddContent16.png" itemWidth="225"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component\Map\Ribbon\GalleryTemplates.xaml" templateID="IconHeaderTemplateID">
         </gallery>
 
@@ -7039,7 +7117,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           </tooltip>
         </gallery>
 
-        <gallery id="esri_mapping_visualEffectGallery" keytip="VE" caption="Visual Effect" extendedCaption="Open visual effect gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.VisualEffectGallery" condition="esri_mapping_VisualEffectCondition"
+        <gallery id="esri_mapping_visualEffectGallery" keytip="VE" caption="Visual Effect" extendedCaption="Open visual effect gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.VisualEffectGallery" condition="esri_mapping_EffectCondition"
                  itemWidth="130" itemHeight="130" resizable="true" loadOnClick="false" showGroup="true" showItemCaption="true" showItemCaptionBelow="true" itemsInRow="3" templateID="EffectItemTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/VisualEffects16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/VisualEffects32.png"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/Map/Ribbon/GalleryTemplates.xaml">
@@ -7049,7 +7127,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           </tooltip>
         </gallery>
 
-        <gallery id="esri_mapping_cameraEffectGallery" keytip="CE" caption="Camera Effect" extendedCaption="Open camera effect gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.CameraEffectGallery" condition="esri_mapping_CameraEffectCondition"
+        <gallery id="esri_mapping_cameraEffectGallery" keytip="CE" caption="Camera Effect" extendedCaption="Open camera effect gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.CameraEffectGallery" condition="esri_mapping_EffectCondition"
          itemWidth="120" itemHeight="120" resizable="true" loadOnClick="false" showGroup="true" showItemCaption="true" showItemCaptionBelow="true" itemsInRow="1" templateID="EffectItemTemplate"
          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CameraEffects16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CameraEffects32.png"
          dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/Map/Ribbon/GalleryTemplates.xaml">
@@ -7059,7 +7137,25 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           </tooltip>
         </gallery>
 
-<!--
+        <gallery id="esri_mapping_postprocessingEffectGallery" keytip="PE" caption="Postprocessing Effects" extendedCaption="Open postprocessing effects gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.PostprocessingEffectGallery" condition="esri_mapping_EffectCondition"
+        itemWidth="120" itemHeight="120" resizable="true" loadOnClick="false" showGroup="true" showItemCaption="true" showItemCaptionBelow="true" itemsInRow="2" templateID="EffectItemTemplate"
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PostProcessingEffects16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PostProcessingEffects32.png"
+        dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/Map/Ribbon/GalleryTemplates.xaml">
+          <button refID="esri_mapping_postprocessingEffectSettingsButton"/>
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </gallery>
+
+        <gallery id="esri_mapping_colorVisionDeficiencyGallery" keytip="CS" caption="Color Vision Deficiency Type" extendedCaption="Open color vision deficiency gallery" className="ArcGIS.Desktop.Internal.Mapping.Ribbon.ColorVisionDeficiencyGallery" resizable="true" loadOnClick="false" showGroup="false" showItemCaption="true" showItemCaptionBelow="true" itemsInRow="1" templateID="ColorVisionDeficiencyGalleryItemTemplate"
+ smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator32.png"
+ dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Mapping;component/Map/Ribbon/GalleryTemplates.xaml">
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </gallery>
+        
+        <!--
         <gallery id="esri_mapping_locatorFilterGallery" className="ArcGIS.Desktop.Internal.Mapping.Locate.LocatorFilterGalleryViewModel" caption="Filter" extendedCaption="Filter locator in locate pane" itemsInRow="1" helpContextID="" loadingMessage="Loading..." itemWidth="150" itemHeight="20" itemSizeString="12" showItemCaption="true" showItemCaptionBelow="true" resizable="true">
           <tooltip heading="">
             Filter<disabledText></disabledText>
@@ -7216,10 +7312,11 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </menu>
         <menu id="esri_mapping_StyleContextMenu" caption="View" extendedCaption="Open style context menu in project view">
           <button refID="esri_mapping_ManageStyleButton" />
-          <button refID="esri_mapping_StyleUnreferenceButton" />
-          <button refID="esri_mapping_UpgradeStyleButton" />
+          <button refID="esri_mapping_StyleUnreferenceButton" separator="true"/>
           <button refID="esri_mapping_newStyleItemInCurrentClass" separator="true"/>
-          <button refID="esri_mapping_pasteStyleItemButton"/>
+          <button refID="esri_mapping_UpgradeStyleButton" separator="true"/>
+          <button refID="esri_mapping_pasteStyleItemButton"  separator="true"/>
+          <button refID="esri_core_editCopyPaths"/>
         </menu>
         <menu id="esri_mapping_StyleItemContextMenu" caption="Item" extendedCaption="Open style item context menu" contextMenu="true">
           <button refID="esri_mapping_newStyleItemInCurrentClass"/>
@@ -7241,9 +7338,12 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </menu>
         <menu id="esri_mapping_FileStyleContextMenu" caption="View" extendedCaption="Open file style context menu">
           <button refID="esri_mapping_importFileStyleButton" />
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
         </menu>
         <menu id="esri_mapping_webStylxContextMenu" caption="View" extendedCaption="Open web style context menu in project view">
           <button refID="esri_mapping_importFileStylxButton" />
@@ -7252,13 +7352,15 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </menu>
         <menu id="esri_mapping_FileStylxContextMenu" caption="View" extendedCaption="Open file styleX context menu in project view">
           <button refID="esri_mapping_importFileStylxButton" />
-          <button refID="esri_addFavoriteButton" />
+          <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
         </menu>
         <menu id="esri_mapping_PortalStylxContextMenu" caption="View" extendedCaption="Open file styleX context menu in project pane">
           <button refID="esri_mapping_importPortalStylxButton" />
@@ -7283,8 +7385,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_core_syncPortalItemButton" separator="true"/>
           <button refID="esri_mapping_map3DConvertMenu" separator="true" />
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_mapping_mapContextMenuRemoveButton" />
+          <button refID="esri_mapping_mapContextMenuRemoveButton" separator="true" />
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <dynamicMenu refID="esri_mapping_dataSources_editDataSourcesContextMenu" inline="true"/>
@@ -7294,8 +7396,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_core_syncPortalItemButton" separator="true"/>
           <button refID="esri_mapping_map2DConvertMenu" separator="true" />
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_mapping_mapContextMenuRemoveButton" />
+          <button refID="esri_mapping_mapContextMenuRemoveButton" separator="true" />
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <dynamicMenu refID="esri_mapping_dataSources_editDataSourcesContextMenu" inline="true"/>
@@ -7304,8 +7406,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_mapContextMenuStereoMapViewButton" />
           <button refID="esri_mapping_mapStereoConvertMenu" separator="true" />
           <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_mapping_mapContextMenuRemoveButton" />
+          <button refID="esri_mapping_mapContextMenuRemoveButton" separator="true" />
+          <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -7313,8 +7415,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_mapContextMenuMap2DViewButton" />
           <button refID="esri_mapping_basemapConvertMenu" separator="true" />
           <button refID="esri_core_editCopyButton" separator="true" />
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_mapping_mapContextMenuRemoveButton" />
+          <button refID="esri_mapping_mapContextMenuRemoveButton" separator="true" />
+          <button refID="esri_core_rename" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>
@@ -7399,25 +7501,28 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         <menu id="esri_mapping_3DCategoryContextMenu" contextMenu="true" extendedCaption="Open 3D Layers context menu">
           <button refID="esri_mapping_new3DGroupLayerButton" />
         </menu>
-        <menu id="esri_mapping_ElevationSurfaceCategoryContextMenu" contextMenu="true" extendedCaption="Open elevation surface category context menu">
-          <button refID="esri_mapping_PasteElevationSurfaceButton" separator="true"/>
-          <button refID="esri_mapping_newElevationSurfaceButton" />
-          <button refID="esri_mapping_createSurfacesFromSourcesButton" />
+
+        <menu id="esri_mapping_ElevationSurfaceLayerCategoryContextMenu" contextMenu="true" extendedCaption="Open elevation surface layer category context menu">
+          <button refID="esri_mapping_PasteElevationSurfaceLayerButton" separator="true"/>
+          <button refID="esri_mapping_newElevationSurfaceLayerButton" />
+          <button refID="esri_mapping_createSurfaceLayersFromSourcesButton" />
         </menu>
-        <menu id="esri_mapping_ElevationSurfaceContextMenu" contextMenu="true" extendedCaption="Open elevation surface context menu">
-          <button refID="esri_mapping_copySelectedElevationSurfaceButton" />
-          <button refID="esri_mapping_cutSelectedElevationSurfaceButton" />
-          <button refID="esri_mapping_pasteSourcesIntoSurfaceButton" />
-          <button refID="esri_mapping_newElevationSourceButton" separator="true"/>
-          <button refID="esri_mapping_RemoveElevationSurfaceButton" />
-          <button refID="esri_mapping_ZoomToElevationSurfaceButton"/>
+        
+        <menu id="esri_mapping_ElevationSourceLayerContextMenu" contextMenu="true" extendedCaption="Open elevation source layer context menu">
+          <button refID="esri_mapping_copySelectedElevationSourceLayerButton" />
+          <button refID="esri_mapping_cutSelectedElevationSourceLayerButton" />
+          <button refID="esri_mapping_RemoveElevationSourceLayerButton" separator="true" />
+          <button refID="esri_mapping_zoomToSelectedElevationLayersButton" separator="true" />
+          <button refID="esri_mapping_ElevationSourceLayerPropertiesButton" separator="true" />
         </menu>
-        <menu id="esri_mapping_ElevationSourceContextMenu" contextMenu="true" extendedCaption="Open elevation surface context menu">
-          <button refID="esri_mapping_copySelectedElevationSourcesButton" />
-          <button refID="esri_mapping_cutSelectedElevationSourcesButton" />
-          <button refID="esri_mapping_RemoveElevationSourceButton" separator="true"/>
-          <button refID="esri_mapping_ZoomToElevationSourceButton" />
-          <button refID="esri_mapping_selectedElevationSourcePropertiesButton" separator="true" />
+        
+        <menu id="esri_mapping_ElevationSurfaceLayerContextMenu" contextMenu="true" extendedCaption="Open elevation surface layer context menu">
+          <button refID="esri_mapping_copySelectedElevationSurfaceLayerButton" />
+          <button refID="esri_mapping_cutSelectedElevationSurfaceLayerButton" />
+          <button refID="esri_mapping_pasteElevationSourceLayersButton" />
+          <button refID="esri_mapping_newElevationSourceLayerButton"  separator="true"/>
+          <button refID="esri_mapping_RemoveElevationSurfaceLayerButton" separator="true"/>
+          <button refID="esri_mapping_zoomToSelectedElevationLayersButton" separator="true" />
         </menu>
         
         <menu id ="esri_mapping_binningLayerContextMenu" contextMenu="true" extendedCaption="Open binning layer context menu">
@@ -7575,7 +7680,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_zoomToMakeVisibleButton" />
           <button refID="esri_mapping_selectedLayerSymbologyButton" separator="true"/>
           <dynamicMenu refID="esri_mapping_enablePopupsMenu" inline="true" separator="true"/>
-          <button refID="esri_mapping_designPopupsButton"/>
           <!--<button refID="esri_sharing_SaveAsLayerFileCXMUBtn" separator="true" />
           <button refID="esri_sharing_PackagingLayersCXMUBtn" />-->
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -7769,6 +7873,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_selectedLayerPropertiesButton" separator="true" />
         </menu>
         <menu id="esri_mapping_naLayerContextMenu" contextMenu="true" extendedCaption="Open network analysis layer context menu">
+          <button refID="esri_networkanalysis_transportation_duplicateSelectedLayer_Btn" />
           <button refID="esri_mapping_removeSelectedLayersButton" />
           <button refID="esri_mapping_groupSelectedLayersButton" />
           <dynamicMenu refID="esri_mapping_layerVisibilityDynamicMenu" inline="true" separator="true"/>
@@ -7790,6 +7895,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_sharing_PackagingLayersCXMUBtn" />
           <button refID="esri_projectItemViewMetadata" separator="true" />
           <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_networkanalysis_transportation_BuildSelectedLayer_Btn" separator="true" />
           <button refID="esri_mapping_selectedLayerPropertiesButton" separator="true" />
         </menu>
         <menu id="esri_mapping_utilityNetworkLayerContextMenu" contextMenu="true" extendedCaption="Open utility network layer context menu">
@@ -7963,6 +8069,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
 
         <menu id="esri_mapping_dataSourceContextMenu" contextMenu="true" caption="Data Source" extendedCaption="Open data source context menu">
           <button refID="esri_mapping_changeVersionButton"/>
+          <button refID="esri_mapping_changeToDefaultVersionButton"/>
           <button refID="esri_mapping_changeTimeButton"/>
           <button refID="esri_mapping_versionViewButton"/>
           <button refID="esri_mapping_removeSelectedDataSourceButton" separator="true"/>
@@ -8152,7 +8259,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_zoomToSelectionButton" />
           <button refID="esri_mapping_panToSelectionButton" />
           <button refID="esri_mapping_clearSelectionButton" />
-          <button refID="esri_sharing_CaptureMapToClipboard" separator="true"/>
+          <dynamicMenu refID="esri_mapping_colorVisionDynamicMenu" inline="true"/>   
+          <button refID="esri_sharing_CaptureMapToClipboard" separator="true"/>     
           <button refID="esri_mapping_navigationControl" separator="true"/>
           <button refID="esri_mapping_gotoXYControl"/>
           <button refID="esri_mapping_cameraPropertiesControl"/>   
@@ -8165,6 +8273,19 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_copyMGRSButton" />
           <button refID="esri_mapping_copyUSNGButton" />
           <button refID="esri_mapping_copyUTMButton" />
+        </menu>
+
+        <menu id="esri_mapping_ColorVisionDeficiencyMenu" caption="Color Vision Simulator" helpContextID="120003689"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ColorVisionSimulator32.png">
+          <tooltip heading="Color Vision Simulator">
+Simulate color vision deficiency in the view.
+
+The active mode simulates the view as if color blind in one of three primary conditions; green-blind, red-blind, or blue-blind.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_mapping_deuteranopiaContextButton"/>
+          <button refID="esri_mapping_protanopiaContextButton"/>      
+          <button refID="esri_mapping_tritanopiaContextButton"/>
         </menu>
 
         <menu id="esri_mapping_bandCombinationMenu" caption="Band Combinations" contextMenu="true">
@@ -8222,12 +8343,12 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
 
         <!-- CandidateLocate pane -->
         <menu id="esri_mapping_locatecandidate_menu" hidden="true" caption="Locate Candidate" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolder32.png">
-          <button refID="esri_mapping_zoomToCandidateLocation" />
+          <!--<button refID="esri_mapping_zoomToCandidateLocation" />
           <button refID="esri_mapping_panToCandidateLocation" />
           <button refID="esri_mapping_flashCandidateGraphic"/>
           <button refID="esri_mapping_showCandidateDetails" />
           <button refID="esri_mapping_addGraphicToMap"/>
-          <button refID="esri_mapping_addToFeatureClassButton"/>
+          <button refID="esri_mapping_addToFeatureClassButton"/>-->
           <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
         </menu>
 
@@ -8237,21 +8358,21 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_flashCandidateGraphic"/>
           <button refID="esri_mapping_showCandidateDetails" />
           <button refID="esri_mapping_addCandidateToSelection" />
-          <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
+          <!--<dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>-->
         </menu>
 
         <menu id="esri_mapping_tablecandidate_menu" caption="Locate Candidate" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolder32.png">
           <!--<button refID="esri_mapping_showCandidateDetails" />-->
           <button refID="esri_mapping_addCandidateToSelection" />
-          <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
+          <!--<dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>-->
         </menu>
         
         <menu id="esri_mapping_locatecandidate_multiselection_menu" hidden="true" caption="Locate Multiselect Candidate" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolder32.png">
-          <button refID="esri_mapping_zoomToCandidateLocation" />
+          <!--<button refID="esri_mapping_zoomToCandidateLocation" />
           <button refID="esri_mapping_panToCandidateLocation" />
           <button refID="esri_mapping_showCandidateDetails" />
           <button refID="esri_mapping_addGraphicToMap"/>
-          <button refID="esri_mapping_addToFeatureClassButton"/>
+          <button refID="esri_mapping_addToFeatureClassButton"/>-->
           <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
         </menu>
 
@@ -8260,13 +8381,13 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_panToCandidateLocation" />
           <button refID="esri_mapping_showCandidateDetails" />
           <button refID="esri_mapping_addCandidateToSelection" />
-          <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
+          <!--<dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>-->
         </menu>
 
         <menu id="esri_mapping_tablecandidate_multiselection_menu" caption="Layer Multiselect Candidate" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StylesFolder32.png">
           <!--<button refID="esri_mapping_showCandidateDetails" />-->
           <button refID="esri_mapping_addCandidateToSelection" />
-          <dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>
+          <!--<dynamicMenu refID="esri_mapping_locate_dynamic" inline="true"/>-->
         </menu>
         <!-- Exploratory Analysis -->
         <menu id="esri_mapping_exploratoryLOSMenu" caption="Line of Sight" contextMenu="true">
@@ -8539,6 +8660,16 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <button refID="esri_mapping_cameraEffectToggleButton" />
           <gallery refID="esri_mapping_cameraEffectGallery"/>
         </splitButton>
+
+        <splitButton id="esri_mapping_postprocessingEffectSplitButton" caption="Postprocessing Effects" keytip="PE" hidden="true" hideTooltip="true">
+          <button refID="esri_mapping_postprocessingEffectToggleButton" />
+          <gallery refID="esri_mapping_postprocessingEffectGallery"/>
+        </splitButton>
+
+        <splitButton id="esri_mapping_colorVisionSplitButton" caption="Color Vision Simulator" keytip="CS" hidden="true" hideTooltip="false">
+          <button refID="esri_mapping_colorVisionSimulatorButton"/>
+          <gallery refID="esri_mapping_colorVisionDeficiencyGallery"/>
+        </splitButton>
       </splitButtons>
         
       <palettes>
@@ -8727,9 +8858,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </updateTab>
       </tabs>
       <groups>
-        <updateGroup refID="esri_core_dockWindows">
-          <insertButton refID="esri_core_showContentsDockPane" size="large" />
-        </updateGroup>
         <updateGroup refID="esri_core_previewPreviewGroup">
           <insertGallery refID="esri_mapping_previewBasemapGallery" inline="false" size="large" insert="before"/>
         </updateGroup>
@@ -8858,6 +8986,18 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </page>
     </insertSheet>
 
+    <insertSheet id="esri_mapping_catalogLayerPropertySheet" caption="Catalog Layer Properties" pageHeight="415" pageWidth="640" resizable="true">
+      <page id="esri_mapping_layerDefintionQueryPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.DefinitionQueryViewModel" caption="Definition Query" condition="esri_mapping_SubtypeValueLayerNotSelectedCondition">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.DefinitionQueryView" />
+      </page>
+      <page id="esri_mapping_layerTimePage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.TimeViewModel" caption="Time" condition="esri_mapping_subtypeValueLayerAndStreamServiceNotSelectedCondition">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.TimeView" />
+      </page>
+      <page id="esri_mapping_layerRangePage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.RangeViewModel" caption="Range" condition="esri_mapping_SubtypeValueLayerNotSelectedCondition">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.RangeView" />
+      </page>
+    </insertSheet>
+
     <insertSheet id="esri_mapping_multiFeatureLayerPropertySheet" caption="Feature Layer Properties" pageHeight="410" pageWidth="640" resizable="true">
       <page id="esri_mapping_generalLayerPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralViewModel" caption="General">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralView" />
@@ -8867,30 +9007,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </page>
       <page id="esri_mapping_layerCachePropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.CacheViewModel" caption="Cache" condition="esri_mapping_compositeSublayerAndStreamServiceNotSelectedCondition">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.CacheView" />
-      </page>
-    </insertSheet>
-
-    <insertSheet id="esri_mapping_locatorPropertySheet" caption="Locator Properties" pageHeight="400" pageWidth="640" resizable="true">
-      <page id="esri_mapping_LocatorGeneralPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorGeneralViewModel" caption="About the locator">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorGeneralView" />
-      </page>
-      <page id="esri_mapping_locatorReferenceDataTablesPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorReferenceDataTablesViewModel" caption="Reference data tables">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorReferenceDataTablesView" />
-      </page>
-      <page id="esri_mapping_locatorPlaceNameAliasTablePropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorPlaceNameAliasTableViewModel" caption="Place name alias table">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorPlaceNameAliasTableView" />
-      </page>
-      <page id="esri_mapping_locatorInputAddressFieldsPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorInputAddressFieldsViewModel" caption="Input fields">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorInputAddressFieldsView" />
-      </page>
-      <page id="esri_mapping_locatorOutputsPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorOutputsViewModel" caption="Outputs">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorOutputsView" />
-      </page>
-      <page id="esri_mapping_locatorGeocodingOptionsPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorGeocodingOptionsViewModel" caption="Geocoding options">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorGeocodingOptionsView" />
-      </page>
-      <page id="esri_mapping_locatorPerformancePropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorPerformanceViewModel" caption="Performance">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.LocatorPerformanceView" />
       </page>
     </insertSheet>
 
@@ -8906,9 +9022,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </page>
       <page id="esri_mapping_CompositeLocatorResultOrder" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorResultOrderViewModel" caption="Result order">
         <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorResultOrderView"/>
-      </page>
-      <page id="esri_mapping_CompositeLocatorOutputsPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorOutputsViewModel" caption="Outputs">
-        <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorOutputsView" />
       </page>
       <page id="esri_mapping_CompositeLocatorPerformancePropertyPage" className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorPerformanceViewModel" caption="Performance">
         <content className="ArcGIS.Desktop.Internal.Mapping.PropertyPages.CompositeLocatorPerformanceView" />
@@ -9135,6 +9248,12 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       <page id="esri_mapping_standaloneTableDefinitionQueryPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.DefinitionQueryViewModel" caption="Definition Query">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.DefinitionQueryView" />
       </page>
+      <page id="esri_mapping_standaloneTableTimePage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.TimeViewModel" caption="Time">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.TimeView" />
+      </page>
+      <page id="esri_mapping_standaloneTableRangePage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.RangeViewModel" caption="Range">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.RangeView" />
+      </page>
       <page id="esri_mapping_StandaloneTableIndexesPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.IndexPropertyPageViewModel" caption="Indexes" condition="esri_mapping_isSelectedTableValidForIndexesCondition">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.StandaloneTable.IndexPropertyPageView" />
       </page>
@@ -9284,12 +9403,8 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
             insert="after" placeWith="esri_mapping_applicationDisplayPropertyPage">
         <content className="ColorManagementOptionsView" />
       </insertPage>
-      <insertPage id="esri_mapping_CadOptionsPropertyPage" caption="CAD" className="ArcGIS.Desktop.Internal.Mapping.Cad.CadOptionsViewModel" group="Application"
-                  insert="before" placeWith="esri_metadata_MetadataOptionsPropertyPage">
-        <content className="ArcGIS.Desktop.Internal.Mapping.Cad.CadOptionsView" />
-      </insertPage>
       <insertPage id="esri_mapping_BimOptionsPropertyPage" caption="BIM" className="ArcGIS.Desktop.Internal.Mapping.Bim.BimOptionsViewModel" group="Application"
-            insert="before" placeWith="esri_mapping_CadOptionsPropertyPage">
+            insert="before" placeWith="esri_metadata_MetadataOptionsPropertyPage">
         <content className="ArcGIS.Desktop.Internal.Mapping.Bim.BimOptionsView" />
       </insertPage>
       <insertPage id="esri_mapping_unitsPropertyPage" caption="Units" className="UnitSettingsViewModel" group="Project">
@@ -9865,6 +9980,23 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </page>
     </insertSheet>
 
+ 
+    <insertSheet id="esri_mapping_elevationSourceLayerPropertySheet" caption="Elevation Source Layer Properties" pageHeight="415" pageWidth="640" resizable="true">
+      <page id="esri_mapping_generalLayerPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralView" />
+      </page>
+      <page id="esri_mapping_layerSourcePropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.SourceViewModel" caption="Source">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.SourceView" />
+      </page>  
+    </insertSheet>
+    
+    <insertSheet id="esri_mapping_multiElevationSourceLayerPropertySheet" caption="Elevation Source Layer Properties" pageHeight="415" pageWidth="640" resizable="true">
+      <page id="esri_mapping_generalLayerPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.GeneralView" />
+      </page>
+    </insertSheet>
+
+
     <insertSheet id="esri_mapping_annotationSubLayerPropertySheet" caption="Annotation SubLayer Properties" pageHeight="415" pageWidth="640" resizable="true">
       <page id="esri_mapping_annotationSubLayerGeneralPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.AnnotationSubLayerGeneralViewModel" caption="General">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.AnnotationSubLayerGeneralView"/>
@@ -9898,9 +10030,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </page>
       <page id="esri_catalog_parcelFeatureLayersPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.ParcelFeatureLayersViewModel" caption="Feature Layers">
         <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.ParcelFeatureLayersView" />
-      </page>
-      <page id="esri_catalog_parcelRulesPropertyPage" className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.ParcelRulesViewModel" caption="Parcel Rules" condition="esri_mapping_SupportParcelTopologyRulesCondition">
-        <content className="ArcGIS.Desktop.Internal.Mapping.Views.PropertyPages.Layer.ParcelRulesView" />
       </page>
     </insertSheet>
 
@@ -10106,34 +10235,44 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       <state id="MapContainer" />
     </insertCondition>
 
-    <insertCondition id="esri_mapping_ElevationSourceSelectedCondition" caption="An elevation source is selected">
-      <state id="esri_mapping_ElevationSourceSelectedState" />
+    <insertCondition id="esri_mapping_ElevationSourceLayerSelectedCondition" caption="An elevation source layer is selected">
+      <state id="esri_mapping_ElevationSourceLayerSelectedState" />
     </insertCondition>
 
-    <insertCondition id="esri_mapping_ElevationSurfaceSelectedCondition" caption="An elevation surface is selected">
-      <state id="esri_mapping_ElevationSurfaceSelectedState" />
+    <insertCondition id="esri_mapping_ElevationSurfaceLayerSelectedCondition" caption="An elevation surface layer is selected">
+      <state id="esri_mapping_ElevationSurfaceLayerSelectedState" />
     </insertCondition>
 
     <insertCondition  id="esri_mapping_canAddElevationSurfaceCondition" caption="" >
         <state id="esri_mapping_mapPane"/>
     </insertCondition>
 
-    <insertCondition id="esri_mapping_IsGroundSurfaceSelectedCondition" caption="The ground surface is selected">
+    <insertCondition id="esri_mapping_CanRemoveSurfaceLayerCondition" caption="The ground surface layer can be removed">
       <and>
-      <state id="esri_mapping_ElevationSurfaceSelectedState" />
-      <not>
-        <state id="esri_mapping_IsGroundSurfaceSelectedState"/>
-      </not>
+        <state id="esri_mapping_ElevationSurfaceLayerSelectedState" />
+        <not>
+          <state id="esri_mapping_IsGroundSurfaceLayerSelectedState"/>
+        </not>
       </and>
     </insertCondition>
 
-    <insertCondition id="esri_mapping_PasteElevationSourceSelectedCondition" caption="An elevation source has been copied to the clipboard">
-      <state id="esri_mapping_PasteElevationSourceSelectedState"/>
+    <insertCondition id="esri_mapping_IsGroundSurfaceLayerSelectedCondition" caption="The ground surface layer is selected">
+      <and>
+        <state id="esri_mapping_ElevationSurfaceLayerSelectedState" />
+        <not>
+          <state id="esri_mapping_IsGroundSurfaceLayerSelectedState"/>
+        </not>
+      </and>
     </insertCondition>
 
-    <insertCondition id="esri_mapping_PasteElevationSurfacesSelectedCondition" caption="An elevation surfaces has been copied to the clipboard">
-      <state id="esri_mapping_PasteElevationSurfacesSelectedState"/>
+    <insertCondition id="esri_mapping_PasteElevationSourceLayerSelectedCondition" caption="An elevation source layer has been copied to the clipboard">
+      <state id="esri_mapping_PasteElevationSourceLayerSelectedState"/>
     </insertCondition>
+
+    <insertCondition id="esri_mapping_PasteElevationSurfaceLayerSelectedCondition" caption="An elevation surface layer has been copied to the clipboard">
+      <state id="esri_mapping_PasteElevationSurfaceLayerSelectedState"/>
+    </insertCondition>
+    
     <insertCondition id="esri_mapping_SubtypeValueLayerNotSelectedCondition" caption="No subtype value layer is selected">
       <not>
         <state id="esri_mapping_subtypeValueLayerSelectedState"/>
@@ -10210,6 +10349,37 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       <or>
         <state id="esri_layouts_layoutPane"/>
         <state id ="esri_mapping_mapPane"/>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_mapping_mapPaneOrLayoutPaneOrLinkChartWithGeographicLayout">
+      <or>
+        <and>
+          <or>
+            <state id="esri_layouts_layoutPane"/>
+            <state id ="esri_mapping_mapPane"/>
+          </or>
+          <not>
+            <state id="esri_mapping_mapTypeLinkChartState" />
+          </not>
+        </and>
+        <and>
+          <state id="esri_mapping_mapTypeLinkChartState" />
+          <state id="esri_mapping_kgLinkChartIsInGeographicLayoutState" />
+        </and>
+      </or>
+    </insertCondition>
+    <insertCondition id="esri_mapping_mapPaneOrLinkChartWithGeographicLayout">
+      <or>
+        <and>
+          <state id="esri_mapping_mapTypeLinkChartState" />
+          <state id="esri_mapping_kgLinkChartIsInGeographicLayoutState" />
+        </and>
+        <and>
+          <state id ="esri_mapping_mapPane"/>
+          <not>
+            <state id="esri_mapping_mapTypeLinkChartState" />
+          </not>
+        </and>
       </or>
     </insertCondition>
     <insertCondition id="esri_mapping_mapPaneOrLayoutPaneNotLinkChart">
@@ -10321,6 +10491,18 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         </not>
       </and>
     </insertCondition>
+   <insertCondition id="esri_mapping_dataSourceSelectedIsValidForChangeVersionToDefaultCondition" caption="A data source is versionable and selected and not already on default">
+      <and>
+        <state id="esri_mapping_dataSourceSelectedIsVersionableState" />
+        <not>
+          <or>
+            <state id="esri_mapping_dataSourceSelectedIsConnectedAsBranchClientServerState"/>
+            <state id="esri_mapping_mapTypeNetworkDiagramState" />
+            <state id="esri_mapping_dataSourceSelectedIsDefaultVersionState"/>
+          </or>
+        </not>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_mapping_dataSourceSelectedIsVersionableAndNotFeatureServiceCondition" caption="A data source is versionable and selected">
       <and>
         <state id="esri_mapping_dataSourceSelectedIsVersionableState" />
@@ -10427,6 +10609,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
     <insertCondition id="esri_mapping_LinearReferencingCondition" caption="The map contains an m-aware layer">
       <and>
         <state id="esri_map_linearReferencing" />
+        <state id="esri_mapping_mapPane"/>
       </and>
     </insertCondition>
     <insertCondition id="esri_mapping_MapContainsRouteFeatureClass" caption="The map contains a Route Line Feature Class">
@@ -10497,6 +10680,24 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_mapping_MapImageLayerSelectedCondition" caption="Map image layer is selected">
+      <and>
+        <not>
+          <state id="esri_mapping_compositeSublayerSelectedState" />
+        </not>
+        <state id="esri_mapping_MapImageLayerSelectedState"/>
+      </and>
+    </insertCondition>
+    
+    <insertCondition id="esri_mapping_TiledServiceLayerSelectedCondition" caption="Tile layer is selected">
+      <and>
+        <not>
+          <state id="esri_mapping_compositeSublayerSelectedState" />
+        </not>
+        <state id="esri_mapping_TiledServiceLayerSelectedState"/>
+      </and>
+    </insertCondition>
+    
     <insertCondition id="esri_mapping_WMSSubLayerSelectedCondition" caption="WMS sub layer is selected">
       <and>
         <not>
@@ -10818,17 +11019,28 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       <state id="esri_mapping_labelingPaneVisibility" />
     </insertCondition>
 
-    <insertCondition id="esri_mapping_VisualEffectCondition" caption="3D Scene or Globe">
-      <or>
-        <state id="esri_mapping_mapViewingMode3DPerspectiveState"/>
-        <state id="esri_mapping_mapViewingMode3DGlobeState"/>
-      </or>
+    <insertCondition id="esri_mapping_EffectCondition" caption="3D Scene or Globe">
+      <and>
+        <or>
+          <state id="esri_mapping_mapViewingMode3DPerspectiveState"/>
+          <state id="esri_mapping_mapViewingMode3DGlobeState"/>
+        </or>
+        <state id="esri_mapping_mapPane"/>
+      </and>
     </insertCondition>
-    <insertCondition id="esri_mapping_CameraEffectCondition" caption="3D Scene or Globe">
-      <or>
-        <state id="esri_mapping_mapViewingMode3DPerspectiveState"/>
-        <state id="esri_mapping_mapViewingMode3DGlobeState"/>
-      </or>
+
+    <insertCondition id="esri_mapping_ColorVisionCondition" caption="Color Vision Condition">
+      <and>
+        <or>
+          <state id="esri_mapping_mapPane"/>
+          <state id="esri_layouts_layoutPane"/>
+          <state id="esri_reports_reportPane"/>
+        </or>
+        <not>
+          <state id="esri_layouts_mapFrameActivated"/>
+          <state id="esri_report_mapFrameActivated"/>
+        </not>
+      </and>
     </insertCondition>
 
     <insertCondition id="esri_mapping_SupportParcelTopologyRulesCondition" caption="Parcel Fabric version supports parcel topology rules.">
@@ -11453,6 +11665,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <state id="esri_mapping_scenePointLayerSelectedState"/>
           <state id="esri_mapping_scene3DObjectLayerSelectedState"/>
           <state id="esri_mapping_sceneSmartIntegratedMeshLayerSelectedState" />
+          <state id="esri_mapping_catalogLayerSelectedState" />
          </or>
         <not>
           <or>
@@ -11477,6 +11690,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <state id="esri_mapping_scenePointLayerSelectedState"/>
           <state id="esri_mapping_scene3DObjectLayerSelectedState"/>
           <state id="esri_mapping_sceneSmartIntegratedMeshLayerSelectedState" />
+          <state id="esri_mapping_catalogLayerSelectedState" />
         </or>
         <not>
           <or>
@@ -11503,8 +11717,10 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
       <not>
         <or>
           <state id="esri_mapping_mapTypeContainmentMapState" />
+          
           <state id="esri_mapping_PasteElevationSurfacesSelectedState" />
           <state id="esri_mapping_PasteElevationSourceSelectedState" />
+          
           <state id="esri_mapping_PasteStandaloneVideosSelectedState" />
         </or>
       </not>
@@ -11560,7 +11776,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
     <insertCondition id="esri_mapping_EnableSwipeCondition">
       <or>
         <and>
-          <state id="esri_mapping_ElevationSurfaceSelectedState" />
+          <state id="esri_mapping_ElevationSurfaceLayerSelectedState" />
           <state id="esri_mapping_singleTOCItemSelectedState" />
         </and>
         <and>
@@ -11630,10 +11846,10 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
         <state id="esri_mapping_mapTypeLinkChartState"/>
         <state id="esri_mapping_CopyLayerSelectedState"/>
         <state id="esri_mapping_layerSelectedState"/>
-        <not>
-          <state id="esri_mapping_compositeSublayerSelectedState"/>
-          <state id="esri_mapping_knowledgeGraphLayerSelectedState"/>
-        </not>
+        <or>
+          <state id="esri_mapping_kgLinkChartAggregationLayer"/>
+          <state id="esri_mapping_kgLinkChartFeatureLayer"/>
+        </or>
       </and>
     </insertCondition>
 
@@ -11646,20 +11862,30 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
           <or>
             <state id="esri_mapping_streamLayerSelectedState"/>
             <state id="esri_mapping_knowledgeGraphSubLayerSelectedState"/>
-            <state id="esri_mapping_mapTypeLinkChartState"/>
           </or>
         </not>
       </and>
     </insertCondition>
 
-    <insertCondition id="esri_mapping_onlyKnowledgeGraphFeatureLayersSelectedCondition">
+    <insertCondition id="esri_mapping_onlyCatalogLayersSelectedCondition">
       <and>
-        <state id="esri_mapping_knowledgeGraphSubLayerSelectedState"/>
-        <state id="esri_mapping_onlyKnowledgeLayerSelectedState"/>
+        <state id="esri_mapping_catalogLayerSelectedState"/>
+        <state id="esri_mapping_sameLayersSelectedState"/>
+        <state id="esri_catalog_catalogLayersEnabled"/>
         <not>
-          <state id="esri_mapping_streamLayerSelectedState"/>
-          <state id="esri_mapping_mapTypeLinkChartState"/>
+          <or>
+            <state id="esri_mapping_multipleLayersSelectedState" />
+            <state id="esri_mapping_streamLayerSelectedState"/>
+            <state id="esri_mapping_knowledgeGraphSubLayerSelectedState"/>
+          </or>
         </not>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_mapping_onlyMapKnowledgeGraphFeatureLayersSelectedCondition">
+      <and>
+        <state id="esri_mapping_onlyMapKnowledgeLayerSublayersSelectedState"/>
+        <state id="esri_mapping_featureLayerSelectedState"/>
       </and>
     </insertCondition>
     
@@ -12110,11 +12336,7 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
     <!--Mixed Layers-->
     <insertCondition id="esri_mapping_mixedLayersSelectedCondition">
       <or>
-        <state id="esri_mapping_groupLayerSelectedState" />
         <state id="esri_mapping_ParcelFabricLayerSelectedState" />
-        <state id="esri_mapping_TiledServiceLayerSelectedState" />
-        <state id="esri_mapping_DynamicServiceLayerSelectedState" />
-        <state id="esri_mapping_WMSServiceLayerSelectedCondition"/>
         <and>
           <state id="esri_mapping_multipleLayersSelectedState" />
           <not>
@@ -12526,18 +12748,6 @@ This tool consumes credits.<disabledText>You need to sign-in through ArcGIS.com 
     </insertCondition>
     <insertCondition id="esri_mapping_TangentSnapping" caption="Tangent Snapping">
       <state id="esri_mapping_state_TangentSnapping"/>
-    </insertCondition>
-    <insertCondition id="esri_mapping_GuideSnapping" caption="Guide Snapping">
-      <state id="esri_mapping_state_GuideSnapping"/>
-    </insertCondition>
-    <insertCondition id="esri_mapping_MarginSnapping" caption="Margin Snapping">
-      <state id="esri_mapping_state_MarginSnapping"/>
-    </insertCondition>
-    <insertCondition id="esri_mapping_PageSnapping" caption="Page Snapping">
-      <state id="esri_mapping_state_PageSnapping"/>
-    </insertCondition>
-    <insertCondition id="esri_mapping_ElementSnapping" caption="Element Snapping">
-      <state id="esri_mapping_state_ElementSnapping"/>
     </insertCondition>
 
   <insertCondition id="esri_mapping_indoorLicenseCondition" caption ="Indoor Map">

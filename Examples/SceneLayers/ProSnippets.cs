@@ -35,11 +35,15 @@ using ArcGIS.Core.Data;
 
 namespace ProSnippetsTasks
 {
-  class Snippets
+  class SnippetsSceneLayer
   {
     public async void Examples()
     {
-
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(LayerCreationParams,ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(Uri)
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.IsVisible
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create a Scene Layer
 
       var sceneLayerUrl = @"https://myportal.com/server/rest/services/Hosted/SceneLayerServiceName/SceneServer";
@@ -55,9 +59,11 @@ namespace ProSnippetsTasks
         };
 
         //cast to specific type of scene layer being created - in this case FeatureSceneLayer
-        var sceneLayer = LayerFactory.Instance.CreateLayer<Layer>(createparams, MapView.Active.Map) as FeatureSceneLayer;
+        var sceneLayer = LayerFactory.Instance.CreateLayer<Layer>(
+                 createparams, MapView.Active.Map) as FeatureSceneLayer;
         //or...specify the cast directly
-        var sceneLayer2 = LayerFactory.Instance.CreateLayer<FeatureSceneLayer>(createparams, MapView.Active.Map);
+        var sceneLayer2 = LayerFactory.Instance.CreateLayer<FeatureSceneLayer>(
+                 createparams, MapView.Active.Map);
         //ditto for BuildingSceneLayer, PointCloudSceneLayer, IntegratedMeshSceneLayer
         //...
       });

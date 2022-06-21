@@ -84,11 +84,13 @@ namespace SDKExamples.GeodatabaseSDK.FeatureService
       using (Geodatabase featureService = new Geodatabase(arcGISOnline))
       {
         //These are the relationship clases where the origin layer ID is 0 and destination layer ID is 1
-        IReadOnlyList<RelationshipClass> relationshipClasses = featureService.OpenRelationshipClass("0", "1");
+        //At 2.x - IReadOnlyList<RelationshipClass> relationshipClasses = featureService.OpenRelationshipClass("0", "1");
+        IReadOnlyList<RelationshipClass> relationshipClasses = featureService.OpenRelationshipClasses("0", "1");
 
         //These are the relationship clases where the origin layer ID is 1 and destination layer ID is 0
         //Note that these will be different from the relationship classes above.
-        IReadOnlyList<RelationshipClass> reverseRrelationshipClasses = featureService.OpenRelationshipClass("1", "0");
+        //At 2.x - IReadOnlyList<RelationshipClass> reverseRrelationshipClasses = featureService.OpenRelationshipClass("1", "0");
+        IReadOnlyList<RelationshipClass> reverseRrelationshipClasses = featureService.OpenRelationshipClasses("1", "0");
       }
     }
   }

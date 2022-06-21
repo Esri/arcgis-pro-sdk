@@ -78,23 +78,34 @@ namespace SDKExamples
     public void MainMethodCode()
     {
       // Opens a file geodatabase. This will open the geodatabase if the folder exists and contains a valid geodatabase.
-      
-      using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\Data\LocalGovernment.gdb"))))
+
+      using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-File-Geodatabase\YourName.gdb"))))
       {
         // Use the geodatabase.
       }
 
-      // Each of the following would fail with GeodatabaseNotFoundOrOpenedException.
+      // Opens a mobile geodatbase. This will open the geodatabase if the folder exists and contains a valid geodatabase.
 
+      MobileGeodatabaseConnectionPath mobileGeodatabaseConnectionPath = new MobileGeodatabaseConnectionPath(new Uri(@"C:\Path-To-Mobile-Geodatabase\YourName.geodatabase"));
+      using (Geodatabase geodatabase = new Geodatabase(mobileGeodatabaseConnectionPath))
+      {
+        // use the geodatabase
+      }
+
+      // Each of the following would fail with GeodatabaseNotFoundOrOpenedException.
       try
       {
-        Geodatabase geodatabase1 = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"Gibberish.gdb")));
-        Geodatabase geodatabase2 = new Geodatabase((FileGeodatabaseConnectionPath)null);
+        Geodatabase fileGeodatabase1 = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"BadPath.gdb")));
+        Geodatabase fileGeodatabase2 = new Geodatabase((FileGeodatabaseConnectionPath)null);
+        
+        Geodatabase mobileGeodatabase1 = new Geodatabase( new MobileGeodatabaseConnectionPath(new Uri(@"BadPath.geodatabase")));
+        Geodatabase mobileGeodatabase2 = new Geodatabase((MobileGeodatabaseConnectionPath)null);
       }
-      catch (GeodatabaseNotFoundOrOpenedException exception)
+      catch (ArcGIS.Core.Data.Exceptions.GeodatabaseNotFoundOrOpenedException exception)
       {
         // Handle Exception.
       }
+
     }
   }
 }

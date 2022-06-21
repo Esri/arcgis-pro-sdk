@@ -107,9 +107,9 @@ namespace SDKExamples
 
           SpatialQueryFilter spatialQueryFilter = new SpatialQueryFilter
           {
-            FilterGeometry = new EnvelopeBuilder(
-              new MapPointBuilder(1052803, 1812751).ToGeometry(), 
-              new MapPointBuilder(1034600, 1821320).ToGeometry()).ToGeometry(),
+            FilterGeometry = new EnvelopeBuilderEx(
+              new MapPointBuilderEx(1052803, 1812751).ToGeometry(), 
+              new MapPointBuilderEx(1034600, 1821320).ToGeometry()).ToGeometry(),
 
             SpatialRelationship = SpatialRelationship.Within
           };
@@ -173,7 +173,7 @@ namespace SDKExamples
             rowBuffer["FCODE"]      = "Park";
             // Note that this is an invalid subtype value.
             rowBuffer[facilitySiteDefinition.GetSubtypeField()] = 890;
-            rowBuffer[facilitySiteDefinition.GetShapeField()]   = new PolygonBuilder(new List<Coordinate2D>
+            rowBuffer[facilitySiteDefinition.GetShapeField()]   = new PolygonBuilderEx(new List<Coordinate2D>
             {
               new Coordinate2D(1021570, 1880583),
               new Coordinate2D(1028730, 1880994),
@@ -185,7 +185,7 @@ namespace SDKExamples
 
             invalidFeatureObjectID = feature.GetObjectID();
           }
-          catch (GeodatabaseException exObj)
+          catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
           {
             Console.WriteLine(exObj);
           }

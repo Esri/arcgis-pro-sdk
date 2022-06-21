@@ -51,7 +51,8 @@ namespace Layout_HelpExamples
     {
       LayoutView layoutView = LayoutView.Active;
 
-      // cref: LayoutView_ZoomTo_Extent;ArcGIS.Desktop.Layouts.LayoutView.ZoomTo(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomTo
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Extent
       #region LayoutView_ZoomTo_Extent
       //Set the page extent for a layout view.
 
@@ -63,7 +64,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_Extent
 
-      // cref: LayoutView_ZoomTo_Percent;ArcGIS.Desktop.Layouts.LayoutView.ZoomTo100Percent(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomTo100Percent(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_Percent
       //Set the layout view to 100 percent.
 
@@ -74,7 +75,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_Percent
 
-      // cref: LayoutView_ZoomTo_Next;ArcGIS.Desktop.Layouts.LayoutView.ZoomToNext(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToNext(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_Next
       //Advance the layout view extent to the previous forward extent
 
@@ -85,7 +86,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_Next
 
-      // cref: LayoutView_ZoomTo_PageWidth;ArcGIS.Desktop.Layouts.LayoutView.ZoomToPageWidth(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToPageWidth(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_PageWidth
       //Set the layout view extent to accomodate the width of the page.
 
@@ -96,7 +97,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_PageWidth
 
-      // cref: LayoutView_ZoomTo_Previous;ArcGIS.Desktop.Layouts.LayoutView.ZoomToPrevious(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToPrevious(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_Previous
       //Set the layout view extent to the previous extent.
 
@@ -107,7 +108,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_Previous
 
-      // cref: LayoutView_ZoomTo_SelectedElements;ArcGIS.Desktop.Layouts.LayoutView.ZoomToSelectedElements(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToSelectedElements(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_SelectedElements
       //Set the layout view extent to the selected elements.
 
@@ -118,7 +119,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_SelectedElements
 
-      // cref: LayoutView_ZoomTo_WholePage;ArcGIS.Desktop.Layouts.LayoutView.ZoomToWholePage(System.Nullable{System.TimeSpan})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToWholePage(System.Nullable{System.TimeSpan})
       #region LayoutView_ZoomTo_WholePage
       //Set the layout view extent to fit the entire page.
 
@@ -129,7 +130,7 @@ namespace Layout_HelpExamples
       });
       #endregion LayoutView_ZoomTo_WholePage
 
-      // cref: LayoutView_Refresh;ArcGIS.Desktop.Layouts.LayoutView.Refresh
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Refresh
       #region LayoutView_Refresh
       //Refresh the layout view.
 
@@ -137,45 +138,55 @@ namespace Layout_HelpExamples
       await QueuedTask.Run(() => layoutView.Refresh());
       #endregion
 
-      // cref: LayoutView_GetSelection;ArcGIS.Desktop.Layouts.LayoutView.GetSelectedElements
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.GetSelectedElements
       #region LayoutView_GetSelection
       //Get the selected layout elements.
 
       var selectedElements = layoutView.GetSelectedElements();
       #endregion
 
-      // cref: LayoutView_SetSelection;ArcGIS.Desktop.Layouts.LayoutView.SelectElements(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Layouts.Element})
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Layout
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.SelectElements(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Layouts.Element})
       #region LayoutView_SetSelection
       //Set the layout's element selection.
 
-      Element rec = layoutView.Layout.FindElement("Rectangle");
-      Element rec2 = layoutView.Layout.FindElement("Rectangle 2");
+      await QueuedTask.Run(() =>
+      {
+        Element rec = layoutView.Layout.FindElement("Rectangle");
+        Element rec2 = layoutView.Layout.FindElement("Rectangle 2");
 
-      List<Element> elmList = new List<Element>();
-      elmList.Add(rec);
-      elmList.Add(rec2);
+        List<Element> elmList = new List<Element>();
+        elmList.Add(rec);
+        elmList.Add(rec2);
 
-      layoutView.SelectElements(elmList);
+        layoutView.SelectElements(elmList);
+      });
       #endregion LayoutView_SetSelection
 
-      // cref: LayoutView_SelectAll;ArcGIS.Desktop.Layouts.LayoutView.SelectAllElements
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.SelectAllElements
       #region LayoutView_SelectAll
       //Select all element on a layout.
 
-      layoutView.SelectAllElements();
+      await QueuedTask.Run(() => layoutView.SelectAllElements());
+
       #endregion LayoutView_SelectAll
 
-      // cref: LayoutView_ClearSelection;ArcGIS.Desktop.Layouts.LayoutView.ClearElementSelection
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ClearElementSelection
       #region LayoutView_ClearSelection
       //Clear the layout's element selection.
 
-      layoutView.ClearElementSelection();
+      await QueuedTask.Run(() => layoutView.ClearElementSelection());
+
       #endregion LayoutView_ClearSelection
 
 
       Layout layout = LayoutFactory.Instance.CreateLayout(5, 5, LinearUnit.Inches);
-      // cref: LayoutView_FindAndCloseLayoutPanes;ArcGIS.Desktop.Core.LayoutFrameworkExtender.CloseLayoutPanes(ArcGIS.Desktop.Framework.PaneCollection,System.String)
-      // cref: LayoutView_FindAndCloseLayoutPanes;ArcGIS.Desktop.Core.LayoutFrameworkExtender.FindLayoutPanes(ArcGIS.Desktop.Framework.PaneCollection,ArcGIS.Desktop.Layouts.Layout)
+
+      // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
+      // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem.GetLayout
+      // cref: ArcGIS.Desktop.Core.LayoutFrameworkExtender.CloseLayoutPanes(ArcGIS.Desktop.Framework.PaneCollection,System.String)
+      // cref: ArcGIS.Desktop.Core.LayoutFrameworkExtender.FindLayoutPanes(ArcGIS.Desktop.Framework.PaneCollection,ArcGIS.Desktop.Layouts.Layout)
       #region LayoutView_FindAndCloseLayoutPanes
       //Find and close all layout panes associated with a specific layout.
 
@@ -189,6 +200,14 @@ namespace Layout_HelpExamples
       }
       #endregion LayoutView_FindandCloseLayoutPanes
 
+      // cref: ArcGIS.Desktop.Core.LayoutFrameworkExtender.CreateLayoutPaneAsync
+      // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem.GetLayout
+      // cref: ArcGIS.Desktop.Layouts.ILayoutPane
+      // cref: ArcGIS.Desktop.Layouts.ILayoutPane.Caption
+      // cref: ArcGIS.Desktop.Layouts.ILayoutPane.LayoutView
+      // cref: ArcGIS.Desktop.Framework.Contracts.Pane.Activate
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Layout
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomTo100Percent
       #region LayoutView_LayoutFrameWorkExtender
       //This sample checks to see if a layout project item already has an open application pane.  
       //If it does, it checks if it is the active layout view, if not, it creates, activates and opens a new pane.
@@ -223,6 +242,11 @@ namespace Layout_HelpExamples
 
     async public static void LayoutViewExample()
     {
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Active
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Layout
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.SelectElements
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToSelectedElements
       #region LayoutViewClassExample1
       //This example references the active layout view.  Next it finds a couple of elements and adds them to a collection. 
       //The elements in the collection are selected within the layout view.  Finally, the layout view is zoomed to the
@@ -259,9 +283,14 @@ namespace Layout_HelpExamples
   {
     async public static Task<bool> SetLayoutViewSelection()
     {
-#region LayoutViewClassExample2
-            // Make sure the active pane is a layout view and then reference it
-            if (LayoutView.Active != null)
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Active
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.Layout
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.SelectElements
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ZoomToSelectedElements
+      #region LayoutViewClassExample2
+      // Make sure the active pane is a layout view and then reference it
+      if (LayoutView.Active != null)
       {
         LayoutView lytView = LayoutView.Active;
         //Reference the layout associated with the layout view

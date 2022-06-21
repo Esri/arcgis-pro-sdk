@@ -37,6 +37,14 @@
         <state id="esri_mapping_openProjectCondition"/>
       </and>
     </insertCondition>
+    <insertCondition id="esri_projectItem_SelectedToolboxMakeDefaultCondition">
+      <not>
+        <state id="esri_projectItem_DefaultToolboxSelected" />
+      </not>
+      <and>
+        <state id="esri_mapping_openProjectCondition"/>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_geoprocessing_DataInterop_installed">
       <state id="esri_geoprocessing_DI_installed" />
     </insertCondition>
@@ -148,8 +156,8 @@
     </insertCategory>
 
     <insertCategory id="esri_gpToolDialogAddin">
-      <customControl id="esri_gpToolDialogCustomValidate" className="ArcGIS.Desktop.GeoProcessing.ToolDialog.custom_validate_addin">
-        <content className="ArcGIS.Desktop.GeoProcessing.ToolDialog.custom_validate_addin_vm">
+      <customControl id="esri_gpToolDialogCustomValidate" className="ArcGIS.Desktop.Internal.GeoProcessing.custom_validate_addin">
+        <content className="ArcGIS.Desktop.Internal.GeoProcessing.custom_validate_addin_vm">
           <!-- for tools:-->
           <tool name="management.AddJoin"/>
           <tool name="management.JoinField"/>
@@ -579,7 +587,7 @@
     <insertModule id="esri_geoprocessing_module" className="GeoprocessingModule" caption="Geoprocessing" description="Geoprocessing" autoLoad="false">
       <tabs>
 
-        <tab id="esri_geoprocessing_GPContainer" caption="Geoprocessing" keytip="G" condition="esri_geoprocessing_container" tabGroupID="esri_geoprocessing_GPTabGroup">
+        <tab id="esri_geoprocessing_GPContainer" caption="Manage" keytip="G" condition="esri_geoprocessing_container" tabGroupID="esri_geoprocessing_GPTabGroup">
           <group refID="esri_core_clipboardGroup"/>
           <group refID="esri_core_organize"/>
           <group refID="esri_geoprocessing_container_ProjectGroup"/>
@@ -608,7 +616,6 @@
           <group refID="esri_modelbuilder_runGroup"/>
           <group refID="esri_modelbuilder_insertGroup"/>
           <group refID="esri_modelbuilder_groupGroup"/>
-          <group refID="esri_modelbuilder_exportGroup"/>
         </tab>
 
         <!--<tab id="esri_geoprocessing_MBInsertTab" caption="Insert" condition="esri_geoprocessing_anyGPPane" keytip="N">
@@ -709,7 +716,7 @@
           <button refID="esri_modelbuilder_copyElementsButton" size="middle" />
         </group>
 
-        <group id="esri_modelbuilder_newModelGroup" caption="Model"  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" >
+        <group id="esri_modelbuilder_newModelGroup" caption="Model" launcherButtonID="esri_geoprocessing_openMBOptionsButton" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderNewModel16.png" >
           <button refID="esri_modelbuilder_NewModelButton" size="large" />
           <button refID="esri_modelbuilder_saveSplitButton" size="large" />
           <button refID="esri_modelbuilder_autoSaveButton" size="middle" />
@@ -874,8 +881,8 @@
         </tooltip>
       </checkBox>
 
-        <customControl id="esri_modelbuilder_gridRouterSettings" caption="Grid Size" keytip="GS" className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.GridRouterSettingsViewModel" extendedCaption="Set the value is used to set the size of the routing grid." loadOnClick="false" disableIfBusy="false"  condition="esri_geoprocessing_modelBuilderPane">
-          <content className="ArcGIS.Desktop.GeoProcessing.Controls.GridRouterSettingsControl"/>
+        <customControl id="esri_modelbuilder_gridRouterSettings" caption="Grid Size" keytip="GS" className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.Ribbon.GridRouterSettingsViewModel" extendedCaption="Set the value is used to set the size of the routing grid." loadOnClick="false" disableIfBusy="false"  condition="esri_geoprocessing_modelBuilderPane">
+          <content className="ArcGIS.Desktop.Internal.GeoProcessing.Controls.GridRouterSettingsControl"/>
           <tooltip heading="Grid Size">
             The value is used to set the size of the routing grid. A smaller grid size will generate better results, but might slow layout performance depending on the number of nodes, connectors and the size of the model.<disabledText></disabledText>
           </tooltip>
@@ -884,9 +891,9 @@
 
       <labelControl id="esri_modelbuilder_elementLabel" caption="Element" hasTwoLines="false" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderLinkBezier32.png" />
       <customControl id="esri_modelbuilder_elementSlider" caption="Element" keytip="ES" extendedCaption="Set distance between tools, variables, connectors and groups."
-         className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.ElementSlider" loadOnClick="false" disableIfBusy="false" >
+         className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.Ribbon.ElementSlider" loadOnClick="false" disableIfBusy="false" >
 
-        <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
+        <content className="ArcGIS.Desktop.Internal.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
         <tooltip heading="Element Distance">
           The distance between tools, variables, connectors and groups.<disabledText></disabledText>
         </tooltip>
@@ -894,8 +901,8 @@
 
       <labelControl id="esri_modelbuilder_levelLabel" caption="Level" hasTwoLines="false" />
       <customControl id="esri_modelbuilder_levelSlider" caption="Level" keytip="LS" extendedCaption="Set distance between stacked tools, variables and groups in the same graph."
-         className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.LevelSlider" loadOnClick="false" disableIfBusy="false">
-         <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
+         className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.Ribbon.LevelSlider" loadOnClick="false" disableIfBusy="false">
+         <content className="ArcGIS.Desktop.Internal.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
           <tooltip heading="Level Distance">
             The distance between stacked tools, variables and groups in the same graph.<disabledText></disabledText>
           </tooltip>
@@ -903,8 +910,8 @@
 
       <labelControl id="esri_modelbuilder_subGraphLabel" caption="Sub-Graph" hasTwoLines="false" />
         <customControl id="esri_modelbuilder_subGraphSlider" caption="Element" keytip="SS" extendedCaption="Set distance between unconnected graphs."
-          className="ArcGIS.Desktop.GeoProcessing.ModelBuilder.Ribbon.SubGraphSlider" loadOnClick="false" disableIfBusy="false" >
-          <content className="ArcGIS.Desktop.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
+          className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.Ribbon.SubGraphSlider" loadOnClick="false" disableIfBusy="false" >
+          <content className="ArcGIS.Desktop.Internal.GeoProcessing.Controls.CustomSlider" loadOnClick="false"/>
           <tooltip heading="Sub-Graph Distance">
             The distance between separate or unconnected graphs.<disabledText></disabledText>
           </tooltip>
@@ -1060,10 +1067,10 @@
 
 A model is a geoprocessing workflow represented as a diagram that strings together a sequence of tools, using the output of one tool as the input to another tool. You create, edit, and manage models in ModelBuilder.<disabledText>Not available yet.</disabledText></tooltip>
         </button>
-        <button id="esri_geoprocessing_pythonButton" caption="Python window" keytip="PY" className="esri_geoprocessing_module:Commands.ShowPythonWindow" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" helpContextID="" disableIfBusy="false">
-          <tooltip heading="Python">Show the Python window.
+        <button id="esri_geoprocessing_pythonButton" caption="Python Window" keytip="PY" className="esri_geoprocessing_module:Commands.ShowPythonWindow" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingPythonWindowShow16.png" helpContextID="" disableIfBusy="false">
+          <tooltip heading="Python Window">Show the Python window.
 
-A Python command line is available in this pane. You can execute geoprocessing tools, ArcPy functions, and any other Python functionality.<disabledText></disabledText></tooltip>
+The Python window is an interpreter in which you can execute geoprocessing tools, ArcPy functions, and any other Python functionality.<disabledText></disabledText></tooltip>
         </button>
 
         <button id="esri_geoprocessing_toolsButton" className="esri_geoprocessing_module:Commands.ShowTools" caption="Tools" extendedCaption="Open Geoprocessing pane" keytip="TS"
@@ -1193,18 +1200,18 @@ Common environments include: extent, output coordinate system, cell size, and ra
     <button id="esri_geoprocessing_deleteTool" hidden="true" loadOnClick="false"
             caption="Delete" extendedCaption="Geoprocessing tool"
             className="esri_geoprocessing_module:Commands.OnDeleteToolboxComponent"
-            helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+            helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png">
       <tooltip heading="">Delete the tool from the toolbox. The tool is permanently deleted.<disabledText></disabledText></tooltip>
     </button>
     <button id="esri_geoprocessing_deleteToolset" hidden="true" caption="Delete" extendedCaption="Geoprocessing toolset"
             className="esri_geoprocessing_module:Commands.OnDeleteToolboxComponent" loadOnClick="false"
-            helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+            helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png">
       <tooltip heading="">Delete the toolset from the toolbox. The toolset and all of the tools it contains are permanently deleted.<disabledText></disabledText></tooltip>
     </button>
     <button id="esri_geoprocessing_deleteToolbox" hidden="true" caption="Delete" extendedCaption="Geoprocessing toolbox"
             className="esri_geoprocessing_module:Commands.OnDeleteToolboxComponent" loadOnClick="false"
             helpContextID="" condition="esri_projectItem_DefaultToolboxSelectedCondition"
-            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png">
       <tooltip heading="">Delete the toolbox. The toolbox is permanently deleted.<disabledText></disabledText></tooltip>
     </button>
     <button id="esri_geoprocessing_openGPOptionsButton" caption="Geoprocessing Options" className="esri_geoprocessing_module:Commands.ShowGPOptions">
@@ -1212,6 +1219,13 @@ Common environments include: extent, output coordinate system, cell size, and ra
         Set geoprocessing options.<disabledText></disabledText>
       </tooltip>
     </button>
+        
+    <button id="esri_geoprocessing_openMBOptionsButton" caption="Modelbuilder Options" className="esri_geoprocessing_module:Commands.ShowMBOptions">
+      <tooltip heading="Modelbuilder Options">
+        Set modelbuilder options.<disabledText></disabledText>
+      </tooltip>
+    </button>
+        
     <button id="esri_geoprocessing_addToFavorities" hidden="true" caption="Add To Project Favorites" extendedCaption="Add geoprocessing tool to Favorites in Geoprocessing pane" className="esri_geoprocessing_module:Commands.OnAddToFavorities" helpContextID="">
       <tooltip heading="">
         Add this tool to the Favorites section in the Geoprocessing pane.<disabledText></disabledText>
@@ -1339,7 +1353,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
         <disabledText></disabledText>
       </tooltip>
     </button>
-    <button id="esri_geoprocessing_ProjectItem_Toolbox_remove" hidden="true" caption="Remove" extendedCaption="Geoprocessing toolbox from Project"
+    <button id="esri_geoprocessing_ProjectItem_Toolbox_remove" hidden="true" caption="Remove From Project" extendedCaption="Geoprocessing toolbox from Project"
             className="esri_geoprocessing_module:Commands.OnRemoveToolbox" loadOnClick="false"
             condition="esri_projectItem_DefaultToolboxSelectedCondition"
       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png" helpContextID="">
@@ -1350,7 +1364,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
     <button id="esri_geoprocessing_Toolbox_MakeDefaultButton" hidden="true" keytip="H"
             className="esri_geoprocessing_module:Commands.SetDefaultToolboxButton" loadOnClick="false"
             caption="Make Default" extendedCaption="Geoprocessing Toolbox"
-            condition="esri_projectItem_DefaultToolboxSelectedCondition"
+            condition="esri_projectItem_SelectedToolboxMakeDefaultCondition"
             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png"
             largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_32.png"
             helpContextID="">
@@ -1364,7 +1378,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           <tooltip heading=""><disabledText></disabledText></tooltip>
         </customControl>
 
-        <button id="esri_geoprocessing_spatialJoinsButton" className="esri_geoprocessing_module:Commands.SpatialJoin" caption="Spatial Join" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSpatialJoin16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSpatialJoin32.png" condition="esri_mapping_JoinsAndRelatesEnabledCondition" helpContextID="" keytip="RS">
+        <button id="esri_geoprocessing_spatialJoinsButton" className="esri_geoprocessing_module:Commands.SpatialJoin" caption="Add Spatial Join" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSpatialJoin16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSpatialJoin32.png" condition="esri_mapping_JoinsAndRelatesEnabledCondition" helpContextID="" keytip="RS">
           <tooltip heading="">Create a spatial join. Joins attributes from one feature to another based on the spatial relationship.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_geoprocessing_newSelectionLayerButton" className="esri_geoprocessing_module:Commands.NewSelectionLayer" caption="New Selection Layer" loadOnClick="false" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionLayerCreate32.png">
@@ -1712,17 +1726,17 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Select All group items<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_elementMessagesButton" hidden="true" caption="Messages..." extendedCaption="ModelBuilder" keytip="M" className="esri_geoprocessing_module:Commands.ElementMessages" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_elementMessagesButton" hidden="true" caption="Messages..." extendedCaption="ModelBuilder" keytip="MM" className="esri_geoprocessing_module:Commands.ElementMessages" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Messages">
             View tool messages.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_openElementButton" hidden="true" caption="Open..." extendedCaption="ModelBuilder" keytip="O" className="esri_geoprocessing_module:Commands.OpenElement" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_openElementButton" hidden="true" caption="Open..." extendedCaption="ModelBuilder" keytip="OE" className="esri_geoprocessing_module:Commands.OpenElement" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Open (Ctrl+O)">
             Open model element. If the element is a tool, the tool dialog is opened. If it is a variable, open the variable control to change the value assigned to the variable.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_editProcessToolButton" hidden="false" caption="Edit..." extendedCaption="ModelBuilder" keytip="E" className="esri_geoprocessing_module:Commands.EditProcessTool" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_editProcessToolButton" hidden="false" caption="Edit..." extendedCaption="ModelBuilder" keytip="ED" className="esri_geoprocessing_module:Commands.EditProcessTool" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Open">
             Open model element. If the element is a tool, the tool dialog is opened. If it is a variable, open the variable control to change the value assigned to the variable.<disabledText></disabledText>
           </tooltip>
@@ -1737,12 +1751,12 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Make model parameter. Model parameters are displayed when the model is opened as a geoprocessing tool. Make an output a parameter so that it is added to the map when the tool runs.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelBuilder_addToDisplayOnButton" hidden="true" caption="Add To Display" extendedCaption="Remove Add To Display" keytip="D" className="esri_geoprocessing_module:Commands.RemoveFromDisplay" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelBuilder_addToDisplayOnButton" hidden="true" caption="Add To Display" extendedCaption="Remove Add To Display" keytip="AD" className="esri_geoprocessing_module:Commands.RemoveFromDisplay" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
         <tooltip heading="Uncheck to Remove From Display (Ctrl+Shift+D)">
           Unchecking will prevent the output from being added to display or remove the currently added layer from display.<disabledText></disabledText>
         </tooltip>
         </button>
-        <button id="esri_modelBuilder_addToDisplayOffButton" hidden="true" caption="Add To Display" extendedCaption="Add To Display" keytip="D" className="esri_geoprocessing_module:Commands.AddToDisplay" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelBuilder_addToDisplayOffButton" hidden="true" caption="Add To Display" extendedCaption="Add To Display" keytip="AD" className="esri_geoprocessing_module:Commands.AddToDisplay" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Check to Add To Display (Ctrl+D)">
             Checking will add the output to the map immediately after the output is generated.<disabledText></disabledText>
           </tooltip>
@@ -1822,12 +1836,12 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Iterates over each value in a field.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_iterateMultivalueButton" hidden="true" caption="Iterate Multivalue" extendedCaption="ModelBuilder" keytip="M" className="esri_geoprocessing_module:Commands.IterateMultivalue" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_iterateMultivalueButton" hidden="true" caption="Iterate Multivalue" extendedCaption="ModelBuilder" keytip="MI" className="esri_geoprocessing_module:Commands.IterateMultivalue" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Iterate Multivalue">
             Iterates over a list of values.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_iterateDatasetsButton" hidden="true" caption="Iterate Datasets" extendedCaption="ModelBuilder" keytip="D" className="esri_geoprocessing_module:Commands.IterateDatasets" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_iterateDatasetsButton" hidden="true" caption="Iterate Datasets" extendedCaption="ModelBuilder" keytip="DS" className="esri_geoprocessing_module:Commands.IterateDatasets" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Iterate Datasets">
             Iterates over datasets in a Workspace or Feature Dataset.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
@@ -1847,7 +1861,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Iterates over rasters in a Workspace or a Raster Catalog.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_iterateTablesButton" hidden="true" caption="Iterate Tables" extendedCaption="ModelBuilder" keytip="T" className="esri_geoprocessing_module:Commands.IterateTables" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_iterateTablesButton" hidden="true" caption="Iterate Tables" extendedCaption="ModelBuilder" keytip="TE" className="esri_geoprocessing_module:Commands.IterateTables" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Iterate Tables">
             Iterates over tables in a workspace.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
@@ -1857,34 +1871,34 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Iterates over workspaces in a folder.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_iterateLayersButton" hidden="true" keytip="L" caption="Iterate Layers" extendedCaption="ModelBuilder" className="esri_geoprocessing_module:Commands.IterateLayers" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_iterateLayersButton" hidden="true" keytip="LY" caption="Iterate Layers" extendedCaption="ModelBuilder" className="esri_geoprocessing_module:Commands.IterateLayers" loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderIterator32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Iterate Layers">
             Lists all the layers from a maps.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_getFieldValueButton" hidden="true" caption="Get Field Value" extendedCaption="ModelBuilder" keytip="F" className="esri_geoprocessing_module:Commands.GetFieldValue" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_getFieldValueButton" hidden="true" caption="Get Field Value" extendedCaption="ModelBuilder" keytip="GV" className="esri_geoprocessing_module:Commands.GetFieldValue" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Get Field Value">
             Gets the value of the first row of a table for the specified field.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_parsePathExtButton" hidden="true" caption="Parse Path" extendedCaption="ModelBuilder" keytip="P" className="esri_geoprocessing_module:Commands.ParsePathExt" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_parsePathExtButton" hidden="true" caption="Parse Path" extendedCaption="ModelBuilder" keytip="PP" className="esri_geoprocessing_module:Commands.ParsePathExt" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Parse Path">
             Parses the input into its file, path, name, or extension. The output can be used as in-line variables in the output name of other tools.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_selectDataButton" hidden="true" caption="Select Data" extendedCaption="ModelBuilder" keytip="S" className="esri_geoprocessing_module:Commands.SelectData" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_selectDataButton" hidden="true" caption="Select Data" extendedCaption="ModelBuilder" keytip="SD" className="esri_geoprocessing_module:Commands.SelectData" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Select Data">
             Selects data in a parent data element such as a folder, geodatabase, feature dataset, or coverage.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_calculateValueButton" hidden="true" caption="Calculate Value" extendedCaption="ModelBuilder" keytip="C" className="esri_geoprocessing_module:Commands.CalculateValue" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_calculateValueButton" hidden="true" caption="Calculate Value" extendedCaption="ModelBuilder" keytip="CV" className="esri_geoprocessing_module:Commands.CalculateValue" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Calculate Value">
             Returns a value based on a specified Python expression.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_collectValuesButton" hidden="true" caption="Collect Values" extendedCaption="ModelBuilder" keytip="V" className="esri_geoprocessing_module:Commands.CollectValues" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_collectValuesButton" hidden="true" caption="Collect Values" extendedCaption="ModelBuilder" keytip="CO" className="esri_geoprocessing_module:Commands.CollectValues" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Collect Values">
             Collects output values of an iterator, or converts a list of multivalues into a single value.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
@@ -1942,7 +1956,13 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Evaluates if the input data matches the specified data type/s.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-
+        
+        <button id="esri_modelbuilder_IfExpressionIsButton" hidden="true" keytip="EI" caption="If Expresssion Is" extendedCaption="ModelBuilder" className="esri_geoprocessing_module:Commands.IfExpressionIs" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilder_If16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilder_If32.png" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="If Expression Is">
+            Evaluates the specified expression.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_modelbuilder_IfValueIsButton" hidden="true" keytip="V" caption="If Value Is" extendedCaption="ModelBuilder" className="esri_geoprocessing_module:Commands.IfValueIs" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilder_If16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilder_If32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="If Value Is">
             Evaluates if the input value matches the specified criteria.<disabledText>Make a model the active view.</disabledText>
@@ -1966,42 +1986,13 @@ Common environments include: extent, output coordinate system, cell size, and ra
             A model is a geoprocessing workflow represented as a diagram that strings together a sequence of tools, using the output of one tool as the input to another tool. You create, edit, and manage models in ModelBuilder.<disabledText>Not available yet.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_saveAsToolbox103" hidden="true"
-                caption="10.3 Toolbox..."
-                className="esri_geoprocessing_module:Commands.OnSaveAsToolbox103" loadOnClick="false"
-                helpContextID="">
-          <tooltip heading="10.3 Toolbox">
-            Save as a toolbox that you can use in ArcGIS 10.3 and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_geoprocessing_saveAsToolbox102" hidden="true"
-                caption="10.1/10.2 Toolbox..."
-                className="esri_geoprocessing_module:Commands.OnSaveAsToolbox102" loadOnClick="false"
-                helpContextID="">
-          <tooltip heading="10.1/10.2 Toolbox">
-            Save as a toolbox that you can use in ArcGIS 10.1, 10.2, and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_geoprocessing_saveAsToolbox100" hidden="true" caption="10.0 Toolbox..." className="esri_geoprocessing_module:Commands.OnSaveAsToolbox100" helpContextID="">
-          <tooltip heading="10.0 Toolbox">
-            Save as a toolbox that you can use in ArcGIS 10.0 and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_geoprocessing_saveAsToolbox104" hidden="true"
-                caption="10.4 Toolbox..."
-                className="esri_geoprocessing_module:Commands.OnSaveAsToolbox104" loadOnClick="false"
-                helpContextID="">
-          <tooltip heading="10.4 Toolbox">
-            Save as a toolbox that you can use in ArcGIS 10.4 and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>
-          </tooltip>
-        </button>
 
-        <button id="esri_geoprocessing_saveAsToolbox105" hidden="true" caption="10.5/10.6 Toolbox..." className="esri_geoprocessing_module:Commands.OnSaveAsToolbox105" helpContextID="">
-                    <tooltip heading="10.5/10.6 Toolbox">
-                        Save as a toolbox that you can use in ArcGIS 10.5 and later releases. This version of toolbox can also be used in ArcGIS Pro.<disabledText></disabledText>
+        <button id="esri_geoprocessing_Toolbox_SaveAs" hidden="true" keytip="SA" caption="Save Toolbox to Version" className="esri_geoprocessing_module:Commands.OnSaveAsToolbox" helpContextID="">
+          <tooltip heading="Save Toolbox to Version">
+            Save toolbox to a specified version<disabledText></disabledText>
           </tooltip>
         </button>
-
+        
         <!-- className="esri_geoprocessing_module:Commands.OnCopy"  -->
         <button id="esri_geoprocessing_editCopy" hidden="true" caption="Copy" extendedCaption="Geoprocessing tool"
                 className="ArcGIS.Desktop.Framework.CopyCMD" assembly="ArcGIS.Desktop.Framework.dll" loadOnClick="false"
@@ -2086,8 +2077,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
         <button id="esri_datainterop_newETLTool" className="NewETLToolButton" caption="Spatial ETL Tool"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FMEgpTool16.png"
-                hidden="true">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FMEgpTool16.png" >
           <tooltip heading="">
             Add Spatial ETL Tool.<disabledText></disabledText>
           </tooltip>
@@ -2174,7 +2164,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
                 loadOnClick="false" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Cancel16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Cancel32.png">
           <tooltip heading="Interrupt Kernel">
-            Interrupt's kernel for this notebook.
+            Interrupts the notebook kernel.
             <disabledText></disabledText>
           </tooltip>
         </button>
@@ -2398,6 +2388,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_modelbuilder_IfSelectionExistsButton" />
           <button refID="esri_modelbuilder_IfCoordinationSystemIsButton" />
           <button refID="esri_modelbuilder_IfDataTypeIsButton" />
+          <button refID="esri_modelbuilder_IfExpressionIsButton" /> 
           <button refID="esri_modelbuilder_IfFeatureTypeIsButton" />
           <button refID="esri_modelbuilder_IfFieldValueIsButton" />
           <button refID="esri_modelbuilder_IfRowCountIsButton" />
@@ -2411,42 +2402,28 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_CreateSAModelButton"/>
         </menu>
 
-        <menu id="esri_samodels_modelActionMenu" caption="Spatial Analyst Model" extendedCaption="Add Spatial Analyst Models to project" keytip="" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolBoxAdd16.png">
-          <button refID="esri_samodels_modelOpenButton"/>
-          <button refID="esri_samodels_modelSaveButton"/>
-          <button refID="esri_samodels_modelDeleteButton" separator="true"/>
-          <button refID="esri_samodels_modelEnvsButton" separator="true"/>
-          <button refID="esri_samodels_modelPropsButton"/>
-        </menu>
-
-        <menu id="esri_samodels_modelMenu" caption="SAModels" extendedCaption="Add Spatial Analyst Models to project" keytip="" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolBoxAdd16.png">
-          <button refID="esri_core_addToProject"/>
-          <menu refID="esri_geoprocessing_SAModels_AddMenu" separator="true"/>
-          <button refID="esri_samodels_modelCopyButton"/>
-          <button refID="esri_samodels_modelPasteButton"/>
-          <button refID="esri_samodels_modelDeleteButton" />
-          <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_core_refresh"/>
-          <button refID="esri_samodels_modelPropsButton"/>
-        </menu>
-
         <menu id="esri_geoprocessing_insertMenu" caption="Toolbox" extendedCaption="Add geoprocessing toolbox to project" keytip="TX" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolbox16.png">
           <tooltip heading="Toolbox">
             Add geoprocessing tools to your project.<disabledText></disabledText>
           </tooltip>
           <button refID="esri_geoprocessing_addToolboxButton"/>
           <button refID="esri_geoprocessing_newToolboxButton_atbx"/>
-          <button refID="esri_geoprocessing_newToolboxButton"/>
           <button refID="esri_geoprocessing_newPythonToolboxButton" />
           <button refID="esri_core_refresh" separator="true" />
         </menu>
 
+        <menu id="esri_makeDefaultGPSubMenu" caption="Make Default and Remove From Project" hidden="true">
+          <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" separator="true"/>
+          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove"/>
+        </menu>
+        
         <menu id="esri_geoprocessing_ToolboxProjectItemMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
           <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" />
           <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_core_rename"/>
-          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
+          <button refID="esri_core_openFileLocation"/>
+          <button refID="esri_geoprocessing_Toolbox_SaveAs" />
           <button refID="esri_geoprocessing_pasteTool" separator="true" />
           <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
           <button refID="esri_core_editDeleteButton"/>
@@ -2457,74 +2434,97 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
 
         <menu id="esri_geoprocessing_FileToolboxProjectItemMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
-          <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" />
-          <button refID="esri_addFavoriteButton" />
+          <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" separator="true"/>
+          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove"/>
+          <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
+          <button refID="esri_geoprocessing_Toolbox_SaveAs"  separator="true"/>
           <button refID="esri_core_refresh" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
           <button refID="esri_geoprocessing_pasteTool" separator="true" />
-          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
-
+        <!--<menu id="esri_cutCopyPasteGPSubMenu" caption="Cut and Copy and Copy Path and Paste in GP" hidden="true">
+          <button refID="esri_core_editCutButton" separator="true" />
+          <button refID="esri_core_editCopyButton" />
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID ="esri_geoprocessing_pasteTool"/>
+        </menu>-->
+        <!--<menu id="esri_deleteRenameOpenFolderGPSubMenu" caption="Delete and Rename and Open Folder" hidden="true">
+          <button refID="esri_geoprocessing_deleteToolbox" />
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+        </menu>-->
         <menu id="esri_geoprocessing_ToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
-          <!-- separator line should not appear here -->
-          <button refID="esri_core_addToProject" />
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_core_refresh" />
-          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
-          <button refID="esri_core_editCopyButton" separator="false"/>
-          <button refID="esri_geoprocessing_pasteTool" separator="true" />
-          <button refID="esri_geoprocessing_deleteToolbox" separator="true" />
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_addToProject" separator="true"/>
+          <button refID="esri_addFavoriteButton" separator="true"/>
+          <button refID="esri_addProjectItemToNewProjectsButton"/>
+          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" separator="true" />
+          <button refID="esri_geoprocessing_Toolbox_SaveAs" separator="true" />
+          <button refID="esri_core_refresh" separator="true"/>
+          <button refID="esri_core_editCutButton" separator="true" />
+          <button refID="esri_core_editCopyButton" />
+          <button refID ="esri_geoprocessing_pasteTool"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_geoprocessing_deleteToolbox" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_FileToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu" />
-          <!-- separator line should not appear here -->
-          <button refID="esri_core_addToProject" />
-          <button refID="esri_addFavoriteButton" />
+          <button refID="esri_core_addToProject" separator="true" />
+          <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_core_rename" separator="true" />
-          <button refID="esri_core_refresh" />
-          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" />
-          <button refID="esri_core_editCopyButton" separator="false"/>
-          <button refID="esri_geoprocessing_pasteTool" separator="true" />
-          <button refID="esri_geoprocessing_deleteToolbox" separator="true" />
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <menu refID="esri_geoprocessing_Toolbox_SaveAsMenu" separator="true" />
+          <button refID="esri_geoprocessing_Toolbox_SaveAs" separator="true"/>
+          <button refID="esri_core_refresh" separator="true"/>
+          <button refID="esri_core_editCutButton" separator="true" />
+          <button refID="esri_core_editCopyButton" />
+          <button refID ="esri_geoprocessing_pasteTool"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_geoprocessing_deleteToolbox" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_PythonToolboxProjectMenu" hidden="true" caption="GP Python Toolbox Project Item" contextMenu="true">
           <button refID="esri_geoprocessing_editPythonToolbox" />
           <button refID="esri_geoprocessing_checkPythonToolboxSyntax" />
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
+          <menu refID="esri_makeDefaultGPSubMenu" inline="true" separator="true"/>
+          <button refID="esri_addFavoriteButton" separator="true"/>
+          <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_FilePythonToolboxProjectMenu" hidden="true" caption="GP Python Toolbox Project Item" contextMenu="true">
           <button refID="esri_geoprocessing_editPythonToolbox" />
           <button refID="esri_geoprocessing_checkPythonToolboxSyntax" />
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
-          <button refID="esri_addFavoriteButton" />
+		  <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" separator="true" />
+          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" />
+          <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true" />
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_geoprocessing_ProjectItem_Toolbox_remove" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_PythonToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
@@ -2534,6 +2534,7 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
           <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_geoprocessing_deleteToolbox" separator="false"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -2541,31 +2542,34 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_FilePythonToolboxMenu" hidden="true" caption="GP Toolbox Project Item" contextMenu="true">
-          <button refID="esri_core_addToProject" />
-          <button refID="esri_addFavoriteButton" />
-          <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_geoprocessing_editPythonToolbox"/>
           <button refID="esri_geoprocessing_checkPythonToolboxSyntax" />
           <dynamicMenu refID="esri_geoprocessing_PythonToolboxEncryptionMenu" inline="true" />
+          <button refID="esri_core_addToProject" separator="true"/>
+          <button refID="esri_addFavoriteButton" separator="true"/>
+          <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_geoprocessing_deleteToolbox" separator="true"/>
           <button refID="esri_core_rename"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_geoprocessing_deleteToolbox" separator="false"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_editToolboxProperties" separator="true"/>
         </menu>
         <menu id="esri_geoprocessing_ServerToolboxMenu" hidden="true" caption="GP Server Toolbox Project Item" contextMenu="true">
           <button refID="esri_core_refresh"/>
-          <button refID="esri_core_addToProject" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_geoprocessing_serviceInformation"/>
         </menu>
         <menu id="esri_geoprocessing_ToolsetMenu" hidden="true" caption="Toolset menu" contextMenu="true">
           <menu refID="esri_geoprocessing_Toolbox_AddMenu"/>
-          <button refID="esri_geoprocessing_pasteTool" separator="true" />
-          <button refID="esri_core_rename" separator="true"/>
-          <button refID="esri_geoprocessing_deleteToolset" />
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_geoprocessing_pasteTool"/>
+          <button refID="esri_core_editCopyPaths" />
+          <button refID="esri_geoprocessing_deleteToolset" separator="true"/>
+          <button refID="esri_core_rename"/>
         </menu>
 
         <menu id="esri_geoprocessing_Toolbox_AddMenu"  hidden="true" caption="New" extendedCaption="Add new item to geoprocessing toolbox" contextMenu="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
@@ -2579,14 +2583,20 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_geoprocessing_Add_SAModel_Suitability" />
         </menu>
 
-        <menu id="esri_geoprocessing_Toolbox_SaveAsMenu" hidden="true" caption="Save As" extendedCaption="Geoprocessing toolbox" contextMenu="true">
-          <button refID="esri_geoprocessing_saveAsToolbox105" />
-          <button refID="esri_geoprocessing_saveAsToolbox104" />
-          <button refID="esri_geoprocessing_saveAsToolbox103" />
-          <button refID="esri_geoprocessing_saveAsToolbox102" />
-          <!--<button refID="esri_geoprocessing_saveAsToolbox100" />
-          <button refID="esri_geoprocessing_saveAsToolbox93" />-->
-        </menu>
+        <!--<menu id="esri_geoprocessing_Toolbox_SaveAsMenu" hidden="true" caption="Save As" extendedCaption="Geoprocessing toolbox" contextMenu="true">
+          <button refID="esri_geoprocessing_saveAsToolbox106" />
+          <button refID="esri_geoprocessing_saveAsToolbox107" />
+          <button refID="esri_geoprocessing_saveAsToolbox108" />
+          <button refID="esri_geoprocessing_saveAsToolbox22" />
+          <button refID="esri_geoprocessing_saveAsToolbox23" />
+          <button refID="esri_geoprocessing_saveAsToolbox24" />
+          <button refID="esri_geoprocessing_saveAsToolbox25" />
+          <button refID="esri_geoprocessing_saveAsToolbox26" />
+          <button refID="esri_geoprocessing_saveAsToolbox27" />
+          <button refID="esri_geoprocessing_saveAsToolbox28" />
+          <button refID="esri_geoprocessing_saveAsToolbox29" />
+          <button refID="esri_geoprocessing_saveAsToolbox93" />
+        </menu>-->
         <menu id="esri_geoprocessing_historyItemMenu" hidden="true" caption="History" extendedCaption="Geoprocessing History" contextMenu="true">
           <button refID="esri_geoprocessing_openToolHistory"/>
           <button refID="esri_geoprocessing_runToolFromHistory"/>
@@ -2710,10 +2720,11 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <button refID="esri_geoprocessing_addToUserFavorities" />
           <button refID="esri_geoprocessing_addToGallery" />
           <button refID="esri_geoprocessing_addToModelBuilder" />
-          <button refID="esri_geoprocessing_editCopy" separator="true" />
+          <button refID="esri_core_editCutButton"  separator="true" />
+          <button refID="esri_geoprocessing_editCopy"/>
+          <button refID="esri_core_editCopyPaths"/>
           <button refID="esri_geoprocessing_deleteTool" separator="true"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
           <button refID="esri_geoprocessing_helpCommand" separator="true"/>
           <button refID="esri_geoprocessing_editToolProperties" separator="true"/>
         </menu>
@@ -2731,9 +2742,9 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </menu>
         <menu id="esri_geoprocessing_ServiceTaskMenu" hidden="true" caption="Geoprocessing Task Item" contextMenu="true">
           <button refID="esri_geoprocessing_openTool" />
-          <button refID="esri_geoprocessing_addToGallery" />
           <button refID="esri_geoprocessing_BatchTool"/>
-          <button refID="esri_geoprocessing_addToModelBuilder" separator="true"/>
+          <button refID="esri_geoprocessing_addToGallery" separator="true" />
+          <button refID="esri_geoprocessing_addToModelBuilder" />
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_geoprocessing_taskInformation"/>
           <button refID="esri_geoprocessing_editToolProperties" separator="true"/>
@@ -3021,10 +3032,13 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
             Geoprocessing Package.<disabledText></disabledText>
           </tooltip>
           <button refID="esri_geoprocessing_ItemUnpackOpenButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_geoprocessing_deleteToolbox" separator="true"/>
           <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
         </menu>
 
         <!--Geoprocessing Sample menu-->
@@ -3145,17 +3159,17 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </gallery>
 
         <!-- CAD Tool Gallery-->
-        <gallery id="esri_cadToolsGallery" className="CadGalleryViewModel" caption="Cad Tool Gallery" keytip="CG"
-                  itemsInRow="7" itemWidth="76" itemHeight="62"
-                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.GeoProcessing;component/Favorites and Gallery/GalleryTemplate.xaml"
-                  templateID="GalleryItemTemplate" showItemCaption="true"
-                  showGroup="true"
-                  showItemCaptionBelow="true"
-        disableIfBusy="false"
-        resizable="true"
-        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
-        condition=""
-        helpContextID="">
+        <gallery id="esri_cadToolsGallery" className="ArcGIS.Desktop.Internal.GeoProcessing.CadGalleryViewModel" caption="Cad Tool Gallery" keytip="CG"
+                itemsInRow="7" itemWidth="76" itemHeight="62"
+                dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.GeoProcessing;component/Favorites and Gallery/GalleryTemplate.xaml"
+                templateID="GalleryItemTemplate" showItemCaption="true"
+                showGroup="true"
+                showItemCaptionBelow="true"
+                disableIfBusy="false"
+                resizable="true"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
+                condition=""
+                helpContextID="">
           <tooltip heading="">
             A gallery of CAD tools.<disabledText></disabledText>
           </tooltip>
@@ -3163,17 +3177,17 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
         </gallery>
 
       <!-- Bim Tool Gallery -->
-      <gallery id="esri_bimToolsGallery" className="BimGalleryViewModel" caption="Building Tool Gallery" keytip="CG"
-                  itemsInRow="4" itemWidth="76" itemHeight="62"
-                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.GeoProcessing;component/Favorites and Gallery/GalleryTemplate.xaml"
-                  templateID="GalleryItemTemplate" showItemCaption="true"
-                  showGroup="true"
-                  showItemCaptionBelow="true"
-        disableIfBusy="false"
-        resizable="true"
-        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
-        condition=""
-        helpContextID="">
+      <gallery id="esri_bimToolsGallery" className="ArcGIS.Desktop.Internal.GeoProcessing.BimGalleryViewModel" caption="Building Tool Gallery" keytip="CG"
+              itemsInRow="4" itemWidth="76" itemHeight="62"
+              dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.GeoProcessing;component/Favorites and Gallery/GalleryTemplate.xaml"
+              templateID="GalleryItemTemplate" showItemCaption="true"
+              showGroup="true"
+              showItemCaptionBelow="true"
+              disableIfBusy="false"
+              resizable="true"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
+              condition=""
+              helpContextID="">
           <tooltip heading="">
             A gallery of Bim tools.<disabledText></disabledText>
           </tooltip>
@@ -3204,13 +3218,6 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <insertGroup refID="esri_geoprocessing_datainterop_group"/>
         </updateTab>
       </tabs>-->
-
-      <groups>
-        <updateGroup refID="esri_core_dockWindows">
-          <insertButton refID="esri_geoprocessing_toolsViewTabButton" />
-          <insertButton refID="esri_geoprocessing_pythonButton" />
-        </updateGroup>
-      </groups>
     </updateModule>
 
     <updateModule refID="esri_mapping">
@@ -3384,6 +3391,12 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
       <insertPage id="esri_geoprocessing_optionsPropertyPage" caption="Geoprocessing" className="GPOptionsViewModel" group="Application" placeWith="esri_editing_versioningPropertyPage" insert="after">
         <content className="GPOptionsView" />
       </insertPage> 
+    </updateSheet>
+
+    <updateSheet refID="esri_core_optionsPropertySheet">
+      <insertPage id="esri_mb_optionsPropertyPage" caption="ModelBuilder" className="ArcGIS.Desktop.Internal.GeoProcessing.MBOptionsViewModel" group="Application" placeWith="esri_geoprocessing_optionsPropertyPage" insert="after">
+        <content className="MBOptionsView" />
+      </insertPage>
     </updateSheet>
       
     <insertSheet id="esri_geoprocessing_toolboxProperties" caption="Toolbox Properties" pageHeight="400" pageWidth="800" resizable="true">

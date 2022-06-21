@@ -43,30 +43,42 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
     public async void Examples()
     {
+      // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer
+      // cref: ArcGIS.Desktop.Mapping.MapMember.Name
       #region Name of BuildingSceneLayer 
-      var bsl = MapView.Active.Map.GetLayersAsFlattenedList().OfType<BuildingSceneLayer>().FirstOrDefault();
+      var bsl = MapView.Active.Map.GetLayersAsFlattenedList()
+                        .OfType<BuildingSceneLayer>().FirstOrDefault();
       var scenelayerName = bsl.Name;
       #endregion
 
       await QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetAvailableFieldsAndValues
         #region Query Building Scene Layer for available Types and Values
         //Must be called on the MCT
         //Retrieve the complete set of types and values for the building scene
         //var bsl = ...;
-        var dict = bsl.QueryAvailableFieldsAndValues();
+        //At 2.x - var dict = bsl.QueryAvailableFieldsAndValues();
+        var dict = bsl.GetAvailableFieldsAndValues();
 
         //get a list of existing disciplines
-        var disciplines = dict.SingleOrDefault(kvp => kvp.Key == "Discipline").Value ?? new List<string>();
+        var disciplines = dict.SingleOrDefault(
+                 kvp => kvp.Key == "Discipline").Value ?? new List<string>();
 
         //get a list of existing categories
-        var categories = dict.SingleOrDefault(kvp => kvp.Key == "Category").Value ?? new List<string>();
+        var categories = dict.SingleOrDefault(
+                 kvp => kvp.Key == "Category").Value ?? new List<string>();
 
         //get a list of existing floors or "levels"
-        var floors = dict.SingleOrDefault(kvp => kvp.Key == "BldgLevel").Value ?? new List<string>();
+        var floors = dict.SingleOrDefault(
+                 kvp => kvp.Key == "BldgLevel").Value ?? new List<string>();
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.CreateDefaultFilter
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.FilterBlockDefinitions
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetFilters
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.SelectedValues
         #region Create a Default Filter and Get Filter Count
         //Must be called on the MCT
         //Creates a default filter on the building scene
@@ -81,12 +93,17 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetFilters
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.FilterBlockDefinitions
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.FilterBlockMode
+        // cref: ArcGIS.Core.CIM.Object3DRenderingMode
         #region Get all the Filters that Contain WireFrame Blocks
 
         //var bsl = ...;
         //Note: wire_frame_filters can be null in this example
         var wire_frame_filters = bsl.GetFilters().Where(
-          f => f.FilterBlockDefinitions.Any(fb => fb.FilterBlockMode == Object3DRenderingMode.Wireframe));
+          f => f.FilterBlockDefinitions.Any(
+            fb => fb.FilterBlockMode == Object3DRenderingMode.Wireframe));
         //substitute Object3DRenderingMode.None to get blocks with a solid mode (default)
         //and...
         //fb.FilterBlockMode == Object3DRenderingMode.Wireframe &&
@@ -95,6 +112,10 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.HasFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.SetActiveFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetActiveFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.ClearActiveFilter
         #region Set and Clear Active Filter for BuildingSceneLayer
         //Must be called on the MCT
         //Note: Use HasFilter to check if a given filter id exists in the layer
@@ -108,6 +129,8 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetFilter
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.ID
         #region Get BuildingSceneLayer Filter ID and Filter     
         string filterID1 = filter1.ID;
         var filter = bsl.GetFilter(filterID1);
@@ -116,6 +139,9 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.UpdateFilter
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.Name
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.Description
         #region Modify BuildingSceneLayer Filter Name and Description
         //Must be called on the MCT
         //var bsl = ...;
@@ -123,15 +149,30 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         filter1.Name = "Updated Filter Name";
         filter1.Description = "Updated Filter description";
-        bsl.SetFilter(filter1);
+        //At 2.x - bsl.SetFilter(filter1);
+        bsl.UpdateFilter(filter);
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.GetAvailableFieldsAndValues
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.UpdateFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.SetActiveFilter
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.Name
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.Description
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.ID
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.FilterBlockDefinitions
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.FilterBlockMode
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.Title
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.SelectedValues
         #region Create a Filter using Building Level and Category
+        //Must be called on the MCT
 
         //refer to "Query Building Scene Layer for available Types and Values"
         //...
         //var bsl = ...;
+        //At 2.x
         //var dict = bsl.QueryAvailableFieldsAndValues();
+
+        //var dict = bsl.GetAvailableFieldsAndValues();
         //var categories = dict.SingleOrDefault(kvp => kvp.Key == "Category").Value;
         //var floors = dict.SingleOrDefault(kvp => kvp.Key == "BldgLevel").Value;
 
@@ -159,12 +200,18 @@ namespace ProSnippetsBuildingSceneLayerFilter
         //Apply the block
         fd.FilterBlockDefinitions = new List<FilterBlockDefinition>() { fdef };
         //Add the filter definition to the layer
-        bsl.SetFilter(fd);
+        //At 2.x - bsl.SetFilter(fd);
+        bsl.UpdateFilter(fd);
         //Set it active. The ID is auto-generated
         bsl.SetActiveFilter(fd.ID);
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.UpdateFilter
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.FilterBlockDefinitions
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.FilterBlockMode
+        // cref: ArcGIS.Desktop.Mapping.FilterBlockDefinition.SelectedValues
+        // cref: ArcGIS.Core.CIM.Object3DRenderingMode
         #region Modify BuildingSceneLayer Filter Block
         //Must be called on the MCT
         //Assuming retrieve filter ok
@@ -182,10 +229,15 @@ namespace ProSnippetsBuildingSceneLayerFilter
 
         //Overwrite
         filter1.FilterBlockDefinitions = new List<FilterBlockDefinition>() { filterBlock };
-        bsl.SetFilter(filter1);
+        //At 2.x - bsl.SetFilter(filter1);
+        bsl.UpdateFilter(filter1);
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.HasFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.RemoveFilter
+        // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer.RemoveAllFilters
+        // cref: ArcGIS.Desktop.Mapping.FilterDefinition.ID
         #region Remove BuildingSceneLayer Filter
         //var bsl = ...;
         //Note: Use HasFilter to check if a given filter id exists in the layer

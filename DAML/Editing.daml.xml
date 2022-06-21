@@ -101,6 +101,23 @@
         <state id="esri_mapping_mapPane"/>
       </and>
     </insertCondition>
+    <insertCondition id="esri_editing_EditingMapOrVideoCondition">
+      <and>
+        <not>
+          <state id="esri_editing_editorDisabled" />
+        </not>
+        <not>
+          <state id="esri_editing_editingNotAvailable"/>
+        </not>
+        <not>
+          <state id="esri_charts_chartsPane" />
+        </not>
+        <or>
+          <state id="esri_mapping_mapPane"/>
+          <state id="esri_motionimagery_videoPane"/>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_editing_DelSelFeaturesShortcutCondition">
       <and>
         <not>
@@ -230,6 +247,17 @@
         </not>
         <state id="esri_editing_hasActiveParcelRecord"/>
         <state id="esri_editing_HasParcelFabric"/>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_editing_activeRecordTransparencyCondition">
+      <and>
+        <not>
+          <state id="esri_editing_editorDisabled" />
+        </not>
+        <not>
+          <state id="esri_editing_editingNotAvailable"/>
+        </not>
+        <state id="esri_editing_recordTransparency"/>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordAndParcelPolygonsOrLinesSelectedCondition">
@@ -364,15 +392,6 @@
     </insertCondition>
     <insertCondition id="esri_editing_parcelToolsVisibleCondition">
       <state id="esri_editing_HasParcelFabric"/>
-    </insertCondition>
-    <insertCondition id="esri_editing_constructParcelBoundariesVisibleCondition">
-      <and>
-        <state id="esri_editing_ReconstructParcelBoundariesEnabled"/>
-        <state id="esri_editing_HasParcelFabric"/>
-      </and>
-    </insertCondition>
-    <insertCondition id="esri_editing_traverseCanSetClosingCondition">
-      <state id ="esri_editing_traverseCanSetClosing"/>
     </insertCondition>
     <!--is attributes pane on the layers tab-->
     <insertCondition id="esri_editing_attributesPane_LayersTabCondition">
@@ -835,6 +854,40 @@
       </insertComponent>
     </updateCategory>
 
+    <updateCategory refID="esri_mapping_MapTrayButtons">
+      <insertComponent id="esri_editing_InferenceTrayPopupButton" className="ArcGIS.Desktop.Internal.Editing.InferenceTrayButton">
+        <content  L_name="Inference"
+                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle24.png"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle16.png"
+                  L_tooltip="Display inferred points of intersection for segments while sketching. Inference constraints can be snapped to if Snapping is enabled." />
+      </insertComponent>
+      <insertComponent id="esri_editing_GroundToGridTrayPopupButton" className="ArcGIS.Desktop.Internal.Editing.GroundToGridTrayPopupButton">
+        <content  L_name="Corrections"
+                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool24.png"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool16.png" />
+      </insertComponent>
+      <!--
+        Examples of using the TrayButton SDK
+        
+      <insertComponent id="esri_editing_InferenceTrayToggleButton" className="ArcGIS.Desktop.Internal.Editing.InferenceTrayButton">
+        <content  L_name="Inference"
+                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle32.png"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle16.png"
+                  L_tooltipHeading="Inference"
+                  placeWith="esri_mapping_SnappingTrayButton" insert="before"
+                  L_tooltip="Turn inference on or off for interactive tools." />
+      </insertComponent>
+      <insertComponent id="esri_editing_InferenceTrayClickButton" className="ArcGIS.Desktop.Internal.Editing.InferenceTrayButton">
+        <content  L_name="Inference"
+                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle32.png"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingInferenceToggle16.png"
+                  L_tooltipHeading="Inference"
+                  placeWith="esri_mapping_ConstraintsTrayButton" insert="after"
+                  L_tooltip="Toggle inference on or off for interactive tools." />
+      </insertComponent>
+      -->
+    </updateCategory>
+
     <!-- Construction Tools Categories -->
     <insertCategory id="esri_editing_construction_tool_group">
       <component id="esri_editing_construction_point_tools">
@@ -923,9 +976,6 @@
     <insertCategory id="esri_editing_ErrorInspector_ErrorTypes">
       <component id="esri_editing_gdbTopology" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorTopologyErrorType" >
         <content L_name="Geodatabase Topology"/>
-      </component>
-      <component id="esri_editing_gdbParcelFabric" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorParcelErrorType" >
-        <content L_name="Parcel Fabric"/>
       </component>
       <component id="esri_editing_gdbGDBValidationErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorGeodatabaseFeatureValidationErrorType" >
         <content L_name="Geodatabase Features"/>
@@ -1134,16 +1184,10 @@
       <shortcut refID="esri_editing_SuperscriptText" key="OemPlus" flags="Ctrl+Shift"/>
       <shortcut refID="esri_editing_SubscriptText"   key="OemPlus" flags="Ctrl"/>
       <shortcut refID="esri_editing_FollowFeatureOptionsShortcut" key="O" flags="None"/>
-      <shortcut refID="esri_editing_FinishSketch"    key="F2" flags="None"/>
-      <shortcut refID="esri_editing_ClearSketch"     key="Delete" flags="Ctrl"/>
     </insertShortcutTable>
     <insertShortcutTable id="esri_editing_shortcutList_DimensionSketches">
-      <shortcut refID="esri_editing_FinishSketch"    key="F2" flags="None"/>
-      <shortcut refID="esri_editing_ClearSketch"     key="Delete" flags="Ctrl"/>
     </insertShortcutTable>
     <insertShortcutTable id="esri_editing_shortcutList_SliceMultipatch">
-      <shortcut refID="esri_editing_FinishSketch"    key="F2" flags="None"/>
-      <shortcut refID="esri_editing_ClearSketch"     key="Delete" flags="Ctrl"/>
     </insertShortcutTable>
     <insertShortcutTable id="esri_editing_shortcutList_AnnoTextBox">
       <shortcut refID="esri_editing_SelectAllText"   key="A" flags="Ctrl"/>
@@ -1415,43 +1459,43 @@
     <updateModule refID="esri_geodatabase_module">
       <menus>
         <updateMenu refID="fgdbItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="mgdbItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="egdbItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="fgdbAnnotationItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="mgdbAnnotationFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="egdbAnnotationItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="fgdbDimensionItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="mgdbDimensionFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="egdbDimensionItemFeatureClassTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_core_editCopyButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="fgdbItemTableTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="egdbItemTableTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="mgdbItemTableTypeMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_GDBFeatureClassAndTableLoadDataButton" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="shapefileItemMenu">
-          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="ShapefileItemMenuExportItemMenu" insert="before" separator="true"/>
+          <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
         </updateMenu>
         <updateMenu refID="onlineSubLayerItemMenu">
           <insertButton refID ="esri_editing_externalTable_openTablePaneButton" placeWith="esri_projectItemAddToMapDynamicMenu" insert="after" separator="true"/>
@@ -1611,6 +1655,20 @@
           <content className="CreateRecordPaneView" />
         </dockPane>
 
+        <dockPane id="esri_editing_transferParcelWizardDockPane"
+                  caption="Transfer Parcel"
+                  className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelWizardDockPaneViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  initiallyVisible="false"
+                  condition="esri_mapping_mapPane"
+                  width="320"
+                  minwidth="320"
+                  delayLoadMessage="Select a map that contains a parcel fabric."
+                  keytip="tp">
+          <content className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelWizardDockPaneView"/>
+        </dockPane>
+        
       </dockPanes>
 
       <controls>
@@ -1925,7 +1983,7 @@
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool16.png"
               caption="Point Tool"
-              condition="esri_editing_EditingMapCondition"
+              condition="esri_editing_EditingMapOrVideoCondition"
               categoryRefID="esri_editing_construction_point" >
           <tooltip heading="Point">
             Create a point feature.<disabledText></disabledText>
@@ -1948,7 +2006,7 @@
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPointTool16.png"
               caption="Multipoint Tool"
-              condition="esri_editing_EditingMapCondition"
+              condition="esri_editing_EditingMapOrVideoCondition"
               categoryRefID="esri_editing_construction_multipoint" >
           <tooltip heading="Multipoint">
             Create a multipoint feature.<disabledText></disabledText>
@@ -1960,7 +2018,7 @@
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingLineTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingLineTool16.png"
               caption="Line Tool"
-              condition="esri_editing_EditingMapCondition"
+              condition="esri_editing_EditingMapOrVideoCondition"
               categoryRefID="esri_editing_construction_polyline">
           <tooltip heading="Line">
             Create a line feature.<disabledText></disabledText>
@@ -2015,7 +2073,7 @@
           <tooltip heading="Circle">
             Create a finished circular polyline feature.<disabledText></disabledText>
           </tooltip>
-          <content guid="09c6f589-a3ce-48ab-81bc-46965c58f264" placeWith="esri_editing_SketchTwoPointLineTool"/>
+          <content guid="09c6f589-a3ce-48ab-81bc-46965c58f264" placeWith="esri_editing_SketchTwoPointLineTool" />
         </tool>
         <button id="esri_editing_SketchCircleLine" hidden="true"
               className="CreateCircleLineCommand"
@@ -2152,7 +2210,7 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingPolygonTool16.png"
               caption="Polygon Tool"
               extendedCaption="Create a polygon feature"
-              condition="esri_editing_EditingMapCondition"
+              condition="esri_editing_EditingMapOrVideoCondition"
               categoryRefID="esri_editing_construction_polygon">
           <tooltip heading="Polygon">
             Create a polygon feature.<disabledText></disabledText>
@@ -2342,6 +2400,60 @@
               caption="Rectangle Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
           <tooltip heading="Rectangle">
             Create a finished rectangular or square multipatch feature.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofFlat" hidden="true"
+              className="CreateRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Flat32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Flat16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Flat Roof">
+            Create a flat roof.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofGable" hidden="true"
+              className="CreateRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Gable32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Gable16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Gable Roof">
+            Create a gable roof.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofHip" hidden="true"
+              className="CreateRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Hip32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Hip16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Hip Roof">
+            Create a hip roof.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofMansard" hidden="true"
+              className="CreateRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Mansard32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Mansard16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Mansard Roof">
+            Create a mansard roof.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofDome" hidden="true"
+              className="CreateRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Dome32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Dome16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Dome Roof">
+            Create a dome roof.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofExtrude" hidden="true"
+              className="ExtrudeRoofMultipatchCommand"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Extrude32x32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing.PushPull;component/Images/roof_Extrude16x16.png"
+              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+          <tooltip heading="Extrude Roof">
+            Extrudes a roof to the ground.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchOffsetMultipatch" hidden="true"
@@ -3036,7 +3148,7 @@
                 categoryRefID="esri_editing_CommandList"
                 loadOnClick="false">
           <tooltip heading="Clip">
-            Clip all editable and visible features that touch or are within a buffered distance from selected features.<disabledText>This tool is not available in 3D views.</disabledText>
+            Clip all features, or selected target features, that touch or are within a buffered distance from selected features.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
           <content keywords="polygon;buffer;discard;donut;hole" HelpContextID="120001896"/>
         </button>
@@ -3048,7 +3160,7 @@
               className="ClipTool"
               condition="esri_editing_EditingMapCondition">
           <tooltip heading="Clip">
-            Clip all editable and visible features that touch or are within a buffered distance from selected features.<disabledText>This tool is not available in 3D views.</disabledText>
+            Clip all features, or selected target features, that touch or are within a buffered distance from selected features.<disabledText>This tool is not available in 3D views.</disabledText>
             <disabledText></disabledText>
           </tooltip>
         </tool>
@@ -3129,26 +3241,6 @@
                 loadOnClick="false">
           <tooltip heading="Insert After">
             Insert new course after the currently selected one.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_traverseSetClosingLocationBefore" caption="Set closing location before this course" extendedCaption="Set closing location before this course." hidden="true"
-                className="SetClosingLocationBeforeCommand"
-                condition="esri_editing_traverseCanSetClosingCondition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TraverseSetClosingBefore32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TraverseSetClosingBefore16.png"
-                loadOnClick="false">
-          <tooltip heading="Set closing location before this course">
-            Set closing location before this course.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_traverseSetClosingLocationAfter" caption="Set closing location after this course" extendedCaption="Set closing location after this course." hidden="true"
-                className="SetClosingLocationAfterCommand"
-                condition="esri_editing_traverseCanSetClosingCondition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TraverseSetClosingAfter32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TraverseSetClosingAfter16.png"
-                loadOnClick="false">
-          <tooltip heading="Set closing location after this course">
-            Set closing location after this course.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -3303,7 +3395,7 @@
               className="SplitTool"
               condition="esri_editing_EditingMapCondition">
           <tooltip heading="Split">
-            Divide a polyline or polygon feature into two features along a splitting line you create across the feature. Click a polyline segment to divide the feature without using a splitting line.
+            Split polyline or polygon features interactively by drawing a cutting line, or by using selected input features.
             <disabledText></disabledText>
           </tooltip>
         </tool>
@@ -3316,7 +3408,7 @@
                 categoryRefID="esri_editing_CommandList"
                 loadOnClick="false">
           <tooltip heading="Split">
-            Divide a polyline or polygon feature into two features along a splitting line you create across the feature. Click a polyline segment to divide the feature without using a splitting line.
+            Split polyline or polygon features interactively by drawing a cutting line, or by using selected input features.
             <disabledText></disabledText>
           </tooltip>
           <content keywords="cut polygons tool;cut polygons;cut polygon;cut;divide;split line;split polygon;hole;donut" HelpContextID="120001770"/>
@@ -3709,6 +3801,36 @@
             Disconnect network features for move.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_UtilityDisconnectCoincident" caption="Disconnect coincident features"
+                className="DisconnectUtilityNetworkCoincidentCommand"
+                loadOnClick="false"
+                condition="esri_editing_MapCondition">
+          <tooltip heading="Disconnect coincident features">
+            Disconnect network features for move.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_UtilityDisconnectAttached" caption="Disconnect structurally attached features"
+                className="DisconnectUtilityNetworkAttachedCommand"
+                loadOnClick="false"
+                condition="esri_editing_MapCondition">
+          <tooltip heading="Disconnect structurally attached features">
+            Disconnect network features for move.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_UtilityDisconnectContained" caption="Disconnect contained features"
+                className="DisconnectUtilityNetworkContainedCommand"
+                loadOnClick="false"
+                condition="esri_editing_MapCondition">
+          <tooltip heading="Disconnect contained features">
+            Disconnect network features for move.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <customControl id="esri_editing_UtilityNetworkDisconnectOptionsControl"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="UtilityNetworkDisconnectOptionsViewModel">
+          <content className="UtilityNetworkDisconnectOptionsView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
 
         <tool id="esri_editing_TopologyFixTool" hidden="true"
                   licenseLevel="standard"
@@ -4066,6 +4188,20 @@
           <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
+        <button id="esri_editing_reconstructParcelsFromSeeds"
+                caption="Reconstruct From Seeds" extendedCaption="" loadOnClick="false"
+                className="ArcGIS.Desktop.Editing.ReconstructParcelsFromSeedsCommand"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReconstructFromSeeds32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReconstructFromSeeds16.png"
+                licenseLevel="standard"
+                categoryRefID="esri_editing_CommandList"
+                disableIfBusy="true">
+          <tooltip heading="Reconstruct From Seeds">
+            Reconstruct parcels from seeds in the current extent.<disabledText></disabledText>
+          </tooltip>
+          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+        </button>
+
         <button id="esri_editing_copyLinesToParcelType"
                 caption="Copy Lines To" extendedCaption=""
                 className="ArcGIS.Desktop.Editing.CopyLinesToParcelTypeCommand"
@@ -4145,6 +4281,21 @@
           <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
+        <button id="esri_editing_transferParcel"
+            caption="Transfer Parcel" extendedCaption=""
+            className="ArcGIS.Desktop.Editing.TransferParcelCommand"
+            largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TransferParcels32.png"
+            smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TransferParcels16.png"
+            licenseLevel="standard"
+            condition="esri_editing_activeParcelRecordCondition"
+            categoryRefID="esri_editing_CommandList"
+            disableIfBusy="true">
+          <tooltip heading="Transfer Parcel">
+            Transfer a parcel between source and target parcels.<disabledText>Available only when there is an active record in the map.</disabledText>
+          </tooltip>
+          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+        </button>
+
         <button id="esri_editing_reconstructParcelBoundaries"
             caption="Reconstruct Boundaries" extendedCaption=""
             className="ArcGIS.Desktop.Editing.ReconstructParcelBoundariesCommand"
@@ -4157,9 +4308,9 @@
           <tooltip heading="Reconstruct Boundaries">
             Reconstruct Parcel Boundaries.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_constructParcelBoundariesVisibleCondition"/>
+          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
-
+        
         <button id="esri_editing_zoomToActiveRecord" hidden="true"
                 caption="Zoom To Active Record" extendedCaption=""
                 className="ArcGIS.Desktop.Editing.ZoomToActiveRecordCommand"
@@ -4719,7 +4870,7 @@
                 condition="esri_editing_EditingMapCondition"
                 categoryRefID="esri_editing_construction_table">
           <tooltip heading="Insert Row">
-            Insert one or more rows into the table.<disabledText></disabledText>
+            Specifies the active Table Template and enables the Create command to insert one or more rows.<disabledText></disabledText>
           </tooltip>
           <content guid="EA2ECD82-D947-4D01-BF74-125DC09AA695" />
         </tool>
@@ -4823,7 +4974,7 @@
                 className="FinishSketchCommand"
                 condition="esri_editing_MapCondition">
           <tooltip heading="Finish (F2)">
-            Apply the changes and complete the current operation.<disabledText></disabledText>
+            Apply uncommitted geometry sketch operations. The editing tool will deactivate if there are no edit operations to apply.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_FinishSketchPart"
@@ -4839,7 +4990,7 @@
         </button>
         <button id="esri_editing_ClearSketch" caption="Cancel" extendedCaption="Discard sketch changes and exit operation." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchDiscard32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSketchDiscard16.png" className="ClearSketchCommand">
           <tooltip heading="Cancel (Ctrl+Del)">
-            Discard the changes and exit the current operation.<disabledText></disabledText>
+            Discard uncommitted geometry sketch operations. The editing tool will deactivate if there are no edit operations to discard.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_clearSlice" hidden="true"
@@ -5617,7 +5768,7 @@
             <disabledText>This command is available when you click an existing feature template.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_templateNewPreset" caption="Preset Template from Selected Features" extendedCaption="Preset Template from Selected Features"
+        <button id="esri_editing_templateNewPreset" caption="Preset Template From Selected Features" extendedCaption="Preset Template From Selected Features"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_New_Preset_Template_from_Features32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Editing_New_Preset_Template_from_Features16.png"
                 className="Templates.NewPresetTemplateContextCommand" loadOnClick="false" helpContextID="">
@@ -5826,7 +5977,7 @@
                 condition="esri_editing_EditingMapCondition"
                 loadOnClick="false">
           <tooltip heading="Split">
-            Divide a polyline or polygon feature into two features along a splitting line you create across the feature. Click a polyline segment to divide the feature without using a splitting line.
+            Split polyline or polygon features interactively by drawing a cutting line, or by using selected input features.
             <disabledText></disabledText>
           </tooltip>
           <content relatedID="esri_editing_SplitCommand" />
@@ -5894,7 +6045,7 @@
         <!-- Elevation group -->
         <button id="esri_editing_ToggleElevationModeButton" hidden="true"
                 caption="Mode" extendedCaption="Enable or disable adding Z values" loadOnClick="false"
-                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Editing.CurrentZToggleModeButton" helpContextID="">
+                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Internal.Editing.CurrentZToggleModeButton" helpContextID="">
           <tooltip heading="Choose how to add Z">
             Choose how z values will be added when creating or modifying features.
           </tooltip>
@@ -5902,7 +6053,7 @@
 
         <button id="esri_editing_ConstantElevationModeButton" hidden="true"
                 caption="Constant" extendedCaption="Choose Constant Mode Elevation" loadOnClick="false"
-                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Editing.CurrentZConstantModeButton" helpContextID=""
+                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Internal.Editing.CurrentZConstantModeButton" helpContextID=""
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingConstantZ32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingConstantZ16.png">
           <tooltip heading="Set z values using a constant">
@@ -5912,7 +6063,7 @@
 
         <button id="esri_editing_SurfaceElevationModeButton" hidden="true"
                 caption="Surface" extendedCaption="Choose Surface Mode Elevation" loadOnClick="false"
-                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Editing.CurrentZSurfaceModeButton" helpContextID=""
+                condition="esri_mapping_mapPane" className="ArcGIS.Desktop.Internal.Editing.CurrentZSurfaceModeButton" helpContextID=""
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSurfaceZ32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSurfaceZ16.png">
           <tooltip heading="Set z values from an elevation surface">
@@ -5921,15 +6072,15 @@
         </button>
 
         <tool id="esri_editing_ElevationPicker" hidden="true" caption="Get Z From View" extendedCaption="Get elevation by clicking in a Map or Scene view." keytip="GZ" loadOnClick="false"
-                condition="esri_editing_ElevationPickerEnabled" className="ArcGIS.Desktop.Editing.ElevationPickerTool" helpContextID="" 
+                condition="esri_editing_ElevationPickerEnabled" className="ArcGIS.Desktop.Internal.Editing.ElevationPickerTool" helpContextID="" 
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGetZFromView32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGetZFromView16.png">
           <!--do not add tool tips here - these are specified within the Resources of the HeightGrabberTool-->
         </tool>
 
         <customControl id="esri_editing_mapSurfacesComboBox" hidden="true" caption="Map surfaces" extendedCaption="Available map surfaces." loadOnClick="false"
-                  condition="esri_editing_SurfacePickerEnabled" className="ArcGIS.Desktop.Editing.MapSurfacesViewModel" helpContextID="">
-          <content className="ArcGIS.Desktop.Editing.MapSurfacesView" />
+                  condition="esri_editing_SurfacePickerEnabled" className="ArcGIS.Desktop.Internal.Editing.MapSurfacesViewModel" helpContextID="">
+          <content className="ArcGIS.Desktop.Internal.Editing.MapSurfacesView" />
           <tooltip heading="Map Surfaces">
             Select a surface from the available elevation map surfaces to get Z values from the Map.
             <disabledText> Available only when elevation surfaces are available and, either Surface Mode is chosen, or Constant mode is chosen and the "Get Z From View" command is active. </disabledText>
@@ -5937,8 +6088,8 @@
         </customControl>
 
         <customControl id="esri_editing_ElevationEntryBox" hidden="true" caption="Enter Elevation Values" extendedCaption="Enter an elevation value." keytip="EV" loadOnClick="false"
-                condition="esri_editing_ConstantZEnabled" className="ElevationViewModel" helpContextID="">
-          <content className="ElevationView" />
+                condition="esri_editing_ConstantZEnabled" className="ArcGIS.Desktop.Internal.Editing.ElevationViewModel" helpContextID="">
+          <content className="ArcGIS.Desktop.Internal.Editing.ElevationView" />
           <tooltip heading="Elevation value">
             Enter a value to be set as the constant Z elevation for newly created features.
             <disabledText>Available only when Constant Mode is chosen.</disabledText>
@@ -5946,8 +6097,8 @@
         </customControl>
 
         <customControl id="esri_editing_ElevationTools" hidden="true" loadOnClick="false" keytip="EL"
-                       className="ElevationToolsViewModel" helpContextID="">
-          <content className="ElevationToolsView" />
+                       className="ArcGIS.Desktop.Internal.Editing.ElevationToolsViewModel" helpContextID="">
+          <content className="ArcGIS.Desktop.Internal.Editing.ElevationToolsView" />
         </customControl>
         <!-- end of Elevation group -->
 
@@ -5955,13 +6106,13 @@
         <button id="esri_editing_GroundToGridSplitToggleButton"
                 caption="Ground To Grid"
                 loadOnClick="false" helpContextID="" hideTooltip="true"
-                className="ArcGIS.Desktop.Editing.GroundToGridSplitToggleButton"
+                className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitToggleButton"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridCorrectionTool16.png"/>
         <customControl id="esri_editing_GroundToGridSplitOpenTrayButton" hidden="true"
                 loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
-                className="ArcGIS.Desktop.Editing.GroundToGridSplitOpenTrayButton">
-          <content className="ArcGIS.Desktop.Editing.GroundToGridSplitView" />
+                className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitOpenTrayButton">
+          <content className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitView" />
           <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
         </customControl>
         <button id="esri_editing_GroundToGrid_DigitizeGroundAndGrid"
@@ -5983,7 +6134,7 @@
           </tooltip>
         </button>
         <tool id="esri_editing_GroundToGrid_EnterGroundTool"
-              className="GroundToGridEnterGroundTool"
+              className="ArcGIS.Desktop.Internal.Editing.GroundToGridEnterGroundTool"
               caption="Enter the ground line and draw the grid line"
               condition="esri_editing_MapCondition" loadOnClick="false">
           <tooltip heading="Ground To Grid Draw Grid Tool">
@@ -5991,7 +6142,7 @@
           </tooltip>
         </tool>
         <tool id="esri_editing_GroundToGrid_GroundTool"
-              className="GroundToGridTwoPointTool"
+              className="ArcGIS.Desktop.Internal.Editing.GroundToGridTwoPointTool"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridGroundTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridGroundTool16.png"
               caption="Draw the ground line and the grid line"
@@ -6001,7 +6152,7 @@
           </tooltip>
         </tool>
         <tool id="esri_editing_GroundToGrid_GridTool"
-              className="GroundToGridTwoPointTool"
+              className="ArcGIS.Desktop.Internal.Editing.GroundToGridTwoPointTool"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridGridTool32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingGroundToGridGridTool16.png"
               caption="Enter the ground line and draw the grid line"
@@ -6311,6 +6462,75 @@
         <dynamicMenu id="esri_editing_Attributes_SelectDynamicMenu" hidden="true"
              className="ArcGIS.Desktop.Editing.Attributes.AttributesSelectionDynamicMenu"
              caption="Select"/>
+
+        <!-- select by associations context menu items -->
+        <dynamicMenu id="esri_editing_Attributes_SelectAssociationsDynamicMenu" hidden="true"
+             className="ArcGIS.Desktop.Editing.Attributes.AttributesSelectAssociationsDynamicMenu"
+             caption="Select Associated Data"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectRelatedRecords16.png"
+             autoDisableWhenPopupContentIsDisabled="false"/>
+        <button id="esri_editing_Attributes_NoneAssociationsContextMenuItem" hidden="true" caption="None"
+                extendedCaption="Select no associated data for the items selected."
+                loadOnClick="false" disableIfBusy="false"
+                helpContextID="" condition="esri_editing_NeverEnabledCondition">
+          <tooltip heading="Select Associated Data">
+            The currently selected items have no associated data to select.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectAllAssociationsContextMenuItem" hidden="true" caption="All"
+                extendedCaption="Select all associated features or objects."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectAllAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select all associated features or objects.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectConnectivityAssociationsContextMenuItem" hidden="true" caption="Connectivity"
+                extendedCaption="Select features or objects using connectivity associations."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectConnectivityAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select features or objects using connectivity associations.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectContainsAssociationsContextMenuItem" hidden="true" caption="Contains"
+                extendedCaption="Select content features using containment associations."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectContainsAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select content features using containment associations.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectContainedInAssociationsContextMenuItem" hidden="true" caption="Contained In"
+                extendedCaption="Select container features using containment associations."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectContainedInAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select container features using containment associations.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectAttachedToAssociationsContextMenuItem" hidden="true" caption="Attached To"
+                extendedCaption="Select structure features or objects using structural attachment associations."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectAttachedToAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select structure features or objects using structural attachment associations.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_Attributes_SelectAttachmentsAssociationsContextMenuItem" hidden="true" caption="Attachments"
+                extendedCaption="Select attachment features or objects using structural attachment associations."
+                loadOnClick="false" disableIfBusy="false"
+                className="Attributes.SelectAttachmentsAssociationsCommand"
+                helpContextID="">
+          <tooltip heading="Select Associated Data">
+            Select attachment features or objects using structural attachment associations.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
         <!--split by feature context menu items-->
         <button id="esri_editing_SplitByFeature_MoveToTargetSelectionContextMenuItem" hidden="true" caption="Move to Target"
@@ -6665,8 +6885,13 @@
             Toggle selection of the current row.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_tableSelectRowButtonSelectedView" caption="Unselect" extendedCaption="Toggle selection of this row in the table." className="esri_editing_EditingModule:TableManager.OnSelectRow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableSelectUnselect16.png" loadOnClick="false" hidden="true">
+          <tooltip heading="Unselect">
+            Unselect the current row.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_editing_tableHighlightRowButton" caption="Highlight/Unhighlight" extendedCaption="Toggle highlight of this row in the table." className="esri_editing_EditingModule:TableManager.OnHighlightRow" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableHighlightUnhighlight16.png" loadOnClick="false">
-          <tooltip heading="Highlight/Unhighlight">
+          <tooltip heading="Highlight/Unhighlight (Ctrl+Space)">
             Toggle highlight of the current row.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -6896,15 +7121,6 @@
                 condition=""  disableIfBusy="true">
           <tooltip heading="">
             Show the Error Inspector. This enables you to find, sort and fix geodatabase topology errors.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_ShowParcelErrorInspectorBtn" caption="Error Inspector" extendedCaption="Parcel Error Inspector" className="esri_editing_EditingModule:ShowParcelErrorInspectorWindow"
-                keytip="EI"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ErrorInspector16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ErrorInspector32.png"
-                condition=""  disableIfBusy="true">
-          <tooltip heading="">
-            Show the Error Inspector. This enables you to find, sort and fix parcel fabric errors.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_ShowGdbErrorsErrorInspectorBtn" caption="Error Inspector" extendedCaption="Geodatabase Validation Error Inspector"  className="esri_editing_EditingModule:ShowGdbValidationErrorInspectorWindow"
@@ -7294,31 +7510,6 @@
           </tooltip>
         </button>
 
-        <!-- The images for parcel rule fixing methods need to be updated-->
-        <button id="esri_editing_topology_fix_BuildContextMenuItem" caption="Build" extendedCaption="Editing GDB Topology Build Fix Method"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ParcelFabricBuild32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ParcelFabricBuild16.png"
-                licenseLevel="standard"
-                condition ="esri_editing_TopologyGDBCondition"
-                loadOnClick="false" disableIfBusy="false"
-                className="TopologyPRTBuildCommand">
-          <tooltip heading="Build">
-            Build the parcel.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_editing_topology_fix_AssignToActiveRecordContextMenuItem" caption="Assign To Active Record" extendedCaption="Editing GDB Topology Assign To Active Record Fix Method"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ActiveRecord32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ActiveRecord16.png"
-                licenseLevel="standard"
-                loadOnClick="false" disableIfBusy="false"
-                condition="esri_editing_activeParcelRecordCondition"
-                className="TopologyPRTAssignToActiveRecordCommand">
-          <tooltip heading="Assign To Active Record">
-            Assign to active record.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
         <button id="esri_editing_topology_fix_NoFixContextMenuItem" caption="No Fix Available" extendedCaption="Editing GDB Topology No Fix Method"
                 licenseLevel="standard"
                 condition ="esri_editing_EditingMapCondition"
@@ -7392,7 +7583,7 @@
                 condition="esri_editing_EditingMapCondition"
                 className="SetReferencePointCommand">
           <tooltip heading="Set Reference">
-            Set reference point.
+            Set reference point at the right-clicked location.
           </tooltip>
         </button>
         <button id="esri_editing_AlignLeftCommand" caption="Align Left" extendedCaption="Align Left"
@@ -7565,12 +7756,21 @@
         <!--end of Grid-->
 
         <!--parcel -->
+        <button id="esri_editing_recordTransparency" caption="Transparency" keytip="RT" className="ArcGIS.Desktop.Editing.RecordTransparencyCommand"
+                  condition="esri_editing_activeRecordTransparencyCondition" loadOnClick="false"
+                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsTransparency32.png"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsTransparency16.png" helpContextID="">
+          <tooltip heading="Transparency">
+            Set the transparency of parcel features that are not part of the active record.<disabledText>Available only when an active record is set and Show only Active is turned off.</disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_editing_parcelShowOnlyActive" caption="Show Only Active" keytip="SA" className="ArcGIS.Desktop.Editing.ShowOnlyActiveRecordCommand"
                   condition="esri_editing_activeParcelRecordCondition" loadOnClick="false"
                   largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ShowOnlyActive32.png"
                   smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ShowOnlyActive16.png" helpContextID="">
           <tooltip heading="Show Only Active">
-            Click to show only parcels in the active record. Show Only Active can be toggled on or off. If Show Only Active is toggled off, you can set the transparency of parcels that are not part of the active record.<disabledText>Available only when an active record is set.</disabledText>
+            Click to show only parcels in the active record. Show Only Active can be toggled on or off. If Show Only Active is toggled off, you can set the transparency of parcels that are not part of the active record.<disabledText>Available only when an active record is set and Transparency is turned off.</disabledText>
           </tooltip>
         </button>
 
@@ -7612,8 +7812,12 @@
         </customControl>
 
         <customControl id="esri_editing_parcelParcelEffectsControl" caption="Parcel Record Effects" keytip="PE"
-                       className="ArcGIS.Desktop.Editing.RecordEffectsViewModel" disableIfBusy="false" loadOnClick="false" hideTooltip="true">
+                       className="ArcGIS.Desktop.Editing.RecordEffectsViewModel" disableIfBusy="true" loadOnClick="false"
+                       condition="esri_editing_activeRecordTransparencyCondition">
           <content className="ArcGIS.Desktop.Editing.RecordEffectsView" />
+          <tooltip heading="Transparency">
+            Set the transparency of parcel features that are not part of the active record.<disabledText>Available only when an active record is set and Show only Active is turned off.</disabledText>
+          </tooltip>
         </customControl>
 
         <button id="esri_editing_AlignParcels"
@@ -7652,15 +7856,6 @@
             Click to display the alignment tolerance buffer. The display of the alignment tolerance buffer can be toggled on or off.<disabledText></disabledText>
           </tooltip>
         </tool>
-
-        <customControl id="esri_editing_AlignParcelValueEntry" caption="Enter Alignment Value" extendedCaption="Enter an alignment buffer value." keytip="AV" loadOnClick="false"
-                       condition="esri_editing_EditingMapCondition"
-                       className="AlignParcelViewModel" helpContextID="">
-          <content className="AlignParcelView" />
-          <tooltip heading="Alignment Buffer Value">
-            Enter a search buffer value that's used to find features to align.<disabledText></disabledText>
-          </tooltip>
-        </customControl>
 
         <button id="esri_editing_SwitchParcelSelection" caption="Switch" keytip="SW" loadOnClick="false" className="SwitchParcelSelectionCommand"
           condition="esri_editing_parcelPolygonOrLinesSelectedCondition"
@@ -7712,6 +7907,18 @@
               condition="esri_editing_MapCondition" hidden="true">
           <tooltip heading="Select Parcels">
             Select one or more parcels.
+            <disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <tool id="esri_editing_MergeParcelPointsTool"
+              caption="Merge Parcel Points"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png"
+              className="MergeParcelPointsTool"
+              condition="esri_editing_MapCondition" hidden="true">
+          <tooltip heading="Merge Parcel Points">
+            Select one or more parcel points.
             <disabledText></disabledText>
           </tooltip>
         </tool>
@@ -7980,34 +8187,34 @@
         </button>
 
         <button id="esri_editing_parcel_HUD_ActiveRecordProperties" hidden="true"
-                caption="Properties" loadOnClick="false"
+                caption="Record Properties" loadOnClick="false"
                 className="ArcGIS.Desktop.Editing.ActiveRecordPropertiesCommand"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail16.png"
                 licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
-          <tooltip heading="Properties">
+          <tooltip heading="Record Properties">
             Show active record properties.<disabledText>Available only when there is an active record set.</disabledText>
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric"/>
         </button>
 
-        <button id="esri_editing_parcel_HUD_ActiveRecordAttributeTable" hidden="true"
-                caption="Attribute Table Showing Selection" loadOnClick="false"
-                className="ArcGIS.Desktop.Editing.ActiveRecordAttributeTableCommand"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpenSelected32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpenSelected16.png"
+        <button id="esri_editing_parcel_HUD_Options" hidden="true"
+                caption="Options" loadOnClick="false"
+                className="ArcGIS.Desktop.Editing.ParcelHUDOptionsCommand"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CogWheel32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CogWheel16.png"
                 licenseLevel="standard"
-                condition="esri_editing_activeParcelRecordCondition"
+                condition="esri_editing_parcelToolsVisibleCondition"
                 disableIfBusy="true">
-          <tooltip heading="Attribute Table Showing Selection">
-            Open and select the active record in the attribute table.<disabledText>Available only when there is an active record set.</disabledText>
+          <tooltip heading="Heads Up Display Options">
+            Show Heads Up Display options.<disabledText>Available only when there are selected parcels.</disabledText>
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric"/>
         </button>
         <!--end of parcel HUD context menu items-->
-
+        
       </controls>
 
       <tabGroups>
@@ -8050,12 +8257,13 @@
 
         <!-- ParcelFabric -->
         <tab id="esri_editing_parcelRecordsTab"
-             caption="Records"
+             caption="Parcel Record Workflows"
              condition="esri_editing_HasParcelFabricCondition"
              tabGroupID="esri_parcelfabric_CoreTabGroup"
              keytip="R">
           <group refID="esri_editing_parcelManageEditsGroup"/>
           <group refID="esri_editing_parcelRecordGroup"/>
+          <group refID="esri_editing_parcelFeaturesGroup"/>
           <group refID="esri_editing_parcelSelectionGroup"/>
           <group refID="esri_editing_parcelGallery"/>
           <group refID="esri_editing_parcelConstructionGroup"/>
@@ -8142,6 +8350,7 @@
           <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
           <button refID="esri_editing_ShowAttributes" size="middle" />
           <button refID="esri_mapping_clearSelectionButton" size="middle" />
+          <button refID="esri_mapping_zoomToSelectionButton" size="middle" />
         </group>
         <group id="esri_editing_EditGallery"
                launcherButtonID="esri_editing_openEditingSettingsButton"
@@ -8228,9 +8437,16 @@
         </group>
 
         <group id="esri_editing_parcelRecordGroup" caption="Records">
-          <toolbar refID="esri_editing_parcelRecordToolbar" size="large"/>
+          <button refID="esri_editing_recordTransparency" size="middle"/>
+          <toolbar refID="esri_editing_parcelRecordToolbar" size="middle"/>
           <button refID="esri_editing_parcelShowOnlyActive" size="large"/>
           <splitButton refID="esri_editing_manageRecordSplitButton" size="large" />
+        </group>
+
+        <group id="esri_editing_parcelFeaturesGroup" caption="Features">
+          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large"/>
+          <button refID="esri_editing_ShowEditFeaturesBtn" size="large"/>
+          <button refID="esri_editing_DelSelFeaturesBtn" size="large" />
         </group>
 
         <group id="esri_editing_parcelSelectionGroup" caption="Selection" launcherButtonID="esri_mapping_openSelectionOptionsButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png" launcherKeytip="ES">
@@ -8252,15 +8468,9 @@
           <button refID="esri_editing_copyLinesToParcelType" size="Large"/>
           <button refID="esri_editing_createParcelSeeds" size="Large"/>
           <toolPalette refID="esri_editing_parcelBuildPalette" size="large" />
-          <button refID="esri_editing_ShowCreateFeaturesBtn" size="middle"/>
-          <button refID="esri_editing_ShowEditFeaturesBtn" size="middle"/>
-          <button refID="esri_editing_DelSelFeaturesBtn" size="middle" />
         </group>
 
         <group id="esri_editing_parcelAlignment" caption="Alignment">
-          <tool refID="esri_editing_AlignParcelShowBuffer" size="large"/>
-          <toolbar refID="esri_editing_AlignParcelValueToolbar" size="middle"/>
-          <button refID="esri_editing_SwitchParcelSelection" size="middle"/>
           <splitButton refID="esri_editing_alignParcelsSplitButton" size="large" />
         </group>
 
@@ -8268,7 +8478,7 @@
           <gallery refID="esri_editing_ParcelLayersGallery" inline="false" size="large"/>
           <customControl refID="esri_editing_TopologySelectionComboBox" size="middle" />
           <toolPallete refID="esri_editing_ValidateSplitPallete" size="middle" />
-          <button refID="esri_editing_ShowErrorInspectorBtn" size="large"/>
+          <button refID="esri_editing_ShowErrorInspectorBtn" size="middle"/>
         </group>
 
         <group id="esri_editing_parcelLeastSquaresGroup" caption="Least Squares">
@@ -8280,6 +8490,7 @@
         <group id="esri_editing_parcelGapsAndOverlapsGroup" caption="Gaps and Overlaps">
           <splitButton refID="esri_editing_HighlightGapsAndOverlapsSplitButton" size="large" />
           <button refID="esri_editing_ClearHighlightedGapsAndOverlaps" size="large"/>
+          <button refID="esri_editing_alignParcelsSplitButton" size="large"/>
         </group>
         <!--ParcelFabric End-->
 
@@ -8356,11 +8567,6 @@
         <toolbar id="esri_editing_parcelRecordToolbar">
           <group>
             <customControl refID="esri_editing_parcelParcelEffectsControl" size="middle" />
-          </group>
-        </toolbar>
-        <toolbar id="esri_editing_AlignParcelValueToolbar">
-          <group>
-            <customControl refID="esri_editing_AlignParcelValueEntry" size="middle" />
           </group>
         </toolbar>
         <!--ParcelFabric End-->
@@ -8522,6 +8728,8 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true"/>
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8647,10 +8855,12 @@
             <button refID="esri_editing_EditVerticesAdd" />
             <button refID="esri_editing_EditVerticesDelete" />
             <button refID="esri_editing_EditVerticesContinue" />
-            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true"/>
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8695,6 +8905,8 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8708,6 +8920,8 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8721,6 +8935,10 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
+            <!-- Note that we are interested in putting a dynamic menu here too...-->
+            <!-- <menu refID="esri_editing_MFT_Menu"/> -->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8734,6 +8952,8 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8743,6 +8963,22 @@
             <button refID="esri_editing_PushPullCommand" />
             <button refID="esri_editing_SketchCircleMultipatch" />
             <button refID="esri_editing_SketchRectangleMultipatch" />
+            <button refID="esri_editing_FinishSketch" separator="true" />
+            <button refID="esri_editing_ClearSketch" />
+          </row>
+        </miniToolbar>
+        <miniToolbar id="esri_editing_toolbar_PushPullToolExperimental">
+          <row>
+            <button refID="esri_editing_PushPullCommand" />
+            <button refID="esri_editing_SketchCircleMultipatch" />
+            <button refID="esri_editing_SketchRectangleMultipatch" />
+            <button refID="esri_editing_SketchOffsetMultipatch" />
+            <button refID="esri_editing_SketchRoofFlat" separator="true"/>
+            <button refID="esri_editing_SketchRoofGable" />
+            <button refID="esri_editing_SketchRoofHip" />
+            <button refID="esri_editing_SketchRoofMansard" />
+            <button refID="esri_editing_SketchRoofDome" />
+			<button refID="esri_editing_SketchRoofExtrude" />
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8794,6 +9030,8 @@
             <button refID="esri_editing_StretchVertices" />
             <button refID="esri_editing_StretchTopology" separator="true"/>
             <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
           </row>
@@ -8807,6 +9045,23 @@
       </miniToolbars>
 
       <splitButtons>
+        <splitButton id="esri_editing_UtilityDisconnectSplitButton"
+                     caption="Disconnect"
+                     condition="esri_editing_MapCondition"
+                     hidden="true" disableIfBusy="true" loadOnClick="false">
+          <button refID="esri_editing_UtilityDisconnect"/>
+          <button refID="esri_editing_UtilityDisconnectCoincident"/>
+          <button refID="esri_editing_UtilityDisconnectAttached"/>
+          <button refID="esri_editing_UtilityDisconnectContained"/>
+        </splitButton>
+        <splitButton id="esri_editing_UtilityDisconnectSplitButton2"
+                     caption="Disconnect"
+                     condition="esri_editing_MapCondition"
+                     hidden="true" disableIfBusy="true" loadOnClick="false">
+          <button refID="esri_editing_UtilityDisconnect"/>
+          <customControl refID="esri_editing_UtilityNetworkDisconnectOptionsControl"/>
+        </splitButton>
+        
         <splitButton id="esri_editing_Attributes_TogglePlayWithSpeeds"
                      caption="Play"
                      condition="esri_editing_MapCondition"
@@ -8937,20 +9192,20 @@
         <!--parcel quality favorites for a 2d map-->
         <menu id="esri_editing_toolGroupParcelQualityFavorites2d" caption="Favorites" contextMenu="false">
           <button refID="esri_editing_shrinkParcelsToSeeds"/>
+          <button refID="esri_editing_reconstructParcelsFromSeeds"/>
           <button refID="esri_editing_MergeCollinearParcelBoundariesButton"/>
           <button refID="esri_editing_MergeParcelPoints"/>
           <button refID="esri_editing_SimplifyBySLACAButton"/>
           <button refID="esri_editing_deleteParcels"/>
-          <button refID="esri_editing_parcelBuildButton"/>
         </menu>
         <!--parcel quality favorites for a 3d map-->
         <menu id="esri_editing_toolGroupParcelQualityFavorites3d" caption="Favorites" contextMenu="false">
           <button refID="esri_editing_shrinkParcelsToSeeds"/>
+          <button refID="esri_editing_reconstructParcelsFromSeeds"/>
           <button refID="esri_editing_MergeCollinearParcelBoundariesButton"/>
           <button refID="esri_editing_MergeParcelPoints"/>
           <button refID="esri_editing_SimplifyBySLACAButton"/>
           <button refID="esri_editing_deleteParcels"/>
-          <button refID="esri_editing_parcelBuildButton"/>
         </menu>
         <!--alignment group-->
         <menu id="esri_editing_toolGroupAlignment" caption="Alignment" contextMenu="false">
@@ -8978,12 +9233,12 @@
         </menu>
         <!--divide group-->
         <menu id="esri_editing_toolGroupDivide" caption="Divide" contextMenu="false">
-          <button refID="esri_editing_PlanarizeLineFeatures"/>
+          <button refID="esri_editing_SplitCommand"/>
+          <button refID="esri_editing_DivideCommand"/>
           <button refID="esri_editing_ClipCommand"/>
           <button refID="esri_editing_ExplodeFeatures"/>
-          <button refID="esri_editing_SplitCommand"/>
+          <button refID="esri_editing_PlanarizeLineFeatures"/>
           <button refID="esri_editing_SliceMultipatchCommand"/>
-          <button refID="esri_editing_DivideCommand"/>
         </menu>
         <!--construct group-->
         <menu id="esri_editing_toolGroupConstruct" caption="Construct" contextMenu="false">
@@ -9032,6 +9287,7 @@
           <button refID="esri_editing_copyLinesToParcelType"/>
           <button refID="esri_editing_createParcelSeeds"/>
           <button refID="esri_editing_shrinkParcelsToSeeds"/>
+          <button refID="esri_editing_reconstructParcelsFromSeeds"/>
           <button refID="esri_editing_parcelBuildButton"/>
           <button refID="esri_editing_parcelBuildActiveRecordButton"/>
           <button refID="esri_editing_deleteParcels"/>
@@ -9040,6 +9296,7 @@
           <button refID="esri_editing_MergeCollinearParcelBoundariesButton"/>
           <button refID="esri_editing_SimplifyBySLACAButton"/>
           <button refID="esri_editing_reconstructParcelBoundaries"/>
+          <button refID="esri_editing_transferParcel"/>
         </menu>
 
         <menu id="esri_editing_toolGroupKnowledgeGraph" caption="Tools" contextMenu="false">
@@ -9135,6 +9392,7 @@
           <dynamicMenu refID="esri_editing_Attributes_SelectDynamicMenu" separator="true" inline="true"/>
           <button refID="esri_editing_Attributes_OnlySelectThisContextMenuItem" />
           <button refID="esri_editing_Attributes_UnselectContextMenuItem" />
+          <button refID="esri_editing_Attributes_SelectAssociationsDynamicMenu" separator="true"/>
           <button refID="esri_editing_Attributes_DeleteSelectionContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableWithSelectionContextMenuItem" />
@@ -9150,6 +9408,7 @@
           <dynamicMenu refID="esri_editing_Attributes_SelectDynamicMenu" separator="true" inline="true"/>
           <button refID="esri_editing_Attributes_OnlySelectThisContextMenuItem"/>
           <button refID="esri_editing_Attributes_UnselectContextMenuItem" />
+          <button refID="esri_editing_Attributes_SelectAssociationsDynamicMenu" separator="true"/>
           <button refID="esri_editing_Attributes_DeleteSelectionContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableWithSelectionContextMenuItem" />
@@ -9165,6 +9424,7 @@
           <button refID="esri_editing_Attributes_OnlySelectThisContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_ClearSelectionContextMenuItem" />
           <button refID="esri_editing_Attributes_UnselectValidFeaturesMenuItem" />
+          <button refID="esri_editing_Attributes_SelectAssociationsDynamicMenu" separator="true"/>
           <button refID="esri_editing_Attributes_DeleteSelectionContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableWithSelectionContextMenuItem" />
@@ -9176,6 +9436,7 @@
           <button refID="esri_editing_Attributes_OnlySelectThisContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_ClearSelectionContextMenuItem"/>
           <button refID="esri_editing_Attributes_UnselectValidFeaturesMenuItem" />
+          <button refID="esri_editing_Attributes_SelectAssociationsDynamicMenu" separator="true"/>
           <button refID="esri_editing_Attributes_DeleteSelectionContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableContextMenuItem" separator="true"/>
           <button refID="esri_editing_Attributes_OpenTableWithSelectionContextMenuItem" />
@@ -9509,6 +9770,7 @@
           <button   refID="esri_editing_annotationFlipAnnotationButton" />
           <button   refID="esri_editing_FinishSketch" separator="true" />
           <button   refID="esri_editing_ClearSketch" />
+          <button   refID="esri_editing_ShowAttributes" separator="true"/>
         </menu>
 
         <menu id="esri_editing_DimensionEditContextMenu" caption="Dimension Edit tool Context Menu" contextMenu="true">
@@ -9790,7 +10052,7 @@
           <button refID="esri_editing_tablePanToButton" />
           <button refID="esri_editing_tablePopupButton" />
           <button refID="esri_editing_tablePinnedPopupButton" />
-          <button refID="esri_editing_tableSelectRowButton" />
+          <button refID="esri_editing_tableSelectRowButtonSelectedView" />
           <button refID="esri_editing_tableHighlightRowButton" />
           <button refID="esri_editing_tableOpenAttachmentsButton" />
           <button refID="esri_editing_tableDeleteRow" />
@@ -9801,7 +10063,7 @@
           <button refID="esri_editing_tableDeleteRow" />
         </menu>
         <menu id="esri_editing_externalTableSelectedRowContextMenu" caption="Row" contextMenu="true">
-          <button refID="esri_editing_tableSelectRowButton" />
+          <button refID="esri_editing_tableSelectRowButtonSelectedView" />
           <button refID="esri_editing_tableHighlightRowButton" />
           <button refID="esri_editing_tableOpenAttachmentsButton" />
           <button refID="esri_editing_tableDeleteRow" />
@@ -9879,8 +10141,6 @@
           <button refID="esri_editing_traversePanToButton" />
           <button refID="esri_editing_traverseInsertCourseBefore" separator="true"/>
           <button refID="esri_editing_traverseInsertCourseAfter" />
-          <button refID="esri_editing_traverseSetClosingLocationBefore" />
-          <button refID="esri_editing_traverseSetClosingLocationAfter" />
           <button refID="esri_editing_traverseDeleteCourseButton" />
         </menu>
 
@@ -10150,24 +10410,6 @@
           <button refID="esri_editing_topology_fixTool_ShowRuleButton"/>
           <dynamicMenu refID="esri_editing_topology_fixTool_DynamicMenu" separator="true" inline="true"/>
         </menu>
-
-        <!--parcel rule fix method context menus-->
-        <!--Removed CreateRecord fix method from UI in 2.3. Need to implement it in the future release-->
-        <menu id="esri_editing_topology_PRTNonEmptyRecordIdContextMenu" caption="Editing GDB Topology Error Parcels Must Have A Record" contextMenu="true">
-          <button refID="esri_editing_topology_fix_AssignToActiveRecordContextMenuItem"/>
-          <!--<button refID="esri_editing_topology_fix_CreateRecordContextMenuItem"/>-->
-          <button refID="esri_editing_topology_fix_DeleteContextMenuItem"/>
-          <button refID="esri_editing_topology_fix_MarkAsExceptionContextMenuItem" separator="true"/>
-          <button refID="esri_editing_topology_fix_MarkAsErrorContextMenuItem"/>
-        </menu>
-
-        <menu id="esri_editing_topology_PRTNonEmptyPolygonRecordIdContextMenu" caption="Editing GDB Topology Error Parcel Must Have Non-empty Record ID" contextMenu="true">
-          <button refID="esri_editing_topology_fix_AssignToActiveRecordContextMenuItem"/>
-          <!--<button refID="esri_editing_topology_fix_CreateRecordContextMenuItem"/>-->
-          <button refID="esri_editing_topology_fix_DeleteContextMenuItem"/>
-          <button refID="esri_editing_topology_fix_MarkAsExceptionContextMenuItem" separator="true"/>
-          <button refID="esri_editing_topology_fix_MarkAsErrorContextMenuItem"/>
-        </menu>
         <!--end of parcel rule fix method context menus-->
 
         <menu id="esri_editing_ParcelManageRecordsPaneContextMenu" caption="Mange Records" contextMenu="true">
@@ -10187,13 +10429,13 @@
           <button refID="esri_editing_parcel_HUD_ManageRecords"/>
           <button refID="esri_editing_parcel_HUD_ActivateRecordFromSelectedParcel"/>
           <dynamicMenu refID="esri_editing_parcel_HUD_RecentlyUsedRecordsMenu" />
+          <button refID="esri_editing_parcel_HUD_ActiveRecordProperties" />
+          <button refID="esri_editing_parcel_HUD_SelectFeaturesInActiveRecord" separator="true"/>
+          <button refID="esri_editing_parcel_HUD_AssignFeaturesToActiveRecord"/>
           <button refID="esri_editing_parcel_HUD_ZoomToActiveRecord" separator="true"/>
           <button refID="esri_editing_parcel_HUD_PanToActiveRecord"/>
           <button refID="esri_editing_parcel_HUD_SelectActiveRecord"/>
-          <button refID="esri_editing_parcel_HUD_ActiveRecordAttributeTable" separator="true"/>
-          <button refID="esri_editing_parcel_HUD_SelectFeaturesInActiveRecord" separator="true"/>
-          <button refID="esri_editing_parcel_HUD_AssignFeaturesToActiveRecord"/>
-          <button refID="esri_editing_parcel_HUD_ActiveRecordProperties" separator="true"/>
+          <button refID="esri_editing_parcel_HUD_Options" separator="true"/>
         </menu>
 
         <menu id="esri_editing_attributeTransferContextMenu" caption="Attribute Transfer Menu" contextMenu="true">
@@ -10300,14 +10542,43 @@
 
   </modules>
 
+  <wizards>
+    <insertWizard id ="esri_editing_transferParcelWizard"
+                  caption="Transfer Parcel"
+                  pageHeight="400"
+                  pageWidth="250"
+                  isPageListVisible="true"
+                  canMoveNextOnValidOnly="true"
+                  resizable="true">
+      <page id ="esri_editing_transferParcelTransferPage"
+            caption="Select a parcel to transfer"
+            className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelPageViewModel">
+        <content className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelPageView"/>
+        <toolTip>Select a parcel to transfer.</toolTip>
+      </page>
+      <page id ="esri_editing_transferParcelSourcePage"
+            caption="Select source parcels"
+            className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.SourceParcelsPageViewModel">
+        <content className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.SourceParcelsPageView"/>
+        <toolTip>Select source parcels to transfer from.</toolTip>
+      </page>
+      <page id ="esri_editing_transferParcelTargetPage"
+            caption="Select target parcels"
+            className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TargetParcelsPageViewModel">
+        <content className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TargetParcelsPageView"/>
+        <toolTip>Select target parcels to transfer to.</toolTip>
+      </page>
+    </insertWizard>
+  </wizards>
+  
   <propertySheets>
     <insertSheet id ="esri_editing_settingsPropertySheet" caption="Editor Settings"
                  pageHeight="500" pageWidth="640" resizable="true">
       <page id="esri_editing_SnappingPropertyPage"  caption="Snapping"
                         className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsViewModel"
-                        assembly="ArcGIS.Desktop.Mapping.dll">
+                        assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll">
         <content className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsView"
-                 assembly="ArcGIS.Desktop.Mapping.dll" />
+                 assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" />
       </page>
       <page id="esri_editing_GridPropertyPage"  caption="Grid"
             className="GridSettingsViewModel">

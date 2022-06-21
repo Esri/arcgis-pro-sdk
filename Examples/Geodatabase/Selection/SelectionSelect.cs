@@ -127,7 +127,7 @@ namespace SDKExamples.GeodatabaseSDK
           // Using SpatialQueryFilter with Selection.Select.
           SpatialQueryFilter spatialQueryFilter = new SpatialQueryFilter
           {
-            FilterGeometry = new PolygonBuilder(new List<Coordinate2D>
+            FilterGeometry = new PolygonBuilderEx(new List<Coordinate2D>
             {
               new Coordinate2D(1021880, 1867396),
               new Coordinate2D(1028223, 1870705),

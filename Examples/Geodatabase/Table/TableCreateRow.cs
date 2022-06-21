@@ -132,7 +132,7 @@ namespace SDKExamples
 
             // Do some other processing with the row.
           }
-          catch (GeodatabaseException exObj)
+          catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
           {
             Console.WriteLine(exObj);
           }
@@ -192,7 +192,7 @@ namespace SDKExamples
 
             // Do some other processing with the row.
           }
-          catch (GeodatabaseException exObj)
+          catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
           {
             Console.WriteLine(exObj);
           }

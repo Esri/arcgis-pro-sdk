@@ -135,7 +135,7 @@ namespace SDKExamples
 
               row = enterpriseTable.CreateRow(rowBuffer);
             }
-            catch (GeodatabaseException exObj)
+            catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
             {
               Console.WriteLine(exObj);
             }

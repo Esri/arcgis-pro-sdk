@@ -71,11 +71,11 @@ namespace EditingSDKExamples
         //get the geometry of the selected feature.
         var selectedFeatures = MapView.Active.Map.GetSelection();
         var insp = new Inspector();
-        insp.Load(selectedFeatures.Keys.First(), selectedFeatures.Values.First());
+        insp.Load(selectedFeatures.ToDictionary().Keys.First(), selectedFeatures.ToDictionary().Values.First());
         var selGeom = insp.Shape;
 
         //var extPolyline = some geometry operation.
-        var extPolyline = new MapPointBuilder(1.0, 1.0).ToGeometry();
+        var extPolyline = new MapPointBuilderEx(1.0, 1.0).ToGeometry();
 
         //set the new geometry back on the feature
         insp.Shape = extPolyline;
@@ -119,9 +119,9 @@ namespace EditingSDKExamples
     protected Task onEditComplete(EditCompletedEventArgs args)
     {
       //show the count of features changed
-      Console.WriteLine("Creates: " + args.Creates.Values.Sum(list => list.Count).ToString());
-      Console.WriteLine("Modifies: " + args.Modifies.Values.Sum(list => list.Count).ToString());
-      Console.WriteLine("Deletes: " + args.Deletes.Values.Sum(list => list.Count).ToString());
+      Console.WriteLine("Creates: " + args.Creates.ToDictionary().Values.Sum(list => list.Count).ToString());
+      Console.WriteLine("Modifies: " + args.Modifies.ToDictionary().Values.Sum(list => list.Count).ToString());
+      Console.WriteLine("Deletes: " + args.Deletes.ToDictionary().Values.Sum(list => list.Count).ToString());
       return Task.FromResult(0);
     }
 
@@ -138,13 +138,15 @@ namespace EditingSDKExamples
       Snapping.SetSnapMode(SnapMode.Point, true);
 
       //set multiple snap modes exclusively. All others will be disabled.
-      Snapping.SetSnapModes(SnapMode.Edge, SnapMode.Point);
+      //at 2.x - Snapping.SetSnapModes(SnapMode.Edge, SnapMode.Point);
+      Snapping.SetSnapModes(new List<SnapMode>() { SnapMode.Edge, SnapMode.Point });
 
       await QueuedTask.Run(() =>
       {
         //set snapping options via get/set options
         var snapOptions = Snapping.GetOptions(myMap);
-        snapOptions.SnapToSketchEnabled = true;
+        //at 2.x - snapOptions.SnapToSketchEnabled = true;
+        snapOptions.IsSnapToSketchEnabled = true;
         snapOptions.XYTolerance = 100;
         Snapping.SetOptions(myMap, snapOptions);
       });
@@ -198,9 +200,10 @@ namespace EditingSDKExamples
         //get all templates on this layer
         var layerTemplates = layerDef.FeatureTemplates.ToList();
         //copy template to new temporary one
-        var resTempDef = resTemplate.GetDefinition() as CIMFeatureTemplate;
-        //could also create a new one here
-        //var newTemplate = new CIMFeatureTemplate();
+        //At 2.x - var resTempDef = resTemplate.GetDefinition() as CIMFeatureTemplate;
+        var resTempDef = resTemplate.GetDefinition() as CIMRowTemplate;
+        //could also create a new one here 
+        //var newTemplate = new CIMRowTemplate();
 
         //set template values
         resTempDef.Name = "Residential copy";

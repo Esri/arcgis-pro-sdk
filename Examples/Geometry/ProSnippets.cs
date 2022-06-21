@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Media.Media3D;
 using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
@@ -28,6 +27,7 @@ using ArcGIS.Desktop.Mapping;
 
 namespace ProSnippetsGeometry
 {
+
   class GeometryCodeExamples
   {
     #region ProSnippet Group: SpatialReference
@@ -36,9 +36,9 @@ namespace ProSnippetsGeometry
     public void SpatialReference()
     {
       {
-        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32)
-        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32)
-        // cref: Construct a SpatialReference - from a well-known ID;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ToSpatialReference
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.ToSpatialReference
         #region Construct a SpatialReference - from a well-known ID
 
         // Use a builder convenience method or use a builder constructor.
@@ -61,8 +61,9 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Construct a SpatialReference - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.String)
-        // cref: Construct a SpatialReference - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.ToSpatialReference
         #region Construct a SpatialReference - from a string
 
         // Use a builder convenience method or use a builder constructor.
@@ -87,9 +88,9 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReference.IsGeographic
-        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReference.IsProjected
-        // cref: Use WGS84 SpatialReference;ArcGIS.Core.Geometry.SpatialReferences.WGS84
+        // cref: ArcGIS.Core.Geometry.SpatialReference.IsGeographic
+        // cref: ArcGIS.Core.Geometry.SpatialReference.IsProjected
+        // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
         #region Use WGS84 SpatialReference
 
         SpatialReference wgs84 = SpatialReferences.WGS84;
@@ -100,10 +101,10 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.Int32)
-        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.Int32)
-        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkid
-        // cref: Construct a SpatialReference with a vertical coordinate system - from well-known IDs;ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkt
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.Int32)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.Int32)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkid
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.VcsWkt
         #region Construct a SpatialReference with a vertical coordinate system - from well-known IDs
 
         // Use a builder convenience method or use a builder constructor.
@@ -120,12 +121,12 @@ namespace ProSnippetsGeometry
         {
           using (SpatialReferenceBuilder sb = new SpatialReferenceBuilder(4326, 115700))
           {
-            // spatialReferenceBuilder properties
-            // sb.wkid = 4326
-            // sb.Wkt = "GEOGCS["MyGCS84",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT[\"Radian\",1.0]]"
-            // sb.name = GCS_WGS_1984
-            // sb.vcsWkid = 115700
-            // sb.VcsWkt = "VERTCS["WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]
+            // SpatialReferenceBuilder properties
+            //   sb.wkid == 4326
+            //   sb.Wkt == "GEOGCS["MyGCS84",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PRIMEM["Greenwich",0.0],UNIT[\"Radian\",1.0]]"
+            //   sb.name == GCS_WGS_1984
+            //   sb.vcsWkid == 115700
+            //   sb.VcsWkt == "VERTCS["WGS_1984",DATUM["D_WGS_1984",SPHEROID["WGS_1984",6378137.0,298.257223563]],PARAMETER["Vertical_Shift",0.0],PARAMETER["Direction",1.0],UNIT["Meter",1.0]]
 
             // do something with the builder
 
@@ -137,10 +138,10 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.String)
-        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.String)
-        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReference.VcsWkid
-        // cref: Construct a SpatialReference with a vertical coordinate system - from a string;ArcGIS.Core.Geometry.SpatialReference.VcsWkt
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.Int32,System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32,System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReference.VcsWkid
+        // cref: ArcGIS.Core.Geometry.SpatialReference.VcsWkt
         #region Construct a SpatialReference with a vertical coordinate system - from a string 
 
         // Use a builder convenience method or use a builder constructor.
@@ -150,10 +151,11 @@ namespace ProSnippetsGeometry
 
         // Builder convenience methods don't need to run on the MCT.
         SpatialReference sr4326_customVertical = SpatialReferenceBuilder.CreateSpatialReference(4326, custom_vWkt);
-        // sr4326_customVertical.wkid = 4326
-        // sr4326_customVertical.vert_wkid = 0
-        // sr4326_customVertical.vert_wkt = custom_vWkt
-        // sr4326_customVertical.hasVcs = true
+        // SpatialReferenceBuilder properties
+        //   sr4326_customVertical.wkid == 4326
+        //   sr4326_customVertical.vert_wkid == 0
+        //   sr4326_customVertical.vert_wkt == custom_vWkt
+        //   sr4326_customVertical.hasVcs == true
 
         // Builder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -170,9 +172,11 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.Gcs
-        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.GcsWkid
-        // cref: Construct a SpatialReference with a custom PCS - from a string;ArcGIS.Core.Geometry.SpatialReference.GcsWkt
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.#ctor(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Gcs
+        // cref: ArcGIS.Core.Geometry.SpatialReference.GcsWkid
+        // cref: ArcGIS.Core.Geometry.SpatialReference.GcsWkt
         #region Construct a SpatialReference with a custom PCS - from a string
 
         // Use a builder convenience method or use a builder constructor.
@@ -182,15 +186,16 @@ namespace ProSnippetsGeometry
 
         // Builder convenience methods don't need to run on the MCT.
         SpatialReference spatialReference = SpatialReferenceBuilder.CreateSpatialReference(customWkt);
-        // spatialReference.Wkt = customWkt
-        // spatialReference.Wkid = 0
-        // spatialReference.VcsWkid = 0
-        // spatialReference.GcsWkid = 4326
+        // SpatialReferenceBuilder properties
+        //   spatialReference.Wkt == customWkt
+        //   spatialReference.Wkid == 0
+        //   spatialReference.VcsWkid == 0
+        //   spatialReference.GcsWkid == 4326
 
         SpatialReference gcs = spatialReference.Gcs;
-        // gcs.Wkid = 4326
-        // gcs.IsGeographic = true
-        // sr.GcsWkt = gcs.Wkt
+        // gcs.Wkid == 4326
+        // gcs.IsGeographic == true
+        // spatialReference.GcsWkt == gcs.Wkt
 
         // Builder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -207,39 +212,39 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseM
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseX
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseY
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.FalseZ
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.HasVcs
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.MScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.MTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Name
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Unit
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Wkid
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.Wkt
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYResolution
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.XYTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReference.ZUnit
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseM
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseX
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseY
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseZ
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.MScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.MTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Name
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Unit
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkid
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkt
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYResolution
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZScale
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZTolerance
-        // cref: SpatialReference Properties;ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZUnit
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Wkid
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Wkt
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Name
+        // cref: ArcGIS.Core.Geometry.SpatialReference.XYScale
+        // cref: ArcGIS.Core.Geometry.SpatialReference.XYTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReference.XYResolution
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Unit
+        // cref: ArcGIS.Core.Geometry.SpatialReference.ZScale
+        // cref: ArcGIS.Core.Geometry.SpatialReference.ZTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReference.ZUnit
+        // cref: ArcGIS.Core.Geometry.SpatialReference.MScale
+        // cref: ArcGIS.Core.Geometry.SpatialReference.MTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReference.FalseX
+        // cref: ArcGIS.Core.Geometry.SpatialReference.FalseY
+        // cref: ArcGIS.Core.Geometry.SpatialReference.FalseZ
+        // cref: ArcGIS.Core.Geometry.SpatialReference.FalseM
+        // cref: ArcGIS.Core.Geometry.SpatialReference.HasVcs
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkid
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.Wkt
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.Name
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYScale
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.XYResolution
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.Unit
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZScale
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.ZUnit
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.MScale
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.MTolerance
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseX
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseY
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseZ
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseM
         #region SpatialReference Properties
 
         // Builder constructors need to run on the MCT.
@@ -303,16 +308,16 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReference.ToJson
-        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReference.ToXML
-        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromJson(System.String)
-        // cref: Import and Export Spatial Reference;ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromXML(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReference.ToJson
+        // cref: ArcGIS.Core.Geometry.SpatialReference.ToXml
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromJson(System.String)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromXml(System.String)
         #region Import and Export Spatial Reference
 
         SpatialReference srWithVertical = SpatialReferenceBuilder.CreateSpatialReference(4326, 6916);
 
-        string xml = srWithVertical.ToXML();
-        SpatialReference importedSR = SpatialReferenceBuilder.FromXML(xml);
+        string xml = srWithVertical.ToXml();
+        SpatialReference importedSR = SpatialReferenceBuilder.FromXml(xml);
         // importedSR.Wkid = 4326
         // importedSR.VcsWkid = 6916
 
@@ -325,31 +330,37 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Determine grid convergence for a SpatialReference at a given point;ArcGIS.Core.Geometry.SpatialReference.ConvergenceAngle(ArcGIS.Core.Geometry.Coordinate2D)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.Project
+        // cref: ArcGIS.Core.Geometry.SpatialReference.GetConvergenceAngle(ArcGIS.Core.Geometry.Coordinate2D)
         #region Determine grid convergence for a SpatialReference at a given point
 
         Coordinate2D coordinate = new Coordinate2D(10, 30);
-        double angle = SpatialReferences.WGS84.ConvergenceAngle(coordinate);
+        double angle = SpatialReferences.WGS84.GetConvergenceAngle(coordinate);
         // angle = 0
 
         SpatialReference srUTM30N = SpatialReferenceBuilder.CreateSpatialReference(32630);
         coordinate.X = 500000;
         coordinate.Y = 550000;
-        angle = srUTM30N.ConvergenceAngle(coordinate);
+        angle = srUTM30N.GetConvergenceAngle(coordinate);
         // angle = 0
 
-        MapPoint pointWGS84 = MapPointBuilder.CreateMapPoint(10, 50, SpatialReferences.WGS84);
-        MapPoint pointUTM30N = GeometryEngine.Instance.Project(pointWGS84, srUTM30N) as MapPoint;
+        MapPoint pointWGS84 = MapPointBuilderEx.CreateMapPoint(10, 50, SpatialReferences.WGS84);
+        MapPoint pointUTM30N = GeometryEngine.Instance.Project(
+          pointWGS84, srUTM30N) as MapPoint;
 
         coordinate = (Coordinate2D)pointUTM30N;
         // get convergence angle and convert to degrees
-        angle = srUTM30N.ConvergenceAngle(coordinate) * 180 / Math.PI;
+        angle = srUTM30N.GetConvergenceAngle(coordinate) * 180 / Math.PI;
         // angle = 10.03
 
         #endregion
       }
 
       {
+        // cref: ArcGIS.Core.CIM.CIMMap.DatumTransforms
+        // cref: ArcGIS.Core.CIM.CIMDatumTransform
+        // cref: ArcGIS.Core.CIM.CIMMap.HVDatumTransforms
+        // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation
         #region Datum
 
         var cimMapDefinition = MapView.Active.Map.GetDefinition();
@@ -362,14 +373,15 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.Name
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidFlattening
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidName
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidSemiMajorAxis
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidSemiMinorAxis
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.SpheroidWkid
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.Datum.Wkid
-        // cref: SpatialReference Datum and datum properties;ArcGIS.Core.Geometry.SpatialReference.Datum
+        // cref: ArcGIS.Core.Geometry.SpatialReference.Datum
+        // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
+        // cref: ArcGIS.Core.Geometry.Datum.Name
+        // cref: ArcGIS.Core.Geometry.Datum.Wkid
+        // cref: ArcGIS.Core.Geometry.Datum.SpheroidName
+        // cref: ArcGIS.Core.Geometry.Datum.SpheroidWkid
+        // cref: ArcGIS.Core.Geometry.Datum.SpheroidFlattening
+        // cref: ArcGIS.Core.Geometry.Datum.SpheroidSemiMajorAxis
+        // cref: ArcGIS.Core.Geometry.Datum.SpheroidSemiMinorAxis
         #region SpatialReference Datum and datum properties
 
         // Get datum of a spatial reference
@@ -404,9 +416,9 @@ namespace ProSnippetsGeometry
 
     public void Coordinate3D()
     {
-      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.QueryComponents
-      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.QueryPolarComponents
-      // cref: Vector Polar Coordinates;ArcGIS.Core.Geometry.Coordinate3D.SetPolarComponents(System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.QueryPolarComponents
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.SetPolarComponents(System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.QueryComponents
       #region Vector Polar Coordinates
       Coordinate3D polarVector = new Coordinate3D(0, 7, 0);
       Tuple<double, double, double> polarComponents = polarVector.QueryPolarComponents();
@@ -422,8 +434,8 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: Getting vector inclination;ArcGIS.Core.Geometry.Coordinate3D.SetComponents(System.Double,System.Double,System.Double)
-      // cref: Getting vector inclination;ArcGIS.Core.Geometry.Coordinate3D.Inclination
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.SetComponents(System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.Inclination
       #region Getting vector inclination
 
       Coordinate3D v = new Coordinate3D(0, 0, 7);
@@ -437,7 +449,9 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: Getting vector azimuth;ArcGIS.Core.Geometry.Coordinate3D.Azimuth
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.Azimuth
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.SetComponents
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians
       #region Getting vector azimuth
       Coordinate3D vector = new Coordinate3D(0, 7, 0);
       double azimuth = vector.Azimuth;      // azimuth = 0
@@ -455,13 +469,18 @@ namespace ProSnippetsGeometry
 
     public void Coordinate3D_Operations()
     {
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.#ctor(System.Double,System.Double,System.Double)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.AddCoordinate3D(ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.CrossProduct(ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.DotProduct(ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Move(System.Double,System.Double,System.Double)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Rotate(System.Double,ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Vector Operations;ArcGIS.Core.Geometry.Coordinate3D.Scale(System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.#ctor(System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.DotProduct(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.CrossProduct(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.AddCoordinate3D(ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.Rotate(System.Double,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.Scale(System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.SetEmpty
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.Move(System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.op_Addition(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.op_Subtraction(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.op_Equality(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.Coordinate3D.op_Inequality(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
       #region Vector Operations
 
       // Easy 3D vectors
@@ -535,6 +554,20 @@ namespace ProSnippetsGeometry
 
     public void Coordinate2D()
     {
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.#ctor(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.Magnitude
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.DotProduct(ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.op_Addition(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.op_Subtraction(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.Rotate(System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.Rotate(System.Double,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.op_Equality(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.op_Inequality(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.Scale(System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.Move(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.QueryComponents
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.GetUnitVector
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.SetComponents(System.Double,System.Double)
       #region 2D Vector Operations
       Coordinate2D v = new Coordinate2D(0, 1);
       // v.Magnitude = 1
@@ -586,70 +619,94 @@ namespace ProSnippetsGeometry
 
     public void Builders()
     {
-      // cref: Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasM
-      // cref: Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasZ
-      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasID
-      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasM
-      // cref: Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasZ
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasZ
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasM
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasID
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasZ
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasM
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasID
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(ArcGIS.Core.Geometry.Polyline polyline)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(ArcGIS.Core.Geometry.Polygon polygon)
+      // cref: ArcGIS.Core.Geometry.AttributeFlags
       #region Builder Properties
 
       // list of points
       List<MapPoint> points = new List<MapPoint>
       {
-        MapPointBuilder.CreateMapPoint(0, 0, 2, 3, 1),
-        MapPointBuilder.CreateMapPoint(1, 1, 5, 6),
-        MapPointBuilder.CreateMapPoint(2, 1, 6),
-        MapPointBuilder.CreateMapPoint(0, 0)
+        MapPointBuilderEx.CreateMapPoint(0, 0, 2, 3, 1),
+        MapPointBuilderEx.CreateMapPoint(1, 1, 5, 6),
+        MapPointBuilderEx.CreateMapPoint(2, 1, 6),
+        MapPointBuilderEx.CreateMapPoint(0, 0)
       };
 
       // will have attributes because it is created with convenience method
-      Polyline polylineWithAttrs = PolylineBuilder.CreatePolyline(points);
-
+      Polyline polylineWithAttrs = PolylineBuilderEx.CreatePolyline(points);
       bool hasZ = polylineWithAttrs.HasZ;          // hasZ = true
       bool hasM = polylineWithAttrs.HasM;          // hasM = true
       bool hasID = polylineWithAttrs.HasID;        // hasID = true
 
+      // will not have attributes because it is specified as a parameter
+      Polyline polylineWithoutAttrs = 
+        PolylineBuilderEx.CreatePolyline(points, AttributeFlags.None);
+      hasZ = polylineWithoutAttrs.HasZ;          // hasZ = false
+      hasM = polylineWithoutAttrs.HasM;          // hasM = false
+      hasID = polylineWithoutAttrs.HasID;        // hasID = false
+
       // will have attributes because it is created with convenience method
-      Polygon polygonWithAttrs = PolygonBuilder.CreatePolygon(points);
+      Polygon polygonWithAttrs = PolygonBuilderEx.CreatePolygon(points);
       hasZ = polygonWithAttrs.HasZ;               // hasZ = true
       hasM = polygonWithAttrs.HasM;               // hasM = true
       hasID = polygonWithAttrs.HasID;             // hasID = true
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // will not have attributes because it is passed something other than an attributed polyline
-        using (PolylineBuilder polylineB = new PolylineBuilder(points))
-        {
-          hasZ = polylineB.HasZ;                      // hasZ = false
-          hasM = polylineB.HasM;                      // hasM = false
-          hasID = polylineB.HasID;                    // hasID = false
-        }
+      // will not have attributes because it is specified as a parameter
+      Polygon polygonWithoutAttrs = 
+            PolygonBuilderEx.CreatePolygon(points, AttributeFlags.None);
+      hasZ = polygonWithoutAttrs.HasZ;               // hasZ = false
+      hasM = polygonWithoutAttrs.HasM;               // hasM = false
+      hasID = polygonWithoutAttrs.HasID;             // hasID = false
 
-        // will have attributes because it is passed an attributed polyline
-        using (PolylineBuilder polylineB = new PolylineBuilder(polylineWithAttrs))
-        {
-          hasZ = polylineB.HasZ;                      // hasZ = true
-          hasM = polylineB.HasM;                      // hasM = true
-          hasID = polylineB.HasID;                    // hasID = true
-        }
+      // will not have attributes because it is specified as a parameter
+      PolylineBuilderEx polylineB = 
+                 new PolylineBuilderEx(points, AttributeFlags.None);
+      hasZ = polylineB.HasZ;                      // hasZ = false
+      hasM = polylineB.HasM;                      // hasM = false
+      hasID = polylineB.HasID;                    // hasID = false
 
-        // will not have attributes because it is passed something other than an attributed polygon
-        using (PolygonBuilder polygonB = new PolygonBuilder(points))
-        {
-          hasZ = polygonB.HasZ;                       // hasZ = false
-          hasM = polygonB.HasM;                       // hasM = false
-          hasID = polygonB.HasID;                     // hasID = false
-        }
+      // will have attributes because it is passed an attributed polyline
+      polylineB = new PolylineBuilderEx(polylineWithAttrs);
+      hasZ = polylineB.HasZ;                      // hasZ = true
+      hasM = polylineB.HasM;                      // hasM = true
+      hasID = polylineB.HasID;                    // hasID = true
 
-        // will have attributes because it is passed an attributed polygon
-        using (PolygonBuilder polygonB = new PolygonBuilder(polygonWithAttrs))
-        {
-          hasZ = polygonB.HasZ;                       // hasZ = true
-          hasM = polygonB.HasM;                       // hasM = true
-          hasID = polygonB.HasID;                     // hasID = true
-        }
-      });
+      // will not have attributes because it is passed a non-attributed polyline
+      polylineB = new PolylineBuilderEx(polylineWithoutAttrs);
+      hasZ = polylineB.HasZ;                      // hasZ = false
+      hasM = polylineB.HasM;                      // hasM = false
+      hasID = polylineB.HasID;                    // hasID = false
+
+      // will not have attributes because it is specified as a parameter
+      PolygonBuilderEx polygonB = new PolygonBuilderEx(points, AttributeFlags.None);
+      hasZ = polygonB.HasZ;                       // hasZ = false
+      hasM = polygonB.HasM;                       // hasM = false
+      hasID = polygonB.HasID;                     // hasID = false
+
+      // will have attributes because it is passed an attributed polygon
+      polygonB = new PolygonBuilderEx(polygonWithAttrs);
+      hasZ = polygonB.HasZ;                       // hasZ = true
+      hasM = polygonB.HasM;                       // hasM = true
+      hasID = polygonB.HasID;                     // hasID = true
+
+      // will not have attributes because it is passed a non-attributed polygon
+      polygonB = new PolygonBuilderEx(polygonWithoutAttrs);
+      hasZ = polygonB.HasZ;                       // hasZ = true
+      hasM = polygonB.HasM;                       // hasM = true
+      hasID = polygonB.HasID;                     // hasID = true
 
       #endregion
     }
@@ -660,40 +717,32 @@ namespace ProSnippetsGeometry
     public void MapPoint()
     {
       {
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.Geometry.Clone
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double)
-        // cref: Construct a MapPoint;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry(ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ToGeometry
+        // cref: ArcGIS.Core.Geometry.Geometry.Clone
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a MapPoint
 
         // Use a builder convenience method or use a builder constructor.
 
-        // Builder convenience methods don't need to run on the MCT.
         // create a 3d point with M
-        MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 2.0, 3.0, 4.0);
-
-        MapPoint ptWithM = null;
-
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (MapPointBuilder mb = new MapPointBuilder(1.0, 2.0, 3.0, 4.0))
-          {
-            // do something with the builder
-
-            ptWithM = mb.ToGeometry();
-          }
-        });
-
-        MapPoint clone = ptWithM.Clone() as MapPoint;
-        MapPoint anotherM = MapPointBuilder.CreateMapPoint(ptWithM);
+        MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, 3.0, 4.0);
 
 
         // builderEx constructors don't need to run on the MCT.
+        MapPointBuilderEx mb = new MapPointBuilderEx(1.0, 2.0, 3.0, 4.0);
+        // do something with the builder
+
+        MapPoint ptWithM = mb.ToGeometry();
+
+
+        MapPoint clone = ptWithM.Clone() as MapPoint;
+        MapPoint anotherM = MapPointBuilderEx.CreateMapPoint(ptWithM);
+
+
         MapPointBuilderEx builderEx = new MapPointBuilderEx(1.0, 2.0, 3.0);
         builderEx.HasM = true;
         builderEx.M = 4.0;
@@ -713,68 +762,58 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint)
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(ArcGIS.Core.Geometry.SpatialReference)
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.SetValues(System.Double,System.Double,System.Double)
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint)
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.ToGeometry
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasM
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.EnvelopeBuilder.HasZ
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasID
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasM
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.HasZ
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.GeometryBuilder`1.IsEmpty
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.IsEmpty
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.M
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.X
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.Y
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPoint.Z
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.M
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.X
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.Y
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.Z
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasID
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasM
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.HasZ
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.ID
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.IsEmpty
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.M
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.X
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.Y
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilderEx.Z
-        // cref: MapPoint Builder Properties;ArcGIS.Core.Geometry.MapPointBuilder.ToGeometry(ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasZ
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasM
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasID
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ToGeometry
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.X
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.Y
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.Z
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.M
+        // cref: ArcGIS.Core.Geometry.MapPoint.X
+        // cref: ArcGIS.Core.Geometry.MapPoint.Y
+        // cref: ArcGIS.Core.Geometry.MapPoint.Z
+        // cref: ArcGIS.Core.Geometry.MapPoint.M
+        // cref: ArcGIS.Core.Geometry.MapPoint.ID
+        // cref: ArcGIS.Core.Geometry.Geometry.HasZ
+        // cref: ArcGIS.Core.Geometry.Geometry.HasM
+        // cref: ArcGIS.Core.Geometry.Geometry.HasID
+        // cref: ArcGIS.Core.Geometry.MapPoint.IsEmpty
+        // cref: ArcGIS.Core.Geometry.MapPoint.IsEqual
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint, ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint, ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ID
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.IsEmpty
+        // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasZ
+        // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasM
+        // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasID
+        // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.IsEmpty
         #region MapPoint Builder Properties
 
-        // Use a builder convenience method or use a builder constructor.
+        // Use a builderEx convenience method or a builderEx constructor.
+        //  neither need to run on the MCT.
 
         MapPoint point1 = null;
         MapPoint point2 = null;
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (MapPointBuilder mb = new MapPointBuilder(1.0, 2.0, 3.0))
-          {
-            bool bhasZ = mb.HasZ;          // hasZ = true
-            bool bhasM = mb.HasM;          // hasM = false
-            bool bhasID = mb.HasID;        // hasID = false
+        MapPointBuilderEx mb = new MapPointBuilderEx(1.0, 2.0, 3.0);
+        bool bhasZ = mb.HasZ;          // hasZ = true
+        bool bhasM = mb.HasM;          // hasM = false
+        bool bhasID = mb.HasID;        // hasID = false
 
-            // do something with the builder
+        // do something with the builder
 
-            point1 = mb.ToGeometry();
+        point1 = mb.ToGeometry();
 
-            // change some of the builder properties
-            mb.X = 11;
-            mb.Y = 22;
-            mb.HasZ = false;
-            mb.HasM = true;
-            mb.M = 44;
-            // create another point
-            point2 = mb.ToGeometry();
-          }
-        });
+        // change some of the builder properties
+        mb.X = 11;
+        mb.Y = 22;
+        mb.HasZ = false;
+        mb.HasM = true;
+        mb.M = 44;
+        // create another point
+        point2 = mb.ToGeometry();
 
         double x = point1.X;                  // x = 1.0
         double y = point1.Y;                  // y = 2.0
@@ -788,8 +827,9 @@ namespace ProSnippetsGeometry
 
         bool isEqual = point1.IsEqual(point2);    // isEqual = false
 
-        // Builder convenience methods don't need to run on the MCT.
-        MapPoint point3 = MapPointBuilder.CreateMapPoint(point1);
+
+        // BuilderEx convenience methods 
+        MapPoint point3 = MapPointBuilderEx.CreateMapPoint(point1);
         x = point3.X;                   // x = 1.0
         y = point3.Y;                   // y = 2.0
         z = point3.Z;                   // z = 3.0
@@ -800,7 +840,6 @@ namespace ProSnippetsGeometry
         hasID = point3.HasID;           // hasID = false
 
 
-        // builderEx constructors don't need to run on the MCT.
         MapPointBuilderEx builderEx = new MapPointBuilderEx(point1);
         x = builderEx.X;              // x = 1.0
         y = builderEx.Y;              // y = 2.0
@@ -815,8 +854,7 @@ namespace ProSnippetsGeometry
         MapPoint point4 = builderEx.ToGeometry() as MapPoint;
 
 
-        // builderEx convenience methods don't need to run on the MCT.
-        MapPoint point5 =MapPointBuilderEx.CreateMapPoint(point1);
+        MapPoint point5 = MapPointBuilderEx.CreateMapPoint(point1);
         x = point5.X;              // x = 1.0
         y = point5.Y;              // y = 2.0
         z = point5.Z;              // z = 3.0
@@ -831,27 +869,27 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: MapPoint IsEqual;ArcGIS.Core.Geometry.MapPoint.IsEqual(ArcGIS.Core.Geometry.MapPoint)
+        // cref: ArcGIS.Core.Geometry.MapPoint.IsEqual(ArcGIS.Core.Geometry.MapPoint)
         #region MapPoint IsEqual
 
-        MapPoint pt1 = MapPointBuilder.CreateMapPoint(1, 2, 3, 4, 5);
+        MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, 5);
         int ID = pt1.ID;           // ID = 5
         bool hasID = pt1.HasID;     // hasID = true
 
-        MapPoint pt2 = MapPointBuilder.CreateMapPoint(1, 2, 3, 4, 0);
+        MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, 0);
         ID = pt2.ID;        // ID = 0
         hasID = pt2.HasID;  // hasID = true
 
-        MapPoint pt3 = MapPointBuilder.CreateMapPoint(1, 2, 3, 4);
+        MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4);
         ID = pt3.ID;          // ID = 0
         hasID = pt3.HasID;    // hasID = false
 
-        MapPoint pt4 = MapPointBuilder.CreateMapPoint(1, 2, 3, 44);
+        MapPoint pt4 = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 44);
         ID = pt4.ID;          // ID = 0
         hasID = pt4.HasID;    // hasID = false
         bool hasM = pt4.HasM; // hasM = true
 
-        MapPoint pt5 = MapPointBuilder.CreateMapPoint(1, 2, 3);
+        MapPoint pt5 = MapPointBuilderEx.CreateMapPoint(1, 2, 3);
         ID = pt5.ID;          // ID = 0
         hasID = pt5.HasID;    // hasID = false
         hasM = pt5.HasM;      // hasM = false
@@ -867,10 +905,14 @@ namespace ProSnippetsGeometry
 
     private static void ZoomToGeographicCoordinates(double x, double y, double buffer_size)
     {
+      // cref: ArcGIS.Desktop.Mapping.MapView.ZoomTo(ArcGIS.Core.Geometry.Geometry,Nullable(System.TimeSpan),System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Buffer
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Project
       #region Zoom to a specified point
 
       //Create a point
-      var pt = MapPointBuilder.CreateMapPoint(x, y, SpatialReferenceBuilder.CreateSpatialReference(4326));
+      var pt = MapPointBuilderEx.CreateMapPoint(x, y, 
+                     SpatialReferenceBuilder.CreateSpatialReference(4326));
       //Buffer it - for purpose of zoom
       var poly = GeometryEngine.Instance.Buffer(pt, buffer_size);
 
@@ -897,42 +939,32 @@ namespace ProSnippetsGeometry
     public void Polyline()
     {
       {
-        // cref: Construct a Polyline - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MapPointBuilder.CreateMapPoint(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a Polyline - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
+        // cref: ArcGIS.Core.Geometry.AttributeFlags
         #region Construct a Polyline - from an enumeration of MapPoints
 
-        // Use a builder convenience method or use a builder constructor.
+        // Use a builderEx convenience method or a builderEx constructor.
+        // neither need to run on the MCT
 
-        MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-        MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 1.0);
+        MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+        MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
         List<MapPoint> list = new List<MapPoint>();
         list.Add(startPt);
         list.Add(endPt);
 
-        // Builder convenience methods don't need to run on the MCT.
-        Polyline polyline = PolylineBuilder.CreatePolyline(list, SpatialReferences.WGS84);
+        Polyline polyline = PolylineBuilderEx.CreatePolyline(list, SpatialReferences.WGS84);
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (PolylineBuilder pb = new PolylineBuilder(list))
-          {
-            pb.SpatialReference = SpatialReferences.WGS84;
-            Polyline polyline2 = pb.ToGeometry();
-          }
-        });
+        // use AttributeFlags.None since we only have 2D points in the list
+        PolylineBuilderEx pb = new PolylineBuilderEx(list, AttributeFlags.None);
+        pb.SpatialReference = SpatialReferences.WGS84;
+        Polyline polyline2 = pb.ToGeometry();
 
-
-        // buildEx constructors don't need to run on the MCT
-        PolylineBuilderEx pBuilder = new PolylineBuilderEx(list);
-        pBuilder.SpatialReference = SpatialReferences.WGS84;
-        Polyline polyline3 = pBuilder.ToGeometry() as Polyline;
-
-
-        // builderEx convenience methods don't need to run on the MCT
         //     use AttributeFlags.NoAttributes because we only have 2d points in the list
-        Polyline polyline4 = PolylineBuilderEx.CreatePolyline(list, AttributeFlags.NoAttributes);
+        Polyline polyline4 = PolylineBuilderEx.CreatePolyline(list, AttributeFlags.None);
 
         #endregion
       }
@@ -940,15 +972,14 @@ namespace ProSnippetsGeometry
       {
         Polyline polyline = null;
 
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipatch.Copy3DCoordinatesToList
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy2DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy3DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.CopyPointsToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.MapPoint}@)
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPointCollection.GetEnumerator
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.PointCount
-        // cref: Get the points of a Polyline;ArcGIS.Core.Geometry.Multipart.Points
+        // cref: ArcGIS.Core.Geometry.Multipart.Points
+        // cref: ArcGIS.Core.Geometry.Multipart.PointCount
+        // cref: ArcGIS.Core.Geometry.ReadOnlyPointCollection.GetEnumerator
+        // cref: ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
+        // cref: ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
+        // cref: ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy2DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
+        // cref: ArcGIS.Core.Geometry.ReadOnlyPointCollection.Copy3DCoordinatesToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
+        // cref: ArcGIS.Core.Geometry.ReadOnlyPointCollection.CopyPointsToList(System.Int32,System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.MapPoint}@)
         #region Get the points of a Polyline
 
         // get the points as a readonly Collection
@@ -994,8 +1025,8 @@ namespace ProSnippetsGeometry
 
         #endregion
 
-        // cref: Get the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.PartCount
-        // cref: Get the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.Multipart.PartCount
+        // cref: ArcGIS.Core.Geometry.Multipart.Parts
         #region Get the parts of a Polyline
 
         int numParts = polyline.PartCount;
@@ -1004,10 +1035,12 @@ namespace ProSnippetsGeometry
 
         #endregion
 
-        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.ReadOnlyPartCollection.GetEnumerator
-        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Multipart.Parts
-        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Segment.Length
-        // cref: Enumerate the parts of a Polyline;ArcGIS.Core.Geometry.Segment.SegmentType
+        // cref: ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.ReadOnlyPartCollection.GetEnumerator
+        // cref: ArcGIS.Core.Geometry.ReadOnlySegmentCollection
+        // cref: ArcGIS.Core.Geometry.SegmentType
+        // cref: ArcGIS.Core.Geometry.Segment.Length
+        // cref: ArcGIS.Core.Geometry.Segment.SegmentType
         #region Enumerate the parts of a Polyline
 
         ReadOnlyPartCollection polylineParts = polyline.Parts;
@@ -1056,25 +1089,18 @@ namespace ProSnippetsGeometry
         }
         #endregion
 
-        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.ReverseOrientation
-        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(ArcGIS.Core.Geometry.Polyline)
-        // cref: Reverse the order of points in a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.ToGeometry
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(ArcGIS.Core.Geometry.Polyline)
+        // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.ReverseOrientation
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.ToGeometry
         #region Reverse the order of points in a Polyline
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (PolylineBuilder polylineBuilder = new PolylineBuilder(polyline))
-          {
-            polylineBuilder.ReverseOrientation();
-            Polyline reversedPolyline = polylineBuilder.ToGeometry();
-          }
-        });
-
+        var polylineBuilder = new PolylineBuilderEx(polyline);
+        polylineBuilder.ReverseOrientation();
+        Polyline reversedPolyline = polylineBuilder.ToGeometry();
         #endregion
 
-        // cref: Get the segments of a Polyline;ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
-        // cref: Get the segments of a Polyline;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
         #region Get the segments of a Polyline
 
         ICollection<Segment> collection = new List<Segment>();
@@ -1088,61 +1114,52 @@ namespace ProSnippetsGeometry
         }
 
         // use the segments to build another polyline
-        Polyline polylineFromSegments = PolylineBuilder.CreatePolyline(collection);
+        Polyline polylineFromSegments = PolylineBuilderEx.CreatePolyline(collection);
 
         #endregion
       }
 
       {
-        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
-        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.MultipartBuilder`1.RemovePart(System.Int32)
-        // cref: Build a multi-part Polyline;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+        // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.RemovePart(System.Int32)
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.ToGeometry
+        // cref: ArcGIS.Core.Geometry.AttributeFlags
         #region Build a multi-part Polyline
 
         List<MapPoint> firstPoints = new List<MapPoint>();
-        firstPoints.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-        firstPoints.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-        firstPoints.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-        firstPoints.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+        firstPoints.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+        firstPoints.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+        firstPoints.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+        firstPoints.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
         List<MapPoint> nextPoints = new List<MapPoint>();
-        nextPoints.Add(MapPointBuilder.CreateMapPoint(11.0, 1.0));
-        nextPoints.Add(MapPointBuilder.CreateMapPoint(11.0, 2.0));
-        nextPoints.Add(MapPointBuilder.CreateMapPoint(12.0, 2.0));
-        nextPoints.Add(MapPointBuilder.CreateMapPoint(12.0, 1.0));
+        nextPoints.Add(MapPointBuilderEx.CreateMapPoint(11.0, 1.0));
+        nextPoints.Add(MapPointBuilderEx.CreateMapPoint(11.0, 2.0));
+        nextPoints.Add(MapPointBuilderEx.CreateMapPoint(12.0, 2.0));
+        nextPoints.Add(MapPointBuilderEx.CreateMapPoint(12.0, 1.0));
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (PolylineBuilder pBuilder = new PolylineBuilder(firstPoints))
-          {
-            pBuilder.AddPart(nextPoints);
+        // use AttributeFlags.None since we have 2D points in the list
+        PolylineBuilderEx pBuilder = new PolylineBuilderEx(firstPoints, AttributeFlags.None);
+        pBuilder.AddPart(nextPoints);
 
-            Polyline polyline = pBuilder.ToGeometry();
-            // polyline has 2 parts
+        Polyline polyline = pBuilder.ToGeometry();
+        // polyline has 2 parts
 
-            pBuilder.RemovePart(0);
-            polyline = pBuilder.ToGeometry();
-            // polyline has 1 part
-          }
-        });
-
-
-        // or use a builderEx constructor - doesn't need to run on MCT
-        PolylineBuilderEx pbuilderEx = new PolylineBuilderEx(firstPoints);
-        pbuilderEx.AddPart(nextPoints);
-        Polyline polyline2 = pbuilderEx.ToGeometry() as Polyline;
-        // polyline2 has 2 parts
-
-        pbuilderEx.RemovePart(0);
-        polyline2 = pbuilderEx.ToGeometry() as Polyline;
-        // polyline2 has 1 part
+        pBuilder.RemovePart(0);
+        polyline = pBuilder.ToGeometry();
+        // polyline has 1 part
 
         #endregion
       }
 
       Geometry sketchGeometry = null;
       {
+        // cref: ArcGIS.Core.Geometry.Multipart.Points
+        // cref: ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.ReadOnlySegmentCollection
+        // cref: ArcGIS.Core.Geometry.LineSegment
+        // cref: ArcGIS.Core.Geometry.Segment.StartPoint
         #region StartPoint of a Polyline
         // Method 1: Get the start point of the polyline by converting the polyline 
         //    into a collection of points and getting the first point
@@ -1172,21 +1189,23 @@ namespace ProSnippetsGeometry
 
     public void ClothoidByAngle()
     {
-      // cref: Construct a Clothoid by Angle;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.esriCurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Clothoid by Angle;ArcGIS.Core.Geometry.PolylineBuilder.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.ClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.ClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.ClothoidCreateMethod
+      // cref: ArcGIS.Core.Geometry.CurveDensifyMethod
       #region Construct a Clothoid by Angle
 
-      MapPoint startPoint = MapPointBuilder.CreateMapPoint(0, 0);
+      MapPoint startPoint = MapPointBuilderEx.CreateMapPoint(0, 0);
       double tangentDirection = Math.PI / 6;
-      esriArcOrientation orientation = esriArcOrientation.esriArcCounterClockwise;
+      ArcOrientation orientation = ArcOrientation.ArcCounterClockwise;
       double startRadius = double.PositiveInfinity;
       double endRadius = 0.2;
-      esriClothoidCreateMethod createMethod = esriClothoidCreateMethod.ByAngle;
+      ClothoidCreateMethod createMethod = ClothoidCreateMethod.ByAngle;
       double angle = Math.PI / 2;
-      esriCurveDensifyMethod densifyMethod = esriCurveDensifyMethod.ByLength;
+      CurveDensifyMethod densifyMethod = CurveDensifyMethod.ByLength;
       double densifyParameter = 0.1;
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, angle, densifyMethod, densifyParameter, SpatialReferences.WGS84);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, angle, densifyMethod, densifyParameter, SpatialReferences.WGS84);
 
       int numPoints = polyline.PointCount;
       MapPoint queryPoint = polyline.Points[numPoints - 2];
@@ -1194,106 +1213,106 @@ namespace ProSnippetsGeometry
       MapPoint pointOnPath;
       double radiusCalculated, tangentDirectionCalculated, lengthCalculated, angleCalculated;
 
-      PolylineBuilder.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, angle, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
+      PolylineBuilderEx.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, angle, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
 
       #endregion
     }
 
     public void ClothoidByLength()
     {
-      // cref: Construct a Clothoid by Length;ArcGIS.Core.Geometry.PolylineBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.esriCurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Clothoid by Length;ArcGIS.Core.Geometry.PolylineBuilder.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.esriClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.ClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.QueryClothoidParameters(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.ClothoidCreateMethod,System.Double,ArcGIS.Core.Geometry.MapPoint@,System.Double@,System.Double@,System.Double@,System.Double@,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.ClothoidCreateMethod
+      // cref: ArcGIS.Core.Geometry.ArcOrientation
       #region Construct a Clothoid by Length
 
-      MapPoint startPoint = MapPointBuilder.CreateMapPoint(0, 0);
-      MapPoint queryPoint = MapPointBuilder.CreateMapPoint(3.8, 1);
+      MapPoint startPoint = MapPointBuilderEx.CreateMapPoint(0, 0);
+      MapPoint queryPoint = MapPointBuilderEx.CreateMapPoint(3.8, 1);
       double tangentDirection = 0;
-      esriArcOrientation orientation = esriArcOrientation.esriArcCounterClockwise;
+      ArcOrientation orientation = ArcOrientation.ArcCounterClockwise;
       double startRadius = double.PositiveInfinity;
       double endRadius = 1;
-      esriClothoidCreateMethod createMethod = esriClothoidCreateMethod.ByLength;
+      ClothoidCreateMethod createMethod = ClothoidCreateMethod.ByLength;
       double curveLength = 10;
       MapPoint pointOnPath;
       double radiusCalculated, tangentDirectionCalculated, lengthCalculated, angleCalculated;
 
-      PolylineBuilder.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
 
-      // pointOnPath = (3.7652656620171379, 1.0332006103128575)
-      // radiusCalculated = 2.4876382887687227
-      // tangentDirectionCalculated = 0.80797056423543978
-      // lengthCalculated = 4.0198770235802987
-      // angleCalculated = 0.80797056423544011
+      PolylineBuilderEx.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
 
-      queryPoint = MapPointBuilder.CreateMapPoint(1.85, 2.6);
+      pointOnPath = MapPointBuilderEx.CreateMapPoint(3.7652656620171379, 1.0332006103128575);
+      radiusCalculated = 2.4876382887687227;
+      tangentDirectionCalculated = 0.80797056423543978;
+      lengthCalculated = 4.0198770235802987;
+      angleCalculated = 0.80797056423544011;
 
-      PolylineBuilder.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
+      queryPoint = MapPointBuilderEx.CreateMapPoint(1.85, 2.6);
 
-      // pointOnPath = (1.8409964973501549, 2.6115979967308132)
-      // radiusCalculated = 1
-      // tangentDirectionCalculated = -1.2831853071795867
-      // lengthCalculated = 10
-      // angleCalculated = 5
+      PolylineBuilderEx.QueryClothoidParameters(queryPoint, startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, out pointOnPath, out radiusCalculated, out tangentDirectionCalculated, out lengthCalculated, out angleCalculated, SpatialReferences.WGS84);
 
+      pointOnPath = MapPointBuilderEx.CreateMapPoint(1.8409964973501549, 2.6115979967308132);
+      radiusCalculated = 1;
+      tangentDirectionCalculated = -1.2831853071795867;
+      lengthCalculated = 10;
+      angleCalculated = 5;
+       
       tangentDirection = Math.PI / 4;
-      orientation = esriArcOrientation.esriArcClockwise;
+      orientation = ArcOrientation.ArcClockwise;
       startRadius = double.PositiveInfinity;
       endRadius = 0.8;
-      createMethod = esriClothoidCreateMethod.ByLength;
+      createMethod = ClothoidCreateMethod.ByLength;
       curveLength = 10;
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, esriCurveDensifyMethod.ByLength, 0.5, SpatialReferences.WGS84);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(startPoint, tangentDirection, startRadius, endRadius, orientation, createMethod, curveLength, CurveDensifyMethod.ByLength, 0.5, SpatialReferences.WGS84);
 
       #endregion
     }
 
     public void SplitPolyline()
     {
-      // cref: Split Polyline at distance;ArcGIS.Core.Geometry.MultipartBuilder`1.SplitAtDistance(System.Double,System.Boolean,System.Boolean)
-      // cref: Split Polyline at distance;ArcGIS.Core.Geometry.MultipartBuilder`1.SplitPartAtDistance(System.Int32,System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.SplitAtDistance(System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.SplitPartAtDistance(System.Int32,System.Double,System.Boolean,System.Boolean)
       #region Split Polyline at distance
 
       // create list of points
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 1.0);
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
       List<MapPoint> list = new List<MapPoint>();
       list.Add(startPt);
       list.Add(endPt);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // use the PolylineBuilder as we wish to manipulate the geometry
-        using (PolylineBuilder polylineBuilder = new PolylineBuilder(list))
-        {
-          // split at a distance 0.75
-          polylineBuilder.SplitAtDistance(0.75, false);
-          // get the polyline
-          Polyline p = polylineBuilder.ToGeometry();
-          // polyline p should have 3 points  (1,1), (1.75, 1), (2,1)
+      // BuilderEx constructors don't need to run on the MCT.
 
-          // add another path
-          MapPoint p1 = MapPointBuilder.CreateMapPoint(4.0, 1.0);
-          MapPoint p2 = MapPointBuilder.CreateMapPoint(6.0, 1.0);
-          MapPoint p3 = MapPointBuilder.CreateMapPoint(7.0, 1.0);
-          List<MapPoint> pts = new List<MapPoint>();
-          pts.Add(p1);
-          pts.Add(p2);
-          pts.Add(p3);
+      // use the PolylineBuilder as we wish to manipulate the geometry
+      // use AttributeFlags.None as we have 2D points
+      PolylineBuilderEx polylineBuilder = new PolylineBuilderEx(list, AttributeFlags.None);
+      // split at a distance 0.75
+      polylineBuilder.SplitAtDistance(0.75, false);
+      // get the polyline
+      Polyline p = polylineBuilder.ToGeometry();
+      // polyline p should have 3 points  (1,1), (1.75, 1), (2,1)
 
-          polylineBuilder.AddPart(pts);
-          p = polylineBuilder.ToGeometry();
+      // add another path
+      MapPoint p1 = MapPointBuilderEx.CreateMapPoint(4.0, 1.0);
+      MapPoint p2 = MapPointBuilderEx.CreateMapPoint(6.0, 1.0);
+      MapPoint p3 = MapPointBuilderEx.CreateMapPoint(7.0, 1.0);
+      List<MapPoint> pts = new List<MapPoint>();
+      pts.Add(p1);
+      pts.Add(p2);
+      pts.Add(p3);
 
-          // polyline p has 2 parts.  Each part has 3 points
+      polylineBuilder.AddPart(pts);
+      p = polylineBuilder.ToGeometry();
 
-          // split the 2nd path half way - dont create a new path
-          polylineBuilder.SplitPartAtDistance(1, 0.5, true, false);
+      // polyline p has 2 parts.  Each part has 3 points
 
-          p = polylineBuilder.ToGeometry();
+      // split the 2nd path half way - dont create a new path
+      polylineBuilder.SplitPartAtDistance(1, 0.5, true, false);
 
-          // polyline p still has 2 parts; but now has 7 points 
-        }
-      });
+      p = polylineBuilder.ToGeometry();
+
+      // polyline p still has 2 parts; but now has 7 points 
 
       #endregion
     }
@@ -1304,78 +1323,53 @@ namespace ProSnippetsGeometry
     public void ConstructPolygon()
     {
       {
-        // cref: Construct a Polygon - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolygonBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
-        // cref: Construct a Polygon - from an enumeration of MapPoints;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.ToGeometry
         #region Construct a Polygon - from an enumeration of MapPoints
 
-        // Use a builder convenience method or use a builder constructor.
+        // Use a builderEx convenience method or use a builderEx constructor.
 
-        MapPoint pt1 = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-        MapPoint pt2 = MapPointBuilder.CreateMapPoint(1.0, 2.0);
-        MapPoint pt3 = MapPointBuilder.CreateMapPoint(2.0, 2.0);
-        MapPoint pt4 = MapPointBuilder.CreateMapPoint(2.0, 1.0);
+        MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+        MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(1.0, 2.0);
+        MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
+        MapPoint pt4 = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
         List<MapPoint> list = new List<MapPoint>() { pt1, pt2, pt3, pt4 };
 
-        // Builder convenience methods don't need to run on the MCT.
-        Polygon polygon = PolygonBuilder.CreatePolygon(list, SpatialReferences.WGS84);
+        Polygon polygon = PolygonBuilderEx.CreatePolygon(list, SpatialReferences.WGS84);
+        // polygon.HasZ will be false - it is determined by the HasZ flag of the points in the list
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (PolygonBuilder polygonBuilder = new PolygonBuilder(list))
-          {
-            polygonBuilder.SpatialReference = SpatialReferences.WGS84;
-            polygon = polygonBuilder.ToGeometry();
-          }
-        });
+        // or specifically use AttributeFlags.NoAttributes
+        polygon = PolygonBuilderEx.CreatePolygon(list, AttributeFlags.None);
 
+        // use AttributeFlags.None as we have 2D points
+        PolygonBuilderEx polygonBuilder = new PolygonBuilderEx(list, AttributeFlags.None);
+        polygonBuilder.SpatialReference = SpatialReferences.WGS84;
+        polygon = polygonBuilder.ToGeometry();
 
-        // builderEx constructor's don't need to run on the MCT
-        PolygonBuilderEx polygonBuilderEx = new PolygonBuilderEx(list);
-        polygonBuilderEx.SpatialReference = SpatialReferences.WGS84;
-        polygon = polygonBuilderEx.ToGeometry() as Polygon;
-
-        // builderEx convenience methods don't need to run on the MCT
-        //     use AttributeFlags.NoAttributes because we only have 2d points in the list
-        polygon = PolygonBuilderEx.CreatePolygon(list, AttributeFlags.NoAttributes);
         #endregion
       }
 
       {
-        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct a Polygon - from an Envelope;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a Polygon - from an Envelope
 
-        // Use a builder convenience method or use a builder constructor.
+        // Use a builderEx convenience method or use a builderEx constructor.
 
-        MapPoint minPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-        MapPoint maxPt = MapPointBuilder.CreateMapPoint(2.0, 2.0);
+        MapPoint minPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+        MapPoint maxPt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
 
         // Create an envelope
-        Envelope env = EnvelopeBuilder.CreateEnvelope(minPt, maxPt);
+        Envelope env = EnvelopeBuilderEx.CreateEnvelope(minPt, maxPt);
 
-        // Builder convenience methods don't need to run on the MCT.
-        Polygon polygonFromEnv = PolygonBuilder.CreatePolygon(env);
+        Polygon polygonFromEnv = PolygonBuilderEx.CreatePolygon(env);
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (PolygonBuilder polygonBuilder = new PolygonBuilder(env))
-          {
-            polygonBuilder.SpatialReference = SpatialReferences.WGS84;
-            polygonFromEnv = polygonBuilder.ToGeometry();
-          }
-        });
-
-        // builderEx constructors don't need to run on the MCt
         PolygonBuilderEx polygonBuilderEx = new PolygonBuilderEx(env);
         polygonBuilderEx.SpatialReference = SpatialReferences.WGS84;
         polygonFromEnv = polygonBuilderEx.ToGeometry() as Polygon;
-
-        // builderEx convenience methods don't need to run on MCT
-        polygonFromEnv = PolygonBuilderEx.CreatePolygon(env);
 
         #endregion Create a Polygon from an Envelope
       }
@@ -1383,10 +1377,9 @@ namespace ProSnippetsGeometry
       {
         Polygon polygon = null;
 
-        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
-        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
-        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipatch.Copy3DCoordinatesToList
-        // cref: Get the points of a Polygon;ArcGIS.Core.Geometry.Multipart.Points
+        // cref: ArcGIS.Core.Geometry.Multipart.Points
+        // cref: ArcGIS.Core.Geometry.Multipart.Copy2DCoordinatesToList
+        // cref: ArcGIS.Core.Geometry.Multipart.Copy3DCoordinatesToList
         #region Get the points of a Polygon
 
         // get the points as a readonly Collection
@@ -1402,14 +1395,15 @@ namespace ProSnippetsGeometry
         IReadOnlyList<Coordinate3D> coordinates3D = polygon.Copy3DCoordinatesToList();
         #endregion
 
-        // cref: Get the parts of a Polygon;ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.Multipart.Parts
         #region Get the parts of a Polygon
         // get the parts as a readonly collection
         ReadOnlyPartCollection parts = polygon.Parts;
 
         #endregion
 
-        // cref: Enumerate the parts of a Polygon;ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.Multipart.Parts
+        // cref: ArcGIS.Core.Geometry.ReadOnlySegmentCollection
         #region Enumerate the parts of a Polygon
 
         int numSegments = 0;
@@ -1426,8 +1420,8 @@ namespace ProSnippetsGeometry
 
         #endregion
 
-        // cref: Get the segments of a Polygon;ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
-        // cref: Get the segments of a Polygon;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.Multipart.GetAllSegments(System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Segment}@)
+        // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Segment},ArcGIS.Core.Geometry.SpatialReference)
         #region Get the segments of a Polygon
 
         List<Segment> segmentList = new List<Segment>(30);
@@ -1437,17 +1431,17 @@ namespace ProSnippetsGeometry
         // segmentList.Capacity = 30
 
         // use the segments to build another polygon
-        Polygon polygonFromSegments = PolygonBuilder.CreatePolygon(collection);
+        Polygon polygonFromSegments = PolygonBuilderEx.CreatePolygon(collection);
         #endregion
       }
 
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.Coordinate2D.#ctor(System.Double,System.Double)
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.GeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.IGeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.MultipartBuilder`1.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D})
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.PolygonBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.PolygonBuilder.ToGeometry
-      // cref: Build a donut polygon;ArcGIS.Core.Geometry.Polygon.Area
+      // cref: ArcGIS.Core.Geometry.Coordinate2D.#ctor(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.Polygon.Area
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.AddPart(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D})
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
       #region Build a donut polygon
 
       List<Coordinate2D> outerCoordinates = new List<Coordinate2D>();
@@ -1463,26 +1457,6 @@ namespace ProSnippetsGeometry
       innerCoordinates.Add(new Coordinate2D(17.0, 17.0));
       innerCoordinates.Add(new Coordinate2D(13.0, 17.0));
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // use the PolygonBuilder as we wish to manipulate the parts
-        using (PolygonBuilder pb = new PolygonBuilder(outerCoordinates))
-        {
-          Polygon donut = pb.ToGeometry();
-          double area = donut.Area;       // area = 100
-
-          pb.AddPart(innerCoordinates);
-          donut = pb.ToGeometry();
-
-          area = donut.Area;    // area = 84.0
-
-          area = GeometryEngine.Instance.Area(donut);    // area = 84.0
-        }
-      });
-
-
-      // builderEx constructors don't need to run on the MCt
       PolygonBuilderEx pbEx = new PolygonBuilderEx(outerCoordinates);
       Polygon donutEx = pbEx.ToGeometry() as Polygon;
       double areaEx = donutEx.Area;       // area = 100
@@ -1498,6 +1472,7 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable{Polygon},SpatialReference)
     #region Create an N-sided regular polygon
 
     // <summary>
@@ -1536,15 +1511,15 @@ namespace ProSnippetsGeometry
 
       coords[numSides] = start;
 
-      return PolygonBuilder.CreatePolygon(coords);
+      return PolygonBuilderEx.CreatePolygon(coords);
     }
 
     #endregion
 
-    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.GetExteriorRing(System.Int32,System.Boolean)
-    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.GetExteriorRings(System.Boolean)
-    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.IsExteriorRing(System.Int32)
-    // cref: Get the exterior rings of a polygon - polygon.GetExteriorRing;ArcGIS.Core.Geometry.Polygon.ExteriorRingCount
+    // cref: ArcGIS.Core.Geometry.Polygon.ExteriorRingCount
+    // cref: ArcGIS.Core.Geometry.Polygon.GetExteriorRings(System.Boolean)
+    // cref: ArcGIS.Core.Geometry.Polygon.IsExteriorRing(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Polygon.GetExteriorRing(System.Int32,System.Boolean)
     #region Get the exterior rings of a polygon - polygon.GetExteriorRing
     public void GetExteriorRings(Polygon inputPolygon)
     {
@@ -1562,6 +1537,7 @@ namespace ProSnippetsGeometry
       for (int idx = 0; idx < partCount; idx++)
       {
         bool isExteriorRing = inputPolygon.IsExteriorRing(idx);
+        var ring = inputPolygon.GetExteriorRing(idx);
       }
     }
     #endregion
@@ -1571,91 +1547,68 @@ namespace ProSnippetsGeometry
 
     public void ConstructEnvelope()
     {
-      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ToGeometry
-      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Construct an Envelope 
 
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      MapPoint minPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint maxPt = MapPointBuilder.CreateMapPoint(2.0, 2.0);
+      MapPoint minPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint maxPt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
 
-      // Builder convenience methods don't need to run on the MCT.
-      Envelope envelope = EnvelopeBuilder.CreateEnvelope(minPt, maxPt);
+      Envelope envelope = EnvelopeBuilderEx.CreateEnvelope(minPt, maxPt);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EnvelopeBuilder builder = new EnvelopeBuilder(minPt, maxPt))
-        {
-          // do something with the builder
-
-          envelope = builder.ToGeometry();
-        }
-      });
-
-      // builderEx constructors don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(minPt, maxPt);
       envelope = builderEx.ToGeometry() as Envelope;
 
-      // builderEx convenience methods don't need to run on the MCT
-      envelope = EnvelopeBuilderEx.CreateEnvelope(minPt, maxPt);
-
       #endregion
 
-      // cref: Construct an Envelope - from a JSON string;ArcGIS.Core.Geometry.EnvelopeBuilder.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.FromJson(System.String)
       #region Construct an Envelope - from a JSON string
 
       string jsonString = "{ \"xmin\" : 1, \"ymin\" : 2,\"xmax\":3,\"ymax\":4,\"spatialReference\":{\"wkid\":4326}}";
-      Envelope envFromJson = EnvelopeBuilder.FromJson(jsonString);
+      Envelope envFromJson = EnvelopeBuilderEx.FromJson(jsonString);
 
       #endregion
     }
+
     public void EnvelopeUnion()
-    { 
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IsEqual(ArcGIS.Core.Geometry.Envelope)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Union(ArcGIS.Core.Geometry.Envelope)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Union(ArcGIS.Core.Geometry.Envelope)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Union(ArcGIS.Core.Geometry.Envelope)
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Area
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Center
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.CenterCoordinate
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Depth
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Height
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IDMax
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IDMin
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.IsEmpty
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Length
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.MMax
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.MMin
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.PointCount
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.Width
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.XMax
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.XMin
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.YMax
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.YMin
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.ZMax
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.Envelope.ZMin
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Center
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.CenterCoordinate
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Depth
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Height
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Width
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Center
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.CenterCoordinate
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Depth
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Height
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.IsEmpty
-      // cref: Union two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Width
+    {
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.Envelope.Union(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.Envelope.Area
+      // cref: ArcGIS.Core.Geometry.Envelope.Depth
+      // cref: ArcGIS.Core.Geometry.Envelope.Height
+      // cref: ArcGIS.Core.Geometry.Envelope.Width
+      // cref: ArcGIS.Core.Geometry.Envelope.Length
+      // cref: ArcGIS.Core.Geometry.Envelope.Center
+      // cref: ArcGIS.Core.Geometry.Envelope.CenterCoordinate
+      // cref: ArcGIS.Core.Geometry.Envelope.IsEmpty
+      // cref: ArcGIS.Core.Geometry.Envelope.PointCount
+      // cref: ArcGIS.Core.Geometry.Envelope.XMin
+      // cref: ArcGIS.Core.Geometry.Envelope.XMax
+      // cref: ArcGIS.Core.Geometry.Envelope.YMin
+      // cref: ArcGIS.Core.Geometry.Envelope.YMax
+      // cref: ArcGIS.Core.Geometry.Envelope.ZMin
+      // cref: ArcGIS.Core.Geometry.Envelope.ZMax
+      // cref: ArcGIS.Core.Geometry.Envelope.MMin
+      // cref: ArcGIS.Core.Geometry.Envelope.MMax
+      // cref: ArcGIS.Core.Geometry.Envelope.IDMin
+      // cref: ArcGIS.Core.Geometry.Envelope.IDMax
+      // cref: ArcGIS.Core.Geometry.Envelope.IsEqual(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Union(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Depth
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Height
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Width
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Center
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CenterCoordinate
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.IsEmpty
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Union two Envelopes
 
-      // use the convenience builders - don't need to run on the MCT.
-      Envelope env1 = EnvelopeBuilder.CreateEnvelope(0, 0, 1, 1, SpatialReferences.WGS84);
-      Envelope env2 = EnvelopeBuilder.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
+      // use the convenience builders
+      Envelope env1 = EnvelopeBuilderEx.CreateEnvelope(0, 0, 1, 1, SpatialReferences.WGS84);
+      Envelope env2 = EnvelopeBuilderEx.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
 
       Envelope env3 = env1.Union(env2);
 
@@ -1678,21 +1631,6 @@ namespace ProSnippetsGeometry
       bool isEqual = env1.IsEqual(env2);    // false
 
 
-      // or use the builder constructor - need to run on the MCT.
-      using (var builder = new EnvelopeBuilder(0, 0, 1, 1, SpatialReferences.WGS84))
-      {
-        env3 = builder.Union(env2);     // builder is updated to the result
-        depth = builder.Depth;
-        height = builder.Height;
-        width = builder.Width;
-
-        centerPt = builder.Center;
-        coord = builder.CenterCoordinate;
-
-        isEmpty = builder.IsEmpty;
-      }
-
-
       // or use the builderEx constructors = don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(0, 0, 1, 1, SpatialReferences.WGS84);
       builderEx.Union(env2);      // builder is updated to the result
@@ -1713,28 +1651,20 @@ namespace ProSnippetsGeometry
 
     public void EnvelopeIntersection()
     {
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.Envelope.Intersection(ArcGIS.Core.Geometry.Envelope)
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.Envelope.Intersects(ArcGIS.Core.Geometry.Envelope)
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Intersection(ArcGIS.Core.Geometry.Envelope)
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilder.Intersects(ArcGIS.Core.Geometry.Envelope)
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersection(ArcGIS.Core.Geometry.Envelope)
-      // cref: Intersect two Envelopes;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersects(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.Envelope.Intersection(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.Envelope.Intersects(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersection(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.Intersects(ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Intersect two Envelopes
 
-      // use the convenience builders - don't need to run on the MCT.
-      Envelope env1 = EnvelopeBuilder.CreateEnvelope(0, 0, 1, 1, SpatialReferences.WGS84);
-      Envelope env2 = EnvelopeBuilder.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
+      // use the convenience builders
+      Envelope env1 = EnvelopeBuilderEx.CreateEnvelope(0, 0, 1, 1, SpatialReferences.WGS84);
+      Envelope env2 = EnvelopeBuilderEx.CreateEnvelope(0.5, 0.5, 1.5, 1.5, SpatialReferences.WGS84);
 
       bool intersects = env1.Intersects(env2); // true
       Envelope env3 = env1.Intersection(env2);
 
-
-      // or use the builder constructor - need to run on the MCT.
-      using (var builder = new EnvelopeBuilder(0, 0, 1, 1, SpatialReferences.WGS84))
-      {
-        intersects = builder.Intersects(env2);  // true
-        env3 = builder.Intersection(env2);
-      }
 
       // or use the builderEx constructors = don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(0, 0, 1, 1, SpatialReferences.WGS84);
@@ -1748,30 +1678,19 @@ namespace ProSnippetsGeometry
     public void EnvelopeExpand()
     {
       // cref: Expand an Envelope;ArcGIS.Core.Geometry.Envelope.Expand(System.Double,System.Double,System.Boolean)
-      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.Expand(System.Double,System.Double,System.Boolean)
       // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: Expand an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.Expand(System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Expand an Envelope
 
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      // Builder convenience methods don't need to run on the MCT.
-      Envelope envelope = EnvelopeBuilder.CreateEnvelope(100.0, 100.0, 500.0, 500.0);
+      // convenience methods don't need to run on the MCT.
+      Envelope envelope = EnvelopeBuilderEx.CreateEnvelope(100.0, 100.0, 500.0, 500.0);
 
       // shrink the envelope by 50%
       Envelope result = envelope.Expand(0.5, 0.5, true);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EnvelopeBuilder eBuilder = new EnvelopeBuilder(100.0, 100.0, 500.0, 500.0))
-        {
-          // shrink by 50%
-          eBuilder.Expand(0.5, 0.5, true);
-
-          result = eBuilder.ToGeometry();
-        }
-      });
 
       // builderEx constructors don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(100.0, 100.0, 500.0, 500.0);
@@ -1783,30 +1702,23 @@ namespace ProSnippetsGeometry
 
     public void EnvelopeUpdate()
     {
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetMCoords(System.Double,System.Double)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetXYCoords(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.SetZCoords(System.Double,System.Double)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetMCoords(System.Double,System.Double)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetXYCoords(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetZCoords(System.Double,System.Double)
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.MMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.MMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.XMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.XMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.YMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.YMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ZMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilder.ZMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.HasM
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMin
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMax
-      // cref: Update Coordinates of an Envelope;ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.XMax
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.YMax
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ZMax
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.MMax
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.IDMax
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.IDMin
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetZCoords(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetXYCoords(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.HasM
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetMCoords(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.SetIDCoords(System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.ToGeometry
       #region Update Coordinates of an Envelope
 
       Coordinate2D minCoord = new Coordinate2D(1, 3);
@@ -1815,62 +1727,8 @@ namespace ProSnippetsGeometry
       Coordinate2D c1 = new Coordinate2D(0, 5);
       Coordinate2D c2 = new Coordinate2D(1, 3);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EnvelopeBuilder builder = new EnvelopeBuilder(minCoord, maxCoord))
-        {
-          // builder.XMin, YMin, Zmin, MMin  = 1, 3, 0, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 2, 4, 0, double.Nan
-
-          // set XMin.  if XMin > XMax; both XMin and XMax change
-          builder.XMin = 6;
-          // builder.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 6, 4, 0, double.Nan
-
-          // set XMax
-          builder.XMax = 8;
-          // builder.XMin, YMin, ZMin, MMin  = 6, 3, 0, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 8, 4, 0, double.Nan
-
-          // set XMax.  if XMax < XMin, both XMin and XMax change
-          builder.XMax = 3;
-          // builder.XMin, YMin, ZMin, MMin  = 3, 3, 0, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
-
-          // set YMin
-          builder.YMin = 2;
-          // builder.XMin, YMin, ZMin, MMin  = 3, 2, 0, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 3, 4, 0, double.Nan
-
-          // set ZMin.  if ZMin > ZMax, both ZMin and ZMax change
-          builder.ZMin = 3;
-          // builder.XMin, YMin, ZMin, MMin  = 3, 2, 3, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 3, 4, 3, double.Nan
-
-          // set ZMax.  if ZMax < ZMin. both ZMin and ZMax change
-          builder.ZMax = -1;
-          // builder.XMin, YMin, ZMin, MMin  = 3, 2, -1, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 3, 4, -1, double.Nan
-
-          builder.SetZCoords(8, -5);
-          // builder.XMin, YMin, ZMin, MMin  = 3, 2, -5, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 3, 4, 8, double.Nan
-
-
-          builder.SetXYCoords(c1, c2);
-          // builder.XMin, YMin, ZMin, MMin  = 0, 3, -5, double.Nan
-          // builder.XMax, YMax, ZMax, MMax = 1, 5, 8, double.Nan
-
-
-          builder.HasM = true;
-          builder.SetMCoords(2, 5);
-
-          var geom = builder.ToGeometry();
-        }
-      });
-
-      // or use the EnvelopeBuilderEx.  This constructor doesn't need to run on the MCT.
+      
+      // use the EnvelopeBuilderEx.  This constructor doesn't need to run on the MCT.
 
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(minCoord, maxCoord);
       // builderEx.XMin, YMin, Zmin, MMin  = 1, 3, 0, double.Nan
@@ -1928,64 +1786,58 @@ namespace ProSnippetsGeometry
 
     public void ConstructMultiPoint()
     {
-      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
-      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilder.CreateMultipoint(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.ToGeometry
-      // cref: Construct a Multipoint - from an enumeration of MapPoints;ArcGIS.Core.Geometry.MultipointBuilderEx.PointCount
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.PointCount
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.CreateMultipoint(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.CreateMultipoint(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Multipoint - from an enumeration of MapPoints
 
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      list.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      list.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
-      // Builder convenience methods don't need to run on the MCT.
-      Multipoint multiPoint = MultipointBuilder.CreateMultipoint(list);
-      int ptCount = multiPoint.PointCount;
-
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (MultipointBuilder mpb = new MultipointBuilder(list))
-        {
-          // do something with the builder
-
-          Multipoint mPt = mpb.ToGeometry();
-
-          ptCount = mpb.PointCount;
-        }
-      });
-
-      // or use the builderEx constructors - don't need to run on the MCT.
-      MultipointBuilderEx builderEx = new MultipointBuilderEx(list);
-      multiPoint = builderEx.ToGeometry() as Multipoint;
-      ptCount = builderEx.PointCount;
-
+      // use the builderEx constructors - don't need to run on the MCT.
+      //  use AttributeFlags.NoAttributes - we have 2d points in the list
+      MultipointBuilderEx builderEx = new MultipointBuilderEx(list, AttributeFlags.None);
+      Multipoint multiPoint = builderEx.ToGeometry() as Multipoint;
+      int ptCount = builderEx.PointCount;
 
       // builderEx convenience methods dont need to run on the MCT
-      //  use AttributeFlags.NoAttributes - we have 2d points in the list
-      multiPoint = MultipointBuilderEx.CreateMultipoint(list, AttributeFlags.NoAttributes);
+      multiPoint = MultipointBuilderEx.CreateMultipoint(list);
+      // multiPoint.HasZ, HasM, HasID will be false - the attributes are determined 
+      //    based on the attribute state of the points in the list
+
+      // or specifically set the state
+      multiPoint = MultipointBuilderEx.CreateMultipoint(list, AttributeFlags.None);
+      // multiPoint.HasM = false
+
+      multiPoint = MultipointBuilderEx.CreateMultipoint(list, AttributeFlags.HasM);
+      // multiPoint.HasM = true
+
+      ptCount = multiPoint.PointCount;
 
       #endregion
     }
 
     public void MultipointBuilderEx_()
     {
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoints(System.Int32,System.Int32)
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.SetEmpty
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.SetPoint(System.Int32,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Coords
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasID
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasM
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.HasZ
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.IDs
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Ms
-      // cref: Construct a Multipoint - using MultipointBuilderEx;ArcGIS.Core.Geometry.MultipointBuilderEx.Zs
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.HasZ
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.Zs
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.HasM
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.Ms
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.HasID
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.IDs
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.GetPoint
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.SetEmpty
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.Coordinate2Ds
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.SetPoint(System.Int32,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoints(System.Int32,System.Int32)
       #region Construct a Multipoint - using MultipointBuilderEx
 
       Coordinate2D[] coordinate2Ds = new Coordinate2D[] { new Coordinate2D(1, 2), new Coordinate2D(-1, -2) };
@@ -1993,7 +1845,7 @@ namespace ProSnippetsGeometry
 
       MultipointBuilderEx builder = new MultipointBuilderEx(coordinate2Ds, sr);
 
-      // builder.Coords.Count = 2
+      // builder.PointCount = 2
 
       builder.HasZ = true;
       // builder.Zs.Count = 2
@@ -2020,7 +1872,7 @@ namespace ProSnippetsGeometry
 
       // reset coordinates
       List<Coordinate2D> inCoords = new List<Coordinate2D>() { new Coordinate2D(1, 2), new Coordinate2D(3, 4), new Coordinate2D(5, 6) };
-      builder.Coords = inCoords;
+      builder.Coordinate2Ds = inCoords;
       // builder.Coords.Count = 3
       // builder.HasZ = true
       // builder.HasM = true
@@ -2066,7 +1918,7 @@ namespace ProSnippetsGeometry
 
 
       // create a new point
-      MapPoint point = MapPointBuilder.CreateMapPoint(-300, 400, 4);
+      MapPoint point = MapPointBuilderEx.CreateMapPoint(-300, 400, 4);
       builder.SetPoint(2, point);
 
       // coordinates are now   (x, y, z, m, id)
@@ -2082,41 +1934,19 @@ namespace ProSnippetsGeometry
     public void ModifyMultipoint()
     {
       Multipoint multipoint = null;
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.#ctor(ArcGIS.Core.Geometry.Multipoint)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.Add(ArcGIS.Core.Geometry.MapPoint)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.GetMapPoint(System.Int32)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.RemovePoint(System.Int32)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilder.ToGeometry
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipoint)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.AddPoint(ArcGIS.Core.Geometry.MapPoint)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.GetPoint(System.Int32)
-      // cref: Modify the points of a Multipoint;ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoint(System.Int32)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipoint)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.RemovePoint(System.Int32)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.GetPoint(System.Int32)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.AddPoint(ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.Multipoint.Copy2DCoordinatesToList
+      // cref: ArcGIS.Core.Geometry.Multipoint.Copy3DCoordinatesToList
       #region Modify the points of a Multipoint
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // assume a multiPoint has been built from 4 points
-        // the modified multiPoint will have the first point removed and the last point moved
+      // assume a multiPoint has been built from 4 points
+      // the modified multiPoint will have the first point removed and the last point moved
 
-        using (MultipointBuilder mpb = new MultipointBuilder(multipoint))
-        {
-          // remove the first point
-          mpb.RemovePoint(0);
-
-          // modify the coordinates of the last point
-          MapPoint pt = mpb.GetMapPoint(mpb.PointCount - 1);
-          mpb.RemovePoint(mpb.PointCount - 1);
-
-          MapPoint newPt = MapPointBuilder.CreateMapPoint(pt.X + 1.0, pt.Y + 2.0);
-          mpb.Add(newPt);
-
-          Multipoint modifiedMultiPoint = mpb.ToGeometry();
-        }
-      });
-
-
-      // or use the builderEx constructors = don't need to run on the MCT.
+      // use the builderEx constructors = don't need to run on the MCT.
       MultipointBuilderEx builderEx = new MultipointBuilderEx(multipoint);
       // remove the first point
       builderEx.RemovePoint(0);
@@ -2124,12 +1954,14 @@ namespace ProSnippetsGeometry
       var ptEx = builderEx.GetPoint(builderEx.PointCount - 1);
       builderEx.RemovePoint(builderEx.PointCount - 1);
 
-      var newPtEx = MapPointBuilder.CreateMapPoint(ptEx.X + 1.0, ptEx.Y + 2.0);
+      var newPtEx = MapPointBuilderEx.CreateMapPoint(ptEx.X + 1.0, ptEx.Y + 2.0);
       builderEx.AddPoint(newPtEx);
       Multipoint modifiedMultiPointEx = builderEx.ToGeometry() as Multipoint;
 
       #endregion
 
+      // cref: ArcGIS.Core.Geometry.MultiPoint.Copy2DCoordinatesToList
+      // cref: ArcGIS.Core.Geometry.MultiPoint.Copy3DCoordinatesToList
       #region Retrieve Points, 2D Coordinates, 3D Coordinates from a multipoint
 
       ReadOnlyPointCollection points = multipoint.Points;
@@ -2144,71 +1976,39 @@ namespace ProSnippetsGeometry
 
     public void ConstructLineSegment()
     {
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.LineSegment)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.LineSegment,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.CreateLineSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a LineSegment using two MapPoints;ArcGIS.Core.Geometry.LineBuilder.ToSegment
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.CreateLineSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.CreateLineSegment(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.CreateLineSegment(ArcGIS.Core.Geometry.LineSegment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.#ctor(ArcGIS.Core.Geometry.LineSegment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.ToSegment
       #region Construct a LineSegment using two MapPoints
 
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 1.0);
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
-      // Builder convenience methods don't need to run on the MCT.
-      LineSegment lineFromMapPoint = LineBuilder.CreateLineSegment(startPt, endPt);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      LineSegment lineFromMapPoint = LineBuilderEx.CreateLineSegment(startPt, endPt);
 
       // coordinate2D
       Coordinate2D start2d = (Coordinate2D)startPt;
       Coordinate2D end2d = (Coordinate2D)endPt;
 
-      LineSegment lineFromCoordinate2D = LineBuilder.CreateLineSegment(start2d, end2d);
+      LineSegment lineFromCoordinate2D = LineBuilderEx.CreateLineSegment(start2d, end2d);
 
       // coordinate3D
       Coordinate3D start3d = (Coordinate3D)startPt;
       Coordinate3D end3d = (Coordinate3D)endPt;
 
-      LineSegment lineFromCoordinate3D = LineBuilder.CreateLineSegment(start3d, end3d);
+      LineSegment lineFromCoordinate3D = LineBuilderEx.CreateLineSegment(start3d, end3d);
 
       // lineSegment
-      LineSegment anotherLineFromLineSegment = LineBuilder.CreateLineSegment(lineFromCoordinate3D);
-
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (LineBuilder lb = new LineBuilder(startPt, endPt))
-        {
-          // do something with the builder
-
-          lineFromMapPoint = lb.ToSegment();
-        }
-
-        using (LineBuilder lb = new LineBuilder(start2d, end2d))
-        {
-          // do something with the builder
-
-          lineFromCoordinate2D = lb.ToSegment();
-        }
-
-        using (LineBuilder lb = new LineBuilder(start3d, end3d))
-        {
-          // do something with the builder
-
-          lineFromCoordinate3D = lb.ToSegment();
-        }
-
-        using (LineBuilder lb = new LineBuilder(lineFromCoordinate3D))
-        {
-          // do something with the builder
-
-          anotherLineFromLineSegment = lb.ToSegment();
-        }
-      });
+      LineSegment anotherLineFromLineSegment = LineBuilderEx.CreateLineSegment(lineFromCoordinate3D);
 
 
       // builderEx constructors don't need to run on the MCT
@@ -2227,45 +2027,15 @@ namespace ProSnippetsGeometry
       lbEx = new LineBuilderEx(lineFromCoordinate3D);
       anotherLineFromLineSegment = lbEx.ToSegment() as LineSegment;
 
-
-      // builderEx convenience methods don't need to run on the MCT
-      lineFromMapPoint = LineBuilderEx.CreateLineSegment(startPt, endPt);
-      lineFromCoordinate2D = LineBuilderEx.CreateLineSegment(start2d, end2d);
-      lineFromCoordinate3D = LineBuilderEx.CreateLineSegment(start3d, end3d);
-      anotherLineFromLineSegment = LineBuilderEx.CreateLineSegment(lineFromCoordinate3D);
-
       #endregion
 
       LineSegment lineSegment = null;
-      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.MapPoint@)
-      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.SetCoords(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.EndPoint
-      // cref: Alter LineSegment Coordinates;ArcGIS.Core.Geometry.LineBuilder.StartPoint
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.MapPoint@)
+      // cref: ArcGIS.Core.Geometry.SegmentBuilderEx.StartPoint
+      // cref: ArcGIS.Core.Geometry.SegmentBuilderEx.EndPoint
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.SetCoords(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.LineBuilderEx.ToSegment
       #region Alter LineSegment Coordinates
-
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // use the builder constructor
-        using (LineBuilder lb = new LineBuilder(lineSegment))
-        {
-          // find the existing coordinates
-          lb.QueryCoords(out startPt, out endPt);
-
-          // or use 
-          //startPt = lb.StartPoint;
-          //endPt = lb.EndPoint;
-
-          // update the coordinates
-          lb.SetCoords(GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint, GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint);
-
-          // or use 
-          //lb.StartPoint = GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint;
-          //lb.EndPoint = GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint;
-
-          LineSegment anotherLineSegment = lb.ToSegment();
-        }
-      });
 
       // builderEx constructors don't need to run on the MCT
       LineBuilderEx lbuilderEx = new LineBuilderEx(lineSegment);
@@ -2273,15 +2043,15 @@ namespace ProSnippetsGeometry
       lbuilderEx.QueryCoords(out startPt, out endPt);
 
       // or use 
-      //startPt = lb.StartPoint;
-      //endPt = lb.EndPoint;
+      //startPt = lbuilderEx.StartPoint;
+      //endPt = lbuilderEx.EndPoint;
 
       // update the coordinates
       lbuilderEx.SetCoords(GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint, GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint);
 
       // or use 
-      //lb.StartPoint = GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint;
-      //lb.EndPoint = GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint;
+      //lbuilderEx.StartPoint = GeometryEngine.Instance.Move(startPt, 10, 10) as MapPoint;
+      //lbuilderEx.EndPoint = GeometryEngine.Instance.Move(endPt, -10, -10) as MapPoint;
 
       LineSegment segment2 = lbuilderEx.ToSegment() as LineSegment;
 
@@ -2293,96 +2063,78 @@ namespace ProSnippetsGeometry
 
     public void ConstructCubicBezier()
     {
-      // cref: Construct a Cubic Bezier - from Coordinates;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct a Cubic Bezier - from Coordinates;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment
       #region Construct a Cubic Bezier - from Coordinates
 
-      // Use a builder convenience method or a builder constructor.
+      // Use a builderEx convenience method or a builderEx constructor.
 
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0, 3.0);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 2.0, 3.0);
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 3.0);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0, 3.0);
 
       Coordinate2D ctrl1Pt = new Coordinate2D(1.0, 2.0);
       Coordinate2D ctrl2Pt = new Coordinate2D(2.0, 1.0);
 
-      // Builder convenience methods don't need to run on the MCT
-      CubicBezierSegment bezier = CubicBezierBuilder.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt, SpatialReferences.WGS84);
+      // BuilderEx convenience methods don't need to run on the MCT
+      CubicBezierSegment bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt, SpatialReferences.WGS84);
 
-      // Builder constructors need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (CubicBezierBuilder cbb = new CubicBezierBuilder(startPt, ctrl1Pt, ctrl2Pt, endPt))
-        {
-          // do something with the builder
-
-          bezier = cbb.ToSegment();
-        }
-      });
-
-
-      // builderEx constructors dont need to run on the MCT
-      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt.ToMapPoint(), ctrl2Pt.ToMapPoint(), endPt);
-      bezier = cbbEx.ToSegment() as CubicBezierSegment;
-
-      // builderEx convenience methods dont need to run on the MCt
+      // without a SR
       bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
-
-      #endregion
-    }
-
-    public void ConstructCubicBezier2()
-    {
-      // cref: Construct a Cubic Bezier - from MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct a Cubic Bezier - from MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
-      #region Construct a Cubic Bezier - from MapPoints
-
-      // Use a builder convenience method or a builder constructor.
-
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84);
-
-      MapPoint ctrl1Pt = MapPointBuilder.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84);
-      MapPoint ctrl2Pt = MapPointBuilder.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84);
-
-      // Builder convenience methods don't need to run on the MCT
-      CubicBezierSegment bezier = CubicBezierBuilder.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
-
-      // Builder constructors need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (CubicBezierBuilder cbb = new CubicBezierBuilder(startPt, ctrl1Pt, ctrl2Pt, endPt))
-        {
-          // do something with the builder
-
-          bezier = cbb.ToSegment();
-        }
-      });
 
 
       // builderEx constructors dont need to run on the MCT
       CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt, ctrl2Pt, endPt);
       bezier = cbbEx.ToSegment() as CubicBezierSegment;
 
-      // builderEx convenience methods dont need to run on the MCt
-      bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
+      // another alternative
+      cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt.ToMapPoint(), ctrl2Pt.ToMapPoint(), endPt);
+      bezier = cbbEx.ToSegment() as CubicBezierSegment;
+
+
+      #endregion
+    }
+
+    public void ConstructCubicBezier2()
+    {
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.CreateCubicBezierSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
+      #region Construct a Cubic Bezier - from MapPoints
+
+      // Use a builderEx convenience method or a builderEx constructor.
+
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84);
+
+      MapPoint ctrl1Pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84);
+      MapPoint ctrl2Pt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84);
+
+      // BuilderEx convenience methods don't need to run on the MCT
+      CubicBezierSegment bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
+
+      // builderEx constructors dont need to run on the MCT
+      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt, ctrl2Pt, endPt);
+      bezier = cbbEx.ToSegment() as CubicBezierSegment;
 
       #endregion
     }
 
     public void ConstructCubicBezier3()
     {
-      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
-      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.CreateCubicBezierSegment(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Cubic Bezier - from an enumeration of MapPoints;ArcGIS.Core.Geometry.CubicBezierBuilder.ToSegment
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.CreateCubicBezierSegment(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
       #region Construct a Cubic Bezier - from an enumeration of MapPoints
 
-      // Use a builder convenience method or use a builder constructor.
+      // Use a buildeExr convenience method or use a builderEx constructor.
 
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84);
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84);
 
-      MapPoint ctrl1Pt = MapPointBuilder.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84);
-      MapPoint ctrl2Pt = MapPointBuilder.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84);
+      MapPoint ctrl1Pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84);
+      MapPoint ctrl2Pt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84);
 
       List<MapPoint> listMapPoints = new List<MapPoint>();
       listMapPoints.Add(startPt);
@@ -2390,26 +2142,12 @@ namespace ProSnippetsGeometry
       listMapPoints.Add(ctrl2Pt);
       listMapPoints.Add(endPt);
 
-      // Builder convenience methods don't need to run on the MCT
-      CubicBezierSegment bezier = CubicBezierBuilder.CreateCubicBezierSegment(listMapPoints);
-
-      // Builder constructors need to run on the MCT
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (CubicBezierBuilder cbb = new CubicBezierBuilder(listMapPoints))
-        {
-          // do something with the builder
-
-          bezier = cbb.ToSegment();
-        }
-      });
+      // BuilderEx convenience methods don't need to run on the MCT
+      CubicBezierSegment bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(listMapPoints);
 
       // builderEx constructors dont need to run on the MCT
       CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(listMapPoints);
       bezier = cbbEx.ToSegment() as CubicBezierSegment;
-
-      // builderEx convenience methods dont need to run on the MCt
-      bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(listMapPoints);
 
       #endregion
     }
@@ -2418,31 +2156,17 @@ namespace ProSnippetsGeometry
     {
       CubicBezierSegment bezierSegment = null;
 
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.#ctor(ArcGIS.Core.Geometry.CubicBezierSegment)
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.MapPoint@)
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.ControlPoint1
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.ControlPoint2
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.EndPoint
-      // cref: Cubic Bezier Builder Properties;ArcGIS.Core.Geometry.CubicBezierBuilder.StartPoint
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.#ctor(ArcGIS.Core.Geometry.CubicBezierSegment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.SegmentBuilderEx.StartPoint
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ControlPoint1
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ControlPoint2
+      // cref: ArcGIS.Core.Geometry.SegmentBuilderEx.EndPoint
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.QueryCoords(ArcGIS.Core.Geometry.MapPoint@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.Coordinate2D@,ArcGIS.Core.Geometry.MapPoint@)
       #region Cubic Bezier Builder Properties
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // retrieve the bezier curve's control points
-        using (CubicBezierBuilder cbb = new CubicBezierBuilder(bezierSegment))
-        {
-          MapPoint startPt = cbb.StartPoint;
-          Coordinate2D ctrlPt1 = cbb.ControlPoint1;
-          Coordinate2D ctrlPt2 = cbb.ControlPoint2;
-          MapPoint endPt = cbb.EndPoint;
+      // retrieve the bezier curve's control points
 
-          // or use the QueryCoords method
-          cbb.QueryCoords(out startPt, out ctrlPt1, out ctrlPt2, out endPt);
-        }
-      });
-
-      CubicBezierBuilder cbbEx = new CubicBezierBuilder(bezierSegment);
+      CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(bezierSegment);
       MapPoint startPtEx = cbbEx.StartPoint;
       Coordinate2D ctrlPt1Ex = cbbEx.ControlPoint1;
       Coordinate2D ctrlPt2Ex = cbbEx.ControlPoint2;
@@ -2457,16 +2181,16 @@ namespace ProSnippetsGeometry
     {
       CubicBezierSegment bezierSegment = null;
 
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint1
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint2
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.IsCurve
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.CubicBezierSegment.Length
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.Segment.EndPoint
-      // cref: Cubic Bezier Properties;ArcGIS.Core.Geometry.Segment.StartPoint
+      // cref: ArcGIS.Core.Geometry.Segment.StartPoint
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint1
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment.ControlPoint2
+      // cref: ArcGIS.Core.Geometry.Segment.EndPoint
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment.IsCurve
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment.Length
       #region Cubic Bezier Properties
 
       // retrieve the bezier curve's control points
-      CubicBezierSegment cb = CubicBezierBuilder.CreateCubicBezierSegment(bezierSegment);
+      CubicBezierSegment cb = CubicBezierBuilderEx.CreateCubicBezierSegment(bezierSegment);
       MapPoint startPt = cb.StartPoint;
       Coordinate2D ctrlPt1 = cb.ControlPoint1;
       Coordinate2D ctrlPt2 = cb.ControlPoint2;
@@ -2477,9 +2201,10 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(Segment,SpatialReference)
       #region Construct a Polyline - from a Cubic Bezier
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(bezierSegment);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(bezierSegment);
 
       #endregion
     }
@@ -2489,78 +2214,70 @@ namespace ProSnippetsGeometry
 
     public void ConstructArcUsingInteriorPt()
     {
-      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D)
-      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using an interior point;ArcGIS.Core.Geometry.EllipticArcBuilder.ToSegment
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircularArc(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       #region Construct a Circular Arc - using an interior point
 
       // Construct a circular arc from (2, 1) to (1, 2) with interior pt (1 + sqrt(2)/2, 1 + sqrt(2)/2).
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      MapPoint fromPt = MapPointBuilder.CreateMapPoint(2, 1);
-      MapPoint toPt = MapPointBuilder.CreateMapPoint(1, 2);
+      MapPoint fromPt = MapPointBuilderEx.CreateMapPoint(2, 1);
+      MapPoint toPt = MapPointBuilderEx.CreateMapPoint(1, 2);
       Coordinate2D interiorPt = new Coordinate2D(1 + Math.Sqrt(2) / 2, 1 + Math.Sqrt(2) / 2);
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromPt, toPt, interiorPt);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, toPt, interiorPt);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(fromPt, toPt, interiorPt))
-        {
-          // do something with the builder
+      // BuilderEx constructors dont need to run on the MCT.
+      EllipticArcBuilderEx eab = new EllipticArcBuilderEx(fromPt, toPt, interiorPt);
+      // do something with the builder
 
-          EllipticArcSegment anotherCircularArc = cab.ToSegment();
-        }
-      });
+      EllipticArcSegment anotherCircularArc = eab.ToSegment();
 
       #endregion
     }
 
     public void ConstructArcUsingChordAndBearing()
     {
-      // cref: Construct a Circular Arc - using a chord length and bearing;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using a chord length and bearing;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircularArc(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.MinorOrMajor,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       #region Construct a Circular Arc - using a chord length and bearing
 
       // Construct a circular arc counterclockwise from (2, 1) to (1, 2) such that the embedded 
       // circle has center point at (1, 1) and radius = 1.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      MapPoint fromPt = MapPointBuilder.CreateMapPoint(2, 1, SpatialReferences.WGS84);
+      MapPoint fromPt = MapPointBuilderEx.CreateMapPoint(2, 1, SpatialReferences.WGS84);
       double chordLength = Math.Sqrt(2);
       double chordBearing = 3 * Math.PI / 4;
       double radius = 1;
-      esriArcOrientation orientation = esriArcOrientation.esriArcCounterClockwise;
+      ArcOrientation orientation = ArcOrientation.ArcCounterClockwise;
       MinorOrMajor minorOrMajor = MinorOrMajor.Minor;
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor);
+      // BuildeExr convenience methods don't need to run on the MCT.
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor))
-        {
-          // do something with the builder
+      // BuilderEx constructors need to run on the MCT.
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor);
+      // do something with the builder
 
-          EllipticArcSegment anotherCircularArc = cab.ToSegment();
-        }
-      });
+      EllipticArcSegment anotherCircularArc = cab.ToSegment();
 
       #endregion
     }
 
     public void ConstructArcUsingCenterPtAngleAndRadius()
     {
-      // cref: Construct a Circular Arc - using a center point, angle and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using a center point, angle and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircularArc(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(System.Double,System.Double,ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       #region Construct a Circular Arc - using a center point, angle and radius
 
       // Construct a circular arc with center point at (0, 0), from angle = 0, 
       // central angle = pi/2, radius = 1.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
       SpatialReference sr4326 = SpatialReferences.WGS84;
       Coordinate2D centerPt = new Coordinate2D(0, 0);
@@ -2568,142 +2285,118 @@ namespace ProSnippetsGeometry
       double centralAngle = Math.PI / 2;
       double radius = 1;
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromAngle, centralAngle, centerPt, radius, sr4326);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromAngle, centralAngle, centerPt, radius, sr4326);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(fromAngle, centralAngle, centerPt, radius, sr4326))
-        {
-          // do something with the builder
-
-          EllipticArcSegment otherCircularArc = cab.ToSegment();
-        }
-      });
+      // BuilderEx constructors dont need to run on the MCT.
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromAngle, centralAngle, centerPt, radius, sr4326);
+      EllipticArcSegment otherCircularArc = cab.ToSegment();
 
       #endregion
     }
 
     public void ConstructArcCenterPtRotationAngle()
     {
-      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using a center point and rotation angle;ArcGIS.Core.Geometry.EllipticArcBuilder.GetAxes(System.Double@,System.Double@)
-      #region Construct a Circular Arc - using a center point and rotation angle
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.GetAxes(System.Double@,System.Double@)
+      #region Construct an Elliptic Arc - using a center point and rotation angle
 
       // Construct an elliptic arc centered at (1,1), startAngle = 0, centralAngle = PI/2, 
       // rotationAngle = 0, semiMajorAxis = 1, minorMajorRatio = 0.5.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
       Coordinate2D centerPt = new Coordinate2D(1, 1);
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(centerPt, 0, Math.PI / 2, 0, 1, 0.5);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateEllipticArcSegment(centerPt, 0, Math.PI / 2, 0, 1, 0.5);
 
       double semiMajor;
       double semiMinor;
       circularArc.GetAxes(out semiMajor, out semiMinor);
       // semiMajor = 1, semiMinor = 0.5
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(centerPt, 0, Math.PI / 2, 0, 1, 0.5))
-        {
-          // do something with the builder
-
-          EllipticArcSegment otherCircularArc = cab.ToSegment();
-        }
-      });
+      // BuilderEx constructors dont need to run on the MCT.
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(centerPt, 0, Math.PI / 2, 0, 1, 0.5);
+      cab.GetAxes(out semiMajor, out semiMinor);
+      EllipticArcSegment otherCircularArc = cab.ToSegment();
 
       #endregion
     }
 
     public void ConstructArcCenterPtOrientation()
     {
-      // cref: Construct a Circular Arc - using a center point and orientation;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using a center point and orientation;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircularArc(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Circular Arc - using a center point and orientation
 
       // Construct a circular arc from (2, 1) to (1, 2) 
       // with center point at (1, 1) and orientation counterclockwise.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      MapPoint toPt = MapPointBuilder.CreateMapPoint(1, 2);
-      MapPoint fromPt = MapPointBuilder.CreateMapPoint(2, 1);
+      MapPoint toPt = MapPointBuilderEx.CreateMapPoint(1, 2);
+      MapPoint fromPt = MapPointBuilderEx.CreateMapPoint(2, 1);
       Coordinate2D centerPtCoord = new Coordinate2D(1, 1);
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromPt, toPt, centerPtCoord, esriArcOrientation.esriArcCounterClockwise);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, toPt, centerPtCoord, ArcOrientation.ArcCounterClockwise);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(fromPt, toPt, centerPtCoord, esriArcOrientation.esriArcCounterClockwise))
-        {
-          // do something with the builder
-
-          EllipticArcSegment otherCircularArc = cab.ToSegment();
-        }
-      });
+      // BuilderEx constructors need to run on the MCT.
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromPt, toPt, centerPtCoord, ArcOrientation.ArcCounterClockwise);
+      EllipticArcSegment otherCircularArc = cab.ToSegment();
 
       #endregion
     }
 
     public void ConstructArcSegmentsRadius()
     {
-      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circular Arc - using two segments and radius;ArcGIS.Core.Geometry.EllipticArcBuilder.QueryFilletRadiusRange(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.QueryFilletRadiusRange(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Coordinate2D)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircularArc(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.Segment,System.Double,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Circular Arc - using two segments and radius
 
       // Construct a segment from (100, 100) to (50, 50) and another segment from (100, 100) to (150, 50).
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
-      LineSegment segment1 = LineBuilder.CreateLineSegment(new Coordinate2D(100, 100), new Coordinate2D(50, 50));
-      LineSegment segment2 = LineBuilder.CreateLineSegment(new Coordinate2D(100, 100), new Coordinate2D(150, 50));
+      LineSegment segment1 = LineBuilderEx.CreateLineSegment(new Coordinate2D(100, 100), new Coordinate2D(50, 50));
+      LineSegment segment2 = LineBuilderEx.CreateLineSegment(new Coordinate2D(100, 100), new Coordinate2D(150, 50));
 
       // Construct the hint point to determine where the arc will be constructed.
       Coordinate2D hintPoint = new Coordinate2D(100, 75);
 
       // Call QueryFilletRadius to get the minimum and maximum radii that can be used with these segments.
-      var minMaxRadii = EllipticArcBuilder.QueryFilletRadiusRange(segment1, segment2, hintPoint);
+      var minMaxRadii = EllipticArcBuilderEx.QueryFilletRadiusRange(segment1, segment2, hintPoint);
 
       // Use the maximum radius to create the arc.
       double maxRadius = minMaxRadii.Item2;
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(segment1, segment2, maxRadius, hintPoint);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      //At 2.x - EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateEllipticArcSegment(segment1, segment2, maxRadius, hintPoint);
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(
+                          segment1, segment2, maxRadius, hintPoint);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder cab = new EllipticArcBuilder(segment1, segment2, maxRadius, hintPoint))
-        {
-          // do something with the builder
-
-          EllipticArcSegment otherCircularArc = cab.ToSegment();
-        }
-      });
+      // BuilderEx constructors need to run on the MCT.
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(segment1, segment2, maxRadius, hintPoint);
+      EllipticArcSegment otherCircularArc = cab.ToSegment();
 
       #endregion
     }
 
     public void ConstructCircle()
     {
-      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Circle;ArcGIS.Core.Geometry.EllipticArcBuilder.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateCircle(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.ArcOrientation
       #region Construct a Circle
 
       // Construct a circle with center at (-1,-1), radius = 2, and oriented clockwise.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
       Coordinate2D centerPtCoord = new Coordinate2D(-1, -1);
 
       // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment circle = EllipticArcBuilder.CreateEllipticArcSegment(centerPtCoord, 2, esriArcOrientation.esriArcClockwise);
+      EllipticArcSegment circle = EllipticArcBuilderEx.CreateCircle(centerPtCoord, 2, ArcOrientation.ArcClockwise);
       // circle.IsCircular = true
       // circle.IsCounterClockwise = false
       // circle.IsMinor = false
@@ -2719,45 +2412,31 @@ namespace ProSnippetsGeometry
       // rotationAngle = 0
       // endAngle = PI/2
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder builder = new EllipticArcBuilder(centerPtCoord, 2, esriArcOrientation.esriArcClockwise))
-        {
-          // do something with the builder
-
-          EllipticArcSegment otherCircle = builder.ToSegment();
-        }
-      });
+      // BuilderEx constructors need to run on the MCT.
+      EllipticArcBuilderEx builder = new EllipticArcBuilderEx(centerPtCoord, 2, ArcOrientation.ArcClockwise);
+      EllipticArcSegment otherCircle = builder.ToSegment();
 
       #endregion
     }
 
     public void ConstructEllipse()
     {
-      // cref: Construct an Ellipse;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct an Ellipse;ArcGIS.Core.Geometry.EllipticArcBuilder.CreateEllipticArcSegment(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.esriArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CreateEllipse(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct an Ellipse
 
       // Construct an ellipse centered at (1, 2) with rotationAngle = -pi/6,  
       // semiMajorAxis = 5, minorMajorRatio = 0.2, oriented clockwise.
-      // Use a builder convenience method or use a builder constructor.
+      // Use a builderEx convenience method or use a builderEx constructor.
 
       Coordinate2D centerPt = new Coordinate2D(1, 2);
 
-      // Builder convenience methods don't need to run on the MCT.
-      EllipticArcSegment ellipse = EllipticArcBuilder.CreateEllipticArcSegment(centerPt, -1 * Math.PI / 6, 5, 0.2, esriArcOrientation.esriArcClockwise);
+      // BuilderEx convenience methods don't need to run on the MCT.
+      EllipticArcSegment ellipse = EllipticArcBuilderEx.CreateEllipse(centerPt, -1 * Math.PI / 6, 5, 0.2, ArcOrientation.ArcClockwise);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (EllipticArcBuilder builder = new EllipticArcBuilder(centerPt, -1 * Math.PI / 6, 5, 0.2, esriArcOrientation.esriArcClockwise))
-        {
-          // do something with the builder
-
-          EllipticArcSegment anotherEllipse = builder.ToSegment();
-        }
-      });
+      // BuilderEx constructors need to run on the MCT.
+      EllipticArcBuilderEx builder = new EllipticArcBuilderEx(centerPt, -1 * Math.PI / 6, 5, 0.2, ArcOrientation.ArcClockwise);
+      EllipticArcSegment anotherEllipse = builder.ToSegment();
 
       #endregion
     }
@@ -2766,37 +2445,31 @@ namespace ProSnippetsGeometry
     {
       EllipticArcSegment arcSegment = null;
 
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.#ctor(ArcGIS.Core.Geometry.EllipticArcSegment)
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.CenterPoint
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.CentralAngle
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.EndAngle
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.EndPoint
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.IsCircular
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.IsMinor
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.Orientation
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.RotationAngle
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.StartAngle
-      // cref: Elliptic Arc Builder Properties;ArcGIS.Core.Geometry.EllipticArcBuilder.StartPoint
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.StartPoint
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.EndPoint
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CenterPoint
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.IsCircular
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.IsMinor
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.StartAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.EndAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.CentralAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.RotationAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.Orientation
       #region Elliptic Arc Builder Properties
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // retrieve the curve's control points
-        using (EllipticArcBuilder builder = new EllipticArcBuilder(arcSegment))
-        {
-          MapPoint startPt = builder.StartPoint;
-          MapPoint endPt = builder.EndPoint;
-          Coordinate2D centerPt = builder.CenterPoint;
-          bool isCircular = builder.IsCircular;
-          bool isMinor = builder.IsMinor;
-          double startAngle = builder.StartAngle;
-          double endAngle = builder.EndAngle;
-          double centralAngle = builder.CentralAngle;
-          double rotationAngle = builder.RotationAngle;
-          esriArcOrientation orientation = builder.Orientation;
-        }
-      });
+      // retrieve the curve's properties
+      EllipticArcBuilderEx builder = new EllipticArcBuilderEx(arcSegment);
+      MapPoint startPt = builder.StartPoint;
+      MapPoint endPt = builder.EndPoint;
+      Coordinate2D centerPt = builder.CenterPoint;
+      bool isCircular = builder.IsCircular;
+      bool isMinor = builder.IsMinor;
+      double startAngle = builder.StartAngle;
+      double endAngle = builder.EndAngle;
+      double centralAngle = builder.CentralAngle;
+      double rotationAngle = builder.RotationAngle;
+      ArcOrientation orientation = builder.Orientation;
 
       #endregion
     }
@@ -2805,25 +2478,25 @@ namespace ProSnippetsGeometry
     {
       EllipticArcSegment arcSegment = null;
 
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.GetAxes(System.Double@,System.Double@)
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.CenterPoint
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.CentralAngle
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.EndAngle
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCircular
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCounterClockwise
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsCurve
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.IsMinor
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.Length
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.MinorMajorRatio
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.RotationAngle
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.SemiMajorAxis
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.SemiMinorAxis
-      // cref: Elliptic Arc Properties;ArcGIS.Core.Geometry.EllipticArcSegment.StartAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.StartAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.EndAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.CenterPoint
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.IsCircular
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.IsMinor
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.IsCounterClockwise
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.IsCurve
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.Length
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.MinorMajorRatio
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.GetAxes(System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.SemiMajorAxis
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.SemiMinorAxis
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.QueryCoords(ArcGIS.Core.Geometry.Coordinate2D@,System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.CentralAngle
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment.RotationAngle
       #region Elliptic Arc Properties
 
       // retrieve the curve's control points
-      EllipticArcSegment arc = EllipticArcBuilder.CreateEllipticArcSegment(arcSegment);
+      EllipticArcSegment arc = EllipticArcBuilderEx.CreateEllipticArcSegment(arcSegment);
       MapPoint startPt = arc.StartPoint;
       MapPoint endPt = arc.EndPoint;
       Coordinate2D centerPt = arc.CenterPoint;
@@ -2860,124 +2533,116 @@ namespace ProSnippetsGeometry
     public void GeometryBag()
     {
       {
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.IsEqual(ArcGIS.Core.Geometry.GeometryBag)
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.#ctor(ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.AddGeometry(ArcGIS.Core.Geometry.Geometry)
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.InsertGeometry(System.Int32,ArcGIS.Core.Geometry.Geometry)
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.RemoveGeometry(System.Int32)
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.ToGeometry
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.Geometries
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.IsEmpty
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.PartCount
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBag.PointCount
-        // cref: Construct GeometryBag;ArcGIS.Core.Geometry.GeometryBagBuilder.CountGeometries
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.#ctor(ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.ToGeometry
+        // cref: ArcGIS.Core.Geometry.GeometryBag.IsEmpty
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.AddGeometry(ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.GeometryCount
+        // cref: ArcGIS.Core.Geometry.GeometryBag.PartCount
+        // cref: ArcGIS.Core.Geometry.GeometryBag.PointCount
+        // cref: ArcGIS.Core.Geometry.GeometryBag.Geometries
+        // cref: ArcGIS.Core.Geometry.GeometryBag.IsEqual(ArcGIS.Core.Geometry.GeometryBag)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.RemoveGeometry(System.Int32)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.InsertGeometry(System.Int32,ArcGIS.Core.Geometry.Geometry)
         #region Construct GeometryBag
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
+        MapPoint point = MapPointBuilderEx.CreateMapPoint(1, 2, SpatialReferences.WebMercator);
+
+        List<Coordinate2D> coords2D = new List<Coordinate2D>()
         {
-          using (GeometryBagBuilder builder = new GeometryBagBuilder(SpatialReferences.WGS84))
-          {
-            GeometryBag emptyBag = builder.ToGeometry();
-            // emptyBag.IsEmpty = true
+          new Coordinate2D(0, 0),
+          new Coordinate2D(0, 1),
+          new Coordinate2D(1, 1),
+          new Coordinate2D(1, 0)
+        };
 
-            MapPoint point = MapPointBuilder.CreateMapPoint(1, 2, SpatialReferences.WebMercator);
-            builder.AddGeometry(point);
-            // builder.CountGeometries = 1
+        Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(coords2D, SpatialReferences.WGS84);
+        Polyline polyline = PolylineBuilderEx.CreatePolyline(coords2D, SpatialReferences.WebMercator);
 
-            GeometryBag geometryBag = builder.ToGeometry();
-            // geometryBag.PartCount = 1
-            // geometryBag.PointCount = 1
-            // geometryBag.IsEmpty = false
+        GeometryBagBuilderEx builder = new GeometryBagBuilderEx(SpatialReferences.WGS84);
 
-            IReadOnlyList<Geometry> geometries = geometryBag.Geometries;
-            // geometries.Count = 1
-            // geometries[0] is MapPoint with a sr of WGS84
+        GeometryBag emptyBag = builder.ToGeometry();
+        // emptyBag.IsEmpty = true
 
-            bool isEqual = geometryBag.IsEqual(emptyBag);   // isEqual = false
+        builder.AddGeometry(point);
+        // builder.GeometryCount = 1
 
-            List<Coordinate2D> coords2D = new List<Coordinate2D>()
-            {
-            new Coordinate2D(0, 0),
-            new Coordinate2D(0, 1),
-            new Coordinate2D(1, 1),
-            new Coordinate2D(1, 0)
-            };
+        GeometryBag geometryBag = builder.ToGeometry();
+        // geometryBag.PartCount = 1
+        // geometryBag.PointCount = 1
+        // geometryBag.IsEmpty = false
 
-            Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords2D, SpatialReferences.WGS84);
-            builder.InsertGeometry(0, multipoint);
-            geometryBag = builder.ToGeometry();
-            // geometryBag.PartCount = 2
+        IReadOnlyList<Geometry> geometries = geometryBag.Geometries;
+        // geometries.Count = 1
+        // geometries[0] is MapPoint with a sr of WGS84
 
-            geometries = geometryBag.Geometries;
-            // geometries.Count = 2
-            // geometries[0] is Multipoint
-            // geometries[1] is MapPoint
+        bool isEqual = geometryBag.IsEqual(emptyBag);   // isEqual = false
 
-            Polyline polyline = PolylineBuilder.CreatePolyline(coords2D, SpatialReferences.WebMercator);
-            builder.AddGeometry(polyline);
-            builder.RemoveGeometry(1);
-            geometryBag = builder.ToGeometry();
-            // geometryBag.PartCount = 2
+        builder.InsertGeometry(0, multipoint);
+        geometryBag = builder.ToGeometry();
+        // geometryBag.PartCount = 2
 
-            geometries = geometryBag.Geometries;
-            // geometries.Count = 2
-            // geometries[0] is Multipoint
-            // geometries[1] is Polyline          
-          }
-        });
+        geometries = geometryBag.Geometries;
+        // geometries.Count = 2
+        // geometries[0] is Multipoint
+        // geometries[1] is MapPoint
+
+        builder.AddGeometry(polyline);
+        builder.RemoveGeometry(1);
+        geometryBag = builder.ToGeometry();
+        // geometryBag.PartCount = 2
+
+        geometries = geometryBag.Geometries;
+        // geometries.Count = 2
+        // geometries[0] is Multipoint
+        // geometries[1] is Polyline          
 
         #endregion
       }
 
       {
-        // cref: Construct GeometryBag - from an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Construct GeometryBag - from an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.CreateGeometryBag(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.CreateGeometryBag(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.ToGeometry
         #region Construct GeometryBag - from an enumeration of geometries
 
         // Use a builder convenience method or use a builder constructor.
 
-        MapPoint point = MapPointBuilder.CreateMapPoint(10, 20);
+        MapPoint point = MapPointBuilderEx.CreateMapPoint(10, 20);
         List<Coordinate2D> coords = new List<Coordinate2D>() { new Coordinate2D(50, 60), new Coordinate2D(-120, -70), new Coordinate2D(40, 60) };
-        Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords, SpatialReferences.WebMercator);
-        Polyline polyline = PolylineBuilder.CreatePolyline(coords);
+        Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(coords, SpatialReferences.WebMercator);
+        Polyline polyline = PolylineBuilderEx.CreatePolyline(coords);
 
         string json = "{\"rings\":[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[3,0],[3,1],[4,1],[4,0],[3,0]]]}";
-        Polygon polygon = PolygonBuilder.FromJson(json);
+        Polygon polygon = PolygonBuilderEx.FromJson(json);
 
         var geometries = new List<Geometry>() { point, multipoint, polyline, polygon };
 
         // Builder convenience methods don't need to run on the MCT.
-        GeometryBag bag = GeometryBagBuilder.CreateGeometryBag(geometries, SpatialReferences.WGS84);
+        //At 2.x - GeometryBag bag = GeometryBagBuilder.CreateGeometryBag(geometries, SpatialReferences.WGS84);
+        var bag = GeometryBagBuilderEx.CreateGeometryBag(geometries, SpatialReferences.WGS84);
 
-        // Builder constructors need to run on the MCT.
-        ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-        {
-          using (var builder = new GeometryBagBuilder(geometries, SpatialReferences.WGS84))
-          {
-            // builder.CountGeometries = 4
-
-            // do something with the builder
-
-            bag = builder.ToGeometry();
-            // bag.PartCount = 4
-            // bag.PointCount = 17
-          }
-        });
+        //At 2.x - using (var builder = new GeometryBagBuilder(geometries, SpatialReferences.WGS84)) 
+        var builder = new GeometryBagBuilderEx(geometries, SpatialReferences.WGS84);
+        // do something with the builder
+        bag = builder.ToGeometry();
 
         #endregion
       }
 
       {
-        // cref: Construct GeometryBag - from JSON, Xml;ArcGIS.Core.Geometry.GeometryBagBuilder.FromJson(System.String)
-        // cref: Construct GeometryBag - from JSON, Xml;ArcGIS.Core.Geometry.GeometryBagBuilder.FromXML(System.String)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.FromJson(System.String)
+        // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.FromXML(System.String)
+        // cref: ArcGIS.Core.Geometry.Geometry.ToXml
         #region Construct GeometryBag - from JSON, Xml
 
         const string jsonString = "{\"geometries\":[{\"x\":1,\"y\":2},{\"rings\":[[[0,0],[0,4],[3,4],[3,0],[0,0]]]}],\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}";
-        GeometryBag geometryBag = GeometryBagBuilder.FromJson(jsonString);
+        //At 2.x - GeometryBag geometryBag = GeometryBagBuilder.FromJson(jsonString);
+        var geometryBag = GeometryBagBuilderEx.FromJson(jsonString);
 
-        string xml = geometryBag.ToXML();
-        GeometryBag xmlString = GeometryBagBuilder.FromXML(xml);
+        string xml = geometryBag.ToXml();
+        //At 2.x - GeometryBag xmlString = GeometryBagBuilder.FromXML(xml);
+        var xmlString = GeometryBagBuilderEx.FromXml(xml);
 
         #endregion
       }
@@ -2985,41 +2650,34 @@ namespace ProSnippetsGeometry
 
     public void GeometryBagInsert()
     {
-      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.AddGeometries(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
-      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.InsertGeometries(System.Int32,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
-      // cref: Construct GeometryBag - adding or inserting an enumeration of geometries;ArcGIS.Core.Geometry.GeometryBagBuilder.CountGeometries
+      // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.AddGeometries(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.InsertGeometries(System.Int32,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.GeometryCount
+      // cref: ArcGIS.Core.Geometry.GeometryBagBuilderEx.ToGeometry
       #region Construct GeometryBag - adding or inserting an enumeration of geometries
 
-      MapPoint point = MapPointBuilder.CreateMapPoint(10, 20);
+      MapPoint point = MapPointBuilderEx.CreateMapPoint(10, 20);
       List<Coordinate2D> coords = new List<Coordinate2D>() { new Coordinate2D(50, 60), new Coordinate2D(-120, -70), new Coordinate2D(40, 60) };
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords, SpatialReferences.WebMercator);
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords);
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(coords, SpatialReferences.WebMercator);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords);
 
       string json = "{\"rings\":[[[0,0],[0,1],[1,1],[1,0],[0,0]],[[3,0],[3,1],[4,1],[4,0],[3,0]]]}";
-      Polygon polygon = PolygonBuilder.FromJson(json);
+      Polygon polygon = PolygonBuilderEx.FromJson(json);
 
       var geometries = new List<Geometry>() { point, multipoint, polyline, polygon };
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        using (var builder = new GeometryBagBuilder(SpatialReferences.WGS84))
-        {
-          // builder.CountGeometries = 0
+      //At 2.x - using (var builder = new GeometryBagBuilder(SpatialReferences.WGS84))
+      var builder = new GeometryBagBuilderEx(SpatialReferences.WGS84);
+      builder.AddGeometries(geometries);
 
-          builder.AddGeometries(geometries);
-          // builder.CountGeometries = 4
+      GeometryBag geomBag = builder.ToGeometry();
+      // geomBag.PartCount == 4    (point, multipoint, polyline, polygon)
 
-          GeometryBag geomBag = builder.ToGeometry();
-          // bag.PartCount = 4    (point, multipoint, polyline, polygon)
-
-          geometries = new List<Geometry>() { point, polyline };
-          builder.InsertGeometries(1, geometries);
-          // builder.CountGeometries = 6
-          geomBag = builder.ToGeometry();
-          // bag.PartCount = 6    (point, point, polyline, multipoint, polyline, polygon)
-        }
-      });
+      geometries = new List<Geometry>() { point, polyline };
+      builder.InsertGeometries(1, geometries);
+      // builder.GeometryCount == 6
+      geomBag = builder.ToGeometry();
+      // geomBag.PartCount == 6    (point, point, polyline, multipoint, polyline, polygon)
 
       #endregion
     }
@@ -3029,28 +2687,28 @@ namespace ProSnippetsGeometry
 
     public void Multipatch()
     {
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Construct Multipatch via Extrusion of Polygon or Polyline;ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrude(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeFromToZ(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongVector3D(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeToZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructMultipatchExtrudeAlongLine(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Coordinate3D,ArcGIS.Core.Geometry.Coordinate3D)
       #region Construct Multipatch via Extrusion of Polygon or Polyline
 
       // build a polygon
       string json = "{\"hasZ\":true,\"rings\":[[[0,0,0],[0,1,0],[1,1,0],[1,0,0],[0,0,0]]],\"spatialReference\":{\"wkid\":4326}}";
-      Polygon polygon = PolygonBuilder.FromJson(json);
+      Polygon polygon = PolygonBuilderEx.FromJson(json);
 
       // extrude the polygon by an offset to create a multipatch
       Multipatch multipatch = GeometryEngine.Instance.ConstructMultipatchExtrude(polygon, 2);
 
       // a different polygon
       json = "{\"hasZ\":true,\"rings\":[[[0,0,1],[0,1,2],[1,1,3],[1,0,4],[0,0,1]]],\"spatialReference\":{\"wkid\":4326}}";
-      polygon = PolygonBuilder.FromJson(json);
+      polygon = PolygonBuilderEx.FromJson(json);
 
       // extrude between z values to create a multipatch
       multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeFromToZ(polygon, -10, 20);
@@ -3061,7 +2719,7 @@ namespace ProSnippetsGeometry
 
       // build a polyline
       json = "{\"hasZ\":true,\"paths\":[[[400,800,1000],[800,1400,1500],[1200,800,2000],[1800,1800,2500],[2200,800,3000]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       // extrude to a specific z value to create a multipatch
       multipatch = GeometryEngine.Instance.ConstructMultipatchExtrudeToZ(polyline, 500);
@@ -3077,21 +2735,34 @@ namespace ProSnippetsGeometry
       Multipatch multiPatch = null;
       int patchIndex = 0;
 
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchPointCount(System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchPriority(System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchStartPointIndex(System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinate(System.Int32,System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinates(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchTextureVertexCount(System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.GetPatchType(System.Int32)
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.HasMaterials
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.HasTextures
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.IsEmpty
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.MaterialCount
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.PartCount
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.PointCount
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.Points
-      // cref: Multipatch Properties;ArcGIS.Core.Geometry.Multipatch.TextureVertexCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.IsEmpty
+      // cref: ArcGIS.Core.Geometry.Multipatch.PartCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.PointCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.Points
+      // cref: ArcGIS.Core.Geometry.Multipatch.HasMaterials
+      // cref: ArcGIS.Core.Geometry.Multipatch.MaterialCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.HasTextures
+      // cref: ArcGIS.Core.Geometry.Multipatch.TextureVertexCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialColor
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialEdgeColor
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialEdgeWidth
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialShininess
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTransparencyPercent
+      // cref: ArcGIS.Core.Geometry.Multipatch.IsMaterialCullBackFace
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureColumnCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureRowCount
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureBytesPerPixel
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureCompressionType
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTexture
+      // cref: ArcGIS.Core.Geometry.TextureCompressionType
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchPriority(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchType(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchPointCount(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchStartPointIndex(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchTextureVertexCount(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinate(System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchTextureCoordinates(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate2D}@)
+      // cref: ArcGIS.Core.Geometry.Multipatch.Copy3DCoordinatesToList
       #region Multipatch Properties
 
       // standard geometry properties
@@ -3127,7 +2798,7 @@ namespace ProSnippetsGeometry
 
       // properties for an individual patch (if multipatch.PartCount > 0)
       int patchPriority = multiPatch.GetPatchPriority(patchIndex);
-      esriPatchType patchType = multiPatch.GetPatchType(patchIndex);
+      PatchType patchType = multiPatch.GetPatchType(patchIndex);
 
       // patch points
       int patchPointCount = multiPatch.GetPatchPointCount(patchIndex);
@@ -3149,7 +2820,7 @@ namespace ProSnippetsGeometry
         var edgeWidth = multipatch.GetMaterialEdgeWidth(materialIndex);
         var shiness = multipatch.GetMaterialShininess(materialIndex);
         var percent = multipatch.GetMaterialTransparencyPercent(materialIndex);
-        var cullBackFace = multipatch.IsMaterialCullBackface(materialIndex);
+        var cullBackFace = multipatch.IsMaterialCullBackFace(materialIndex);
 
         // texture properties
         bool isTextured = multipatch.IsMaterialTextured(materialIndex);
@@ -3158,7 +2829,7 @@ namespace ProSnippetsGeometry
           int columnCount = multipatch.GetMaterialTextureColumnCount(materialIndex);
           int rowCount = multipatch.GetMaterialTextureRowCount(materialIndex);
           int bpp = multipatch.GetMaterialTextureBytesPerPixel(materialIndex);
-          esriTextureCompressionType compressionType = multipatch.GetMaterialTextureCompressionType(materialIndex);
+          TextureCompressionType compressionType = multipatch.GetMaterialTextureCompressionType(materialIndex);
           var texture = multipatch.GetMaterialTexture(materialIndex);
         }
       }
@@ -3186,50 +2857,43 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToBinaryXML
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToEsriShape
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromBinaryXML(System.String)
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.MultipatchBuilder.FromXML(System.String)
-      // cref: Construct Multipatch;ArcGIS.Core.Geometry.Multipatch.ToEsriShape(System.Byte[]@)
+      // cref: ArcGIS.Core.Geometry.Multipatch.ToBinaryXml
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.FromBinaryXml(System.String)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.FromXml(System.String)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.Multipatch.ToEsriShape
       #region Construct Multipatch
 
       // export to binary xml
-      string binaryXml = multiPatch.ToBinaryXML();
+      string binaryXml = multiPatch.ToBinaryXml();
 
       // import from binaryXML - methods need to run on the MCT
-      Multipatch binaryMultipatch = MultipatchBuilder.FromBinaryXML(binaryXml);
+      Multipatch binaryMultipatch = MultipatchBuilderEx.FromBinaryXml(binaryXml);
 
       // xml export / import
-      string xml = multiPatch.ToXML();
-      Multipatch xmlMultipatch = MultipatchBuilder.FromXML(xml);
+      string xml = multiPatch.ToXml();
+      Multipatch xmlMultipatch = MultipatchBuilderEx.FromXml(xml);
 
       // esriShape export/import
       byte[] buffer = multiPatch.ToEsriShape();
-      Multipatch esriPatch = MultipatchBuilder.FromEsriShape(buffer);
+      Multipatch esriPatch = MultipatchBuilderEx.FromEsriShape(buffer);
 
       // or use GeometryEngine
-      Multipatch patchImport = GeometryEngine.Instance.ImportFromEsriShape(EsriShapeImportFlags.esriShapeImportDefaults, buffer, multiPatch.SpatialReference) as Multipatch;
+      Multipatch patchImport = GeometryEngine.Instance.ImportFromEsriShape(EsriShapeImportFlags.EsriShapeImportDefaults, buffer, multiPatch.SpatialReference) as Multipatch;
 
       #endregion
 
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.#ctor
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.MakePatch(ArcGIS.Core.Geometry.esriPatchType)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithMaterial(ArcGIS.Core.Geometry.Material)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.ToGeometry
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.Color
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.CullBackFace
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.EdgeColor
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.Shininess
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipatch)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchBuilderEx)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct Multipatch via MultipatchBuilderEx;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.SpatialReference)
+
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.#ctor
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.Color
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.MakePatch(ArcGIS.Core.Geometry.PatchType)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithMaterial(ArcGIS.Core.Geometry.Material)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.Patch
+      // cref: ArcGIS.Core.Geometry.PatchType
       #region Construct Multipatch via MultipatchBuilderEx
 
       var coords_face1 = new List<Coordinate3D>()
@@ -3310,27 +2974,27 @@ namespace ProSnippetsGeometry
       var mpb = new ArcGIS.Core.Geometry.MultipatchBuilderEx();
 
       // make each patch using the appropriate coordinates and add to the patch list
-      var patch = mpb.MakePatch(esriPatchType.Triangles);
+      var patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face1;
       patches.Add(patch);
 
-      patch = mpb.MakePatch(esriPatchType.Triangles);
+      patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face2;
       patches.Add(patch);
 
-      patch = mpb.MakePatch(esriPatchType.Triangles);
+      patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face3;
       patches.Add(patch);
 
-      patch = mpb.MakePatch(esriPatchType.Triangles);
+      patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face4;
       patches.Add(patch);
 
-      patch = mpb.MakePatch(esriPatchType.Triangles);
+      patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face5;
       patches.Add(patch);
 
-      patch = mpb.MakePatch(esriPatchType.Triangles);
+      patch = mpb.MakePatch(PatchType.Triangles);
       patch.Coords = coords_face6;
       patches.Add(patch);
 
@@ -3355,7 +3019,7 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
-    public void MultipatchBuilderEx()
+    public void MultipatchBuilderEx_()
     {
       Multipatch multipatch = null;
       TextureResource brickTextureResource = null;
@@ -3363,18 +3027,20 @@ namespace ProSnippetsGeometry
       MapPoint newPoint = null;
       var coords = new List<Coordinate3D>();
 
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipatch)
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPatchPointCount(System.Int32)
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPoint(System.Int32,System.Int32)
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithTexture(ArcGIS.Core.Geometry.TextureResource)
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.SetPoint(System.Int32,System.Int32,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.SynchronizeAttributeAwareness
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasID
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasM
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasNormals
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.HasZ
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.IsEmpty
-      // cref: Construct Multipatch from another Multipatch;ArcGIS.Core.Geometry.MultipatchBuilderEx.Patches
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.Multipatch)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.HasM
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.HasZ
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.HasID
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.IsEmpty
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.HasNormals
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.Patches
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.ToGeometry
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPatchPointCount(System.Int32)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.GetPoint(System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.SetPoint(System.Int32,System.Int32,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.QueryPatchIndicesWithTexture(ArcGIS.Core.Geometry.TextureResource)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.SynchronizeAttributeAwareness
+      // cref: ArcGIS.Core.Geometry.Patch.Material
       #region Construct Multipatch from another Multipatch
 
       // create the multipatchBuilderEx object
@@ -3423,6 +3089,7 @@ namespace ProSnippetsGeometry
 
       #endregion
 
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.From3DModelFile(System.String,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct Multipatch from a 3D model file
 
       try
@@ -3440,6 +3107,15 @@ namespace ProSnippetsGeometry
       }
       #endregion
 
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.#ctor(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipatchBuilderEx.CreateMultipatch(ArcGIS.Core.Geometry.MultipatchConstructType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.MultipatchConstructType
+      // cref: ArcGIS.Core.Geometry.BasicMaterial
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.Color
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.Shininess
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
+      // cref: ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
+      // cref: ArcGIS.Core.Geometry.Patch.Material
       #region Construct 3D special Multipatch shapes
 
       var sr = MapView.Active.Map.SpatialReference;
@@ -3488,14 +3164,14 @@ namespace ProSnippetsGeometry
     public void Material()
     {
       {
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.#ctor
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.Color
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.CullBackFace
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.EdgeColor
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.Shininess
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
-        // cref: Create BasicMaterial;ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.#ctor
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.#ctor(ArcGIS.Core.Geometry.BasicMaterial)
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.Color
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.EdgeColor
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.EdgeWidth
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.TransparencyPercent
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.Shininess
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.IsCullBackFace
         #region Create BasicMaterial
 
         // Create BasicMaterial with default values
@@ -3505,7 +3181,7 @@ namespace ProSnippetsGeometry
         int edgeWidth = material.EdgeWidth;                        // edgeWidth = 0
         int transparency = material.TransparencyPercent;           // transparency = 0
         int shininess = material.Shininess;                        // shininess = 0
-        bool cullBackFace = material.CullBackFace;                 // cullBackFace = false
+        bool cullBackFace = material.IsCullBackFace;               // cullBackFace = false
 
         // Modify the properties
         material.Color = System.Windows.Media.Colors.Red;
@@ -3513,20 +3189,22 @@ namespace ProSnippetsGeometry
         material.EdgeWidth = 10;
         material.TransparencyPercent = 50;
         material.Shininess = 25;
-        material.CullBackFace = true;
+        material.IsCullBackFace = true;
         #endregion
       }
 
       {
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.#ctor(System.Byte[])
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.BasicMaterial.TextureResource
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.BytesPerPixel
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.ColumnCount
-        // cref: Create BasicMaterial with JPEG texture;ArcGIS.Core.Geometry.JPEGTexture.RowCount
+        // cref: ArcGIS.Core.Geometry.JPEGTexture.#ctor(System.Byte[])
+        // cref: ArcGIS.Core.Geometry.JPEGTexture.BytesPerPixel
+        // cref: ArcGIS.Core.Geometry.JPEGTexture.ColumnCount
+        // cref: ArcGIS.Core.Geometry.JPEGTexture.RowCount
+        // cref: ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.TextureResource
         #region Create BasicMaterial with JPEG texture
 
         // read the jpeg into a buffer
+        //At 3.0 you need https://www.nuget.org/packages/Microsoft.Windows.Compatibility
+        //System.Drawing
         System.Drawing.Image image = System.Drawing.Image.FromFile(@"C:\temp\myImageFile.jpg");
         MemoryStream memoryStream = new MemoryStream();
 
@@ -3549,11 +3227,12 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
-        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.#ctor(System.Byte[],System.Int32,System.Int32,System.Byte)
-        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.BytesPerPixel
-        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.ColumnCount
-        // cref: Create BasicMaterial with Uncompressed texture;ArcGIS.Core.Geometry.UncompressedTexture.RowCount
+        // cref: ArcGIS.Core.Geometry.UncompressedTexture.#ctor(System.Byte[],System.Int32,System.Int32,System.Byte)
+        // cref: ArcGIS.Core.Geometry.UncompressedTexture.BytesPerPixel
+        // cref: ArcGIS.Core.Geometry.UncompressedTexture.ColumnCount
+        // cref: ArcGIS.Core.Geometry.UncompressedTexture.RowCount
+        // cref: ArcGIS.Core.Geometry.TextureResource.#ctor(ArcGIS.Core.Geometry.Texture)
+        // cref: ArcGIS.Core.Geometry.BasicMaterial.TextureResource
         #region Create BasicMaterial with Uncompressed texture
 
         UncompressedTexture uncompressedTexture1 = new UncompressedTexture(new byte[10 * 12 * 3], 10, 12, 3);
@@ -3572,10 +3251,11 @@ namespace ProSnippetsGeometry
       }
     }
 
-    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTexture(System.Int32)
-    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureCompressionType(System.Int32)
-    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.Multipatch.IsMaterialTextured(System.Int32)
-    // cref: Get the texture image of a multipatch;ArcGIS.Core.Geometry.esriTextureCompressionType
+    // cref: ArcGIS.Core.Geometry.Multipatch.IsMaterialTextured(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureCompressionType(System.Int32)
+    // cref: ArcGIS.Core.Geometry.TextureCompressionType
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTexture(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchMaterialIndex
     #region Get the texture image of a multipatch 
 
     // <summary>
@@ -3590,8 +3270,10 @@ namespace ProSnippetsGeometry
       if (!multipatch.IsMaterialTextured(materialIndex))
         return;
 
-      esriTextureCompressionType compressionType = multipatch.GetMaterialTextureCompressionType(materialIndex);
-      string ext = compressionType == esriTextureCompressionType.CompressionJPEG ? ".jpg" : ".dat";
+      TextureCompressionType compressionType = 
+        multipatch.GetMaterialTextureCompressionType(materialIndex);
+
+      string ext = compressionType == TextureCompressionType.CompressionJPEG ? ".jpg" : ".dat";
       byte[] textureBuffer = multipatch.GetMaterialTexture(materialIndex);
 
       Stream imageStream = new MemoryStream(textureBuffer);
@@ -3601,8 +3283,8 @@ namespace ProSnippetsGeometry
 
     #endregion
 
-    // cref: Get the normal coordinate of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchNormal(System.Int32,System.Int32)
-    // cref: Get the normal coordinate of a multipatch;ArcGIS.Core.Geometry.Multipatch.HasNormals
+    // cref: ArcGIS.Core.Geometry.Multipatch.HasNormals
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchNormal(System.Int32,System.Int32)
     #region Get the normal coordinate of a multipatch 
 
     // <summary>
@@ -3629,7 +3311,7 @@ namespace ProSnippetsGeometry
 
     #endregion
 
-    // cref: Get the normals of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchNormals(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchNormals(System.Int32,System.Collections.Generic.ICollection{ArcGIS.Core.Geometry.Coordinate3D}@)
     #region Get the normals of a multipatch 
 
     // <summary>
@@ -3659,13 +3341,13 @@ namespace ProSnippetsGeometry
 
     #endregion
 
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialColor(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureBytesPerPixel(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureColumnCount(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureRowCount(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetMaterialTransparencyPercent(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.GetPatchMaterialIndex(System.Int32)
-    // cref: Get the material properties of a multipatch;ArcGIS.Core.Geometry.Multipatch.IsMaterialCullBackface(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetPatchMaterialIndex(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTransparencyPercent(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.IsMaterialCullBackFace(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureBytesPerPixel(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureColumnCount(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.GetMaterialTextureRowCount(System.Int32)
+    // cref: ArcGIS.Core.Geometry.Multipatch.IsMaterialTextured
     #region Get the material properties of a multipatch 
 
     /// <summary>
@@ -3683,7 +3365,7 @@ namespace ProSnippetsGeometry
 
         System.Windows.Media.Color color = multipatch.GetMaterialColor(materialIndex);
         int tranparencyPercent = multipatch.GetMaterialTransparencyPercent(materialIndex);
-        bool isBackCulled = multipatch.IsMaterialCullBackface(materialIndex);
+        bool isBackCulled = multipatch.IsMaterialCullBackFace(materialIndex);
 
         if (multipatch.IsMaterialTextured(materialIndex))
         {
@@ -3699,6 +3381,13 @@ namespace ProSnippetsGeometry
     #region ProSnippet Group: Multiparts
     #endregion
 
+    // cref: ArcGIS.Core.Geometry.Geometry.IsEmpty
+    // cref: ArcGIS.Core.Geometry.Geometry.GeometryType
+    // cref: ArcGIS.Core.Geometry.Geometry.Clone
+    // cref: ArcGIS.Core.Geometry.GeometryType
+    // cref: ArcGIS.Core.Geometry.MultiPoint.Points
+    // cref: ArcGIS.Core.Geometry.MultiPart.Parts
+    // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable{Segment},SpatialReference)
     #region Get the individual parts of a multipart feature
 
     /// <summary>
@@ -3745,9 +3434,9 @@ namespace ProSnippetsGeometry
 
           foreach (var polygonPart in polygon.Parts)
           {
-            // use the PolygonBuilder turning the segments into a standalone 
+            // use the PolygonBuilderEx turning the segments into a standalone 
             // polygon instance
-            singleParts.Add(PolygonBuilder.CreatePolygon(polygonPart));
+            singleParts.Add(PolygonBuilderEx.CreatePolygon(polygonPart));
           }
           break;
         case GeometryType.Polyline:
@@ -3755,9 +3444,9 @@ namespace ProSnippetsGeometry
 
           foreach (var polylinePart in polyline.Parts)
           {
-            // use the PolylineBuilder turning the segments into a standalone
+            // use the PolylineBuilderEx turning the segments into a standalone
             // polyline instance
-            singleParts.Add(PolylineBuilder.CreatePolyline(polylinePart));
+            singleParts.Add(PolylineBuilderEx.CreatePolyline(polylinePart));
           }
           break;
         case GeometryType.Unknown:
@@ -3771,6 +3460,8 @@ namespace ProSnippetsGeometry
 
     #endregion
 
+    // cref: ArcGIS.Core.Geometry.Polygon
+    // cref: ArcGIS.Core.Geometry.GeometryEngine.Within
     #region Get the outermost rings of a polygon
 
     /// <summary>
@@ -3788,11 +3479,13 @@ namespace ProSnippetsGeometry
       List<Polygon> internalRings = new List<Polygon>();
 
       // explode the parts of the polygon into a list of individual geometries
-      // see the "Get the individual parts of a multipart feature" snippet for MultipartToSinglePart method defintion
+      // see the "Get the individual parts of a multipart feature"
+      // snippet for MultipartToSinglePart
       var parts = MultipartToSinglePart(inputPolygon);
 
       // get an enumeration of clockwise geometries (area > 0) ordered by the area
-      var clockwiseParts = parts.Where(geom => ((Polygon)geom).Area > 0).OrderByDescending(geom => ((Polygon)geom).Area);
+      var clockwiseParts = parts.Where(geom => ((Polygon)geom).Area > 0)
+                            .OrderByDescending(geom => ((Polygon)geom).Area);
 
       // for each of the exterior rings
       foreach (var part in clockwiseParts)
@@ -3816,17 +3509,15 @@ namespace ProSnippetsGeometry
           internalRings.Add(part as Polygon);
       }
 
-      using (PolygonBuilder outerRings = new PolygonBuilder())
+      PolygonBuilderEx outerRings = new PolygonBuilderEx();
+      // now assemble a new polygon geometry based on the internal polygon collection
+      foreach (var ring in internalRings)
       {
-        // now assemble a new polygon geometry based on the internal polygon collection
-        foreach (var ring in internalRings)
-        {
-          outerRings.AddParts(ring.Parts);
-        }
-
-        // return the final geometry of the outer rings
-        return outerRings.ToGeometry();
+        outerRings.AddParts(ring.Parts);
       }
+
+      // return the final geometry of the outer rings
+      return outerRings.ToGeometry();
     }
 
     #endregion
@@ -3836,6 +3527,9 @@ namespace ProSnippetsGeometry
 
     public void RetrieveGeometryFromGeodatabase()
     {
+      // cref: ArcGIS.Core.Geometry.Polygon
+      // cref: ArcGIS.Core.Geometry.Geometry
+      // cref: ArcGIS.Core.Data.Feature.GetShape
       #region Retrieve Geometry from Geodatabase
 
       // methods need to run on the MCT
@@ -3844,26 +3538,24 @@ namespace ProSnippetsGeometry
         try
         {
           // open a gdb
-          using (ArcGIS.Core.Data.Geodatabase gdb = new ArcGIS.Core.Data.Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"c:\Temp\MyDatabase.gdb"))))
+          using (ArcGIS.Core.Data.Geodatabase gdb = 
+                    new ArcGIS.Core.Data.Geodatabase(
+                        new FileGeodatabaseConnectionPath(new Uri(@"c:\Temp\MyDatabase.gdb"))))
           {
             //Open a featureClass 
-            using (ArcGIS.Core.Data.FeatureClass featureClass = gdb.OpenDataset<ArcGIS.Core.Data.FeatureClass>("Polygon"))
+            using (ArcGIS.Core.Data.FeatureClass featureClass = 
+                           gdb.OpenDataset<ArcGIS.Core.Data.FeatureClass>("Polygon"))
             {
-              // find a field 
-              ArcGIS.Core.Data.FeatureClassDefinition featureClassDefinition = featureClass.GetDefinition();
-              int fldIndex = featureClassDefinition.FindField("SomeField");
-              if (fldIndex == -1)
-              {
-                return;
-              }
-
-              ArcGIS.Core.Data.QueryFilter filter = new ArcGIS.Core.Data.QueryFilter
-              {
-                WhereClause = "OBJECTID = 6"
-              };
+              
+              ArcGIS.Core.Data.QueryFilter filter = 
+                         new ArcGIS.Core.Data.QueryFilter()
+                          {
+                            WhereClause = "OBJECTID = 6"
+                          };
 
               // get the row
-              using (ArcGIS.Core.Data.RowCursor rowCursor = featureClass.Search(filter, false))
+              using (ArcGIS.Core.Data.RowCursor rowCursor = 
+                                     featureClass.Search(filter, false))
               {
                 while (rowCursor.MoveNext())
                 {
@@ -3874,9 +3566,6 @@ namespace ProSnippetsGeometry
                     // get the shape from the row
                     ArcGIS.Core.Data.Feature feature = row as ArcGIS.Core.Data.Feature;
                     Polygon polygon = feature.GetShape() as Polygon;
-
-                    // get the attribute from the row (assume it's a double field)
-                    double value = (double)row.GetOriginalValue(fldIndex);
 
                     // do something here
                   }
@@ -3900,22 +3589,27 @@ namespace ProSnippetsGeometry
     public void ImportExport()
     {
       {
-        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WKTExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WKTImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WKTExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Text;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WKTImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WktExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKT(ArcGIS.Core.Geometry.WktExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WktImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKT(ArcGIS.Core.Geometry.WktImportFlags,System.String,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.SpatialReferences.WebMercator
+        // cref: ArcGIS.Core.Geometry.WktExportFlags
+        // cref: ArcGIS.Core.Geometry.WktImportFlags
         #region Import and Export Geometries to well-known Text
 
         // create a point with z, m
-        MapPoint point = MapPointBuilder.CreateMapPoint(100, 200, 300, 400, SpatialReferences.WebMercator);
+        MapPoint point = MapPointBuilderEx.CreateMapPoint(
+                 100, 200, 300, 400, SpatialReferences.WebMercator);
 
         // set the flags
-        WKTExportFlags wktExportFlags = WKTExportFlags.wktExportDefaults;
-        WKTImportFlags wktImportFlags = WKTImportFlags.wktImportDefaults;
+        WktExportFlags wktExportFlags = WktExportFlags.WktExportDefaults;
+        WktImportFlags wktImportFlags = WktImportFlags.WktImportDefaults;
 
         // export and import
         string wktString = GeometryEngine.Instance.ExportToWKT(wktExportFlags, point);
-        MapPoint importPoint = GeometryEngine.Instance.ImportFromWKT(wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
+        MapPoint importPoint = GeometryEngine.Instance.ImportFromWKT(
+              wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
 
         double x = importPoint.X;       // x = 100
         double y = importPoint.Y;       // y = 200
@@ -3925,9 +3619,10 @@ namespace ProSnippetsGeometry
         double m = importPoint.M;       // m = 400
 
         // export without z
-        WKTExportFlags exportFlagsNoZ = WKTExportFlags.wktExportStripZs;
+        WktExportFlags exportFlagsNoZ = WktExportFlags.WktExportStripZs;
         wktString = GeometryEngine.Instance.ExportToWKT(exportFlagsNoZ, point);
-        importPoint = GeometryEngine.Instance.ImportFromWKT(wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
+        importPoint = GeometryEngine.Instance.ImportFromWKT(
+          wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
 
         x = importPoint.X;        // x = 100
         y = importPoint.Y;        // y = 200
@@ -3937,9 +3632,10 @@ namespace ProSnippetsGeometry
         m = importPoint.M;        // m = 400
 
         // export without m
-        WKTExportFlags exportFlagsNoM = WKTExportFlags.wktExportStripMs;
+        WktExportFlags exportFlagsNoM = WktExportFlags.WktExportStripMs;
         wktString = GeometryEngine.Instance.ExportToWKT(exportFlagsNoM, point);
-        importPoint = GeometryEngine.Instance.ImportFromWKT(wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
+        importPoint = GeometryEngine.Instance.ImportFromWKT(
+          wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
 
         x = importPoint.X;        // x = 100
         y = importPoint.Y;        // y = 200
@@ -3949,8 +3645,10 @@ namespace ProSnippetsGeometry
         m = importPoint.M;        // m = Nan
 
         // export without z, m
-        wktString = GeometryEngine.Instance.ExportToWKT(exportFlagsNoZ | exportFlagsNoM, point);
-        importPoint = GeometryEngine.Instance.ImportFromWKT(wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
+        wktString = GeometryEngine.Instance.ExportToWKT(
+          exportFlagsNoZ | exportFlagsNoM, point);
+        importPoint = GeometryEngine.Instance.ImportFromWKT(
+          wktImportFlags, wktString, SpatialReferences.WebMercator) as MapPoint;
 
         x = importPoint.X;        // x = 100
         y = importPoint.Y;        // y = 200
@@ -3963,14 +3661,17 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WKBImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WKBExportFlags,ArcGIS.Core.Geometry.Geometry)
-        // cref: Import and Export Geometries to well-known Binary;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WKBImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WkbImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.ImportFromWKB(ArcGIS.Core.Geometry.WkbImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetWKBSize(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToWKB(ArcGIS.Core.Geometry.WkbExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+        // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
+        // cref: ArcGIS.Core.Geometry.WktExportFlags
+        // cref: ArcGIS.Core.Geometry.WktImportFlags
         #region Import and Export Geometries to well-known Binary
 
         // create a polyline
@@ -3982,14 +3683,16 @@ namespace ProSnippetsGeometry
           new Coordinate2D(1, 0)
         };
 
-        Polyline polyline = PolylineBuilder.CreatePolyline(coords, SpatialReferences.WGS84);
+        Polyline polyline = PolylineBuilderEx.CreatePolyline(
+                    coords, SpatialReferences.WGS84);
 
-        WKBExportFlags wkbExportFlags = WKBExportFlags.wkbExportDefaults;
-        WKBImportFlags wkbImportFlags = WKBImportFlags.wkbImportDefaults;
+        WkbExportFlags wkbExportFlags = WkbExportFlags.WkbExportDefaults;
+        WkbImportFlags wkbImportFlags = WkbImportFlags.WkbImportDefaults;
 
         // export and import
         byte[] buffer = GeometryEngine.Instance.ExportToWKB(wkbExportFlags, polyline);
-        Geometry geometry = GeometryEngine.Instance.ImportFromWKB(wkbImportFlags, buffer, SpatialReferences.WGS84);
+        Geometry geometry = GeometryEngine.Instance.ImportFromWKB(
+                       wkbImportFlags, buffer, SpatialReferences.WGS84);
         Polyline importPolyline = geometry as Polyline;
 
 
@@ -3997,9 +3700,11 @@ namespace ProSnippetsGeometry
         int bufferSize = GeometryEngine.Instance.GetWKBSize(wkbExportFlags, polyline);
         buffer = new byte[bufferSize];
         // export
-        bufferSize = GeometryEngine.Instance.ExportToWKB(wkbExportFlags, polyline, ref buffer);
+        bufferSize = GeometryEngine.Instance.ExportToWKB(
+                        wkbExportFlags, polyline, ref buffer);
         // import
-        importPolyline = GeometryEngine.Instance.ImportFromWKB(wkbImportFlags, buffer, SpatialReferences.WGS84) as Polyline;
+        importPolyline = GeometryEngine.Instance.ImportFromWKB(
+                 wkbImportFlags, buffer, SpatialReferences.WGS84) as Polyline;
 
         #endregion
       }
@@ -4007,96 +3712,114 @@ namespace ProSnippetsGeometry
 
     public void ImportExportEsriShape()
     {
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.Envelope.ToEsriShape
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.EnvelopeBuilder.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.GeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Import and Export Geometries to EsriShape;ArcGIS.Core.Geometry.Envelope.ToEsriShape(System.Byte[]@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ImportFromEsriShape(ArcGIS.Core.Geometry.EsriShapeImportFlags,System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetEsriShapeSize(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToEsriShape(ArcGIS.Core.Geometry.EsriShapeExportFlags,ArcGIS.Core.Geometry.Geometry,System.Byte[]@)
+      // cref: ArcGIS.Core.Geometry.Envelope.ToEsriShape
+      // cref: ArcGIS.Core.Geometry.Envelope.ToEsriShape(System.Byte[]@)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.FromEsriShape(System.Byte[],ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
+      // cref: ArcGIS.Core.Geometry.EsriShapeExportFlags
       #region Import and Export Geometries to EsriShape
 
       // create an envelope
       List<MapPoint> coordsZM = new List<MapPoint>
       {
-        MapPointBuilder.CreateMapPoint(1001, 1002, 1003, 1004),
-        MapPointBuilder.CreateMapPoint(2001, 2002, Double.NaN, 2004),
-        MapPointBuilder.CreateMapPoint(3001, -3002, 3003, 3004),
-        MapPointBuilder.CreateMapPoint(1001, -4002, 4003, 4004)
+        MapPointBuilderEx.CreateMapPoint(1001, 1002, 1003, 1004),
+        MapPointBuilderEx.CreateMapPoint(2001, 2002, Double.NaN, 2004),
+        MapPointBuilderEx.CreateMapPoint(3001, -3002, 3003, 3004),
+        MapPointBuilderEx.CreateMapPoint(1001, -4002, 4003, 4004)
       };
 
-      Envelope envelope = EnvelopeBuilder.CreateEnvelope(coordsZM[0], coordsZM[2], SpatialReferences.WGS84);
+      Envelope envelope = EnvelopeBuilderEx.CreateEnvelope(
+                 coordsZM[0], coordsZM[2], SpatialReferences.WGS84);
 
       // export and import
-      EsriShapeExportFlags exportFlags = EsriShapeExportFlags.esriShapeExportDefaults;
-      EsriShapeImportFlags importFlags = EsriShapeImportFlags.esriShapeImportDefaults;
+      EsriShapeExportFlags exportFlags = EsriShapeExportFlags.EsriShapeExportDefaults;
+      EsriShapeImportFlags importFlags = EsriShapeImportFlags.EsriShapeImportDefaults;
       byte[] buffer = GeometryEngine.Instance.ExportToEsriShape(exportFlags, envelope);
-      Polygon importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(importFlags, buffer, envelope.SpatialReference) as Polygon;
+      Polygon importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(
+                     importFlags, buffer, envelope.SpatialReference) as Polygon;
       Envelope importedEnvelope = importedPolygon.Extent;
 
       // export without z,m
-      buffer = GeometryEngine.Instance.ExportToEsriShape(EsriShapeExportFlags.esriShapeExportStripZs | EsriShapeExportFlags.esriShapeExportStripMs, envelope);
-      importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(importFlags, buffer, SpatialReferences.WGS84) as Polygon;
+      buffer = GeometryEngine.Instance.ExportToEsriShape(
+              EsriShapeExportFlags.EsriShapeExportStripZs | 
+              EsriShapeExportFlags.EsriShapeExportStripMs, envelope);
+      importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(
+              importFlags, buffer, SpatialReferences.WGS84) as Polygon;
       importedEnvelope = importedPolygon.Extent;
 
       bool hasZ = importedEnvelope.HasZ;      // hasZ = false
       bool hasM = importedEnvelope.HasM;      // hasM = false
 
       // export with shapeSize
-      int bufferSize = GeometryEngine.Instance.GetEsriShapeSize(exportFlags, envelope);
+      int bufferSize = GeometryEngine.Instance.GetEsriShapeSize(
+                                             exportFlags, envelope);
       buffer = new byte[bufferSize];
 
-      bufferSize = GeometryEngine.Instance.ExportToEsriShape(exportFlags, envelope, ref buffer);
-      importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(importFlags, buffer, envelope.SpatialReference) as Polygon;
+      bufferSize = GeometryEngine.Instance.ExportToEsriShape(
+                                   exportFlags, envelope, ref buffer);
+      importedPolygon = GeometryEngine.Instance.ImportFromEsriShape(
+                          importFlags, buffer, envelope.SpatialReference) as Polygon;
       importedEnvelope = importedPolygon.Extent;
 
 
-      // or use the envelope and envelopeBuilder classes
+      // or use the envelope and envelopeBuilderEx classes
       buffer = envelope.ToEsriShape();
       // buffer represents a polygon as there is not an envelope Esri shape buffer
-      // EnvelopeBuilder.FromEsriShape takes a polygon Esri shape buffer and returns the extent of the polygon.
-      importedEnvelope = EnvelopeBuilder.FromEsriShape(buffer);
+      // EnvelopeBuilderEx.FromEsriShape takes a polygon Esri shape buffer and returns the extent of the polygon.
+      importedEnvelope = EnvelopeBuilderEx.FromEsriShape(buffer);
 
       #endregion
     }
 
     public void ImportExportJson()
     {
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.Geometry.ToJson(System.Boolean)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.GeometryEngine.ExportToJSON(ArcGIS.Core.Geometry.JSONExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.GeometryEngine.ImportFromJSON(ArcGIS.Core.Geometry.JSONImportFlags,System.String)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.IGeometryEngine.ExportToJSON(ArcGIS.Core.Geometry.JSONExportFlags,ArcGIS.Core.Geometry.Geometry)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.IGeometryEngine.ImportFromJSON(ArcGIS.Core.Geometry.JSONImportFlags,System.String)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.MapPointBuilder.FromJson(System.String)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.MultipointBuilder.FromJson(System.String)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.PolygonBuilder.FromJson(System.String)
-      // cref: Import and Export Geometries to JSON;ArcGIS.Core.Geometry.PolylineBuilder.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ImportFromJson(ArcGIS.Core.Geometry.JsonImportFlags,System.String)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ImportFromJson(ArcGIS.Core.Geometry.JsonImportFlags,System.String)
+      // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ExportToJson(ArcGIS.Core.Geometry.JsonExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExportToJson(ArcGIS.Core.Geometry.JsonExportFlags,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.Geometry.ToJson(System.Boolean)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.FromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.JsonImportFlags
+      // cref: ArcGIS.Core.Geometry.JsonExportFlags
       #region Import and Export Geometries to JSON
 
       // MapPoint
-      string inputString = "{\"x\":1,\"y\":2,\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}";
-      Geometry geometry = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, inputString);
+      string inputString = 
+        "{\"x\":1,\"y\":2,\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}";
+      Geometry geometry = GeometryEngine.Instance.ImportFromJson(
+        JsonImportFlags.JsonImportDefaults, inputString);
 
       MapPoint importPoint = geometry as MapPoint;
       // importPoint = 1, 2
       // importPoint.SpatialReference.WKid = 4326
 
-      // use the MapPointBuilder convenience method
-      MapPoint importPoint2 = MapPointBuilder.FromJson(inputString);
+      // use the MapPointBuilderEx convenience method
+      MapPoint importPoint2 = MapPointBuilderEx.FromJson(inputString);
       // importPoint2 = 1, 2
       // impointPoint2.SpatialReference.Wkid = 4326
 
-      string outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportDefaults, importPoint);
-      // outputString =  "{\"x\":1,\"y\":2,\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}"
+      string outputString = GeometryEngine.Instance.ExportToJson(
+        JsonExportFlags.JsonExportDefaults, importPoint);
+      // outputString =
+      //   "{\"x\":1,\"y\":2,\"spatialReference\":{\"wkid\":4326,\"latestWkid\":4326}}"
 
       string outputString2 = importPoint.ToJson();
 
-      inputString = "{\"spatialReference\":{\"wkid\":4326},\"z\":3,\"m\":4,\"x\":1,\"y\":2}";
-      importPoint = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, inputString) as MapPoint;
+      inputString = 
+        "{\"spatialReference\":{\"wkid\":4326},\"z\":3,\"m\":4,\"x\":1,\"y\":2}";
+      importPoint = GeometryEngine.Instance.ImportFromJson(
+        JsonImportFlags.JsonImportDefaults, inputString) as MapPoint;
       // importPoint.HasM = true
       // importPoint.HasZ = true
       // importPoint.X = 1
@@ -4104,13 +3827,14 @@ namespace ProSnippetsGeometry
       // importPoint.M = 4
       // importPoint.Z = 3
 
-      importPoint2 = MapPointBuilder.FromJson(inputString);
+      importPoint2 = MapPointBuilderEx.FromJson(inputString);
 
       // export to json - skip spatial reference
-      outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportSkipCRS, importPoint);
+      outputString = GeometryEngine.Instance.ExportToJson(
+                    JsonExportFlags.JsonExportSkipCRS, importPoint);
       // outputString = "{\"x\":1,\"y\":2,\"z\":3,\"m\":4}"
 
-      // export from mappoint, skipping the sr - same as GeometryEngine.Instance.ExportToJSON w JSONExportFlags.jsonExportSkipCRS
+      // export from mappoint, skipping the sr - same as GeometryEngine.Instance.ExportToJson w JsonExportFlags.JsonExportSkipCRS
       outputString2 = importPoint.ToJson(true);
 
       //
@@ -4124,10 +3848,14 @@ namespace ProSnippetsGeometry
         new Coordinate2D(401, 500)
       };
 
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords, SpatialReferences.WebMercator);
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(
+        coords, SpatialReferences.WebMercator);
 
-      inputString = "{\"points\":[[100,200],[201,300],[301,400],[401,500]],\"spatialReference\":{\"wkid\":3857}}";
-      Multipoint importMultipoint = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, inputString) as Multipoint;
+      inputString = 
+        "{\"points\":[[100,200],[201,300],[301,400],[401,500]],\"spatialReference\":{\"wkid\":3857}}";
+      Multipoint importMultipoint = 
+        GeometryEngine.Instance.ImportFromJson(
+               JsonImportFlags.JsonImportDefaults, inputString) as Multipoint;
       // importMultipoint.IsEqual(multipoint) = true
 
       ReadOnlyPointCollection points = importMultipoint.Points;
@@ -4137,12 +3865,13 @@ namespace ProSnippetsGeometry
       // points[2] = 301, 400
       // points[3] = 401, 500
 
-      // use the Multipointbuilder convenience method
-      Multipoint importMultipoint2 = MultipointBuilder.FromJson(inputString);
+      // use the MultipointbuilderEx convenience method
+      Multipoint importMultipoint2 = MultipointBuilderEx.FromJson(inputString);
       // importMultipoint2.IsEqual(multipoint) = true
 
       // export to json
-      outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportDefaults, multipoint);
+      outputString = GeometryEngine.Instance.ExportToJson(
+                      JsonExportFlags.JsonExportDefaults, multipoint);
       // outputString = inputString
 
       // or use the multipoint itself
@@ -4151,12 +3880,15 @@ namespace ProSnippetsGeometry
       //
       // Polyline
       //
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, SpatialReferences.WebMercator);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(
+                               coords, SpatialReferences.WebMercator);
 
       // export without the spatial reference
-      outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportSkipCRS, polyline);
+      outputString = GeometryEngine.Instance.ExportToJson(
+                              JsonExportFlags.JsonExportSkipCRS, polyline);
       // import
-      geometry = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, outputString);
+      geometry = GeometryEngine.Instance.ImportFromJson(
+                   JsonImportFlags.JsonImportDefaults, outputString);
       Polyline importPolyline = geometry as Polyline;
       // importPolyline.SpatialReference = null
 
@@ -4168,8 +3900,8 @@ namespace ProSnippetsGeometry
       // points[2] = 301, 400
       // points[3] = 401, 500
 
-      // use the polylineBuilder convenience method 
-      Polyline importPolyline2 = PolylineBuilder.FromJson(outputString);
+      // use the polylineBuilderEx convenience method 
+      Polyline importPolyline2 = PolylineBuilderEx.FromJson(outputString);
       // importPolyline2 = importPolyline
 
       outputString2 = importPolyline2.ToJson();
@@ -4178,29 +3910,34 @@ namespace ProSnippetsGeometry
       //
       // Polygon
       //
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords, SpatialReferences.WebMercator);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(
+                                    coords, SpatialReferences.WebMercator);
 
       // export without the spatial reference
-      outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportSkipCRS, polygon);
+      outputString = GeometryEngine.Instance.ExportToJson(
+                                JsonExportFlags.JsonExportSkipCRS, polygon);
       // import
-      geometry = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, outputString);
+      geometry = GeometryEngine.Instance.ImportFromJson(
+                           JsonImportFlags.JsonImportDefaults, outputString);
 
       Polygon importPolygon = geometry as Polygon;
       // importPolygon.SpatialReference = null
       points = importPolygon.Points;
       // points.Count = 5
 
-      // polygonBuilder convenience method
-      Polygon importPolyon2 = PolygonBuilder.FromJson(outputString);
+      // polygonBuilderEx convenience method
+      Polygon importPolyon2 = PolygonBuilderEx.FromJson(outputString);
       // importPolygon2 = importPolygon
 
       // export from the polygon
       outputString2 = importPolyon2.ToJson(true);
 
       // Empty polygon
-      polygon = PolygonBuilder.CreatePolygon(SpatialReferences.WebMercator);
-      outputString = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportDefaults, polygon);
-      importPolygon = GeometryEngine.Instance.ImportFromJSON(JSONImportFlags.jsonImportDefaults, outputString) as Polygon;
+      polygon = PolygonBuilderEx.CreatePolygon(SpatialReferences.WebMercator);
+      outputString = GeometryEngine.Instance.ExportToJson(
+                                     JsonExportFlags.JsonExportDefaults, polygon);
+      importPolygon = GeometryEngine.Instance.ImportFromJson(
+                          JsonImportFlags.JsonImportDefaults, outputString) as Polygon;
 
       // importPolygon.IsEmpty = true
       // importPolygon.SpatialReference.Wkid = 3857
@@ -4210,34 +3947,34 @@ namespace ProSnippetsGeometry
 
     public void ImportExportXML()
     {
-      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.EnvelopeBuilder.FromXML(System.String)
-      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.Geometry.ToXML
-      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.MapPointBuilder.FromXML(System.String)
-      // cref: Import and Export Geometries to XML;ArcGIS.Core.Geometry.MultipointBuilder.FromXML(System.String)
+      // cref: ArcGIS.Core.Geometry.Geometry.ToXml
+      // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.FromXml(System.String)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.FromXml(System.String)
+      // cref: ArcGIS.Core.Geometry.MultipointBuilderEx.FromXml(System.String)
       #region Import and Export Geometries to XML
 
-      MapPoint minPoint = MapPointBuilder.CreateMapPoint(1, 1, 1, 1, 3);
-      MapPoint maxPoint = MapPointBuilder.CreateMapPoint(5, 5, 5);
+      MapPoint minPoint = MapPointBuilderEx.CreateMapPoint(1, 1, 1, 1, 3);
+      MapPoint maxPoint = MapPointBuilderEx.CreateMapPoint(5, 5, 5);
 
       // 
       //  MapPoint
       // 
-      string xml = minPoint.ToXML();
-      MapPoint minPointImport = MapPointBuilder.FromXML(xml);
+      string xml = minPoint.ToXml();
+      MapPoint minPointImport = MapPointBuilderEx.FromXml(xml);
       // minPointImport = minPoint
 
       //
       // Envelope
       //
-      Envelope envelopeWithID = EnvelopeBuilder.CreateEnvelope(minPoint, maxPoint);
+      Envelope envelopeWithID = EnvelopeBuilderEx.CreateEnvelope(minPoint, maxPoint);
 
       // Envelopes don't have IDs
       // envelopeWithID.HasID = false
       // envelopeWithID.HasM = true
       // envelopeWithID.HasZ = true
 
-      xml = envelopeWithID.ToXML();
-      Envelope envelopeImport = EnvelopeBuilder.FromXML(xml);
+      xml = envelopeWithID.ToXml();
+      Envelope envelopeImport = EnvelopeBuilderEx.FromXml(xml);
 
       //
       // Multipoint
@@ -4246,10 +3983,10 @@ namespace ProSnippetsGeometry
       list.Add(minPoint);
       list.Add(maxPoint);
 
-      Multipoint multiPoint = MultipointBuilder.CreateMultipoint(list);
+      Multipoint multiPoint = MultipointBuilderEx.CreateMultipoint(list);
 
-      xml = multiPoint.ToXML();
-      Multipoint multipointImport = MultipointBuilder.FromXML(xml);
+      xml = multiPoint.ToXml();
+      Multipoint multipointImport = MultipointBuilderEx.FromXml(xml);
       // multipointImport.PointCount == 2
       // multipointImport.HasID = true
       // multipointImport.HasM = true
@@ -4264,26 +4001,29 @@ namespace ProSnippetsGeometry
 
     public void Create_GeographicTransformation()
     {
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Create(System.Int32,System.Boolean)
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Create(System.String,System.Boolean)
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.GetInverse
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.IsForward
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Name
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Wkid
-      // cref: Create Geographic Transformation;ArcGIS.Core.Geometry.GeographicTransformation.Wkt
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.Create(System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.Create(System.String,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.Name
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.Wkt
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.Wkid
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.GetInverse
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation.IsForward
       #region Create Geographic Transformation
 
       // create from wkid
-      GeographicTransformation gt1478 = ArcGIS.Core.Geometry.GeographicTransformation.Create(1478);
+      GeographicTransformation gt1478 = 
+        ArcGIS.Core.Geometry.GeographicTransformation.Create(1478);
       string name = gt1478.Name;
       string wkt = gt1478.Wkt;
       int wkid = gt1478.Wkid;
 
       // create from wkt
-      GeographicTransformation another_gt1478 = ArcGIS.Core.Geometry.GeographicTransformation.Create(wkt);
+      GeographicTransformation another_gt1478 = 
+           ArcGIS.Core.Geometry.GeographicTransformation.Create(wkt);
 
       // inverse
-      GeographicTransformation inverse_gt148 = another_gt1478.GetInverse() as GeographicTransformation;
+      GeographicTransformation inverse_gt148 = 
+                     another_gt1478.GetInverse() as GeographicTransformation;
       bool isForward = inverse_gt148.IsForward;
 
       #endregion
@@ -4291,27 +4031,30 @@ namespace ProSnippetsGeometry
 
     public void Create_CompositeGeographicTransformation()
     {
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.GeographicTransformation})
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Int32,System.Boolean)
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.String,System.Boolean)
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.GetInverse
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.ToJson
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Count
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Item(System.Int32)
-      // cref: Create Composite Geographic Transformation;ArcGIS.Core.Geometry.CompositeGeographicTransformation.Transformations
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.GeographicTransformation})
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(System.String,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Count
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Transformations
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.Item(System.Int32)
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.GetInverse
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation.ToJson
+      // cref: ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
       #region Create Composite Geographic Transformation
 
       // Create singleton from wkid
-      CompositeGeographicTransformation cgt = ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(108272);
+      CompositeGeographicTransformation cgt = 
+          ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(108272);
       int count = cgt.Count;    // count = 1
 
-      IList<GeographicTransformation> gts = cgt.Transformations as IList<GeographicTransformation>;
+      IList<GeographicTransformation> gts = cgt.Transformations 
+                                      as IList<GeographicTransformation>;
       gts.Add(ArcGIS.Core.Geometry.GeographicTransformation.Create(1437, false));
       count = cgt.Count;        // count = 2
 
       // create from an enumeration
-      CompositeGeographicTransformation another_cgt = ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(gts);
+      CompositeGeographicTransformation another_cgt = 
+                    ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(gts);
       GeographicTransformation gt0 = another_cgt[0];
       GeographicTransformation gt1 = another_cgt[1];
 
@@ -4322,21 +4065,23 @@ namespace ProSnippetsGeometry
 
       var wkt = gt0.Wkt;
       // create from string 
-      CompositeGeographicTransformation third_cgt = ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(wkt, gt0.IsForward);
+      CompositeGeographicTransformation third_cgt = 
+         ArcGIS.Core.Geometry.CompositeGeographicTransformation.Create(wkt, gt0.IsForward);
       count = third_cgt.Count;        // count = 1
 
       // create from josn
       string json = cgt.ToJson();
-      CompositeGeographicTransformation joson_cgt = DatumTransformation.CreateFromJson(json) as CompositeGeographicTransformation;
+      CompositeGeographicTransformation joson_cgt = 
+        DatumTransformation.CreateFromJson(json) as CompositeGeographicTransformation;
 
       #endregion
     }
 
     public void Create_ProjectionTransformation()
     {
-      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.GeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
-      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.IGeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
-      // cref: Create Projection Transformation;ArcGIS.Core.Geometry.ProjectionTransformation.Create(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.ProjectionTransformation.Create(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ProjectEx(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.ProjectionTransformation)
       #region Create Projection Transformation
 
       // methods need to be on the MCT
@@ -4347,18 +4092,24 @@ namespace ProSnippetsGeometry
         SpatialReference sr3857 = SpatialReferences.WebMercator;
 
         // Create transformation from  4267 -> 3857
-        ProjectionTransformation projTransFromSRs = ArcGIS.Core.Geometry.ProjectionTransformation.Create(sr4267, sr3857);
+        ProjectionTransformation projTransFromSRs = 
+             ArcGIS.Core.Geometry.ProjectionTransformation.Create(sr4267, sr3857);
 
         // create an envelope
-        Envelope env = EnvelopeBuilder.CreateEnvelope(new Coordinate2D(2, 2), new Coordinate2D(3, 3), sr4267);
+        Envelope env = EnvelopeBuilderEx.CreateEnvelope(
+                   new Coordinate2D(2, 2), new Coordinate2D(3, 3), sr4267);
 
         // Project with one geo transform 4267 -> 3857
-        Envelope projectedEnvEx = GeometryEngine.Instance.ProjectEx(env, projTransFromSRs) as Envelope;
+        Envelope projectedEnvEx = GeometryEngine.Instance.ProjectEx(
+                                       env, projTransFromSRs) as Envelope;
 
         // Create inverse transformation, 3857 -> 4267
-        ProjectionTransformation projTransFromSRsInverse = ArcGIS.Core.Geometry.ProjectionTransformation.Create(sr3857, sr4267);
+        ProjectionTransformation projTransFromSRsInverse = 
+            ArcGIS.Core.Geometry.ProjectionTransformation.Create(sr3857, sr4267);
         // Project the projected envelope back using the inverse transformation
-        Envelope projectedEnvBack = GeometryEngine.Instance.ProjectEx(projectedEnvEx, projTransFromSRsInverse) as Envelope;
+        Envelope projectedEnvBack = 
+               GeometryEngine.Instance.ProjectEx(
+                 projectedEnvEx, projTransFromSRsInverse) as Envelope;
 
         bool isEqual = env.IsEqual(projectedEnvBack);
       });
@@ -4368,13 +4119,13 @@ namespace ProSnippetsGeometry
 
     public void Create_HVDatumTransformation()
     {
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.Int32,System.Boolean)
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.String,System.Boolean)
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.GetInverse
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.IsForward
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Name
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Wkid
-      // cref: Create HV Datum Transformation;ArcGIS.Core.Geometry.HVDatumTransformation.Wkt
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.Create(System.String,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.IsForward
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.Wkid
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.Name
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.Wkt
+      // cref: ArcGIS.Core.Geometry.HVDatumTransformation.GetInverse
       #region Create HV Datum Transformation
 
       // Create from wkid
@@ -4388,7 +4139,8 @@ namespace ProSnippetsGeometry
       HVDatumTransformation hv110018FromWkt = HVDatumTransformation.Create(wkt);
 
       // Get the inverse
-      HVDatumTransformation hv110018Inverse = hv110018.GetInverse() as HVDatumTransformation;
+      HVDatumTransformation hv110018Inverse = 
+         hv110018.GetInverse() as HVDatumTransformation;
       // hv110018Inverse.IsForward = false
 
       #endregion
@@ -4396,17 +4148,17 @@ namespace ProSnippetsGeometry
 
     public void Create_CompositeHVDatumTransformation()
     {
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.HVDatumTransformation})
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Int32,System.Boolean)
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.String,System.Boolean)
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.CreateFromXML(System.String)
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.GetInverse
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToJson
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToXML
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Count
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Item(System.Int32)
-      // cref: Create Composite HV Datum Transformation;ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Transformations
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.HVDatumTransformation})
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Create(System.String,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Count
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Transformations
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.GetInverse
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToXml
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.CreateFromXml(System.String)
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.ToJson
+      // cref: ArcGIS.Core.Geometry.DatumTransformation.CreateFromJson(System.String)
+      // cref: ArcGIS.Core.Geometry.CompositeHVDatumTransformation.Item(System.Int32)
       #region Create Composite HV Datum Transformation
 
       HVDatumTransformation hv1 = HVDatumTransformation.Create(108034);
@@ -4414,30 +4166,42 @@ namespace ProSnippetsGeometry
       List<HVDatumTransformation> hvs = new List<HVDatumTransformation>() { hv1, hv2 };
 
       // create from enumeration
-      CompositeHVDatumTransformation compositehv = CompositeHVDatumTransformation.Create(hvs);
+      CompositeHVDatumTransformation compositehv = 
+                      CompositeHVDatumTransformation.Create(hvs);
       int count = compositehv.Count;      // count = 2
 
-      List<HVDatumTransformation> transforms = compositehv.Transformations as List<HVDatumTransformation>;
+      List<HVDatumTransformation> transforms = 
+                     compositehv.Transformations as List<HVDatumTransformation>;
       HVDatumTransformation tranform = transforms[0];
       // transform.Wkid = 108034
 
       // get inverse
-      CompositeHVDatumTransformation inverse_compositehv = compositehv.GetInverse() as CompositeHVDatumTransformation;
+      CompositeHVDatumTransformation inverse_compositehv = 
+             compositehv.GetInverse() as CompositeHVDatumTransformation;
 
       // create from xml
-      string xml = compositehv.ToXML();
-      CompositeHVDatumTransformation xml_compositehv = CompositeHVDatumTransformation.CreateFromXML(xml);
+      string xml = compositehv.ToXml();
+      //At 2.x - CompositeHVDatumTransformation xml_compositehv =
+      //      CompositeHVDatumTransformation.CreateFromXML(xml);
+
+      var xml_compositehv = CompositeHVDatumTransformation.CreateFromXml(xml);
 
       // create from json
       string json = compositehv.ToJson();
-      CompositeHVDatumTransformation json_compositehv = DatumTransformation.CreateFromJson(json) as CompositeHVDatumTransformation;
+      CompositeHVDatumTransformation json_compositehv = 
+          DatumTransformation.CreateFromJson(json) as CompositeHVDatumTransformation;
 
       #endregion
     }
 
     public void Determine_Transformations()
     {
-      // cref: Determine Transformations;ArcGIS.Core.Geometry.ProjectionTransformation.FindTransformations(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope,System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.ProjectionTransformation.FindTransformations(ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.Envelope,System.Int32,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference
+      // cref: ArcGIS.Core.Geometry.ProjectionTransformation.FindTransformations
+      // cref: ArcGIS.Core.Geometry.ProjectionTransformation.Transformation
+      // cref: ArcGIS.Core.Geometry.CompositeGeographicTransformation
+      // cref: ArcGIS.Core.Geometry.GeographicTransformation
       #region Determine Transformations
 
       // methods need to run on the MCT
@@ -4446,13 +4210,16 @@ namespace ProSnippetsGeometry
         //
         // find the first transformation used between spatial references 4267 and 4326
         //
-        SpatialReference sr4267 = SpatialReferenceBuilder.CreateSpatialReference(4267);
+        SpatialReference sr4267 = 
+             SpatialReferenceBuilder.CreateSpatialReference(4267);
         SpatialReference sr4326 = SpatialReferences.WGS84;
 
-        List<ProjectionTransformation> transformations = ProjectionTransformation.FindTransformations(sr4267, sr4326);
+        List<ProjectionTransformation> transformations = 
+               ProjectionTransformation.FindTransformations(sr4267, sr4326);
         // transformations.Count = 1
         ProjectionTransformation projTrans = transformations[0];
-        CompositeGeographicTransformation compositeGT = projTrans.Transformation as CompositeGeographicTransformation;
+        CompositeGeographicTransformation compositeGT = 
+             projTrans.Transformation as CompositeGeographicTransformation;
         GeographicTransformation gt = compositeGT[0];
         // gt.Wkid = 15851
         // gt.Name = "NAD_1927_To_WGS_1984_79_CONUS"
@@ -4462,7 +4229,8 @@ namespace ProSnippetsGeometry
         //
         // find the first five transformation used between spatial references 4267 and 4326
         //
-        transformations = ProjectionTransformation.FindTransformations(sr4267, sr4326, numResults: 5);
+        transformations = ProjectionTransformation.FindTransformations(
+                                           sr4267, sr4326, numResults: 5);
         // transformations.Count = 5
         projTrans = transformations[0];
         compositeGT = projTrans.Transformation as CompositeGeographicTransformation;
@@ -4509,12 +4277,14 @@ namespace ProSnippetsGeometry
 
 
         //
-        // find the first transformation used between spatial references 4267 and 4326 within Alaska
+        // find the first transformation used between spatial
+        // references 4267 and 4326 within Alaska
         //
 
         // Alaska
-        Envelope envelope = EnvelopeBuilder.CreateEnvelope(-161, 61, -145, 69);
-        transformations = ProjectionTransformation.FindTransformations(sr4267, sr4326, envelope);
+        Envelope envelope = EnvelopeBuilderEx.CreateEnvelope(-161, 61, -145, 69);
+        transformations = ProjectionTransformation.FindTransformations(
+                                                    sr4267, sr4326, envelope);
         // transformations.Count = 1
         projTrans = transformations[0];
         compositeGT = projTrans.Transformation as CompositeGeographicTransformation;
@@ -4531,11 +4301,13 @@ namespace ProSnippetsGeometry
         //
         // find the first geographic transformation used between two spatial references with VCS  (use vertical = false)
         //
+        SpatialReference inSR = 
+                        SpatialReferenceBuilder.CreateSpatialReference(4269, 115702);
+        SpatialReference outSR = 
+                        SpatialReferenceBuilder.CreateSpatialReference(4326, 3855);
 
-        SpatialReference inSR = SpatialReferenceBuilder.CreateSpatialReference(4269, 115702);
-        SpatialReference outSR = SpatialReferenceBuilder.CreateSpatialReference(4326, 3855);
-
-        // Even though each spatial reference has a VCS, vertical = false should return geographic transformations.
+        // Even though each spatial reference has a VCS,
+        // vertical = false should return geographic transformations.
         transformations = ProjectionTransformation.FindTransformations(inSR, outSR);
         // transformations.Count = 1
         projTrans = transformations[0];
@@ -4545,16 +4317,18 @@ namespace ProSnippetsGeometry
         // compositeGT[0].Name = ""WGS_1984_(ITRF00)_To_NAD_1983"
         // compositeGT[0].IsForward = false
 
-
         //
         // find the first vertical transformation used between two spatial references with VCS  (use vertical = true)
         //
 
-        transformations = ProjectionTransformation.FindTransformations(inSR, outSR, vertical: true);
+        transformations = 
+                  ProjectionTransformation.FindTransformations(
+                                          inSR, outSR, vertical: true);
         // transformations.Count = 1
         projTrans = transformations[0];
 
-        CompositeHVDatumTransformation compositeHV = projTrans.Transformation as CompositeHVDatumTransformation;
+        CompositeHVDatumTransformation compositeHV = 
+                projTrans.Transformation as CompositeHVDatumTransformation;
         // compositeHV.Count = 2
         // compositeHV[0].Wkid = 1188
         // compositeHV[0].Name = "NAD_1983_To_WGS_1984_1"
@@ -4572,63 +4346,90 @@ namespace ProSnippetsGeometry
 
     public void GeoCoordinateStringConversion()
     {
-      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.MapPoint.ToGeoCoordinateString(ArcGIS.Core.Geometry.ToGeoCoordinateParameter)
-      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.MapPointBuilder.FromGeoCoordinateString(System.String,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.FromGeoCoordinateMode)
-      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType)
-      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode)
-      // cref: MapPoint - GeoCoordinateString Conversion;ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode,System.Int32,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType)
+      // cref: ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode)
+      // cref: ArcGIS.Core.Geometry.ToGeoCoordinateParameter.#ctor(ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.ToGeoCoordinateMode,System.Int32,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.MapPoint.ToGeoCoordinateString(ArcGIS.Core.Geometry.ToGeoCoordinateParameter)
+      // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.FromGeoCoordinateString(System.String,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Core.Geometry.GeoCoordinateType,ArcGIS.Core.Geometry.FromGeoCoordinateMode)
+      // cref: ArcGIS.Core.Geometry.GeoCoordinateType
       #region MapPoint - GeoCoordinateString Conversion
 
       SpatialReference sr = SpatialReferences.WGS84;
       SpatialReference sr2 = SpatialReferences.WebMercator;
 
       // create some points
-      MapPoint point0 = MapPointBuilder.CreateMapPoint(0, 0, sr);
-      MapPoint point1 = MapPointBuilder.CreateMapPoint(10, 20, sr);
+      MapPoint point0 = MapPointBuilderEx.CreateMapPoint(0, 0, sr);
+      MapPoint point1 = MapPointBuilderEx.CreateMapPoint(10, 20, sr);
       MapPoint point2 = GeometryEngine.Instance.Project(point1, sr2) as MapPoint;
-      MapPoint pointEmpty = MapPointBuilder.CreateMapPoint(sr);
-      MapPoint pointwithNoSR = MapPointBuilder.CreateMapPoint(1, 1);
-      MapPoint pointZM = MapPointBuilder.CreateMapPoint(1, 2, 3, 4, sr);
+      MapPoint pointEmpty = MapPointBuilderEx.CreateMapPoint(sr);
+      MapPoint pointwithNoSR = MapPointBuilderEx.CreateMapPoint(1, 1);
+      MapPoint pointZM = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, sr);
 
       // convert to MGRS
-      ToGeoCoordinateParameter mgrsParam = new ToGeoCoordinateParameter(GeoCoordinateType.MGRS);
-      string geoCoordString = point0.ToGeoCoordinateString(mgrsParam);        // 31NAA6602100000
+      ToGeoCoordinateParameter mgrsParam = 
+               new ToGeoCoordinateParameter(GeoCoordinateType.MGRS);
+      // 31NAA6602100000
+      string geoCoordString = point0.ToGeoCoordinateString(mgrsParam);
 
-      // use the builder to create a new point from the string.  Coordinates are the same 
-      MapPoint outPoint = MapPointBuilder.FromGeoCoordinateString(geoCoordString, sr, GeoCoordinateType.MGRS);    // outPoint.x = 0; outPoint.Y = 0
+      // use the builder to create a new point from the string.
+      // Coordinates are the same 
+      // outPoint.x = 0; outPoint.Y = 0
+      MapPoint outPoint = 
+            MapPointBuilderEx.FromGeoCoordinateString(
+                      geoCoordString, sr, GeoCoordinateType.MGRS);
 
-      geoCoordString = point1.ToGeoCoordinateString(mgrsParam);             // 32QPH0460911794
-      outPoint = MapPointBuilder.FromGeoCoordinateString(geoCoordString, sr, GeoCoordinateType.MGRS);       // outPoint.X = 10; outPoint.Y = 20
+      // 32QPH0460911794
+      // outPoint.X = 10; outPoint.Y = 20
+      geoCoordString = point1.ToGeoCoordinateString(mgrsParam);             
+      outPoint = MapPointBuilderEx.FromGeoCoordinateString(
+                 geoCoordString, sr, GeoCoordinateType.MGRS);
 
       // z, m are not transformed
+      // outPoint.X = 1; outPoint.Y = 2; outPoint.Z = Nan; outPoint.M = Nan;
       geoCoordString = pointZM.ToGeoCoordinateString(mgrsParam);
-      outPoint = MapPointBuilder.FromGeoCoordinateString(geoCoordString, sr, GeoCoordinateType.MGRS);     // outPoint.X = 1; outPoint.Y = 2; outPoint.Z = Nan; outPoint.M = Nan;
+      outPoint = MapPointBuilderEx.FromGeoCoordinateString(
+        geoCoordString, sr, GeoCoordinateType.MGRS);
 
       // set the number of digits to 2 and convert
+      // 32QPH0512
+      // outPoint.X = 10; outPoint.Y = 20
       mgrsParam.NumDigits = 2;
-      geoCoordString = point1.ToGeoCoordinateString(mgrsParam);             // 32QPH0512
-      outPoint = MapPointBuilder.FromGeoCoordinateString(geoCoordString, sr, GeoCoordinateType.MGRS);     // outPoint.X = 10; outPoint.Y = 20
+      geoCoordString = point1.ToGeoCoordinateString(mgrsParam);             
+      outPoint = MapPointBuilderEx.FromGeoCoordinateString(
+        geoCoordString, sr, GeoCoordinateType.MGRS);     
 
 
       // convert to UTM
-      ToGeoCoordinateParameter utmParam = new ToGeoCoordinateParameter(GeoCoordinateType.UTM);
-      geoCoordString = point0.ToGeoCoordinateString(utmParam);        // 31N 166021 0000000
-      geoCoordString = point1.ToGeoCoordinateString(utmParam);        // 32Q 604609 2211793
+      ToGeoCoordinateParameter utmParam = 
+           new ToGeoCoordinateParameter(GeoCoordinateType.UTM);
+      // 31N 166021 0000000
+      geoCoordString = point0.ToGeoCoordinateString(utmParam);
+      // 32Q 604609 2211793
+      geoCoordString = point1.ToGeoCoordinateString(utmParam);        
 
       // convert to DMS
-      ToGeoCoordinateParameter dmsParam = new ToGeoCoordinateParameter(GeoCoordinateType.DMS);
-      geoCoordString = point0.ToGeoCoordinateString(dmsParam);        // 00 00 00.00N 000 00 00.00E
-      geoCoordString = point1.ToGeoCoordinateString(dmsParam);        // 20 00 00.00N 010 00 00.00E
+      ToGeoCoordinateParameter dmsParam = 
+        new ToGeoCoordinateParameter(GeoCoordinateType.DMS);
+      // 00 00 00.00N 000 00 00.00E
+      geoCoordString = point0.ToGeoCoordinateString(dmsParam);
+      // 20 00 00.00N 010 00 00.00E
+      geoCoordString = point1.ToGeoCoordinateString(dmsParam);        
 
       // convert to DDM
-      ToGeoCoordinateParameter ddmParam = new ToGeoCoordinateParameter(GeoCoordinateType.DDM);
-      geoCoordString = point0.ToGeoCoordinateString(ddmParam);        // 00 00.0000N 000 00.0000E
-      geoCoordString = point1.ToGeoCoordinateString(ddmParam);        // 20 00.0000N 010 00.0000E
+      ToGeoCoordinateParameter ddmParam = 
+        new ToGeoCoordinateParameter(GeoCoordinateType.DDM);
+      // 00 00.0000N 000 00.0000E
+      geoCoordString = point0.ToGeoCoordinateString(ddmParam);
+      // 20 00.0000N 010 00.0000E
+      geoCoordString = point1.ToGeoCoordinateString(ddmParam);        
 
       // convert to DD
-      ToGeoCoordinateParameter ddParam = new ToGeoCoordinateParameter(GeoCoordinateType.DD);
-      geoCoordString = point0.ToGeoCoordinateString(ddParam);       // 00.000000N 000.000000E
-      geoCoordString = point1.ToGeoCoordinateString(ddParam);       // 20.000000N 010.000000E
+      ToGeoCoordinateParameter ddParam = 
+        new ToGeoCoordinateParameter(GeoCoordinateType.DD);
+      // 00.000000N 000.000000E
+      geoCoordString = point0.ToGeoCoordinateString(ddParam);
+      // 20.000000N 010.000000E
+      geoCoordString = point1.ToGeoCoordinateString(ddParam);       
 
       #endregion
     }
@@ -4638,9 +4439,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: AngularUnit
       #endregion
 
-      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
-      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.ConvertToRadians(System.Double)
-      // cref: AngularUnit - Convert between degrees and radians;ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertToRadians(System.Double)
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
       #region AngularUnit - Convert between degrees and radians
 
       // convert 45 degrees to radians
@@ -4651,13 +4452,15 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.Int32)
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.ConversionFactor
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.FactoryCode
-      // cref: AngularUnit - Create an AngularUnit with a factory code;ArcGIS.Core.Geometry.Unit.Name
+      // cref: ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.Int32)
+      // cref: ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians
+      // cref: ArcGIS.Core.Geometry.Unit.Name
+      // cref: ArcGIS.Core.Geometry.Unit.ConversionFactor
+      // cref: ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
+      // cref: ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians(System.Double)
       #region AngularUnit - Create an AngularUnit with a factory code
 
       try
@@ -4677,19 +4480,24 @@ namespace ProSnippetsGeometry
       }
       catch (ArgumentException)
       {
-        // ArgumentException will be thrown by CreateAngularUnit in the following scenarios
-        // - if the factory code used is a non-angular factory code  (i.e. it corresponds to square meters which is an area unit code)
-        // - if the factory code used is invalid (i.e. it is negative or doesn't correspond to any factory code)
+        // ArgumentException will be thrown by CreateAngularUnit in
+        // the following scenarios:
+        // - if the factory code used is a non-angular factory code
+        //   (i.e. it corresponds to square meters which is an area unit code)
+        // - if the factory code used is invalid
+        //   (i.e. it is negative or doesn't correspond to any factory code)
       }
 
       #endregion
 
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String)
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String,System.Double)
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.Degrees
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
-      // cref: AngularUnit - Create a Custom AngularUnit;ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String,System.Double)
+      // cref: ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertFromRadians
+      // cref: ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.AngularUnit.RadiansPerUnit
+      // cref: ArcGIS.Core.Geometry.AngularUnit.Degrees
+      // cref: ArcGIS.Core.Geometry.AngularUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AngularUnit)
+      // cref: ArcGIS.Core.Geometry.AngularUnit.CreateAngularUnit(System.String)
       #region AngularUnit - Create a Custom AngularUnit
 
       // custom unit - 3 radians per unit
@@ -4721,9 +4529,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: LinearUnit
       #endregion
 
-      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
-      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
-      // cref: LinearUnit - Convert between feet and meters;ArcGIS.Core.Geometry.LinearUnit.Feet
+      // cref: ArcGIS.Core.Geometry.LinearUnit.Feet
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
       #region LinearUnit - Convert between feet and meters
       // convert 10 feet to meters
       double metres = LinearUnit.Feet.ConvertToMeters(10);
@@ -4732,10 +4540,10 @@ namespace ProSnippetsGeometry
       double feet = LinearUnit.Feet.ConvertFromMeters(20.0);
       #endregion
 
-      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
-      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
-      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.Centimeters
-      // cref: LinearUnit - Convert between centimeters and millimeters;ArcGIS.Core.Geometry.LinearUnit.Millimeters
+      // cref: ArcGIS.Core.Geometry.LinearUnit.Centimeters
+      // cref: ArcGIS.Core.Geometry.LinearUnit.Millimeters
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertToMeters(System.Double)
       #region LinearUnit - Convert between centimeters and millimeters
 
       // convert 11 centimeters to millimeters
@@ -4749,12 +4557,13 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.Int32)
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.LinearUnit.MetersPerUnit
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.ConversionFactor
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.FactoryCode
-      // cref: LinearUnit - Create a LinearUnit with a factory code;ArcGIS.Core.Geometry.Unit.Name
+      // cref: ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.Int32)
+      // cref: ArcGIS.Core.Geometry.Unit.Name
+      // cref: ArcGIS.Core.Geometry.Unit.ConversionFactor
+      // cref: ArcGIS.Core.Geometry.LinearUnit.MetersPerUnit
+      // cref: ArcGIS.Core.Geometry.LinearUnit.Centimeters
+      // cref: ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertFromMeters(System.Double)
       #region LinearUnit - Create a LinearUnit with a factory code
 
       try
@@ -4774,18 +4583,24 @@ namespace ProSnippetsGeometry
       }
       catch (ArgumentException)
       {
-        // ArgumentException will be thrown by CreateLinearUnit in the following scenarios
-        // - if the factory code used is a non-linear factory code  (i.e. it corresponds to square meters which is an area unit code)
-        // - if the factory code used is invalid (i.e. it is negative or doesn't correspond to any factory code)
+        // ArgumentException will be thrown by CreateLinearUnit
+        // in the following scenarios:
+        // - if the factory code used is a non-linear factory code
+        //   (i.e. it corresponds to square meters which is an area unit code)
+        // - if the factory code used is invalid
+        //   (i.e. it is negative or doesn't correspond to any factory code)
       }
 
       #endregion
 
-      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
-      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String)
-      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String,System.Double)
-      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.Unit.ToString
-      // cref: LinearUnit - Create a Custom LinearUnit;ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String,System.Double)
+      // cref: ArcGIS.Core.Geometry.LinearUnit.MetersPerUnit
+      // cref: ArcGIS.Core.Geometry.Unit.ToString
+      // cref: ArcGIS.Core.Geometry.Unit.Wkt
+      // cref: ArcGIS.Core.Geometry.Unit.ConversionFactor
+      // cref: ArcGIS.Core.Geometry.Unit.FactoryCode
+      // cref: ArcGIS.Core.Geometry.LinearUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.LinearUnit.CreateLinearUnit(System.String)
       #region LinearUnit - Create a Custom LinearUnit
 
       // create a custom linear unit - there are 0.33 meters per myLinearUnit
@@ -4813,9 +4628,9 @@ namespace ProSnippetsGeometry
       #region ProSnippet Group: AreaUnit
       #endregion
 
-      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.ConvertFromSquareMeters(System.Double)
-      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.ConvertToSquareMeters(System.Double)
-      // cref: AreaUnit - Convert between square feet and square meters;ArcGIS.Core.Geometry.AreaUnit.SquareFeet
+      // cref: ArcGIS.Core.Geometry.AreaUnit.ConvertFromSquareMeters(System.Double)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.ConvertToSquareMeters(System.Double)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareFeet
       #region AreaUnit - Convert between square feet and square meters
 
       // convert 700 square meters to square feet
@@ -4825,8 +4640,9 @@ namespace ProSnippetsGeometry
       double sqMeters = AreaUnit.SquareFeet.ConvertToSquareMeters(1000);
       #endregion
 
-      // cref: AreaUnit - Convert between hectares and acres;ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
-      // cref: AreaUnit - Convert between hectares and acres;ArcGIS.Core.Geometry.AreaUnit.Hectares
+      // cref: ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.Hectares
+      // cref: ArcGIS.Core.Geometry.AreaUnit.Acres
       #region AreaUnit - Convert between hectares and acres
 
       // convert 2 hectares to acres
@@ -4834,14 +4650,20 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: AreaUnit - Convert between hectares and square miles;ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
-      // cref: AreaUnit - Convert between hectares and square miles;ArcGIS.Core.Geometry.AreaUnit.Hectares
+      // cref: ArcGIS.Core.Geometry.AreaUnit.ConvertTo(System.Double,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareMiles
+      // cref: ArcGIS.Core.Geometry.AreaUnit.Hectares
       #region AreaUnit - Convert between hectares and square miles
       // convert 300 hectares to square miles
       double sqMiles = AreaUnit.Hectares.ConvertTo(300, AreaUnit.SquareMiles);
       #endregion
 
-      // cref: AreaUnit - How many Square meters in various units;ArcGIS.Core.Geometry.AreaUnit.SquareMetersPerUnit
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareMetersPerUnit
+      // cref: ArcGIS.Core.Geometry.AreaUnit.Ares
+      // cref: ArcGIS.Core.Geometry.AreaUnit.Hectares
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareKilometers
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareMiles
+      // cref: ArcGIS.Core.Geometry.AreaUnit.SquareYards
       #region AreaUnit - How many Square meters in various units
 
       double sqMetersPerUnit = AreaUnit.Acres.SquareMetersPerUnit;
@@ -4853,14 +4675,13 @@ namespace ProSnippetsGeometry
 
       #endregion
 
-      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.Int32)
-      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String)
-      // cref: AreaUnit - Create an AreaUnit;ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String,System.Double)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.Int32)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String,System.Double)
+      // cref: ArcGIS.Core.Geometry.AreaUnit.CreateAreaUnit(System.String)
       #region AreaUnit - Create an AreaUnit 
 
       try
       {
-
         var myFactoryCodeInit = AreaUnit.CreateAreaUnit(109439);     // 109439 is the factory code for square miles
 
         var myWktUnit = AreaUnit.CreateAreaUnit("HECTARE_AREAUNIT[\"H\",10000.0]");

@@ -122,7 +122,7 @@ namespace SDKExamples.GeodatabaseSDK
             Feature feature = (Feature)recyclingCursor.Current;
 
             if (Convert.ToDouble(feature[areaFieldIndex]) > 500)
-              Console.WriteLine(feature.GetShape().ToXML());
+              Console.WriteLine(feature.GetShape().ToXml());
           }
         } 
       }
@@ -152,7 +152,7 @@ namespace SDKExamples.GeodatabaseSDK
         SpatialQueryFilter spatialQueryFilter = new SpatialQueryFilter
         {
           WhereClause    = "DISTRCTNAME = 'Indian Prairie School District 204'",
-          FilterGeometry = new PolygonBuilder(new List<Coordinate2D>
+          FilterGeometry = new PolygonBuilderEx(new List<Coordinate2D>
           {
             new Coordinate2D(1021880, 1867396),
             new Coordinate2D(1028223, 1870705),

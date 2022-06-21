@@ -134,7 +134,7 @@ namespace SDKExamples
               new Coordinate2D(1021405, 1875397)
             };
 
-            rowBuffer[facilitySiteDefinition.GetShapeField()] = new PolygonBuilder(newCoordinates).ToGeometry();
+            rowBuffer[facilitySiteDefinition.GetShapeField()] = new PolygonBuilderEx(newCoordinates).ToGeometry();
 
             feature = enterpriseFeatureClass.CreateRow(rowBuffer);
 
@@ -146,7 +146,7 @@ namespace SDKExamples
 
              // Do some other processing with the newly-created feature.
           }
-          catch (GeodatabaseException exObj)
+          catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
           {
             Console.WriteLine(exObj);
           }
@@ -199,7 +199,7 @@ namespace SDKExamples
             rowBuffer["PHONE"]     = "815-740-4782";
             rowBuffer["EMAIL"]     = "elections@willcounty.gov";
 
-            rowBuffer[featureClassDefinition.GetShapeField()] = new MapPointBuilder(1028367, 1809789).ToGeometry();
+            rowBuffer[featureClassDefinition.GetShapeField()] = new MapPointBuilderEx(1028367, 1809789).ToGeometry();
 
             feature = featureClass.CreateRow(rowBuffer);
 
@@ -219,7 +219,7 @@ namespace SDKExamples
           // If the table is non-versioned this is a no-op. If it is versioned, we need the Save to be done for the edits to be persisted.
           bool saveResult = await Project.Current.SaveEditsAsync();
         }
-        catch (GeodatabaseException exObj)
+        catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
         {
           Console.WriteLine(exObj);
           throw;

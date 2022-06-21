@@ -21,8 +21,8 @@ using System.Collections.Generic;
 
 namespace ConsoleApplication1 {
 
-    // cref: Initializing Core Host;ArcGIS.Core.Hosting.Host.Initialize
-    // cref: Initializing Core Host;ArcGIS.Core.Hosting.Host.Initialize(ArcGIS.Core.Hosting.Host.LicenseProductCode)
+    // cref: ArcGIS.Core.Hosting.Host.Initialize
+    // cref: ArcGIS.Core.Hosting.Host.Initialize(ArcGIS.Core.Hosting.Host.LicenseProductCode)
     #region Initializing Core Host
     using ArcGIS.Core.Data;
     //There must be a reference to ArcGIS.CoreHost.dll
@@ -58,7 +58,6 @@ namespace ConsoleApplication1 {
             string name = table.GetName();
             return string.Format("{0} ({1})", alias.Length > 0 ? alias : name, name);
         }
-
     }
     #endregion
 }

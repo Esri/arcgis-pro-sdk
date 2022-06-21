@@ -42,13 +42,19 @@ namespace ProSnippetsBuildingSceneLayerDiscipline
   {
     public async void Examples()
     {
+      // cref: ArcGIS.Desktop.Mapping.BuildingDisciplineSceneLayer
+      // cref: ArcGIS.Desktop.Mapping.BuildingDisciplineSceneLayer.GetDiscipline
       #region Get BuildingDisciplineSceneLayer Discipline
       var bsl_discipline = MapView.Active.Map.GetLayersAsFlattenedList().OfType<BuildingDisciplineSceneLayer>().FirstOrDefault(l => l.Name == "Architectural");
       var disciplineName = bsl_discipline.GetDiscipline();
       #endregion
 
       }
-
+    // cref: ArcGIS.Desktop.Mapping.BuildingSceneLayer
+    // cref: ArcGIS.Desktop.Mapping.BuildingDisciplineSceneLayer
+    // cref: ArcGIS.Desktop.Mapping.BuildingDisciplineSceneLayer.GetDiscipline
+    // cref: ARCGIS.DESKTOP.MAPPING.COMPOSITELAYER.LAYERS
+    // cref: ARCGIS.DESKTOP.MAPPING.COMPOSITELAYER.FINDLAYERS
     #region Enumerate the Discipline Layers from a Building SceneLayer
     public void QueryBuildingSceneLayer()
     {
@@ -58,7 +64,8 @@ namespace ProSnippetsBuildingSceneLayerDiscipline
       //Overview is a FeatureSceneLayer
       //Full Model is a BuildingDisciplineSceneLayer that contains the disciplines
       
-      var fullModel = bldgLayer.FindLayers("Full Model").First() as BuildingDisciplineSceneLayer;
+      var fullModel = bldgLayer.FindLayers("Full Model").First() 
+                                     as BuildingDisciplineSceneLayer;
       CollectDisciplineLayers(fullModel, disciplines);
       
     }
@@ -68,7 +75,9 @@ namespace ProSnippetsBuildingSceneLayerDiscipline
     {
       //collect information on the disciplines
       var name = disciplineLayer.Name;
-      var layerType = ((ISceneLayerInfo)disciplineLayer).SceneServiceLayerType.ToString();
+      //At 2.x - var layerType =
+      //      ((ISceneLayerInfo)disciplineLayer).SceneServiceLayerType.ToString();
+
       var discipline = disciplineLayer.GetDiscipline();
       //etc
       //TODO - use collected information
@@ -76,7 +85,8 @@ namespace ProSnippetsBuildingSceneLayerDiscipline
       disciplines.Add(discipline, disciplineLayer);
 
       //Discipline layers are composite layers too
-      foreach (var childDiscipline in disciplineLayer.Layers.OfType<BuildingDisciplineSceneLayer>())
+      foreach (var childDiscipline in disciplineLayer.Layers
+                          .OfType<BuildingDisciplineSceneLayer>())
       {
         //Discipline layers can also contain FeatureSceneLayers that render the
         //individual full model contents

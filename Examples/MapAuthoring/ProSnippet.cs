@@ -42,6 +42,9 @@ namespace MapAuthoring.ProSnippet
     #endregion
     public void GetActiveMapAsync()
     {
+      // cref: ArcGIS.Desktop.Mapping.MapView.Active
+      // cref: ArcGIS.Desktop.Mapping.MapView.Map
+      // cref: ArcGIS.Desktop.Mapping.Map
       #region Get the active map
 
       Map map = MapView.Active.Map;
@@ -52,8 +55,8 @@ namespace MapAuthoring.ProSnippet
     public async Task CreateMapAsync(string mapName)
     {
 
-      // cref: Create a new map with a default basemap layer;ArcGIS.Desktop.Mapping.MapFactory.CreateMap(System.String,ArcGIS.Core.CIM.MapType,ArcGIS.Core.CIM.MapViewingMode,ArcGIS.Desktop.Mapping.Basemap)
-      // cref: Create a new map with a default basemap layer;ArcGIS.Desktop.Mapping.Map
+      // cref: ArcGIS.Desktop.Mapping.MapFactory.CreateMap(System.String,ArcGIS.Core.CIM.MapType,ArcGIS.Core.CIM.MapViewingMode,ArcGIS.Desktop.Mapping.Basemap)
+      // cref: ArcGIS.Desktop.Mapping.Map
       #region Create a new map with a default basemap layer
 
       await QueuedTask.Run(() =>
@@ -65,7 +68,10 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    // cref: Find a map within a project and open it;ArcGIS.Desktop.Mapping.Map
+    // cref: ArcGIS.Desktop.Mapping.MapProjectItem
+    // cref: ArcGIS.Desktop.Mapping.MapProjectItem.GetMap()
+    // cref: ArcGIS.Desktop.Mapping.Map
+    // cref: ArcGIS.Desktop.Core.FrameworkExtender.CreateMapPaneAsync(ArcGIS.Desktop.Framework.PaneCollection, ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.MapViewingMode, ArcGIS.Desktop.Mapping.TimeRange)
     #region Find a map within a project and open it
     public static async Task<Map> FindOpenExistingMapAsync(string mapName)
     {
@@ -94,8 +100,10 @@ namespace MapAuthoring.ProSnippet
     public async Task<Map> OpenWebMapAsync()
     {
 
-      // cref: Open a webmap;ArcGIS.Desktop.Mapping.MapFactory.CreateMapFromItem(ArcGIS.Desktop.Core.Item)
-      // cref: Open a webmap;ArcGIS.Desktop.Mapping.Map
+      // cref: ArcGIS.Desktop.Mapping.MapFactory.CanCreateMapFrom(ArcGIS.Desktop.Core.Item)
+      // cref: ArcGIS.Desktop.Mapping.MapFactory.CreateMapFromItem(ArcGIS.Desktop.Core.Item)
+      // cref: ArcGIS.Desktop.Mapping.Map
+      // cref: ArcGIS.Desktop.Core.FrameworkExtender.CreateMapPaneAsync(ArcGIS.Desktop.Framework.PaneCollection, ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.MapViewingMode, ArcGIS.Desktop.Mapping.TimeRange)
       #region Open a webmap
       Map map = null;
 
@@ -114,6 +122,7 @@ namespace MapAuthoring.ProSnippet
       return map;
     }
 
+    // cref: ArcGIS.Desktop.Mapping.IMapPane
     #region Get Map Panes
     public static IEnumerable<IMapPane> GetMapPanes()
     {
@@ -122,6 +131,9 @@ namespace MapAuthoring.ProSnippet
     }
     #endregion
 
+    // cref: ArcGIS.Desktop.Mapping.IMapPane
+    // cref: ArcGIS.Desktop.Mapping.IMapPane.MapView
+    // cref: ArcGIS.Desktop.Mapping.Map.URI
     #region Get the Unique List of Maps From the Map Panes
     public static IReadOnlyList<Map> GetMapsFromMapPanes()
     {
@@ -142,12 +154,14 @@ namespace MapAuthoring.ProSnippet
     {
       QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.Map.SetName
         #region Change the Map name
         ////Note: call within QueuedTask.Run()
         MapView.Active.Map.SetName("Test");
         #endregion
       });
 
+      // cref: ArcGIS.Desktop.Framework.Contracts.Pane.Caption
       #region Renames the caption of the pane
       ProApp.Panes.ActivePane.Caption = "Caption";
       #endregion
@@ -159,6 +173,9 @@ namespace MapAuthoring.ProSnippet
       if (map == null) return Task.FromResult(0);
       return QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.MapFactory.CanConvertMap(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.MapConversionType)
+        // cref: ArcGIS.Desktop.Mapping.MapConversionType
+        // cref: ArcGIS.Desktop.Mapping.MapFactory.ConvertMap(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.MapConversionType, System.Boolean)
         #region Convert Map to Local Scene
         //Note: Run within the context of QueuedTask.Run
         bool canConvertMap = MapFactory.Instance.CanConvertMap(map, MapConversionType.SceneLocal);
@@ -170,6 +187,8 @@ namespace MapAuthoring.ProSnippet
 
     private async void GetBasemaps()
     {
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetBasemapsAsync(ArcGIS.Desktop.Core.ArcGISPortal)
+      // cref: ArcGIS.Desktop.Core.Portal.PortalItem
       #region Get Basemaps
 
       //Basemaps stored locally in the project. This is usually an empty collection
@@ -196,12 +215,14 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.SaveAsFile(System.String, System.Boolean)
       #region Save Map as MapX
 
-      map.SaveAsFile(@"C:\Data\MyMap.mapx");
+      map.SaveAsFile(@"C:\Data\MyMap.mapx", true);
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.Map.SaveAsWebMapFile(System.String)
       #region Save 2D Map as WebMap on Disk
 
       //2D maps only
@@ -214,10 +235,11 @@ namespace MapAuthoring.ProSnippet
 
     }
 
-		private void ClipMap()
+    private void ClipMap()
     {
       QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.Map.SetClipGeometry(ArcGIS.Core.Geometry.Polygon, ArcGIS.Core.CIM.CIMLineSymbol)
         #region Clip Map to the provided clip polygon
         //Run within QueuedTask
         var map = MapView.Active.Map;
@@ -225,7 +247,7 @@ namespace MapAuthoring.ProSnippet
         var lyrOfInterest = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().Where(l => l.Name == "TestPoly").FirstOrDefault();
         //Get the polygon to use to clip the map
         var extent = lyrOfInterest.QueryExtent();
-        var polygonForClipping = PolygonBuilder.CreatePolygon(extent);
+        var polygonForClipping = PolygonBuilderEx.CreatePolygon(extent);
         //Clip the map using the layer's extent
         map.SetClipGeometry(polygonForClipping,
             SymbolFactory.Instance.ConstructLineSymbol(
@@ -239,6 +261,7 @@ namespace MapAuthoring.ProSnippet
     {
       QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.Map.ClearClipGeometry()
         #region Clear the current map clip geometry 
         //Run within QueuedTask
         var map = MapView.Active.Map;
@@ -253,6 +276,7 @@ namespace MapAuthoring.ProSnippet
     {
       QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.Map.GetClipGeometry()
         #region Get the map clipping geometry
         var map = MapView.Active.Map;
         //If clipping is set to ArcGIS.Core.CIM.ClippingMode.None or ArcGIS.Core.CIM.ClippingMode.MapSeries null is returned
@@ -275,9 +299,13 @@ namespace MapAuthoring.ProSnippet
     }
 
     public void LocationUnit1()
-		{
+    {
       Map map = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLocationUnitFormat()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat.DisplayName
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat.UnitCode
       #region Get the Current Map Location Unit
 
       //var map = MapView.Active.Map;
@@ -295,6 +323,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.GetAvailableLocationUnitFormats()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
       #region Get the Available List of Map Location Units
 
       //var map = MapView.Active.Map;
@@ -309,6 +339,9 @@ namespace MapAuthoring.ProSnippet
 
     public void LocationUnit2()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLocationUnitFormat()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat.FormatLocation(ArcGIs.Core.Geometry.Coordinate2D, ArcGIS.Core.Geometry.SpatialReference)
       #region Format a Location Using the Current Map Location Unit
 
       var mv = MapView.Active;
@@ -331,6 +364,9 @@ namespace MapAuthoring.ProSnippet
 
     public void LocationUnit3()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetAvailableLocationUnitFormats()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
+      // cref: ArcGIS.Desktop.Mapping.Map.SetLocationUnitFormat(ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat)
       #region Set the Location Unit for the Current Map
 
       var mv = MapView.Active;
@@ -353,6 +389,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationUnitFormat()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
       #region Get the Current Map Elevation Unit
 
       //var map = MapView.Active.Map;
@@ -371,6 +409,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.GetAvailableElevationUnitFormats()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
       #region Get the Available List of Map Elevation Units
 
       //var map = MapView.Active.Map;
@@ -385,6 +425,9 @@ namespace MapAuthoring.ProSnippet
 
     public void ElevationUnit2()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationUnitFormat()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat.FormatValue(System.Double)
       #region Format an Elevation Using the Current Map Elevation Unit
 
       var mv = MapView.Active;
@@ -407,6 +450,9 @@ namespace MapAuthoring.ProSnippet
 
     public void ElevationUnit3()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetAvailableElevationUnitFormats()
+      // cref: ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat
+      // cref: ArcGIS.Desktop.Mapping.Map.SetElevationUnitFormat( ArcGIS.Desktop.Core.UnitFormats.DisplayUnitFormat)
       #region Set the Elevation Unit for the Current Map
 
       var map = MapView.Active.Map;
@@ -415,25 +461,26 @@ namespace MapAuthoring.ProSnippet
       {
         //Trying to set the elevation unit on a map other than
         //a scene will throw an InvalidOperationException
-				if (map.IsScene)
-				{
-					//Get the list of available elevation unit formats
-					//for the current map
-					var loc_units = map.GetAvailableElevationUnitFormats();
+        if (map.IsScene)
+        {
+          //Get the list of available elevation unit formats
+          //for the current map
+          var loc_units = map.GetAvailableElevationUnitFormats();
           //arbitrarily use the last unit in the list
           map.SetElevationUnitFormat(loc_units.Last());
         }
-				
+
       });
 
       #endregion
     }
 
-		#region ProSnippet Group: Offline Map
-		#endregion
+    #region ProSnippet Group: Offline Map
+    #endregion
 
     public void OfflineMaps1()
-		{
+    {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanGenerateReplicas(ArcGIS.Desktop.Mapping.Map)
       #region Check Map Has Sync-Enabled Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -444,15 +491,21 @@ namespace MapAuthoring.ProSnippet
       {
         var hasSyncEnabledContent = GenerateOfflineMap.Instance.GetCanGenerateReplicas(map);
         if (hasSyncEnabledContent)
-				{
+        {
           //TODO - use status...
-				}
+        }
       });
       #endregion
     }
 
     public void OfflineMaps2()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanGenerateReplicas(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GenerateReplicas(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.Offline.GenerateReplicaParams)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateReplicaParams
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateReplicaParams.#ctor
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateReplicaParams.Extent
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateReplicaParams.DestinationFolder
       #region Generate Replicas for Sync-Enabled Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -487,6 +540,7 @@ namespace MapAuthoring.ProSnippet
 
     public void OfflineMaps3()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanSynchronizeReplicas(ArcGIS.Desktop.Mapping.Map)
       #region Check Map Has Local Syncable Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -507,6 +561,8 @@ namespace MapAuthoring.ProSnippet
 
     public void OfflineMaps4()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanSynchronizeReplicas(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.SynchronizeReplicas(ArcGIS.Desktop.Mapping.Map)
       #region Synchronize Replicas for Syncable Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -530,6 +586,8 @@ namespace MapAuthoring.ProSnippet
 
     public void OfflineMaps5()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanRemoveReplicas(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.RemoveReplicas(ArcGIS.Desktop.Mapping.Map)
       #region Remove Replicas for Syncable Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -558,6 +616,14 @@ namespace MapAuthoring.ProSnippet
 
     public void OfflineMaps6()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanExportRasterTileCache(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetExportRasterTileCacheScales(ArcGIS.Desktop.Mapping.Map, ArcGIs.Core.Geometry.Envelope)
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.#ctor
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.Extent
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.MaximumUserDefinedScale
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.DestinationFolder
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.ExportRasterTileCache(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams)
       #region Export Map Raster Tile Cache Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -598,6 +664,14 @@ namespace MapAuthoring.ProSnippet
 
     public void OfflineMaps7()
     {
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetCanExportVectorTileCache(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.GetExportVectorTileCacheScales(ArcGIS.Desktop.Mapping.Map, ArcGIs.Core.Geometry.Envelope)
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.#ctor
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.Extent
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.MaximumUserDefinedScale
+      // cref: ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams.DestinationFolder
+      // cref: ArcGIS.Desktop.Mapping.Offline.GenerateOfflineMap.ExportVectorTileCache(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Mapping.Offline.ExportTileCacheParams)
       #region Export Map Vector Tile Cache Content
 
       //namespace ArcGIS.Desktop.Mapping.Offline
@@ -642,8 +716,7 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
-      // cref: Create and add a layer to the active map;ArcGIS.Desktop.Mapping.LayerFactory
-      // cref: Create and add a layer to the active map;ArcGIS.Desktop.Mapping.Map
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(System.Uri, ArcGIS.Desktop.Mapping.ILayerContainerEdit, System.Int32, System.String)
       #region Create and add a layer to the active map
 
       /*
@@ -665,7 +738,12 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
-      // cref: Create layer with create-params;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.DefinitionQuery
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.RendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create layer with create-params
       var flyrCreatnParam = new FeatureLayerCreationParams(new Uri(@"c:\data\world.gdb\cities"))
       {
@@ -673,11 +751,12 @@ namespace MapAuthoring.ProSnippet
         IsVisible = false,
         MinimumScale = 1000000,
         MaximumScale = 5000,
-        DefinitionFilter = new CIMDefinitionFilter()
-        {
-          DefinitionExpression = "Population > 100000",
-          Name = "More than 100k"
-        },
+        // At 2.x - DefinitionFilter = new CIMDefinitionFilter()
+        //{
+        //  DefinitionExpression = "Population > 100000",
+        //  Name = "More than 100k"
+        //},
+        DefinitionQuery = new DefinitionQuery(whereClause: "Population > 100000", name: "More than 100k"),
         RendererDefinition = new SimpleRendererDefinition()
         {
           SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(
@@ -686,13 +765,19 @@ namespace MapAuthoring.ProSnippet
       };
 
       var featureLayer = LayerFactory.Instance.CreateLayer<FeatureLayer>(
-        flyrCreatnParam, map, LayerPosition.AutoArrange);
+        flyrCreatnParam, map);
       #endregion
 
     }
     public static void CreateLayerWithParams()
     {
 
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.#ctor(System.String)
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.GetCIMLayerDocument()
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMLayerDocument)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create FeatureLayer and add to Map using LayerCreationParams
       //Note: Call within QueuedTask.Run()
       var layerDoc = new LayerDocument(@"E:\Data\SDK\Default2DPointSymbols.lyrx");
@@ -740,16 +825,21 @@ namespace MapAuthoring.ProSnippet
       //The catalog path of the feature layer to add to the map
       var featureClassUriDefinition = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
       //Define the Feature Layer's parameters.
+      //At 2.x - var layerParamsQueryDefn = new FeatureLayerCreationParams(featureClassUriDefinition)
+      //{
+      //  IsVisible = true,
+      //  DefinitionFilter = new CIMDefinitionFilter()
+      //  {
+      //    Name = "CACities",
+      //    DefinitionExpression = "STATE_NAME = 'California'"
+      //  }
+      //};
       var layerParamsQueryDefn = new FeatureLayerCreationParams(featureClassUriDefinition)
       {
         IsVisible = true,
-        DefinitionFilter = new CIMDefinitionFilter()
-        {
-          Name = "CACities",
-          DefinitionExpression = "STATE_NAME = 'California'"
-        }
-
+        DefinitionQuery = new DefinitionQuery(whereClause: "STATE_NAME = 'California'", name: "CACities")
       };
+
       //Create the layer with the feature layer parameters and add it to the active map
       var createdFCWithQueryDefn = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParamsQueryDefn, MapView.Active.Map);
       #endregion
@@ -759,16 +849,21 @@ namespace MapAuthoring.ProSnippet
 
     private async void MapNotesAPI()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.LayerTemplatePackages
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(ArcGIS.Desktop.Core.Item)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Add MapNotes to the active map
       //Gets the collection of layer template packages installed with Pro for use with maps
-      var items = MapView.Active.Map.LayerTemplatePackages;     
+      var items = MapView.Active.Map.LayerTemplatePackages;
       //Iterate through the collection of items to add each Map Note to the active map
       foreach (var item in items)
       {
         //Create a parameter item for the map note
         var layer_params = new LayerCreationParams(item);
         layer_params.IsVisible = false;
-        await QueuedTask.Run(() => {
+        await QueuedTask.Run(() =>
+        {
           //Create a feature layer for the map note
           var layer = LayerFactory.Instance.CreateLayer<Layer>(layer_params, MapView.Active.Map);
         });
@@ -778,9 +873,14 @@ namespace MapAuthoring.ProSnippet
 
     public static void CreateLayerUsingDocument()
     {
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer()
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMDataConnection)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.RendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.SimpleRendererDefinition
       #region Apply Symbology from a Layer in the TOC
       //Note: Call within QueuedTask.Run()
       if (MapView.Active.Map == null) return;
+
       //Get an existing Layer. This layer has a symbol you want to use in a new layer.
       var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>()
             .Where(l => l.ShapeType == esriGeometryType.esriGeometryPoint).FirstOrDefault();
@@ -799,14 +899,22 @@ namespace MapAuthoring.ProSnippet
       };
       //create the new layer
       LayerFactory.Instance.CreateLayer<FeatureLayer>(
-        featureLayerParams, MapView.Active.Map, LayerPosition.AutoArrange);
+        featureLayerParams, MapView.Active.Map);
       #endregion
     }
     private void CreateSubTypeLayers()
     {
 
-      // cref: Create a new SubTypeGroupLayer;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
-      // cref: Create a new SubTypeGroupLayer;ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams.SubtypeLayers
+      // cref: ArcGIS.Desktop.Mapping.SubtypeFeatureLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.SubtypeFeatureLayerCreationParams.#ctor(ArcGIS.Desktop.Mapping.RendererDefinition, System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams.SubtypeLayers
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayerCreationParams.DefinitionQuery
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
+      // cref: ArcGIS.Desktop.Mapping.SubtypeGroupLayer
       #region Create a new SubTypeGroupLayer
       var subtypeGroupLayerCreateParam = new SubtypeGroupLayerCreationParams
       (
@@ -814,33 +922,30 @@ namespace MapAuthoring.ProSnippet
       );
 
       // Define Subtype layers
+      //At 2.x - var rendererDefn1 = new UniqueValueRendererDefinition(new string[] { "type" });
+      var rendererDefn1 = new UniqueValueRendererDefinition(new List<string> { "type" });
+      var renderDefn2 = new SimpleRendererDefinition()
+      {
+        SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(
+                CIMColor.CreateRGBColor(255, 0, 0), 8, SimpleMarkerStyle.Hexagon).MakeSymbolReference()
+      };
       subtypeGroupLayerCreateParam.SubtypeLayers = new List<SubtypeFeatureLayerCreationParams>()
       {
         //define first subtype layer with unique value renderer
-        new SubtypeFeatureLayerCreationParams()
-        {
-          SubtypeId = 1,
-          RendererDefinition = new UniqueValueRendererDefinition(new string[] { "type" })
-        },
+        //At 2.x - new SubtypeFeatureLayerCreationParams(new UniqueValueRendererDefinition(new string[] { "type" }), 1),
+        new SubtypeFeatureLayerCreationParams(new UniqueValueRendererDefinition(new List<string> { "type" }), 1),
 
         //define second subtype layer with simple symbol renderer
-        new SubtypeFeatureLayerCreationParams()
-        {
-          SubtypeId = 2,
-          RendererDefinition = new SimpleRendererDefinition()
-          {
-              SymbolTemplate = SymbolFactory.Instance.ConstructPointSymbol(
-                CIMColor.CreateRGBColor(255, 0, 0), 8, SimpleMarkerStyle.Hexagon).MakeSymbolReference()
-          }
-        }
+        new SubtypeFeatureLayerCreationParams(renderDefn2, 2)
       };
 
       // Define additional parameters
-      subtypeGroupLayerCreateParam.DefinitionFilter = new CIMDefinitionFilter()
-      {
-        Name = "IsActive",
-        DefinitionExpression = "Enabled = 1"
-      };
+      //At - 2.x subtypeGroupLayerCreateParam.DefinitionFilter = new CIMDefinitionFilter()
+      //{
+      //  Name = "IsActive",
+      //  DefinitionExpression = "Enabled = 1"
+      //};
+      subtypeGroupLayerCreateParam.DefinitionQuery = new DefinitionQuery(whereClause: "Enabled = 1", name: "IsActive");
       subtypeGroupLayerCreateParam.IsVisible = true;
       subtypeGroupLayerCreateParam.MinimumScale = 50000;
 
@@ -853,8 +958,15 @@ namespace MapAuthoring.ProSnippet
     {
       Map map = null;
 
-      // cref: create layer from a lyrx file;ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition)
-      // cref: create layer from a lyrx file;ArcGIS.Desktop.Mapping.LayerDocument
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.#ctor(System.String)
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.GetCIMLayerDocument
+      // cref: ArcGIS.Core.CIM.CIMLayerDocument.LayerDefinitions
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.Save(System.String)
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.AsJson()
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.Load(System.String)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create layer from a lyrx file
       var lyrDocFromLyrxFile = new LayerDocument(@"d:\data\cities.lyrx");
       var cimLyrDoc = lyrDocFromLyrxFile.GetCIMLayerDocument();
@@ -875,15 +987,22 @@ namespace MapAuthoring.ProSnippet
 
       //create a layer and add it to a map
       var lcp = new LayerCreationParams(cimLyrDoc);
-      var lyr = LayerFactory.Instance.CreateLayer<FeatureLayer>(lcp, map, LayerPosition.AutoArrange);
+      var lyr = LayerFactory.Instance.CreateLayer<FeatureLayer>(lcp, map);
       #endregion
     }
+
     private static async Task ModifyLayerSymbologyFromLyrFileAsync(IEnumerable<FeatureLayer> featureLayers, string layerFile)
     {
       await QueuedTask.Run(() =>
       {
         foreach (var featureLayer in featureLayers)
         {
+          // cref: ArcGIS.Desktop.Mapping.LayerDocument
+          // cref: ArcGIS.Desktop.Mapping.LayerDocument.#ctor(System.String)
+          // cref: ArcGIS.Desktop.Mapping.LayerDocument.GetCIMLayerDocument
+          // cref: ArcGIS.Core.CIM.CIMLayerDocument.LayerDefinitions
+          // cref: ArcGIS.Core.CIM.CIMGeoFeatureLayerBase.Renderer
+          // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
           #region Apply Symbology to a layer from a Layer file
           //Note: Run within QueuedTask.Run
           //Get the Layer Document from the lyrx file
@@ -906,20 +1025,38 @@ namespace MapAuthoring.ProSnippet
     public async Task AddWMSLayerAsync()
     {
       {
+        // cref: ArcGIS.Core.CIM.CIMInternetServerConnection
+        // cref: ArcGIS.Core.CIM.CIMInternetServerConnection.#ctor
+        // cref: ArcGIS.Core.CIM.CIMWMSServiceConnection
+        // cref: ArcGIS.Core.CIM.CIMWMSServiceConnection.#ctor
+        // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMDataConnection)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory
         #region Add a WMS service
         // Create a connection to the WMS server
         var serverConnection = new CIMInternetServerConnection { URL = "URL of the WMS service" };
         var connection = new CIMWMSServiceConnection { ServerConnection = serverConnection };
 
         // Add a new layer to the map
+        var layerParams = new LayerCreationParams(connection);
         await QueuedTask.Run(() =>
         {
-          var layer = LayerFactory.Instance.CreateLayer(connection, MapView.Active.Map);
+          var layer = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParams, MapView.Active.Map);
         });
         #endregion
       }
       {
 
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.#ctor
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.WorkspaceConnectionString
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.WorkspaceFactory
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.Dataset
+        // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.DatasetType
+        // cref: ArcGIS.Core.CIM.esriDatasetType
+        // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMDataConnection)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory
         #region Add a WFS Service
         CIMStandardDataConnection cIMStandardDataConnection = new CIMStandardDataConnection()
         {
@@ -930,18 +1067,63 @@ namespace MapAuthoring.ProSnippet
         };
 
         // Add a new layer to the map
+        var layerPamsDC = new LayerCreationParams(cIMStandardDataConnection);
         await QueuedTask.Run(() =>
         {
-          Layer layer = LayerFactory.Instance.CreateLayer(cIMStandardDataConnection, MapView.Active.Map);
+          Layer layer = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerPamsDC, MapView.Active.Map);
         });
         #endregion
 
       }
     }
+
+
+    public async Task StyleWMSLayer()
+    {
+      // cref: ArcGIS.Desktop.Mapping.MapMemberPosition
+      // cref: ArcGIS.Desktop.Mapping.WMSLayer
+      // cref: ArcGIS.Desktop.Mapping.ServiceCompositeSubLayer
+      // cref: ArcGIS.Desktop.Mapping.WMSSubLayer
+      // cref: ArcGIS.Desktop.Mapping.WMSSubLayer.GetStyleNames
+      // cref: ArcGIS.Desktop.Mapping.WMSSubLayer.SetStyleName(System.String)
+      #region Adding and changing styles for WMS Service Layer
+      var serverConnection = new CIMInternetServerConnection { URL = "https://spritle.esri.com/arcgis/services/sanfrancisco_sld/MapServer/WMSServer" };
+      var connection = new CIMWMSServiceConnection { ServerConnection = serverConnection };
+      LayerCreationParams parameters = new LayerCreationParams(connection);
+      parameters.MapMemberPosition = MapMemberPosition.AddToBottom;
+      await QueuedTask.Run(() =>
+      {
+        var compositeLyr = LayerFactory.Instance.CreateLayer<WMSLayer>(parameters, MapView.Active.Map);
+        //wms layer in ArcGIS Pro always has a composite layer inside it
+        var wmsLayers = compositeLyr.Layers[0] as ServiceCompositeSubLayer;
+        //each wms sublayer belongs in that composite layer
+        var highwayLayerWMSSub = wmsLayers.Layers[1] as WMSSubLayer;
+        //toggling a sublayer's visibility
+        if ((highwayLayerWMSSub != null))
+        {
+          bool visibility = highwayLayerWMSSub.IsVisible;
+          highwayLayerWMSSub.SetVisibility(!visibility);
+        }
+        //applying an existing style to a wms sub layer
+        var pizzaLayerWMSSub = wmsLayers.Layers[0] as WMSSubLayer;
+        var currentStyles = pizzaLayerWMSSub.GetStyleNames();
+        pizzaLayerWMSSub.SetStyleName(currentStyles[1]);
+      });
+      #endregion
+    }
     public async Task AddQuerylayerAsync()
     {
-      // cref: Create a query layer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(ArcGIS.Core.CIM.CIMDataConnection,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
-      // cref: Create a query layer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(ArcGIS.Core.CIM.CIMDataConnection,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.#ctor
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.WorkspaceConnectionString
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.GeometryType
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.OIDFields
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.Srid
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.SqlQuery
+      // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.Dataset
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMDataConnection)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create a query layer
       await QueuedTask.Run(() =>
       {
@@ -956,32 +1138,54 @@ namespace MapAuthoring.ProSnippet
           SqlQuery = "select * from MySDE.dbo.STATES",
           Dataset = "States"
         };
-        FeatureLayer flyr = (FeatureLayer)LayerFactory.Instance.CreateLayer(sqldc, map, layerName: "States");
+        var lcp = new LayerCreationParams(sqldc)
+        {
+          Name = "States"
+        };
+        FeatureLayer flyr = LayerFactory.Instance.CreateLayer<FeatureLayer>(lcp, map);
       });
       #endregion
     }
     public async Task AddFeatureLayerClasBreaksAsync()
     {
-
-      // cref: Create a feature layer with class breaks renderer with defaults;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
-      // cref: Create a feature layer with class breaks renderer with defaults;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition
+      // cref: ArcGIS.Core.CIM.ClassificationMethod
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition.#ctor(System.String, ArcGIS.Core.CIM.ClassificationMethod, System.Int32, ArcGIS.Core.CIM.CIMColorRamp, ArcGIS.Core.CIM.CIMSymbolReference)
       #region Create a feature layer with class breaks renderer with defaults
       await QueuedTask.Run(() =>
-        LayerFactory.Instance.CreateFeatureLayer(
-          new Uri(@"c:\data\countydata.gdb\counties"),
-          MapView.Active.Map,
-          layerName: "Population Density (sq mi) Year 2010",
-          rendererDefinition: new GraduatedColorsRendererDefinition("POP10_SQMI")
-        )
-      );
+      {
+        var featureLayerCreationParams = new FeatureLayerCreationParams(new Uri(@"c:\data\countydata.gdb\counties"))
+        {
+          Name = "Population Density (sq mi) Year 2010",
+          RendererDefinition = new GraduatedColorsRendererDefinition("POP10_SQMI")
+        };
+        LayerFactory.Instance.CreateLayer<FeatureLayer>(
+          featureLayerCreationParams,
+          MapView.Active.Map
+        );
+      });
       #endregion
     }
 
     public async Task AddFeatureLayerClasBreaksExAsync()
     {
 
-      // cref: Create a feature layer with class breaks renderer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,ArcGIS.Desktop.Mapping.LayerPosition,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
-      // cref: Create a feature layer with class breaks renderer;ArcGIS.Desktop.Mapping.LayerFactory.CreateFeatureLayer(System.Uri,ArcGIS.Desktop.Mapping.ILayerContainerEdit,System.Int32,System.String,ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition
+      // cref: ArcGIS.Core.CIM.ClassificationMethod
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ClassificationField
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ClassificationMethod
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.BreakCount
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ColorRamp
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.SymbolTemplate
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ExclusionClause
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ExclusionSymbol
+      // cref: ArcGIS.Desktop.Mapping.ClassBreaksRendererDefinition.ExclusionLabel
+      // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem
+      // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp
+      // cref: ArcGIS.Desktop.Mapping.StyleHelper.SearchColorRamps(ArcGIS.Desktop.Mapping.StyleProjectItem, System.String)
       #region Create a feature layer with class breaks renderer
 
       string colorBrewerSchemesName = "ColorBrewer Schemes (RGB)";
@@ -1008,9 +1212,12 @@ namespace MapAuthoring.ProSnippet
                                   ColorFactory.Instance.RedRGB, SimpleFillStyle.Solid, null).MakeSymbolReference(),
           ExclusionLabel = "No yield",
         };
-
-        LayerFactory.Instance.CreateFeatureLayer(new Uri(@"c:\Data\CountyData.gdb\Counties"),
-                  MapView.Active.Map, layerName: "Crop", rendererDefinition: gcDef);
+        var featureLayerCreationParams = new FeatureLayerCreationParams((new Uri(@"c:\Data\CountyData.gdb\Counties")))
+        {
+          Name = "Crop",
+          RendererDefinition = gcDef
+        };
+        LayerFactory.Instance.CreateLayer<FeatureLayer>(featureLayerCreationParams, MapView.Active.Map);
       });
 
       #endregion
@@ -1022,11 +1229,12 @@ namespace MapAuthoring.ProSnippet
     {
       Map aMap = null;
 
+      // cref: ArcGIS.Desktop.Mapping.Map.SetBasemapLayers(ArcGIS.Desktop.Mapping.Basemap)
       #region Update a map's basemap layer
       aMap.SetBasemapLayers(Basemap.Gray);
       #endregion
 
-      // cref: Remove basemap layer from a map;ArcGIS.Desktop.Mapping.Map.SetBasemapLayers(ArcGIS.Desktop.Mapping.Basemap)
+      // cref: ArcGIS.Desktop.Mapping.Map.SetBasemapLayers(ArcGIS.Desktop.Mapping.Basemap)
       #region Remove basemap layer from a map
       aMap.SetBasemapLayers(Basemap.None);
       #endregion    
@@ -1039,12 +1247,22 @@ namespace MapAuthoring.ProSnippet
     {
       Map aMap = null;
 
-      // cref: Get a list of layers filtered by layer type from a map;ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
       #region Get a list of layers filtered by layer type from a map
       List<FeatureLayer> featureLayerList = aMap.GetLayersAsFlattenedList().OfType<FeatureLayer>().ToList();
       #endregion
 
-      // cref: Find a layer;ArcGIS.Desktop.Mapping.Map.FindLayer(System.String,System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.ShapeType
+      #region Get a layer of a certain geometry type
+      //Get an existing Layer. This layer has a symbol you want to use in a new layer.
+      var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+            .Where(l => l.ShapeType == esriGeometryType.esriGeometryPoint).FirstOrDefault();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.Map.FindLayer(System.String,System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.Map.FindLayers(System.String,System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
       #region Find a layer
       //Finds layers by name and returns a read only list of Layers
       IReadOnlyList<Layer> layers = aMap.FindLayers("cities", true);
@@ -1058,14 +1276,24 @@ namespace MapAuthoring.ProSnippet
                          .OfType<FeatureLayer>().Any(f => f.Name == "U.S. States (Generalized)");
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.Map.FindStandaloneTable(System.String)
+      // cref: ArcGIS.Desktop.Mapping.Map.FindStandaloneTables(System.String)
+      // cref: ArcGIS.Desktop.Mapping.Map.StandaloneTables
       #region Find a standalone table
+
+      // these routines find a standalone table whether it is a child of the Map or a GroupLayer
+      var tblFind = aMap.FindStandaloneTable("CIMPATH=map/address_audit.xml");
+
       IReadOnlyList<StandaloneTable> tables = aMap.FindStandaloneTables("addresses");
+
+      // this method finds a standalone table as a child of the map only
+      var table = aMap.StandaloneTables.FirstOrDefault(t => t.Name == "Addresses");
       #endregion    
     }
     public List<Layer> FindLayersWithPartialName(string partialName)
     {
 
-      // cref: Find a layer using partial name search;ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
+      // cref: ArcGIS.Desktop.Mapping.Map.GetLayersAsFlattenedList
       #region Find a layer using partial name search
 
       Map map = MapView.Active.Map;
@@ -1080,9 +1308,36 @@ namespace MapAuthoring.ProSnippet
       return layers;
     }
 
+    internal void ChangeProperties(Layer layer)
+    {
+      // cref: ArcGIS.Desktop.Mapping.Layer.IsVisible
+      // cref: ArcGIS.Desktop.Mapping.Layer.SetVisibility(System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.IsEditable
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SetEditable(System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.IsSnappable
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetSnappable(System.Boolean)
+      #region Change layer visibility, editability, snappability
+      if (!layer.IsVisible)
+        layer.SetVisibility(true);
+
+      if (layer is FeatureLayer featureLayer)
+      {
+        if (!featureLayer.IsEditable)
+          featureLayer.SetEditable(true);
+
+        if (!featureLayer.IsSnappable)
+          featureLayer.SetSnappable(true);
+      }
+      #endregion
+    }
+
     public void CreateLyrx()
     {
       Layer layer = null;
+
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.#ctor(ArcGIS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Mapping.LayerDocument.Save(System.String)
       #region Create a Lyrx file
 
       LayerDocument layerDocument = new LayerDocument(layer);
@@ -1093,7 +1348,8 @@ namespace MapAuthoring.ProSnippet
     {
       Map aMap = MapView.Active.Map;
 
-      #region Count the features selected in a map
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SelectionCount
+      #region Count the features selected on a layer
       var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       var noFeaturesSelected = lyr.SelectionCount;
       #endregion
@@ -1101,6 +1357,10 @@ namespace MapAuthoring.ProSnippet
 
     public void AccessDisplayField()
     {
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.FeatureTable
+      // cref: ArcGIS.Core.CIM.CIMFeatureTable
+      // cref: ArcGIS.Core.CIM.CIMDisplayTable.DisplayField
       #region Access the display field for a layer
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -1117,6 +1377,8 @@ namespace MapAuthoring.ProSnippet
 
     public void EnableLabeling()
     {
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.IsLabelVisible
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetLabelVisibility(System.Boolean)
       #region Enable labeling on a layer
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
@@ -1129,6 +1391,7 @@ namespace MapAuthoring.ProSnippet
 
     public static void MoveLayerTo3D()
     {
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.IsFlattened
       #region Move a layer in the 2D group to the 3D Group in a Local Scene
       //The layer in the 2D group to move to the 3D Group in a Local Scene
       var layer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
@@ -1146,6 +1409,10 @@ namespace MapAuthoring.ProSnippet
 
     private static void ResetDataConnectionFeatureService(Layer dataConnectionLayer, string newConnectionString)
     {
+      // cref: ArcGIS.Desktop.Mapping.MapMember.GetDataConnection()
+      // cref: ArcGIS.Core.CIM.CIMStandardDataConnection
+      // cref: ArcGIS.Core.CIM.CIMStandardDataConnection.WorkspaceConnectionString
+      // cref: ArcGIS.Desktop.Mapping.MapMember.SetDataConnection(ArcGIS.Core.CIM.CIMDataConnection, System.Boolean)
       #region Reset the URL of a feature service layer 
       CIMStandardDataConnection dataConnection = dataConnectionLayer.GetDataConnection() as CIMStandardDataConnection;
       dataConnection.WorkspaceConnectionString = newConnectionString;
@@ -1154,6 +1421,8 @@ namespace MapAuthoring.ProSnippet
     }
     private static void ReplaceDataSource()
     {
+      // cref: ArcGIS.Desktop.Mapping.Layer.FindAndReplaceWorkspacePath(System.String, System.String, System.Boolean)
+      // cref: ArcGIS.Core.Data.Datastore.GetConnectionString()
       #region Change the underlying data source of a feature layer - same workspace type
       //This is the existing layer for which we want to switch the underlying datasource
       var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
@@ -1173,32 +1442,32 @@ namespace MapAuthoring.ProSnippet
     public async Task ChangeGDBVersion2Async()
     {
 
-      // cref: Change Geodatabase Version of layers off a specified version in a map;ArcGIS.Desktop.Mapping.Map.ChangeVersion(ArcGIS.Core.Data.Version,ArcGIS.Core.Data.Version)
+      // cref: ArcGIS.Desktop.Mapping.Map.ChangeVersion(ArcGIS.Core.Data.VersionBase,ArcGIS.Core.Data.VersionBase)
       #region Change Geodatabase Version of layers off a specified version in a map
 
       await QueuedTask.Run(() =>
       {
-              //Getting the current version name from the first feature layer of the map
-              FeatureLayer flyr = MapView.Active.Map.GetLayersAsFlattenedList()
-                      .OfType<FeatureLayer>().FirstOrDefault();  //first feature layer
-              Datastore dataStore = flyr.GetFeatureClass().GetDatastore();  //getting datasource
-              Geodatabase geodatabase = dataStore as Geodatabase; //casting to Geodatabase
-              if (geodatabase == null)
+        //Getting the current version name from the first feature layer of the map
+        FeatureLayer flyr = MapView.Active.Map.GetLayersAsFlattenedList()
+                .OfType<FeatureLayer>().FirstOrDefault();  //first feature layer
+        Datastore dataStore = flyr.GetFeatureClass().GetDatastore();  //getting datasource
+        Geodatabase geodatabase = dataStore as Geodatabase; //casting to Geodatabase
+        if (geodatabase == null)
           return;
 
         VersionManager versionManager = geodatabase.GetVersionManager();
         ArcGIS.Core.Data.Version currentVersion = versionManager.GetCurrentVersion();
 
-              //Getting all available versions except the current one
-              IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions()
-                      .Where(v => !v.GetName().Equals(currentVersion.GetName(), StringComparison.CurrentCultureIgnoreCase));
+        //Getting all available versions except the current one
+        IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions()
+                .Where(v => !v.GetName().Equals(currentVersion.GetName(), StringComparison.CurrentCultureIgnoreCase));
 
-              //Assuming there is at least one other version we pick the first one from the list
-              ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
+        //Assuming there is at least one other version we pick the first one from the list
+        ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
         if (toVersion != null)
         {
-                //Changing version
-                MapView.Active.Map.ChangeVersion(currentVersion, toVersion);
+          //Changing version
+          MapView.Active.Map.ChangeVersion(currentVersion, toVersion);
         }
       });
       #endregion
@@ -1207,9 +1476,8 @@ namespace MapAuthoring.ProSnippet
     public async void SearchAndGetFeatureCount()
     {
 
-      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter)
-      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter,ArcGIS.Desktop.Mapping.TimeRange,ArcGIS.Desktop.Mapping.RangeExtent)
-      // cref: Querying a feature layer;ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter,ArcGIS.Desktop.Mapping.TimeRange,ArcGIS.Desktop.Mapping.RangeExtent,ArcGIS.Core.CIM.CIMFloorFilterSettings)
+      // cref: ArcGIS.Core.Data.QueryFilter
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.Search(ArcGIS.Core.Data.QueryFilter, ArcGIS.Desktop.Mapping.TimeRange, ArcGIS.Desktop.Mapping.RangeExtent, ArcGIS.Core.CIM.CIMFloorFilterSettings)
       #region Querying a feature layer
 
       var count = await QueuedTask.Run(() =>
@@ -1219,13 +1487,13 @@ namespace MapAuthoring.ProSnippet
           WhereClause = "Class = 'city'"
         };
 
-              //Getting the first selected feature layer of the map view
-              var flyr = (FeatureLayer)MapView.Active.GetSelectedLayers()
-                                .OfType<FeatureLayer>().FirstOrDefault();
+        //Getting the first selected feature layer of the map view
+        var flyr = (FeatureLayer)MapView.Active.GetSelectedLayers()
+                          .OfType<FeatureLayer>().FirstOrDefault();
         using (RowCursor rows = flyr.Search(qf)) //execute
-              {
-                //Looping through to count
-                int i = 0;
+        {
+          //Looping through to count
+          int i = 0;
           while (rows.MoveNext()) i++;
 
           return i;
@@ -1240,6 +1508,8 @@ namespace MapAuthoring.ProSnippet
 
     public static void GetRotationFieldOfRenderer()
     {
+      // cref: ArcGIS.Core.CIM.CIMRotationVisualVariable
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.VisualVariables
       #region Get the attribute rotation field of a layer
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       QueuedTask.Run(() =>
@@ -1248,79 +1518,92 @@ namespace MapAuthoring.ProSnippet
         var cimRotationVariable = cimRenderer.VisualVariables.OfType<CIMRotationVisualVariable>().FirstOrDefault();
         var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
         var rotationExpression = rotationInfoZ.ValueExpressionInfo.Expression; // this expression stores the field name  
-            });
+      });
       #endregion
     }
 
     public void FindConnectedAttribute()
     {
+      // cref: ArcGIS.Core.CIM.CIMRotationVisualVariable
+      // cref: ArcGIS.Core.CIM.CIMSimpleRenderer.VisualVariables
       #region Find connected attribute field for rotation
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
-              // get the CIM renderer from the layer
-              var cimRenderer = featureLayer.GetRenderer() as ArcGIS.Core.CIM.CIMSimpleRenderer;
-              // get the collection of connected attributes for rotation
-              var cimRotationVariable = cimRenderer.VisualVariables.OfType<ArcGIS.Core.CIM.CIMRotationVisualVariable>().FirstOrDefault();
-              // the z direction is describing the heading rotation
-              var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
+        // get the CIM renderer from the layer
+        var cimRenderer = featureLayer.GetRenderer() as ArcGIS.Core.CIM.CIMSimpleRenderer;
+        // get the collection of connected attributes for rotation
+        var cimRotationVariable = cimRenderer.VisualVariables.OfType<ArcGIS.Core.CIM.CIMRotationVisualVariable>().FirstOrDefault();
+        // the z direction is describing the heading rotation
+        var rotationInfoZ = cimRotationVariable.VisualVariableInfoZ;
         var rotationExpression = rotationInfoZ.Expression; // this expression stores the field name  
-            });
+      });
       #endregion
     }
 
     public void ScaleSymbols()
     {
+      // cref: ArcGIS.Core.CIM.CIMGeoFeatureLayerBase.ScaleSymbols
       #region Toggle "Scale layer symbols when reference scale is set"
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
-              // get the CIM layer definition
-              var cimFeatureLayer = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMFeatureLayer;
-              // turn on the option to scale the symbols in this layer based in the map's reference scale
-              cimFeatureLayer.ScaleSymbols = true;
+        // get the CIM layer definition
+        var cimFeatureLayer = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMFeatureLayer;
+        // turn on the option to scale the symbols in this layer based in the map's reference scale
+        cimFeatureLayer.ScaleSymbols = true;
       });
       #endregion
     }
 
     public void SetLayerCache()
     {
+      // cref: ArcGIS.Desktop.Mapping.LayerCacheType
+      // cref: ArcGIS.Desktop.Mapping.Layer.SetCacheOptions(ArcGIS.Desktop.Mapping.LayerCacheType)
+      // cref: ArcGIS.Desktop.Mapping.Layer.SetDisplayCacheMaxAge(System.TimeSpan)
       #region Set the layer cache
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
-              // change the layer cache type to maximum age
-              featureLayer.SetDisplayCacheType(ArcGIS.Core.CIM.DisplayCacheType.MaxAge);
-              // change from the default 5 min to 2 min
-              featureLayer.SetDisplayCacheMaxAge(TimeSpan.FromMinutes(2));
+        // change the layer cache type to maximum age
+        //At 2.x - featureLayer.SetDisplayCacheType(ArcGIS.Core.CIM.DisplayCacheType.MaxAge);
+        featureLayer.SetCacheOptions(LayerCacheType.MaxAge);
+        // change from the default 5 min to 2 min
+        featureLayer.SetDisplayCacheMaxAge(TimeSpan.FromMinutes(2));
       });
       #endregion
     }
 
     public void ChangeSelectionColor()
     {
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.UseSelectionSymbol
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.SelectionColor
+      // cref: ArcGIS.Desktop.Mapping.MapView.SelectFeatures(ArcGIS.Core.Geometry.Geometry, ArcGIS.Desktop.Mapping.SelectionCombinationMethod, System.Boolean, System.Boolean)
       #region Change the layer selection color
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
-              // get the CIM definition of the layer
-              var layerDef = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
-              // disable the default symbol
-              layerDef.UseSelectionSymbol = false;
-              // assign a new color
-              layerDef.SelectionColor = ColorFactory.Instance.RedRGB;
-              // apply the definition to the layer
-              featureLayer.SetDefinition(layerDef);
+        // get the CIM definition of the layer
+        var layerDef = featureLayer.GetDefinition() as ArcGIS.Core.CIM.CIMBasicFeatureLayer;
+        // disable the default symbol
+        layerDef.UseSelectionSymbol = false;
+        // assign a new color
+        layerDef.SelectionColor = ColorFactory.Instance.RedRGB;
+        // apply the definition to the layer
+        featureLayer.SetDefinition(layerDef);
 
-        if (!featureLayer.IsVisible) featureLayer.SetVisibility(true);
-              //Do a selection
+        if (!featureLayer.IsVisible) 
+          featureLayer.SetVisibility(true);
+        //Do a selection
 
-              MapView.Active.SelectFeatures(MapView.Active.Extent);
+        MapView.Active.SelectFeatures(MapView.Active.Extent);
       });
       #endregion
     }
     public async void RemoveAllUncheckedLayers()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.RemoveLayers(System.Collections.Generic.Enumerable<ArcGIS.Desktop.Mapping.Layer>)
+      // cref: ArcGIS.Desktop.Mapping.Map.RemoveLayer(ArcGIS.Desktop.Mapping.Layer)
       #region Removes all layers that are unchecked
       var map = MapView.Active.Map;
       if (map == null)
@@ -1355,6 +1638,9 @@ namespace MapAuthoring.ProSnippet
     }
     public async void RemoveEmptyGroups()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.RemoveLayer(ArcGIS.Desktop.Mapping.Layer)
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayer.Layers
       #region Remove empty groups
       var map = MapView.Active.Map;
       if (map == null)
@@ -1370,8 +1656,21 @@ namespace MapAuthoring.ProSnippet
         }
       }
       #endregion
-
     }
+
+    // cref: ArcGIS.Core.CIM.CIMMap.GeneralPlacementProperties
+    // cref: ArcGIS.Core.CIM.CIMMaplexGeneralPlacementProperties
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionaryEntry
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionaryEntry.#ctor
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionaryEntry.Abbreviation
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionaryEntry.Text
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionaryEntry.MaplexAbbreviationType
+    // cref: ArcGIS.Core.CIM.MaplexAbbreviationType
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionary
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionary.#ctor
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionary.Name
+    // cref: ArcGIS.Core.CIM.CIMMaplexDictionary.MaplexDictionary
+    // cref: ArcGIS.Core.CIM.CIMMaplexGeneralPlacementProperties.Dictionaries
     #region Create and apply Abbreviation Dictionary in the Map Definition to a layer
     public static void CreateDictionary()
     {
@@ -1446,6 +1745,9 @@ namespace MapAuthoring.ProSnippet
 
     public void SetTablePaneZoom()
     {
+      // cref: ArcGIS.Desktop.Mapping.ITablePane
+      // cref: ArcGIS.Desktop.Mapping.ITablePane.ZoomLevel
+      // cref: ArcGIS.Desktop.Mapping.ITablePane.SetZoomLevel
       #region Set zoom level for Attribute Table
       if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
       {
@@ -1460,23 +1762,45 @@ namespace MapAuthoring.ProSnippet
 
     public static Task<object> ActiveCellContents()
     {
-      #region Retrieve the values of selected cell in the attribute table
-      if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
       {
-        var mapMember = tablePane.MapMember;
-        var oid = tablePane.ActiveObjectID;
-        if (oid.HasValue && oid.Value != -1 && mapMember != null)
+        // cref: ArcGIS.Desktop.Mapping.ITablePane
+        // cref: ArcGIS.Desktop.Mapping.ITablePane.MapMember
+        // cref: ArcGIS.Desktop.Mapping.ITablePane.ActiveObjectID
+        // cref: ArcGIS.Desktop.Mapping.ITablePane.ActiveColumn
+        #region Retrieve the values of selected cell in the attribute table
+        if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
         {
-          var activeField = tablePane.ActiveColumn;
-          return QueuedTask.Run<object>(() =>
+          var mapMember = tablePane.MapMember;
+          var oid = tablePane.ActiveObjectID;
+          if (oid.HasValue && oid.Value != -1 && mapMember != null)
           {
-            // TODO: Use core objects to retrieve record and get value
+            var activeField = tablePane.ActiveColumn;
+            return QueuedTask.Run<object>(() =>
+            {
+              // TODO: Use core objects to retrieve record and get value
 
-            return null;
-          });
+              return null;
+            });
+          }
+        }
+        #endregion
+      }
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.ITablePane
+        // cref: ArcGIS.Desktop.Mapping.ITablePane.BringIntoView
+        #region Move to a particular row
+        if (FrameworkApplication.Panes.ActivePane is ITablePane tablePane)
+        {
+          // move to first row
+          tablePane.BringIntoView(0);
+
+          // move to sixth row
+          tablePane.BringIntoView(5);
         }
       }
       #endregion
+
       return Task.FromResult<object>(null);
     }
 
@@ -1484,6 +1808,9 @@ namespace MapAuthoring.ProSnippet
     #endregion
     private void MapLayerMetadata()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetMetadata()
+      // cref: ArcGIS.Desktop.Mapping.Map.GetCanEditMetadata()
+      // cref: ArcGIS.Desktop.Mapping.Map.SetMetadata(System.String)
       #region Get and Set Map Metadata
       var map = MapView.Active.Map;
       if (map == null) return;
@@ -1496,6 +1823,12 @@ namespace MapAuthoring.ProSnippet
         map.SetMetadata(mapMetadata);
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MapMember.GetUseSourceMetadata()
+      // cref: ArcGIS.Desktop.Mapping.MapMember.SetUseSourceMetadata(System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.MapMember.SupportsMetadata
+      // cref: ArcGIS.Desktop.Mapping.MapMember.GetMetadata()
+      // cref: ArcGIS.Desktop.Mapping.MapMember.GetCanEditMetadata()
+      // cref: ArcGIS.Desktop.Mapping.MapMember.SetMetadata(System.String)
       #region Layer Metadata
       MapMember mapMember = map.GetLayersAsFlattenedList().FirstOrDefault(); //Search for only layers/tables here if needed.
       if (mapMember == null) return;
@@ -1526,24 +1859,27 @@ namespace MapAuthoring.ProSnippet
     #endregion
     public async Task SetUniqueValueRendererAsync()
     {
-
-
-      // cref: Set unique value renderer to the selected feature layer of the active map;ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Desktop.Mapping.UniqueValueRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.UniqueValueRendererDefinition.#ctor(System.Collections.Generic.List<System.String>, ArcGIS.Core.CIM.CIMSymbolReference, ArcGIS.Core.CIM.CIMColorRamp, ArcGIS.Core.CIM.CIMSymbolReference, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Set unique value renderer to the selected feature layer of the active map
 
       await QueuedTask.Run(() =>
       {
-        String[] fields = new string[] { "Type" }; //field to be used to retrieve unique values
+        var fields = new List<string> { "Type" }; //field to be used to retrieve unique values
         CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(
                   ColorFactory.Instance.GreenRGB, 16.0, SimpleMarkerStyle.Pushpin);  //constructing a point symbol as a template symbol
         CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
         //constructing renderer definition for unique value renderer
-        UniqueValueRendererDefinition uniqueValueRendererDef = new UniqueValueRendererDefinition(fields, symbolPointTemplate);
+        UniqueValueRendererDefinition uniqueValueRendererDef =
+            new UniqueValueRendererDefinition(fields, symbolPointTemplate);
 
         //creating a unique value renderer
         var flyr = MapView.Active.GetSelectedLayers()[0] as FeatureLayer;
-        CIMUniqueValueRenderer uniqueValueRenderer = (CIMUniqueValueRenderer)flyr.CreateRenderer(uniqueValueRendererDef);
+        CIMUniqueValueRenderer uniqueValueRenderer = flyr.CreateRenderer(uniqueValueRendererDef) as CIMUniqueValueRenderer;
 
         //setting the renderer to the feature layer
         flyr.SetRenderer(uniqueValueRenderer);
@@ -1554,16 +1890,38 @@ namespace MapAuthoring.ProSnippet
 
     internal static Task UniqueValueRenderer(FeatureLayer featureLayer)
     {
+      // cref: ArcGIS.Core.CIM.CIMUniqueValue
+      // cref: ArcGIS.Core.CIM.CIMUniqueValue.#ctor
+      // cref: ArcGIS.Core.CIM.CIMUniqueValue.FieldValues
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.#ctor
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Editable
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Label
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Patch
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Symbol
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Visible
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueClass.Values
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueGroup
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueGroup.#ctor
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueGroup.Classes
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.#ctor
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.UseDefaultSymbol
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.DefaultLabel
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.DefaultSymbol
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.Groups
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.Fields
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Create a UniqueValueRenderer to specify symbols to values 
       return QueuedTask.Run(() =>
       {
-              //The goal is to construct the CIMUniqueValueRenderer which will be applied to the feature layer.
-              // To do this, the following are the objects we need to set the renderer up with the fields and symbols.
-              // As a reference, this is the USCities dataset. Snippet will create a unique value renderer that applies 
-              // specific symbols to all the cities in California and Alabama.  The rest of the cities will use a default symbol.
+        //The goal is to construct the CIMUniqueValueRenderer which will be applied to the feature layer.
+        // To do this, the following are the objects we need to set the renderer up with the fields and symbols.
+        // As a reference, this is the USCities dataset. Snippet will create a unique value renderer that applies 
+        // specific symbols to all the cities in California and Alabama.  The rest of the cities will use a default symbol.
 
-              // First create a "CIMUniqueValueClass" for the cities in Alabama.
-              List<CIMUniqueValue> listUniqueValuesAlabama = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "Alabama" } } };
+        // First create a "CIMUniqueValueClass" for the cities in Alabama.
+        List<CIMUniqueValue> listUniqueValuesAlabama = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "Alabama" } } };
         CIMUniqueValueClass alabamaUniqueValueClass = new CIMUniqueValueClass
         {
           Editable = true,
@@ -1574,8 +1932,8 @@ namespace MapAuthoring.ProSnippet
           Values = listUniqueValuesAlabama.ToArray()
 
         };
-              // Create a "CIMUniqueValueClass" for the cities in California.
-              List<CIMUniqueValue> listUniqueValuescalifornia = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "California" } } };
+        // Create a "CIMUniqueValueClass" for the cities in California.
+        List<CIMUniqueValue> listUniqueValuescalifornia = new List<CIMUniqueValue> { new CIMUniqueValue { FieldValues = new string[] { "California" } } };
         CIMUniqueValueClass californiaUniqueValueClass = new CIMUniqueValueClass
         {
           Editable = true,
@@ -1585,19 +1943,19 @@ namespace MapAuthoring.ProSnippet
           Visible = true,
           Values = listUniqueValuescalifornia.ToArray()
         };
-              //Create a list of the above two CIMUniqueValueClasses
-              List<CIMUniqueValueClass> listUniqueValueClasses = new List<CIMUniqueValueClass>
+        //Create a list of the above two CIMUniqueValueClasses
+        List<CIMUniqueValueClass> listUniqueValueClasses = new List<CIMUniqueValueClass>
           {
                         alabamaUniqueValueClass, californiaUniqueValueClass
           };
-              //Create a list of CIMUniqueValueGroup
-              CIMUniqueValueGroup uvg = new CIMUniqueValueGroup
+        //Create a list of CIMUniqueValueGroup
+        CIMUniqueValueGroup uvg = new CIMUniqueValueGroup
         {
           Classes = listUniqueValueClasses.ToArray(),
         };
         List<CIMUniqueValueGroup> listUniqueValueGroups = new List<CIMUniqueValueGroup> { uvg };
-              //Create the CIMUniqueValueRenderer
-              CIMUniqueValueRenderer uvr = new CIMUniqueValueRenderer
+        //Create the CIMUniqueValueRenderer
+        CIMUniqueValueRenderer uvr = new CIMUniqueValueRenderer
         {
           UseDefaultSymbol = true,
           DefaultLabel = "all other values",
@@ -1605,14 +1963,24 @@ namespace MapAuthoring.ProSnippet
           Groups = listUniqueValueGroups.ToArray(),
           Fields = new string[] { "STATE_NAME" }
         };
-              //Set the feature layer's renderer.
-              featureLayer.SetRenderer(uvr);
+        //Set the feature layer's renderer.
+        featureLayer.SetRenderer(uvr);
       });
       #endregion
     }
     public async void CreateHeatMapRenderer()
     {
-      // cref: Create a Heatmap Renderer;ArcGIS.Desktop.Mapping.HeatMapRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.Radius
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.WeightField
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.ColorRamp
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.RendereringQuality
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.UpperLabel
+      // cref: ArcGIS.Desktop.Mapping.HeatMapRendererDefinition.LowerLabel
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMHeatMapRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Create a Heatmap Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1625,8 +1993,8 @@ namespace MapAuthoring.ProSnippet
 
       await QueuedTask.Run(() =>
       {
-              //defining a heatmap renderer that uses values from Population field as the weights
-              HeatMapRendererDefinition heatMapDef = new HeatMapRendererDefinition()
+        //defining a heatmap renderer that uses values from Population field as the weights
+        HeatMapRendererDefinition heatMapDef = new HeatMapRendererDefinition()
         {
           Radius = 20,
           WeightField = "Population",
@@ -1637,7 +2005,7 @@ namespace MapAuthoring.ProSnippet
         };
 
         FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMHeatMapRenderer heatMapRndr = (CIMHeatMapRenderer)flyr.CreateRenderer(heatMapDef);
+        CIMHeatMapRenderer heatMapRndr = flyr.CreateRenderer(heatMapDef) as CIMHeatMapRenderer;
         flyr.SetRenderer(heatMapRndr);
       });
       #endregion
@@ -1645,7 +2013,13 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateUnclassedRenderer()
     {
-      // cref: Create an Unclassed Renderer;ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition.#ctor(System.String, ArcGIS.Core.CIM.CIMSymbolReference, ArcGIS.Core.CIM.CIMColorRamp, System.String, System.String, System.Double, System.Double)
+      // cref: ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition.ShowNullValues
+      // cref: ArcGIS.Desktop.Mapping.UnclassedColorsRendererDefinition.NullValueLabel
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMClassBreaksRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Create an Unclassed Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1661,21 +2035,21 @@ namespace MapAuthoring.ProSnippet
         CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 16.0, SimpleMarkerStyle.Diamond);
         CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
-              //defining an unclassed renderer with custom upper and lower stops
-              //all features with value >= 5,000,000 will be drawn with the upper color from the color ramp
-              //all features with value <= 50,000 will be drawn with the lower color from the color ramp
-              UnclassedColorsRendererDefinition unclassRndrDef = new UnclassedColorsRendererDefinition
-                                          ("Population", symbolPointTemplate, colorRamp.ColorRamp, "Highest", "Lowest", 5000000, 50000)
+        //defining an unclassed renderer with custom upper and lower stops
+        //all features with value >= 5,000,000 will be drawn with the upper color from the color ramp
+        //all features with value <= 50,000 will be drawn with the lower color from the color ramp
+        UnclassedColorsRendererDefinition unclassRndrDef = new UnclassedColorsRendererDefinition
+                                    ("Population", symbolPointTemplate, colorRamp.ColorRamp, "Highest", "Lowest", 5000000, 50000)
         {
 
-                //drawing features with null values with a different symbol
-                ShowNullValues = true,
+          //drawing features with null values with a different symbol
+          ShowNullValues = true,
           NullValueLabel = "Unknown"
         };
         CIMPointSymbol nullSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.RedRGB, 16.0, SimpleMarkerStyle.Circle);
         unclassRndrDef.NullValueSymbol = nullSym.MakeSymbolReference();
         FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMClassBreaksRenderer cbRndr = (CIMClassBreaksRenderer)flyr.CreateRenderer(unclassRndrDef);
+        CIMClassBreaksRenderer cbRndr = flyr.CreateRenderer(unclassRndrDef) as CIMClassBreaksRenderer;
         flyr.SetRenderer(cbRndr);
       });
       #endregion
@@ -1683,7 +2057,13 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateProportionaRenderer()
     {
-      // cref: Create a Proportion Renderer with max and min symbol size capped;ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition.#ctor(System.String, ArcGIS.Core.CIM.CIMSymbolReference, System.Double, System.Double, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition.UpperSizeStop
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition.LowerSizeStop
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMProportionalRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Create a Proportion Renderer with max and min symbol size capped
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1699,16 +2079,16 @@ namespace MapAuthoring.ProSnippet
         CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
         CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
-              //minimum symbol size is capped to 4 point while the maximum symbol size is set to 50 point
-              ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", symbolPointTemplate, 4, 50, true)
+        //minimum symbol size is capped to 4 point while the maximum symbol size is set to 50 point
+        ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", symbolPointTemplate, 4, 50, true)
         {
 
-                //setting upper and lower size stops to stop symbols growing or shrinking beyond those thresholds
-                UpperSizeStop = 5000000,  //features with values >= 5,000,000 will be drawn with maximum symbol size
-                LowerSizeStop = 50000    //features with values <= 50,000 will be drawn with minimum symbol size
-              };
+          //setting upper and lower size stops to stop symbols growing or shrinking beyond those thresholds
+          UpperSizeStop = 5000000,  //features with values >= 5,000,000 will be drawn with maximum symbol size
+          LowerSizeStop = 50000    //features with values <= 50,000 will be drawn with minimum symbol size
+        };
         FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
+        CIMProportionalRenderer propRndr = flyr.CreateRenderer(prDef) as CIMProportionalRenderer;
         flyr.SetRenderer(propRndr);
 
       });
@@ -1717,7 +2097,12 @@ namespace MapAuthoring.ProSnippet
 
     public async void CreateTrueProportionaRenderer()
     {
-      // cref: Create a True Proportion Renderer;ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
+
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
+      // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition.#ctor(System.String, ArcGIS.Core.CIM.esriUnits, ArcGIS.Core.CIM.CIMSymbolReference, ArcGIS.Core.CIM.SymbolShapes, ArcGIS.Core.CIM.ValueRepresentations)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+      // cref: ArcGIS.Core.CIM.CIMProportionalRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
       #region Create a True Proportion Renderer
       string colorBrewerSchemesName = "ArcGIS Colors";
       StyleProjectItem style = Project.Current.GetItems<StyleProjectItem>().First(s => s.Name == colorBrewerSchemesName);
@@ -1733,11 +2118,11 @@ namespace MapAuthoring.ProSnippet
         CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(ColorFactory.Instance.GreenRGB, 1.0, SimpleMarkerStyle.Circle);
         CIMSymbolReference symbolPointTemplate = pointSym.MakeSymbolReference();
 
-              //Defining proportional renderer where size of symbol will be same as its value in field used in the renderer.
-              ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", esriUnits.esriMeters, symbolPointTemplate, SymbolShapes.Square, ValueRepresentations.Radius);
+        //Defining proportional renderer where size of symbol will be same as its value in field used in the renderer.
+        ProportionalRendererDefinition prDef = new ProportionalRendererDefinition("POPULATION", esriUnits.esriMeters, symbolPointTemplate, SymbolShapes.Square, ValueRepresentations.Radius);
 
         FeatureLayer flyr = MapView.Active.Map.Layers[0] as FeatureLayer;
-        CIMProportionalRenderer propRndr = (CIMProportionalRenderer)flyr.CreateRenderer(prDef);
+        CIMProportionalRenderer propRndr = flyr.CreateRenderer(prDef) as CIMProportionalRenderer;
         flyr.SetRenderer(propRndr);
 
       });
@@ -1749,6 +2134,13 @@ namespace MapAuthoring.ProSnippet
 
     protected static void ArcadeRenderer()
     {
+      // cref: ArcGIS.Core.CIM.CIMExpressionInfo
+      // cref: ArcGIS.Core.CIM.CIMExpressionInfo.#ctor
+      // cref: ArcGIS.Core.CIM.CIMExpressionInfo.Expression
+      // cref: ArcGIS.Core.CIM.CIMExpressionInfo.Title
+      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.ValueExpressionInfo
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer
       #region Modify renderer using Arcade
       var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
       if (lyr == null) return;
@@ -1775,6 +2167,11 @@ namespace MapAuthoring.ProSnippet
     }
     protected static void ArcadeLabeling()
     {
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer
+      // cref: ArcGIS.Core.CIM.CIMGeoFeatureLayerBase.LabelClasses
+      // cref: ArcGIS.Core.CiM.CIMLabelClass
+      // cref: ArcGIS.Core.CiM.CIMLabelClass.Expression
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer
       #region Modify label expression using Arcade
       var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
       if (lyr == null) return;
@@ -1796,13 +2193,32 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    #region ProSnippet Group: Elevation Surface
+    #region ProSnippet Group: Elevation Surface Layers
     #endregion
+
+    private void CreateScene()
+    {
+      Uri groundSourceUri = null;
+
+      // cref: ArcGIS.Desktop.Mapping.MapFactory.CreateScene(System.String, System.Uri, ArcGIS.Core.CIM.MapViewingMode, ArcGIS.Desktop.Mapping.Basemap)
+      #region Create a scene with a ground surface layer
+
+      // wrap in QueuedTask.Run
+      var scene = MapFactory.Instance.CreateScene("My scene", groundSourceUri, MapViewingMode.SceneGlobal);
+
+      #endregion
+    }
 
     private Task CreateNewElevationSurface()
     {
       return ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
+        // cref: ArcGIS.Desktop.Mapping.ElevationSurfaceLayer
+        // cref: ArcGIS.Desktop.Mapping.ElevationLayerCreationParams
+        // cref: ArcGIS.Desktop.Mapping.ElevationLayerCreationParams.#ctor(ArcGIS.Core.CIM.CIMDataConnection)
+        // cref: ArcGIS.Desktop.Mapping.Map.GetGroundElevationSurfaceLayer
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory
         #region Create a New Elevation Surface
         //Note: call within QueuedTask.Run()
         //Define a ServiceConnection to use for the new Elevation surface
@@ -1820,38 +2236,36 @@ namespace MapAuthoring.ProSnippet
           ServerConnection = serverConnection
         };
         //Defines a new elevation source set to the CIMAGSServiceConnection defined above
-        var newElevationSource = new ArcGIS.Core.CIM.CIMElevationSource
-        {
-          VerticalUnit = ArcGIS.Core.Geometry.LinearUnit.Meters,
-          DataConnection = serviceConnection,
-          Name = "WorldElevation/Terrain",
-          Visibility = true
-        };
+        //At 2.x - var newElevationSource = new ArcGIS.Core.CIM.CIMElevationSource
+        //{
+        //  VerticalUnit = ArcGIS.Core.Geometry.LinearUnit.Meters,
+        //  DataConnection = serviceConnection,
+        //  Name = "WorldElevation/Terrain",
+        //  Visibility = true
+        //};
         //The elevation surface
-        var newElevationSurface = new ArcGIS.Core.CIM.CIMMapElevationSurface
-        {
-          Name = "New Elevation Surface",
-          BaseSources = new ArcGIS.Core.CIM.CIMElevationSource[1] { newElevationSource },
-          Visibility = true,
-          ElevationMode = ElevationMode.CustomSurface,
-          VerticalExaggeration = 1,
-          EnableSurfaceShading = false,
-          SurfaceTINShadingMode = SurfaceTINShadingMode.Smooth,
-          Expanded = false,
-          MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
-        };
+        //At 2.x - var newElevationSurface = new ArcGIS.Core.CIM.CIMMapElevationSurface
+        //{
+        //  Name = "New Elevation Surface",
+        //  BaseSources = new ArcGIS.Core.CIM.CIMElevationSource[1] { newElevationSource },
+        //  Visibility = true,
+        //  ElevationMode = ElevationMode.CustomSurface,
+        //  VerticalExaggeration = 1,
+        //  EnableSurfaceShading = false,
+        //  SurfaceTINShadingMode = SurfaceTINShadingMode.Smooth,
+        //  Expanded = false,
+        //  MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
+        //};
         //Get the active map
         var map = MapView.Active.Map;
-        //Get the active map's definition
-        var definition = map.GetDefinition();
         //Get the elevation surfaces defined in the map
-        var listOfElevationSurfaces = definition.ElevationSurfaces.ToList();
+        //At 2.x - var listOfElevationSurfaces = definition.ElevationSurfaces.ToList();
+        var listOfElevationSurfaces = map.GetElevationSurfaceLayers();
         //Add the new elevation surface 
-        listOfElevationSurfaces.Add(newElevationSurface);
-        //Set the map definitions to ElevationSurface (this has the new elevation surface)
-        definition.ElevationSurfaces = listOfElevationSurfaces.ToArray();
-        //Set the map definition
-        map.SetDefinition(definition);
+        //At 2.x - listOfElevationSurfaces.Add(newElevationSurface);
+        var elevationLyrCreationParams = new ElevationLayerCreationParams(serviceConnection);
+        var elevationSurface = LayerFactory.Instance.CreateLayer<ElevationSurfaceLayer>(
+               elevationLyrCreationParams, map);
         #endregion
       });
     }
@@ -1860,25 +2274,111 @@ namespace MapAuthoring.ProSnippet
     {
       return QueuedTask.Run(() =>
       {
-              #region Set a custom elevation surface to a Z-Aware layer
+        // cref: ArcGIS.Core.CIM.CIMLayerElevationSurface
+        // cref: ArcGIS.Core.CIM.CIMBaselayer.LayerElevation
+        #region Set a custom elevation surface to a Z-Aware layer
 
-              //Define the custom elevation surface to use
-              var layerElevationSurface = new CIMLayerElevationSurface
+        //Define the custom elevation surface to use
+        //At 2.x - var layerElevationSurface = new CIMLayerElevationSurface
+        //{
+        //  MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
+        //};
+        var layerElevationSurface = new CIMLayerElevationSurface
         {
-          MapElevationID = "{3DEC3CC5-7C69-4132-A700-DCD5BDED14D6}"
+          ElevationSurfaceLayerURI = "https://elevation3d.arcgis.com/arcgis/services/WorldElevation3D/Terrain3D/ImageServer"
         };
-              //Get the layer's definition
-              var lyrDefn = featureLayer.GetDefinition() as CIMBasicFeatureLayer;
-              //Set the layer's elevation surface
-              lyrDefn.LayerElevation = layerElevationSurface;
-              //Set the layer's definition
-              featureLayer.SetDefinition(lyrDefn);
-              #endregion
-            });
+        //Get the layer's definition
+        var lyrDefn = featureLayer.GetDefinition() as CIMBasicFeatureLayer;
+        //Set the layer's elevation surface
+        lyrDefn.LayerElevation = layerElevationSurface;
+        //Set the layer's definition
+        featureLayer.SetDefinition(lyrDefn);
+        #endregion
+      });
     }
+
+    private Task AddSourceToElevationSurfaceLayer()
+    {
+      return QueuedTask.Run(() =>
+      {
+        ElevationSurfaceLayer surfaceLayer = null;
+
+        // cref: ArcGIS.Desktop.Mapping.ElevationLayerCreationParams
+        // cref: ArcGIS.Desktop.Mapping.ElevationLayerCreationParams.#ctor(System.Uri)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory
+        #region Add an elevation source to an existing elevation surface layer
+
+        // wrap in QueuendTask.Run
+
+        // surfaceLayer could also be the ground layer
+
+        string uri = "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer";
+        var createParams = new ElevationLayerCreationParams(new Uri(uri));
+        createParams.Name = "Terrain 3D";
+        var eleSourceLayer = LayerFactory.Instance.CreateLayer<Layer>(createParams, surfaceLayer);
+        #endregion
+      });
+    }
+
+    private void ElevationSurfaceLayers(Map map)
+    {
+      {
+        // cref: ArcGIS.Desktop.Mapping.ElevationSurfaceLayer
+        // cref: ArcGIS.Desktop.Mapping.Map.GetElevationSurfaceLayers
+        // cref: ArcGIS.Desktop.Mapping.Map.GetGroundElevationSurfaceLayer
+        #region Get the elevation surface layers and elevation source layers from a map
+
+        // retrieve the elevation surface layers in the map including the Ground
+        var surfaceLayers = map.GetElevationSurfaceLayers();
+
+        // retrieve the single ground elevation surface layer in the map
+        var groundSurfaceLayer = map.GetGroundElevationSurfaceLayer();
+
+        // determine the number of elevation sources in the ground elevation surface layer
+        int numberGroundSources = groundSurfaceLayer.Layers.Count;
+        // get the first elevation source layer from the ground elevation surface layer
+        var groundSourceLayer = groundSurfaceLayer.Layers.FirstOrDefault();
+
+        #endregion
+      }
+      {
+        string layerUri = "";
+
+        // cref: ArcGIS.Desktop.Mapping.ElevationSurfaceLayer
+        // cref: ArcGIS.Desktop.Mapping.Map.GetElevationSurfaceLayers
+        // cref: ArcGIS.Desktop.Mapping.Map.FindElevationSurfaceLayer(System.String)
+        #region Find an elevation surface layer
+        var surfaceLayers = map.GetElevationSurfaceLayers();
+        var surfaceLayer = surfaceLayers.FirstOrDefault(l => l.Name == "Surface2");
+
+        surfaceLayer = map.FindElevationSurfaceLayer(layerUri);
+        #endregion
+
+      }
+      {
+        Layer surfaceLayer = null;
+
+        // cref: ArcGIS.Desktop.Mapping.Map.ClearElevationSurfaceLayers
+        #region Remove elevation surface layers
+
+        // wrap in a QueuedTask.Run
+
+        map.ClearElevationSurfaceLayers();   //Ground will not be removed
+
+        map.RemoveLayer(surfaceLayer);//Cannot remove ground
+        map.RemoveLayers(map.GetElevationSurfaceLayers()); //Ground will not be removed
+
+        #endregion
+      }
+    }
+
+
 
     private static async Task<SurfaceZsResult> GetZValue()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetZsFromSurfaceAsync(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult
       #region Get Z values from a surface
       var geometry = await QueuedTask.Run<Geometry>(() =>
       {
@@ -1901,16 +2401,25 @@ namespace MapAuthoring.ProSnippet
       CIMColorRamp colorRamp = null;
       RasterLayer rasterLayer = null;
 
+      // cref: ArcGIS.Desktop.Mapping.RasterLayer
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(System.Uri, ArcGIS.Desktop.Mapping.ILayerContainerEdit, Saystem.Int32, System.String)
       #region Create a raster layer
       string url = @"C:\Images\Italy.tif";
       await QueuedTask.Run(() =>
       {
         // Create a raster layer using a path to an image.
         // Note: You can create a raster layer from a url, project item, or data connection.
-        rasterLayer = (RasterLayer)LayerFactory.Instance.CreateLayer(new Uri(url), aMap);
+        rasterLayer = LayerFactory.Instance.CreateLayer(new Uri(url), aMap) as RasterLayer;
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Brightness
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Contrast
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.ResamplingType
+      // cref: ArcGIS.Core.CIM.RasterResamplingType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the raster colorizer on a raster layer
       await QueuedTask.Run(() =>
       {
@@ -1925,23 +2434,29 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer.StretchType
+      // cref: ArcGIS.Core.CIM.RasterStretchType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the RGB colorizer on a raster layer
       await QueuedTask.Run(() =>
       {
         // Get the colorizer from the raster layer.
         CIMRasterColorizer rColorizer = rasterLayer.GetColorizer();
         // Check if the colorizer is an RGB colorizer.
-        if (rColorizer is CIMRasterRGBColorizer)
+        if (rColorizer is CIMRasterRGBColorizer rasterRGBColorizer)
         {
-          CIMRasterRGBColorizer rasterRGBColorizer = (CIMRasterRGBColorizer)rColorizer;
           // Update RGB colorizer properties.
           rasterRGBColorizer.StretchType = RasterStretchType.ESRI;
           // Update the raster layer with the changed colorizer.
-          rasterLayer.SetColorizer((CIMRasterColorizer)rasterRGBColorizer);
+          rasterLayer.SetColorizer(rasterRGBColorizer);
         }
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
       #region Check if a certain colorizer can be applied to a raster layer 
       await QueuedTask.Run(() =>
       {
@@ -1953,6 +2468,13 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a default colorizer definition and apply it to the raster layer 
       await QueuedTask.Run(async () =>
       {
@@ -1970,6 +2492,13 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor(System.Int32, ArcGIS.Core.CIM.RasterStretchType, System.Double, ArcGIS.Core.CIM.CIMColorRamp)
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a custom colorizer definition and apply it to the raster layer 
       await QueuedTask.Run(async () =>
       {
@@ -1989,18 +2518,32 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.RasterLayer
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.ColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create a raster layer with a new colorizer definition
       // Create a new stretch colorizer definition using default constructor.
       StretchColorizerDefinition stretchColorizerDef = new StretchColorizerDefinition();
+      var rasterLayerCreationParams = new RasterLayerCreationParams(new Uri(url))
+      {
+        ColorizerDefinition = stretchColorizerDef,
+        Name = layerName,
+        MapMemberIndex = 0
+      };
       await QueuedTask.Run(() =>
       {
         // Create a raster layer using the colorizer definition created above.
         // Note: You can create a raster layer from a url, project item, or data connection.
         RasterLayer rasterLayerfromURL =
-          LayerFactory.Instance.CreateRasterLayer(new Uri(url), aMap, 0, layerName, stretchColorizerDef) as RasterLayer;
+          LayerFactory.Instance.CreateLayer<RasterLayer>(rasterLayerCreationParams, aMap);
       });
       #endregion
     }
+
     #region ProSnippet Group: Mosaic Layers
     #endregion
     public async Task MosaicLayers()
@@ -2009,6 +2552,8 @@ namespace MapAuthoring.ProSnippet
       string layerName = null;
       CIMColorRamp colorRamp = null;
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(System.Uri, ArcGIS.Desktop.Mapping.ILayerContainerEdit, Saystem.Int, System.String)
       #region Create a mosaic layer
       MosaicLayer mosaicLayer = null;
       string url = @"C:\Images\countries.gdb\Italy";
@@ -2016,10 +2561,19 @@ namespace MapAuthoring.ProSnippet
       {
         // Create a mosaic layer using a path to a mosaic dataset.
         // Note: You can create a mosaic layer from a url, project item, or data connection.
-        mosaicLayer = (MosaicLayer)LayerFactory.Instance.CreateLayer(new Uri(url), aMap);
+        mosaicLayer = LayerFactory.Instance.CreateLayer(new Uri(url), aMap) as MosaicLayer;
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageMosaicSubLayer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Brightness
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Contrast
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.ResamplingType
+      // cref: ArcGIS.Core.CIM.RasterResamplingType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the raster colorizer on a mosaic layer
       await QueuedTask.Run(() =>
       {
@@ -2036,6 +2590,13 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageMosaicSubLayer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer.StretchType
+      // cref: ArcGIS.Core.CIM.RasterStretchType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the RGB colorizer on a mosaic layer
       await QueuedTask.Run(() =>
       {
@@ -2044,18 +2605,20 @@ namespace MapAuthoring.ProSnippet
         // Get the colorizer from the image sub-layer.
         CIMRasterColorizer rColorizer = mosaicImageSubLayer.GetColorizer();
         // Check if the colorizer is an RGB colorizer.
-        if (rColorizer is CIMRasterRGBColorizer)
+        if (rColorizer is CIMRasterRGBColorizer rasterRGBColorizer)
         {
-          // Cast colorizer type from CIMRasterColorizer into CIMRasterRGBColorizer.
-          CIMRasterRGBColorizer rasterRGBColorizer = (CIMRasterRGBColorizer)rColorizer;
           // Update RGB colorizer properties.
           rasterRGBColorizer.StretchType = RasterStretchType.ESRI;
           // Update the image sub-layer with the changed colorizer.
-          mosaicImageSubLayer.SetColorizer((CIMRasterColorizer)rasterRGBColorizer);
+          mosaicImageSubLayer.SetColorizer(rasterRGBColorizer);
         }
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageMosaicSubLayer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
       #region Check if a certain colorizer can be applied to a mosaic layer 
       await QueuedTask.Run(() =>
       {
@@ -2070,6 +2633,15 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageMosaicSubLayer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a default colorizer definition and apply it to the mosaic layer 
       await QueuedTask.Run(async () =>
       {
@@ -2089,6 +2661,15 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageMosaicSubLayer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor(System.Int32, ArcGIS.Core.CIM.RasterStretchType, System.Double, ArcGIS.Core.CIM.CIMColorRamp)
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a custom colorizer definition and apply it to the mosaic layer 
       await QueuedTask.Run(async () =>
       {
@@ -2110,23 +2691,43 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.ColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create a mosaic layer with a new colorizer definition
       // Create a new colorizer definition using default constructor.
       StretchColorizerDefinition stretchColorizerDef = new StretchColorizerDefinition();
+      var rasterLayerCreationParams = new RasterLayerCreationParams(new Uri(url))
+      {
+        Name = layerName,
+        ColorizerDefinition = stretchColorizerDef,
+        MapMemberIndex = 0
+
+      };
       await QueuedTask.Run(() =>
       {
         // Create a mosaic layer using the colorizer definition created above.
         // Note: You can create a mosaic layer from a url, project item, or data connection.
         MosaicLayer newMosaicLayer =
-          LayerFactory.Instance.CreateMosaicLayer(new Uri(url), aMap, 0, layerName, stretchColorizerDef) as MosaicLayer;
+          LayerFactory.Instance.CreateLayer<MosaicLayer>(rasterLayerCreationParams, aMap);
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.GetMosaicRule()
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule.MosaicMethod
+      // cref: ArcGIS.Core.CIM.RasterMosaicMethod
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.SetMosaicRule(ArcGIS.Core.CIM.CIMMosaicRule)
       #region Update the sort order - mosaic method on a mosaic layer
       await QueuedTask.Run(() =>
       {
         // Get the image sub-layer from the mosaic layer.
-        ImageServiceLayer mosaicImageSubLayer = (ImageServiceLayer)mosaicLayer.GetImageLayer();
+        ImageServiceLayer mosaicImageSubLayer = mosaicLayer.GetImageLayer() as ImageServiceLayer;
         // Get the mosaic rule.
         CIMMosaicRule mosaicingRule = mosaicImageSubLayer.GetMosaicRule();
         // Set the Mosaic Method to Center.
@@ -2136,11 +2737,17 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MosaicLayer.GetImageLayer()
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.GetMosaicRule()
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule.MosaicOperatorType
+      // cref: ArcGIS.Core.CIM.RasterMosaicOperatorType
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.SetMosaicRule(ArcGIS.Core.CIM.CIMMosaicRule)
       #region Update the resolve overlap - mosaic operator on a mosaic layer
       await QueuedTask.Run(() =>
       {
         // Get the image sub-layer from the mosaic layer.
-        ImageServiceLayer mosaicImageSublayer = (ImageServiceLayer)mosaicLayer.GetImageLayer();
+        ImageServiceLayer mosaicImageSublayer = mosaicLayer.GetImageLayer() as ImageServiceLayer;
         // Get the mosaic rule.
         CIMMosaicRule mosaicRule = mosaicImageSublayer.GetMosaicRule();
         // Set the Mosaic Operator to Mean.
@@ -2150,6 +2757,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
+
     #region ProSnippet Group: Image Service Layers
     #endregion
     public async Task ImageServiceLayers()
@@ -2158,6 +2766,8 @@ namespace MapAuthoring.ProSnippet
       string layerName = null;
       CIMColorRamp colorRamp = null;
 
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(System.Uri, ArcGIS.Desktop.Mapping.ILayerContainerEdit, Saystem.Int32, System.String)
       #region Create an image service layer
       ImageServiceLayer isLayer = null;
       string url =
@@ -2165,10 +2775,17 @@ namespace MapAuthoring.ProSnippet
       await QueuedTask.Run(() =>
       {
         // Create an image service layer using the url for an image service.
-        isLayer = (ImageServiceLayer)LayerFactory.Instance.CreateLayer(new Uri(url), aMap);
+        isLayer = LayerFactory.Instance.CreateLayer(new Uri(url), aMap) as ImageServiceLayer;
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Brightness
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.Contrast
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer.ResamplingType
+      // cref: ArcGIS.Core.CIM.RasterResamplingType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the raster colorizer on an image service layer
       await QueuedTask.Run(() =>
       {
@@ -2183,16 +2800,20 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetColorizer()
+      // cref: ArcGIS.Core.CIM.CIMRasterColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer
+      // cref: ArcGIS.Core.CIM.CIMRasterRGBColorizer.StretchType
+      // cref: ArcGIS.Core.CIM.RasterStretchType
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Update the RGB colorizer on an image service layer
       await QueuedTask.Run(() =>
       {
         // Get the colorizer from the image service layer.
         CIMRasterColorizer rColorizer = isLayer.GetColorizer();
         // Check if the colorizer is an RGB colorizer.
-        if (rColorizer is CIMRasterRGBColorizer)
+        if (rColorizer is CIMRasterRGBColorizer rasterRGBColorizer)
         {
-          // Cast colorizer type from CIMRasterColorizer to CIMRasterRGBColorizer.
-          CIMRasterRGBColorizer rasterRGBColorizer = (CIMRasterRGBColorizer)rColorizer;
           // Update RGB colorizer properties.
           rasterRGBColorizer.StretchType = RasterStretchType.ESRI;
           // Update the image service layer with the changed colorizer.
@@ -2201,6 +2822,8 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
       #region Check if a certain colorizer can be applied to an image service layer 
       await QueuedTask.Run(() =>
       {
@@ -2212,6 +2835,13 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a default colorizer definition and apply it to the image service layer 
       await QueuedTask.Run(async () =>
       {
@@ -2229,6 +2859,13 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.GetApplicableColorizers()
+      // cref: ArcGIS.Desktop.Mapping.RasterColorizerType
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor(System.Int32, ArcGIS.Core.CIM.RasterStretchType, System.Double, ArcGIS.Core.CIM.CIMColorRamp)
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.CreateColorizerAsync(ArcGIS.Desktop.Mapping.RasterColorizerDefinition)
+      // cref: ArcGIS.core.CIM.CIMRasterStretchColorizer
+      // cref: ArcGIS.Desktop.Mapping.BasicRasterLayer.SetColorizer(ArcGIS.Core.CIM.CIMRasterColorizer)
       #region Create a new colorizer based on a custom colorizer definition and apply it to the image service layer 
       await QueuedTask.Run(async () =>
       {
@@ -2248,17 +2885,34 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.StretchColorizerDefinition.#ctor
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.RasterLayerCreationParams.ColorizerDefinition
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create an image service layer with a new colorizer definition
       // Create a new colorizer definition using default constructor.
       StretchColorizerDefinition stretchColorizerDef = new StretchColorizerDefinition();
+      var rasterLayerCreationParams = new RasterLayerCreationParams(new Uri(url))
+      {
+        Name = layerName,
+        ColorizerDefinition = stretchColorizerDef,
+        MapMemberIndex = 0
+      };
       await QueuedTask.Run(() =>
       {
         // Create an image service layer using the colorizer definition created above.
         ImageServiceLayer imageServiceLayer =
-          LayerFactory.Instance.CreateRasterLayer(new Uri(url), aMap, 0, layerName, stretchColorizerDef) as ImageServiceLayer;
+          LayerFactory.Instance.CreateLayer<ImageServiceLayer>(rasterLayerCreationParams, aMap);
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.GetMosaicRule()
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule.MosaicMethod
+      // cref: ArcGIS.Core.CIM.RasterMosaicMethod
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.SetMosaicRule(ArcGIS.Core.CIM.CIMMosaicRule)
       #region Update the sort order - mosaic method on an image service layer
       await QueuedTask.Run(() =>
       {
@@ -2271,6 +2925,11 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.GetMosaicRule()
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule
+      // cref: ArcGIS.Core.CIM.CIMMosaicRule.MosaicOperatorType
+      // cref: ArcGIS.Core.CIM.RasterMosaicOperatorType
+      // cref: ArcGIS.Desktop.Mapping.ImageServiceLayer.SetMosaicRule(ArcGIS.Core.CIM.CIMMosaicRule)
       #region Update the resolve overlap - mosaic operator on an image service layer
       await QueuedTask.Run(() =>
       {
@@ -2289,7 +2948,12 @@ namespace MapAuthoring.ProSnippet
     #endregion
 
     public void StandaloneTables1()
-		{
+    {
+      // cref: ArcGIS.Desktop.Mapping.StandaloneTableFactory.CreateStandaloneTable(System.Uri, ArcGIS.Desktop.Mapping.IStandaloneTableContainerEdit, Saystem.Int32, System.String)
+      // cref: ArcGIS.Desktop.Mapping.StandaloneTableCreationParams
+      // cref: ArcGIS.Desktop.Mapping.StandaloneTableCreationParams.#ctor(ArcGIS.Desktop.Core.Item)
+      // cref: ArcGIS.Desktop.Mapping.StandaloneTableCreationParams.DefinitionQuery
+      // cref: ArcGIS.Desktop.Mapping.StandaloneTableFactory.CreateStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTableCreationParams, ArcGIS.Desktop.Mapping.IStandaloneTableContainerEdit)
       #region Create a StandaloneTable
 
       //container can be a map or group layer
@@ -2308,18 +2972,20 @@ namespace MapAuthoring.ProSnippet
           container);
         //Use an item
         var item = ItemFactory.Instance.Create(@"C:\Temp\Data\SDK.gdb\ParcelOwners");
-        var table3 = StandaloneTableFactory.Instance.CreateStandaloneTable(item, container);
+        var tableCreationParams = new StandaloneTableCreationParams(item);
+        var table3 = StandaloneTableFactory.Instance.CreateStandaloneTable(tableCreationParams, container);
 
         //use table creation params
         var table_params = new StandaloneTableCreationParams(item)
         {
-          DefinitionFilter = new CIMDefinitionFilter()
-          {
-            //optional - use a filter
-            DefinitionExpression = "LAND_USE = 3"
-          }
+          // At 2.x - DefinitionFilter = new CIMDefinitionFilter()
+          //{
+          //  //optional - use a filter
+          //  DefinitionExpression = "LAND_USE = 3"
+          //}
+          DefinitionQuery = new DefinitionQuery(whereClause: "LAND_USE = 3", name: "Landuse")
         };
-        var table4 = StandaloneTableFactory.Instance.CreateStandaloneTable(table_params, 
+        var table4 = StandaloneTableFactory.Instance.CreateStandaloneTable(table_params,
                                  container);
 
       });
@@ -2330,6 +2996,13 @@ namespace MapAuthoring.ProSnippet
 
     public void StandaloneTables2()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetStandaloneTablesAsFlattenedList()
+      // cref: ArcGIS.Desktop.Mapping.Map.FindStandaloneTables(System.String)
+      // cref: ArcGIS.Desktop.Mapping.Map.StandaloneTables
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.FindStandaloneTables(System.String)
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.GetStandaloneTablesAsFlattenedList()
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.StandaloneTables
+      // cref: ArcGIS.Desktop.Core.FrameworkExtender.OpenTablePane(ArcGIS.Desktop.Framework.PaneCollection,ArcGIS.Desktop.Mapping.MapMember, ArcGIS.Desktop.Mapping.TableViewMode)
       #region Retrieve a table from its container
       var container = MapView.Active.Map;
 
@@ -2351,7 +3024,12 @@ namespace MapAuthoring.ProSnippet
     }
 
     public void StandaloneTables3()
-		{
+    {
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.MoveStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTable, System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.StandaloneTables
+      // cref: ArcGIS.Desktop.Mapping.Map.MoveStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTable, ArcGIS.Desktop.Mapping.CompositeLayerWithTables, System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.FindStandaloneTables(System.String)
+      // cref: ArcGIS.Desktop.Mapping.Map.MoveStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTable, System.Int32)
       #region Move a Standalone table
 
       //get the first group layer that has at least one table
@@ -2382,7 +3060,15 @@ namespace MapAuthoring.ProSnippet
     }
 
     public void StandaloneTables4()
-		{
+    {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetStandaloneTablesAsFlattenedList()
+      // cref: ArcGIS.Desktop.Mapping.Map.StandaloneTables
+      // cref: ArcGIS.Desktop.Mapping.Map.RemoveStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTable)
+      // cref: ArcGIS.Desktop.Mapping.Map.RemoveStandaloneTables(System.IEnumerable<ArcGIS.Desktop.Mapping.StandaloneTable>)
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.GetStandaloneTablesAsFlattenedList()
+      // cref: ArcGIS.Desktop.Mapping.CompositeLayerWithTables.StandaloneTables
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.RemoveStandaloneTable(ArcGIS.Desktop.Mapping.StandaloneTable)
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.RemoveStandaloneTables(System.IEnumerable<ArcGIS.Desktop.Mapping.StandaloneTable>)
       #region Remove a Standalone table
 
       //get the first group layer that has at least one table
@@ -2396,7 +3082,7 @@ namespace MapAuthoring.ProSnippet
         var tables = map.GetStandaloneTablesAsFlattenedList();
         //delete the first...
         if (tables.Count() > 0)
-				{
+        {
           map.RemoveStandaloneTable(tables.First());
           //or delete all of them
           map.RemoveStandaloneTables(tables);
@@ -2410,14 +3096,18 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    #region ProSnippet Group: Symbol Layer Drawing, SLD
+    #region ProSnippet Group: Symbol Layer Drawing (SLD)
     #endregion
 
     public void SLD1()
-		{
+    {
       FeatureLayer featLayer = null;
       GroupLayer groupLayer = null;
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CanAddSymbolLayerDrawing()
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.AddSymbolLayerDrawing()
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.CanAddSymbolLayerDrawing()
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.AddSymbolLayerDrawing()
       #region Add SLD
 
       QueuedTask.Run(() =>
@@ -2434,6 +3124,8 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.HasSymbolLayerDrawingAdded()
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.HasSymbolLayerDrawingAdded()
       #region Determine if a layer has SLD added
 
       //SLD can be added to feature layers and group layers
@@ -2447,11 +3139,11 @@ namespace MapAuthoring.ProSnippet
         //Check if the layer has SLD added -returns a tuple
         var tuple = featLayer.HasSymbolLayerDrawingAdded();
         if (tuple.addedOnLayer)
-				{
+        {
           //SLD is added on the layer
-				}
+        }
         else if (tuple.addedOnParent)
-				{
+        {
           //SLD is added on the parent (group layer) - 
           //check parent...this can be recursive
           var parentLayer = GetParentLayerWithSLD(featLayer.Parent as GroupLayer);
@@ -2476,6 +3168,12 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.HasSymbolLayerDrawingAdded()
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetUseSymbolLayerDrawing()
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetUseSymbolLayerDrawing(System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.HasSymbolLayerDrawingAdded()
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.GetUseSymbolLayerDrawing()
+      // cref: ArcGIS.Desktop.Mapping.GroupLayer.SetUseSymbolLayerDrawing(System.Boolean)
       #region Enable/Disable SLD
 
       QueuedTask.Run(() =>
@@ -2484,16 +3182,16 @@ namespace MapAuthoring.ProSnippet
         //HasSymbolLayerDrawingAdded returns a tuple - to check
         //the layer has SLD (not its parent) check addedOnLayer
         if (featLayer.HasSymbolLayerDrawingAdded().addedOnLayer)
-				{
+        {
           //the layer has SLD but is the layer currently using it?
           //GetUseSymbolLayerDrawing returns a tuple - useOnLayer for 
           //the layer (and useOnParent for the parent layer)
           if (!featLayer.GetUseSymbolLayerDrawing().useOnLayer)
-					{
+          {
             //enable it
             featLayer.SetUseSymbolLayerDrawing(true);
-					}
-				}
+          }
+        }
 
         //Enable/Disable SLD on a layer parent
         if (featLayer.HasSymbolLayerDrawingAdded().addedOnParent)
@@ -2543,6 +3241,13 @@ namespace MapAuthoring.ProSnippet
     public async Task GNSS()
     {
       {
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.#ctor
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.ComPort
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.BaudRate
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.AntennaHeight
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.#ctor
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.AccuracyThreshold
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.Open()
         #region Connect to a Device Location Source
 
         var newSrc = new SerialPortDeviceLocationSource();
@@ -2568,16 +3273,18 @@ namespace MapAuthoring.ProSnippet
 
       {
 
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.GetSource()
         #region Get the Current Device Location Source
 
         var source = DeviceLocationService.Instance.GetSource();
         if (source == null)
-				{
+        {
           //There is no current source
-				}
+        }
 
         #endregion
 
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.Close()
         #region Close the Current Device Location Source
         //Is there a current device source?
         var src = DeviceLocationService.Instance.GetSource();
@@ -2593,6 +3300,13 @@ namespace MapAuthoring.ProSnippet
       }
 
       {
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.IsDeviceConnected()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.GetSource()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.GetSpatialReference()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.GetProperties()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.AccuracyThreshold
         #region Get Current Device Location Source and Properties
 
         bool isConnected = DeviceLocationService.Instance.IsDeviceConnected();
@@ -2617,12 +3331,16 @@ namespace MapAuthoring.ProSnippet
         }
         var dlProps = DeviceLocationService.Instance.GetProperties();
         var accuracy = dlProps.AccuracyThreshold;
-        
+
         #endregion
       }
 
       {
 
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.GetProperties()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.AccuracyThreshold
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.UpdateProperties(ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties)
         #region Update Properties on the Current Device Location Source
 
         await QueuedTask.Run(() =>
@@ -2635,11 +3353,56 @@ namespace MapAuthoring.ProSnippet
         });
         #endregion
       }
+    }
 
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationPropertiesUpdatedEvent
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationPropertiesUpdatedEvent.Subscribe
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationPropertiesUpdatedEventArgs
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationPropertiesUpdatedEventArgs.DeviceLocationProperties
+    #region Subscribe to DeviceLocationPropertiesUpdated event
+    private void SubscribeToPropertiesEvents()
+    {
+      DeviceLocationPropertiesUpdatedEvent.Subscribe(OnDeviceLocationPropertiesUpdated);
+    }
+    private void OnDeviceLocationPropertiesUpdated(DeviceLocationPropertiesUpdatedEventArgs args)
+    {
+      if (args == null)
+        return;
+
+      var properties = args.DeviceLocationProperties;
+
+      //  TODO - something with the updated properties
+    }
+    #endregion
+
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationSourceChangedEvent
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationSourceChangedEvent.Subscribe
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationSourceChangedEventArgs
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.DeviceLocationSourceChangedEventArgs.DeviceLocationSource
+    #region Subscribe to DeviceLocationSourceChanged event
+    private void SubscribeToSourceEvents()
+    {
+      DeviceLocationSourceChangedEvent.Subscribe(OnDeviceLocationSourceChanged);
+    }
+    private void OnDeviceLocationSourceChanged(DeviceLocationSourceChangedEventArgs args)
+    {
+      if (args == null)
+        return;
+
+      var source = args.DeviceLocationSource; 
+
+      //  TODO - something with the updated source properties
+    }
+    #endregion
+
+    public async Task GNSS_Map()
+    {
       #region ProSnippet Group: Map Device Location Options
       #endregion
 
       {
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.IsDeviceLocationEnabled
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.SetDeviceLocationEnabled(System.Boolean)
         #region Enable/Disable Current Device Location Source For the Map
 
         bool enabled = MapDeviceLocationService.Instance.IsDeviceLocationEnabled;
@@ -2653,6 +3416,13 @@ namespace MapAuthoring.ProSnippet
       }
 
       {
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.GetDeviceLocationOptions()
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.DeviceLocationVisibility
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.NavigationMode
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.TrackUpNavigation
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.ShowAccuracyBuffer
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MappingDeviceLocationNavigationMode
         #region Get Current Map Device Location Options
 
         var options = MapDeviceLocationService.Instance.GetDeviceLocationOptions();
@@ -2660,22 +3430,27 @@ namespace MapAuthoring.ProSnippet
         var visibility = options.DeviceLocationVisibility;
         var navMode = options.NavigationMode;
         var trackUp = options.TrackUpNavigation;
+        var showBuffer = options.ShowAccuracyBuffer;
 
         #endregion
       }
 
-			{
+      {
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.IsDeviceLocationEnabled
         #region Check if The Current Device Location Is Enabled On The Map
 
         if (MapDeviceLocationService.Instance.IsDeviceLocationEnabled)
-				{
+        {
           //The Device Location Source is Enabled
-				}
+        }
 
         #endregion
       }
-			{
+      {
 
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.SetDeviceLocationOptions(ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions)
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.#ctor
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MappingDeviceLocationNavigationMode
         #region Set Current Map Device Location Options
 
         //Must be on the QueuedTask.Run()
@@ -2699,10 +3474,11 @@ namespace MapAuthoring.ProSnippet
             NavigationMode = MappingDeviceLocationNavigationMode.KeepAtCenter,
             TrackUpNavigation = true
           });
-        
+
         #endregion
       }
       {
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.ZoomOrPanToCurrentLocation(System.Boolean)
         #region Zoom/Pan The Map To The Most Recent Location
 
         //Must be on the QueuedTask.Run()
@@ -2721,6 +3497,7 @@ namespace MapAuthoring.ProSnippet
       {
         GraphicsLayer graphicsLayer = null;
 
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.GetCurrentSnapshot()
         #region Add the Most Recent Location To A Graphics Layer
 
         //var graphicsLayer = ... ;
@@ -2729,7 +3506,7 @@ namespace MapAuthoring.ProSnippet
         // get the last location
         var pt = DeviceLocationService.Instance.GetCurrentSnapshot()?.GetPositionAsMapPoint();
         if (pt != null)
-				{
+        {
           //Create a point symbol
           var ptSymbol = SymbolFactory.Instance.ConstructPointSymbol(
                             CIMColor.CreateRGBColor(125, 125, 0), 10, SimpleMarkerStyle.Triangle);
@@ -2742,10 +3519,41 @@ namespace MapAuthoring.ProSnippet
         #endregion
       }
 
+      {
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.GetDeviceLocationOptions()
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.DeviceLocationVisibility
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions.NavigationMode
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MappingDeviceLocationNavigationMode
+        // cref: ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationService.SetDeviceLocationOptions(ArcGIS.Desktop.Mapping.DeviceLocation.MapDeviceLocationOptions)
+        #region Set map view to always be centered on the device location
+        var currentOptions = MapDeviceLocationService.Instance.GetDeviceLocationOptions();
+        if (currentOptions == null)
+           return;
+        
+        currentOptions.DeviceLocationVisibility = true;
+        currentOptions.NavigationMode = MappingDeviceLocationNavigationMode.KeepAtCenter;
+        
+        await QueuedTask.Run(() =>
+        {
+          MapDeviceLocationService.Instance.SetDeviceLocationOptions(currentOptions);
+        });
+        #endregion
+      }
     }
 
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotchangedEvent
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotchangedEvent.Subscribe(Action<ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs> action, System.Boolean)
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs.Snapshot
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot.GetPositionAsMapPoint()
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot.Altitude
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot.DateTime
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot.VDOP
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot.HDOP
     #region Subscribe to Location Snapshot event
-    private void SubscribeToEvents()
+    private void SubscribeToSnapshotEvents()
     {
       SnapshotChangedEvent.Subscribe(OnSnapshotChanged);
     }
@@ -2781,6 +3589,8 @@ namespace MapAuthoring.ProSnippet
 
     public void Masking1()
     {
+      // cref: ArcGIS.Desktop.Mapping.BasicFeaturelayer.GetDrawingOutline(System.Int64, ArcGIs.Desktop.Mapping.MapView, ArcGIS.Desktop.Mapping.DrawingOutlineType)
+      // cref: ArcGIS.Desktop.Mapping.DrawingOutlineType
       #region Get the Mask Geometry for a Feature
 
       var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList()
@@ -2792,22 +3602,26 @@ namespace MapAuthoring.ProSnippet
 
       QueuedTask.Run(() =>
       {
-        //get the first feature...
-        //...assuming at least one feature gets selected
-        var rc = featureLayer.GetTable().Search();
-        rc.MoveNext();
-        var oid = rc.Current.GetObjectID();
+        using (var table = featureLayer.GetTable())
+        {
+          using (var rc = table.Search())
+          {
+            //get the first feature...
+            //...assuming at least one feature gets retrieved
+            rc.MoveNext();
+            var oid = rc.Current.GetObjectID();
 
-        //Use DrawingOutlineType.BoundingEnvelope to retrieve a generalized
-        //mask geometry or "Box". The mask will be in the same SpatRef as the map
-        var mask_geom = featureLayer.QueryDrawingOutline(oid, mv, DrawingOutlineType.Exact);
+            //Use DrawingOutlineType.BoundingEnvelope to retrieve a generalized
+            //mask geometry or "Box". The mask will be in the same SpatRef as the map
+            //At 2.x - var mask_geom = featureLayer.QueryDrawingOutline(oid, mv, DrawingOutlineType.Exact);
+            var mask_geom = featureLayer.GetDrawingOutline(oid, mv, DrawingOutlineType.Exact);
 
-        //TODO - use the mask geometry...
-        rc.Dispose();
+            //TODO - use the mask geometry...
+          }
+        }
       });
       #endregion
 
     }
   }
-
 }

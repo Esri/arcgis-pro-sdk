@@ -53,6 +53,12 @@ namespace Layout_HelpExamples
 
 
       // cref: Element_ConvertToGraphics;ArcGIS.Desktop.Layouts.Element.ConvertToGraphics
+      // cref: Element_ConvertToGraphics;ArcGIS.Desktop.Mapping.IElement.ConvertToGraphics
+      // cref: ArcGIS.Desktop.Layouts.GroupElement.ELEMENTS
+      // cref: ArcGIS.Desktop.Layouts.Element.GETY      
+      // cref: ArcGIS.Desktop.Layouts.Element.SETY
+      // cref: ArcGIS.Desktop.Layouts.Element.Name
+      // cref: ArcGIS.Desktop.Layouts.Element.SetTOCPositionAbsolute
       #region Element_ConvertToGraphics
       //Convert a legend to a graphic and move the Title to the bottom of the legend and also move
       //the label in the contents pane to the bottom of the list.
@@ -74,8 +80,11 @@ namespace Layout_HelpExamples
       });
       #endregion Element_ConvertToGraphics
 
-      // cref: Element_GetSetAnchor;ArcGIS.Desktop.Layouts.Element.GetAnchor
-      // cref: Element_GetSetAnchor;ArcGIS.Desktop.Layouts.Element.SetAnchor(ArcGIS.Core.CIM.Anchor)
+      // cref: ArcGIS.Core.CIM.Anchor
+      // cref: ArcGIS.Desktop.Layouts.Element.GetAnchor
+      // cref: ArcGIS.Desktop.Layouts.Element.SetAnchor(ArcGIS.Core.CIM.Anchor)
+      // cref: ArcGIS.Desktop.Mapping.IElement.SetAnchor(ArcGIS.Core.CIM.Anchor)
+      // cref: ArcGIS.Desktop.Mapping.IElement.GetAnchor
       #region Element_GetSetAnchor
       //Change the element's anchor position
 
@@ -89,8 +98,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetSetAnchor
 
-      // cref: Element_GetCustomProperty;ArcGIS.Desktop.Layouts.Element.GetCustomProperties
       // cref: Element_GetCustomProperty;ArcGIS.Desktop.Layouts.Element.GetCustomProperty(System.String)
+      // cref: Element_GetCustomProperty;ArcGIS.Desktop.Mapping.IElement.GetCustomProperty(System.String)
       #region Element_GetCustomProperty
       //Get a custom property that has been previously set.
 
@@ -101,8 +110,11 @@ namespace Layout_HelpExamples
       });
       #endregion Element_GetCustomProperty
 
+      // cref: Element_GetSetDefinition;ArcGIS.Core.CIM.CIMElement
       // cref: Element_GetSetDefinition;ArcGIS.Desktop.Layouts.Element.GetDefinition
       // cref: Element_GetSetDefinition;ArcGIS.Desktop.Layouts.Element.SetDefinition(ArcGIS.Core.CIM.CIMElement)
+      // cref: Element_GetSetDefinition;ArcGIS.Desktop.Mapping.IElement.GetDefinition
+      // cref: Element_GetSetDefinition;ArcGIS.Desktop.Mapping.IElement.SetDefinition(ArcGIS.Core.CIM.CIMElement)
       #region Element_GetSetDefinition
       //Modify an element's CIM properties.
 
@@ -119,6 +131,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetHeight;ArcGIS.Desktop.Layouts.Element.GetHeight
       // cref: Element_GetSetHeight;ArcGIS.Desktop.Layouts.Element.SetHeight(System.Double)
+      // cref: Element_GetSetHeight;ArcGIS.Desktop.Mapping.IElement.SetHeight(System.Double)
+      // cref: Element_GetSetHeight;ArcGIS.Desktop.Mapping.IElement.GetHeight
       #region Element_GetSetHeight
       //Modify an element's hieght.
 
@@ -133,6 +147,9 @@ namespace Layout_HelpExamples
       #endregion Element_GetSetHeight
 
       // cref: Element_SetLocked;ArcGIS.Desktop.Layouts.Element.SetLocked(System.Boolean)
+      // cref: ArcGIS.Desktop.Layouts.Element.IsLocked
+      // cref: Element_SetLocked;ArcGIS.Desktop.Mapping.IElement.SetLocked(System.Boolean)
+      // cref: Element_SetLocked;ArcGIS.Desktop.Mapping.IElement.IsLocked
       #region Element_SetLocked
       //Modify an element's locked state if it isn't already
 
@@ -148,6 +165,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Layouts.Element.GetLockedAspectRatio
       // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Layouts.Element.SetLockedAspectRatio(System.Boolean)
+      // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Mapping.IElement.SetLockedAspectRatio(System.Boolean)
+      // cref: Element_GetSetLockedAspectRatio;ArcGIS.Desktop.Mapping.IElement.GetLockedAspectRatio
       #region Element_GetSetLockedAspectRatio
       //Modify an element's aspect ratio. 
 
@@ -163,6 +182,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetRotation;ArcGIS.Desktop.Layouts.Element.GetRotation
       // cref: Element_GetSetRotation;ArcGIS.Desktop.Layouts.Element.SetRotation(System.Double)
+      // cref: Element_GetSetRotation;ArcGIS.Desktop.Mapping.IElement.SetRotation(System.Double)
+      // cref: Element_GetSetRotation;ArcGIS.Desktop.Mapping.IElement.GetRotation
       #region Element_GetSetRotation
       //Modify and element's rotation value.
 
@@ -178,6 +199,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetWidth;ArcGIS.Desktop.Layouts.Element.GetWidth
       // cref: Element_GetSetWidth;ArcGIS.Desktop.Layouts.Element.SetWidth(System.Double)
+      // cref: Element_GetSetWidth;ArcGIS.Desktop.Mapping.IElement.SetWidth(System.Double)
+      // cref: Element_GetSetWidth;ArcGIS.Desktop.Mapping.IElement.GetWidth
       #region Element_GetSetWidth
       //Modify an element's width.
 
@@ -193,6 +216,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetX;ArcGIS.Desktop.Layouts.Element.GetX
       // cref: Element_GetSetX;ArcGIS.Desktop.Layouts.Element.SetX(System.Double)
+      // cref: Element_GetSetX;ArcGIS.Desktop.Mapping.IElement.SetX(System.Double)
+      // cref: Element_GetSetX;ArcGIS.Desktop.Mapping.IElement.GetX
       #region Element_GetSetX
       //Modify an element's X position.
 
@@ -209,6 +234,8 @@ namespace Layout_HelpExamples
 
       // cref: Element_GetSetY;ArcGIS.Desktop.Layouts.Element.GetY
       // cref: Element_GetSetY;ArcGIS.Desktop.Layouts.Element.SetY(System.Double)
+      // cref: Element_GetSetY;ArcGIS.Desktop.Mapping.IElement.SetY(System.Double)
+      // cref: Element_GetSetY;ArcGIS.Desktop.Mapping.IElement.GetY
       #region Element_GetSetY
       //Modify an element's Y position.
 
@@ -223,7 +250,7 @@ namespace Layout_HelpExamples
       #endregion Element_GetSetY
 
       // cref: Element_SetCustomProperty;ArcGIS.Desktop.Layouts.Element.SetCustomProperty(System.String,System.String)
-      // cref: Element_SetCustomProperty;ArcGIS.Desktop.Layouts.Element.SetCustomProperty(System.String[],System.String[])
+      // cref: Element_SetCustomProperty;ArcGIS.Desktop.Mapping.IElement.SetCustomProperty(System.String,System.String)
       #region Element_SetCustomProperty
       //Set a custom property on an element.
 
@@ -235,6 +262,7 @@ namespace Layout_HelpExamples
       #endregion Element_SetCustomProperty
 
       // cref: Element_SetName;ArcGIS.Desktop.Layouts.Element.SetName(System.String)
+      // cref: Element_SetName;ArcGIS.Desktop.Mapping.IElement.SetName(System.String)
       #region Element_SetName
       //Modify an element's name.
 
@@ -245,7 +273,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetName
 
-      // cref: Element_SetTOCPositionAbsolute;ArcGIS.Desktop.Layouts.Element.SetTOCPositionAbsolute(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Boolean)
+      // cref: Element_SetTOCPositionAbsolute;ArcGIS.Desktop.Layouts.Element.SetTOCPositionAbsolute
+      // cref: Element_SetTOCPositionAbsolute;ArcGIS.Desktop.Mapping.IElement.SetTOCPositionAbsolute
       #region Element_SetTOCPositionAbsolute
       //Move an element to the top of the TOC
 
@@ -256,7 +285,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetTOCPositionAbsolute
 
-      // cref: Element_SetTOCPositionRelative;ArcGIS.Desktop.Layouts.Element.SetTOCPositionRelative(ArcGIS.Desktop.Layouts.Element,System.Boolean)
+      // cref: Element_SetTOCPositionRelative;ArcGIS.Desktop.Layouts.Element.SetTOCPositionRelative
+      // cref: Element_SetTOCPositionRelative;ArcGIS.Desktop.Mapping.IElement.SetTOCPositionRelative
       #region Element_SetTOCPositionRelative
       //Move a layout element above an existing layout element.
 
@@ -267,7 +297,8 @@ namespace Layout_HelpExamples
       });
       #endregion Element_SetTOCPositionRelative
 
-      // cref: Element_SetVisible;ArcGIS.Desktop.Layouts.Element.SetVisible(System.Boolean)
+      // cref: Element_SetVisible;ArcGIS.Desktop.Layouts.Element.SetVisible
+      // cref: Element_SetVisible;ArcGIS.Desktop.Mapping.IElement.SetVisible
       #region Element_SetVisible
       //Modify an element's visibility.
 
@@ -296,10 +327,13 @@ namespace Layout_HelpExamples
       LayoutView lytView = LayoutView.Active;
       Layout layout = lytView.Layout;
 
-      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.IElementFactory.CreateBezierCurveGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
-      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateBezierCurveGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
+      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: Create_BezierCurve;ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
       #region Create_BezierCurve
-      //Create a beizier curve element with a simple line style.
+      //Create a bezier curve element with a simple line style.
 
       //Construct on the worker thread
       await QueuedTask.Run(() =>
@@ -309,19 +343,24 @@ namespace Layout_HelpExamples
         Coordinate2D pt2 = new Coordinate2D(1.66, 8);
         Coordinate2D pt3 = new Coordinate2D(2.33, 7.1);
         Coordinate2D pt4 = new Coordinate2D(3, 7.5);
-        CubicBezierBuilder bez = new CubicBezierBuilder(pt1, pt2, pt3, pt4);
+        //At 2.x - CubicBezierBuilder bez = new CubicBezierBuilder(pt1, pt2, pt3, pt4);
+        var bez = new CubicBezierBuilderEx(pt1, pt2, pt3, pt4);
         CubicBezierSegment bezSeg = bez.ToSegment();
-        Polyline bezPl = PolylineBuilder.CreatePolyline(bezSeg);
+        //At 2.x - Polyline bezPl = PolylineBuilder.CreatePolyline(bezSeg);
+        Polyline bezPl = PolylineBuilderEx.CreatePolyline(bezSeg);
 
         //Set symbology, create and add element to layout
         CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.RedRGB, 4.0, SimpleLineStyle.DashDot);
-        GraphicElement bezElm = LayoutElementFactory.Instance.CreateLineGraphicElement(layout, bezPl, lineSym);
-        bezElm.SetName("New Bezier Curve");
+        //At 2.x - GraphicElement bezElm = LayoutElementFactory.Instance.CreateLineGraphicElement(layout, bezPl, lineSym);
+        //         bezElm.SetName("New Bezier Curve");
+        GraphicElement bezElm = ElementFactory.Instance.CreateGraphicElement(layout, bezPl, lineSym, "New Bezier Curve");
       });
       #endregion Create_BezierCurve
 
-      // cref: Create_freehand;ArcGIS.Desktop.Layouts.IElementFactory.CreateFreehandGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
-      // cref: Create_freehand;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateFreehandGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.CIM.CIMLineSymbol)
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline
       #region Create_freehand
       //Create a graphic freehand element with a simple line style.
 
@@ -338,17 +377,21 @@ namespace Layout_HelpExamples
         plCoords.Add(new Coordinate2D(0.5, 1));
         plCoords.Add(new Coordinate2D(0.75, 2));
         plCoords.Add(new Coordinate2D(1, 1));
-        Polyline linePl = PolylineBuilder.CreatePolyline(plCoords);
+        //At 2.x - Polyline linePl = PolylineBuilder.CreatePolyline(plCoords);
+        Polyline linePl = PolylineBuilderEx.CreatePolyline(plCoords);
 
         //Set symbolology, create and add element to layout
         CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Solid);
-        GraphicElement lineElm = LayoutElementFactory.Instance.CreateLineGraphicElement(layout, linePl, lineSym);
-        lineElm.SetName("New Freehand");
+        //At 2.x - GraphicElement lineElm = LayoutElementFactory.Instance.CreateLineGraphicElement(layout, linePl, lineSym);
+        //         lineElm.SetName("New Freehand"); 
+        GraphicElement lineElm = ElementFactory.Instance.CreateGraphicElement(layout, linePl, lineSym, "New Freehand");
       });
       #endregion Create_freehand
 
-      // cref: Create_polygon_poly;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
-      // cref: Create_polygon_poly;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon
       #region Create_polygon_poly
       //Create a polygon graphic with simple line and fill styles.
 
@@ -363,18 +406,26 @@ namespace Layout_HelpExamples
         plyCoords.Add(new Coordinate2D(3, 6.7));
         plyCoords.Add(new Coordinate2D(3, 6.1));
         plyCoords.Add(new Coordinate2D(1, 6.1));
-        Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        //At 2.x - Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
         //Set symbolology, create and add element to layout
         CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.DashDotDot);
         CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB, SimpleFillStyle.ForwardDiagonal, outline);
-        GraphicElement polyElm = LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, poly, polySym);
-        polyElm.SetName("New Polygon");
+        //At 2.x - GraphicElement polyElm = LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, poly, polySym);
+        //         polyElm.SetName("New Polygon"); 
+        GraphicElement polyElm = ElementFactory.Instance.CreateGraphicElement(layout, poly, polySym, "New Polygon");
       });
       #endregion Create_polygon_poly
 
-      // cref: Create_polygon_env;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
-      // cref: Create_polygon_env;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Envelope,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPolygonSymbol
+      // cref: ArcGIS.Core.CIM.CIMStroke
+      // cref: ArcGIS.Core.CIM.CIMPolygonSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope
       #region Create_polygon_env
       //Create a polygon graphic using an envelope with simple line and fill styles.
 
@@ -384,18 +435,33 @@ namespace Layout_HelpExamples
         //Build 2D envelope
         Coordinate2D env_ll = new Coordinate2D(1.0, 4.75);
         Coordinate2D env_ur = new Coordinate2D(3.0, 5.75);
-        Envelope env = EnvelopeBuilder.CreateEnvelope(env_ll, env_ur);
+        //At 2.x - Envelope env = EnvelopeBuilder.CreateEnvelope(env_ll, env_ur);
+        Envelope env = EnvelopeBuilderEx.CreateEnvelope(env_ll, env_ur);
 
         //Set symbolology, create and add element to layout
-        CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.DashDotDot);
-        CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB, SimpleFillStyle.ForwardDiagonal, outline);
-        GraphicElement polyElm = LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, env, polySym);
-        polyElm.SetName("New Polygon");
+        CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
+          ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.DashDotDot);
+        CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
+          ColorFactory.Instance.RedRGB, SimpleFillStyle.ForwardDiagonal, outline);
+        //At 2.x - GraphicElement polyElm =
+        //            LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, env, polySym);
+        //         polyElm.SetName("New Polygon");
+        GraphicElement polyElm = ElementFactory.Instance.CreateGraphicElement(
+          layout, env, polySym, "New Polygon");
       });
       #endregion Create_polygon_env
 
-      // cref: Create_circle;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
-      // cref: Create_circle;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment
+      // cref: ArcGIS.Core.Geometry.ArcOrientation
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPolygonSymbol
+      // cref: ArcGIS.Core.CIM.CIMStroke
+      // cref: ArcGIS.Core.CIM.CIMPolygonSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
       #region Create_circle
       //Create a circle graphic element using a simple line and fill styles.
 
@@ -404,19 +470,33 @@ namespace Layout_HelpExamples
       {
         //Build geometry
         Coordinate2D center = new Coordinate2D(2, 4);
-        EllipticArcBuilder eabCir = new EllipticArcBuilder(center, 0.5, esriArcOrientation.esriArcClockwise);
+        //At 2.x - EllipticArcBuilder eabCir = new EllipticArcBuilder(center, 0.5, esriArcOrientation.esriArcClockwise);
+        var eabCir = new EllipticArcBuilderEx(center, 0.5, ArcOrientation.ArcClockwise);
         EllipticArcSegment cir = eabCir.ToSegment();
 
         //Set symbolology, create and add element to layout
         CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Dash);
         CIMPolygonSymbol circleSym = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB, SimpleFillStyle.Solid, outline);
-        GraphicElement cirElm = LayoutElementFactory.Instance.CreateCircleGraphicElement(layout, cir, circleSym);
-        cirElm.SetName("New Circle");
+        //At 2.x - GraphicElement cirElm = LayoutElementFactory.Instance.CreateCircleGraphicElement(layout, cir, circleSym);
+        //         cirElm.SetName("New Circle");
+
+        var polyLine = PolylineBuilderEx.CreatePolyline(cir);
+        GraphicElement cirElm = ElementFactory.Instance.CreateGraphicElement(layout, polyLine, circleSym, "New Circle");
       });
       #endregion
 
-      // cref: Create_ellipse;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
-      // cref: Create_ellipse;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,ArcGIS.Core.CIM.CIMPolygonSymbol)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline
+      // cref: ArcGIS.Core.Geometry.EllipticArcSegment
+      // cref: ArcGIS.Core.Geometry.ArcOrientation
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructPolygonSymbol
+      // cref: ArcGIS.Core.CIM.CIMStroke
+      // cref: ArcGIS.Core.CIM.CIMPolygonSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
       #region Create_ellipse
       //Create an ellipse graphic with simple line and fill styles.
 
@@ -425,19 +505,26 @@ namespace Layout_HelpExamples
       {
         //Build geometry
         Coordinate2D center = new Coordinate2D(2, 2.75);
-        EllipticArcBuilder eabElp = new EllipticArcBuilder(center, 0, 1, 0.45, esriArcOrientation.esriArcClockwise);
+        //At 2.x - EllipticArcBuilder eabElp = new EllipticArcBuilder(center, 0, 1, 0.45, esriArcOrientation.esriArcClockwise);
+        var eabElp = new EllipticArcBuilderEx(center, 0, 1, 0.45, ArcOrientation.ArcClockwise);
         EllipticArcSegment ellipse = eabElp.ToSegment();
 
         //Set symbolology, create and add element to layout
         CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.GreenRGB, 2.0, SimpleLineStyle.Dot);
         CIMPolygonSymbol ellipseSym = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.GreyRGB, SimpleFillStyle.Vertical, outline);
-        GraphicElement elpElm = LayoutElementFactory.Instance.CreateEllipseGraphicElement(layout, ellipse, ellipseSym);
-        elpElm.SetName("New Ellipse");
+        //At 2.x - GraphicElement elpElm = LayoutElementFactory.Instance.CreateEllipseGraphicElement(layout, ellipse, ellipseSym);
+        //         elpElm.SetName("New Ellipse");
+
+        var polyLine = PolylineBuilderEx.CreatePolyline(ellipse);
+        GraphicElement elpElm = ElementFactory.Instance.CreateGraphicElement(layout, polyLine, ellipseSym, "New Ellipse");
       });
       #endregion
 
-      // cref: Create_lasso;ArcGIS.Desktop.Layouts.IElementFactory.CreateLassoGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
-      // cref: Create_lasso;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateLassoGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,ArcGIS.Core.CIM.CIMPolygonSymbol)
+
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
       #region Create_lasso
       //Create a graphic lasso element with simple line and fill styles.
 
@@ -455,20 +542,28 @@ namespace Layout_HelpExamples
         plyCoords.Add(new Coordinate2D(2.5, 1.1));
         plyCoords.Add(new Coordinate2D(2.75, 2));
         plyCoords.Add(new Coordinate2D(3, 1));
-        Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        //At 2.x - Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
         //Set symbolology, create and add element to layout
         CIMStroke outline = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Solid);
         CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(ColorFactory.Instance.RedRGB, SimpleFillStyle.ForwardDiagonal, outline);
-        GraphicElement polyElm = LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, poly, polySym);
-        polyElm.SetName("New Lasso");
+        //At 2.x - GraphicElement polyElm = LayoutElementFactory.Instance.CreatePolygonGraphicElement(layout, poly, polySym);
+        //         polyElm.SetName("New Lasso"); 
+        GraphicElement polyElm = ElementFactory.Instance.CreateGraphicElement(layout, poly, polySym, "New Lasso");
       });
       #endregion Create_lasso
 
-      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String)
-      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
-      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String)
-      // cref: Create_CurveText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCurvedTextGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polyline,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline
+      // cref: ArcGIS.Core.Geometry.CubicBezierSegment
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMTextSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Desktop.Layouts.TextType
       #region Create_CurveText
       //Create curve text with basic text properties.
 
@@ -480,21 +575,34 @@ namespace Layout_HelpExamples
         Coordinate2D pt2 = new Coordinate2D(4.26, 8);
         Coordinate2D pt3 = new Coordinate2D(4.93, 7.1);
         Coordinate2D pt4 = new Coordinate2D(5.6, 7.5);
-        CubicBezierBuilder bez = new CubicBezierBuilder(pt1, pt2, pt3, pt4);
+        //At 2.x - CubicBezierBuilder bez = new CubicBezierBuilder(pt1, pt2, pt3, pt4);
+        var bez = new CubicBezierBuilderEx(pt1, pt2, pt3, pt4);
         CubicBezierSegment bezSeg = bez.ToSegment();
-        Polyline bezPl = PolylineBuilder.CreatePolyline(bezSeg);
+        //At 2.x - Polyline bezPl = PolylineBuilder.CreatePolyline(bezSeg);
+        Polyline bezPl = PolylineBuilderEx.CreatePolyline(bezSeg);
 
         //Set symbolology, create and add element to layout
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.BlackRGB, 24, "Comic Sans MS", "Regular");
-        GraphicElement bezTxtElm = LayoutElementFactory.Instance.CreateCurvedTextGraphicElement(layout, bezPl, "Curved Text", sym);
-        bezTxtElm.SetName("New Splinned Text");
+        //At 2.x - GraphicElement bezTxtElm = LayoutElementFactory.Instance.CreateCurvedTextGraphicElement(layout, bezPl, "Curved Text", sym);
+        //         bezTxtElm.SetName("New Splinned Text");
+        GraphicElement bezTxtElm = ElementFactory.Instance.CreateTextGraphicElement(
+                                      layout, TextType.SplinedText, bezPl, sym, "Curved Text", "New Splinned Text");
       });
       #endregion Create_CurveText
 
-      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String)
-      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.IElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
-      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String)
-      // cref: Create_PolygonText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreatePolygonParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Polygon,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic
+      // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT.SETGRAPHIC
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic.Frame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame.BorderSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Desktop.Layouts.TextType
       #region Create_PolygonText
       //Create polygon paragraph text with basic text properties.
 
@@ -509,13 +617,16 @@ namespace Layout_HelpExamples
         plyCoords.Add(new Coordinate2D(5.5, 6.7));
         plyCoords.Add(new Coordinate2D(5.5, 6.1));
         plyCoords.Add(new Coordinate2D(3.5, 6.1));
-        Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        //At 2.x - Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
+        Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
         //Set symbolology, create and add element to layout
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.GreyRGB, 10, "Arial", "Regular");
         string text = "Some Text String that is really long and is <BOL>forced to wrap to other lines</BOL> so that we can see the effects." as String;
-        GraphicElement polyTxtElm = LayoutElementFactory.Instance.CreatePolygonParagraphGraphicElement(layout, poly, text, sym);
-        polyTxtElm.SetName("New Polygon Text");
+        //At 2.x - GraphicElement polyTxtElm = LayoutElementFactory.Instance.CreatePolygonParagraphGraphicElement(layout, poly, text, sym);
+        //         polyTxtElm.SetName("New Polygon Text"); 
+        GraphicElement polyTxtElm = ElementFactory.Instance.CreateTextGraphicElement(
+                                      layout, TextType.RectangleParagraph, poly, sym, text, "New Polygon Text");
 
         //(Optionally) Modify paragraph border 
         CIMGraphic polyTxtGra = polyTxtElm.GetGraphic();
@@ -527,10 +638,19 @@ namespace Layout_HelpExamples
 
       #endregion Create_PolygonText
 
-      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
-      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.IElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
-      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
-      // cref: Create_CircleText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateCircleParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic
+      // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT.SETGRAPHIC
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic.Frame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame.BorderSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Desktop.Layouts.TextType
       #region Create_CircleText
       //Create circle paragraph text with basic text settings and optionally a modified border.
 
@@ -539,14 +659,19 @@ namespace Layout_HelpExamples
       {
         //Build geometry
         Coordinate2D center = new Coordinate2D(4.5, 4);
-        EllipticArcBuilder eabCir = new EllipticArcBuilder(center, 0.5, esriArcOrientation.esriArcClockwise);
+        //At 2.x - EllipticArcBuilder eabCir = new EllipticArcBuilder(center, 0.5, esriArcOrientation.esriArcClockwise);
+        var eabCir = new EllipticArcBuilderEx(center, 0.5, ArcOrientation.ArcClockwise);
         EllipticArcSegment cir = eabCir.ToSegment();
+        var polyCir = PolygonBuilderEx.CreatePolygon(
+                        PolylineBuilderEx.CreatePolyline(cir));
 
         //Set symbolology, create and add element to layout
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.GreenRGB, 10, "Arial", "Regular");
         string text = "Circle, circle, circle, circle, circle, circle, circle, circle, circle, circle, circle";
-        GraphicElement cirTxtElm = LayoutElementFactory.Instance.CreateCircleParagraphGraphicElement(layout, cir, text, sym);
-        cirTxtElm.SetName("New Circle Text");
+        //At 2.x - GraphicElement cirTxtElm = LayoutElementFactory.Instance.CreateCircleParagraphGraphicElement(layout, cir, text, sym);
+        //         cirTxtElm.SetName("New Circle Text");
+        GraphicElement cirTxtElm = ElementFactory.Instance.CreateTextGraphicElement(
+                                      layout, TextType.CircleParagraph, polyCir, sym, text, "New Circle Text");
 
         //(Optionally) Modify paragraph border 
         CIMGraphic cirTxtGra = cirTxtElm.GetGraphic();
@@ -557,10 +682,19 @@ namespace Layout_HelpExamples
       });
       #endregion
 
-      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
-      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.IElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
-      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String)
-      // cref: Create_EllipseText;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateEllipseParagraphGraphicElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.EllipticArcSegment,System.String,ArcGIS.Core.CIM.CIMTextSymbol)
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic
+      // cref: ARCGIS.DESKTOP.LAYOUTS.GRAPHICELEMENT.SETGRAPHIC
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMTextSymbol
+      // cref: ArcGIS.Core.CIM.CIMGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic
+      // cref: ArcGIS.Core.CIM.CIMParagraphTextGraphic.Frame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame
+      // cref: ArcGIS.Core.CIM.CIMGraphicFrame.BorderSymbol
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
+      // cref: ArcGIS.Desktop.Layouts.GraphicElement
+      // cref: ArcGIS.Desktop.Layouts.TextType
       #region Create_EllipseText
       //Create ellipse paragraph text with basic text settings and optionally a modified border.
 
@@ -569,14 +703,19 @@ namespace Layout_HelpExamples
       {
         //Build geometry
         Coordinate2D center = new Coordinate2D(4.5, 2.75);
-        EllipticArcBuilder eabElp = new EllipticArcBuilder(center, 0, 1, 0.45, esriArcOrientation.esriArcClockwise);
+        //At 2.x - EllipticArcBuilder eabElp = new EllipticArcBuilder(center, 0, 1, 0.45, esriArcOrientation.esriArcClockwise);
+        var eabElp = new EllipticArcBuilderEx(center, 0, 1, 0.45, ArcOrientation.ArcClockwise);
         EllipticArcSegment ellipse = eabElp.ToSegment();
+        var polyElp = PolygonBuilderEx.CreatePolygon(
+                        PolylineBuilderEx.CreatePolyline(ellipse));
 
         //Set symbolology, create and add element to layout
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(ColorFactory.Instance.BlueRGB, 10, "Arial", "Regular");
         string text = "Ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse, ellipse";
-        GraphicElement elpTxtElm = LayoutElementFactory.Instance.CreateEllipseParagraphGraphicElement(layout, ellipse, text, sym);
-        elpTxtElm.SetName("New Ellipse Text");
+        //At 2.x - GraphicElement elpTxtElm = LayoutElementFactory.Instance.CreateEllipseParagraphGraphicElement(layout, ellipse, text, sym);
+        //         elpTxtElm.SetName("New Ellipse Text");
+        GraphicElement elpTxtElm = ElementFactory.Instance.CreateTextGraphicElement(
+                                      layout, TextType.EllipseParagraph, polyElp, sym, text, "New Ellipse Text");
 
         //(Optionally) Modify paragraph border 
         CIMGraphic elpTxtGra = elpTxtElm.GetGraphic();
@@ -589,6 +728,10 @@ namespace Layout_HelpExamples
 
       MapFrame mfElm = null;
 
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateMapFrameElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateMapFrameElement
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetCamera(Layer,Boolean)
       #region Create_MapFrame
       //Creates a new map frame and changes the camera's scale.
 
@@ -598,13 +741,15 @@ namespace Layout_HelpExamples
         //Build geometry
         Coordinate2D ll = new Coordinate2D(6.0, 8.5);
         Coordinate2D ur = new Coordinate2D(8.0, 10.5);
-        Envelope env = EnvelopeBuilder.CreateEnvelope(ll, ur);
+        //At 2.x - Envelope env = EnvelopeBuilder.CreateEnvelope(ll, ur);
+        Envelope env = EnvelopeBuilderEx.CreateEnvelope(ll, ur);
 
         //Reference map, create MF and add to layout
         MapProjectItem mapPrjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map"));
         Map mfMap = mapPrjItem.GetMap();
-        mfElm = LayoutElementFactory.Instance.CreateMapFrame(layout, env, mfMap);
-        mfElm.SetName("New Map Frame");
+        //At 2.x - mfElm = LayoutElementFactory.Instance.CreateMapFrame(layout, env, mfMap);
+        //         mfElm.SetName("New Map Frame"); 
+        mfElm = ElementFactory.Instance.CreateMapFrameElement(layout, env, mfMap, "New Map Frame");
 
         //Set the camera
         Camera camera = mfElm.Camera;
@@ -613,9 +758,20 @@ namespace Layout_HelpExamples
       });
       #endregion Create_MapFrame
 
-      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.IElementFactory.CreateScaleBar(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.ScaleBarStyleItem)
-      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateScaleBar(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.ScaleBarStyleItem)
-      // cref: Create_ScaleBar;ArcGIS.Desktop.Layouts.ScaleBar
+      // cref: ArcGIS.Desktop.Mapping.StyleProjectItem
+      // cref: ArcGIS.Desktop.Mapping.ScaleBarStyleItem
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.MapFrame
+      // cref: ArcGIS.Desktop.Layouts.ScaleBarInfo
+      // cref: ArcGIS.Desktop.Layouts.MapSurroundInfo.MapFrameName
+      // cref: ArcGIS.Desktop.Layouts.ScaleBarInfo.ScaleBarStyleItem
+      // cref: ArcGIS.Desktop.Layouts.ScaleBar
+      // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.SEARCHSCALEBARS
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateMapSurroundElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateMapSurroundElement
+      // cref: ArcGIS.Desktop.Layouts.Element.SETX
+      // cref: ArcGIS.Desktop.Layouts.Element.SETY
+      // cref: ArcGIS.Desktop.Layouts.Element.SETWIDTH
       #region Create_ScaleBar
       //Create a scale bar for a specific map frame and assign a scale bar style item.
 
@@ -636,17 +792,41 @@ namespace Layout_HelpExamples
           ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Map frame not found", "WARNING");
           return;
         }
-        ScaleBar sbElm = LayoutElementFactory.Instance.CreateScaleBar(layout, center, mf, sbStyleItm);
-        sbElm.SetName("New Scale Bar");
+
+        //At 2.x -
+        //ScaleBar sbElm = LayoutElementFactory.Instance.CreateScaleBar(layout, center, mf, sbStyleItm);
+        //sbElm.SetName("New Scale Bar");
+        //sbElm.SetWidth(2);
+        //sbElm.SetX(6);
+        //sbElm.SetY(7.5); 
+
+        var sbInfo = new ScaleBarInfo()
+        {
+          MapFrameName = mf.Name,
+          ScaleBarStyleItem = sbStyleItm
+        };
+        var sbElm = ElementFactory.Instance.CreateMapSurroundElement(
+                                            layout, center.ToMapPoint(), sbInfo, "New Scale Bar") as ScaleBar;
         sbElm.SetWidth(2);
         sbElm.SetX(6);
         sbElm.SetY(7.5);
       });
       #endregion Create_ScaleBar
 
-      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.IElementFactory.CreateNorthArrow(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.NorthArrowStyleItem)
-      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateNorthArrow(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Desktop.Layouts.MapFrame,ArcGIS.Desktop.Mapping.NorthArrowStyleItem)
-      // cref: Create_NorthArrow;ArcGIS.Desktop.Layouts.NorthArrow
+      // cref: ArcGIS.Desktop.Mapping.StyleProjectItem
+      // cref: ArcGIS.Desktop.Mapping.NorthArrowStyleItem
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.MapFrame
+      // cref: ArcGIS.Desktop.Layouts.NorthArrowInfo
+      // cref: ArcGIS.Desktop.Layouts.MapSurroundInfo.MapFrameName
+      // cref: ArcGIS.Desktop.Layouts.NorthArrowInfo.NorthArrowStyleItem
+      // cref: ArcGIS.Desktop.Layouts.NorthArrow
+      // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.SEARCHNORTHARROWS
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateMapSurroundElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateMapSurroundElement
+      // cref: ArcGIS.Desktop.Layouts.Element.SETX
+      // cref: ArcGIS.Desktop.Layouts.Element.SETY
+      // cref: ArcGIS.Desktop.Layouts.Element.SetHeight
       #region Create_NorthArrow
       //Create a north arrow for a specific map frame and assign a north arrow style item.
 
@@ -667,16 +847,30 @@ namespace Layout_HelpExamples
           ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Map frame not found", "WARNING");
           return;
         }
-        NorthArrow arrowElm = LayoutElementFactory.Instance.CreateNorthArrow(layout, center, mf, naStyleItm);
-        arrowElm.SetName("New North Arrow");
+        //At 2.x -
+        //NorthArrow arrowElm = LayoutElementFactory.Instance.CreateNorthArrow(layout, center, mf, naStyleItm);
+        //arrowElm.SetName("New North Arrow");
+        //arrowElm.SetHeight(1.75);
+        //arrowElm.SetX(7);
+        //arrowElm.SetY(6);
+
+        var naInfo = new NorthArrowInfo()
+        {
+          MapFrameName = mf.Name,
+          NorthArrowStyleItem = naStyleItm
+        };
+
+        var arrowElm = ElementFactory.Instance.CreateMapSurroundElement(
+                                  layout, center.ToMapPoint(), naInfo, "New North Arrow") as NorthArrow;
         arrowElm.SetHeight(1.75);
         arrowElm.SetX(7);
         arrowElm.SetY(6);
       });
       #endregion Create_NorthArrow
 
-      // cref: Create_Empty_Group_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer)
-      // cref: Create_Empty_Group_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer)
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.GroupElement
       #region Create_Empty_Group_Root
       //Create an empty group element at the root level of the contents pane.
 
@@ -684,11 +878,16 @@ namespace Layout_HelpExamples
       //Construct on the worker thread
       await QueuedTask.Run(() =>
       {
-        GroupElement emptyGroupAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout);
-        emptyGroupAtRoot.SetName("Empty group at root");
+        //At 2.x - GroupElement emptyGroupAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout);
+        //         emptyGroupAtRoot.SetName("Empty group at root");
+        GroupElement emptyGroupAtRoot = ElementFactory.Instance.CreateGroupElement(layout, null, "Empty group at root");
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.GroupElement
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
       #region Create_Empty_Group_Group
       //Create an empty group element at the root level of another group element.
 
@@ -698,13 +897,19 @@ namespace Layout_HelpExamples
       //Construct on the worker thread
       await QueuedTask.Run(() =>
       {
-        GroupElement emptyGroupInGroupAtRoot = LayoutElementFactory.Instance.CreateGroupElement(existingGroupAtRoot);
-        emptyGroupInGroupAtRoot.SetName("Empty group in group at root");
+        //At 2.x - GroupElement emptyGroupInGroupAtRoot = LayoutElementFactory.Instance.CreateGroupElement(existingGroupAtRoot);
+        //         emptyGroupInGroupAtRoot.SetName("Empty group in group at root");
+        GroupElement emptyGroupInGroupAtRoot = ElementFactory.Instance.CreateGroupElement(
+                                                existingGroupAtRoot, null, "Empty group in group at root");
+
       });
       #endregion
 
-      // cref: Create_Group_With_Single_Element_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Desktop.Layouts.Element)
-      // cref: Create_Group_With_Single_Element_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,ArcGIS.Desktop.Layouts.Element)
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.GroupElement
+      // cref: ArcGIS.Desktop.Layouts.Element
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
       #region Create_Group_With_Single_Element_Root
       //Create a group with a single element at the root level of the contents pane.
 
@@ -714,13 +919,18 @@ namespace Layout_HelpExamples
       //Construct on the worker thread
       await QueuedTask.Run(() =>
       {
-        GroupElement groupWithSingleElementAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, titleElm);
-        groupWithSingleElementAtRoot.SetName("Group with single element at root");
+        //At 2.x - GroupElement groupWithSingleElementAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, titleElm);
+        //         groupWithSingleElementAtRoot.SetName("Group with single element at root"); 
+        GroupElement groupWithSingleElementAtRoot = 
+                 ElementFactory.Instance.CreateGroupElement(layout, new List<Element>() { titleElm }, "Group with single element at root");
       });
       #endregion
 
-      // cref: Create_Group_With_List_Elements_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Collections.Generic.IList{ArcGIS.Desktop.Layouts.Element})
-      // cref: Create_Group_With_List_Elements_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.Collections.Generic.IList{ArcGIS.Desktop.Layouts.Element})
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.GroupElement
+      // cref: ArcGIS.Desktop.Layouts.Element
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
       #region Create_Group_With_List_Elements_Root
       //Create a group with a list of elements at the root level of the contents pane.
 
@@ -740,13 +950,17 @@ namespace Layout_HelpExamples
       //Construct on the worker thread
       await QueuedTask.Run(() =>
       {
-        GroupElement groupWithListOfElementsAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmList);
-        groupWithListOfElementsAtRoot.SetName("Group with list of elements at root");
+        //At 2.x - GroupElement groupWithListOfElementsAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmList);
+        //         groupWithListOfElementsAtRoot.SetName("Group with list of elements at root");
+        GroupElement groupWithListOfElementsAtRoot = 
+          ElementFactory.Instance.CreateGroupElement(layout, elmList, "Group with list of elements at root");
       });
       #endregion
 
-      // cref: Create_Group_With_List_Element_Names_Root;ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.String[])
-      // cref: Create_Group_With_List_Element_Names_Root;ArcGIS.Desktop.Layouts.LayoutElementFactory.CreateGroupElement(ArcGIS.Desktop.Layouts.ILayoutElementContainer,System.String[])
+      // cref: ArcGIS.Desktop.Layouts.IElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
+      // cref: ArcGIS.Desktop.Layouts.GroupElement
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElements
       #region Create_Group_With_List_Element_Names_Root
       //Create a group using a list of element names at the root level of the contents pane.
 
@@ -756,8 +970,13 @@ namespace Layout_HelpExamples
       //Construct on the worker thread
       await QueuedTask.Run(() =>
       {
-        GroupElement groupWithListOfElementNamesAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmNameList);
-        groupWithListOfElementNamesAtRoot.SetName("Group with list of element names at root");
+        //GroupElement groupWithListOfElementNamesAtRoot = LayoutElementFactory.Instance.CreateGroupElement(layout, elmNameList);
+        //groupWithListOfElementNamesAtRoot.SetName("Group with list of element names at root");
+
+        //At 3.x use FindElements to retrieve the respective elements first
+        var elems = layout.FindElements(elmNameList);
+        GroupElement groupWithListOfElementNamesAtRoot =
+          ElementFactory.Instance.CreateGroupElement(layout, elems, "Group with list of element names at root");
       });
       #endregion
 

@@ -54,6 +54,8 @@ namespace ProSnippetsEditingFeatureSceneLayer
 
     public async void Examples2()
     {
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
       #region Determine if a FeatureSceneLayer supports editing
 
       var featSceneLayer = MapView.Active.Map.GetLayersAsFlattenedList()
@@ -67,8 +69,11 @@ namespace ProSnippetsEditingFeatureSceneLayer
       #endregion
 
       // create a new point at specified coordinates
-      MapPoint mapPoint = MapPointBuilder.CreateMapPoint(122.39, 37.78);
+      MapPoint mapPoint = MapPointBuilderEx.CreateMapPoint(122.39, 37.78);
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.ShapeType
       #region Create a new Point feature in FeatureSceneLayer
 
       //must support editing!
@@ -95,6 +100,10 @@ namespace ProSnippetsEditingFeatureSceneLayer
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.GetSelection
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Delete
       #region Delete all the selected features in FeatureSceneLayer
 
       //must support editing!
@@ -118,6 +127,10 @@ namespace ProSnippetsEditingFeatureSceneLayer
     {
       var oid = 1;
 
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
+      // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
+      // cref: ArcGIS.Desktop.Editing.Inspector.Load
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Modify
       #region Edit the attributes of a FeatureSceneLayer
       //must support editing!
       var featSceneLayer = MapView.Active.Map.GetLayersAsFlattenedList()

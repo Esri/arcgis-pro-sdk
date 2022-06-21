@@ -39,6 +39,16 @@ namespace Layout_HelpExamples
       Layout layout = await QueuedTask.Run(() => layoutItem.GetLayout());
       String filePath = null;
 
+      // cref: ArcGIS.Desktop.Layouts.Layout.Export
+      // cref: ARCGIS.DESKTOP.MAPPING.PDFFORMAT
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+      // cref: ArcGIS.Desktop.Mapping.PDFFormat.ImageCompression
+      // cref: ARCGIS.DESKTOP.MAPPING.PDFFORMAT.IMAGEQUALITY
+      // cref: ARCGIS.DESKTOP.MAPPING.PDFFORMAT.LAYERSANDATTRIBUTES
+      // cref: ARCGIS.DESKTOP.MAPPING.ImageCompression
+      // cref: ARCGIS.DESKTOP.MAPPING.ImageQuality
+      // cref: ARCGIS.DESKTOP.MAPPING.LayersAndAttributes
       #region Layout_ExportPDF
       //Export a layout to PDF
 
@@ -67,14 +77,14 @@ namespace Layout_HelpExamples
 }
 
 
-
-
-
-
-
 namespace Layout_HelpExamples
 {
-  // cref: ExportBMP_Layout;ArcGIS.Desktop.Mapping.BMPFormat
+  // cref: ArcGIS.Desktop.Mapping.BMPFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportBMP_Layout
   //This example demonstrates how to export a layout to BMP.
 
@@ -114,6 +124,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.BMPFormat
+  // cref: ArcGIS.Desktop.Mapping.BMPFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportBMP_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to BMP.
 
@@ -156,6 +173,15 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.BMPFormat
+  // cref: ArcGIS.Desktop.Mapping.BMPFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Height
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Width
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportBMP_ActiveMap
   //This example demonstrates how to export the active mapview to BMP.
 
@@ -193,7 +219,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportEMF_Layout;ArcGIS.Desktop.Mapping.EMFFormat
+  // cref: ArcGIS.Desktop.Mapping.EMFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportEMF_Layout
   //This example demonstrates how to export a layout to EMF.
 
@@ -233,6 +264,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+
+  // cref: ArcGIS.Desktop.Mapping.EMFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportEMF_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to EMF.
 
@@ -274,6 +312,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.EMFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportEMF_ActiveMap
   //This example demonstrates how to export the active mapview to EMF.
 
@@ -310,7 +354,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportEPS_Layout;ArcGIS.Desktop.Mapping.EPSFormat
+  // cref: ArcGIS.Desktop.Mapping.EPSFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportEPS_Layout
   //This example demonstrates how to export a layout to EPS.
 
@@ -350,6 +399,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.EPSFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportEPS_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to EPS.
 
@@ -391,6 +446,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.EPSFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportEPS_ActiveMap
   //This example demonstrates how to export the active mapview to EPS.
 
@@ -405,7 +466,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create EMF format with appropriate settings
               EPSFormat EPS = new EPSFormat();
@@ -417,7 +478,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (EPS.ValidateOutputFilePath())
         {
-          map.Export(EPS);
+          mapv.Export(EPS);
         }
       });
     }
@@ -427,7 +488,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportGIF_Layout;ArcGIS.Desktop.Mapping.GIFFormat
+  // cref: ArcGIS.Desktop.Mapping.GIFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportGIF_Layout
   //This example demonstrates how to export a layout to GIF.
 
@@ -467,6 +533,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.GIFFormat
+  // cref: ArcGIS.Desktop.Mapping.GIFFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportGIF_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to GIF.
 
@@ -509,6 +582,15 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.GIFFormat
+  // cref: ArcGIS.Desktop.Mapping.GIFFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Height
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Width
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportGIF_ActiveMap
   //This example demonstrates how to export the active mapview to GIF.
 
@@ -523,7 +605,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create GIF format with appropriate settings
               GIFFormat GIF = new GIFFormat();
@@ -536,7 +618,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (GIF.ValidateOutputFilePath())
         {
-          map.Export(GIF);
+          mapv.Export(GIF);
         }
       });
     }
@@ -546,7 +628,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportJPEG_Layout;ArcGIS.Desktop.Mapping.JPEGFormat
+  // cref: ArcGIS.Desktop.Mapping.JPEGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportJPEG_Layout
   //This example demonstrates how to export a layout to JPEG.
 
@@ -586,6 +673,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.JPEGFormat
+  // cref: ArcGIS.Desktop.Mapping.JPEGFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportJPEG_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to JPEG.
 
@@ -615,7 +709,6 @@ namespace Layout_HelpExamples
               //Export MapFrame
               Layout lyt = layoutItem.GetLayout(); //Loads and returns the layout associated with a LayoutItem
               MapFrame mf = lyt.FindElement(MFName) as MapFrame;
-        JPEG.OutputFileName = Path;
         if (JPEG.ValidateOutputFilePath())
         {
           mf.Export(JPEG);
@@ -628,6 +721,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.JPEGFormat
+  // cref: ArcGIS.Desktop.Mapping.JPEGFormat.HasWorldFile
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportJPEG_ActiveMap
   //This example demonstrates how to export the active mapview to JPEG.
 
@@ -642,7 +742,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create JPEG format with appropriate settings
               JPEGFormat JPEG = new JPEGFormat();
@@ -655,7 +755,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (JPEG.ValidateOutputFilePath())
         {
-          map.Export(JPEG);
+          mapv.Export(JPEG);
         }
       });
     }
@@ -665,7 +765,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportPDF_Layout;ArcGIS.Desktop.Mapping.PDFFormat
+  // cref: ArcGIS.Desktop.Mapping.PDFFormat
+  // cref: ArcGIS.Desktop.Mapping.PDFFormat.Password
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportPDF_Layout
   //This example demonstrates how to export a layout to PDF.
 
@@ -706,6 +812,13 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.PDFFormat
+  // cref: ArcGIS.Desktop.Mapping.PDFFormat.Password
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportPDF_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to PDF.
 
@@ -728,6 +841,7 @@ namespace Layout_HelpExamples
       PDFFormat PDF = new PDFFormat();
       PDF.Resolution = 300;
       PDF.OutputFileName = Path;
+      //PDF.Password = "xxx";
 
       return QueuedTask.Run(() =>
       {
@@ -747,6 +861,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.PDFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportPDF_ActiveMap
   //This example demonstrates how to export the active mapview to PDF.
 
@@ -761,7 +881,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create PDF format with appropriate settings
               PDFFormat PDF = new PDFFormat();
@@ -773,7 +893,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (PDF.ValidateOutputFilePath())
         {
-          map.Export(PDF);
+          mapv.Export(PDF);
         }
       });
     }
@@ -783,7 +903,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportPNG_Layout;ArcGIS.Desktop.Mapping.PNGFormat
+  // cref: ArcGIS.Desktop.Mapping.PNGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportPNG_Layout
   //This example demonstrates how to export a layout to PNG.
 
@@ -823,6 +948,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.PNGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportPNG_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to PNG.
 
@@ -864,6 +995,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.PNGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportPNG_ActiveMap
   //This example demonstrates how to export the active mapview to PNG.
 
@@ -878,7 +1015,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create PNG format with appropriate settings
               PNGFormat PNG = new PNGFormat();
@@ -890,7 +1027,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (PNG.ValidateOutputFilePath())
         {
-          map.Export(PNG);
+          mapv.Export(PNG);
         }
       });
     }
@@ -900,7 +1037,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportSVG_Layout;ArcGIS.Desktop.Mapping.SVGFormat
+  // cref: ArcGIS.Desktop.Mapping.SVGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportSVG_Layout
   //This example demonstrates how to export a layout to SVG.
 
@@ -940,6 +1082,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.SVGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportSVG_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to SVG.
 
@@ -981,6 +1129,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.SVGFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportSVG_ActiveMap
   //This example demonstrates how to export the active mapview to SVG.
 
@@ -995,7 +1149,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create SVG format with appropriate settings
               SVGFormat SVG = new SVGFormat();
@@ -1007,7 +1161,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (SVG.ValidateOutputFilePath())
         {
-          map.Export(SVG);
+          mapv.Export(SVG);
         }
       });
     }
@@ -1017,7 +1171,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportTGA_Layout;ArcGIS.Desktop.Mapping.TGAFormat
+  // cref: ArcGIS.Desktop.Mapping.TGAFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportTGA_Layout
   //This example demonstrates how to export a layout to TGA.
 
@@ -1057,6 +1216,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.TGAFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportTGA_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to TGA.
 
@@ -1098,6 +1263,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.TGAFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportTGA_ActiveMap
   //This example demonstrates how to export the active mapview to TGA.
 
@@ -1112,7 +1283,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create TGA format with appropriate settings
               TGAFormat TGA = new TGAFormat();
@@ -1124,7 +1295,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (TGA.ValidateOutputFilePath())
         {
-          map.Export(TGA);
+          mapv.Export(TGA);
         }
       });
     }
@@ -1134,7 +1305,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
-  // cref: ExportTIFF_Layout;ArcGIS.Desktop.Mapping.TIFFFormat
+  // cref: ArcGIS.Desktop.Mapping.TIFFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.Layout.Export
   #region ExportTIFF_Layout
   //This example demonstrates how to export a layout to TIFF.
 
@@ -1174,6 +1350,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.TIFFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Layouts.MapFrame.Export
   #region ExportTIFF_MapFrame
   //This example demonstrates how to export an individual map frame on a layout to TIFF.
 
@@ -1215,6 +1397,12 @@ namespace Layout_HelpExamples
 
 namespace Layout_HelpExamples
 {
+  // cref: ArcGIS.Desktop.Mapping.TIFFFormat
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.Resolution
+  // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+  // cref: ArcGIS.Desktop.Mapping.MapView.Export
   #region ExportTIFF_ActiveMap
   //This example demonstrates how to export the active mapview to TIFF.
 
@@ -1229,7 +1417,7 @@ namespace Layout_HelpExamples
       return QueuedTask.Run(() =>
       {
               //Reference the active map view
-              MapView map = MapView.Active;
+              MapView mapv = MapView.Active;
 
               //Create TIFF format with appropriate settings
               TIFFFormat TIFF = new TIFFFormat();
@@ -1241,7 +1429,7 @@ namespace Layout_HelpExamples
               //Export active map view
               if (TIFF.ValidateOutputFilePath())
         {
-          map.Export(TIFF);
+          mapv.Export(TIFF);
         }
       });
     }

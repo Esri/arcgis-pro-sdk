@@ -26,14 +26,15 @@ using ArcGIS.Desktop.Framework.Contracts;
 
 namespace Layout_HelpExamples
 {
-  // cref: PictureElementExample;ArcGIS.Desktop.Layouts.PictureElement
+  // cref: ArcGIS.Desktop.Layouts.PictureElement
+  // cref: ArcGIS.Desktop.Layouts.PictureElement.SetSourcePath
   #region PictureElementExample
   ///This example references a PictureElement on a layout and changes the picture by setting a path to a file on disk using the
 
   //Added references
-  using ArcGIS.Desktop.Core;                        
-  using ArcGIS.Desktop.Layouts;                      
-  using ArcGIS.Desktop.Framework.Threading.Tasks;    
+  using ArcGIS.Desktop.Core;
+  using ArcGIS.Desktop.Layouts;
+  using ArcGIS.Desktop.Framework.Threading.Tasks;
 
   public class PictureElementExample
   {
@@ -46,16 +47,16 @@ namespace Layout_HelpExamples
 
       return QueuedTask.Run<bool>(() =>
       {
-              //Reference and load the layout associated with the layout item
-              Layout lyt = layoutItem.GetLayout();
+        //Reference and load the layout associated with the layout item
+        Layout lyt = layoutItem.GetLayout();
 
-              //Reference a picture element by name
-              PictureElement picElm = lyt.FindElement(PictureName) as PictureElement;
+        //Reference a picture element by name
+        PictureElement picElm = lyt.FindElement(PictureName) as PictureElement;
         if (picElm == null)
           return false;
 
-              //Change the path to a new source
-              picElm.SetSourcePath(PicturePath);
+        //Change the path to a new source
+        picElm.SetSourcePath(PicturePath);
 
         return true;
       });

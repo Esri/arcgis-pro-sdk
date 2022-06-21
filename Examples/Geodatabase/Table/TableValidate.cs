@@ -174,7 +174,7 @@ namespace SDKExamples
 
               invalidRowObjectID = row.GetObjectID();
             }
-            catch (GeodatabaseException exObj)
+            catch (ArcGIS.Core.Data.Exceptions.GeodatabaseException exObj)
             {
               Console.WriteLine(exObj);
             }

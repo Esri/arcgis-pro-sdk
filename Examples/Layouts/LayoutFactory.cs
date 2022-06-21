@@ -28,10 +28,11 @@ using ArcGIS.Core.Geometry;
 
 namespace Layout_HelpExamples
 {
-  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
-  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
-  // cref: CreateLayoutExample1;ArcGIS.Desktop.Layouts.LayoutFactory
-  #region CreateLayoutExample1
+  // cref: ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
+  // cref: ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
+  // cref: ArcGIS.Desktop.Layouts.Layout.SetName
+  // cref: ArcGIS.Desktop.Core.LayoutFrameworkExtender.CreateLayoutPaneAsync
+  #region CreateLayout_WITH_WD_AND_HT
   //This example creates a new layout using a minimum set of parameters.
 
   //Added references
@@ -50,21 +51,30 @@ namespace Layout_HelpExamples
         layout.SetName(LayoutName);
       });
 
-      //Open the layout in a pane
+      //Open the layout in a pane on the UI!
       await ProApp.Panes.CreateLayoutPaneAsync(layout);
 
       return layout;
     }
   }
-  #endregion CreateLayoutExample1
+  #endregion
 }
 
 
 namespace Layout_HelpExamples
 {
-  // cref: CreateLayoutExample2;ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
-  // cref: CreateLayoutExample2;ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Boolean,System.Double)
-  #region CreateLayoutExample2
+  // cref: ArcGIS.Desktop.Layouts.ILayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
+  // cref: ArcGIS.Desktop.Layouts.LayoutFactory.CreateLayout(ArcGIS.Core.CIM.CIMPage)
+  // cref: ArcGIS.Core.CIM.CIMPAGE
+  // cref: ArcGIS.Core.CIM.CIMPAGE.ShowGuides
+  // cref: ArcGIS.Core.CIM.CIMPAGE.ShowRulers
+  // cref: ArcGIS.Core.CIM.CIMPAGE.Guides
+  // cref: ArcGIS.Core.CIM.CIMGUIDE
+  // cref: ArcGIS.Core.CIM.CIMGUIDE.Position
+  // cref: ArcGIS.Core.CIM.CIMGUIDE.Orientation
+  // cref: ArcGIS.Core.CIM.Orientation
+  // cref: ArcGIS.Desktop.Core.LayoutFrameworkExtender.CreateLayoutPaneAsync
+  #region CreateLayout_With_CIMPAGE
   //This example creates a new layout using a CIM page definion with rulers and guides included.
 
   //Added references
@@ -119,12 +129,12 @@ namespace Layout_HelpExamples
         layout.SetName(LayoutName);
       });
 
-      //Open the layout in a pane
+      //Open the layout in a pane on the UI!
       await ProApp.Panes.CreateLayoutPaneAsync(CIMlayout);
       return CIMlayout;
     }
   }
-  #endregion CreateLayoutExample2
+  #endregion
 }
 
 namespace Layout_HelpExamples

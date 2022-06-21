@@ -25,6 +25,7 @@ using ArcGIS.Desktop.TaskAssistant;
 using ArcGIS.Desktop.TaskAssistant.Events;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using ArcGIS.Desktop.TaskAssistant.Exceptions;
 
 namespace ProSnippetsTasks 
 {
@@ -33,6 +34,7 @@ namespace ProSnippetsTasks
 
     public async void OpenTask()
     {
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem
       #region Retrieve all the Task Items in a Project
       IEnumerable<TaskProjectItem> taskItems = Project.Current.GetItems<TaskProjectItem>();
       foreach (var item in taskItems)
@@ -42,16 +44,19 @@ namespace ProSnippetsTasks
 
       #endregion
 
-      // cref: Open a Task File - .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskAsync(System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.OpenTaskFileAsync(System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
       #region Open a Task File - .esriTasks file
       // Open a task file
       try
       {
         // TODO - substitute your own .esriTasks file to be opened
         string taskFile = @"c:\Tasks\Get Started.esriTasks";
-        System.Guid guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
+        //At 2.x -
+        //System.Guid guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
+        var guid = await TaskAssistantFactory.Instance.OpenTaskFileAsync(taskFile);
 
-        // TODO - retain the guid returned for use with CloseTaskAsync
+        // TODO - retain the guid returned for use with CloseTaskItemAsync
       }
       catch (OpenTaskException e)
       {
@@ -61,7 +66,10 @@ namespace ProSnippetsTasks
 
       #endregion
 
-      // cref: Open a Project Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskItemAsync(System.Guid)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem.TaskItemGuid
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.OpenTaskItemAsync(System.Guid)
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
       #region Open a Project Task Item
       // get the first project task item
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -72,9 +80,11 @@ namespace ProSnippetsTasks
       try
       {
         // Open it
-        System.Guid guid = await TaskAssistantModule.OpenTaskItemAsync(taskItem.TaskItemGuid);
+        //At 2.x -
+        //System.Guid guid = await TaskAssistantModule.OpenTaskItemAsync(taskItem.TaskItemGuid);
+        var guid = await TaskAssistantFactory.Instance.OpenTaskItemAsync(taskItem.TaskItemGuid);
 
-        // TODO - retain the guid returned for use with CloseTaskAsync
+        // TODO - retain the guid returned for use with CloseTaskItemAsync
       }
       catch (OpenTaskException e)
       {
@@ -85,9 +95,10 @@ namespace ProSnippetsTasks
 
     public void CloseTaskItem()
     {
-      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.CloseTaskAsync(System.Guid)
-      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.IsOpen
-      // cref: Close a Task Item;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.TaskItemGuid
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.CloseTaskItemAsync(System.Guid)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem.IsOpen
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem.TaskItemGuid
       #region Close a Task Item
       // find the first project task item which is open
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault(t => t.IsOpen == true);
@@ -95,16 +106,24 @@ namespace ProSnippetsTasks
       if (taskItem == null)
         return;
 
-      // close it
-      // NOTE : The task item will also be removed from the project
-      TaskAssistantModule.CloseTaskAsync(taskItem.TaskItemGuid);
+      if (taskItem.IsOpen)
+      {
+        // close it
+        // NOTE : The task item will also be removed from the project
+        //At 2.x -
+        //TaskAssistantModule.CloseTaskAsync(taskItem.TaskItemGuid);
+        TaskAssistantFactory.Instance.CloseTaskItemAsync(taskItem.TaskItemGuid);
+      }
 
       #endregion
     }
 
     public async void ExportTaskItem()
     {
-      // cref: Export a Task Item;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.ExportTaskAsync(System.Guid,System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.ExportTaskItemAsync(System.Guid,System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem.TaskItemGuid
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.ExportTaskException
       #region Export a Task Item
       // get the first project task item
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -116,7 +135,9 @@ namespace ProSnippetsTasks
       {
         // export the task item to the c:\Temp folder
         string exportFolder = @"c:\temp";
-        string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, exportFolder);
+        //At 2.x -
+        //string fileName = await TaskAssistantModule.ExportTaskAsync(taskItem.TaskItemGuid, exportFolder);
+        string fileName = await TaskAssistantFactory.Instance.ExportTaskItemAsync(taskItem.TaskItemGuid, exportFolder);
         ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Task saved to " + fileName);
       }
       catch (ExportTaskException e)
@@ -128,11 +149,15 @@ namespace ProSnippetsTasks
 
     public async void GetTaskItemInfo_ProjectItem()
     {
-      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.GetTasks
-      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskProjectItem.GetTaskItemInfoAsync
-      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Description
-      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Guid
-      // cref: Get Task Information - from a TaskProjectItem;ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Name
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskProjectItem.GetTaskItemInfoAsync
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Name
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Description
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Guid
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.GetTasks
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskInfo.Name
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskInfo.Guid
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.TaskFileVersionException
       #region Get Task Information - from a TaskProjectItem
 
       var taskItem = Project.Current.GetItems<TaskProjectItem>().FirstOrDefault();
@@ -183,102 +208,131 @@ namespace ProSnippetsTasks
     }
 
     public async void GetTaskItemInfo_EsriTasksFile()
-    { 
-      // cref: Get Task Information - from an .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.GetTaskItemInfoAsync(System.String)
+    {
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.GetTaskItemInfoAsync(System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Name
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Description
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.Guid
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.GetTasks()
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.TaskFileVersionException
       #region Get Task Information - from an .esriTasks file
 
       // TODO - substitute your own .esriTasks file
       string taskFile = @"c:\Tasks\Get Started.esriTasks";
 
-      try
+      string message = await QueuedTask.Run(async () =>
       {
-        // retrieve the task item information
-        TaskItemInfo taskItemInfo = await TaskAssistantModule.GetTaskItemInfoAsync(taskFile);
+        string msg = "";
+        try
+        {
+          // retrieve the task item information
+          //At 2.x -
+          //TaskItemInfo taskItemInfo = await TaskAssistantModule.GetTaskItemInfoAsync(taskFile);
+          TaskItemInfo taskItemInfo = await TaskAssistantFactory.Instance.GetTaskItemInfoAsync(taskFile);
 
-        string message = "Name : " + taskItemInfo.Name;
-        message += "\r\n" + "Description : " + taskItemInfo.Description;
-        message += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
-        message += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
+          msg = "Name : " + taskItemInfo.Name;
+          msg += "\r\n" + "Description : " + taskItemInfo.Description;
+          msg += "\r\n" + "Guid : " + taskItemInfo.Guid.ToString("B");
+          msg += "\r\n" + "Task Count : " + taskItemInfo.GetTasks().Count();
 
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
-      }
-      catch (OpenTaskException e)
-      {
-        // exception thrown if task file doesn't exist or has incorrect format
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
-      }
-      catch (TaskFileVersionException e)
-      {
-        // exception thrown if task file does not support returning task information
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message, "Task Information");
-      }
+        }
+        catch (OpenTaskException e)
+        {
+          // exception thrown if task file doesn't exist or has incorrect format
+          msg = e.Message;
+        }
+        catch (TaskFileVersionException e)
+        {
+          // exception thrown if task file does not support returning task information
+          msg = e.Message;
+        }
+        return msg;
+      });
+
+      ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(message, "Task Information");
       #endregion Get Task item information
     }
 
     public async void OpenSpecificTask()
     {
-      // cref: Open a specific Task in a Task File - .esriTasks file;ArcGIS.Desktop.TaskAssistant.TaskAssistantModule.OpenTaskAsync(System.String,System.Guid)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.GetTaskItemInfoAsync(System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskItemInfo.GetTasks()
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.OpenTaskFileAsync(System.String,System.Guid)
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.OpenTaskFileAsync(System.String)
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
+      // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.TaskFileVersionException
       #region Open a specific Task in a Task File - .esriTasks file
 
       // TODO - substitute your own .esriTasks file to be opened
       string taskFile = @"c:\Tasks\Get Started.esriTasks";
 
-      try
+      await QueuedTask.Run(async () =>
       {
-        // retrieve the task item information
-        TaskItemInfo taskItemInfo = await TaskAssistantModule.GetTaskItemInfoAsync(taskFile);
-
-        // find the first task
-        TaskInfo taskInfo = taskItemInfo.GetTasks().FirstOrDefault();
-
-        Guid guid = Guid.Empty;
-        if (taskInfo != null)
+        try
         {
-          // if a task exists, open it
-          guid = await TaskAssistantModule.OpenTaskAsync(taskFile, taskInfo.Guid);
+          // retrieve the task item information
+          //At 2.x -
+          //TaskItemInfo taskItemInfo = await TaskAssistantModule.GetTaskItemInfoAsync(taskFile);
+          var taskItemInfo = await TaskAssistantFactory.Instance.GetTaskItemInfoAsync(taskFile);
+
+          // find the first task
+          TaskInfo taskInfo = taskItemInfo.GetTasks().FirstOrDefault();
+
+          Guid guid = Guid.Empty;
+          if (taskInfo != null)
+          {
+            // if a task exists, open it
+            //At 2.x -
+            //guid = await TaskAssistantModule.OpenTaskAsync(taskFile, taskInfo.Guid);
+            guid = await TaskAssistantFactory.Instance.OpenTaskFileAsync(taskFile, taskInfo.Guid);
+          }
+          else
+          {
+            // else just open the task item
+            //At 2.x -
+            //guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
+            guid = await TaskAssistantFactory.Instance.OpenTaskFileAsync(taskFile);
+          }
+
+          // TODO - retain the guid returned for use with CloseTaskItemAsync 
         }
-        else
+        catch (OpenTaskException e)
         {
-          // else just open the task item
-          guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
+          // exception thrown if task file doesn't exist or has incorrect format
+          ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
+        }
+        catch (TaskFileVersionException e)
+        {
+          // exception thrown if task file does not support returning task information
+          ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
         }
 
-        // TODO - retain the guid returned for use with CloseTaskAsync 
-      }
-      catch (OpenTaskException e)
-      {
-        // exception thrown if task file doesn't exist or has incorrect format
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
-      }
-      catch (TaskFileVersionException e)
-      {
-        // exception thrown if task file does not support returning task information
-        ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show(e.Message);
-      }
+      });
       #endregion
     }
 
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Completed
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Duration
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.EndTime
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.ProjectName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.StartTime
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskGuid
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemGuid
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemVersion
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.UserID
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.ProjectName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.StartTime
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskGuid
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemGuid
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemVersion
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskName
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.UserID
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEvent
-    // cref: Subscribe to Task Events;ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEvent
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEvent
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.UserID
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.ProjectName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemGuid
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskItemVersion
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskGuid
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.TaskName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskStartedEventArgs.StartTime
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEvent
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.UserID
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.ProjectName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemGuid
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskItemVersion
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskGuid
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.TaskName
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.StartTime
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.EndTime
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Duration
+    // cref: ArcGIS.Desktop.TaskAssistant.Events.TaskEndedEventArgs.Completed
     #region Subscribe to Task Events
     public void TaskEvents()
     {

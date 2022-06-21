@@ -47,6 +47,8 @@ namespace Layout_HelpExamples
   {
     async public static void MethodSnippets()
     {
+      // cref: ARCGIS.DESKTOP.LAYOUTS.LAYOUTPROJECTITEM
+      // cref: ARCGIS.DESKTOP.LAYOUTS.LAYOUTPROJECTITEM.GetLayout
       #region LayoutProjectItem_GetLayout
       //Reference the layout associated with a layout project item.
 
@@ -87,9 +89,9 @@ namespace Layout_HelpExamples
       TextElement txtElm = layout.FindElement("Text") as TextElement;
       #endregion Layout_FindElement
 
-
       // cref: Layout_GetSetDefinition;ArcGIS.Desktop.Layouts.Layout.GetDefinition
       // cref: Layout_GetSetDefinition;ArcGIS.Desktop.Layouts.Layout.SetDefinition(ArcGIS.Core.CIM.CIMLayout)
+      // cref: ArcGIS.Core.CIM.CIMLayout
       #region Layout_GetSetDefinition
       //Modify a layout's CIM definition
 
@@ -107,6 +109,7 @@ namespace Layout_HelpExamples
 
       // cref: Layout_GetSetPage;ArcGIS.Desktop.Layouts.Layout.GetPage
       // cref: Layout_GetSetPage;ArcGIS.Desktop.Layouts.Layout.SetPage(ArcGIS.Core.CIM.CIMPage)
+      // cref: ArcGIS.Core.CIM.CIMPage
       #region Layout_GetSetPage
       //Modify a layouts page settings.
 
@@ -122,13 +125,21 @@ namespace Layout_HelpExamples
       });
       #endregion Layout_GetSetPage
 
-
       String filePath = null;
-      #region Layout_ExportPDF
-      //See ProSnippets "Export layout to PDF"
-      #endregion Layout_ExportPDF
 
-
+      // cref: ArcGIS.Desktop.Layouts.Layout.Export
+      // cref: ARCGIS.DESKTOP.MAPPING.PDFFORMAT
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
+      // cref: ArcGIS.Desktop.Mapping.EXPORTFORMAT.Resolution
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+      // cref: ARCGIS.DESKTOP.MAPPING.PDFFORMAT.DoCompressVectorGraphics
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportPages
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.CustomPages
+      // cref: ArcGIS.Desktop.Mapping.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.ExportPages
       #region Layout_ExportMS_PDF
       //Export multiple map series pages to PDF
 
@@ -156,7 +167,19 @@ namespace Layout_HelpExamples
       }
       #endregion Layout_ExportMS_PDF
 
-
+      // cref: ArcGIS.Desktop.Layouts.Layout.Export
+      // cref: ARCGIS.DESKTOP.MAPPING.TIFFFORMAT
+      // cref: ARCGIS.DESKTOP.MAPPING.TIFFFORMAT.HasWorldFile
+      // cref: ARCGIS.DESKTOP.MAPPING.TIFFFORMAT.HasGeoTiffTags
+      // cref: ARCGIS.DESKTOP.MAPPING.TIFFFORMAT.ColorMode
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.RESOLUTION
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.OutputFileName
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportPages
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.MapSeriesExportOptions.ShowSelectedSymbology
+      // cref: ArcGIS.Desktop.Mapping.ExportFileOptions
+      // cref: ArcGIS.Desktop.Layouts.ExportPages
+      // cref: ARCGIS.DESKTOP.MAPPING.EXPORTFORMAT.VALIDATEOUTPUTFILEPATH
       #region Layout_ExportMS_TIFF
       //Export multiple map series pages to TIFF
 
@@ -165,7 +188,7 @@ namespace Layout_HelpExamples
       {
         Resolution = 300,
         OutputFileName = filePath,
-        ColorMode = ColorMode.TwentyFourBitTrueColor,
+        ColorMode = TIFFColorMode.TwentyFourBitTrueColor,
         HasGeoTiffTags = true,
         HasWorldFile = true
       };
@@ -205,7 +228,7 @@ namespace Layout_HelpExamples
       //Perform on the worker thread
       await QueuedTask.Run(() =>
       {
-        layout.SaveAsFile(filePath);
+        layout.SaveAsFile(filePath, true);
       });
       #endregion Layout_SaveAsFile
 
@@ -236,6 +259,8 @@ namespace Layout_HelpExamples
 
 
       // cref: Layout_ShowProperties;ArcGIS.Desktop.Layouts.Layout.ShowProperties
+      // cref: ARCGIS.DESKTOP.LAYOUTS.LAYOUTPROJECTITEM
+      // cref: ARCGIS.DESKTOP.LAYOUTS.LAYOUTPROJECTITEM.GetLayout
       #region Layout_ShowProperties
       //Open the layout properties dialog.
 

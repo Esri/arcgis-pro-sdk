@@ -40,6 +40,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Filter
       // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.InitialLocation
       // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Title
+      // cref: OpenItemDialog;ArcGIS.Desktop.Catalog.OpenItemDialog
       #region OpenItemDialog
 
       /// Adds a single item to a map
@@ -47,7 +48,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       {
         Title = "Add To Map",
         InitialLocation = @"C:\Data\NewYork\Counties\Erie\Streets",
-        Filter = ItemFilters.composite_addToMap
+        Filter = ItemFilters.Composite_AddToMap
       };
 
       #endregion //OpenItemDialog
@@ -62,7 +63,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       addToProjectDialog.Title = "Add To Project";
       addToProjectDialog.InitialLocation = @"C:\Data\NewYork\Counties\Maps";
       addToProjectDialog.MultiSelect = true;
-      addToProjectDialog.Filter = ItemFilters.composite_maps_import;
+      addToProjectDialog.Filter = ItemFilters.Composite_Maps_Import;
 
       bool? ok = addToMapDialog.ShowDialog();
 
@@ -78,13 +79,14 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Filter
       // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.InitialLocation
       // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.ItemDialog.Title
+      // cref: SaveItemDialog;ArcGIS.Desktop.Catalog.SaveItemDialog
       #region SaveItemDialog
 
       SaveItemDialog saveLayerFileDialog = new SaveItemDialog()
       {
         Title = "Save Layer File",
         InitialLocation = @"C:\Data\ProLayers\Geographic\Streets",
-        Filter = ItemFilters.layers_allFileTypes
+        Filter = ItemFilters.Files_All
       };
 
       #endregion //SaveItemDialog
@@ -99,7 +101,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
         Title = "Save Map File",
         InitialLocation = @"C:\Data\NewYork\Counties\Maps",
         DefaultExt = @"mapx",
-        Filter = ItemFilters.maps_all,
+        Filter = ItemFilters.Maps_All,
         OverwritePrompt = true
       };
       bool? result = saveMapFileDialog.ShowDialog();
@@ -111,6 +113,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //Show_SaveItemDialog
 
+      // cref: ArcGIS.Desktop.Catalog.OpenItemDialog.Items
+      // cref: ArcGIS.Desktop.Catalog.OpenItemDialog
+      // cref: BrowseDialogItems;ArcGIS.Desktop.Mapping.MapFactory.CreateMapFromItem
       #region BrowseDialogItems
 
       IEnumerable<Item> selectedDialogItems = selectItemDialog.Items;

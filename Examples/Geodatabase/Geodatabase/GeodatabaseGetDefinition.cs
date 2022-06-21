@@ -132,7 +132,7 @@ namespace SDKExamples
           // Trying to GetDefinition of a non existent dataset.
           geodatabase.GetDefinition<TableDefinition>("SomeRandomString");
         }
-        catch (GeodatabaseCatalogDatasetException catalogDatasetException)
+        catch (ArcGIS.Core.Data.Exceptions.GeodatabaseCatalogDatasetException catalogDatasetException)
         {
           // All of the above scenarios will result in GeodatabaseCatalogDatasetException with a message "Item Not Found".
           // Remember that when you get this exception, most likely the following are the reasons.

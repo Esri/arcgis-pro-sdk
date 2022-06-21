@@ -60,6 +60,12 @@ namespace EditingSDKExamples
       #region ProSnippet Group: Undo / Redo
       #endregion
 
+      // cref: ArcGIS.Desktop.Framework.OperationManager
+      // cref: ArcGIS.Desktop.Framework.OperationManager.CanUndo
+      // cref: ArcGIS.Desktop.Framework.OperationManager.UndoAsync()
+      // cref: ArcGIS.Desktop.Framework.OperationManager.CanRedo
+      // cref: ArcGIS.Desktop.Framework.OperationManager.RedoAsync()
+      // cref: ARCGIS.DESKTOP.MAPPING.MAP.OPERATIONMANAGER
       #region Undo/Redo the Most Recent Operation
 
       //undo
@@ -76,8 +82,13 @@ namespace EditingSDKExamples
     #region ProSnippet Group: Edit Templates
     #endregion
 
-    public void FindTemplateByName()
+    public void Templates()
     {
+      // cref: ARCGIS.DESKTOP.MAPPING.MAP.FINDLAYERS
+      // cref: ARCGIS.DESKTOP.MAPPING.MAP.FINDSTANDALONETABLES
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String)
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
       #region Find edit template by name on a layer
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
@@ -90,10 +101,12 @@ namespace EditingSDKExamples
         var mhTemplate = map.FindLayers("Manhole").FirstOrDefault()?.GetTemplate("Active");
       });
       #endregion
-    }
 
-    public void FindTableTemplate()
-    {
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTemplates(ArcGIS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
+      // cref: ARCGIS.DESKTOP.MAPPING.MAP.FINDSTANDALONETABLES(System.String)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetStandaloneTablesAsFlattenedList
       #region Find table templates belonging to a standalone table
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
@@ -107,8 +120,26 @@ namespace EditingSDKExamples
         var statisticsTableTemplates = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().First(l => l.Name.Equals("Trading Statistics")).GetTemplates();
       });
       #endregion
+
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current
+      #region Current template
+      EditingTemplate template = EditingTemplate.Current;
+      #endregion
+
     }
 
+    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String)
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.DefaultToolID
+    // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.AutoGenerateFeatureTemplates
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.GetDefinition
+    // cref: ArcGIS.Core.CIM.CIMEditingTemplate
+    // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
+    // cref: ArcGIS.Core.CIM.CIMRowTemplate
+    // cref: ArcGIS.Core.CIM.CIMEditingTemplate.DefaultToolGUID
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.GetDefinition( ArcGIS.Core.CIM.CIMEditingTemplate)
     #region Change Default Edit tool for a template
     public Task ChangeTemplateDefaultToolAsync(ArcGIS.Desktop.Mapping.FeatureLayer flayer,
                       string toolContentGUID, string templateName)
@@ -141,7 +172,10 @@ namespace EditingSDKExamples
           //   <content guid="e58239b3-9c69-49e5-ad4d-bb2ba29ff3ea" />
           // </tool>
           // then the toolContentGUID would be "e58239b3-9c69-49e5-ad4d-bb2ba29ff3ea"
-          templateDef.ToolProgID = toolContentGUID;
+
+          //At 2.x -
+          //templateDef.ToolProgID = toolContentGUID;
+          templateDef.DefaultToolGUID = toolContentGUID;
 
           // set the definition back to 
           template.SetDefinition(templateDef);
@@ -157,6 +191,20 @@ namespace EditingSDKExamples
 
     protected void FilterTemplateTools()
     {
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTemplates(ArcGIS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate
+      // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
+      // cref: ArcGIS.Core.CIM.CIMRowTemplate
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.GetDefinition()
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.ActivateDefaultToolAsync
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.ToolIDs
+      // cref: ArcGIS.Core.CIM.CIMExtensions.GetExcludedToolIDs(ArcGIS.Core.CIM.CIMEditingTemplate)
+      // cref: ArcGIS.Core.CIM.CIMExtensions.SetExcludedToolIDs(ArcGIS.Core.CIM.CIMEditingTemplate,System.Collections.Generic.IEnumerable{System.String})
+      // cref: ArcGIS.Core.CIM.CIMExtensions.AllowToolID(ArcGIS.Core.CIM.CIMEditingTemplate,System.String)
+      // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.FeatureTemplates
+      // cref: ARCGIS.DESKTOP.MAPPING.LAYER.GETDEFINITION
+      // cref: ARCGIS.DESKTOP.MAPPING.LAYER.SETDEFINITION
       #region Hide or show editing tools on templates
       QueuedTask.Run(() =>
       {
@@ -174,10 +222,19 @@ namespace EditingSDKExamples
           //get the visible tools on this template
           var allTools = et.ToolIDs.ToList();
           //add the hidden tools on this template
-          allTools.AddRange(cimEditTemplate.GetExcludedToolDamlIds().ToList());
+          allTools.AddRange(cimEditTemplate.GetExcludedToolIDs().ToList());
           //hide all the tools then allow the line tool
-          cimEditTemplate.SetExcludedToolDamlIds(allTools.ToArray());
-          cimEditTemplate.AllowToolDamlID("esri_editing_SketchLineTool");
+  
+          //At 2.x -
+          //allTools.AddRange(cimEditTemplate.GetExcludedToolDamlIds().ToList());
+          allTools.AddRange(cimEditTemplate.GetExcludedToolIDs().ToList());
+          
+          //At 2.x - 
+          //cimEditTemplate.SetExcludedToolDamlIds(allTools.ToArray());
+          //cimEditTemplate.AllowToolDamlID("esri_editing_SketchLineTool");
+          
+          cimEditTemplate.SetExcludedToolIDs(allTools.ToArray());
+          cimEditTemplate.AllowToolID("esri_editing_SketchLineTool");
           newCIMEditingTemplates.Add(cimEditTemplate);
         }
         //update the layer templates
@@ -196,6 +253,10 @@ namespace EditingSDKExamples
       string value2 = "";
       string value3 = "";
 
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.LoadSchema(ArcGIS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String,System.String,ArcGIS.Desktop.Editing.Attributes.Inspector,System.String,System.String[],System.String[])
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
       #region Create New Template using layer.CreateTemplate
 
       var layer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
@@ -223,6 +284,16 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.GETDEFINITION
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Description
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Name
+      // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
+      // cref: ArcGIS.Core.CIM.CIMRowTemplate
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String,System.String,ArcGIS.Desktop.Editing.Attributes.Inspector,System.String,System.String[],System.String[])
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
+      // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
       #region Create New Table Template using table.CreateTemplate
       var table = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
       if (table == null)
@@ -242,6 +313,13 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.GETDEFINITION
+      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.SETDEFINITION(ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate)
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Description
+      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Name
+      // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
+      // cref: ArcGIS.Core.CIM.CIMRowTemplate
       #region Update a Table Template
       QueuedTask.Run(() =>
       {
@@ -255,6 +333,15 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      // cref: ArcGIS.Core.Data.Mapping.AnnotationFeatureClassDefinition
+      // cref: ArcGIS.Core.Data.Mapping.AnnotationFeatureClassDefinition.GetSymbolCollection
+      // cref: ArcGIS.Core.Data.Mapping.AnnotationFeatureClassDefinition.GetLabelClassCollection
+      // cref: ARCGIS.DESKTOP.MAPPING.FEATURELAYER.GETFEATURECLASS
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.LoadSchema(ArcGIS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String,System.String,ArcGIS.Desktop.Editing.Attributes.Inspector,System.String,System.String[],System.String[])
       #region Create Annotation Template
 
       // get an anno layer
@@ -339,6 +426,9 @@ namespace EditingSDKExamples
 
     public void RemoveTemplate()
     {
+      // cref: ArcGIS.Desktop.Mapping.Map.GetStandaloneTablesAsFlattenedList
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.RemoveTemplate(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.Desktop.Editing.Templates.EditingTemplate)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.RemoveTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String)
       #region Remove a table template
       var table = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
       if (table == null)
@@ -356,6 +446,11 @@ namespace EditingSDKExamples
 
     public void TemplateChanged()
     {
+      // cref: ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEvent
+      // cref: ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEventArgs
+      // cref: ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEventArgs.IncomingTemplate
+      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.ACTIVATETOOLASYNC
+      // cref: ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEvent.Subscribe(System.Action{ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEventArgs},System.Boolean)
       #region Active Template Changed
 
       ArcGIS.Desktop.Editing.Events.ActiveTemplateChangedEvent.Subscribe(OnActiveTemplateChanged);
@@ -376,6 +471,11 @@ namespace EditingSDKExamples
     #region ProSnippet Group: Annotation
     #endregion
 
+    // cref: ARCGIS.DESKTOP.MAPPING.MAPTOOL.ONSKETCHCOMPLETEASYNC
+    // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+    // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties(ArcGIS.Desktop.Editing.AnnotationProperties)
+    // cref: ArcGIS.Desktop.Editing.AnnotationProperties
+    // cref: ArcGIS.Core.CIM.HorizontalAlignment
     #region Annotation Construction Tool
 
     //In your config.daml...set the categoryRefID
@@ -427,6 +527,8 @@ namespace EditingSDKExamples
 
     public static void StartEditAnnotationTool()
     {
+      // cref: ARCGIS.DESKTOP.FRAMEWORK.FRAMEWORKAPPLICATION.GETPLUGINWRAPPER
+      // cref: ARCGIS.DESKTOP.FRAMEWORK.IPLUGINWRAPPER
       #region Programmatically start Edit Annotation
 
       var plugin = FrameworkApplication.GetPlugInWrapper("esri_editing_EditVerticesText");
@@ -441,6 +543,10 @@ namespace EditingSDKExamples
       BasicFeatureLayer annoLayer = MapView.Active.Map.GetLayersAsFlattenedList().First() as BasicFeatureLayer;
       var oid = 1;
 
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties.TextString
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties(ArcGIS.Desktop.Editing.AnnotationProperties)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Desktop.Editing.Attributes.Inspector)
       #region Update Annotation Text 
 
       await QueuedTask.Run(() =>
@@ -448,7 +554,8 @@ namespace EditingSDKExamples
         //annoLayer is ~your~ Annotation layer...
 
         // use the inspector methodology
-        var insp = new Inspector(true);
+        //at 2.x - var insp = new Inspector(true);
+        var insp = new Inspector();
         insp.Load(annoLayer, oid);
 
         // get the annotation properties
@@ -466,6 +573,10 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties.Shape
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties(ArcGIS.Desktop.Editing.AnnotationProperties)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Desktop.Editing.Attributes.Inspector)
       #region Modify Annotation Shape
 
       await QueuedTask.Run(() =>
@@ -480,7 +591,8 @@ namespace EditingSDKExamples
         //Instead, we must use the AnnotationProperties
 
         //annoLayer is ~your~ Annotation layer
-        var insp = new Inspector(true);
+        //at 2.x - var insp = new Inspector(true);
+        var insp = new Inspector();
         insp.Load(annoLayer, oid);
 
         AnnotationProperties annoProperties = insp.GetAnnotationProperties();
@@ -500,6 +612,12 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Core.CIM.HorizontalAlignment
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties.LoadFromTextGraphic(ArcGIS.Core.CIM.CIMTextGraphic)
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties.TextGraphic
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties(ArcGIS.Desktop.Editing.AnnotationProperties)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Desktop.Editing.Attributes.Inspector)
       #region Modify Annotation Text Graphic
 
       await QueuedTask.Run(() =>
@@ -510,7 +628,8 @@ namespace EditingSDKExamples
           return;
 
         // use the first selelcted feature 
-        var insp = new Inspector(true);
+        //at 2.x - var insp = new Inspector(true);
+        var insp = new Inspector();
         insp.Load(annoLayer, selection.GetObjectIDs().FirstOrDefault());
 
         // getAnnoProperties should return null if not an annotation feature
@@ -543,11 +662,41 @@ namespace EditingSDKExamples
       #endregion
     }
 
+    #region ProSnippet Group : Ground to Grid
+    #endregion
+
+    internal void G2G()
+    {
+      // cref: ArcGIS.Core.CIM.CIMGroundToGridCorrection
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.IsCorrecting(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.UsingDirectionOffset(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.GetDirectionOffset(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.UsingDistanceFactor(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.UsingElevationMode(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.UsingConstantScaleFactor(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      // cref: ArcGIS.Desktop.Editing.GroundToGridCorrection.GetConstantScaleFactor(ArcGIS.Core.CIM.CIMGroundToGridCorrection)
+      #region G2G Settings
+      CIMGroundToGridCorrection correction = null;
+      bool isCorecting = correction.IsCorrecting();   // equivalent to correction != null && correction.Enabled;
+      bool UsingOffset = correction.UsingDirectionOffset();   // equivalent to correction.IsCorrecting() && correction.UseDirection;
+      double dOffset = correction.GetDirectionOffset(); // equivalent to correction.UsingDirectionOffset() ? correction.Direction : DefaultDirectionOffset;
+      bool usingDistanceFactor = correction.UsingDistanceFactor();  // equivalent to correction.IsCorrecting() && correction.UseScale;
+      bool usingElevation = correction.UsingElevationMode(); // equivalent to correction.UsingDistanceFactor() && c.ScaleType == GroundToGridScaleType.ComputeUsingElevation;
+      bool usingSFactor = correction.UsingConstantScaleFactor();  //; equivalent to correction.UsingDistanceFactor() && correction.ScaleType == GroundToGridScaleType.ConstantFactor;
+      double dSFactor = correction.GetConstantScaleFactor(); // equivalent to correctionc.UsingDistanceFactor() ? correction.ConstantScaleFactor : DefaultConstantScaleFactor;
+      #endregion
+    }
+
     #region ProSnippet Group: EditingOptions
     #endregion
 
     public void EditingOptions()
 		{
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.EditingOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions
+      // cref: ArcGIS.Desktop.Core.UncommitedEditMode
+      // cref: ArcGIS.Desktop.Core.ToolbarPosition
+      // cref: ArcGIS.Desktop.Core.ToolbarSize
       #region Get/Set Editing Options
 
       //toggle, switch option values
@@ -599,6 +748,12 @@ namespace EditingSDKExamples
 
     public void SymbologyOptions()
 		{
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.EditingOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions.GetVertexSymbolOptions(ArcGIS.Desktop.Core.VertexSymbolType)
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions.GetPointSymbol()
+      // cref: ArcGIS.Desktop.Core.VertexSymbolType
       #region Get Sketch Vertex Symbology Options
 
       var options = ApplicationOptions.EditingOptions;
@@ -621,6 +776,13 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.EditingOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions.GetSegmentSymbolOptions()
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions.PrimaryColor
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions.Width
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions.HasSecondaryColor
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions.SecondaryColor
       #region Get Sketch Segment Symbology Options
 
       //var options = ApplicationOptions.EditingOptions;
@@ -646,6 +808,15 @@ namespace EditingSDKExamples
       });
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions
+      // cref: ArcGIS.Desktop.Core.VertexSymbolType
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions.#ctor(ArcGIS.Desktop.Core.VertexSymbolType)
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions.OutlineColor
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions.MarkerType
+      // cref: ArcGIS.Desktop.Core.VertexMarkerType
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions.Size
+      // cref: ArcGIS.Desktop.Core.EditingOptions.CanSetVertexSymbolOptions(ArcGIS.Desktop.Core.VertexSymbolType, ArcGIS.Desktop.Core.VertexSymbolOptions)
+      // cref: ArcGIS.Desktop.Core.EditingOptions.SetVertexSymbolOptions(ArcGIS.Desktop.Core.VertexSymbolType, ArcGIS.Desktop.Core.VertexSymbolOptions)
       #region Set Sketch Vertex Symbol Options
 
       //var options = ApplicationOptions.EditingOptions;
@@ -669,6 +840,10 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.EditingOptions.GetSegmentSymbolOptions()
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions.CanSetSegmentSymbolOptions(ArcGIS.Desktop.Core.SegmentSymbolOptions)
+      // cref: ArcGIS.desktop.Core.EditingOptions.SetSegmentSymbolOptions(ArcGIS.Desktop.Core.SegmentSymbolOptions)
       #region Set Sketch Segment Symbol Options
 
       //var options = ApplicationOptions.EditingOptions;
@@ -689,6 +864,10 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.VertexSymbolType
+      // cref: ArcGIS.Desktop.Core.EditingOptions.GetDefaultVertexSymbolOptions(ArcGIS.Desktop.Core.VertexSymbolType)
+      // cref: ArcGIS.Desktop.Core.VertexSymbolOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions.SetVertexSymbolOptions(ArcGIS.Desktop.Core.VertexSymbolType, ArcGIS.Desktop.Core.VertexSymbolOptions)
       #region Set Sketch Vertex Symbol Back to Default
 
       //var options = ApplicationOptions.EditingOptions;
@@ -704,6 +883,9 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.EditingOptions.GetDefaultSegmentSymbolOptions
+      // cref: ArcGIS.Desktop.Core.SegmentSymbolOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions.SetSegmentSymbolOptions
       #region Set Sketch Segment Symbol Back to Default
 
       //var options = ApplicationOptions.EditingOptions;
@@ -722,9 +904,17 @@ namespace EditingSDKExamples
     public void VersioningOptions()
 		{
 
-			#region Get and Set Versioning Options
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.VersioningOptions
+      // cref: ArcGIS.Desktop.Core.VersioningOptions
+      // cref: ArcGIS.Desktop.Core.VersioningOptions.DefineConflicts
+      // cref: ArcGIS.Desktop.Core.VersioningOptions.ConflictResolution
+      // cref: ArcGIS.Desktop.Core.VersioningOptions.ShowConflictsDialog
+      // cref: ArcGIS.Desktop.Core.VersioningOptions.ShowReconcileDialog
+      // cref: ArcGIS.Core.Data.ConflictDetectionType
+      // cref: ArcGIS.Core.Data.ConflictResolutionType
+      #region Get and Set Versioning Options
 
-			var vOptions = ApplicationOptions.VersioningOptions;
+      var vOptions = ApplicationOptions.VersioningOptions;
 
       vOptions.DefineConflicts = (vOptions.DefineConflicts == ConflictDetectionType.ByRow) ? 
         ConflictDetectionType.ByColumn : ConflictDetectionType.ByRow;

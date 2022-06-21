@@ -1,3 +1,5 @@
+/// cref: ArcGIS.Core.Data.AttributedRelationship.FindField(System.String)
+#region RowOriginValue
 /*
 
    Copyright 2018 Esri
@@ -88,7 +90,7 @@ namespace SDKExamples.GeodatabaseSDK
       DatabaseConnectionProperties connectionProperties = new DatabaseConnectionProperties(EnterpriseDatabaseType.SQLServer)
       {
         AuthenticationMode = AuthenticationMode.DBMS,
-       
+
         // Where testMachine is the machine where the instance is running and testInstance is the name of the SqlServer instance.
         Instance = @"testMachine\testInstance",
 
@@ -96,13 +98,13 @@ namespace SDKExamples.GeodatabaseSDK
         Database = "LocalGovernment",
 
         // Provided that a login called gdb has been created and corresponding schema has been created with the required permissions.
-        User     = "gdb",
+        User = "gdb",
         Password = "password",
-        Version  = "dbo.DEFAULT"
+        Version = "dbo.DEFAULT"
       };
 
       using (Geodatabase geodatabase = new Geodatabase((connectionProperties)))
-      using (Table enterpriseTable   = geodatabase.OpenDataset<Table>("LocalGovernment.GDB.piCIPCost"))
+      using (Table enterpriseTable = geodatabase.OpenDataset<Table>("LocalGovernment.GDB.piCIPCost"))
       {
         EditOperation editOperation = new EditOperation();
         editOperation.Callback(context =>
@@ -156,7 +158,7 @@ namespace SDKExamples.GeodatabaseSDK
     private static async Task FileGeodatabaseWorkFlow()
     {
       using (Geodatabase fileGeodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri(@"C:\Data\LocalGovernment.gdb"))))
-      using (FeatureClass featureClass   = fileGeodatabase.OpenDataset<FeatureClass>("PollingPlace"))
+      using (FeatureClass featureClass = fileGeodatabase.OpenDataset<FeatureClass>("PollingPlace"))
       {
         EditOperation editOperation = new EditOperation();
         editOperation.Callback(context =>
@@ -182,7 +184,7 @@ namespace SDKExamples.GeodatabaseSDK
                 // Has to be called before any changes are made to the row
                 context.Invalidate(feature);
 
-                MapPoint newShape = new MapPointBuilder(mapPoint.X + 10, mapPoint.Y, mapPoint.SpatialReference).ToGeometry();
+                MapPoint newShape = new MapPointBuilderEx(mapPoint.X + 10, mapPoint.Y, mapPoint.SpatialReference).ToGeometry();
                 feature.SetShape(newShape);
 
                 // Will be the same as feature.GetShape().
@@ -208,3 +210,4 @@ namespace SDKExamples.GeodatabaseSDK
     }
   }
 }
+#endregion

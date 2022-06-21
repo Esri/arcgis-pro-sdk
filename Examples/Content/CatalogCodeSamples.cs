@@ -39,39 +39,46 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // not to be included in sample regions
       var projectFolderConnection = (Project.Current.GetItems<FolderConnectionProjectItem>()).First();
 
-      #region GetMapProjectItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Mapping.MapProjectItem
+      #region Get MapProjectItems
 
       /// Get all the maps in a project
       IEnumerable<MapProjectItem> projectMaps = Project.Current.GetItems<MapProjectItem>();
 
       #endregion //GetMapProjectItems
 
-      // cref: GetFolderConnectionProjectItems;ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      #region GetFolderConnectionProjectItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
+      #region Get FolderConnectionProjectItems
 
       /// Get all the folder connections in a project
       IEnumerable<FolderConnectionProjectItem> projectFolders = Project.Current.GetItems<FolderConnectionProjectItem>();
 
       #endregion //GetFolderConnectiontProjectItems
 
-      // cref: GetServerConnectionProjectItems;ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
-      #region GetServerConnectionProjectItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
+      #region Get ServerConnectionProjectItems
 
       /// Get all the server connections in a project
       IEnumerable<ServerConnectionProjectItem> projectServers = Project.Current.GetItems<ServerConnectionProjectItem>();
 
-      #endregion //GetServerConnectionProjectItems
+      #endregion //Get ServerConnectionProjectItems
 
-      // cref: GetLocatorConnectionProjectItems;ArcGIS.Desktop.Catalog.LocatorsConnectionProjectItem
-      #region GetLocatorConnectionProjectItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Catalog.LocatorsConnectionProjectItem
+      #region Get LocatorConnectionProjectItems
 
       /// Get all the locator connections in a project
       IEnumerable<LocatorsConnectionProjectItem> projectLocators = Project.Current.GetItems<LocatorsConnectionProjectItem>();
 
-      #endregion //GetLocatorConnectionProjectItems
+      #endregion //Get LocatorConnectionProjectItems
 
-
-      #region GetProjectItemContent
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
+      // cref: ArcGIS.Desktop.Core.Item.GetItems
+      #region Get Project Items by ProjectItem type
 
       /// Get all the items that can be accessed from a folder connection. The items immediately 
       /// contained by a folder, that is, the folder's children, are returned including folders
@@ -85,7 +92,8 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       });
       #endregion //GetProjectItems
 
-      #region AddFolderConnectionProjectItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      #region Add Folder to Project as IProjectItem
 
       /// Add a folder connection to a project
       Item folderToAdd = ItemFactory.Instance.Create(@"C:\Data\Oregon\Counties\Streets");
@@ -93,8 +101,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //AddFolderConnectionProjectItem
 
-      // cref: AddGDBProjectItem;ArcGIS.Desktop.Catalog.GDBProjectItem
-      #region AddGDBProjectItem
+      // cref: ArcGIS.Desktop.Catalog.GDBProjectItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      #region Add GDBProjectItem to Project as IProjectItem
 
       /// Add a file geodatabase or a SQLite or enterprise database connection to a project
       Item gdbToAdd = folderToAdd.GetItems().FirstOrDefault(folderItem => folderItem.Name.Equals("CountyData.gdb"));
@@ -102,10 +111,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //AddGDBProjectItem
 
-
-
-      // cref: RemoveFolderConnectionFromProject;ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      #region RemoveFolderConnectionFromProject
+      // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
+      // cref: ArcGIS.Desktop.Core.Project.RemoveItem
+      #region Remove FolderConnection From Project
 
       /// Remove a folder connection from a project; the folder stored on the local disk 
       /// or the network is not deleted
@@ -115,7 +123,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //RemoveFolderConnectionFromProject
 
-      #region RemoveMapFromProject
+      // cref: ArcGIS.Desktop.Mapping.MapProjectItem
+      // cref: ArcGIS.Desktop.Core.Project.RemoveItem
+      #region Remove Map From Project
 
       /// Remove a map from a project; the map is deleted
       IProjectItem mapToRemove = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(map => map.Name.Equals("OldStreetRoutes"));
@@ -124,9 +134,11 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //RemoveMapFromProject
 
-
-
-      #region ImportToProject
+      // cref: ArcGIS.Desktop.Core.ItemFactory
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      #region Importing Maps To Project
 
       /// Import a mxd
       Item mxdToImport = ItemFactory.Instance.Create(@"C:\Projects\RegionalSurvey\LatestResults.mxd");
@@ -145,7 +157,6 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //ImportToProject
 
-
     }
 
     /// <summary>
@@ -156,15 +167,18 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // not to be included in sample regions
       var projectfolderConnection = (Project.Current.GetItems<FolderConnectionProjectItem>()).First();
 
-
-      #region CreateAnItem
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.Item
+      #region Create An Item
 
       Item mxdItem = ItemFactory.Instance.Create(@"C:\Projects\RegionalSurvey\LatestResults.mxd");
 
       #endregion //CreateAnItem
 
-
-      #region CreateAPortalItem
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.ItemFactory.ItemType
+      // cref: ArcGIS.Desktop.Core.Portal.PortalItem
+      #region Create A PortalItem
 
       // Creates an Item from an existing portal item base on its ID
       string portalItemID = "9801f878ff4a22738dff3f039c43e395";
@@ -172,8 +186,10 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion
 
-
-      #region CreateAPortalFolder
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.ItemFactory.ItemType
+      // cref: ArcGIS.Desktop.Core.Portal.PortalItem 
+      #region Create A PortalFolder
 
       // Creates an Item from an existing portal folder base on its ID
       string portalFolderID = "39c43e39f878f4a2279838dfff3f0015";
@@ -181,8 +197,9 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion
 
-
-      #region GetItemContent
+      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Portal.PortalItem 
+      #region Get Folder Item Content from Project PortalItem
 
       var folderConnectionContent = projectfolderConnection.GetItems();
       var folder = folderConnectionContent.FirstOrDefault(folderItem => folderItem.Name.Equals("Tourist Sites"));

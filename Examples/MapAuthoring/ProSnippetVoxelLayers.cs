@@ -1,3 +1,4 @@
+
 /*
 
    Copyright 2018 Esri
@@ -36,6 +37,7 @@ using System.Threading.Tasks;
 
 namespace MapAuthoring.VoxelLayers
 {
+
 	class ProSnippetRealtime
 	{
 		#region ProSnippet Group: Create Voxel Layer
@@ -46,30 +48,37 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			await QueuedTask.Run(() =>
 			{
-				#region Check Licensing Level for Advanced
 
-				//Voxels requires an Advanced license level
-				var canUseVoxels =
-					(ArcGIS.Core.Licensing.LicenseInformation.Level == ArcGIS.Core.Licensing.LicenseLevels.Advanced);
-
-				#endregion
-
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayer
+				// cref: ArcGIS.Desktop.Mapping.MapView.ViewingMode
+				// cref: ArcGIS.Core.CIM.MapViewingMode
 				#region Check if a Voxel Layer can be created
 
 				//Map must be a local scene
-				bool canCreateVoxel = false;
-				if (MapView.Active.ViewingMode == MapViewingMode.SceneLocal)
-				{
-					//license level must be advanced
-					canCreateVoxel = (ArcGIS.Core.Licensing.LicenseInformation.Level ==
-							ArcGIS.Core.Licensing.LicenseLevels.Advanced);
-				}
+				bool canCreateVoxel = (MapView.Active.ViewingMode == MapViewingMode.SceneLocal);
+
 				if (canCreateVoxel)
 				{
 					//TODO - use the voxel api methods
 				}
 				#endregion
 
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayer
+				// cref: ArcGIS.Core.CIM.CIMVoxelDataConnection
+				// cref: ArcGIS.Core.CIM.CIMVoxelDataConnection.URI
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.Create(ArcGIS.Core.CIM.CIMVoxelDataConnection)
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.IsVisible
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.Variables
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.Variable
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.DataType
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.Description
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.IsDefault
+				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.IsSelected
+				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.SetDefaultVariable(ArcGIS.Desktop.Mapping.VoxelVariableCreationParams)
+				// cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer
+				// cref: ArcGIS.Desktop.Mapping.LayerFactory
 				#region Create Voxel Layer
 				//Must be on the QueuedTask.Run()
 
@@ -99,7 +108,7 @@ namespace MapAuthoring.VoxelLayers
 				createParams.SetDefaultVariable(variables.Last());
 
 				//Create the layer - map must be a local scene
-				LayerFactory.Instance.CreateLayer<VoxelLayer>(createParams, map);
+				VoxelLayer voxelLayer = LayerFactory.Instance.CreateLayer<VoxelLayer>(createParams, map);
 				#endregion
 			});
 		}
@@ -111,6 +120,7 @@ namespace MapAuthoring.VoxelLayers
 		{
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer
 			#region Get a Voxel Layer from the TOC
 			//Get selected layer if a voxel layer is selected
 			var voxelLayer = MapView.Active.GetSelectedLayers().OfType<VoxelLayer>().FirstOrDefault();
@@ -123,6 +133,16 @@ namespace MapAuthoring.VoxelLayers
 			}
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer
+			// cref: ArcGIS.Desktop.Mapping.Layer.SetExpanded
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetIsosurfaceContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetIsosurfaceContainerVisibility(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerVisibility(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSectionContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSectionContainerVisibility(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetLockedSectionContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetLockedSectionContainerVisibility(System.Boolean)
 			#region Manipulate the Voxel Layer TOC Group
 
 			//var voxelLayer = ...
@@ -142,6 +162,18 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedIsosurfaces()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition
+			// cref: ArcGIS.Desktop.Mapping.MapView.SelectVoxelIsosurface(ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSlices()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
+			// cref: ArcGIS.Desktop.Mapping.MapView.SelectVoxelSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition
+			// cref: ArcGIS.Desktop.Mapping.MapView.SelectVoxelSection( ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition
+			// cref: ArcGIS.Desktop.Mapping.MapView.SelectVoxelLockedSection(ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition)
 			#region Get/Set Selected Voxel Assets from the TOC
 
 			var surfaces = MapView.Active.GetSelectedIsosurfaces();
@@ -155,6 +187,8 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetVisualization(ArcGIS.Core.CIM.VoxelVisualization)
+			// cref: ArcGIS.Core.CIM.VoxelVisualization
 			#region Change the Voxel Visualization
 
 			//var voxelLayer = ... ;
@@ -169,6 +203,20 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetVisualization(VoxelVisualization.Surface);
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.CartographicOffset
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetCartographicOffset(System.Double)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.VerticalExaggeration
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetVerticalExaggeration(System.Double)
+			// cref: ArcGIS.Core.CIM.CIM3DLayerProperties.ExaggerationMode
+			// cref: ArcGIS.Core.CIM.CIM3DLayerProperties.VerticalExaggeration
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.IsDiffuseLightingEnabled
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetDiffuseLightingEnabled(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.DiffuseLighting
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetDiffuseLighting(System.Double)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.IsSpecularLightingEnabled
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSpecularLightingEnabled(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SpecularLighting
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSpecularLighting(System.Double)
 			#region Lighting Properties, Offset, Vertical Exaggeration
 
 			//var voxelLayer = ... ;
@@ -210,12 +258,25 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVolumes
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
 			#region Get the Voxel Volume Dimensions
 
-			var volume = voxelLayer.GetVolumeSize();
-			var x_max = volume.Item1;
-			var y_max = volume.Item2;
-			var z_max = volume.Item3;
+			//At 2.x - var volume = voxelLayer.GetVolumeSize();
+			//var x_max = volume.Item1;
+			//var y_max = volume.Item2;
+			//var z_max = volume.Item3;
+
+			var x_max = voxelLayer.GetVolumes().Max(v => v.GetVolumeSize().X);
+			var y_max = voxelLayer.GetVolumes().Max(v => v.GetVolumeSize().Y);
+			var z_max = voxelLayer.GetVolumes().Max(v => v.GetVolumeSize().Z);
+
+			//Get the dimensions of just one volume
+			var dimensions = voxelLayer.GetVolumes().FirstOrDefault();
+			//Get the dimensions of the volume associated with the selected variable
+			var dimensions2 = voxelLayer.SelectedVariableProfile.Volume.GetVolumeSize();
 
 			#endregion
 		}
@@ -225,7 +286,18 @@ namespace MapAuthoring.VoxelLayers
 
 		public void ExampleEvents()
 		{
-
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
+			// cref: ArcGIS.Desktop.Mapping.VoxelVariableProfile.Variable
+			// cref: ArcGIS.Desktop.Mapping.VoxelVariableProfile.Renderer
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.MapMemberEventHint
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.MapMemberPropertiesChangedEventArgs.EventHints
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetChangedEvent.Subscribe
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs.ChangeType
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs.AssetType
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs.VoxelAssetChangeType
+			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs.VoxelAssetType
 			#region Subscribe for Changes to a Voxel Layer
 
 			ArcGIS.Desktop.Mapping.Events.MapMemberPropertiesChangedEvent.Subscribe((args) =>
@@ -234,7 +306,8 @@ namespace MapAuthoring.VoxelLayers
 				if (voxel == null)
 					return;
 				//Anything changed on a voxel layer?
-				if (args.EventHints.Any(hint => hint == MapMemberEventHint.VoxelSelectedVariableProfileIndex))
+				//At 2.x - if (args.EventHints.Any(hint => hint == MapMemberEventHint.VoxelSelectedVariableProfileIndex))
+				if (args.EventHints.Any(hint => hint == MapMemberEventHint.VoxelSelectedVariable))
 				{
 					//Voxel variable profile selection changed
 					var changed_variable_name = voxel.SelectedVariableProfile.Variable;
@@ -295,6 +368,8 @@ namespace MapAuthoring.VoxelLayers
 					return;
 			}
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Variable
 			#region Get the Selected Variable Profile
 
 			//var voxelLayer = ... ;
@@ -307,6 +382,9 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfiles
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Variable
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSelectedVariableProfile(ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile)
 			#region Change the Selected Variable Profile
 
 			//var voxelLayer = ... ;
@@ -323,6 +401,8 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfiles
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile
 			#region Get the Variable Profiles
 
 			//var voxelLayer = ... ;
@@ -338,6 +418,14 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfiles
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Renderer
+			// cref: ArcGIS.Core.CIM.CIMVoxelRenderer
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.DataType
+			// cref: ArcGIS.Core.CIM.VoxelVariableDataType
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer
+			// cref: ArcGIS.Core.CIM.CIMVoxelUniqueValueRenderer
 			#region Get the Variable Renderer
 
 			//var voxelLayer = ... ;
@@ -367,6 +455,15 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Statistics
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.DataType
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Renderer
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableStatistics.MinimumValue
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableStatistics.MaximumValue
+			// cref: ArcGIS.Core.CIM.VoxelVariableDataType
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer.ColorRangeMax
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer.ColorRangeMin
 			#region Access Stats and Color Range for a Stretch Renderer
 
 			//var voxelLayer = ... ;
@@ -377,8 +474,12 @@ namespace MapAuthoring.VoxelLayers
 			//or use ...voxelLayer.GetVariableProfiles()
 
 			//Data range
-			var min = variable.GetVariableStatistics().MinimumValue;
-			var max = variable.GetVariableStatistics().MaximumValue;
+			//At 2.x - 
+			//var min = variable.GetVariableStatistics().MinimumValue;
+			//var max = variable.GetVariableStatistics().MaximumValue;
+
+			var min = variable.Statistics.MinimumValue;
+			var max = variable.Statistics.MaximumValue;
 
 			//Color range (Continuous only)
 			double color_min, color_max;
@@ -397,6 +498,10 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer.ColorRangeMax
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer.ColorRangeMin
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableStatistics.MinimumValue
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableStatistics.MAximumValue
 			#region Change Stretch Renderer Color Range
 
 			//Typically, the default color range covers the most
@@ -419,10 +524,18 @@ namespace MapAuthoring.VoxelLayers
 			color_max += dif;
 
 			//make sure we do not exceed data range
-			if (color_min < variable.GetVariableStatistics().MinimumValue)
-				color_min = variable.GetVariableStatistics().MinimumValue;
-			if (color_max > variable.GetVariableStatistics().MaximumValue)
-				color_max = variable.GetVariableStatistics().MaximumValue;
+			//At 2.x - 
+			//if (color_min < variable.GetVariableStatistics().MinimumValue)
+			//	color_min = variable.GetVariableStatistics().MinimumValue;
+			//if (color_max > variable.GetVariableStatistics().MaximumValue)
+			//	color_max = variable.GetVariableStatistics().MaximumValue;
+
+			if (color_min < variable.Statistics.MinimumValue)
+				color_min = variable.Statistics.MinimumValue;
+			if (color_max > variable.Statistics.MaximumValue)
+				color_max = variable.Statistics.MaximumValue;
+
+			//variable.Statistics.MinimumValue
 			renderer.ColorRangeMin = color_min;
 			renderer.ColorRangeMax = color_max;
 
@@ -437,6 +550,10 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Core.CIM.CIMVoxelUniqueValueRenderer
+			// cref: ArcGIS.Core.CIM.CIMVoxelUniqueValueRenderer.Classes
+			// cref: ArcGIS.Core.CIM.CIMVoxelColorUniqueValue
+			// cref: ArcGIS.Core.CIM.CIMVoxelColorUniqueValue.Visible
 			#region Change The Visibility on a CIMVoxelColorUniqueValue class
 
 			//Get the variable profile whose renderer will be changed
@@ -475,6 +592,9 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfiles
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.MaxNumberOfIsosurfaces
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.GetIsosurfaces()
 			#region Check the MaxNumberofIsoSurfaces for a Variable
 
 			//var voxelLayer = ... ;
@@ -495,6 +615,8 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfiles
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.DataType
 			#region Check a Variable's Datatype
 
 			//var voxelLayer = ... ;
@@ -515,6 +637,11 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.Visualization
+			// cref: ArcGIS.Core.CIM.VoxelVisualization
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.CanCreateIsosurface
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetVisualization(ArcGIS.Core.CIM.VoxelVisualization)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.CanCreateIsosurface
 			#region Check CanCreateIsoSurface
 
 			//var voxelLayer = ... ;
@@ -545,6 +672,15 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.Visualization
+			// cref: ArcGIS.Core.CIM.VoxelVisualization
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetVisualization(ArcGIS.Core.CIM.VoxelVisualization)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.CanCreateIsosurface
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.CreateIsosurface(ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.Value
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.IsVisible
 			#region Create Isosurface
 
 			//var voxelLayer = ... ;
@@ -566,8 +702,12 @@ namespace MapAuthoring.VoxelLayers
 				//will trigger an InvalidOperationException
 
 				//Specify a voxel value for the iso surface
-				var min = variable.GetVariableStatistics().MinimumValue;
-				var max = variable.GetVariableStatistics().MaximumValue;
+				//At 2.x - 
+				//var min = variable.GetVariableStatistics().MinimumValue;
+				//var max = variable.GetVariableStatistics().MaximumValue;
+
+				var min = variable.Statistics.MinimumValue;
+				var max = variable.Statistics.MaximumValue;
 				var mid = (max + min) / 2;
 
 				//color range (i.e. values that are being rendered)
@@ -604,6 +744,13 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.GetIsosurfaces()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.Value
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.Color
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.IsCustomColor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.UpdateIsosurface(ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition)
+			// cref: ArcGIS.Core.CIM.CIMVoxelStretchRenderer.ColorRamp
+			// cref: ArcGIS.Desktop.Mapping.ColorFactory.GenerateColorsFromColorRamp
 			#region How to Change Value and Color on an Isosurface
 
 			//var voxelLayer = ... ;
@@ -639,6 +786,9 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition.IsCustomColor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.GetIsosurfaceColor(System.Double)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.UpdateIsosurface(ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition)
 			#region Change Isourface Color Back to Default
 
 			//var voxelLayer = ... ;
@@ -661,6 +811,8 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.GetIsosurfaces()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.DeleteIsosurface(ArcGIS.Desktop.Mapping.Voxel.IsosurfaceDefinition)
 			#region Delete Isosurface- s
 
 			//var voxelLayer = ... ;
@@ -697,18 +849,32 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Volume
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSlices()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.IsVisible
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.UpdateSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerVisibility(System.Boolean)
 			#region Get the Collection of Slices
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
 
-			var slices = voxelLayer.GetSlices();
+			//At 2.x - var slices = voxelLayer.GetSlices();
+
+			//Use the SelectedVariableProfile to get the slices currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var slices = volume.GetSlices();
 
 			//Do something... e.g. make them visible
 			foreach (var slice in slices)
 			{
 				slice.IsVisible = true;
-				voxelLayer.UpdateSlice(slice);
+				//at 2.x - voxelLayer.UpdateSlice(slice);
+				volume.UpdateSlice(slice);
 			}
 
 			//expand the slice container and make sure container visibility is true
@@ -725,13 +891,24 @@ namespace MapAuthoring.VoxelLayers
 			VoxelLayer voxelLayer = null;
 			var my_slice_id = "";
 
-			#region Get a Slice- s
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Volume
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSlices()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
+			#region Get a Slice
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
 
-			var slice = voxelLayer.GetSlices().FirstOrDefault();
-			var slice2 = voxelLayer.GetSlices().First(s => s.Id == my_slice_id);
+			//At 2.x -
+			//var slice = voxelLayer.GetSlices().FirstOrDefault();
+			//var slice2 = voxelLayer.GetSlices().First(s => s.Id == my_slice_id);
+
+			//Use the SelectedVariableProfile to get the slices currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var slice = volume.GetSlices().FirstOrDefault();
+			var slice2 = volume.GetSlices().First(s => s.Id == my_slice_id);
 
 			#endregion
 		}
@@ -744,6 +921,8 @@ namespace MapAuthoring.VoxelLayers
 
 			//Must be on the QueuedTask.Run()
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSlices()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
 			var slice = MapView.Active?.GetSelectedSlices()?.FirstOrDefault();
 			if (slice != null)
 			{
@@ -758,6 +937,9 @@ namespace MapAuthoring.VoxelLayers
 
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSlices()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.Layer
 			#region Get Voxel Layer for the Selected Slice in TOC
 
 			//Must be on the QueuedTask.Run()
@@ -779,6 +961,17 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerExpanded(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerVisibility(System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.AutoShowExploreDockPane
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetNormal(System.Double, System.Double)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.#ctor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.IsVisible
 			#region Create a Slice
 
 			//var voxelLayer = ... ;
@@ -793,7 +986,12 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.AutoShowExploreDockPane = false;
 			//This is useful if u have your own dockpane currently activated...
 
-			var volume = voxelLayer.GetVolumeSize();
+			//At 2.x - var volumeSize = voxelLayer.GetVolumeSize();
+
+			//Use the SelectedVariableProfile to get the slices currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
 
 			//Orientation 90 degrees (West), Tilt 0.0 (vertical)
 			//Convert to a normal
@@ -801,10 +999,21 @@ namespace MapAuthoring.VoxelLayers
 
 			//Create the slice at the voxel mid-point. VoxelPosition
 			//is specified in voxel-space coordinates
-			voxelLayer.CreateSlice(new SliceDefinition()
+
+			//At 2.x - 
+			//voxelLayer.CreateSlice(new SliceDefinition()
+			//{
+			//	Name = "Middle Slice",
+			//	VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+			//	Normal = normal,
+			//	IsVisible = true
+			//});
+
+			//Create the slice on the respective volume
+			volume.CreateSlice(new SliceDefinition()
 			{
 				Name = "Middle Slice",
-				VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+				VoxelPosition = new Coordinate3D(volumeSize.X / 2, volumeSize.Y / 2, volumeSize.Z / 2),
 				Normal = normal,
 				IsVisible = true
 			});
@@ -820,6 +1029,11 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerVisibility
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetOrientationAndTilt(ArcGOS.Core.Geometry.Geometry3D)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetNormal(System.Double, System.Double)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.UpdateSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)
 			#region Change Tilt on a Slice
 
 			//var voxelLayer = ... ;
@@ -834,13 +1048,19 @@ namespace MapAuthoring.VoxelLayers
 				voxelLayer.SetVisualization(VoxelVisualization.Volume);
 			voxelLayer.SetSliceContainerVisibility(true);
 
-			var slice = voxelLayer.GetSlices().First(s => s.Name == "Change Tilt Slice");
+			//At 2.x - var slice = voxelLayer.GetSlices().First(s => s.Name == "Change Tilt Slice");
+
+			//Use the SelectedVariableProfile to get the slices currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var slice = volume.GetSlices().First(s => s.Name == "Change Tilt Slice");
 
 			(double orientation, double tilt) = voxelLayer.GetOrientationAndTilt(slice.Normal);
 
 			//Convert orientation and tilt to a normal
 			slice.Normal = voxelLayer.GetNormal(orientation, 45.0);
-			voxelLayer.UpdateSlice(slice);
+			//At 2.x - voxelLayer.UpdateSlice(slice);
+			volume.UpdateSlice(slice);
 
 			//reset if needed...Normally this might be when your dockpane
 			//was de-activated (ie "closed")
@@ -856,19 +1076,35 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.DeleteSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSlices()
 			#region Delete Slice
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
 
-			var last_slice = voxelLayer.GetSlices().LastOrDefault();
+			//At 2.x
+			//var last_slice = voxelLayer.GetSlices().LastOrDefault();
+			//   if (last_slice != null)
+			//     voxelLayer.DeleteSlice(last_slice);
+
+			//   //Delete all slices
+			//   var slices = voxelLayer.GetSlices();
+			//   foreach (var slice in slices)
+			//     voxelLayer.DeleteSlice(slice);
+
+			//Use the SelectedVariableProfile to get the slices currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+
+			var last_slice = volume.GetSlices().LastOrDefault();
 			if (last_slice != null)
-				voxelLayer.DeleteSlice(last_slice);
+				volume.DeleteSlice(last_slice);
 
 			//Delete all slices
-			var slices = voxelLayer.GetSlices();
+			var slices = volume.GetSlices();
 			foreach (var slice in slices)
-				voxelLayer.DeleteSlice(slice);
+				volume.DeleteSlice(slice);
 
 			#endregion
 		}
@@ -884,13 +1120,23 @@ namespace MapAuthoring.VoxelLayers
 			VoxelLayer voxelLayer = null;
 			var my_section_id = "";
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition
 			#region Get a Section
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
 
-			var section = voxelLayer.GetSections().FirstOrDefault();
-			var section2 = voxelLayer.GetSections().First(sec => sec.Id == my_section_id);
+			//At 2.x -
+			//var section = voxelLayer.GetSections().FirstOrDefault();
+			//var section2 = voxelLayer.GetSections().First(sec => sec.Id == my_section_id);
+
+			//Use the SelectedVariableProfile to get the sections currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+
+			var section = volume.GetSections().FirstOrDefault();
+			var section2 = volume.GetSections().First(sec => sec.ID == my_section_id);
 
 			#endregion
 		}
@@ -901,6 +1147,8 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition
 			#region Get the Current Collection of Sections
 
 			//var voxelLayer = ... ;
@@ -911,7 +1159,13 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			var sections = voxelLayer.GetSections();
+			//At 2.x - var sections = voxelLayer.GetSections();
+
+			//Use the SelectedVariableProfile to get the sections currently in the TOC
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var sections = volume.GetSections();
+
 
 			#endregion
 		}
@@ -920,8 +1174,9 @@ namespace MapAuthoring.VoxelLayers
 		{
 
 			Map map = MapView.Active.Map;
-			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition
 			#region Get the Selected Section in TOC
 
 			//var voxelLayer = ... ;
@@ -941,6 +1196,9 @@ namespace MapAuthoring.VoxelLayers
 
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Layer
 			#region Get Voxel Layer for the Selected Section in TOC
 
 			//var voxelLayer = ... ;
@@ -963,6 +1221,15 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.AutoShowExploreDockPane
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetNormal(System.Double, System.Double)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.#ctor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.isVisible
 			#region Create a Section at the Voxel MidPoint
 
 			//var voxelLayer = ... ;
@@ -979,16 +1246,31 @@ namespace MapAuthoring.VoxelLayers
 			//Normally, it would be set in your dockpane
 
 			//Create a section that cuts the volume in two on the vertical plane
-			var volume = voxelLayer.GetVolumeSize();
+
+			//At 2.x - var volume = voxelLayer.GetVolumeSize();
+
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
 
 			//Orientation 90 degrees (due West), Tilt 0 degrees
 			var normal = voxelLayer.GetNormal(90, 0.0);
 
 			//Position must be specified in voxel space
-			voxelLayer.CreateSection(new SectionDefinition()
+
+			//At 2.x -
+			//voxelLayer.CreateSection(new SectionDefinition()
+			//{
+			//	Name = "Middle Section",
+			//	VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+			//	Normal = normal,
+			//	IsVisible = true
+			//});
+			volume.CreateSection(new SectionDefinition()
 			{
 				Name = "Middle Section",
-				VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+				VoxelPosition = new Coordinate3D(volumeSize.X / 2, volumeSize.Y / 2, volumeSize.Z / 2),
 				Normal = normal,
 				IsVisible = true
 			});
@@ -1006,6 +1288,12 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.CreateHorizontalSectionDefinition()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
 			#region Create a Horizontal Section
 
 			//var voxelLayer = ... ;
@@ -1017,16 +1305,23 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerVisibility(true);
 
 			//Create a section that cuts the volume in two on the horizontal plane
-			var volume = voxelLayer.GetVolumeSize();
+			
+			//At 2.x - var volumeSize = voxelLayer.GetVolumeSize();
+
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
 
 			//Or use normal (0, 0, 1) or (0, 0, -1)...
 			var horz_section = SectionDefinition.CreateHorizontalSectionDefinition();
 
 			horz_section.Name = "Horizontal Section";
-			horz_section.VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2);
 			horz_section.IsVisible = true;
+			horz_section.VoxelPosition = new Coordinate3D(volumeSize.X / 2, volumeSize.Y / 2, volumeSize.Z / 2);
 
-			voxelLayer.CreateSection(horz_section);
+			//At 2.x - voxelLayer.CreateSection(horz_section);
+			volume.CreateSection(horz_section);
 
 			#endregion
 		}
@@ -1037,6 +1332,13 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.#ctor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.isVisible
 			#region Create Sections in a Circle Pattern
 
 			//var voxelLayer = ... ;
@@ -1047,7 +1349,12 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			var volume = voxelLayer.GetVolumeSize();
+			//At 2.x - var volumeSize = voxelLayer.GetVolumeSize();
+
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
 
 			//180 degrees orientation is due South. 90 degrees orientation is due west.
 			var south = 180.0;
@@ -1059,10 +1366,19 @@ namespace MapAuthoring.VoxelLayers
 			for (int s = 0; s < num_sections; s++)
 			{
 				var orientation = south * (s * spacing);
-				voxelLayer.CreateSection(new SectionDefinition()
+				//At 2.x -
+				//voxelLayer.CreateSection(new SectionDefinition()
+				//{
+				//	Name = $"Circle {s + 1}",
+				//	VoxelPosition = new Coordinate3D(volumeSize.Item1 / 2, volumeSize.Item2 / 2, volumeSize.Item3 / 2),
+				//	Normal = voxelLayer.GetNormal(orientation, 0.0),
+				//	IsVisible = true
+				//});
+
+				volume.CreateSection(new SectionDefinition()
 				{
 					Name = $"Circle {s + 1}",
-					VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+					VoxelPosition = new Coordinate3D(volumeSize.X / 2, volumeSize.Y / 2, volumeSize.Z / 2),
 					Normal = voxelLayer.GetNormal(orientation, 0.0),
 					IsVisible = true
 				});
@@ -1077,6 +1393,13 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.#ctor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.isVisible
 			#region Create Sections that Bisect the Voxel
 
 			//var voxelLayer = ... ;
@@ -1087,7 +1410,12 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			var volume = voxelLayer.GetVolumeSize();
+			//At 2.x - var volumeSize = voxelLayer.GetVolumeSize();
+
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
 
 			//Make three Normals - each is a Unit Vector (x, y, z)
 			var north_south = new Coordinate3D(1, 0, 0);
@@ -1099,10 +1427,19 @@ namespace MapAuthoring.VoxelLayers
 			//the Z plane.
 			foreach (var normal in new List<Coordinate3D> { north_south, east_west, horizontal })
 			{
-				voxelLayer.CreateSection(new SectionDefinition()
+				//At 2.x -
+				//voxelLayer.CreateSection(new SectionDefinition()
+				//{
+				//	Name = $"Cross {++n}",
+				//	VoxelPosition = new Coordinate3D(volumeSize.Item1 / 2, volumeSize.Item2 / 2, volumeSize.Item3 / 2),
+				//	Normal = normal,
+				//	IsVisible = true
+				//});
+
+				volume.CreateSection(new SectionDefinition()
 				{
 					Name = $"Cross {++n}",
-					VoxelPosition = new Coordinate3D(volume.Item1 / 2, volume.Item2 / 2, volume.Item3 / 2),
+					VoxelPosition = new Coordinate3D(volumeSize.X / 2, volumeSize.Y / 2, volumeSize.Z / 2),
 					Normal = normal,
 					IsVisible = true
 				});
@@ -1117,6 +1454,13 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetVolumeSize()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CreateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.#ctor
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Name
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.VoxelPosition
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.isVisible
 			#region Create Sections Diagonally across the Voxel
 
 			//var voxelLayer = ... ;
@@ -1127,13 +1471,19 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			var volume = voxelLayer.GetVolumeSize();
-			//make a diagonal across the voxel
-			var voxel_pos = new Coordinate3D(0, 0, volume.Item3);
-			var voxel_pos_ur = new Coordinate3D(volume.Item1, volume.Item2, volume.Item3);
+			//At 2.x - var volumeSize = voxelLayer.GetVolumeSize();
 
-			var lineBuilder = new LineBuilder(voxel_pos, voxel_pos_ur, null);
-			var diagonal = PolylineBuilder.CreatePolyline(lineBuilder.ToSegment());
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var volumeSize = volume.GetVolumeSize();
+
+			//make a diagonal across the voxel
+			var voxel_pos = new Coordinate3D(0, 0, volumeSize.Z);
+			var voxel_pos_ur = new Coordinate3D(volumeSize.X, volumeSize.Y, volumeSize.Z);
+
+			var lineBuilder = new LineBuilderEx(voxel_pos, voxel_pos_ur, null);
+			var diagonal = PolylineBuilderEx.CreatePolyline(lineBuilder.ToSegment());
 
 			var num_sections = 12;
 			var spacing = 1 / (double)num_sections;
@@ -1157,10 +1507,19 @@ namespace MapAuthoring.VoxelLayers
 					end_pt = segments.First().EndCoordinate;
 				}
 
-				voxelLayer.CreateSection(new SectionDefinition()
+				//At 2.x -
+				//voxelLayer.CreateSection(new SectionDefinition()
+				//{
+				//	Name = $"Diagonal {s + 1}",
+				//	VoxelPosition = new Coordinate3D(end_pt.X, end_pt.Y, volumeSize.Item3),
+				//	Normal = normal,
+				//	IsVisible = true
+				//});
+
+				volume.CreateSection(new SectionDefinition()
 				{
 					Name = $"Diagonal {s + 1}",
-					VoxelPosition = new Coordinate3D(end_pt.X, end_pt.Y, volume.Item3),
+					VoxelPosition = new Coordinate3D(end_pt.X, end_pt.Y, volumeSize.Z),
 					Normal = normal,
 					IsVisible = true
 				});
@@ -1175,6 +1534,9 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.Normal
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.UpdateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
 			#region Update Section Orientation and Tilt
 
 			//var voxelLayer = ... ;
@@ -1185,12 +1547,18 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			foreach (var section in voxelLayer.GetSections())
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+
+			//At 2.x - foreach (var section in voxelLayer.GetSections())
+			foreach (var section in volume.GetSections())
 			{
 				//set each normal to 45.0 orientation and tilt
 				section.Normal = voxelLayer.GetNormal(45.0, 45.0);
 				//apply the change
-				voxelLayer.UpdateSection(section);
+				//At 2.x - voxelLayer.UpdateSection(section);
+				volume.UpdateSection(section);
 			}
 
 			#endregion
@@ -1202,6 +1570,9 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.GetSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.SectionDefinition.isVisible
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.UpdateSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
 			#region Update Section Visibility
 
 			//var voxelLayer = ... ;
@@ -1212,14 +1583,20 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetSectionContainerExpanded(true);
 			voxelLayer.SetSectionContainerVisibility(true);
 
-			var sections = voxelLayer.GetSections().Where(s => !s.IsVisible);
+			//At 2.x - var sections = voxelLayer.GetSections().Where(s => !s.IsVisible);
+
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+			var sections = volume.GetSections().Where(s => !s.IsVisible);
 
 			//Make them all visible
 			foreach (var section in sections)
 			{
 				section.IsVisible = true;
 				//apply the change
-				voxelLayer.UpdateSection(section);
+				//At 2.x - voxelLayer.UpdateSection(section);
+				volume.UpdateSection(section);
 			}
 
 			#endregion
@@ -1231,13 +1608,20 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.DeleteSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
 			#region Delete Sections
 
 			//var voxelLayer = ... ;
 			//Must be on the QueuedTask.Run()
 
-			foreach (var section in voxelLayer.GetSections())
-				voxelLayer.DeleteSection(section);
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+
+			//At 2.x - foreach (var section in voxelLayer.GetSections())
+			//						voxelLayer.DeleteSection(section);
+			foreach (var section in volume.GetSections())
+				volume.DeleteSection(section);
 
 			//optional...
 			if (voxelLayer.Visualization != VoxelVisualization.Volume)
@@ -1255,6 +1639,8 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition
 			#region Get the Current Collection of Locked Sections
 
 			//var voxelLayer = ... ;
@@ -1277,6 +1663,8 @@ namespace MapAuthoring.VoxelLayers
 			VoxelLayer voxelLayer = null;
 			var my_locked_section_id = -1;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition
 			#region Get a Locked Section
 
 			//var voxelLayer = ... ;
@@ -1284,7 +1672,7 @@ namespace MapAuthoring.VoxelLayers
 
 			var locked_section = voxelLayer.GetLockedSections().FirstOrDefault();
 			var locked_section2 = voxelLayer.GetLockedSections()
-											.First(lsec => lsec.Id == my_locked_section_id);
+											.First(lsec => lsec.ID == my_locked_section_id);
 
 			#endregion
 		}
@@ -1294,6 +1682,8 @@ namespace MapAuthoring.VoxelLayers
 
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition
 			#region Get Selected Locked Section in TOC
 
 			//var voxelLayer = ... ;
@@ -1313,6 +1703,8 @@ namespace MapAuthoring.VoxelLayers
 
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition.Layer
 			#region Get Voxel Layer for the Selected Locked Section in TOC
 
 			//var voxelLayer = ... ;
@@ -1334,6 +1726,11 @@ namespace MapAuthoring.VoxelLayers
 
 			Map map = MapView.Active.Map;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition.Layer
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition.VariableName
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetVariableProfile(System.String)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSelectedVariableProfile(ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile)
 			#region Set the Variable Profile Active for Selected Locked Section
 
 			//Must be on the QueuedTask.Run()
@@ -1354,6 +1751,9 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.CanLockSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.LockSection(ArcGIS.Desktop.Mapping.Voxel.SectionDefinition)
 			#region Lock a Section/"Create" a Locked Section
 
 			//var voxelLayer = ... ;
@@ -1365,19 +1765,29 @@ namespace MapAuthoring.VoxelLayers
 			voxelLayer.SetLockedSectionContainerExpanded(true);
 			voxelLayer.SetLockedSectionContainerVisibility(true);
 
+			//Use the SelectedVariableProfile to get the sections
+			//via its associated volume
+			var volume = voxelLayer.SelectedVariableProfile.Volume;
+
 			//get the selected section
 			var section = MapView.Active.GetSelectedSections().FirstOrDefault();
 			if (section == null)
-				section = voxelLayer.GetSections().FirstOrDefault();
+      {
+				//At 2.x - section = voxelLayer.GetSections().FirstOrDefault();
+				section = volume.GetSections().FirstOrDefault();
+			}
+
 			if (section == null)
 				return;
 
 			//Lock the section (Creates a locked section, deletes
 			//the section)
-			if (voxelLayer.CanLockSection(section))
-				voxelLayer.LockSection(section);
+			//if (voxelLayer.CanLockSection(section))
+			//	voxelLayer.LockSection(section);
+			if (volume.CanLockSection(section))
+				volume.LockSection(section);
 
-			#endregion
+				#endregion
 		}
 
 		public void Example10g()
@@ -1386,6 +1796,9 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetLockedSections()
+			// cref: ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition.IsVisible
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.UpdateSection(ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition)
 			#region Update Locked Section Visibility
 
 			//var voxelLayer = ... ;
@@ -1416,6 +1829,8 @@ namespace MapAuthoring.VoxelLayers
 			Map map = MapView.Active.Map;
 			VoxelLayer voxelLayer = null;
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.CanUnlockSection(ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.UnlockSection(ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition)
 			#region Unlock a Locked Section
 
 			//var voxelLayer = ... ;
@@ -1441,6 +1856,7 @@ namespace MapAuthoring.VoxelLayers
 
 			#endregion
 
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.DeleteSection(ArcGIS.Desktop.Mapping.Voxel.LockedSectionDefinition)
 			#region Delete a Locked Section
 
 			//var voxelLayer = ... ;

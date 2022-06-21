@@ -38,8 +38,8 @@ namespace ProSnippetsGeometry
       Polygon polygon = null;
       IEnumerable<Polygon> testPolygons = null;
 
-      // cref: Accelerate Geometries;ArcGIS.Core.Geometry.GeometryEngine.AccelerateForRelationalOperations(ArcGIS.Core.Geometry.Geometry)
-      // cref: Accelerate Geometries;ArcGIS.Core.Geometry.IGeometryEngine.AccelerateForRelationalOperations(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.AccelerateForRelationalOperations(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.AccelerateForRelationalOperations(ArcGIS.Core.Geometry.Geometry)
       #region Accelerate Geometries
 
       // Use acceleration to speed up relational operations.  Accelerate your source geometry only if you are going to test many other geometries against it. 
@@ -78,11 +78,11 @@ namespace ProSnippetsGeometry
 
     public void Area()
     {
-      // cref: Determine area of a polygon;ArcGIS.Core.Geometry.GeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine area of a polygon;ArcGIS.Core.Geometry.IGeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Area(ArcGIS.Core.Geometry.Geometry)
       #region Determine area of a polygon
 
-      var g1 = PolygonBuilder.FromJson("{\"rings\": [ [ [0, 0], [10, 0], [10, 10], [0, 10] ] ] }");
+      var g1 = PolygonBuilderEx.FromJson("{\"rings\": [ [ [0, 0], [10, 0], [10, 10], [0, 10] ] ] }");
       double d = GeometryEngine.Instance.Area(g1);
       // d = -100.0         //negative due to wrong ring orientation
       d = GeometryEngine.Instance.Area(GeometryEngine.Instance.SimplifyAsFeature(g1));
@@ -93,11 +93,11 @@ namespace ProSnippetsGeometry
 
     public void Boundary()
     {
-      // cref: Determine the boundary of a multi-part Polygon;ArcGIS.Core.Geometry.GeometryEngine.Boundary(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine the boundary of a multi-part Polygon;ArcGIS.Core.Geometry.IGeometryEngine.Boundary(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Boundary(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Boundary(ArcGIS.Core.Geometry.Geometry)
       #region Determine the boundary of a multi-part Polygon
 
-      // create a donut polygon.  Must use the PolygonBuilder object
+      // create a donut polygon.  Must use the PolygonBuilderEx object
 
       List<Coordinate2D> outerPts = new List<Coordinate2D>();
       outerPts.Add(new Coordinate2D(10.0, 10.0));
@@ -113,18 +113,12 @@ namespace ProSnippetsGeometry
 
       Polygon donut = null;
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        // add the outer points
-        using (PolygonBuilder pb = new PolygonBuilder(outerPts))
-        {
-          // add the inner points (note they are defined anticlockwise)
-          pb.AddPart(innerPts);
-          // get the polygon
-          donut = pb.ToGeometry();
-        }
-      });
+      // add the outer points
+      PolygonBuilderEx pb = new PolygonBuilderEx(outerPts);
+      // add the inner points (note they are defined anticlockwise)
+      pb.AddPart(innerPts);
+      // get the polygon
+      donut = pb.ToGeometry();
 
       // get the boundary 
       Geometry g = GeometryEngine.Instance.Boundary(donut);
@@ -135,30 +129,30 @@ namespace ProSnippetsGeometry
 
     public void Buffer()
     {
-      // cref: Buffer a MapPoint;ArcGIS.Core.Geometry.GeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Buffer a MapPoint;ArcGIS.Core.Geometry.IGeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
       #region Buffer a MapPoint
 
       // buffer a point
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
       Geometry ptBuffer = GeometryEngine.Instance.Buffer(pt, 5.0);
       Polygon buffer = ptBuffer as Polygon;
       #endregion
 
-      // cref: Buffer a Circular Arc;ArcGIS.Core.Geometry.GeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Buffer a Circular Arc;ArcGIS.Core.Geometry.IGeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Buffer a Circular Arc;ArcGIS.Core.Geometry.PolylineBuilder.CreatePolyline(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Buffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SpatialReference)
       #region Buffer a Circular Arc
 
       // create the circular arc
-      MapPoint fromPt = MapPointBuilder.CreateMapPoint(2, 1);
-      MapPoint toPt = MapPointBuilder.CreateMapPoint(1, 2);
+      MapPoint fromPt = MapPointBuilderEx.CreateMapPoint(2, 1);
+      MapPoint toPt = MapPointBuilderEx.CreateMapPoint(1, 2);
       Coordinate2D interiorPt = new Coordinate2D(1 + Math.Sqrt(2) / 2, 1 + Math.Sqrt(2) / 2);
 
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromPt, toPt, interiorPt);
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, toPt, interiorPt);
 
       // buffer the arc
-      Polyline polyline = PolylineBuilder.CreatePolyline(circularArc);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(circularArc);
       Geometry lineBuffer = GeometryEngine.Instance.Buffer(polyline, 10);
 
       #endregion
@@ -170,18 +164,18 @@ namespace ProSnippetsGeometry
       // creates a buffer around each MapPoint
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
       Geometry ptsBuffer = GeometryEngine.Instance.Buffer(pts, 0.25);
       Polygon bufferResult = ptsBuffer as Polygon;      // bufferResult will have 4 parts
 
       #endregion
 
-      // cref: Buffer many different Geometry Types;ArcGIS.Core.Geometry.GeometryEngine.Buffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
-      // cref: Buffer many different Geometry Types;ArcGIS.Core.Geometry.IGeometryEngine.Buffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Buffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Buffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
       #region Buffer many different Geometry Types
 
       List<Coordinate2D> coords = new List<Coordinate2D>()
@@ -194,10 +188,10 @@ namespace ProSnippetsGeometry
 
       List<Geometry> manyGeometries = new List<Geometry>
       {
-          MapPointBuilder.CreateMapPoint(coords[9]),
-          PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
-          PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
-          PolygonBuilder.CreatePolygon(new List<Coordinate2D>(){coords[6], coords[7], coords[8]})
+          MapPointBuilderEx.CreateMapPoint(coords[9]),
+          PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
+          PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
+          PolygonBuilderEx.CreatePolygon(new List<Coordinate2D>(){coords[6], coords[7], coords[8]})
       };
 
       Geometry manyGeomBuffer = GeometryEngine.Instance.Buffer(manyGeometries, 0.25);
@@ -208,8 +202,8 @@ namespace ProSnippetsGeometry
     public void CalculateNonSimpleZs_Ms()
     {
       {
-        // cref: Interpolate Z values on a polyline;ArcGIS.Core.Geometry.GeometryEngine.CalculateNonSimpleZs(ArcGIS.Core.Geometry.Multipart,System.Double)
-        // cref: Interpolate Z values on a polyline;ArcGIS.Core.Geometry.IGeometryEngine.CalculateNonSimpleZs(ArcGIS.Core.Geometry.Multipart,System.Double)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.CalculateNonSimpleZs(ArcGIS.Core.Geometry.Multipart,System.Double)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.CalculateNonSimpleZs(ArcGIS.Core.Geometry.Multipart,System.Double)
         #region Interpolate Z values on a polyline
 
         List<Coordinate3D> coords2 = new List<Coordinate3D>()
@@ -224,7 +218,7 @@ namespace ProSnippetsGeometry
 
         SpatialReference sr = SpatialReferences.WebMercator;
 
-        Polyline polyline = PolylineBuilder.CreatePolyline(coords2, sr);
+        Polyline polyline = PolylineBuilderEx.CreatePolyline(coords2, sr);
 
         // polyline.HasZ = true
         // polyline.Points[1].HasZ = true
@@ -242,20 +236,20 @@ namespace ProSnippetsGeometry
       }
 
       {
-        // cref: Interpolate M values on a polygon;ArcGIS.Core.Geometry.GeometryEngine.CalculateNonSimpleMs(ArcGIS.Core.Geometry.Multipart,System.Double)
-        // cref: Interpolate M values on a polygon;ArcGIS.Core.Geometry.IGeometryEngine.CalculateNonSimpleMs(ArcGIS.Core.Geometry.Multipart,System.Double)
+        // cref: ArcGIS.Core.Geometry.GeometryEngine.CalculateNonSimpleMs(ArcGIS.Core.Geometry.Multipart,System.Double)
+        // cref: ArcGIS.Core.Geometry.IGeometryEngine.CalculateNonSimpleMs(ArcGIS.Core.Geometry.Multipart,System.Double)
         #region Interpolate M values on a polygon
 
         List<MapPoint> coords = new List<MapPoint>()
         {
-          MapPointBuilder.CreateMapPoint(0, 0, 0, 0),
-          MapPointBuilder.CreateMapPoint(0, 1000),
-          MapPointBuilder.CreateMapPoint(1000, 1000, 10, 50)
+          MapPointBuilderEx.CreateMapPoint(0, 0, 0, 0),
+          MapPointBuilderEx.CreateMapPoint(0, 1000),
+          MapPointBuilderEx.CreateMapPoint(1000, 1000, 10, 50)
         };
 
         SpatialReference sr = SpatialReferences.WebMercator;
 
-        Polygon polygon = PolygonBuilder.CreatePolygon(coords, sr);
+        Polygon polygon = PolygonBuilderEx.CreatePolygon(coords, sr);
 
         // polygon.HasM = true
         // polygon.Points[1].HasM = true
@@ -272,12 +266,12 @@ namespace ProSnippetsGeometry
 
     public void CenterAt()
     {
-      // cref: Center an envelope around X,Y;ArcGIS.Core.Geometry.Envelope.CenterAt(System.Double,System.Double)
-      // cref: Center an envelope around X,Y;ArcGIS.Core.Geometry.GeometryEngine.CenterAt(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double)
-      // cref: Center an envelope around X,Y;ArcGIS.Core.Geometry.IGeometryEngine.CenterAt(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.Envelope.CenterAt(System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.CenterAt(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.CenterAt(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double)
       #region Center an envelope around X,Y
 
-      Envelope env = EnvelopeBuilder.CreateEnvelope(1.0, 1.0, 5.0, 5.0);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(1.0, 1.0, 5.0, 5.0);
       Envelope centered = GeometryEngine.Instance.CenterAt(env, 2.0, 2.0);
 
       // centered.Center.X = 2.0
@@ -299,8 +293,8 @@ namespace ProSnippetsGeometry
 
     public void Centroid()
     {
-      // cref: Find the centroid of geometries;ArcGIS.Core.Geometry.GeometryEngine.Centroid(ArcGIS.Core.Geometry.Geometry)
-      // cref: Find the centroid of geometries;ArcGIS.Core.Geometry.IGeometryEngine.Centroid(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Centroid(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Centroid(ArcGIS.Core.Geometry.Geometry)
       #region Find the centroid of geometries
 
       // simple polygon
@@ -310,7 +304,7 @@ namespace ProSnippetsGeometry
       list2D.Add(new Coordinate2D(2, 2));
       list2D.Add(new Coordinate2D(2, 0));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list2D, SpatialReferences.WGS84);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list2D, SpatialReferences.WGS84);
 
       // verify it is simple
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polygon);
@@ -320,8 +314,8 @@ namespace ProSnippetsGeometry
       // centroid.Y = 1
 
       // map Point
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1, 2, 3, 4, SpatialReferences.WGS84);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(5, 2, double.NaN, 7);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, SpatialReferences.WGS84);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(5, 2, double.NaN, 7);
 
       // pt1.HasZ = true
       // pt1.HasM = true
@@ -332,7 +326,7 @@ namespace ProSnippetsGeometry
 
       // multipoint
       List<MapPoint> list = new List<MapPoint>() { pt1, pt2 };
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(list);
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(list);
       // multipoint.HasZ = true
       // multipoint.HasM = true
 
@@ -346,23 +340,23 @@ namespace ProSnippetsGeometry
 
     public void Clip()
     {
-      // cref: Clip a Polyline;ArcGIS.Core.Geometry.GeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
-      // cref: Clip a Polyline;ArcGIS.Core.Geometry.IGeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
       #region Clip a Polyline
 
       // clip a polyline by an envelope
 
-      Envelope env = EnvelopeBuilder.CreateEnvelope(2.0, 2.0, 4.0, 4.0);
-      LineSegment line = LineBuilder.CreateLineSegment(new Coordinate2D(0, 3), new Coordinate2D(5.0, 3.0));
-      Polyline polyline = PolylineBuilder.CreatePolyline(line);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(2.0, 2.0, 4.0, 4.0);
+      LineSegment line = LineBuilderEx.CreateLineSegment(new Coordinate2D(0, 3), new Coordinate2D(5.0, 3.0));
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(line);
 
       Geometry clipGeom = GeometryEngine.Instance.Clip(polyline, env);
       #endregion
 
-      // cref: Clip a Polyline by a Polygon;ArcGIS.Core.Geometry.GeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
-      // cref: Clip a Polyline by a Polygon;ArcGIS.Core.Geometry.IGeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
-      // cref: Clip a Polyline by a Polygon;ArcGIS.Core.Geometry.PolygonBuilder.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Clip a Polyline by a Polygon;ArcGIS.Core.Geometry.Multipart.Extent
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Clip(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Envelope)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Coordinate2D},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.Multipart.Extent
       #region Clip a Polyline by a Polygon
 
       // clip a polyline by a polygon
@@ -373,10 +367,10 @@ namespace ProSnippetsGeometry
       list.Add(new Coordinate2D(4.0, 4.0));
       list.Add(new Coordinate2D(4.0, 1.0));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list, SpatialReferences.WGS84);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list, SpatialReferences.WGS84);
 
-      LineSegment crossingLine = LineBuilder.CreateLineSegment(MapPointBuilder.CreateMapPoint(0, 3), MapPointBuilder.CreateMapPoint(5.0, 3.0));
-      Polyline p = PolylineBuilder.CreatePolyline(crossingLine);
+      LineSegment crossingLine = LineBuilderEx.CreateLineSegment(MapPointBuilderEx.CreateMapPoint(0, 3), MapPointBuilderEx.CreateMapPoint(5.0, 3.0));
+      Polyline p = PolylineBuilderEx.CreatePolyline(crossingLine);
       Geometry geometry = GeometryEngine.Instance.Clip(p, polygon.Extent);
       #endregion
     }
@@ -390,18 +384,22 @@ namespace ProSnippetsGeometry
 
     public void ConstructGeodeticLineFromDistance()
     {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructGeodeticLineFromDistance(ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructGeodeticLineFromDistance(ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double)
       #region Construct a geodetic line with specified distance and azimuth
       var sr = SpatialReferenceBuilder.CreateSpatialReference(4326);
       var mapPoint = MapPointBuilderEx.CreateMapPoint(15, 60, sr);
 
       // calculate
-      var polylineGeodetic = GeometryEngine.Instance.ConstructGeodeticLineFromDistance(GeodeticCurveType.Loxodrome, mapPoint, 5000000, 45, null, esriCurveDensifyMethod.ByLength, 300000);
+      var polylineGeodetic = GeometryEngine.Instance.ConstructGeodeticLineFromDistance(GeodeticCurveType.Loxodrome, mapPoint, 5000000, 45, null, CurveDensifyMethod.ByLength, 300000);
 
       #endregion
     }
 
     public void ConstructGeodeticLineFromPoints()
     {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructGeodeticLineFromPoints(ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructGeodeticLineFromPoints(ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.CurveDensifyMethod,System.Double)
       #region Construct a geodetic line connecting points
       var sr = SpatialReferenceBuilder.CreateSpatialReference(4326);
 
@@ -409,21 +407,21 @@ namespace ProSnippetsGeometry
       var pt2 = MapPointBuilderEx.CreateMapPoint(60, 0, sr);
 
       // densify by length
-      var gl = GeometryEngine.Instance.ConstructGeodeticLineFromPoints(GeodeticCurveType.Geodesic, pt1, pt2, null, esriCurveDensifyMethod.ByLength, -3.356);
+      var gl = GeometryEngine.Instance.ConstructGeodeticLineFromPoints(GeodeticCurveType.Geodesic, pt1, pt2, null, CurveDensifyMethod.ByLength, -3.356);
 
       // densify by deviation
-      gl = GeometryEngine.Instance.ConstructGeodeticLineFromPoints(GeodeticCurveType.Geodesic, pt1, pt2, null, esriCurveDensifyMethod.ByDeviation, -0.0026);
+      gl = GeometryEngine.Instance.ConstructGeodeticLineFromPoints(GeodeticCurveType.Geodesic, pt1, pt2, null, CurveDensifyMethod.ByDeviation, -0.0026);
 
       #endregion
     }
 
     public void ConstructPointFromAngleDistance()
     {
-      // cref: Construct a Point at a distance and angle from an existing Point;ArcGIS.Core.Geometry.GeometryEngine.ConstructPointFromAngleDistance(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Construct a Point at a distance and angle from an existing Point;ArcGIS.Core.Geometry.IGeometryEngine.ConstructPointFromAngleDistance(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructPointFromAngleDistance(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructPointFromAngleDistance(ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
       #region Construct a Point at a distance and angle from an existing Point
 
-      MapPoint inPoint = MapPointBuilder.CreateMapPoint(3, 4);
+      MapPoint inPoint = MapPointBuilderEx.CreateMapPoint(3, 4);
       double angle = 0;
       double distance = 10;
 
@@ -432,7 +430,7 @@ namespace ProSnippetsGeometry
       // outPoint.Y = 4
 
       SpatialReference sr = SpatialReferences.WGS84;
-      inPoint = MapPointBuilder.CreateMapPoint(0, 0, sr);
+      inPoint = MapPointBuilderEx.CreateMapPoint(0, 0, sr);
       angle = Math.PI;
       distance = 1;
 
@@ -445,8 +443,8 @@ namespace ProSnippetsGeometry
 
     public void ConstructPolygonsFromPolylines()
     {
-      // cref: Construct a Polygon from a set of Polylines;ArcGIS.Core.Geometry.GeometryEngine.ConstructPolygonsFromPolylines(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
-      // cref: Construct a Polygon from a set of Polylines;ArcGIS.Core.Geometry.IGeometryEngine.ConstructPolygonsFromPolylines(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConstructPolygonsFromPolylines(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConstructPolygonsFromPolylines(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
       #region Construct a Polygon from a set of Polylines
 
       List<Coordinate2D> firstLinePts = new List<Coordinate2D>();
@@ -467,10 +465,10 @@ namespace ProSnippetsGeometry
 
       // build the polylines
       List<Polyline> polylines = new List<Polyline>();
-      polylines.Add(PolylineBuilder.CreatePolyline(firstLinePts));
-      polylines.Add(PolylineBuilder.CreatePolyline(secondLinePts));
-      polylines.Add(PolylineBuilder.CreatePolyline(thirdLinePts));
-      polylines.Add(PolylineBuilder.CreatePolyline(fourthLinePts));
+      polylines.Add(PolylineBuilderEx.CreatePolyline(firstLinePts));
+      polylines.Add(PolylineBuilderEx.CreatePolyline(secondLinePts));
+      polylines.Add(PolylineBuilderEx.CreatePolyline(thirdLinePts));
+      polylines.Add(PolylineBuilderEx.CreatePolyline(fourthLinePts));
 
       // construct polygons from the polylines
       var polygons = GeometryEngine.Instance.ConstructPolygonsFromPolylines(polylines);
@@ -483,63 +481,63 @@ namespace ProSnippetsGeometry
 
     public void Contains()
     {
-      // cref: Polygon contains MapPoints, Polylines, Polygons;ArcGIS.Core.Geometry.GeometryEngine.Contains(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Polygon contains MapPoints, Polylines, Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Contains(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Polygon contains MapPoints, Polylines, Polygons;ArcGIS.Core.Geometry.ReadOnlyPointCollection.Item(System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Contains(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Contains(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.ReadOnlyPointCollection.Item(System.Int32)
       #region Polygon contains MapPoints, Polylines, Polygons
 
       // build a polygon      
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
-      Polygon poly = PolygonBuilder.CreatePolygon(pts);
+      Polygon poly = PolygonBuilderEx.CreatePolygon(pts);
 
       // test if an inner point is contained
-      MapPoint innerPt = MapPointBuilder.CreateMapPoint(1.5, 1.5);
+      MapPoint innerPt = MapPointBuilderEx.CreateMapPoint(1.5, 1.5);
       bool contains = GeometryEngine.Instance.Contains(poly, innerPt);   // contains = true
 
       // test a point on a boundary
       contains = GeometryEngine.Instance.Contains(poly, poly.Points[0]);     // contains = false
 
       // test an interior line
-      MapPoint innerPt2 = MapPointBuilder.CreateMapPoint(1.25, 1.75);
+      MapPoint innerPt2 = MapPointBuilderEx.CreateMapPoint(1.25, 1.75);
       List<MapPoint> innerLinePts = new List<MapPoint>();
       innerLinePts.Add(innerPt);
       innerLinePts.Add(innerPt2);
 
       // test an inner polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(innerLinePts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(innerLinePts);
       contains = GeometryEngine.Instance.Contains(poly, polyline);   // contains = true
 
       // test a line that crosses the boundary
-      MapPoint outerPt = MapPointBuilder.CreateMapPoint(3, 1.5);
+      MapPoint outerPt = MapPointBuilderEx.CreateMapPoint(3, 1.5);
       List<MapPoint> crossingLinePts = new List<MapPoint>();
       crossingLinePts.Add(innerPt);
       crossingLinePts.Add(outerPt);
 
-      polyline = PolylineBuilder.CreatePolyline(crossingLinePts);
+      polyline = PolylineBuilderEx.CreatePolyline(crossingLinePts);
       contains = GeometryEngine.Instance.Contains(poly, polyline);     // contains = false
 
       // test a polygon in polygon
-      Envelope env = EnvelopeBuilder.CreateEnvelope(innerPt, innerPt2);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(innerPt, innerPt2);
       contains = GeometryEngine.Instance.Contains(poly, env);      // contains = true
       #endregion
     }
 
     public void ConvexHull()
     {
-      // cref: Determine convex hull;ArcGIS.Core.Geometry.GeometryEngine.ConvexHull(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine convex hull;ArcGIS.Core.Geometry.IGeometryEngine.ConvexHull(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ConvexHull(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ConvexHull(ArcGIS.Core.Geometry.Geometry)
       #region Determine convex hull
 
       //
       // convex hull around a point - returns a point
       //
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(2.0, 2.0);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
       Geometry hull = GeometryEngine.Instance.ConvexHull(pt);
       MapPoint hullPt = hull as MapPoint;
       // nullPt.X = 2
@@ -547,17 +545,17 @@ namespace ProSnippetsGeometry
 
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      list.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      list.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
       //
       // convex hull around a multipoint - returns a polygon
       //
 
       // build a multiPoint
-      Multipoint multiPoint = MultipointBuilder.CreateMultipoint(list);
+      Multipoint multiPoint = MultipointBuilderEx.CreateMultipoint(list);
 
       hull = GeometryEngine.Instance.ConvexHull(multiPoint);
       Polygon hullPoly = hull as Polygon;
@@ -569,19 +567,19 @@ namespace ProSnippetsGeometry
       // 
 
       List<MapPoint> polylineList = new List<MapPoint>();
-      polylineList.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      polylineList.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
+      polylineList.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      polylineList.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
 
       // 2 point straight line
-      Polyline polyline = PolylineBuilder.CreatePolyline(polylineList);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(polylineList);
       hull = GeometryEngine.Instance.ConvexHull(polyline);
       Polyline hullPolyline = hull as Polyline;
       // hullPolyline.Length = Math.Sqrt(2)
       // hullPolyline.PointCount = 2
 
       // 3 point angular line
-      polylineList.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
-      polyline = PolylineBuilder.CreatePolyline(polylineList);
+      polylineList.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
+      polyline = PolylineBuilderEx.CreatePolyline(polylineList);
       hull = GeometryEngine.Instance.ConvexHull(polyline);
       hullPoly = hull as Polygon;
       // hullPoly.Length = 2 + Math.Sqrt(2)
@@ -593,7 +591,7 @@ namespace ProSnippetsGeometry
       //
 
       // simple polygon
-      Polygon poly = PolygonBuilder.CreatePolygon(list);
+      Polygon poly = PolygonBuilderEx.CreatePolygon(list);
       hull = GeometryEngine.Instance.ConvexHull(poly);
       hullPoly = hull as Polygon;
 
@@ -603,15 +601,15 @@ namespace ProSnippetsGeometry
 
       // polygon with concave angles
       List<MapPoint> funkyList = new List<MapPoint>();
-      funkyList.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(1.5, 1.5));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(1.5, 1.5));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
-      funkyList.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(1.5, 1.5));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(1.5, 1.5));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
+      funkyList.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
 
-      Polygon funkyPoly = PolygonBuilder.CreatePolygon(funkyList);
+      Polygon funkyPoly = PolygonBuilderEx.CreatePolygon(funkyList);
       hull = GeometryEngine.Instance.ConvexHull(funkyPoly);
       hullPoly = hull as Polygon;
       // hullPoly.Length = 4.0
@@ -627,16 +625,16 @@ namespace ProSnippetsGeometry
 
     public void Crosses()
     {
-      // cref: Determine if two geometries cross;ArcGIS.Core.Geometry.GeometryEngine.Crosses(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine if two geometries cross;ArcGIS.Core.Geometry.IGeometryEngine.Crosses(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Crosses(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Crosses(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Determine if two geometries cross
 
       //
       // pt on pt
       //
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2.0, 2.0);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
 
       bool crosses = GeometryEngine.Instance.Crosses(pt, pt2);         // crosses = false
       crosses = GeometryEngine.Instance.Crosses(pt, pt);               // crosses = false
@@ -646,11 +644,11 @@ namespace ProSnippetsGeometry
       // 
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(3.0, 3.0));
-      list.Add(MapPointBuilder.CreateMapPoint(5.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(3.0, 3.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(5.0, 1.0));
 
-      Polyline line1 = PolylineBuilder.CreatePolyline(list);
+      Polyline line1 = PolylineBuilderEx.CreatePolyline(list);
       crosses = GeometryEngine.Instance.Crosses(line1, pt2);           // crosses = false
       crosses = GeometryEngine.Instance.Crosses(pt2, line1);           // crosses = false
                                                                        // end pt of line
@@ -660,12 +658,12 @@ namespace ProSnippetsGeometry
       // pt and polygon
       //
       List<MapPoint> polyPts = new List<MapPoint>();
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 2.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 2.0));
 
-      Polygon poly1 = PolygonBuilder.CreatePolygon(polyPts);
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(polyPts);
       crosses = GeometryEngine.Instance.Crosses(poly1, pt);              // crosses = false
       crosses = GeometryEngine.Instance.Crosses(pt, poly1);              // crosses = false
 
@@ -673,11 +671,11 @@ namespace ProSnippetsGeometry
       // line and line
       //
       List<MapPoint> list2 = new List<MapPoint>();
-      list2.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(5.0, 3.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(5.0, 3.0));
 
-      Polyline line2 = PolylineBuilder.CreatePolyline(list2);
+      Polyline line2 = PolylineBuilderEx.CreatePolyline(list2);
       crosses = GeometryEngine.Instance.Crosses(line1, line2);           // crosses = true
 
       //
@@ -688,8 +686,8 @@ namespace ProSnippetsGeometry
       //
       // polygon and polygon
       //
-      Envelope env = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(1.0, 1.0), MapPointBuilder.CreateMapPoint(4, 4));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(1.0, 1.0), MapPointBuilderEx.CreateMapPoint(4, 4));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env);
       crosses = GeometryEngine.Instance.Crosses(poly1, poly2);           // crosses = false
 
       #endregion
@@ -697,25 +695,25 @@ namespace ProSnippetsGeometry
 
     public void Cut()
     {
-      // cref: Cut a geometry with a polyline;ArcGIS.Core.Geometry.GeometryEngine.Cut(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
-      // cref: Cut a geometry with a polyline;ArcGIS.Core.Geometry.IGeometryEngine.Cut(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Cut(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Cut(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
       #region Cut a geometry with a polyline
 
       SpatialReference sr = SpatialReferences.WGS84;
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, sr));
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 4.0, sr));
-      list.Add(MapPointBuilder.CreateMapPoint(4.0, 4.0, sr));
-      list.Add(MapPointBuilder.CreateMapPoint(4.0, 1.0, sr));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, sr));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 4.0, sr));
+      list.Add(MapPointBuilderEx.CreateMapPoint(4.0, 4.0, sr));
+      list.Add(MapPointBuilderEx.CreateMapPoint(4.0, 1.0, sr));
 
       List<Geometry> cutGeometries;
 
-      LineSegment line = LineBuilder.CreateLineSegment(MapPointBuilder.CreateMapPoint(0, 0, sr), MapPointBuilder.CreateMapPoint(3, 6, sr));
-      Polyline cutter = PolylineBuilder.CreatePolyline(line);
+      LineSegment line = LineBuilderEx.CreateLineSegment(MapPointBuilderEx.CreateMapPoint(0, 0, sr), MapPointBuilderEx.CreateMapPoint(3, 6, sr));
+      Polyline cutter = PolylineBuilderEx.CreatePolyline(line);
 
       // polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(list);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(list);
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polyline);
       cutGeometries = GeometryEngine.Instance.Cut(polyline, cutter) as List<Geometry>;
 
@@ -741,7 +739,7 @@ namespace ProSnippetsGeometry
       // segments1[1].EndCoordinate = 4, 1
 
       // polygon 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list);
       isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polygon);
       cutGeometries = GeometryEngine.Instance.Cut(polygon, cutter) as List<Geometry>;
       #endregion
@@ -749,52 +747,50 @@ namespace ProSnippetsGeometry
 
     public void DensifyByLength()
     {
-      // cref: Densify By Length;ArcGIS.Core.Geometry.GeometryEngine.DensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Densify By Length;ArcGIS.Core.Geometry.IGeometryEngine.DensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.DensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.DensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double)
       #region Densify by Length
 
       // densify a line segment
-      MapPoint startPt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint endPt = MapPointBuilder.CreateMapPoint(1, 21);
-      LineSegment line = LineBuilder.CreateLineSegment(startPt, endPt);
-      Polyline polyline = PolylineBuilder.CreatePolyline(line);
+      MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint endPt = MapPointBuilderEx.CreateMapPoint(1, 21);
+      LineSegment line = LineBuilderEx.CreateLineSegment(startPt, endPt);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(line);
 
       Geometry geom = GeometryEngine.Instance.DensifyByLength(polyline, 2);
       Polyline result = geom as Polyline;
 
 
       // densify a circular arc
-      MapPoint fromPt = MapPointBuilder.CreateMapPoint(2, 1);
-      MapPoint toPt = MapPointBuilder.CreateMapPoint(1, 2);
+      MapPoint fromPt = MapPointBuilderEx.CreateMapPoint(2, 1);
+      MapPoint toPt = MapPointBuilderEx.CreateMapPoint(1, 2);
       Coordinate2D interiorPt = new Coordinate2D(1 + Math.Sqrt(2) / 2, 1 + Math.Sqrt(2) / 2);
 
-      using (EllipticArcBuilder cab = new EllipticArcBuilder(fromPt, toPt, interiorPt))
-      {
-        EllipticArcSegment circularArc = cab.ToSegment();
-        polyline = PolylineBuilder.CreatePolyline(circularArc);
-        geom = GeometryEngine.Instance.DensifyByLength(polyline, 2);
-        result = geom as Polyline;
-      }
+      EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromPt, toPt, interiorPt);
+      EllipticArcSegment circularArc = cab.ToSegment();
+      polyline = PolylineBuilderEx.CreatePolyline(circularArc);
+      geom = GeometryEngine.Instance.DensifyByLength(polyline, 2);
+      result = geom as Polyline;
 
       #endregion
     }
 
     public void Difference()
     {
-      // cref: Difference between two Polygons;ArcGIS.Core.Geometry.GeometryEngine.Difference(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Difference between two Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Difference(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Difference(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Difference(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Difference between two Polygons
 
       List<MapPoint> polyPts = new List<MapPoint>();
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 2.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 2.0));
 
-      Polygon poly1 = PolygonBuilder.CreatePolygon(polyPts);
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(polyPts);
 
-      Envelope env = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(1.0, 1.0), MapPointBuilder.CreateMapPoint(4, 4));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(1.0, 1.0), MapPointBuilderEx.CreateMapPoint(4, 4));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env);
 
       Geometry result = GeometryEngine.Instance.Difference(poly1, poly2);
       Polygon polyResult = result as Polygon;
@@ -808,40 +804,38 @@ namespace ProSnippetsGeometry
 
     public void Disjoint_Disjoint3D()
     {
-      // cref: Determine if two Geometries are disjoint;ArcGIS.Core.Geometry.GeometryEngine.Disjoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine if two Geometries are disjoint;ArcGIS.Core.Geometry.GeometryEngine.Disjoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine if two Geometries are disjoint;ArcGIS.Core.Geometry.IGeometryEngine.Disjoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine if two Geometries are disjoint;ArcGIS.Core.Geometry.IGeometryEngine.Disjoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Disjoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Disjoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Disjoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Disjoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Determine if two Geometries are disjoint
 
       //
       // pt on pt
       //
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2.0, 2.5);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2.0, 2.5);
 
       bool disjoint = GeometryEngine.Instance.Disjoint(pt, pt2);       // result is true
 
-      using (MultipointBuilder mpb = new MultipointBuilder())
-      {
-        mpb.Add(pt);
-        mpb.Add(pt2);
-        Multipoint multiPoint = mpb.ToGeometry();
+      MultipointBuilderEx mpb = new MultipointBuilderEx();
+      mpb.AddPoint(pt);
+      mpb.AddPoint(pt2);
+      Multipoint multiPoint = mpb.ToGeometry();
 
-        disjoint = GeometryEngine.Instance.Disjoint(multiPoint, pt);     // result is false
-      }
+      disjoint = GeometryEngine.Instance.Disjoint(multiPoint, pt);     // result is false
 
       // 
       // pt and line
       // 
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(3.0, 3.0));
-      list.Add(MapPointBuilder.CreateMapPoint(5.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(3.0, 3.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(5.0, 1.0));
 
-      Polyline line1 = PolylineBuilder.CreatePolyline(list);
+      Polyline line1 = PolylineBuilderEx.CreatePolyline(list);
       disjoint = GeometryEngine.Instance.Disjoint(line1, pt2);       // result is true
 
       disjoint = GeometryEngine.Instance.Disjoint(pt2, line1);       // result is true
@@ -853,12 +847,12 @@ namespace ProSnippetsGeometry
       // pt and polygon
       //
       List<MapPoint> polyPts = new List<MapPoint>();
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 2.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 2.0));
 
-      Polygon poly1 = PolygonBuilder.CreatePolygon(polyPts);
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(polyPts);
       disjoint = GeometryEngine.Instance.Disjoint(poly1, pt);          // result is true
       disjoint = GeometryEngine.Instance.Disjoint(pt, poly1);          // result is true
 
@@ -867,11 +861,11 @@ namespace ProSnippetsGeometry
       //
 
       List<MapPoint> list2 = new List<MapPoint>();
-      list2.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(5.0, 3.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(5.0, 3.0));
 
-      Polyline line2 = PolylineBuilder.CreatePolyline(list2);
+      Polyline line2 = PolylineBuilderEx.CreatePolyline(list2);
       disjoint = GeometryEngine.Instance.Disjoint(line1, line2);         // result is false
 
       //
@@ -883,8 +877,8 @@ namespace ProSnippetsGeometry
       //
       // polygon and polygon
       //
-      Envelope env = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(1.0, 1.0), MapPointBuilder.CreateMapPoint(4, 4));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(1.0, 1.0), MapPointBuilderEx.CreateMapPoint(4, 4));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env);
 
       disjoint = GeometryEngine.Instance.Disjoint(poly1, poly2);         // result is false
 
@@ -893,32 +887,30 @@ namespace ProSnippetsGeometry
 
       SpatialReference sr = SpatialReferences.WGS84;
 
-      MapPoint pt3D_1 = MapPointBuilder.CreateMapPoint(1, 1, 1, sr);
-      MapPoint pt3D_2 = MapPointBuilder.CreateMapPoint(2, 2, 2, sr);
-      MapPoint pt3D_3 = MapPointBuilder.CreateMapPoint(1, 1, 2, sr);
+      MapPoint pt3D_1 = MapPointBuilderEx.CreateMapPoint(1, 1, 1, sr);
+      MapPoint pt3D_2 = MapPointBuilderEx.CreateMapPoint(2, 2, 2, sr);
+      MapPoint pt3D_3 = MapPointBuilderEx.CreateMapPoint(1, 1, 2, sr);
 
-      using (MultipointBuilder mpb = new MultipointBuilder())
-      {
-        mpb.Add(pt3D_1);
-        mpb.Add(pt3D_2);
-        mpb.HasZ = true;
+      MultipointBuilderEx mpbEx = new MultipointBuilderEx();
+      mpbEx.AddPoint(pt3D_1);
+      mpbEx.AddPoint(pt3D_2);
+      mpbEx.HasZ = true;
 
-        Multipoint multiPoint = mpb.ToGeometry();
-        disjoint = GeometryEngine.Instance.Disjoint3D(multiPoint, pt3D_2);     // disjoint = false
-        disjoint = GeometryEngine.Instance.Disjoint3D(multiPoint, pt3D_3);     // disjoint = true
-      }
+      multiPoint = mpbEx.ToGeometry();
+      disjoint = GeometryEngine.Instance.Disjoint3D(multiPoint, pt3D_2);     // disjoint = false
+      disjoint = GeometryEngine.Instance.Disjoint3D(multiPoint, pt3D_3);     // disjoint = true
       #endregion
     }
 
     public void Distance()
     {
-      // cref: Determine distance between two Geometries;ArcGIS.Core.Geometry.GeometryEngine.Distance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine distance between two Geometries;ArcGIS.Core.Geometry.IGeometryEngine.Distance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Distance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Distance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Determine distance between two Geometries
 
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2.0, 2.0);
-      MapPoint pt3 = MapPointBuilder.CreateMapPoint(4.0, 2.0);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2.0, 2.0);
+      MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(4.0, 2.0);
 
       //
       // pt and pt 
@@ -931,30 +923,30 @@ namespace ProSnippetsGeometry
       List<MapPoint> multiPts = new List<MapPoint>();
       multiPts.Add(pt2);
       multiPts.Add(pt3);
-      Multipoint multiPoint = MultipointBuilder.CreateMultipoint(multiPts);
+      Multipoint multiPoint = MultipointBuilderEx.CreateMultipoint(multiPts);
       d = GeometryEngine.Instance.Distance(pt1, multiPoint);         // d = Math.Sqrt(2)
 
       //
       // pt and envelope
       //
-      Envelope env = EnvelopeBuilder.CreateEnvelope(pt1, pt2);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(pt1, pt2);
       d = GeometryEngine.Instance.Distance(pt1, env);                // d = 0
 
       //
       // pt and polyline
       //
       List<MapPoint> polylinePts = new List<MapPoint>();
-      polylinePts.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      polylinePts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
       polylinePts.Add(pt2);
-      Polyline polyline = PolylineBuilder.CreatePolyline(polylinePts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(polylinePts);
 
       d = GeometryEngine.Instance.Distance(pt1, polyline);             // d = 1.0
 
       //
       // pt and polygon
       //
-      Envelope env2 = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(3.0, 3.0), MapPointBuilder.CreateMapPoint(5.0, 5.0));
-      Polygon poly = PolygonBuilder.CreatePolygon(env2);
+      Envelope env2 = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(3.0, 3.0), MapPointBuilderEx.CreateMapPoint(5.0, 5.0));
+      Polygon poly = PolygonBuilderEx.CreatePolygon(env2);
       d = GeometryEngine.Instance.Distance(pt1, poly);                 // d = Math.Sqrt(8)
 
       //
@@ -966,9 +958,9 @@ namespace ProSnippetsGeometry
       // polyline and polyline
       //
       List<MapPoint> polylineList = new List<MapPoint>();
-      polylineList.Add(MapPointBuilder.CreateMapPoint(4, 3));
-      polylineList.Add(MapPointBuilder.CreateMapPoint(4, 4));
-      Polyline polyline2 = PolylineBuilder.CreatePolyline(polylineList);
+      polylineList.Add(MapPointBuilderEx.CreateMapPoint(4, 3));
+      polylineList.Add(MapPointBuilderEx.CreateMapPoint(4, 4));
+      Polyline polyline2 = PolylineBuilderEx.CreatePolyline(polylineList);
 
       d = GeometryEngine.Instance.Distance(polyline, polyline2);           // d = Math.Sqrt(5)
 
@@ -976,7 +968,7 @@ namespace ProSnippetsGeometry
       //
       // polygon and polygon
       //
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env);
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env);
       d = GeometryEngine.Instance.Distance(poly, poly2);                 // d = Math.Sqrt(2)
 
       #endregion
@@ -984,14 +976,14 @@ namespace ProSnippetsGeometry
 
     public void Distance3D()
     {
-      // cref: Determine 3D distance between two Geometries;ArcGIS.Core.Geometry.GeometryEngine.Distance3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine 3D distance between two Geometries;ArcGIS.Core.Geometry.IGeometryEngine.Distance3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Distance3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Distance3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Determine 3D distance between two Geometries
 
       // between points 
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1, 1, 1);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2, 2, 2);
-      MapPoint pt3 = MapPointBuilder.CreateMapPoint(10, 2, 1);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1, 1, 1);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2, 2, 2);
+      MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(10, 2, 1);
 
       // pt1 to pt2
       double d = GeometryEngine.Instance.Distance3D(pt1, pt2);        // d = Math.Sqrt(3)
@@ -1005,18 +997,18 @@ namespace ProSnippetsGeometry
       // intersecting lines
 
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(3.0, 3.0, 1.0));
-      list.Add(MapPointBuilder.CreateMapPoint(5.0, 1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(3.0, 3.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(5.0, 1.0, 1.0));
 
-      Polyline line1 = PolylineBuilder.CreatePolyline(list);
+      Polyline line1 = PolylineBuilderEx.CreatePolyline(list);
 
       List<MapPoint> list2 = new List<MapPoint>();
-      list2.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0, 1.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0, 1.0));
-      list2.Add(MapPointBuilder.CreateMapPoint(5.0, 3.0, 1.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0, 1.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0, 1.0));
+      list2.Add(MapPointBuilderEx.CreateMapPoint(5.0, 3.0, 1.0));
 
-      Polyline line2 = PolylineBuilder.CreatePolyline(list2);
+      Polyline line2 = PolylineBuilderEx.CreatePolyline(list2);
 
       bool intersects = GeometryEngine.Instance.Intersects(line1, line2);    // intersects = true
       d = GeometryEngine.Instance.Distance3D(line1, line2);                  // d = 0   (distance is 0 when geomtries intersect)
@@ -1026,13 +1018,13 @@ namespace ProSnippetsGeometry
 
     public void Expand()
     {
-      // cref: Expand envelopes;ArcGIS.Core.Geometry.GeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Boolean)
-      // cref: Expand envelopes;ArcGIS.Core.Geometry.GeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Double,System.Boolean)
-      // cref: Expand envelopes;ArcGIS.Core.Geometry.IGeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Boolean)
-      // cref: Expand envelopes;ArcGIS.Core.Geometry.IGeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Expand(ArcGIS.Core.Geometry.Envelope,System.Double,System.Double,System.Double,System.Boolean)
       #region Expand envelopes
 
-      Envelope env = EnvelopeBuilder.CreateEnvelope(100.0, 100.0, 500.0, 500.0);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(100.0, 100.0, 500.0, 500.0);
       // env.HasZ = false
 
       Envelope result = GeometryEngine.Instance.Expand(env, 0.5, 0.5, true);
@@ -1060,10 +1052,10 @@ namespace ProSnippetsGeometry
       }
 
       // expand a 3d envelope
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(100, 100, 100);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(200, 200, 200);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(100, 100, 100);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(200, 200, 200);
 
-      env = EnvelopeBuilder.CreateEnvelope(pt1, pt2);
+      env = EnvelopeBuilderEx.CreateEnvelope(pt1, pt2);
       // env.HasZ = true
 
       result = GeometryEngine.Instance.Expand(env, 0.5, 0.5, 0.5, true);
@@ -1081,23 +1073,23 @@ namespace ProSnippetsGeometry
 
     public void Extend()
     {
-      // cref: Extend a polyline;ArcGIS.Core.Geometry.GeometryEngine.Extend(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.ExtendFlags)
-      // cref: Extend a polyline;ArcGIS.Core.Geometry.IGeometryEngine.Extend(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.ExtendFlags)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Extend(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.ExtendFlags)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Extend(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.ExtendFlags)
       #region Extend a polyline
 
       // build a polyline
-      var polyline = PolylineBuilder.CreatePolyline(new[]
+      var polyline = PolylineBuilderEx.CreatePolyline(new[]
       {
-        MapPointBuilder.CreateMapPoint(1, 1, 10, 20),
-        MapPointBuilder.CreateMapPoint(0, 0, 10, 20),
-        MapPointBuilder.CreateMapPoint(1, -1, 10, 20)
+        MapPointBuilderEx.CreateMapPoint(1, 1, 10, 20),
+        MapPointBuilderEx.CreateMapPoint(0, 0, 10, 20),
+        MapPointBuilderEx.CreateMapPoint(1, -1, 10, 20)
       });
 
       // build the extender line
-      var extender = PolylineBuilder.CreatePolyline(new[]
+      var extender = PolylineBuilderEx.CreatePolyline(new[]
       {
-        MapPointBuilder.CreateMapPoint(2, 2),
-        MapPointBuilder.CreateMapPoint(2, -2),
+        MapPointBuilderEx.CreateMapPoint(2, 2),
+        MapPointBuilderEx.CreateMapPoint(2, -2),
       });
 
       // extend
@@ -1128,16 +1120,16 @@ namespace ProSnippetsGeometry
 
       // extend with no intersection 
 
-      polyline = PolylineBuilder.CreatePolyline(new[]
+      polyline = PolylineBuilderEx.CreatePolyline(new[]
       {
-        MapPointBuilder.CreateMapPoint(1, 1),
-        MapPointBuilder.CreateMapPoint(3, 1)
+        MapPointBuilderEx.CreateMapPoint(1, 1),
+        MapPointBuilderEx.CreateMapPoint(3, 1)
       });
 
-      extender = PolylineBuilder.CreatePolyline(new[]
+      extender = PolylineBuilderEx.CreatePolyline(new[]
       {
-        MapPointBuilder.CreateMapPoint(1, 4),
-        MapPointBuilder.CreateMapPoint(3, 4)
+        MapPointBuilderEx.CreateMapPoint(1, 4),
+        MapPointBuilderEx.CreateMapPoint(3, 4)
       });
 
       result = GeometryEngine.Instance.Extend(polyline, extender, ExtendFlags.Default);
@@ -1150,10 +1142,10 @@ namespace ProSnippetsGeometry
     {
       Polyline polylineWithZ = null;
 
-      // cref: Generalize;ArcGIS.Core.Geometry.GeometryEngine.Generalize(ArcGIS.Core.Geometry.Geometry,System.Double,System.Boolean,System.Boolean)
-      // cref: Generalize;ArcGIS.Core.Geometry.GeometryEngine.Generalize3D(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Generalize;ArcGIS.Core.Geometry.IGeometryEngine.Generalize(ArcGIS.Core.Geometry.Geometry,System.Double,System.Boolean,System.Boolean)
-      // cref: Generalize;ArcGIS.Core.Geometry.IGeometryEngine.Generalize3D(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Generalize(ArcGIS.Core.Geometry.Geometry,System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Generalize3D(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Generalize(ArcGIS.Core.Geometry.Geometry,System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Generalize3D(ArcGIS.Core.Geometry.Geometry,System.Double)
       #region Generalize
 
       Polyline generalizedPolyline = GeometryEngine.Instance.Generalize(polylineWithZ, 200) as Polyline;
@@ -1170,15 +1162,15 @@ namespace ProSnippetsGeometry
 
     public void GeodesicArea()
     {
-      // cref: Calculate the Geodesic Area of a polygon;ArcGIS.Core.Geometry.GeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry)
-      // cref: Calculate the Geodesic Area of a polygon;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry)
       #region Calculate the Geodesic Area of a polygon
-      var polygon = PolygonBuilder.CreatePolygon(new[]
+      var polygon = PolygonBuilderEx.CreatePolygon(new[]
       {
-        MapPointBuilder.CreateMapPoint(-10018754.1713946, 10018754.1713946),
-        MapPointBuilder.CreateMapPoint(10018754.1713946, 10018754.1713946),
-        MapPointBuilder.CreateMapPoint(10018754.1713946, -10018754.1713946),
-        MapPointBuilder.CreateMapPoint(-10018754.1713946, -10018754.1713946)
+        MapPointBuilderEx.CreateMapPoint(-10018754.1713946, 10018754.1713946),
+        MapPointBuilderEx.CreateMapPoint(10018754.1713946, 10018754.1713946),
+        MapPointBuilderEx.CreateMapPoint(10018754.1713946, -10018754.1713946),
+        MapPointBuilderEx.CreateMapPoint(-10018754.1713946, -10018754.1713946)
       }, SpatialReferences.WebMercator);
       var area = GeometryEngine.Instance.GeodesicArea(polygon);
 
@@ -1192,14 +1184,18 @@ namespace ProSnippetsGeometry
 
     public void GeodesicBuffer()
     {
-      // cref: Create a buffer polygon at the specified geodesic distance;ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Create a buffer polygon at the specified geodesic distance;ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
-      // cref: Create a buffer polygon at the specified geodesic distance;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Create a buffer polygon at the specified geodesic distance;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LinearUnit)
       #region Create a buffer polygon at the specified geodesic distance
 
       // buffer a point
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84);
       Polygon outPolygon = GeometryEngine.Instance.GeodesicBuffer(pt, 5) as Polygon;
 
       double delta = SpatialReferences.WGS84.XYTolerance * 2 * Math.Sqrt(2);
@@ -1219,10 +1215,10 @@ namespace ProSnippetsGeometry
 
       // buffer many points
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
-      list.Add(MapPointBuilder.CreateMapPoint(10.0, 20.0));
-      list.Add(MapPointBuilder.CreateMapPoint(40.0, 40.0));
-      list.Add(MapPointBuilder.CreateMapPoint(60.0, 60.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
+      list.Add(MapPointBuilderEx.CreateMapPoint(10.0, 20.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(40.0, 40.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(60.0, 60.0));
 
       outPolygon = GeometryEngine.Instance.GeodesicBuffer(list, 10000) as Polygon;
       // outPolygon.PartCount = 4
@@ -1238,10 +1234,10 @@ namespace ProSnippetsGeometry
 
       List<Geometry> manyGeometries = new List<Geometry>
       {
-        MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84),
-        PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
-        PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
-        PolygonBuilder.CreatePolygon(new List<Coordinate2D>(){coords[9], coords[10], coords[11]})
+        MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84),
+        PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
+        PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
+        PolygonBuilderEx.CreatePolygon(new List<Coordinate2D>(){coords[9], coords[10], coords[11]})
       };
 
       outPolygon = GeometryEngine.Instance.GeodesicBuffer(manyGeometries, 20000) as Polygon;
@@ -1255,11 +1251,13 @@ namespace ProSnippetsGeometry
 
     public void GeodesicDistance()
     {
-      // cref: Determine geodesic distance between two Geometries;ArcGIS.Core.Geometry.GeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine geodesic distance between two Geometries;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicDistance(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
       #region Determine geodesic distance between two Geometries
-      var point1 = MapPointBuilder.CreateMapPoint(-170, 45, SpatialReferences.WGS84);
-      var point2 = MapPointBuilder.CreateMapPoint(170, 45, SpatialReferences.WGS84);
+      var point1 = MapPointBuilderEx.CreateMapPoint(-170, 45, SpatialReferences.WGS84);
+      var point2 = MapPointBuilderEx.CreateMapPoint(170, 45, SpatialReferences.WGS84);
 
       var distances_meters = GeometryEngine.Instance.GeodesicDistance(point1, point2);
       // distance is approximately 1572912.2066940258 in meters
@@ -1272,16 +1270,16 @@ namespace ProSnippetsGeometry
 
     public void GeodesicEllipse()
     {
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeometryEngine.GeodesicEllipse(ArcGIS.Core.Geometry.GeodesicEllipseParameter,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicEllipse(ArcGIS.Core.Geometry.GeodesicEllipseParameter,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.AxisDirection
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.Center
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.LinearUnit
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.OutGeometryType
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.SemiAxis1Length
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.SemiAxis2Length
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter.VertexCount
-      // cref: GeodesicEllipse;ArcGIS.Core.Geometry.GeodesicEllipseParameter
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.AxisDirection
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.Center
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.LinearUnit
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.SemiAxis1Length
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.SemiAxis2Length
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.VertexCount
+      // cref: ArcGIS.Core.Geometry.GeodesicEllipseParameter.OutGeometryType
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicEllipse(ArcGIS.Core.Geometry.GeodesicEllipseParameter,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicEllipse(ArcGIS.Core.Geometry.GeodesicEllipseParameter,ArcGIS.Core.Geometry.SpatialReference)
       #region GeodesicEllipse
 
       GeodesicEllipseParameter param = new GeodesicEllipseParameter();
@@ -1303,12 +1301,16 @@ namespace ProSnippetsGeometry
     }
     public void GeodesicLength()
     {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
       #region Determine geodesic length of a line
 
-      var polyline = PolylineBuilder.CreatePolyline(new[]
+      var polyline = PolylineBuilderEx.CreatePolyline(new[]
       {
-          MapPointBuilder.CreateMapPoint(-10018754.1713946, 10018754.1713946),
-          MapPointBuilder.CreateMapPoint(10018754.1713946, 10018754.1713946)
+          MapPointBuilderEx.CreateMapPoint(-10018754.1713946, 10018754.1713946),
+          MapPointBuilderEx.CreateMapPoint(10018754.1713946, 10018754.1713946)
       }, SpatialReferences.WebMercator);
 
       var length = GeometryEngine.Instance.GeodesicLength(polyline);
@@ -1326,19 +1328,19 @@ namespace ProSnippetsGeometry
 
     public void GeodesicSector()
     {
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeometryEngine.GeodesicSector(ArcGIS.Core.Geometry.GeodesicSectorParameter,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicSector(ArcGIS.Core.Geometry.GeodesicSectorParameter,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.ArcVertexCount
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.AxisDirection
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.Center
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.LinearUnit
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.OutGeometryType
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.RadiusVertexCount
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.SectorAngle
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.SemiAxis1Length
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.SemiAxis2Length
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter.StartDirection
-      // cref: GeodesicSector;ArcGIS.Core.Geometry.GeodesicSectorParameter
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.ArcVertexCount
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.AxisDirection
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.Center
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.LinearUnit
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.OutGeometryType
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.RadiusVertexCount
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.SectorAngle
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.SemiAxis1Length
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.SemiAxis2Length
+      // cref: ArcGIS.Core.Geometry.GeodesicSectorParameter.StartDirection
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicSector(ArcGIS.Core.Geometry.GeodesicSectorParameter,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicSector(ArcGIS.Core.Geometry.GeodesicSectorParameter,ArcGIS.Core.Geometry.SpatialReference)
       #region GeodesicSector
 
       GeodesicSectorParameter param = new GeodesicSectorParameter();
@@ -1364,8 +1366,8 @@ namespace ProSnippetsGeometry
 
     public void GeodeticDensifyByDeviation()
     {
-      // cref: GeodeticDensifyByDeviation - polyline;ArcGIS.Core.Geometry.GeometryEngine.GeodeticDensifyByDeviation(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
-      // cref: GeodeticDensifyByDeviation - polyline;ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDensifyByDeviation(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodeticDensifyByDeviation(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDensifyByDeviation(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
       #region GeodeticDensifyByDeviation - polyline
 
       List<Coordinate2D> coords = new List<Coordinate2D>()
@@ -1380,7 +1382,7 @@ namespace ProSnippetsGeometry
       SpatialReference sr = SpatialReferences.WGS84;
 
       // create a polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, sr);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
 
       // densify in km
       Polyline geodesicPolyline = GeometryEngine.Instance.GeodeticDensifyByDeviation(polyline, 200, LinearUnit.Kilometers, GeodeticCurveType.Geodesic) as Polyline;
@@ -1395,10 +1397,10 @@ namespace ProSnippetsGeometry
 
     public void GeodeticDensifyByLength()
     {
-      // cref: GeodeticDensifyByLength - polygon;ArcGIS.Core.Geometry.GeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
-      // cref: GeodeticDensifyByLength - polygon;ArcGIS.Core.Geometry.GeometryEngine.GeodeticDensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
-      // cref: GeodeticDensifyByLength - polygon;ArcGIS.Core.Geometry.IGeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
-      // cref: GeodeticDensifyByLength - polygon;ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicLength(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodeticDensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDensifyByLength(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LinearUnit,ArcGIS.Core.Geometry.GeodeticCurveType)
       #region GeodeticDensifyByLength - polygon
 
       List<Coordinate2D> coords = new List<Coordinate2D>()
@@ -1413,14 +1415,14 @@ namespace ProSnippetsGeometry
       SpatialReference sr = SpatialReferences.WGS84;
 
       // create a polygon
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords, sr);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords, sr);
 
       // get the geodesic lengths of the polygon segments
       ReadOnlySegmentCollection segments = polygon.Parts[0];
       List<Double> geoLengths = new List<Double>(segments.Count);
       foreach (Segment s in segments)
       {
-        Polyline line = PolylineBuilder.CreatePolyline(s, sr);
+        Polyline line = PolylineBuilderEx.CreatePolyline(s, sr);
         double geoLen = GeometryEngine.Instance.GeodesicLength(line);
         geoLengths.Add(geoLen);
       }
@@ -1441,14 +1443,16 @@ namespace ProSnippetsGeometry
 
     public void GeodeticDistanceAndAzimuth()
     {
-      // cref: Calculate geodetic distance, azimuth between two points;ArcGIS.Core.Geometry.GeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,System.Double@,System.Double@)
-      // cref: Calculate geodetic distance, azimuth between two points;ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.LinearUnit,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodeticDistanceAndAzimuth(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.GeodeticCurveType,ArcGIS.Core.Geometry.LinearUnit,System.Double@,System.Double@)
       #region Calculate geodetic distance, azimuth between two points
 
       SpatialReference sr = SpatialReferences.WGS84;
 
-      MapPoint p1 = MapPointBuilder.CreateMapPoint(111, 55, sr);
-      MapPoint p2 = MapPointBuilder.CreateMapPoint(95.5845, 64.2285, sr);
+      MapPoint p1 = MapPointBuilderEx.CreateMapPoint(111, 55, sr);
+      MapPoint p2 = MapPointBuilderEx.CreateMapPoint(95.5845, 64.2285, sr);
 
       double distance, az12, az21;
 
@@ -1469,8 +1473,8 @@ namespace ProSnippetsGeometry
 
 
 
-      MapPoint p3 = MapPointBuilder.CreateMapPoint(0, 0, sr);
-      MapPoint p4 = MapPointBuilder.CreateMapPoint(1, 0, sr);
+      MapPoint p3 = MapPointBuilderEx.CreateMapPoint(0, 0, sr);
+      MapPoint p4 = MapPointBuilderEx.CreateMapPoint(1, 0, sr);
 
       distance = GeometryEngine.Instance.GeodeticDistanceAndAzimuth(p3, p4, GeodeticCurveType.Geodesic, out az12, out az21);
       // distance - 111319.49079327342
@@ -1487,12 +1491,12 @@ namespace ProSnippetsGeometry
 
     public void GeodeticMove()
     {
-      // cref: Perform Geodetic Move on a set of MapPoints;ArcGIS.Core.Geometry.GeometryEngine.GeodeticMove(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Double,ArcGIS.Core.Geometry.GeodeticCurveType)
-      // cref: Perform Geodetic Move on a set of MapPoints;ArcGIS.Core.Geometry.IGeometryEngine.GeodeticMove(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Double,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodeticMove(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Double,ArcGIS.Core.Geometry.GeodeticCurveType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodeticMove(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference,System.Double,ArcGIS.Core.Geometry.LinearUnit,System.Double,ArcGIS.Core.Geometry.GeodeticCurveType)
       #region Perform Geodetic Move on a set of MapPoints
 
       SpatialReference sr = SpatialReferences.WebMercator;
-      var points = new[] { MapPointBuilder.CreateMapPoint(0, 0, sr) };
+      var points = new[] { MapPointBuilderEx.CreateMapPoint(0, 0, sr) };
       double distance = 10;
       double azimuth = Math.PI / 2;
       var resultPoints = GeometryEngine.Instance.GeodeticMove(points, sr, distance, LinearUnit.Meters, azimuth, GeodeticCurveType.Geodesic);
@@ -1515,11 +1519,11 @@ namespace ProSnippetsGeometry
 
     public void GetPredefinedCoordinateSystemList()
     {
-      // cref: Retrieve coordinate systems;ArcGIS.Core.Geometry.GeometryEngine.GetPredefinedCoordinateSystemList(ArcGIS.Core.Geometry.CoordinateSystemFilter)
-      // cref: Retrieve coordinate systems;ArcGIS.Core.Geometry.IGeometryEngine.GetPredefinedCoordinateSystemList(ArcGIS.Core.Geometry.CoordinateSystemFilter)
-      // cref: Retrieve coordinate systems;ArcGIS.Core.Geometry.CoordinateSystemListEntry.Category
-      // cref: Retrieve coordinate systems;ArcGIS.Core.Geometry.CoordinateSystemListEntry.Name
-      // cref: Retrieve coordinate systems;ArcGIS.Core.Geometry.CoordinateSystemListEntry.Wkid
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetPredefinedCoordinateSystemList(ArcGIS.Core.Geometry.CoordinateSystemFilter)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetPredefinedCoordinateSystemList(ArcGIS.Core.Geometry.CoordinateSystemFilter)
+      // cref: ArcGIS.Core.Geometry.CoordinateSystemListEntry.Category
+      // cref: ArcGIS.Core.Geometry.CoordinateSystemListEntry.Name
+      // cref: ArcGIS.Core.Geometry.CoordinateSystemListEntry.Wkid
       #region Retrieve coordinate systems
 
       // get all the geographic coordinate systems
@@ -1544,12 +1548,12 @@ namespace ProSnippetsGeometry
 
     public void GetPredefinedGeographicTransformationList()
     {
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.GeometryEngine.GetPredefinedGeographicTransformationList
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.IGeometryEngine.GetPredefinedGeographicTransformationList
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.GeographicTransformationListEntry.FromSRWkid
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.GeographicTransformationListEntry.Name
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.GeographicTransformationListEntry.ToSRWkid
-      // cref: Retrieve system geographic transformations;ArcGIS.Core.Geometry.GeographicTransformationListEntry.Wkid
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetPredefinedGeographicTransformationList
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetPredefinedGeographicTransformationList
+      // cref: ArcGIS.Core.Geometry.GeographicTransformationListEntry.FromSRWkid
+      // cref: ArcGIS.Core.Geometry.GeographicTransformationListEntry.Name
+      // cref: ArcGIS.Core.Geometry.GeographicTransformationListEntry.ToSRWkid
+      // cref: ArcGIS.Core.Geometry.GeographicTransformationListEntry.Wkid
       #region Retrieve system geographic transformations
 
       // a geographic transformation is the definition of how to project from one spatial reference to another
@@ -1567,10 +1571,10 @@ namespace ProSnippetsGeometry
 
     public void GetSubCurve_GetSubCurve3D()
     {
-      // cref: Get Sub-curve of a polyline or polygon;ArcGIS.Core.Geometry.GeometryEngine.GetSubCurve(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: Get Sub-curve of a polyline or polygon;ArcGIS.Core.Geometry.GeometryEngine.GetSubCurve3D(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: Get Sub-curve of a polyline or polygon;ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurve(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: Get Sub-curve of a polyline or polygon;ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurve3D(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetSubCurve(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetSubCurve3D(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurve(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurve3D(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
       #region Get Sub-curve of a polyline or polygon
 
       SpatialReference sr = SpatialReferences.WGS84;
@@ -1582,7 +1586,7 @@ namespace ProSnippetsGeometry
         new Coordinate2D(-114, 68)
       };
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, sr);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
 
       Polyline subCurve = GeometryEngine.Instance.GetSubCurve(polyline, 0, 5, AsRatioOrLength.AsLength);
       // subCurve.PartCount = 1
@@ -1609,7 +1613,7 @@ namespace ProSnippetsGeometry
         new Coordinate3D(1, 0, 3)
       };
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords3D, sr);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords3D, sr);
 
       subCurve = GeometryEngine.Instance.GetSubCurve3D(polygon, 0, 1, AsRatioOrLength.AsLength);
       // subCurve.HasZ = true
@@ -1624,8 +1628,8 @@ namespace ProSnippetsGeometry
 
     public void GraphicBuffer()
     {
-      // cref: GraphicBuffer;ArcGIS.Core.Geometry.GeometryEngine.GraphicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
-      // cref: GraphicBuffer;ArcGIS.Core.Geometry.IGeometryEngine.GraphicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GraphicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GraphicBuffer(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
       #region GraphicBuffer
 
       // mitered join and butt caps
@@ -1637,24 +1641,24 @@ namespace ProSnippetsGeometry
           new Coordinate2D(1800,6200)
       };
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, sr);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
 
       Polygon polygon = GeometryEngine.Instance.GraphicBuffer(polyline, 50, LineJoinType.Miter, LineCapType.Butt, 10, 0, -1) as Polygon;
 
       // bevelled join and round caps
-      Envelope envelope = EnvelopeBuilder.CreateEnvelope(0, 0, 10000, 10000, SpatialReferences.WebMercator);
+      Envelope envelope = EnvelopeBuilderEx.CreateEnvelope(0, 0, 10000, 10000, SpatialReferences.WebMercator);
 
       Polygon outPolygon = GeometryEngine.Instance.GraphicBuffer(envelope, 1000, LineJoinType.Bevel, LineCapType.Round, 4, 0, 96) as Polygon;
       #endregion
 
-      // cref: GraphicBuffer Many;ArcGIS.Core.Geometry.GeometryEngine.GraphicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
-      // cref: GraphicBuffer Many;ArcGIS.Core.Geometry.IGeometryEngine.GraphicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GraphicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GraphicBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry},System.Double,ArcGIS.Core.Geometry.LineJoinType,ArcGIS.Core.Geometry.LineCapType,System.Double,System.Double,System.Int32)
       #region GraphicBuffer Many
 
       // round join and round caps
-      MapPoint point1 = MapPointBuilder.CreateMapPoint(0, 0);
-      MapPoint point2 = MapPointBuilder.CreateMapPoint(1, 1, SpatialReferences.WGS84);
-      MapPoint point3 = MapPointBuilder.CreateMapPoint(1000000, 1200000, SpatialReferences.WebMercator);
+      MapPoint point1 = MapPointBuilderEx.CreateMapPoint(0, 0);
+      MapPoint point2 = MapPointBuilderEx.CreateMapPoint(1, 1, SpatialReferences.WGS84);
+      MapPoint point3 = MapPointBuilderEx.CreateMapPoint(1000000, 1200000, SpatialReferences.WebMercator);
       List<MapPoint> points = new List<MapPoint>() { point1, point2, point3 };
 
       IReadOnlyList<Geometry> geometries = GeometryEngine.Instance.GraphicBuffer(points, 5, LineJoinType.Round, LineCapType.Round, 0, 0, 3000);
@@ -1663,51 +1667,49 @@ namespace ProSnippetsGeometry
 
     public void Intersection()
     {
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimension)
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.GeometryEngine.Intersects(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimension)
-      // cref: Intersection between two Polylines;ArcGIS.Core.Geometry.IGeometryEngine.Intersects(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimensionType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Intersects(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimensionType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Intersects(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Intersection between two Polylines
 
       // determine intersection between two polylines
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(5.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(5.0, 1.0));
 
-      Polyline line1 = PolylineBuilder.CreatePolyline(pts);
+      Polyline line1 = PolylineBuilderEx.CreatePolyline(pts);
 
       List<MapPoint> pts2 = new List<MapPoint>();
-      pts2.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0));
-      pts2.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0));
-      pts2.Add(MapPointBuilder.CreateMapPoint(5.0, 3.0));
+      pts2.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0));
+      pts2.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0));
+      pts2.Add(MapPointBuilderEx.CreateMapPoint(5.0, 3.0));
 
-      Polyline line2 = PolylineBuilder.CreatePolyline(pts2);
+      Polyline line2 = PolylineBuilderEx.CreatePolyline(pts2);
 
       bool intersects = GeometryEngine.Instance.Intersects(line1, line2);    // intersects = true
-      Geometry g = GeometryEngine.Instance.Intersection(line1, line2, GeometryDimension.esriGeometry0Dimension);
+      Geometry g = GeometryEngine.Instance.Intersection(line1, line2, GeometryDimensionType.EsriGeometry0Dimension);
       Multipoint resultMultipoint = g as Multipoint;
 
       // result is a multiPoint that intersects at (2,2) and (4,2)
       #endregion
 
-      // cref: Intersection between two Polygons;ArcGIS.Core.Geometry.EnvelopeBuilder.CreateEnvelope(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Intersection between two Polygons;ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Intersection between two Polygons;ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimension)
-      // cref: Intersection between two Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Intersection between two Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.GeometryDimension)
+      // cref: ArcGIS.Core.Geometry.EnvelopeBuilderEx.CreateEnvelope(ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.Coordinate2D,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Intersection(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Intersection between two Polygons
 
       // determine intersection between two polygons
 
-      Envelope env1 = EnvelopeBuilder.CreateEnvelope(new Coordinate2D(3.0, 2.0), new Coordinate2D(6.0, 6.0));
-      Polygon poly1 = PolygonBuilder.CreatePolygon(env1);
+      Envelope env1 = EnvelopeBuilderEx.CreateEnvelope(new Coordinate2D(3.0, 2.0), new Coordinate2D(6.0, 6.0));
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(env1);
 
-      Envelope env2 = EnvelopeBuilder.CreateEnvelope(new Coordinate2D(1.0, 1.0), new Coordinate2D(4.0, 4.0));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env2);
+      Envelope env2 = EnvelopeBuilderEx.CreateEnvelope(new Coordinate2D(1.0, 1.0), new Coordinate2D(4.0, 4.0));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env2);
 
       Polygon polyResult = GeometryEngine.Instance.Intersection(poly1, poly2) as Polygon;
       #endregion
@@ -1715,8 +1717,8 @@ namespace ProSnippetsGeometry
 
     public void LabelPoint()
     {
-      // cref: Determine label point for a Polygon;ArcGIS.Core.Geometry.GeometryEngine.LabelPoint(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine label point for a Polygon;ArcGIS.Core.Geometry.IGeometryEngine.LabelPoint(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.LabelPoint(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.LabelPoint(ArcGIS.Core.Geometry.Geometry)
       #region Determine label point for a Polygon
 
       // create a polygon
@@ -1726,7 +1728,7 @@ namespace ProSnippetsGeometry
       list2D.Add(new Coordinate2D(2.0, 2.0));
       list2D.Add(new Coordinate2D(2.0, 1.0));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list2D);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list2D);
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polygon);
       MapPoint pt = GeometryEngine.Instance.LabelPoint(polygon);
       #endregion
@@ -1734,22 +1736,22 @@ namespace ProSnippetsGeometry
 
     public void Length_Length3D()
     {
-      // cref: Determine Length, Length3D of line;ArcGIS.Core.Geometry.GeometryEngine.Length(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine Length, Length3D of line;ArcGIS.Core.Geometry.GeometryEngine.Length3D(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine Length, Length3D of line;ArcGIS.Core.Geometry.IGeometryEngine.Length(ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine Length, Length3D of line;ArcGIS.Core.Geometry.IGeometryEngine.Length3D(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Length(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Length3D(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Length(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Length3D(ArcGIS.Core.Geometry.Geometry)
       #region Determine Length, Length3D of line
 
-      MapPoint c1 = MapPointBuilder.CreateMapPoint(1, 2, 3);
-      MapPoint c2 = MapPointBuilder.CreateMapPoint(4, 2, 4);
+      MapPoint c1 = MapPointBuilderEx.CreateMapPoint(1, 2, 3);
+      MapPoint c2 = MapPointBuilderEx.CreateMapPoint(4, 2, 4);
 
       // line segment
-      LineSegment line = LineBuilder.CreateLineSegment(c1, c2);
+      LineSegment line = LineBuilderEx.CreateLineSegment(c1, c2);
       double len = line.Length;     // = 3
       double len3D = line.Length3D;   // = Math.Sqrt(10)
 
       // polyline
-      Polyline p = PolylineBuilder.CreatePolyline(line);
+      Polyline p = PolylineBuilderEx.CreatePolyline(line);
       double p_len = p.Length;        // = len = 3
       double p_len3D = p.Length3D;    // = len3D = Math.Sqrt(10)
 
@@ -1762,12 +1764,12 @@ namespace ProSnippetsGeometry
     {
       // GetMinMaxM, GetMMonotonic, GetPointsAtM, GetSubCurveBetweenMs, GetNormalsAtM, SetMsAsDistance, SetAndInterpolateMsBetween
 
-      // cref: Get the minimum and maximum M values - GetMinMaxM;ArcGIS.Core.Geometry.GeometryEngine.GetMinMaxM(ArcGIS.Core.Geometry.Multipart,System.Double@,System.Double@)
-      // cref: Get the minimum and maximum M values - GetMinMaxM;ArcGIS.Core.Geometry.IGeometryEngine.GetMinMaxM(ArcGIS.Core.Geometry.Multipart,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetMinMaxM(ArcGIS.Core.Geometry.Multipart,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetMinMaxM(ArcGIS.Core.Geometry.Multipart,System.Double@,System.Double@)
       #region Get the minimum and maximum M values - GetMinMaxM
 
       string json = "{\"hasM\":true,\"rings\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20],[0,-2000,0],[1000,-2000,-20],[2000,-2000,-30],[3000,-2000,10],[4000,-2000,5]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polygon polygon = PolygonBuilder.FromJson(json);
+      Polygon polygon = PolygonBuilderEx.FromJson(json);
 
       double minM, maxM;
       GeometryEngine.Instance.GetMinMaxM(polygon, out minM, out maxM);
@@ -1775,14 +1777,14 @@ namespace ProSnippetsGeometry
       // maxM = 20
 
       json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,null],[-1000,-2000,null]]]}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       GeometryEngine.Instance.GetMinMaxM(polyline, out minM, out maxM);
       // minM = 10
       // maxM = 10
 
       json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,null],[-2000,-2000,null],[-1000,-2000,null]]]}";
-      polyline = PolylineBuilder.FromJson(json);
+      polyline = PolylineBuilderEx.FromJson(json);
 
       GeometryEngine.Instance.GetMinMaxM(polyline, out minM, out maxM);
       // minM = double.Nan
@@ -1792,24 +1794,24 @@ namespace ProSnippetsGeometry
 
     public void GetMMonotonic()
     {
-      // cref: Determine whether Ms are monotonic and whether ascending or descending - GetMMonotonic;ArcGIS.Core.Geometry.GeometryEngine.GetMMonotonic(ArcGIS.Core.Geometry.Multipart)
-      // cref: Determine whether Ms are monotonic and whether ascending or descending - GetMMonotonic;ArcGIS.Core.Geometry.IGeometryEngine.GetMMonotonic(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetMMonotonic(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetMMonotonic(ArcGIS.Core.Geometry.Multipart)
       #region Determine whether Ms are monotonic and whether ascending or descending - GetMMonotonic
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20]]]}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
-      Monotonic monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
+      MonotonicType monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
       // monotonic = Monotonic.Ascending
 
       json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,5],[-1000,-2000,0]]]}";
-      polyline = PolylineBuilder.FromJson(json);
+      polyline = PolylineBuilderEx.FromJson(json);
 
       monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
       // monotonic = Monotonic.Descending
 
       json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,0]]]}";
-      polyline = PolylineBuilder.FromJson(json);
+      polyline = PolylineBuilderEx.FromJson(json);
 
       monotonic = GeometryEngine.Instance.GetMMonotonic(polyline);
       // monotonic = Monotonic.NotMonotonic
@@ -1819,12 +1821,12 @@ namespace ProSnippetsGeometry
 
     public void GetPointsAtM()
     {
-      // cref: Get a multipoint corresponding to the locations where the specified M values occur along the geometry - GetPointsAtM;ArcGIS.Core.Geometry.GeometryEngine.GetPointsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Get a multipoint corresponding to the locations where the specified M values occur along the geometry - GetPointsAtM;ArcGIS.Core.Geometry.IGeometryEngine.GetPointsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetPointsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetPointsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
       #region Get a multipoint corresponding to the locations where the specified M values occur along the geometry - GetPointsAtM
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,15],[-1000,-2000,20],[0,-2000,0],[1000,-2000,20],[2000,-2000,30],[3000,-2000,10],[4000,-2000,5]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       Multipoint multipoint = GeometryEngine.Instance.GetPointsAtM(polyline, 10, 500);
       // multiPoint.PointCount = 4
@@ -1837,12 +1839,12 @@ namespace ProSnippetsGeometry
 
     public void GetSubCurveBetweenMs()
     {
-      // cref: Get a polyline corresponding to the subcurves between specified M values - GetSubCurveBetweenMs;ArcGIS.Core.Geometry.GeometryEngine.GetSubCurveBetweenMs(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Get a polyline corresponding to the subcurves between specified M values - GetSubCurveBetweenMs;ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurveBetweenMs(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetSubCurveBetweenMs(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurveBetweenMs(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
       #region Get a polyline corresponding to the subcurves between specified M values - GetSubCurveBetweenMs
 
       string json = "{\"hasM\":true,\"paths\":[[[-2000,0,1],[-1000,1000,2],[-1000,0,3],[1000,1000,4],[2000,1000,5],[2000,2000,6],[3000,2000,7],[4000,0,8]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       Polyline subCurve = GeometryEngine.Instance.GetSubCurveBetweenMs(polyline, 2, 6);
       // subCurve.PointCount = 5
@@ -1860,24 +1862,24 @@ namespace ProSnippetsGeometry
 
     public void GetNormalsAtM()
     {
-      // cref: Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry - GetNormalsAtM;ArcGIS.Core.Geometry.GeometryEngine.GetNormalsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry - GetNormalsAtM;ArcGIS.Core.Geometry.IGeometryEngine.GetNormalsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetNormalsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetNormalsAtM(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
       #region Get line segments corresponding to the normal at the locations where the specified M values occur along the geometry - GetNormalsAtM
 
       IList<MapPoint> inPoints = new List<MapPoint>()
       {
-        MapPointBuilder.CreateMapPoint(-3000, -2000, 0, 100),
-        MapPointBuilder.CreateMapPoint(-3000, 0, 0, 200),
-        MapPointBuilder.CreateMapPoint(-1000, 0, 0, 300),
-        MapPointBuilder.CreateMapPoint(-1000, 2000, 0, 100),
-        MapPointBuilder.CreateMapPoint(3000, 2000, 0, 200),
-        MapPointBuilder.CreateMapPoint(3000, 0, 0, 300),
-        MapPointBuilder.CreateMapPoint(1000, 0, 0, 100),
-        MapPointBuilder.CreateMapPoint(1000, -2000, 0, 200),
-        MapPointBuilder.CreateMapPoint(-3000, -2000, 0, 300)
+        MapPointBuilderEx.CreateMapPoint(-3000, -2000, 0, 100),
+        MapPointBuilderEx.CreateMapPoint(-3000, 0, 0, 200),
+        MapPointBuilderEx.CreateMapPoint(-1000, 0, 0, 300),
+        MapPointBuilderEx.CreateMapPoint(-1000, 2000, 0, 100),
+        MapPointBuilderEx.CreateMapPoint(3000, 2000, 0, 200),
+        MapPointBuilderEx.CreateMapPoint(3000, 0, 0, 300),
+        MapPointBuilderEx.CreateMapPoint(1000, 0, 0, 100),
+        MapPointBuilderEx.CreateMapPoint(1000, -2000, 0, 200),
+        MapPointBuilderEx.CreateMapPoint(-3000, -2000, 0, 300)
       };
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(inPoints);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(inPoints);
       // polygon.HasM = true
 
       Polyline polyline = GeometryEngine.Instance.GetNormalsAtM(polygon, 150, 100);
@@ -1915,12 +1917,12 @@ namespace ProSnippetsGeometry
 
     public void GetMsAtDistance()
     {
-      // cref: Get the M values at the specified distance along the multipart;ArcGIS.Core.Geometry.GeometryEngine.GetMsAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@)
-      // cref: Get the M values at the specified distance along the multipart;ArcGIS.Core.Geometry.IGeometryEngine.GetMsAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetMsAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetMsAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@)
       #region Get the M values at the specified distance along the multipart
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2]],[[-2000,-2000,1],[-2000,1000,2]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
       
       // polyline has 2 parts
 
@@ -1942,12 +1944,12 @@ namespace ProSnippetsGeometry
 
     public void SetMsAsDistance()
     {
-      // cref: Set M values to the cumulative length from the start of the multipart - SetMsAsDistance;ArcGIS.Core.Geometry.GeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: Set M values to the cumulative length from the start of the multipart - SetMsAsDistance;ArcGIS.Core.Geometry.IGeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
       #region Set M values to the cumulative length from the start of the multipart - SetMsAsDistance
 
       string json = "{\"hasM\":true,\"rings\":[[[0,0],[0,3000],[4000,3000],[4000,0],[0,0]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polygon polygon = PolygonBuilder.FromJson(json);
+      Polygon polygon = PolygonBuilderEx.FromJson(json);
 
       Polygon outPolygon = GeometryEngine.Instance.SetMsAsDistance(polygon, AsRatioOrLength.AsLength) as Polygon;
       ReadOnlyPointCollection outPoints = outPolygon.Points;
@@ -1957,12 +1959,12 @@ namespace ProSnippetsGeometry
 
     public void InsertMAtDistance()
     {
-      // cref: Insert M value at the given distance - InsertMAtDistance;ArcGIS.Core.Geometry.GeometryEngine.InsertMAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
-      // cref: Insert M value at the given distance - InsertMAtDistance;ArcGIS.Core.Geometry.IGeometryEngine.InsertMAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.InsertMAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.InsertMAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
       #region Insert M value at the given distance - InsertMAtDistance
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,null]]]}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
       bool splitHappened;
       int partIndex, segmentIndex;
 
@@ -1976,7 +1978,7 @@ namespace ProSnippetsGeometry
       // outputPolyline.Points[2].M = -1
 
       json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,-3],[-2000,-2000,-2],[-1000,-2000,-1]],[[0,0,0],[0,1000,0],[0,2000,2]]],\"spatialReference\":{\"wkid\":3857}}";
-      polyline = PolylineBuilder.FromJson(json);
+      polyline = PolylineBuilderEx.FromJson(json);
 
       // A point already exists at the given distance, but createNewPart = true
       m = 1;
@@ -2006,12 +2008,12 @@ namespace ProSnippetsGeometry
 
     public void CalibrateByMs()
     {
-      // cref: Calibrate M values using M values from input points - CalibrateByMs;ArcGIS.Core.Geometry.GeometryEngine.CalibrateByMs(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Double)
-      // cref: Calibrate M values using M values from input points - CalibrateByMs;ArcGIS.Core.Geometry.IGeometryEngine.CalibrateByMs(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.CalibrateByMs(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.CalibrateByMs(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Double)
       #region Calibrate M values using M values from input points - CalibrateByMs
 
       string json = "{\"hasM\":true,\"paths\":[[[0,0,-1],[1,0,0],[1,1,1],[1,2,2],[3,1,3],[5,3,4],[9,5,5],[7,6,6]]],\"spatialReference\":{\"wkid\":4326}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       // Interpolate using points (0, 0, 17), (1, 0, 42), (7, 6, 18) 
       List<MapPoint> updatePoints = new List<MapPoint>(3);
@@ -2074,12 +2076,12 @@ namespace ProSnippetsGeometry
 
     public void InterpolateMsBetween()
     {
-      // cref: Generates M values by linear interpolation over a range of points - InterpolateMsBetween;ArcGIS.Core.Geometry.GeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
-      // cref: Generates M values by linear interpolation over a range of points - InterpolateMsBetween;ArcGIS.Core.Geometry.IGeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
       #region Generates M values by linear interpolation over a range of points - InterpolateMsBetween
 
       string json = "{\"hasM\":true,\"paths\":[[[0,0,-1],[1,0,0],[1,1,1],[1,2,2],[3,1,3],[5,3,4],[9,5,5],[7,6,6]]],\"spatialReference\":{\"wkid\":4326}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       // Interpolate between points 2 and 6
       Polyline outPolyline = GeometryEngine.Instance.InterpolateMsBetween(polyline, 0, 2, 0, 6) as Polyline;
@@ -2091,12 +2093,12 @@ namespace ProSnippetsGeometry
 
     public void SetAndInterpolateMsBetween()
     {
-      // cref: Set Ms at the beginning and end of the geometry and interpolate M values between the two values - SetAndInterpolateMsBetween;ArcGIS.Core.Geometry.GeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      // cref: Set Ms at the beginning and end of the geometry and interpolate M values between the two values - SetAndInterpolateMsBetween;ArcGIS.Core.Geometry.IGeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
       #region Set Ms at the beginning and end of the geometry and interpolate M values between the two values - SetAndInterpolateMsBetween
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000],[-2000,-2000],[-1000,-2000],[0,-2000],[1000,-2000],[2000,-2000],[3000,-2000],[4000,-2000]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       Polyline outPolyline = GeometryEngine.Instance.SetAndInterpolateMsBetween(polyline, 100, 800) as Polyline;
       ReadOnlyPointCollection outPoints = outPolyline.Points;
@@ -2106,33 +2108,34 @@ namespace ProSnippetsGeometry
 
     public void Move()
     {
-      // cref: Move a MapPoint;ArcGIS.Core.Geometry.IGeometryEngine.Move (ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Move (ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Move (ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
       #region Move a MapPoint
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 3.0);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0);
       MapPoint ptResult = GeometryEngine.Instance.Move(pt, -3.5, 2.5) as MapPoint;
       // ptResult is (-2.5, 5.5)
       #endregion
 
-      // cref: Move a z-aware MapPoint;ArcGIS.Core.Geometry.GeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double,System.Double)
-      // cref: Move a z-aware MapPoint;ArcGIS.Core.Geometry.IGeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double,System.Double)
       #region Move a z-aware MapPoint
 
-      MapPoint zPt = MapPointBuilder.CreateMapPoint(1.0, 3.0, 2.0);
+      MapPoint zPt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0, 2.0);
       MapPoint zPtResult = GeometryEngine.Instance.Move(zPt, 4, 0.25, 0.5) as MapPoint;
       // zPtResult is (5.0, 3.25, 2.5);
       #endregion
 
-      // cref: Move a Polyline;ArcGIS.Core.Geometry.GeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
-      // cref: Move a Polyline;ArcGIS.Core.Geometry.IGeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
       #region Move a Polyline
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3.0, 3.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3, 2, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(4.0, 2.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 3.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3, 2, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(4.0, 2.0, 3.0));
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts);
 
       Geometry geometry = GeometryEngine.Instance.Move(polyline, 3, 2);
       Polyline polylineResult = geometry as Polyline;
@@ -2145,115 +2148,115 @@ namespace ProSnippetsGeometry
 
     public void MovePointAlongLine()
     {
-      // cref: MovePointAlongLine;ArcGIS.Core.Geometry.GeometryEngine.MovePointAlongLine(ArcGIS.Core.Geometry.Multipart,System.Double,System.Boolean,System.Double,ArcGIS.Core.Geometry.SegmentExtension)
-      // cref: MovePointAlongLine;ArcGIS.Core.Geometry.IGeometryEngine.MovePointAlongLine(ArcGIS.Core.Geometry.Multipart,System.Double,System.Boolean,System.Double,ArcGIS.Core.Geometry.SegmentExtension)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.MovePointAlongLine(ArcGIS.Core.Geometry.Multipart,System.Double,System.Boolean,System.Double,ArcGIS.Core.Geometry.SegmentExtensionType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.MovePointAlongLine(ArcGIS.Core.Geometry.Multipart,System.Double,System.Boolean,System.Double,ArcGIS.Core.Geometry.SegmentExtensionType)
       #region MovePointAlongLine
 
-      LineSegment line = LineBuilder.CreateLineSegment(MapPointBuilder.CreateMapPoint(0, 3), MapPointBuilder.CreateMapPoint(5.0, 3.0));
-      Polyline polyline = PolylineBuilder.CreatePolyline(line);
+      LineSegment line = LineBuilderEx.CreateLineSegment(MapPointBuilderEx.CreateMapPoint(0, 3), MapPointBuilderEx.CreateMapPoint(5.0, 3.0));
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(line);
       bool simple = GeometryEngine.Instance.IsSimpleAsFeature(polyline);
 
       // ratio = false
-      MapPoint pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, 0.0, SegmentExtension.NoExtension);
+      MapPoint pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, 0.0, SegmentExtensionType.NoExtension);
       // pt = 1.0, 3.0
 
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, -1.0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, -1.0, SegmentExtensionType.NoExtension);
       // pt = 1.0, 4.0
 
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, 2.0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 1.0, false, 2.0, SegmentExtensionType.NoExtension);
       // pt = 1.0, 1.0
 
       // ratio = true
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 0.5, true, 0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 0.5, true, 0, SegmentExtensionType.NoExtension);
       // pt = 2.5, 3.0
 
       // move past the line
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 7, false, 0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 7, false, 0, SegmentExtensionType.NoExtension);
       // pt = 5.0, 3.0
 
       // move past the line with extension at "to" point
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 7, false, 0, SegmentExtension.ExtendEmbeddedAtTo);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 7, false, 0, SegmentExtensionType.ExtendEmbeddedAtTo);
       // pt = 7.0, 3.0
 
       // negative distance with extension at "from" point
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, -2, false, 0, SegmentExtension.ExtendEmbeddedAtFrom);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, -2, false, 0, SegmentExtensionType.ExtendEmbeddedAtFrom);
       // pt = -2.0, 3.0
 
       // ratio = true
-      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 0.5, true, 0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polyline, 0.5, true, 0, SegmentExtensionType.NoExtension);
       // pt = 2.5, 3.0
 
       // line with Z
       List<Coordinate3D> coords3D = new List<Coordinate3D> { new Coordinate3D(0, 0, 0), new Coordinate3D(1113195, 1118890, 5000) };
-      Polyline polylineZ = PolylineBuilder.CreatePolyline(coords3D, SpatialReferences.WebMercator);
+      Polyline polylineZ = PolylineBuilderEx.CreatePolyline(coords3D, SpatialReferences.WebMercator);
       // polylineZ.HasZ = true
 
       // ratio = true, no offset
-      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, 0.5, true, 0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, 0.5, true, 0, SegmentExtensionType.NoExtension);
       // pt.X = 556597.5
       // pt.Y = 559445
       // pt.Z = 2500
 
       // ratio = true, past the line with "to" extension, no offset
-      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, 1.5, true, 0, SegmentExtension.ExtendEmbeddedAtTo);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, 1.5, true, 0, SegmentExtensionType.ExtendEmbeddedAtTo);
       // pt.X = 1669792.5
       // pt.Y = 1678335
       // pt.Z = 7500
 
       // ratio = true, negative distance past the line with no extension, no offset
-      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, -1.5, true, 0, SegmentExtension.NoExtension);
+      pt = GeometryEngine.Instance.MovePointAlongLine(polylineZ, -1.5, true, 0, SegmentExtensionType.NoExtension);
       // pt.X = 0
       // pt.Y = 0
       // pt.Z = -7500
 
       // polyline with Z but 2d distance = 0
-      MapPoint pt3 = MapPointBuilder.CreateMapPoint(5, 5, 0);
-      MapPoint pt4 = MapPointBuilder.CreateMapPoint(5, 5, 10);
+      MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(5, 5, 0);
+      MapPoint pt4 = MapPointBuilderEx.CreateMapPoint(5, 5, 10);
       List<MapPoint> pts = new List<MapPoint>() { pt3, pt4 };
 
-      polyline = PolylineBuilder.CreatePolyline(pts);
+      polyline = PolylineBuilderEx.CreatePolyline(pts);
       // polyline.HasZ = true
       // polyline.Length3D = 10
       // polyline.Length = 0
 
-      MapPoint result = GeometryEngine.Instance.MovePointAlongLine(polyline, 2, false, 0, SegmentExtension.NoExtension);
+      MapPoint result = GeometryEngine.Instance.MovePointAlongLine(polyline, 2, false, 0, SegmentExtensionType.NoExtension);
       // result = 5, 5, 2
 
       // polyline with length2d = 0 and length3d = 0
-      MapPoint pt5 = MapPointBuilder.CreateMapPoint(5, 5, 10);
-      MapPoint pt6 = MapPointBuilder.CreateMapPoint(5, 5, 10);
+      MapPoint pt5 = MapPointBuilderEx.CreateMapPoint(5, 5, 10);
+      MapPoint pt6 = MapPointBuilderEx.CreateMapPoint(5, 5, 10);
       pts.Clear();
       pts.Add(pt5);
       pts.Add(pt6);
 
-      polyline = PolylineBuilder.CreatePolyline(pts);
+      polyline = PolylineBuilderEx.CreatePolyline(pts);
       // polyline.HasZ = true
       // polyline.Length3D = 0
       // polyline.Length = 0
 
-      result = GeometryEngine.Instance.MovePointAlongLine(polyline, 3, true, 0, SegmentExtension.NoExtension);
+      result = GeometryEngine.Instance.MovePointAlongLine(polyline, 3, true, 0, SegmentExtensionType.NoExtension);
       // result = 5, 5, 10
 
-      result = GeometryEngine.Instance.MovePointAlongLine(polyline, 3, true, 0, SegmentExtension.ExtendEmbeddedAtFrom);
+      result = GeometryEngine.Instance.MovePointAlongLine(polyline, 3, true, 0, SegmentExtensionType.ExtendEmbeddedAtFrom);
       // result = 5, 5, 10
 
       // polyline with Z and M
       List<MapPoint> inputPoints = new List<MapPoint>()
       {
-          MapPointBuilder.CreateMapPoint(1, 2, 3, 4),
-          MapPointBuilder.CreateMapPoint(1, 2, 33, 44),
+          MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4),
+          MapPointBuilderEx.CreateMapPoint(1, 2, 33, 44),
       };
 
-      Polyline polylineZM = PolylineBuilder.CreatePolyline(inputPoints, SpatialReferences.WGS84);
+      Polyline polylineZM = PolylineBuilderEx.CreatePolyline(inputPoints, SpatialReferences.WGS84);
       // polylineZM.HasZ = true
       // polylineZM.HasM = true
 
       // ratio = true, no offset
-      MapPoint pointAlong = GeometryEngine.Instance.MovePointAlongLine(polylineZM, 0.5, true, 0, SegmentExtension.NoExtension);
+      MapPoint pointAlong = GeometryEngine.Instance.MovePointAlongLine(polylineZM, 0.5, true, 0, SegmentExtensionType.NoExtension);
       // pointAlong = 1, 2, 18, 24
 
       // ratio = true with offset
-      pointAlong = GeometryEngine.Instance.MovePointAlongLine(polylineZM, 0.2, true, 2.23606797749979, SegmentExtension.NoExtension);
+      pointAlong = GeometryEngine.Instance.MovePointAlongLine(polylineZM, 0.2, true, 2.23606797749979, SegmentExtensionType.NoExtension);
       // pointAlong = 1, 2, 9, 12
       #endregion
     }
@@ -2262,8 +2265,8 @@ namespace ProSnippetsGeometry
     {
       Polygon multipartPolygon = null;
 
-      // cref: Separate components of a geometry into single component geometries;ArcGIS.Core.Geometry.GeometryEngine.MultipartToSinglePart(ArcGIS.Core.Geometry.Geometry)
-      // cref: Separate components of a geometry into single component geometries;ArcGIS.Core.Geometry.IGeometryEngine.MultipartToSinglePart(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.MultipartToSinglePart(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.MultipartToSinglePart(ArcGIS.Core.Geometry.Geometry)
       #region Separate components of a geometry into single component geometries
 
       List<Coordinate2D> coords2D = new List<Coordinate2D>()
@@ -2274,7 +2277,7 @@ namespace ProSnippetsGeometry
           new Coordinate2D(-10, 3)
         };
 
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(coords2D, SpatialReferences.WGS84);
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(coords2D, SpatialReferences.WGS84);
 
       IReadOnlyList<Geometry> result = GeometryEngine.Instance.MultipartToSinglePart(multipoint);
       // result.Count = 4, 
@@ -2285,12 +2288,13 @@ namespace ProSnippetsGeometry
 
 
       // create a bag of geometries
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords2D, SpatialReferences.WGS84);
-      GeometryBag bag = GeometryBagBuilder.CreateGeometryBag(new List<Geometry>() { multipoint, polygon });
-      // bag.PartCount = 2
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords2D, SpatialReferences.WGS84);
+      //At 2.x - GeometryBag bag = GeometryBagBuilder.CreateGeometryBag(new List<Geometry>() { multipoint, polygon });
+      var bag = GeometryBagBuilderEx.CreateGeometryBag(new List<Geometry>() { multipoint, polygon });
+      // bag.PartCount = =2
 
       result = GeometryEngine.Instance.MultipartToSinglePart(bag);
-      // result.Count = 2
+      // result.Count == 2
       // result[0] is MultiPoint
       // result[1] is Polygon
 
@@ -2299,14 +2303,14 @@ namespace ProSnippetsGeometry
 
     public void NearestPoint_NearestVertex()
     {
-      // cref: Nearest Point versus Nearest Vertex;ArcGIS.Core.Geometry.GeometryEngine.NearestPoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Nearest Point versus Nearest Vertex;ArcGIS.Core.Geometry.GeometryEngine.NearestVertex(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Nearest Point versus Nearest Vertex;ArcGIS.Core.Geometry.IGeometryEngine.NearestPoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Nearest Point versus Nearest Vertex;ArcGIS.Core.Geometry.IGeometryEngine.NearestVertex(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.NearestPoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.NearestVertex(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.NearestPoint(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.NearestVertex(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
       #region Nearest Point versus Nearest Vertex
 
       SpatialReference sr = SpatialReferences.WGS84;
-      MapPoint pt = MapPointBuilder.CreateMapPoint(5, 5, sr);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(5, 5, sr);
 
       List<Coordinate2D> coords = new List<Coordinate2D>()
       {
@@ -2317,7 +2321,7 @@ namespace ProSnippetsGeometry
         new Coordinate2D(10, 1)
       };
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords);
 
       // find the nearest point in the polygon geomtry to the pt
       ProximityResult result = GeometryEngine.Instance.NearestPoint(polygon, pt);
@@ -2341,13 +2345,13 @@ namespace ProSnippetsGeometry
 
     public void NearestPoint3D()
     {
-      // cref: Determine Nearest Point in 3D;ArcGIS.Core.Geometry.GeometryEngine.NearestPoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
-      // cref: Determine Nearest Point in 3D;ArcGIS.Core.Geometry.IGeometryEngine.NearestPoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.NearestPoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.NearestPoint3D(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint)
       #region Determine Nearest Point in 3D
 
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1, 1, 1);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2, 2, 2);
-      MapPoint pt3 = MapPointBuilder.CreateMapPoint(10, 2, 1);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1, 1, 1);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2, 2, 2);
+      MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(10, 2, 1);
 
       //
       // test pt1 to pt2
@@ -2363,7 +2367,7 @@ namespace ProSnippetsGeometry
       // 
       // multipoint built from pt1, pt2.   should be closer to pt2
       // 
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(new List<MapPoint>() { pt1, pt2 });
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(new List<MapPoint>() { pt1, pt2 });
       result = GeometryEngine.Instance.NearestPoint3D(multipoint, pt3);
       // result.Point = 2, 2, 2
       // result.Distance = Math.Sqrt(65)
@@ -2376,15 +2380,15 @@ namespace ProSnippetsGeometry
 
     public void Offset()
     {
-      // cref: Calculate a geometry offset from the source;ArcGIS.Core.Geometry.GeometryEngine.Offset(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.OffsetType,System.Double)
-      // cref: Calculate a geometry offset from the source;ArcGIS.Core.Geometry.IGeometryEngine.Offset(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.OffsetType,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Offset(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.OffsetType,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Offset(ArcGIS.Core.Geometry.Geometry,System.Double,ArcGIS.Core.Geometry.OffsetType,System.Double)
       #region Calculate a geometry offset from the source
 
       List<MapPoint> linePts = new List<MapPoint>();
-      linePts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
-      linePts.Add(MapPointBuilder.CreateMapPoint(10.0, 1.0, SpatialReferences.WGS84));
+      linePts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
+      linePts.Add(MapPointBuilderEx.CreateMapPoint(10.0, 1.0, SpatialReferences.WGS84));
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(linePts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(linePts);
 
       Geometry g = GeometryEngine.Instance.Offset(polyline, 10, OffsetType.Square, 0);
       Polyline gResult = g as Polyline;
@@ -2406,9 +2410,9 @@ namespace ProSnippetsGeometry
       Coordinate2D toPt = new Coordinate2D(1, 2);
       Coordinate2D interiorPt = new Coordinate2D(1 + Math.Sqrt(2) / 2, 1 + Math.Sqrt(2) / 2);
 
-      EllipticArcSegment circularArc = EllipticArcBuilder.CreateEllipticArcSegment(fromPt.ToMapPoint(), toPt.ToMapPoint(), interiorPt);
+      EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt.ToMapPoint(), toPt.ToMapPoint(), interiorPt);
 
-      polyline = PolylineBuilder.CreatePolyline(circularArc);
+      polyline = PolylineBuilderEx.CreatePolyline(circularArc);
       g = GeometryEngine.Instance.Offset(polyline, -0.25, OffsetType.Miter, 0.5);
       gResult = g as Polyline;
 
@@ -2420,12 +2424,12 @@ namespace ProSnippetsGeometry
       //  offset for a polygon
       //
       List<MapPoint> list = new List<MapPoint>();
-      list.Add(MapPointBuilder.CreateMapPoint(10.0, 10.0, SpatialReferences.WGS84));
-      list.Add(MapPointBuilder.CreateMapPoint(10.0, 20.0, SpatialReferences.WGS84));
-      list.Add(MapPointBuilder.CreateMapPoint(20.0, 20.0, SpatialReferences.WGS84));
-      list.Add(MapPointBuilder.CreateMapPoint(20.0, 10.0, SpatialReferences.WGS84));
+      list.Add(MapPointBuilderEx.CreateMapPoint(10.0, 10.0, SpatialReferences.WGS84));
+      list.Add(MapPointBuilderEx.CreateMapPoint(10.0, 20.0, SpatialReferences.WGS84));
+      list.Add(MapPointBuilderEx.CreateMapPoint(20.0, 20.0, SpatialReferences.WGS84));
+      list.Add(MapPointBuilderEx.CreateMapPoint(20.0, 10.0, SpatialReferences.WGS84));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list);
 
       g = GeometryEngine.Instance.Offset(polygon, 2, OffsetType.Square, 0);
       Polygon gPolygon = g as Polygon;
@@ -2441,14 +2445,14 @@ namespace ProSnippetsGeometry
 
     public void Overlaps()
     {
-      // cref: Determine if geometries overlap;ArcGIS.Core.Geometry.GeometryEngine.Overlaps(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Determine if geometries overlap;ArcGIS.Core.Geometry.IGeometryEngine.Overlaps(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Overlaps(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Overlaps(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Determine if geometries overlap
 
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1.5, 1.5);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(1.25, 1.75);
-      MapPoint pt3 = MapPointBuilder.CreateMapPoint(3, 1.5);
-      MapPoint pt4 = MapPointBuilder.CreateMapPoint(1.5, 2);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1.5, 1.5);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(1.25, 1.75);
+      MapPoint pt3 = MapPointBuilderEx.CreateMapPoint(3, 1.5);
+      MapPoint pt4 = MapPointBuilderEx.CreateMapPoint(1.5, 2);
 
       //
       // point and point overlap
@@ -2471,14 +2475,14 @@ namespace ProSnippetsGeometry
       //
       // pt and line overlap
       //
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts);
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polyline);         // isSimple = true
       overlaps = GeometryEngine.Instance.Overlaps(polyline, pt1);                  // overlaps = false
 
       //
       // line and line
       //
-      Polyline polyline2 = PolylineBuilder.CreatePolyline(pts2);
+      Polyline polyline2 = PolylineBuilderEx.CreatePolyline(pts2);
       isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polyline2);             // isSimple = true
       overlaps = GeometryEngine.Instance.Overlaps(polyline, polyline2);            // overlaps = true
 
@@ -2487,31 +2491,31 @@ namespace ProSnippetsGeometry
 
     public void Project()
     {
-      // cref: Project from WGS84 to WebMercator;ArcGIS.Core.Geometry.GeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Project from WGS84 to WebMercator;ArcGIS.Core.Geometry.IGeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Project from WGS84 to WebMercator;ArcGIS.Core.Geometry.SpatialReferences.WebMercator
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.SpatialReferences.WebMercator
       #region Project from WGS84 to WebMercator
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 3.0, SpatialReferences.WGS84);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0, SpatialReferences.WGS84);
       Geometry result = GeometryEngine.Instance.Project(pt, SpatialReferences.WebMercator);
       MapPoint projectedPt = result as MapPoint;
       #endregion
 
-      // cref: Project from WGS84;ArcGIS.Core.Geometry.GeometryEngine.IsSimpleAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
-      // cref: Project from WGS84;ArcGIS.Core.Geometry.GeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Project from WGS84;ArcGIS.Core.Geometry.IGeometryEngine.IsSimpleAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
-      // cref: Project from WGS84;ArcGIS.Core.Geometry.IGeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
-      // cref: Project from WGS84;ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.IsSimpleAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.IsSimpleAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.CreateSpatialReference(System.Int32)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Project(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.SpatialReference)
       #region Project from WGS84
 
       // create the polygon
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0, SpatialReferences.WGS84));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0, SpatialReferences.WGS84));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0, SpatialReferences.WGS84));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(pts);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(pts);
       // ensure it is simple
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polygon);
 
@@ -2525,58 +2529,58 @@ namespace ProSnippetsGeometry
 
     public void QueryNormal()
     {
-      // cref: QueryNormal;ArcGIS.Core.Geometry.GeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryNormal;ArcGIS.Core.Geometry.GeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryNormal;ArcGIS.Core.Geometry.IGeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryNormal;ArcGIS.Core.Geometry.IGeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryNormal(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
       #region QueryNormal
 
       string json = "{\"curvePaths\":[[[-13046586.8335,4036570.6796000004]," +
                     "{\"c\":[[-13046645.107099999,4037152.5873000026]," +
                     "[-13046132.776277589,4036932.1325614937]]}]],\"spatialReference\":{\"wkid\":3857}}";
-      Polyline polyline = PolylineBuilder.FromJson(json);
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
 
       EllipticArcSegment arc = polyline.Parts[0][0] as EllipticArcSegment;
 
       // No extension, distanceAlongCurve = 0.5
 
       // use the polyline
-      Polyline poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1000);
+      Polyline poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1000);
       // or a segment
-      LineSegment seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1000);
+      LineSegment seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1000);
 
       // TangentAtFrom, distanceAlongCurve = -1.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendTangentAtFrom, -1.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendTangentAtFrom, -1.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendTangentAtFrom, -1.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendTangentAtFrom, -1.2, AsRatioOrLength.AsRatio, 1000);
 
       // TangentAtTo (ignored because distanceAlongCurve < 0), distanceAlongCurve = -1.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendTangentAtTo, -1.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendTangentAtTo, -1.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendTangentAtTo, -1.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendTangentAtTo, -1.2, AsRatioOrLength.AsRatio, 1000);
 
       // TangentAtTo, distanceAlongCurve = 1.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendTangentAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendTangentAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendTangentAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendTangentAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
 
       // TangentAtFrom (ignored because distanceAlongCurve > 0), distanceAlongCurve = 1.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendTangentAtFrom, 1.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendTangentAtFrom, 1.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendTangentAtFrom, 1.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendTangentAtFrom, 1.2, AsRatioOrLength.AsRatio, 1000);
 
       // EmbeddedAtTo, distanceAlongCurve = 1.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendEmbeddedAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendEmbeddedAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendEmbeddedAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendEmbeddedAtTo, 1.2, AsRatioOrLength.AsRatio, 1000);
 
       // EmbeddedAtFrom, distanceAlongCurve = -0.2
-      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtension.ExtendEmbeddedAtFrom, -0.2, AsRatioOrLength.AsRatio, 1000);
-      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtension.ExtendEmbeddedAtFrom, -0.2, AsRatioOrLength.AsRatio, 1000);
+      poly_normal = GeometryEngine.Instance.QueryNormal(polyline, SegmentExtensionType.ExtendEmbeddedAtFrom, -0.2, AsRatioOrLength.AsRatio, 1000);
+      seg_normal = GeometryEngine.Instance.QueryNormal(arc, SegmentExtensionType.ExtendEmbeddedAtFrom, -0.2, AsRatioOrLength.AsRatio, 1000);
       #endregion
     }
 
     public void QueryPoint()
     {
-      // cref: QueryPoint;ArcGIS.Core.Geometry.GeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: QueryPoint;ArcGIS.Core.Geometry.GeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: QueryPoint;ArcGIS.Core.Geometry.IGeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: QueryPoint;ArcGIS.Core.Geometry.IGeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryPoint(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength)
       #region QueryPoint
 
       SpatialReference sr = SpatialReferences.WGS84;
@@ -2584,47 +2588,47 @@ namespace ProSnippetsGeometry
       // Horizontal line segment
       Coordinate2D start = new Coordinate2D(1, 1);
       Coordinate2D end = new Coordinate2D(11, 1);
-      LineSegment line = LineBuilder.CreateLineSegment(start, end, sr);
+      LineSegment line = LineBuilderEx.CreateLineSegment(start, end, sr);
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(line);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(line);
 
       // Don't extend the segment
 
-      MapPoint outPoint = GeometryEngine.Instance.QueryPoint(polyline, SegmentExtension.NoExtension, 1.0, AsRatioOrLength.AsLength);
+      MapPoint outPoint = GeometryEngine.Instance.QueryPoint(polyline, SegmentExtensionType.NoExtension, 1.0, AsRatioOrLength.AsLength);
       // outPoint = (2, 1)
 
       // or the segment
-      MapPoint outPoint_seg = GeometryEngine.Instance.QueryPoint(line, SegmentExtension.NoExtension, 1.0, AsRatioOrLength.AsLength);
+      MapPoint outPoint_seg = GeometryEngine.Instance.QueryPoint(line, SegmentExtensionType.NoExtension, 1.0, AsRatioOrLength.AsLength);
       // outPoint_seg = (2, 1)
 
       // Extend infinitely in both directions
-      outPoint = GeometryEngine.Instance.QueryPoint(polyline, SegmentExtension.ExtendTangents, 1.5, AsRatioOrLength.AsRatio);
+      outPoint = GeometryEngine.Instance.QueryPoint(polyline, SegmentExtensionType.ExtendTangents, 1.5, AsRatioOrLength.AsRatio);
       // outPoint = (16, 1)
-      outPoint_seg = GeometryEngine.Instance.QueryPoint(line, SegmentExtension.ExtendTangents, 1.5, AsRatioOrLength.AsRatio);
+      outPoint_seg = GeometryEngine.Instance.QueryPoint(line, SegmentExtensionType.ExtendTangents, 1.5, AsRatioOrLength.AsRatio);
       // outPoint_seg = (16, 1)
       #endregion
     }
 
     public void QueryPointAndDistance()
     {
-      // cref: QueryPointAndDistance;ArcGIS.Core.Geometry.GeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
-      // cref: QueryPointAndDistance;ArcGIS.Core.Geometry.GeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
-      // cref: QueryPointAndDistance;ArcGIS.Core.Geometry.IGeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
-      // cref: QueryPointAndDistance;ArcGIS.Core.Geometry.IGeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryPointAndDistance(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double@,System.Double@,ArcGIS.Core.Geometry.LeftOrRightSide@)
       #region QueryPointAndDistance
 
       // Horizontal line segment
       List<MapPoint> linePts = new List<MapPoint>();
-      linePts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
-      linePts.Add(MapPointBuilder.CreateMapPoint(11.0, 1.0, SpatialReferences.WGS84));
-      Polyline polyline = PolylineBuilder.CreatePolyline(linePts);
+      linePts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, SpatialReferences.WGS84));
+      linePts.Add(MapPointBuilderEx.CreateMapPoint(11.0, 1.0, SpatialReferences.WGS84));
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(linePts);
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(polyline);
 
       // Don't extent the segment
-      SegmentExtension extension = SegmentExtension.NoExtension;
+      SegmentExtensionType extension = SegmentExtensionType.NoExtension;
 
       // A point on the line segment
-      MapPoint inPoint = MapPointBuilder.CreateMapPoint(2, 1, SpatialReferences.WGS84);
+      MapPoint inPoint = MapPointBuilderEx.CreateMapPoint(2, 1, SpatialReferences.WGS84);
 
       double distanceAlongCurve, distanceFromCurve;
       LeftOrRightSide whichSide;
@@ -2638,10 +2642,10 @@ namespace ProSnippetsGeometry
 
 
       // Extend infinitely in both directions
-      extension = SegmentExtension.ExtendTangents;
+      extension = SegmentExtensionType.ExtendTangents;
 
       // A point on the left side
-      inPoint = MapPointBuilder.CreateMapPoint(16, 6, SpatialReferences.WGS84);
+      inPoint = MapPointBuilderEx.CreateMapPoint(16, 6, SpatialReferences.WGS84);
       asRatioOrLength = AsRatioOrLength.AsRatio;
 
       outPoint = GeometryEngine.Instance.QueryPointAndDistance(polyline, extension, inPoint, asRatioOrLength, out distanceAlongCurve, out distanceFromCurve, out whichSide);
@@ -2655,32 +2659,32 @@ namespace ProSnippetsGeometry
 
     public void QueryTangent()
     {
-      // cref: QueryTangent;ArcGIS.Core.Geometry.GeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryTangent;ArcGIS.Core.Geometry.GeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryTangent;ArcGIS.Core.Geometry.IGeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
-      // cref: QueryTangent;ArcGIS.Core.Geometry.IGeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtension,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryTangent(ArcGIS.Core.Geometry.Segment,ArcGIS.Core.Geometry.SegmentExtensionType,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
       #region QueryTangent
 
-      LineSegment line = LineBuilder.CreateLineSegment(new Coordinate2D(0, 0), new Coordinate2D(1, 0));
+      LineSegment line = LineBuilderEx.CreateLineSegment(new Coordinate2D(0, 0), new Coordinate2D(1, 0));
 
       // No extension, distanceAlongCurve = 0.5
-      LineSegment tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtension.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1);
+      LineSegment tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtensionType.NoExtension, 0.5, AsRatioOrLength.AsRatio, 1);
       // tangent.StartCoordinate = (0.5, 0.0)
       // tangent.EndCoordinate = (1.5, 0.0)
 
-      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtension.NoExtension, 1.5, AsRatioOrLength.AsLength, 1);
+      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtensionType.NoExtension, 1.5, AsRatioOrLength.AsLength, 1);
       // tangent.StartCoordinate = (1.0, 0.0)
       // tangent.EndCoordinate = (2.0, 0.0)
 
-      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtension.ExtendTangentAtTo, 1.5, AsRatioOrLength.AsLength, 1);
+      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtensionType.ExtendTangentAtTo, 1.5, AsRatioOrLength.AsLength, 1);
       // tangent.StartCoordinate = (1.5, 0.0)
       // tangent.EndCoordinate = (2.5, 0.0)
 
-      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtension.ExtendTangentAtFrom, -1.5, AsRatioOrLength.AsLength, 1);
+      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtensionType.ExtendTangentAtFrom, -1.5, AsRatioOrLength.AsLength, 1);
       // tangent.StartCoordinate = (-1.5, 0.0)
       // tangent.EndCoordinate = (-0.5, 0.0)
 
-      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtension.ExtendTangentAtFrom, -0.5, AsRatioOrLength.AsRatio, 1);
+      tangent = GeometryEngine.Instance.QueryTangent(line, SegmentExtensionType.ExtendTangentAtFrom, -0.5, AsRatioOrLength.AsRatio, 1);
       // tangent.StartCoordinate = (-0.5, 0.0)
       // tangent.EndCoordinate = (0.5, 0.0)
       #endregion
@@ -2688,15 +2692,15 @@ namespace ProSnippetsGeometry
 
     public void ReflectAboutLine()
     {
-      // cref: Reflect a polygon about a line;ArcGIS.Core.Geometry.GeometryEngine.ReflectAboutLine(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LineSegment)
-      // cref: Reflect a polygon about a line;ArcGIS.Core.Geometry.IGeometryEngine.ReflectAboutLine(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LineSegment)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ReflectAboutLine(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LineSegment)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ReflectAboutLine(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LineSegment)
       #region Reflect a polygon about a line
 
       SpatialReference sr = SpatialReferences.WGS84;
 
       Coordinate2D start = new Coordinate2D(0, 0);
       Coordinate2D end = new Coordinate2D(4, 4);
-      LineSegment line = LineBuilder.CreateLineSegment(start, end, sr);
+      LineSegment line = LineBuilderEx.CreateLineSegment(start, end, sr);
 
       Coordinate2D[] coords = new Coordinate2D[]
       {
@@ -2706,7 +2710,7 @@ namespace ProSnippetsGeometry
         new Coordinate2D(-1, 2)
       };
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(coords, sr);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords, sr);
 
       // reflect a polygon about the line
       Polygon reflectedPolygon = GeometryEngine.Instance.ReflectAboutLine(polygon, line) as Polygon;
@@ -2718,20 +2722,20 @@ namespace ProSnippetsGeometry
 
     public void Related()
     {
-      // cref: Determine relationship between two geometries;ArcGIS.Core.Geometry.GeometryEngine.Relate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,System.String)
-      // cref: Determine relationship between two geometries;ArcGIS.Core.Geometry.IGeometryEngine.Relate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,System.String)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Relate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,System.String)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Relate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry,System.String)
       #region Determine relationship between two geometries
 
       // set up some geometries
 
       // points
-      MapPoint point0 = MapPointBuilder.CreateMapPoint(0, 0, SpatialReferences.WGS84);
-      MapPoint point1 = MapPointBuilder.CreateMapPoint(1, 1, SpatialReferences.WGS84);
-      MapPoint point2 = MapPointBuilder.CreateMapPoint(-5, 5, SpatialReferences.WGS84);
+      MapPoint point0 = MapPointBuilderEx.CreateMapPoint(0, 0, SpatialReferences.WGS84);
+      MapPoint point1 = MapPointBuilderEx.CreateMapPoint(1, 1, SpatialReferences.WGS84);
+      MapPoint point2 = MapPointBuilderEx.CreateMapPoint(-5, 5, SpatialReferences.WGS84);
 
       // multipoint
       List<MapPoint> points = new List<MapPoint>() { point0, point1, point2 };
-      Multipoint multipoint = MultipointBuilder.CreateMultipoint(points, SpatialReferences.WGS84);
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(points, SpatialReferences.WGS84);
 
       // polygon 
       List<Coordinate2D> polygonCoords = new List<Coordinate2D>()
@@ -2741,33 +2745,33 @@ namespace ProSnippetsGeometry
           new Coordinate2D(10, 0),
           new Coordinate2D(-10, 0)
       };
-      Polygon polygon = PolygonBuilder.CreatePolygon(polygonCoords, SpatialReferences.WGS84);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(polygonCoords, SpatialReferences.WGS84);
 
       // polylines
-      Polyline polyline1 = PolylineBuilder.CreatePolyline(LineBuilder.CreateLineSegment(new Coordinate2D(-9.1, 0.1), new Coordinate2D(0, 9)), SpatialReferences.WGS84);
-      Polyline polyline2 = PolylineBuilder.CreatePolyline(LineBuilder.CreateLineSegment(new Coordinate2D(-5, 5), new Coordinate2D(0, 5)), SpatialReferences.WGS84);
-      Polyline polyline3 = PolylineBuilder.CreatePolyline(LineBuilder.CreateLineSegment(new Coordinate2D(2.09, -2.04), new Coordinate2D(5, 10)), SpatialReferences.WGS84);
-      Polyline polyline4 = PolylineBuilder.CreatePolyline(LineBuilder.CreateLineSegment(new Coordinate2D(10, -5), new Coordinate2D(10, 5)), SpatialReferences.WGS84);
+      Polyline polyline1 = PolylineBuilderEx.CreatePolyline(LineBuilderEx.CreateLineSegment(new Coordinate2D(-9.1, 0.1), new Coordinate2D(0, 9)), SpatialReferences.WGS84);
+      Polyline polyline2 = PolylineBuilderEx.CreatePolyline(LineBuilderEx.CreateLineSegment(new Coordinate2D(-5, 5), new Coordinate2D(0, 5)), SpatialReferences.WGS84);
+      Polyline polyline3 = PolylineBuilderEx.CreatePolyline(LineBuilderEx.CreateLineSegment(new Coordinate2D(2.09, -2.04), new Coordinate2D(5, 10)), SpatialReferences.WGS84);
+      Polyline polyline4 = PolylineBuilderEx.CreatePolyline(LineBuilderEx.CreateLineSegment(new Coordinate2D(10, -5), new Coordinate2D(10, 5)), SpatialReferences.WGS84);
 
       List<Segment> segments = new List<Segment>()
       {
-          LineBuilder.CreateLineSegment(new Coordinate2D(5.05, -2.87), new Coordinate2D(6.35, 1.57)),
-          LineBuilder.CreateLineSegment(new Coordinate2D(6.35, 1.57), new Coordinate2D(4.13, 2.59)),
-          LineBuilder.CreateLineSegment(new Coordinate2D(4.13, 2.59), new Coordinate2D(5, 5))
+          LineBuilderEx.CreateLineSegment(new Coordinate2D(5.05, -2.87), new Coordinate2D(6.35, 1.57)),
+          LineBuilderEx.CreateLineSegment(new Coordinate2D(6.35, 1.57), new Coordinate2D(4.13, 2.59)),
+          LineBuilderEx.CreateLineSegment(new Coordinate2D(4.13, 2.59), new Coordinate2D(5, 5))
       };
-      Polyline polyline5 = PolylineBuilder.CreatePolyline(segments, SpatialReferences.WGS84);
+      Polyline polyline5 = PolylineBuilderEx.CreatePolyline(segments, SpatialReferences.WGS84);
 
-      segments.Add(LineBuilder.CreateLineSegment(new Coordinate2D(5, 5), new Coordinate2D(10, 10)));
+      segments.Add(LineBuilderEx.CreateLineSegment(new Coordinate2D(5, 5), new Coordinate2D(10, 10)));
 
-      Polyline polyline6 = PolylineBuilder.CreatePolyline(segments, SpatialReferences.WGS84);
-      Polyline polyline7 = PolylineBuilder.CreatePolyline(polyline5);
-      Polyline polyline8 = PolylineBuilder.CreatePolyline(LineBuilder.CreateLineSegment(new Coordinate2D(5, 5), new Coordinate2D(10, 10)), SpatialReferences.WGS84);
+      Polyline polyline6 = PolylineBuilderEx.CreatePolyline(segments, SpatialReferences.WGS84);
+      Polyline polyline7 = PolylineBuilderEx.CreatePolyline(polyline5);
+      Polyline polyline8 = PolylineBuilderEx.CreatePolyline(LineBuilderEx.CreateLineSegment(new Coordinate2D(5, 5), new Coordinate2D(10, 10)), SpatialReferences.WGS84);
 
       segments.Clear();
-      segments.Add(LineBuilder.CreateLineSegment(new Coordinate2D(0.6, 3.5), new Coordinate2D(0.7, 7)));
-      segments.Add(LineBuilder.CreateLineSegment(new Coordinate2D(0.7, 7), new Coordinate2D(3, 9)));
+      segments.Add(LineBuilderEx.CreateLineSegment(new Coordinate2D(0.6, 3.5), new Coordinate2D(0.7, 7)));
+      segments.Add(LineBuilderEx.CreateLineSegment(new Coordinate2D(0.7, 7), new Coordinate2D(3, 9)));
 
-      Polyline polyline9 = PolylineBuilder.CreatePolyline(segments, SpatialReferences.WGS84);
+      Polyline polyline9 = PolylineBuilderEx.CreatePolyline(segments, SpatialReferences.WGS84);
 
       // now do the Related tests
 
@@ -2810,8 +2814,8 @@ namespace ProSnippetsGeometry
 
     public void ReplaceNaNZs()
     {
-      // cref: Replace NaN Zs in a polygon;ArcGIS.Core.Geometry.GeometryEngine.ReplaceNaNZs(ArcGIS.Core.Geometry.Geometry,System.Double)
-      // cref: Replace NaN Zs in a polygon;ArcGIS.Core.Geometry.IGeometryEngine.ReplaceNaNZs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ReplaceNaNZs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ReplaceNaNZs(ArcGIS.Core.Geometry.Geometry,System.Double)
       #region Replace NaN Zs in a polygon
 
       List<Coordinate3D> coordsZ = new List<Coordinate3D>()
@@ -2821,7 +2825,7 @@ namespace ProSnippetsGeometry
         new Coordinate3D(7, 8, double.NaN)
       };
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(coordsZ);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coordsZ);
       // polygon.HasZ = true
 
       Polygon polygonZReplaced = GeometryEngine.Instance.ReplaceNaNZs(polygon, -1) as Polygon;
@@ -2834,8 +2838,8 @@ namespace ProSnippetsGeometry
 
     public void Reshape()
     {
-      // cref: Reshape a polygon;ArcGIS.Core.Geometry.GeometryEngine.Reshape(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
-      // cref: Reshape a polygon;ArcGIS.Core.Geometry.IGeometryEngine.Reshape(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Reshape(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Reshape(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.Polyline)
       #region Reshape a polygon
 
       List<Coordinate2D> polygon1Coords = new List<Coordinate2D>()
@@ -2855,8 +2859,8 @@ namespace ProSnippetsGeometry
       };
 
       SpatialReference sr = SpatialReferenceBuilder.CreateSpatialReference(102010);
-      Polygon polygon1 = PolygonBuilder.CreatePolygon(polygon1Coords, sr);
-      Polyline reshaper = PolylineBuilder.CreatePolyline(reshaperCoords, sr);
+      Polygon polygon1 = PolygonBuilderEx.CreatePolygon(polygon1Coords, sr);
+      Polyline reshaper = PolylineBuilderEx.CreatePolyline(reshaperCoords, sr);
 
       Polygon outPolygon = GeometryEngine.Instance.Reshape(polygon1, reshaper) as Polygon;
       // outPolygon.PartCount = 1
@@ -2865,7 +2869,7 @@ namespace ProSnippetsGeometry
       // segments.Count = 4
       // outPolygon.PointCount = 5
 
-      string json = GeometryEngine.Instance.ExportToJSON(JSONExportFlags.jsonExportSkipCRS, outPolygon);
+      string json = GeometryEngine.Instance.ExportToJson(JsonExportFlags.JsonExportSkipCRS, outPolygon);
       // json = "{\"rings\":[[[0,-11800],[0,-11000],[1000,-11000],[1000,-11800],[0,-11800]]]}";
 
 
@@ -2875,7 +2879,7 @@ namespace ProSnippetsGeometry
       reshaperCoords.Add(new Coordinate2D(1000, 1000));
       reshaperCoords.Add(new Coordinate2D(2000, 1000));
 
-      reshaper = PolylineBuilder.CreatePolyline(reshaperCoords, sr);
+      reshaper = PolylineBuilderEx.CreatePolyline(reshaperCoords, sr);
 
       outPolygon = GeometryEngine.Instance.Reshape(polygon1, reshaper) as Polygon;
       // outPolygon = null
@@ -2885,8 +2889,8 @@ namespace ProSnippetsGeometry
 
     public void ReverseOrientation()
     {
-      // cref: Reverse the order of points in a Polygon;ArcGIS.Core.Geometry.GeometryEngine.ReverseOrientation(ArcGIS.Core.Geometry.Multipart)
-      // cref: Reverse the order of points in a Polygon;ArcGIS.Core.Geometry.IGeometryEngine.ReverseOrientation(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ReverseOrientation(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ReverseOrientation(ArcGIS.Core.Geometry.Multipart)
       #region Reverse the order of points in a Polygon
 
       List<Coordinate2D> list2D = new List<Coordinate2D>();
@@ -2895,7 +2899,7 @@ namespace ProSnippetsGeometry
       list2D.Add(new Coordinate2D(2.0, 2.0));
       list2D.Add(new Coordinate2D(2.0, 1.0));
 
-      Polygon polygon = PolygonBuilder.CreatePolygon(list2D);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(list2D);
 
       Geometry g = GeometryEngine.Instance.ReverseOrientation(polygon);
       Polygon gPolygon = g as Polygon;
@@ -2911,31 +2915,31 @@ namespace ProSnippetsGeometry
 
     public void Rotate()
     {
-      // cref: Rotate a MapPoint;ArcGIS.Core.Geometry.GeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
-      // cref: Rotate a MapPoint;ArcGIS.Core.Geometry.IGeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
       #region Rotate a MapPoint
 
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 3.0);
-      MapPoint rotatePt = MapPointBuilder.CreateMapPoint(3.0, 3.0);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0);
+      MapPoint rotatePt = MapPointBuilderEx.CreateMapPoint(3.0, 3.0);
 
       Geometry result = GeometryEngine.Instance.Rotate(pt, rotatePt, Math.PI / 2);
       // result point is (3, 1)
       #endregion
 
-      // cref: Rotate a Polyline;ArcGIS.Core.Geometry.GeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
-      // cref: Rotate a Polyline;ArcGIS.Core.Geometry.IGeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Rotate(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double)
       #region Rotate a Polyline
 
       // rotate a polyline
 
-      MapPoint fixedPt = MapPointBuilder.CreateMapPoint(3.0, 3.0);
+      MapPoint fixedPt = MapPointBuilderEx.CreateMapPoint(3.0, 3.0);
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 5.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(5, 5));
-      pts.Add(MapPointBuilder.CreateMapPoint(5.0, 1.0));
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts);
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 5.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(5, 5));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(5.0, 1.0));
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts);
 
       Polyline rotated = GeometryEngine.Instance.Rotate(polyline, fixedPt, Math.PI / 4) as Polyline;  // rotate 45 deg
       #endregion
@@ -2943,22 +2947,22 @@ namespace ProSnippetsGeometry
 
     public void Scale()
     {
-      // cref: Scale a geometry;ArcGIS.Core.Geometry.GeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double)
-      // cref: Scale a geometry;ArcGIS.Core.Geometry.GeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double)
-      // cref: Scale a geometry;ArcGIS.Core.Geometry.IGeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double)
-      // cref: Scale a geometry;ArcGIS.Core.Geometry.IGeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Scale(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.MapPoint,System.Double,System.Double)
       #region Scale a geometry
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3, 3, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3, 3, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0, 3.0));
 
-      MapPoint midPt = MapPointBuilder.CreateMapPoint(1.5, 1.5);
+      MapPoint midPt = MapPointBuilderEx.CreateMapPoint(1.5, 1.5);
 
       // polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts);
       // polyline.Length = 6
       // polyline.Length3D = 0
       Geometry g = GeometryEngine.Instance.Scale(polyline, midPt, 0.5, 0.5);
@@ -2970,7 +2974,7 @@ namespace ProSnippetsGeometry
       // resultPolyline.Points[3] = 2.25, 1.25, 3
 
       // 3D point - scale in 3d
-      MapPoint midPtZ = MapPointBuilder.CreateMapPoint(1.5, 1.5, 1);
+      MapPoint midPtZ = MapPointBuilderEx.CreateMapPoint(1.5, 1.5, 1);
       g = GeometryEngine.Instance.Scale(polyline, midPtZ, 0.5, 0.5, 0.25);
       resultPolyline = g as Polyline;
       // resultPolyline.Points[0] = 1.25, 1.25, 1.5
@@ -2983,8 +2987,8 @@ namespace ProSnippetsGeometry
 
     public void SetConstantZ()
     {
-      // cref: Set all Zs in a polyline;ArcGIS.Core.Geometry.GeometryEngine.SetConstantZ(ArcGIS.Core.Geometry.Multipart,System.Double)
-      // cref: Set all Zs in a polyline;ArcGIS.Core.Geometry.IGeometryEngine.SetConstantZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetConstantZ(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetConstantZ(ArcGIS.Core.Geometry.Multipart,System.Double)
       #region Set all Zs in a polyline
 
       List<Coordinate3D> coordsZ = new List<Coordinate3D>()
@@ -2994,7 +2998,7 @@ namespace ProSnippetsGeometry
         new Coordinate3D(7, 8, double.NaN)
       };
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(coordsZ);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coordsZ);
       // polyline.HasZ = true
 
       Polyline polylineSetZ = GeometryEngine.Instance.SetConstantZ(polyline, -1) as Polyline;
@@ -3024,42 +3028,44 @@ namespace ProSnippetsGeometry
 
     public void ShapePreservingArea()
     {
-      // cref: Calculate area of geometry on surface of Earth's ellipsoid - ShapePreservingArea;ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry)
-      // cref: Calculate area of geometry on surface of Earth's ellipsoid - ShapePreservingArea;ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingArea(ArcGIS.Core.Geometry.Geometry)
       #region Calculate area of geometry on surface of Earth's ellipsoid - ShapePreservingArea
 
       // pt
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 3.0, SpatialReferences.WebMercator);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0, SpatialReferences.WebMercator);
       double area = GeometryEngine.Instance.ShapePreservingArea(pt);         // area = 0
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3, 3, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3, 3, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0, 3.0));
 
       // multipoint
-      Multipoint mPt = MultipointBuilder.CreateMultipoint(pts);
+      Multipoint mPt = MultipointBuilderEx.CreateMultipoint(pts);
       area = GeometryEngine.Instance.ShapePreservingArea(mPt);               // area = 0
 
       // polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts);
       area = GeometryEngine.Instance.ShapePreservingArea(polyline);          // area = 0
 
       // polygon
-      Polygon polygon = PolygonBuilder.CreatePolygon(pts, SpatialReferences.WGS84);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(pts, SpatialReferences.WGS84);
       area = GeometryEngine.Instance.ShapePreservingArea(polygon);
 
-      polygon = PolygonBuilder.CreatePolygon(pts, SpatialReferences.WebMercator);
+      polygon = PolygonBuilderEx.CreatePolygon(pts, SpatialReferences.WebMercator);
       area = GeometryEngine.Instance.ShapePreservingArea(polygon);
 
 
-      polygon = PolygonBuilder.CreatePolygon(new[]
+      polygon = PolygonBuilderEx.CreatePolygon(new[]
       {
-          MapPointBuilder.CreateMapPoint( -170, 45),
-          MapPointBuilder.CreateMapPoint( 170, 45),
-          MapPointBuilder.CreateMapPoint( 170, -45),
-          MapPointBuilder.CreateMapPoint( -170, -54)
+          MapPointBuilderEx.CreateMapPoint( -170, 45),
+          MapPointBuilderEx.CreateMapPoint( 170, 45),
+          MapPointBuilderEx.CreateMapPoint( 170, -45),
+          MapPointBuilderEx.CreateMapPoint( -170, -54)
       }, SpatialReferences.WGS84);
 
       var area_meters = GeometryEngine.Instance.ShapePreservingArea(polygon);// , AreaUnits.SquareMeters);
@@ -3073,38 +3079,40 @@ namespace ProSnippetsGeometry
 
     public void ShapePreservingLength()
     {
-      // cref: Calculate length of geometry on surface of Earth's ellipsoid - ShapePreservingLength;ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry)
-      // cref: Calculate length of geometry on surface of Earth's ellipsoid - ShapePreservingLength;ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.LinearUnit)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ShapePreservingLength(ArcGIS.Core.Geometry.Geometry)
       #region Calculate length of geometry on surface of Earth's ellipsoid - ShapePreservingLength
 
       // pt
-      MapPoint pt = MapPointBuilder.CreateMapPoint(1.0, 3.0, SpatialReferences.WebMercator);
+      MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0, SpatialReferences.WebMercator);
       double len = GeometryEngine.Instance.ShapePreservingLength(pt);          // len = 0
 
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 3.0, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3, 3, 3.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(3.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 3.0, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3, 3, 3.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 1.0, 3.0));
 
       // multipoint
-      Multipoint mPt = MultipointBuilder.CreateMultipoint(pts);
+      Multipoint mPt = MultipointBuilderEx.CreateMultipoint(pts);
       len = GeometryEngine.Instance.ShapePreservingLength(mPt);                // len = 0
 
       // polyline
-      Polyline polyline = PolylineBuilder.CreatePolyline(pts, SpatialReferences.WGS84);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(pts, SpatialReferences.WGS84);
       len = GeometryEngine.Instance.ShapePreservingLength(polyline);
 
       // polygon
-      Polygon polygon = PolygonBuilder.CreatePolygon(pts, SpatialReferences.WGS84);
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(pts, SpatialReferences.WGS84);
       len = GeometryEngine.Instance.ShapePreservingLength(polygon);
 
 
 
-      polyline = PolylineBuilder.CreatePolyline(new[]
+      polyline = PolylineBuilderEx.CreatePolyline(new[]
       {
-          MapPointBuilder.CreateMapPoint( -170, 0),
-          MapPointBuilder.CreateMapPoint( 170, 0)
+          MapPointBuilderEx.CreateMapPoint( -170, 0),
+          MapPointBuilderEx.CreateMapPoint( 170, 0)
       }, SpatialReferences.WGS84);
 
 
@@ -3119,8 +3127,8 @@ namespace ProSnippetsGeometry
 
     public void SideBuffer()
     {
-      // cref: SideBuffer;ArcGIS.Core.Geometry.GeometryEngine.SideBuffer(ArcGIS.Core.Geometry.Polyline,System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
-      // cref: SideBuffer;ArcGIS.Core.Geometry.IGeometryEngine.SideBuffer(ArcGIS.Core.Geometry.Polyline,System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SideBuffer(ArcGIS.Core.Geometry.Polyline,System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SideBuffer(ArcGIS.Core.Geometry.Polyline,System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
       #region SideBuffer
 
       // right side, round caps
@@ -3134,12 +3142,12 @@ namespace ProSnippetsGeometry
         new Coordinate2D(1300, 5700)
       };
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, sr);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
       Polygon output = GeometryEngine.Instance.SideBuffer(polyline, 20, LeftOrRightSide.RightSide, LineCapType.Round) as Polygon;
       #endregion
 
-      // cref: SideBuffer Many;ArcGIS.Core.Geometry.GeometryEngine.SideBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
-      // cref: SideBuffer Many;ArcGIS.Core.Geometry.IGeometryEngine.SideBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SideBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SideBuffer(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},System.Double,ArcGIS.Core.Geometry.LeftOrRightSide,ArcGIS.Core.Geometry.LineCapType)
       #region SideBuffer Many
 
       SpatialReference spatialReference = SpatialReferenceBuilder.CreateSpatialReference(102010);
@@ -3152,14 +3160,14 @@ namespace ProSnippetsGeometry
         new Coordinate2D(1300, 5700)
       };
 
-      Polyline polyline1 = PolylineBuilder.CreatePolyline(coordinates, spatialReference);
+      Polyline polyline1 = PolylineBuilderEx.CreatePolyline(coordinates, spatialReference);
 
       coordinates.Clear();
       coordinates.Add(new Coordinate2D(1400, 6050));
       coordinates.Add(new Coordinate2D(1600, 6150));
       coordinates.Add(new Coordinate2D(1800, 6050));
 
-      Polyline polyline2 = PolylineBuilder.CreatePolyline(coordinates, spatialReference);
+      Polyline polyline2 = PolylineBuilderEx.CreatePolyline(coordinates, spatialReference);
       List<Polyline> polylines = new List<Polyline>() { polyline1, polyline2 };
       IReadOnlyList<Geometry> outGeometries = GeometryEngine.Instance.SideBuffer(polylines, 10, LeftOrRightSide.RightSide, LineCapType.Round);
       #endregion
@@ -3167,11 +3175,11 @@ namespace ProSnippetsGeometry
 
     public void SimplifyAsFeature()
     {
-      // cref: Simplify a polygon;ArcGIS.Core.Geometry.GeometryEngine.SimplifyAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
-      // cref: Simplify a polygon;ArcGIS.Core.Geometry.IGeometryEngine.SimplifyAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SimplifyAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SimplifyAsFeature(ArcGIS.Core.Geometry.Geometry,System.Boolean)
       #region Simplify a polygon 
 
-      var g1 = PolygonBuilder.FromJson("{\"rings\": [ [ [0, 0], [10, 0], [10, 10], [0, 10] ] ] }");
+      var g1 = PolygonBuilderEx.FromJson("{\"rings\": [ [ [0, 0], [10, 0], [10, 10], [0, 10] ] ] }");
       var result = GeometryEngine.Instance.Area(g1);      // result = -100.0   - negative due to wrong ring orientation
                                                           // simplify it
       var result2 = GeometryEngine.Instance.Area(GeometryEngine.Instance.SimplifyAsFeature(g1, true));
@@ -3181,8 +3189,8 @@ namespace ProSnippetsGeometry
 
     public void SimplifyPolyline()
     {
-      // cref: Simplify a polyline with intersections, overlaps;ArcGIS.Core.Geometry.GeometryEngine.SimplifyPolyline(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.SimplifyType,System.Boolean)
-      // cref: Simplify a polyline with intersections, overlaps;ArcGIS.Core.Geometry.IGeometryEngine.SimplifyPolyline(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.SimplifyType,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SimplifyPolyline(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.SimplifyType,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SimplifyPolyline(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.SimplifyType,System.Boolean)
       #region Simplify a polyline with intersections, overlaps
 
       List<Coordinate2D> coords = new List<Coordinate2D>()
@@ -3198,7 +3206,7 @@ namespace ProSnippetsGeometry
       SpatialReference sr = SpatialReferences.WGS84;
 
       // build a line that has segments that cross over each other
-      Polyline polyline = PolylineBuilder.CreatePolyline(coords, sr);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
       // polyline.PartCount = 1
       ReadOnlyPartCollection parts = polyline.Parts;
       ReadOnlySegmentCollection segments = parts[0];
@@ -3231,8 +3239,8 @@ namespace ProSnippetsGeometry
     {
       Polygon polygon = null;
 
-      // cref: Slice a Polygon into equal parts;ArcGIS.Core.Geometry.GeometryEngine.SlicePolygonIntoEqualParts(ArcGIS.Core.Geometry.Polygon,System.Int32,System.Double,ArcGIS.Core.Geometry.SliceType)
-      // cref: Slice a Polygon into equal parts;ArcGIS.Core.Geometry.IGeometryEngine.SlicePolygonIntoEqualParts(ArcGIS.Core.Geometry.Polygon,System.Int32,System.Double,ArcGIS.Core.Geometry.SliceType)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SlicePolygonIntoEqualParts(ArcGIS.Core.Geometry.Polygon,System.Int32,System.Double,ArcGIS.Core.Geometry.SliceType)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SlicePolygonIntoEqualParts(ArcGIS.Core.Geometry.Polygon,System.Int32,System.Double,ArcGIS.Core.Geometry.SliceType)
       #region Slice a Polygon into equal parts
       
       var slices = GeometryEngine.Instance.SlicePolygonIntoEqualParts(polygon, 3, 0, SliceType.Blocks);
@@ -3246,7 +3254,7 @@ namespace ProSnippetsGeometry
       list2D.Add(new Coordinate2D(2.0, 2.0));
       list2D.Add(new Coordinate2D(2.0, 1.0));
 
-      Polygon p = PolygonBuilder.CreatePolygon(list2D);
+      Polygon p = PolygonBuilderEx.CreatePolygon(list2D);
       slices = GeometryEngine.Instance.SlicePolygonIntoEqualParts(p, 2, 0, SliceType.Strips);
 
       // slice[0] coordinates - (1.0, 1.0), (1.0, 1.5), (2.0, 1.5), (2.0, 1.0), (1.0, 1.0) 
@@ -3262,18 +3270,18 @@ namespace ProSnippetsGeometry
 
     public void SplitAtPoint()
     {
-      // cref: Split multipart at point;ArcGIS.Core.Geometry.GeometryEngine.SplitAtPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.MapPoint,System.Boolean,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
-      // cref: Split multipart at point;ArcGIS.Core.Geometry.IGeometryEngine.SplitAtPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.MapPoint,System.Boolean,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SplitAtPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.MapPoint,System.Boolean,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SplitAtPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.MapPoint,System.Boolean,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
       #region Split multipart at point
 
       // define a polyline
-      MapPoint startPointZ = MapPointBuilder.CreateMapPoint(1, 1, 5);
-      MapPoint endPointZ = MapPointBuilder.CreateMapPoint(20, 1, 5);
+      MapPoint startPointZ = MapPointBuilderEx.CreateMapPoint(1, 1, 5);
+      MapPoint endPointZ = MapPointBuilderEx.CreateMapPoint(20, 1, 5);
 
-      Polyline polylineZ = PolylineBuilder.CreatePolyline(new List<MapPoint>() { startPointZ, endPointZ });
+      Polyline polylineZ = PolylineBuilderEx.CreatePolyline(new List<MapPoint>() { startPointZ, endPointZ });
 
       // define a split point
-      MapPoint splitPointAboveLine = MapPointBuilder.CreateMapPoint(10, 10, 10);
+      MapPoint splitPointAboveLine = MapPointBuilderEx.CreateMapPoint(10, 10, 10);
 
       bool splitOccurred;
       int partIndex;
@@ -3327,7 +3335,7 @@ namespace ProSnippetsGeometry
       // try to split with a point that won't split the line  - pt extends beyond the line
       //
 
-      var pointAfterLine = MapPointBuilder.CreateMapPoint(50, 1, 10);
+      var pointAfterLine = MapPointBuilderEx.CreateMapPoint(50, 1, 10);
       splitPolyline = GeometryEngine.Instance.SplitAtPoint(polylineZ, pointAfterLine, false, false, out splitOccurred, out partIndex, out segmentIndex);
 
       // splitOccurred = false
@@ -3355,21 +3363,15 @@ namespace ProSnippetsGeometry
         new Coordinate3D(40,20,10),
       };
 
-      Polygon multipart = null;
+      var builder = new PolygonBuilderEx();
+      builder.HasZ = true;
+      builder.AddPart(coordsZ);
+      builder.AddPart(coordsZ_2ndPart);
 
-      // Builder constructors need to run on the MCT.
-      ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
-      {
-        var builder = new PolygonBuilder();
-        builder.HasZ = true;
-        builder.AddPart(coordsZ);
-        builder.AddPart(coordsZ_2ndPart);
-
-        multipart = builder.ToGeometry();
-      });
+      Polygon multipart = builder.ToGeometry();
 
       // pointA is closer to the first part of the multipart - the split occurs in the first part
-      var pointA = MapPointBuilder.CreateMapPoint(22, 18, 7);
+      var pointA = MapPointBuilderEx.CreateMapPoint(22, 18, 7);
       var splitPolygon = GeometryEngine.Instance.SplitAtPoint(multipart, pointA, false, false, out splitOccurred, out partIndex, out segmentIndex);
 
       // splitPolygon.PointCount = 12
@@ -3378,7 +3380,7 @@ namespace ProSnippetsGeometry
 
 
       // pointB is midPoint between the 2 parts - no split will occur
-      var pointB = MapPointBuilder.CreateMapPoint(25, 20, 7);
+      var pointB = MapPointBuilderEx.CreateMapPoint(25, 20, 7);
       splitPolygon = GeometryEngine.Instance.SplitAtPoint(multipart, pointB, true, false, out splitOccurred, out partIndex, out segmentIndex);
 
       // splitOccurred = false
@@ -3390,22 +3392,22 @@ namespace ProSnippetsGeometry
 
     public void Touches()
     {
-      // cref: Polygon touches another Polygon;ArcGIS.Core.Geometry.GeometryEngine.Touches(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Polygon touches another Polygon;ArcGIS.Core.Geometry.IGeometryEngine.Touches(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Touches(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Touches(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Polygon touches another Polygon
 
       // two disjoint polygons
-      Envelope env = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(4.0, 4.0), MapPointBuilder.CreateMapPoint(8, 8));
-      Polygon poly1 = PolygonBuilder.CreatePolygon(env);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(4.0, 4.0), MapPointBuilderEx.CreateMapPoint(8, 8));
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(env);
 
-      Envelope env2 = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(1.0, 1.0), MapPointBuilder.CreateMapPoint(5, 5));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env2);
+      Envelope env2 = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(1.0, 1.0), MapPointBuilderEx.CreateMapPoint(5, 5));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env2);
 
       bool touches = GeometryEngine.Instance.Touches(poly1, poly2);    // touches = false
 
       // another polygon that touches the first
-      Envelope env3 = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(1.0, 1.0), MapPointBuilder.CreateMapPoint(4, 4));
-      Polygon poly3 = PolygonBuilder.CreatePolygon(env3);
+      Envelope env3 = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(1.0, 1.0), MapPointBuilderEx.CreateMapPoint(4, 4));
+      Polygon poly3 = PolygonBuilderEx.CreatePolygon(env3);
 
       touches = GeometryEngine.Instance.Touches(poly1, poly3);         // touches = true
       #endregion
@@ -3413,8 +3415,8 @@ namespace ProSnippetsGeometry
 
     public void Transform2D()
     {
-      // cref: Transform2D;ArcGIS.Core.Geometry.GeometryEngine.Transform2D(ArcGIS.Core.Geometry.Coordinate2D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate2D[]@,System.Boolean)
-      // cref: Transform2D;ArcGIS.Core.Geometry.IGeometryEngine.Transform2D(ArcGIS.Core.Geometry.Coordinate2D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate2D[]@,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Transform2D(ArcGIS.Core.Geometry.Coordinate2D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate2D[]@,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Transform2D(ArcGIS.Core.Geometry.Coordinate2D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate2D[]@,System.Boolean)
       #region Transform2D
 
       // Not all of the input points are transformed as some of them are outside of the GCS horizon.
@@ -3470,8 +3472,8 @@ namespace ProSnippetsGeometry
 
     public void Transform3D()
     {
-      // cref: Transform3D;ArcGIS.Core.Geometry.GeometryEngine.Transform3D(ArcGIS.Core.Geometry.Coordinate3D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate3D[]@)
-      // cref: Transform3D;ArcGIS.Core.Geometry.IGeometryEngine.Transform3D(ArcGIS.Core.Geometry.Coordinate3D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate3D[]@)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Transform3D(ArcGIS.Core.Geometry.Coordinate3D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate3D[]@,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Transform3D(ArcGIS.Core.Geometry.Coordinate3D[],ArcGIS.Core.Geometry.ProjectionTransformation,ArcGIS.Core.Geometry.Coordinate3D[]@,System.Boolean)
       #region Transform3D
 
       // Not all of the input points are transformed as some of them are outside of the GCS horizon.
@@ -3511,12 +3513,12 @@ namespace ProSnippetsGeometry
 
     public void UnionMapPoints()
     {
-      // cref: Union two MapPoints - creates a Multipoint;ArcGIS.Core.Geometry.GeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Union two MapPoints - creates a Multipoint;ArcGIS.Core.Geometry.IGeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Union two MapPoints - creates a Multipoint
 
-      MapPoint pt1 = MapPointBuilder.CreateMapPoint(1.0, 1.0);
-      MapPoint pt2 = MapPointBuilder.CreateMapPoint(2.0, 2.5);
+      MapPoint pt1 = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
+      MapPoint pt2 = MapPointBuilderEx.CreateMapPoint(2.0, 2.5);
 
       Geometry geometry = GeometryEngine.Instance.Union(pt1, pt2);
       Multipoint multipoint = geometry as Multipoint;   // multipoint has point count of 2
@@ -3525,23 +3527,23 @@ namespace ProSnippetsGeometry
 
     public void UnionPolygons()
     {
-      // cref: Union two Polygons;ArcGIS.Core.Geometry.GeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: Union two Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Union(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region Union two Polygons
 
       // union two polygons
 
       List<MapPoint> polyPts = new List<MapPoint>();
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 2.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(3.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 6.0));
-      polyPts.Add(MapPointBuilder.CreateMapPoint(6.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 2.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(3.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 6.0));
+      polyPts.Add(MapPointBuilderEx.CreateMapPoint(6.0, 2.0));
 
-      Polygon poly1 = PolygonBuilder.CreatePolygon(polyPts);
+      Polygon poly1 = PolygonBuilderEx.CreatePolygon(polyPts);
       bool isSimple = GeometryEngine.Instance.IsSimpleAsFeature(poly1);
 
-      Envelope env = EnvelopeBuilder.CreateEnvelope(MapPointBuilder.CreateMapPoint(4.0, 4.0), MapPointBuilder.CreateMapPoint(8, 8));
-      Polygon poly2 = PolygonBuilder.CreatePolygon(env);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(MapPointBuilderEx.CreateMapPoint(4.0, 4.0), MapPointBuilderEx.CreateMapPoint(8, 8));
+      Polygon poly2 = PolygonBuilderEx.CreatePolygon(env);
       isSimple = GeometryEngine.Instance.IsSimpleAsFeature(poly2);
 
       Geometry g = GeometryEngine.Instance.Union(poly1, poly2);
@@ -3551,8 +3553,8 @@ namespace ProSnippetsGeometry
 
     public void UnionManyPolylines()
     {
-      // cref: Union many Polylines;ArcGIS.Core.Geometry.GeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
-      // cref: Union many Polylines;ArcGIS.Core.Geometry.IGeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
       #region Union many Polylines
 
       // union many polylines
@@ -3568,9 +3570,9 @@ namespace ProSnippetsGeometry
       // create Disjoint lines
       List<Polyline> manyLines = new List<Polyline>
       {
-        PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
-        PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
-        PolylineBuilder.CreatePolyline(new List<Coordinate2D>(){coords[6], coords[7], coords[8]})
+        PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[0], coords[1], coords[2]}, SpatialReferences.WGS84),
+        PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[3], coords[4], coords[5]}),
+        PolylineBuilderEx.CreatePolyline(new List<Coordinate2D>(){coords[6], coords[7], coords[8]})
       };
 
       Polyline polyline = GeometryEngine.Instance.Union(manyLines) as Polyline;
@@ -3579,8 +3581,8 @@ namespace ProSnippetsGeometry
 
     public void UnionManyPolygons()
     {
-      // cref: Union many Polygons;ArcGIS.Core.Geometry.GeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
-      // cref: Union many Polygons;ArcGIS.Core.Geometry.IGeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Union(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Geometry})
       #region Union many Polygons
 
       // union many polygons
@@ -3596,9 +3598,9 @@ namespace ProSnippetsGeometry
       // create polygons
       List<Polygon> manyPolygonsZ = new List<Polygon>
       {
-        PolygonBuilder.CreatePolygon(new List<Coordinate3D>(){coordsZ[0], coordsZ[1], coordsZ[2]}, SpatialReferences.WGS84),
-        PolygonBuilder.CreatePolygon(new List<Coordinate3D>(){coordsZ[3], coordsZ[4], coordsZ[5]}),
-        PolygonBuilder.CreatePolygon(new List<Coordinate3D>(){coordsZ[6], coordsZ[7], coordsZ[8]})
+        PolygonBuilderEx.CreatePolygon(new List<Coordinate3D>(){coordsZ[0], coordsZ[1], coordsZ[2]}, SpatialReferences.WGS84),
+        PolygonBuilderEx.CreatePolygon(new List<Coordinate3D>(){coordsZ[3], coordsZ[4], coordsZ[5]}),
+        PolygonBuilderEx.CreatePolygon(new List<Coordinate3D>(){coordsZ[6], coordsZ[7], coordsZ[8]})
       };
 
       Polygon polygon = GeometryEngine.Instance.Union(manyPolygonsZ) as Polygon;
@@ -3607,47 +3609,47 @@ namespace ProSnippetsGeometry
 
     public void Within()
     {
-      // cref: MapPoints, Polylines, Polygons within Polygon;ArcGIS.Core.Geometry.GeometryEngine.Within(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
-      // cref: MapPoints, Polylines, Polygons within Polygon;ArcGIS.Core.Geometry.IGeometryEngine.Within(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Within(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Within(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)
       #region MapPoints, Polylines, Polygons within Polygon
 
       // build a polygon      
       List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 1.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(1.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 2.0));
-      pts.Add(MapPointBuilder.CreateMapPoint(2.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      pts.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
-      Polygon poly = PolygonBuilder.CreatePolygon(pts);
+      Polygon poly = PolygonBuilderEx.CreatePolygon(pts);
 
       // an inner point
-      MapPoint innerPt = MapPointBuilder.CreateMapPoint(1.5, 1.5);
+      MapPoint innerPt = MapPointBuilderEx.CreateMapPoint(1.5, 1.5);
       bool within = GeometryEngine.Instance.Within(innerPt, poly);   // within = true
 
       // point on a boundary
       within = GeometryEngine.Instance.Within(pts[0], poly);     // within = false
 
       // an interior line
-      MapPoint innerPt2 = MapPointBuilder.CreateMapPoint(1.25, 1.75);
+      MapPoint innerPt2 = MapPointBuilderEx.CreateMapPoint(1.25, 1.75);
       List<MapPoint> innerLinePts = new List<MapPoint>();
       innerLinePts.Add(innerPt);
       innerLinePts.Add(innerPt2);
 
-      Polyline polyline = PolylineBuilder.CreatePolyline(innerLinePts);
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(innerLinePts);
       within = GeometryEngine.Instance.Within(polyline, poly);   // within = true
 
       // a line that crosses the boundary
-      MapPoint outerPt = MapPointBuilder.CreateMapPoint(3, 1.5);
+      MapPoint outerPt = MapPointBuilderEx.CreateMapPoint(3, 1.5);
       List<MapPoint> crossingLinePts = new List<MapPoint>();
       crossingLinePts.Add(innerPt);
       crossingLinePts.Add(outerPt);
 
-      polyline = PolylineBuilder.CreatePolyline(crossingLinePts);
+      polyline = PolylineBuilderEx.CreatePolyline(crossingLinePts);
       within = GeometryEngine.Instance.Within(polyline, poly);     // within = false
 
 
       // polygon in polygon
-      Envelope env = EnvelopeBuilder.CreateEnvelope(innerPt, innerPt2);
+      Envelope env = EnvelopeBuilderEx.CreateEnvelope(innerPt, innerPt2);
       within = GeometryEngine.Instance.Within(env, poly);      // within = true
       #endregion
     }

@@ -140,7 +140,7 @@ namespace SDKExamples.GeodatabaseSDK
                     new Coordinate2D(1021405, 1875397)
                   };
 
-                  feature.SetShape(new PolygonBuilder(newCoordinates).ToGeometry());
+                  feature.SetShape(new PolygonBuilderEx(newCoordinates).ToGeometry());
                 }
 
                 feature.Store();
@@ -184,7 +184,7 @@ namespace SDKExamples.GeodatabaseSDK
 
                 // Note that to update the shape, you will need to create a new Shape object.
 
-                feature.SetShape(new MapPointBuilder(mapPoint.X + 1, mapPoint.Y + 1, mapPoint.SpatialReference).ToGeometry());
+                feature.SetShape(new MapPointBuilderEx(mapPoint.X + 1, mapPoint.Y + 1, mapPoint.SpatialReference).ToGeometry());
                 feature.Store();
 
                 // Has to be called after the store too
