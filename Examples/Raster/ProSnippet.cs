@@ -41,7 +41,7 @@ namespace Raster.ProSnippet
         // cref: ArcGIS.Core.Data.FileSystemConnectionPath.#ctor(System.Uri, ArcGIS.Core.Data.FileSystemDatastoreType)
         // cref: ArcGIS.Core.Data.FileSystemDatastoreType
         // cref: ArcGIS.Core.Data.FileSystemDatastore.#ctor(ArcGIS.Core.Data.FileSystemConnectionPath)
-        // cref: ArcGIS.Core.Data.FileSystemDatastore.OpenDataset
+        // cref: ArcGIS.Core.Data.FileSystemDatastore.OpenDataset<T>
         // cref: ArcGIS.Core.Data.Raster.RasterDataset
         #region Open raster dataset in a folder
         // Create a FileSystemConnectionPath using the folder path.
@@ -54,7 +54,7 @@ namespace Raster.ProSnippet
 
         // cref: ArcGIS.Core.Data.FileGeodatabaseConnectionPath.#ctor(System.Uri)
         // cref: ArcGIS.Core.Data.Geodatabase.#ctor(ArcGIS.Core.Data.FileGeodatabaseConnectionPath)
-        // cref: ArcGIS.Core.Data.Geodatabase.OpenDataset
+        // cref: ArcGIS.Core.Data.Geodatabase.OpenDataset<T>
         // cref: ArcGIS.Core.Data.Raster.RasterDataset
         #region Open raster dataset in a geodatabase
         // Create a FileGeodatabaseConnectionPath using the path to the gdb. Note: This can be a path to a .sde file.
@@ -90,7 +90,7 @@ namespace Raster.ProSnippet
           // cref: ArcGIS.Core.Data.Raster.RasterBand
           // cref: ArcGIS.Core.Data.Raster.RasterBand.GetDefinition()
           // cref: ArcGIS.Core.Data.Raster.RasterBandDefinition
-          // cref: ArcGIS.Core.Data.Raster.RasterBandDefinition.GetName()
+          // cref: ArcGIS.Core.Data.Definition.GetName()
           #region Access the bands in a raster dataset
 
           var count = rasterDataset.GetBandCount();
@@ -221,7 +221,7 @@ namespace Raster.ProSnippet
           // cref: ArcGIS.Core.Data.Raster.PixelBlock.GetHeight()
           // cref: ArcGIS.Core.Data.Raster.PixelBlock.GetWidth()
           // cref: ArcGIS.Core.Data.Raster.PixelBlock.GetNoDataMaskValue(System.Int32, System.Int32, System.Int32)
-          // cref: ArcGIS.Core.Data.Raster.PixelBlock.GetPixelData(System.Int32, System.Array)
+          // cref: ArcGIS.Core.Data.Raster.PixelBlock.SetPixelData(System.Int32, System.Array)
           // cref: ArcGIS.Core.Data.Raster.Raster.Write(System.Int32, System.Int32, ArcGIS.Core.Data.Raster.PixelBlock)
           #region Process pixels using a pixel block
           await QueuedTask.Run(() =>

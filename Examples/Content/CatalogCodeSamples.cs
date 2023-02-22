@@ -39,7 +39,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // not to be included in sample regions
       var projectFolderConnection = (Project.Current.GetItems<FolderConnectionProjectItem>()).First();
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Mapping.MapProjectItem
       #region Get MapProjectItems
 
@@ -48,7 +48,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //GetMapProjectItems
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
       #region Get FolderConnectionProjectItems
 
@@ -57,7 +57,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //GetFolderConnectiontProjectItems
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
       #region Get ServerConnectionProjectItems
 
@@ -66,7 +66,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //Get ServerConnectionProjectItems
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Catalog.LocatorsConnectionProjectItem
       #region Get LocatorConnectionProjectItems
 
@@ -75,7 +75,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion //Get LocatorConnectionProjectItems
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
       // cref: ArcGIS.Desktop.Core.Item.GetItems
       #region Get Project Items by ProjectItem type
@@ -92,7 +92,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       });
       #endregion //GetProjectItems
 
-      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
       #region Add Folder to Project as IProjectItem
 
       /// Add a folder connection to a project
@@ -102,7 +102,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       #endregion //AddFolderConnectionProjectItem
 
       // cref: ArcGIS.Desktop.Catalog.GDBProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
       #region Add GDBProjectItem to Project as IProjectItem
 
       /// Add a file geodatabase or a SQLite or enterprise database connection to a project
@@ -137,7 +137,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
       // cref: ArcGIS.Desktop.Core.ItemFactory
       // cref: ArcGIS.Desktop.Core.ItemFactory.Create
       // cref: ArcGIS.Desktop.Core.ItemFactory.Create
-      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
       #region Importing Maps To Project
 
       /// Import a mxd
@@ -197,7 +197,7 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Core.Portal.PortalItem 
       #region Get Folder Item Content from Project PortalItem
 

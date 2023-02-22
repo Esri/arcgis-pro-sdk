@@ -55,7 +55,7 @@ using ArcGIS.Desktop.Framework.Contracts;
 namespace Layout_HelpExamples
 {
   // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
-  // cref: ArcGIS.Desktop.Core.Project.GetItems
+  // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
   // cref: ArcGIS.Desktop.Core.Project.RemoveItem
   #region Delete_Layout
   //This example deletes a layout in a project after finding it by name.

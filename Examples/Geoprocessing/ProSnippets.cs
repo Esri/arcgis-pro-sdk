@@ -30,6 +30,8 @@ using ArcGIS.Desktop.Mapping;
 using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.GeoProcessing;
 using ArcGIS.Desktop.Editing.Templates;
+using System.Threading;
+using ArcGIS.Core.Data;
 
 namespace ProSnippetsGeoprocessing
 {
@@ -87,6 +89,49 @@ namespace ProSnippetsGeoprocessing
             Geoprocessing.OpenToolDialog(toolpath, arguments);
       #endregion
 
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.OpenToolDialog
+      #region Open the Geoprocessing Tool Pane for a specific Tool
+
+      // For a System toolbox, to identify the specific tool to show, use
+      // either:
+      // o "ToolboxName.ToolName" - eg "analysis.Buffer"
+      // o "Fullpath to Toolbox.tbx\Toolname" - eg:
+      //       "C:\ArcGIS\Resources\ArcToolBox\Toolboxes\Analysis Tools.tbx\Buffer"
+      // note:
+      // For legacy purposes, the convention "ToolName_ToolBox" is also supported so,
+      // o "Buffer_analysis" would also work
+      //
+      // For a custom toolbox, the full path must be provided. So, for example,
+      // given the custom toolbox "DeepThought.tbx" containing a python script tool
+      // called "Answer", installed at "C:\Data\DeepThought-ProAddin\Toolboxes\toolboxes",
+      // the full path would be:
+      // o "C:\Data\DeepThought-ProAddin\Toolboxes\toolboxes\DeepThought.tbx\Answer"
+
+      //Open the Buffer Tool GP Dialog - use either the full path or just 
+      //use "ToolboxName.ToolName"
+      var path = @"C:\ArcGIS\Resources\ArcToolBox\Toolboxes\Analysis Tools.tbx";
+      var full_tool_name = System.IO.Path.Combine(path, "Buffer");
+
+      var short_tool_name = "analysis.Buffer";
+
+      var tool_name = short_tool_name;//or full_tool_name
+
+      var extent = MapView.Active.Extent;
+
+      var val_array = await QueuedTask.Run(() =>
+      {
+        var rect = GeometryEngine.Instance.Scale(extent, extent.Center, 0.25, 0.25) as Envelope;
+        var poly = PolygonBuilderEx.CreatePolygon(rect, rect.SpatialReference);
+        var geom = new List<object>() { poly };
+        return Geoprocessing.MakeValueArray(new object[] { geom, null, @"1000 Meters" });
+
+      });
+      //Call OpenToolDialog on the UI thread!
+      Geoprocessing.OpenToolDialog(tool_name, val_array, null, false);
+
+      #endregion
+
       // cref: ARCGIS.DESKTOP.GEOPROCESSING.GEOPROCESSINGPROJECTITEM
       #region Get Geoprocessing project items
       var gpItems = CoreModule.CurrentProject.Items.OfType<GeoprocessingProjectItem>();
@@ -124,7 +169,7 @@ namespace ProSnippetsGeoprocessing
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
-      #region GPExecuteToolFlags.AddToHistory will add the execution messages to Hisotry
+      #region GPExecuteToolFlags.AddToHistory will add the execution messages to History
       // However, settings in Pro App's Geoprocessing Options will override option set in code
       // for example, if in Options > Geoprocessing dialog, if you uncheck 'Write geoprocessing operations to Geoprocessing History'
       // then the output will not be added to history.
@@ -208,7 +253,128 @@ namespace ProSnippetsGeoprocessing
             //return gpResult;
 
             #endregion
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MAKEENVIRONMENTARRAY
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
+      #region How to pass native objects as parameter values to run geoprocessing tool
+      string tool2 = "analysis.Buffer";
+      List<MapPoint> list = new List<MapPoint>();
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 1.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(1.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
+      list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
+
+      Multipoint multiPoint = MultipointBuilderEx.CreateMultipoint(list);
+      var spatial_ref = SpatialReferenceBuilder.CreateSpatialReference(3857);
+      var args3 = await QueuedTask.Run(() =>
+      {
+          return Geoprocessing.MakeValueArray(multiPoint, "memory\\Buffers", "800 meters");
+      });
+      var env1 = Geoprocessing.MakeEnvironmentArray(outputCoordinateSystem: spatial_ref);
+      var messages = new List<string>(); // list to collect all output messages
+      var cts = new CancellationTokenSource();
+      await Geoprocessing.ExecuteToolAsync(tool2, args3, env1, cts.Token);
+          
+      #endregion
+
+      // cref: ARCGIS.DESKTOP.CORE.PROJECT.OPENASYNC
+      // cref: ARCGIS.DESKTOP.CORE.PROJECT.ITEMS
+      // cref: ARCGIS.DESKTOP.MAPPING.MapProjectItem
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.IGPHistoryItem	  
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GPEXECUTETOOLFLAGS
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MAKEENVIRONMENTARRAY
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
+      #region How to access Geoprocessing History
+      string openProjectPath = @"D\DATA\IGPHistoryItemTestProject\IGPHistoryItemTestProject.aprx";
+      await Project.OpenAsync(openProjectPath); 
+	  MapProjectItem mapProjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map", StringComparison.CurrentCultureIgnoreCase));
+
+      var map = await QueuedTask.Run(() => mapProjItem.GetMap());
+      var ftrLayer = map.Layers[0] as FeatureLayer;
+      string tool1 = "management.GetCount";     
+      var args1 = Geoprocessing.MakeValueArray(ftrLayer);
+      var env = Geoprocessing.MakeEnvironmentArray(overwriteoutput: true);          
+      GPExecuteToolFlags executeFlags = GPExecuteToolFlags.AddToHistory;
+      var t = await Geoprocessing.ExecuteToolAsync(tool1, args1,env,null,null,executeFlags);
+
+      IEnumerable<IGPHistoryItem> hisItems = Project.Current.GetProjectItemContainer(Geoprocessing.HistoryContainerKey) as IEnumerable<IGPHistoryItem>;        
+
+      String hitemID="";
+      String hitemToolPath="" ;
+      IGPResult hitemGPResult=null;
+      DateTime hitemTimeStamp;
+
+      foreach (var hitem in hisItems)
+      {
+          // common IGPHistoryItem and Item properties
+          hitemID = (hitem as Item).ID;
+          hitemToolPath = hitem.ToolPath;
+          hitemGPResult = hitem.GPResult;
+          hitemTimeStamp = hitem.TimeStamp;
+      }
+
+
+      #endregion	
+	  // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.ShowMessageBox	  
+	  // cref: ARCGIS.DESKTOP.CORE.Events.GPExecuteToolEvent	          
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
+      #region How to use Geoprocessing public event
+      ArcGIS.Desktop.Core.Events.GPExecuteToolEvent.Subscribe(e =>
+            {
+                string id = e.ID;                   // Same as history ID
+                if (e.IsStarting == false)  // Execute completed
+                    _ = e.GPResult.ReturnValue;
+                System.Windows.MessageBox.Show("event triggered.");
+            });
+      await Geoprocessing.ExecuteToolAsync("management.GetCount", Geoprocessing.MakeValueArray(@"c:\shape_file.shp"));
+
+      #endregion	
         }
+
+    #region ProSnippet Group: Parameter Value Array 
+    #endregion
+
+    public async void CodeExamples2()
+    {
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GPEXECUTETOOLFLAGS
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
+      // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
+      #region Add Geometry via MakeValueArray to GP Tool parameter lists
+
+      var tool_name = "analysis.Clip";
+      var extent = MapView.Active.Extent;
+      var sel_layer = MapView.Active.Map.GetLayersAsFlattenedList()
+                        .OfType<FeatureLayer>().FirstOrDefault(l => l.Name == "GreatLakes");
+      if (sel_layer == null) return;
+
+      var gdb = Project.Current.DefaultGeodatabasePath;
+      var out_fc = System.IO.Path.Combine(gdb, "clipped_lakes_out");
+
+      var val_array = await QueuedTask.Run(() =>
+      {
+
+        var rect = GeometryEngine.Instance.Scale(extent, extent.Center, 0.5, 0.5) as Envelope;
+        var clip_poly = PolygonBuilderEx.CreatePolygon(rect, rect.SpatialReference);
+
+        //Add the geometry to a list before calling MakeValueArray
+        //Envelope and Geometry types are supported
+        var geom = new List<object>() { clip_poly };
+        return Geoprocessing.MakeValueArray(new object[] { sel_layer, geom, out_fc });
+
+      });
+      Geoprocessing.ExecuteToolAsync(tool_name, val_array,
+        null, null, null, GPExecuteToolFlags.InheritGPOptions);
+
+      #endregion
+    }
 
     #region ProSnippet Group: Geoprocessing Options 
     #endregion
@@ -246,9 +412,5 @@ namespace ProSnippetsGeoprocessing
 
       #endregion
     }
-
-
   }
-
-
 }

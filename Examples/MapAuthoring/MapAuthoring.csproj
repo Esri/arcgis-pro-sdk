@@ -8,7 +8,7 @@
     <NoWarn>CA1416</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="6.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.IO.Ports" Version="6.0.0" />
   </ItemGroup>
@@ -82,4 +82,6 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <Import Project="C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets" Condition="Exists('C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
+
 </Project>

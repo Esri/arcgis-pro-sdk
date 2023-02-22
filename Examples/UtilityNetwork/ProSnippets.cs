@@ -197,7 +197,7 @@ namespace UtilityNetworkProSnippets {
     {
       // cref: ArcGIS.Desktop.Editing.RowToken
       // cref: ArcGIS.Desktop.Editing.RowHandle.#ctor(ArcGIS.Desktop.Editing.RowToken)
-      // cref: ArcGIS.Desktop.Editing.RowHandle.#ctor(ArcGIS.Core.Data.UtilityNetwork.AssociationType, ArcGIS.Desktop.Editing.RowHandle, ArcGIS.Desktop.Editing.RowHandle)
+      // cref: ArcGIS.Desktop.Editing.AssociationDescription.#ctor(ArcGIS.Core.Data.UtilityNetwork.AssociationType, ArcGIS.Desktop.Editing.RowHandle, ArcGIS.Desktop.Editing.RowHandle)
       // cref: ArcGIS.Desktop.Editing.AssociationDescription.#ctor
       #region Create utility network features and associations in a single edit operation
 
@@ -230,7 +230,7 @@ namespace UtilityNetworkProSnippets {
 
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraversalDirection
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsDescription.#ctor(ArcGIS.Core.Data.UtilityNetwork.TraversalDirection,System.Int32)
-    // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.TraverseAssociations(System.Collections.Generic.IReadOnlyList< ArcGIS.Core.Data.UtilityNetwork.Element>)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.TraverseAssociations(System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.UtilityNetwork.Element},ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsDescription)
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsResult
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsResult.Associations
     // cref: ArcGIS.Core.Data.UtilityNetwork.Association
@@ -250,7 +250,7 @@ namespace UtilityNetworkProSnippets {
 
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraversalDirection
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsDescription.#ctor(ArcGIS.Core.Data.UtilityNetwork.TraversalDirection,System.Int32)
-    // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.TraverseAssociations(System.Collections.Generic.IReadOnlyList< ArcGIS.Core.Data.UtilityNetwork.Element>)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.TraverseAssociations(System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.UtilityNetwork.Element},ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsDescription)
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsResult
     // cref: ArcGIS.Core.Data.UtilityNetwork.TraverseAssociationsResult.Associations
     // cref: ArcGIS.Core.Data.UtilityNetwork.Association
@@ -446,7 +446,7 @@ namespace UtilityNetworkProSnippets {
     void CreateTraceArgument()
     {
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument
-      // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument.#ctor(System.Collections.Generic.IReadOnlyList<ArcGIS.Core.Data.UtilityNetwork.Element> )
+      // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument.#ctor(System.Collections.Generic.IEnumerable<ArcGIS.Core.Data.UtilityNetwork.Element>)
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceConfiguration
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceConfiguration.#ctor()
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument.Configuration
@@ -696,9 +696,9 @@ namespace UtilityNetworkProSnippets {
     // cref: ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagrams()
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagram(System.String)
-    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagram(ArcGIS.Core.Geometry.Envelope)
-    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagram(System.Collections.Generic.IEnumerable<System.Guid>)
-    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagram(ArcGIS.Core.Geometry.Envelope, System.Collections.Generic.IEnumerable<System.Guid>)
+    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagrams(ArcGIS.Core.Geometry.Envelope)
+    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagrams(System.Collections.Generic.IEnumerable<System.Guid>)
+    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetNetworkDiagrams(ArcGIS.Core.Geometry.Envelope, System.Collections.Generic.IEnumerable<System.Guid>)
     public void GetDiagram(UtilityNetwork utilityNetwork, IEnumerable<Guid> globalIDs)
     {
       #region Get Network Diagrams
@@ -767,7 +767,7 @@ namespace UtilityNetworkProSnippets {
     {
       // cref: ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram
       // cref: ArcGIS.Desktop.Mapping.MapFactory.CreateMap(System.String,ArcGIS.Core.CIM.MapType,ArcGIS.Core.CIM.MapViewingMode,ArcGIS.Desktop.Mapping.Basemap)
-      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddDiagramLayer(ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddDiagramLayer(ArcGIS.Desktop.Mapping.Map, ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram)
       #region Open a diagram pane from a Network Diagram
 
       // Create a diagram layer from a NetworkDiagram (myDiagram)
@@ -836,7 +836,7 @@ namespace UtilityNetworkProSnippets {
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager.GetDiagramTemplates()
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramTemplate.GetNetworkDiagrams()
-    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramTemplate.GetNetworkDiagrams(System.String)
+    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramTemplate.GetNetworkDiagram(System.String)
     #region Get Network Diagrams from a Diagram Template
 
     public void GetNetworkDiagramFromDiagramTemplates(UtilityNetwork utilityNetwork)
@@ -875,7 +875,7 @@ namespace UtilityNetworkProSnippets {
 
     // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.GetDiagramManager
     // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramManager
-    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramTemplate.GetNetworkDiagrams(System.String)
+    // cref: ArcGIS.Core.Data.NetworkDiagrams.DiagramTemplate.GetNetworkDiagrams
     // cref: ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram
     // cref: ArcGIS.Core.Data.NetworkDiagrams.NetworkDiagram.GetContent(System.Boolean, System.Boolean, System.Boolean, System.Boolean)
     #region Get Network Diagram Information as JSON string

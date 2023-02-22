@@ -43,10 +43,10 @@ namespace ProSnippetsGeometry
 
         // Use a builder convenience method or use a builder constructor.
 
-        // Builder convenience methods don't need to run on the MCT.
+        // SpatialReferenceBuilder convenience methods don't need to run on the MCT.
         SpatialReference sr3857 = SpatialReferenceBuilder.CreateSpatialReference(3857);
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           using (SpatialReferenceBuilder srBuilder = new SpatialReferenceBuilder(3857))
@@ -70,10 +70,10 @@ namespace ProSnippetsGeometry
 
         string wkt = "GEOGCS[\"MyGCS84\",DATUM[\"D_WGS_1984\",SPHEROID[\"WGS_1984\",6378137.0,298.257223563]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Radian\",1.0]]";
 
-        // Builder convenience methods don't need to run on the MCT.
+        // SpatialReferenceBuilder convenience methods don't need to run on the MCT.
         SpatialReference sr = SpatialReferenceBuilder.CreateSpatialReference(wkt);
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           using (SpatialReferenceBuilder builder = new SpatialReferenceBuilder(wkt))
@@ -116,7 +116,7 @@ namespace ProSnippetsGeometry
         // 115700 = vertical WGS_1984
         SpatialReference sr4326_115700 = SpatialReferenceBuilder.CreateSpatialReference(4326, 115700);
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           using (SpatialReferenceBuilder sb = new SpatialReferenceBuilder(4326, 115700))
@@ -157,7 +157,7 @@ namespace ProSnippetsGeometry
         //   sr4326_customVertical.vert_wkt == custom_vWkt
         //   sr4326_customVertical.hasVcs == true
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           using (SpatialReferenceBuilder sb = new SpatialReferenceBuilder(4326, custom_vWkt))
@@ -197,7 +197,7 @@ namespace ProSnippetsGeometry
         // gcs.IsGeographic == true
         // spatialReference.GcsWkt == gcs.Wkt
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           using (SpatialReferenceBuilder sb = new SpatialReferenceBuilder(customWkt))
@@ -247,7 +247,7 @@ namespace ProSnippetsGeometry
         // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FalseM
         #region SpatialReference Properties
 
-        // Builder constructors need to run on the MCT.
+        // SpatialReferenceBuilder constructors need to run on the MCT.
         ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
         {
           // use the builder constructor
@@ -717,52 +717,161 @@ namespace ProSnippetsGeometry
     public void MapPoint()
     {
       {
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
-        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ToGeometry
         // cref: ArcGIS.Core.Geometry.Geometry.Clone
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
         #region Construct a MapPoint
 
         // Use a builder convenience method or use a builder constructor.
 
-        // create a 3d point with M
-        MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, 3.0, 4.0);
+        // Create a 2D point without a spatial reference
+        MapPoint point2D = MapPointBuilderEx.CreateMapPoint(1, 2);
+        SpatialReference sr = point2D.SpatialReference; // sr = null
+        bool hasZ = point2D.HasZ;   // hasZ = false
+        bool hasM = point2D.HasM;   // hasM = false
+        bool hasID = point2D.HasID; // hasID = false
+        double x = point2D.X;   // x = 1
+        double y = point2D.Y;   // y = 2
+        double z = point2D.Z;   // z = 0 default value
+        double m = point2D.M;   // m is NaN default value
+        double id = point2D.ID; // id = 0 default value
 
+        // Or use a builderEx which doesn't need to run on the MCT. 
+        MapPointBuilderEx builderEx = new MapPointBuilderEx(1, 2);
 
-        // builderEx constructors don't need to run on the MCT.
-        MapPointBuilderEx mb = new MapPointBuilderEx(1.0, 2.0, 3.0, 4.0);
         // do something with the builder
+        builderEx.Y = 3;
+        point2D = builderEx.ToGeometry();
+        sr = point2D.SpatialReference; // sr = null
+        hasZ = point2D.HasZ;   // hasZ = false
+        hasM = point2D.HasM;   // hasM = false
+        hasID = point2D.HasID; // hasID = false
+        x = point2D.X;   // x = 1
+        y = point2D.Y;   // y = 3
+        z = point2D.Z;   // z = 0 default value
+        m = point2D.M;   // m is NaN default value
+        id = point2D.ID; // id = 0 default value
 
-        MapPoint ptWithM = mb.ToGeometry();
+        // Create a 2D point with a spatial reference
+        SpatialReference spatialReference = SpatialReferenceBuilder.CreateSpatialReference(4269);
+        point2D = MapPointBuilderEx.CreateMapPoint(1, 2, spatialReference);
+        sr = point2D.SpatialReference; // sr != null
+        int wkid = sr.Wkid; // wkid = 4269
 
+        // Or use a builder
+        builderEx = new MapPointBuilderEx(1, 2, spatialReference);
 
-        MapPoint clone = ptWithM.Clone() as MapPoint;
-        MapPoint anotherM = MapPointBuilderEx.CreateMapPoint(ptWithM);
+        // Do something with the builder
+        builderEx.SetValues(3, 5);
+        point2D = builderEx.ToGeometry();
+        sr = point2D.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4269
+        x = point2D.X; // x = 3
+        y = point2D.Y; // y = 5
 
+        // Change the spatial reference of the builder
+        builderEx.SpatialReference = SpatialReferences.WGS84;
+        point2D = builderEx.ToGeometry();
+        sr = point2D.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4326
+        x = point2D.X; // x = 3
+        y = point2D.Y; // y = 5
 
-        MapPointBuilderEx builderEx = new MapPointBuilderEx(1.0, 2.0, 3.0);
-        builderEx.HasM = true;
-        builderEx.M = 4.0;
+        // Create a 3D point with M
+        MapPoint pointZM = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4);
+        sr = pointZM.SpatialReference; // sr = null
+        hasZ = pointZM.HasZ;   // hasZ = true
+        hasM = pointZM.HasM;   // hasM = true
+        hasID = pointZM.HasID; // hasID = false
+        x = pointZM.X;   // x = 1
+        y = pointZM.Y;   // y = 2
+        z = pointZM.Z;   // z = 3
+        m = pointZM.M;   // m = 4
+        id = pointZM.ID; // id = 0 default value
 
-        pt = builderEx.ToGeometry() as MapPoint;
+        // Create a 3D point with M and a spatial reference
+        pointZM = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, spatialReference);
+        sr = pointZM.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4269
 
+        // Create a point from another point in three ways
+        MapPoint clone = pointZM.Clone() as MapPoint; // Has the same values including the spatial reference as pointZM
+        MapPoint anotherZM = MapPointBuilderEx.CreateMapPoint(pointZM);  // Has the same values including the spatial reference as pointZM
+        
+        builderEx = new MapPointBuilderEx(pointZM); // Has the same values including the spatial reference as pointZM
+        // Do something with the builder
+        builderEx.HasM = false;
+        builderEx.ID = 7; // Setting the id also sets HasID = true
+        MapPoint pointZId = builderEx.ToGeometry();
+        sr = pointZId.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4269
+        hasZ = pointZId.HasZ;   // hasZ = true
+        hasM = pointZId.HasM;   // hasM = false
+        hasID = pointZId.HasID; // hasID = true
+        x = pointZId.X;   // x = 1
+        y = pointZId.Y;   // y = 2
+        z = pointZId.Z;   // z = 3
+        m = pointZId.M;   // m is NaN, default value
+        id = pointZId.ID; // id = 7
 
-        // or another alternative with builderEx constructor
-        builderEx = new MapPointBuilderEx(1.0, 2.0, true, 3.0, true, 4.0, false, 0);
-        pt = builderEx.ToGeometry() as MapPoint;
+        // Create a point with Z, M, and ID-values
+        MapPoint pointZMId = MapPointBuilderEx.CreateMapPoint(1, 2, 3, 4, 5, spatialReference);
+        sr = pointZMId.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4269
+        hasZ = pointZMId.HasZ;   // hasZ = true
+        hasM = pointZMId.HasM;   // hasM = true
+        hasID = pointZMId.HasID; // hasID = true
+        x = pointZMId.X;   // x = 1
+        y = pointZMId.Y;   // y = 2
+        z = pointZMId.Z;   // z = 3
+        m = pointZMId.M;   // m = 4
+        id = pointZMId.ID; // id = 5
 
+        // Pick and choose which attributes to include
+        MapPoint point = MapPointBuilderEx.CreateMapPoint(1, 2, false, 3, true, 4, true, 5);
+        sr = point.SpatialReference; // sr = null
+        hasZ = point.HasZ;   // hasZ = false
+        hasM = point.HasM;   // hasM = true
+        hasID = point.HasID; // hasID = true
+        x = point.X;   // x = 1
+        y = point.Y;   // y = 2
+        z = point.Z;   // z = 0, default value
+        m = point.M;   // m = 4
+        id = point.ID; // id = 5
 
-        // or use a builderEx convenience method
-        pt = MapPointBuilderEx.CreateMapPoint(1.0, 2.0, 3.0, 4.0);
+        // Or use a builder
+        builderEx = new(1, 2, true, 3, false, 4, true, 5);
+        // Do something with the builder
+        builderEx.ID = 7;
+        builderEx.SpatialReference = SpatialReferences.WGS84;
+        point = builderEx.ToGeometry();
+        sr = point.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 4326
+        hasZ = point.HasZ;   // hasZ = true
+        hasM = point.HasM;   // hasM = false
+        hasID = point.HasID; // hasID = true
+        x = point.X;   // x = 1
+        y = point.Y;   // y = 2
+        z = point.Z;   // z = 0, default value
+        m = point.M;   // m is NaN, default value
+        id = point.ID; // id = 7
 
         #endregion
       }
 
       {
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(System.Double,System.Double,System.Boolean,System.Double,System.Boolean,System.Double,System.Boolean,System.Int32,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasZ
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasM
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasID
@@ -781,89 +890,112 @@ namespace ProSnippetsGeometry
         // cref: ArcGIS.Core.Geometry.Geometry.HasID
         // cref: ArcGIS.Core.Geometry.MapPoint.IsEmpty
         // cref: ArcGIS.Core.Geometry.MapPoint.IsEqual
-        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(ArcGIS.Core.Geometry.MapPoint, ArcGIS.Core.Geometry.SpatialReference)
-        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint, ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.#ctor(ArcGIS.Core.Geometry.MapPoint)
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ID
         // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.IsEmpty
         // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasZ
         // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasM
         // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.HasID
         // cref: ArcGIS.Core.Geometry.GeometryBuilderEx.IsEmpty
+        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.SetValues(System.Double,System.Double)
         #region MapPoint Builder Properties
 
-        // Use a builderEx convenience method or a builderEx constructor.
-        //  neither need to run on the MCT.
+        // MapPointBuilderEx constructors can run on any thread.
 
         MapPoint point1 = null;
         MapPoint point2 = null;
 
-        MapPointBuilderEx mb = new MapPointBuilderEx(1.0, 2.0, 3.0);
-        bool bhasZ = mb.HasZ;          // hasZ = true
-        bool bhasM = mb.HasM;          // hasM = false
-        bool bhasID = mb.HasID;        // hasID = false
+        SpatialReference spatialReference = SpatialReferenceBuilder.CreateSpatialReference(54004);
+        
+        MapPointBuilderEx mapPointBuilder = new MapPointBuilderEx(100, 200, spatialReference);
+        SpatialReference sr = mapPointBuilder.SpatialReference; // sr != null
+        int wkid = sr.Wkid; // wkid = 54004
+        bool hasZ = mapPointBuilder.HasZ;   // hasZ = false
+        bool hasM = mapPointBuilder.HasM;   // hasM = false
+        bool hasID = mapPointBuilder.HasID; // hasID = false
+        bool isEmpty = mapPointBuilder.IsEmpty; // isEmpty = false
+        double x = mapPointBuilder.X;   // x = 100
+        double y = mapPointBuilder.Y;   // y = 200
+        double z = mapPointBuilder.Z;   // z = 0, default value
+        double m = mapPointBuilder.M;   // m is NaN, default value
+        double id = mapPointBuilder.ID; // id = 0, default value
 
-        // do something with the builder
+        // Do something with the builder
+        mapPointBuilder.Z = 12; // Setting the z-value automatically sets HasZ property to true
 
-        point1 = mb.ToGeometry();
+        point1 = mapPointBuilder.ToGeometry();
+        sr = point1.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 54004
+        hasZ = point1.HasZ;   // hasZ = true
+        hasM = point1.HasM;   // hasM = false
+        hasID = point1.HasID; // hasID = false
+        x = point1.X;   // x = 100
+        y = point1.Y;   // y = 200
+        z = point1.Z;   // z = 12
+        m = point1.M;   // m is NaN, default value
+        id = point1.ID; // id = 0, default value
 
-        // change some of the builder properties
-        mb.X = 11;
-        mb.Y = 22;
-        mb.HasZ = false;
-        mb.HasM = true;
-        mb.M = 44;
-        // create another point
-        point2 = mb.ToGeometry();
+        // Change some of the builder properties
+        mapPointBuilder.SetValues(11, 22);
+        mapPointBuilder.HasZ = false;
+        mapPointBuilder.HasM = true;
+        mapPointBuilder.M = 44;
+        
+        // Create another point
+        point2 = mapPointBuilder.ToGeometry();
 
-        double x = point1.X;                  // x = 1.0
-        double y = point1.Y;                  // y = 2.0
-        double z = point1.Z;                  // z = 3.0
-        double m = point1.M;                  // m = Nan
-        int ID = point1.ID;                   // ID = 0
-        bool hasZ = point1.HasZ;              // hasZ = true
-        bool hasM = point1.HasM;              // hasM = false
-        bool hasID = point1.HasID;            // hasID = false
-        bool isEmpty = point1.IsEmpty;        // isEmpty = false
+        bool isEqual = point1.IsEqual(point2); // isEqual = false
 
-        bool isEqual = point1.IsEqual(point2);    // isEqual = false
+        // Set the builder to empty
+        // Sets X and Y to NaN. Sets other attributes to the default values.
+        // Does not change the attribute awareness.
+        mapPointBuilder.SetEmpty();
 
+        MapPoint point3 = mapPointBuilder.ToGeometry();
+        sr = point3.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 54004
+        hasZ = point3.HasZ;        // hasZ = false
+        hasM = point3.HasM;        // hasM = true
+        hasID = point3.HasID;      // hasID = false
+        isEmpty = point3.IsEmpty;  // isEmpty = true
+        x = point3.X;              // x is NaN
+        y = point3.Y;              // y is NaN
+        z = point3.Z;              // z = 0, default value
+        m = point3.M;              // m is NaN, default value
+        id = point3.ID;            // ID = 0, default value
 
-        // BuilderEx convenience methods 
-        MapPoint point3 = MapPointBuilderEx.CreateMapPoint(point1);
-        x = point3.X;                   // x = 1.0
-        y = point3.Y;                   // y = 2.0
-        z = point3.Z;                   // z = 3.0
-        m = point3.M;                   // m = Nan
-        ID = point3.ID;                 // ID = 0
-        hasZ = point3.HasZ;             // hasZ = true
-        hasM = point3.HasM;             // hasM = false
-        hasID = point3.HasID;           // hasID = false
+        // Create a builder from a point
+        mapPointBuilder = new MapPointBuilderEx(point2); // point1 = (11, 22, 0, 44, 0)
+        sr = mapPointBuilder.SpatialReference; // sr != null
+        wkid = sr.Wkid; // wkid = 54004
+        hasZ = mapPointBuilder.HasZ;        // hasZ = false
+        hasM = mapPointBuilder.HasM;        // hasM = true
+        hasID = mapPointBuilder.HasID;      // hasID = false
+        isEmpty = mapPointBuilder.IsEmpty;  // isEmpty = false
+        x = mapPointBuilder.X;              // x = 11
+        y = mapPointBuilder.Y;              // y = 22
+        z = mapPointBuilder.Z;              // z = 0, default value
+        m = mapPointBuilder.M;              // m = 44
+        id = mapPointBuilder.ID;            // ID = 0, default value
 
+        // Setting attribute values automatically sets the corresponding flag to true
+        mapPointBuilder.Z = 150;
+        mapPointBuilder.ID = 2;
 
-        MapPointBuilderEx builderEx = new MapPointBuilderEx(point1);
-        x = builderEx.X;              // x = 1.0
-        y = builderEx.Y;              // y = 2.0
-        z = builderEx.Z;              // z = 3.0
-        m = builderEx.M;              // m = Nan
-        ID = builderEx.ID;            // ID = 0
-        hasZ = builderEx.HasZ;        // hasZ = true
-        hasM = builderEx.HasM;        // hasM = false
-        hasID = builderEx.HasID;      // hasID = false
-        isEmpty = builderEx.IsEmpty;     // isEmpty = false
-
-        MapPoint point4 = builderEx.ToGeometry() as MapPoint;
-
-
-        MapPoint point5 = MapPointBuilderEx.CreateMapPoint(point1);
-        x = point5.X;              // x = 1.0
-        y = point5.Y;              // y = 2.0
-        z = point5.Z;              // z = 3.0
-        m = point5.M;              // m = Nan
-        ID = point5.ID;            // ID = 0
-        hasZ = point5.HasZ;        // hasZ = true
-        hasM = point5.HasM;        // hasM = false
-        hasID = point5.HasID;      // hasID = false
-        isEmpty = point5.IsEmpty;     // isEmpty = false
+        // Remove the spatial reference
+        mapPointBuilder.SpatialReference = null;
+        
+        MapPoint point4 = mapPointBuilder.ToGeometry() as MapPoint;
+        sr = point3.SpatialReference; // sr = null
+        hasZ = point3.HasZ;        // hasZ = true
+        hasM = point3.HasM;        // hasM = true
+        hasID = point3.HasID;      // hasID = true
+        isEmpty = point3.IsEmpty;  // isEmpty = false
+        x = point3.X;              // x = 11
+        y = point3.Y;              // y = 22
+        z = point3.Z;              // z = 150
+        m = point3.M;              // m = 44
+        id = point3.ID;            // ID = 2
 
         #endregion
       }
@@ -939,7 +1071,6 @@ namespace ProSnippetsGeometry
     public void Polyline()
     {
       {
-        // cref: ArcGIS.Core.Geometry.MapPointBuilderEx.CreateMapPoint(System.Double,System.Double,ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
@@ -952,9 +1083,7 @@ namespace ProSnippetsGeometry
         MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
         MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
-        List<MapPoint> list = new List<MapPoint>();
-        list.Add(startPt);
-        list.Add(endPt);
+        List<MapPoint> list = new List<MapPoint>() { startPt, endPt };
 
         Polyline polyline = PolylineBuilderEx.CreatePolyline(list, SpatialReferences.WGS84);
 
@@ -963,7 +1092,7 @@ namespace ProSnippetsGeometry
         pb.SpatialReference = SpatialReferences.WGS84;
         Polyline polyline2 = pb.ToGeometry();
 
-        //     use AttributeFlags.NoAttributes because we only have 2d points in the list
+        // Use AttributeFlags.NoAttributes because we only have 2d points in the list
         Polyline polyline4 = PolylineBuilderEx.CreatePolyline(list, AttributeFlags.None);
 
         #endregion
@@ -1270,17 +1399,15 @@ namespace ProSnippetsGeometry
 
     public void SplitPolyline()
     {
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.SplitAtDistance(System.Double,System.Boolean,System.Boolean)
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.SplitPartAtDistance(System.Int32,System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.SplitAtDistance(System.Double,System.Boolean,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.SplitPartAtDistance(System.Int32,System.Double,System.Boolean,System.Boolean)
       #region Split Polyline at distance
 
       // create list of points
       MapPoint startPt = MapPointBuilderEx.CreateMapPoint(1.0, 1.0);
       MapPoint endPt = MapPointBuilderEx.CreateMapPoint(2.0, 1.0);
 
-      List<MapPoint> list = new List<MapPoint>();
-      list.Add(startPt);
-      list.Add(endPt);
+      List<MapPoint> list = new List<MapPoint>() { startPt, endPt };
 
       // BuilderEx constructors don't need to run on the MCT.
 
@@ -1290,29 +1417,26 @@ namespace ProSnippetsGeometry
       // split at a distance 0.75
       polylineBuilder.SplitAtDistance(0.75, false);
       // get the polyline
-      Polyline p = polylineBuilder.ToGeometry();
-      // polyline p should have 3 points  (1,1), (1.75, 1), (2,1)
+      Polyline polyline = polylineBuilder.ToGeometry();
+      // polyline should have 3 points  (1,1), (1.75, 1), (2,1)
 
       // add another path
       MapPoint p1 = MapPointBuilderEx.CreateMapPoint(4.0, 1.0);
       MapPoint p2 = MapPointBuilderEx.CreateMapPoint(6.0, 1.0);
       MapPoint p3 = MapPointBuilderEx.CreateMapPoint(7.0, 1.0);
-      List<MapPoint> pts = new List<MapPoint>();
-      pts.Add(p1);
-      pts.Add(p2);
-      pts.Add(p3);
+      List<MapPoint> pts = new List<MapPoint>() { p1, p2, p3 };
 
       polylineBuilder.AddPart(pts);
-      p = polylineBuilder.ToGeometry();
+      polyline = polylineBuilder.ToGeometry();
 
-      // polyline p has 2 parts.  Each part has 3 points
+      // polyline has 2 parts. Each part has 3 points
 
-      // split the 2nd path half way - dont create a new path
+      // split the 2nd path half way - don't create a new path
       polylineBuilder.SplitPartAtDistance(1, 0.5, true, false);
 
-      p = polylineBuilder.ToGeometry();
+      polyline = polylineBuilder.ToGeometry();
 
-      // polyline p still has 2 parts; but now has 7 points 
+      // polyline still has 2 parts; but now has 7 points 
 
       #endregion
     }
@@ -1630,8 +1754,7 @@ namespace ProSnippetsGeometry
 
       bool isEqual = env1.IsEqual(env2);    // false
 
-
-      // or use the builderEx constructors = don't need to run on the MCT.
+      // or use the builderEx constructors which don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(0, 0, 1, 1, SpatialReferences.WGS84);
       builderEx.Union(env2);      // builder is updated to the result
 
@@ -1666,7 +1789,7 @@ namespace ProSnippetsGeometry
       Envelope env3 = env1.Intersection(env2);
 
 
-      // or use the builderEx constructors = don't need to run on the MCT.
+      // or use the builderEx constructors which don't need to run on the MCT.
       EnvelopeBuilderEx builderEx = new EnvelopeBuilderEx(0, 0, 1, 1, SpatialReferences.WGS84);
       intersects = builderEx.Intersects(env2);
       builderEx.Intersection(env2);   // note this sets the builder to the intersection
@@ -1801,13 +1924,13 @@ namespace ProSnippetsGeometry
       list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 2.0));
       list.Add(MapPointBuilderEx.CreateMapPoint(2.0, 1.0));
 
-      // use the builderEx constructors - don't need to run on the MCT.
-      //  use AttributeFlags.NoAttributes - we have 2d points in the list
+      // use the builderEx constructors which don't need to run on the MCT.
+      // use AttributeFlags.NoAttributes since we have 2d points in the list
       MultipointBuilderEx builderEx = new MultipointBuilderEx(list, AttributeFlags.None);
       Multipoint multiPoint = builderEx.ToGeometry() as Multipoint;
       int ptCount = builderEx.PointCount;
 
-      // builderEx convenience methods dont need to run on the MCT
+      // builderEx convenience methods don't need to run on the MCT
       multiPoint = MultipointBuilderEx.CreateMultipoint(list);
       // multiPoint.HasZ, HasM, HasID will be false - the attributes are determined 
       //    based on the attribute state of the points in the list
@@ -1946,7 +2069,7 @@ namespace ProSnippetsGeometry
       // assume a multiPoint has been built from 4 points
       // the modified multiPoint will have the first point removed and the last point moved
 
-      // use the builderEx constructors = don't need to run on the MCT.
+      // use the builderEx constructors which don't need to run on the MCT.
       MultipointBuilderEx builderEx = new MultipointBuilderEx(multipoint);
       // remove the first point
       builderEx.RemovePoint(0);
@@ -2084,7 +2207,7 @@ namespace ProSnippetsGeometry
       bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
 
 
-      // builderEx constructors dont need to run on the MCT
+      // builderEx constructors don't need to run on the MCT
       CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt, ctrl2Pt, endPt);
       bezier = cbbEx.ToSegment() as CubicBezierSegment;
 
@@ -2114,7 +2237,7 @@ namespace ProSnippetsGeometry
       // BuilderEx convenience methods don't need to run on the MCT
       CubicBezierSegment bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(startPt, ctrl1Pt, ctrl2Pt, endPt);
 
-      // builderEx constructors dont need to run on the MCT
+      // builderEx constructors don't need to run on the MCT
       CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(startPt, ctrl1Pt, ctrl2Pt, endPt);
       bezier = cbbEx.ToSegment() as CubicBezierSegment;
 
@@ -2145,7 +2268,7 @@ namespace ProSnippetsGeometry
       // BuilderEx convenience methods don't need to run on the MCT
       CubicBezierSegment bezier = CubicBezierBuilderEx.CreateCubicBezierSegment(listMapPoints);
 
-      // builderEx constructors dont need to run on the MCT
+      // builderEx constructors don't need to run on the MCT
       CubicBezierBuilderEx cbbEx = new CubicBezierBuilderEx(listMapPoints);
       bezier = cbbEx.ToSegment() as CubicBezierSegment;
 
@@ -2229,7 +2352,7 @@ namespace ProSnippetsGeometry
       // BuilderEx convenience methods don't need to run on the MCT.
       EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, toPt, interiorPt);
 
-      // BuilderEx constructors dont need to run on the MCT.
+      // BuilderEx constructors don't need to run on the MCT.
       EllipticArcBuilderEx eab = new EllipticArcBuilderEx(fromPt, toPt, interiorPt);
       // do something with the builder
 
@@ -2256,10 +2379,10 @@ namespace ProSnippetsGeometry
       ArcOrientation orientation = ArcOrientation.ArcCounterClockwise;
       MinorOrMajor minorOrMajor = MinorOrMajor.Minor;
 
-      // BuildeExr convenience methods don't need to run on the MCT.
+      // BuildeEx convenience methods don't need to run on the MCT.
       EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor);
 
-      // BuilderEx constructors need to run on the MCT.
+      // BuilderEx constructors don't need to run on the MCT either.
       EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromPt, chordLength, chordBearing, radius, orientation, minorOrMajor);
       // do something with the builder
 
@@ -2288,7 +2411,7 @@ namespace ProSnippetsGeometry
       // BuilderEx convenience methods don't need to run on the MCT.
       EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(fromAngle, centralAngle, centerPt, radius, sr4326);
 
-      // BuilderEx constructors dont need to run on the MCT.
+      // BuilderEx constructors don't need to run on the MCT.
       EllipticArcBuilderEx cab = new EllipticArcBuilderEx(fromAngle, centralAngle, centerPt, radius, sr4326);
       EllipticArcSegment otherCircularArc = cab.ToSegment();
 
@@ -2316,7 +2439,7 @@ namespace ProSnippetsGeometry
       circularArc.GetAxes(out semiMajor, out semiMinor);
       // semiMajor = 1, semiMinor = 0.5
 
-      // BuilderEx constructors dont need to run on the MCT.
+      // BuilderEx constructors don't need to run on the MCT.
       EllipticArcBuilderEx cab = new EllipticArcBuilderEx(centerPt, 0, Math.PI / 2, 0, 1, 0.5);
       cab.GetAxes(out semiMajor, out semiMinor);
       EllipticArcSegment otherCircularArc = cab.ToSegment();
@@ -2375,7 +2498,7 @@ namespace ProSnippetsGeometry
       EllipticArcSegment circularArc = EllipticArcBuilderEx.CreateCircularArc(
                           segment1, segment2, maxRadius, hintPoint);
 
-      // BuilderEx constructors need to run on the MCT.
+      // This EllipticArcBuilderEx constructor needs to run on the MCT either.
       EllipticArcBuilderEx cab = new EllipticArcBuilderEx(segment1, segment2, maxRadius, hintPoint);
       EllipticArcSegment otherCircularArc = cab.ToSegment();
 
@@ -2412,7 +2535,7 @@ namespace ProSnippetsGeometry
       // rotationAngle = 0
       // endAngle = PI/2
 
-      // BuilderEx constructors need to run on the MCT.
+      // This EllipticArcBuilderEx constructor doesn't need to run on the MCT.
       EllipticArcBuilderEx builder = new EllipticArcBuilderEx(centerPtCoord, 2, ArcOrientation.ArcClockwise);
       EllipticArcSegment otherCircle = builder.ToSegment();
 
@@ -2434,7 +2557,7 @@ namespace ProSnippetsGeometry
       // BuilderEx convenience methods don't need to run on the MCT.
       EllipticArcSegment ellipse = EllipticArcBuilderEx.CreateEllipse(centerPt, -1 * Math.PI / 6, 5, 0.2, ArcOrientation.ArcClockwise);
 
-      // BuilderEx constructors need to run on the MCT.
+      // This EllipticArcBuilderEx constructor doesn't need to run on the MCT.
       EllipticArcBuilderEx builder = new EllipticArcBuilderEx(centerPt, -1 * Math.PI / 6, 5, 0.2, ArcOrientation.ArcClockwise);
       EllipticArcSegment anotherEllipse = builder.ToSegment();
 
@@ -3289,7 +3412,6 @@ namespace ProSnippetsGeometry
 
     // <summary>
     // This method gets the normal coordinate of a multipatch and does something with it.
-    // This method must be called on the MCT. Use QueuedTask.Run.
     // </summary>
     // <param name="multipatch">The input multipatch.</param>
     // <param name="patchIndex">The index of the patch (part) for which to get the normal.</param>
@@ -3466,11 +3588,9 @@ namespace ProSnippetsGeometry
 
     /// <summary>
     /// The methods retrieves the outer ring(s) of the input polygon.
-    /// This method must be called on the MCT. Use QueuedTask.Run.
     /// </summary>
     /// <param name="inputPolygon">Input Polygon.</param>
     /// <returns>The outer most (exterior, clockwise) ring(s) of the polygon. If the input is null or empty, a null pointer is returned.</returns>
-    /// <remarks>This method must be called on the MCT. Use QueuedTask.Run.</remarks>
     public Polygon GetOutermostRings(Polygon inputPolygon)
     {
       if (inputPolygon == null || inputPolygon.IsEmpty)

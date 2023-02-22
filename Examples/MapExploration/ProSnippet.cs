@@ -43,6 +43,7 @@ namespace Snippets
   {
 
     #region ProSnippet Group: MapView
+    #endregion
 
     // cref: ArcGIS.Desktop.Mapping.MapView.ViewingMode
     // cref: ArcGIS.Core.CIM.MapViewingMode
@@ -592,7 +593,6 @@ namespace Snippets
 
     #endregion
 
-    #endregion
 
     private static void ClearSelectionMap()
     {
@@ -637,8 +637,8 @@ namespace Snippets
     {
       // cref: ArcGIS.Desktop.Mapping.MapViewOverlayControl
       // cref: ArcGIS.Desktop.Mapping.MapViewOverlayControl.#ctor(System.Windows.FrameworkElement, System.Boolean, System.Boolean, System.Boolean, ArcGIS.Desktop.Mapping.OverlayControlRelativePosition, System.Double, System.Double)
-      // cref: ArcGIS.Desktop.Mapping.MapView.AddOverlayControl(MapViewOverlayControl)
-      // cref: ArcGIS.Desktop.Mapping.MapView.RemoveOverlayControl(MapViewOverlayControl)
+      // cref: ArcGIS.Desktop.Mapping.MapView.AddOverlayControl(IMapViewOverlayControl)
+      // cref: ArcGIS.Desktop.Mapping.MapView.RemoveOverlayControl(IMapViewOverlayControl)
       #region MapView Overlay Control
       //Creat a Progress Bar user control
       var progressBarControl = new System.Windows.Controls.ProgressBar();
@@ -792,6 +792,709 @@ namespace Snippets
       #endregion
     }
 
+    #region ProSnippet Group: TableView
+    #endregion
+
+    public void SetViewingModelTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetViewMode(TableViewMode)
+      // cref: ArcGIS.Desktop.Mapping.TableViewMode
+      // cref: ArcGIS.Desktop.Mapping.TableViewMode.eSelectedRecords
+      // cref: ArcGIS.Desktop.Mapping.TableViewMode.eAllRecords
+      #region Set Table ViewingMode
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // change to "selected record" mode
+      tableView.SetViewMode(TableViewMode.eSelectedRecords);
+      #endregion
+    }
+
+    public void SetZoomLevelTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetZoomLevel(System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.TableView.ZoomLevel
+      #region Set ZoomLevel
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // change zoom level
+      if (tableView.ZoomLevel > 100)
+        tableView.SetZoomLevel(100);
+      else
+        tableView.SetZoomLevel(200);
+
+      #endregion
+    }
+
+    public void AliasTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ShowFieldAlias
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanToggleFieldAlias
+      // cref: ArcGIS.Desktop.Mapping.TableView.ToggleFieldAlias()
+      #region Toggle Field Alias
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+
+      // set the value
+      tableView.ShowFieldAlias = true;
+
+      // OR toggle it
+      if (tableView.CanToggleFieldAlias)
+        tableView.ToggleFieldAlias();
+
+      #endregion
+    }
+
+    public void DomainDescTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ShowSubtypeDomainDescriptions
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanToggleSubtypeDomainDescriptions
+      // cref: ArcGIS.Desktop.Mapping.TableView.ToggleSubtypeDomainDescriptionsAsync()
+      #region Toggle Subtype Descriptions
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+
+      // set the value
+      tableView.ShowSubtypeDomainDescriptions = true;
+
+      // OR toggle it
+      if (tableView.CanToggleSubtypeDomainDescriptions)
+        tableView.ToggleSubtypeDomainDescriptionsAsync();
+
+      #endregion
+    }
+
+    public void GetAtiveRowIndexTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ActiveRowIndex
+      #region Get the active row 
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // get the active rowindex
+      int rowIndex = tableView.ActiveRowIndex;
+
+      #endregion
+    }
+
+    public async void ChangeActiveRowIndexTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ActiveRowIndex
+      // cref: ArcGIS.Desktop.Mapping.TableView.BringIntoView(System.Int32,System.Int32)
+      #region Change the active row 
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // get the active rowindex
+      int rowIndex = tableView.ActiveRowIndex;
+
+      // move to a different row
+      var newIndex = 10 + rowIndex;
+      await tableView.BringIntoView(newIndex);
+
+      #endregion
+    }
+
+    public void GetActiveOIDTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ActiveObjectId
+      #region Get the active object ID
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // get the active objectID
+      long? OID = tableView.ActiveObjectId;
+
+      #endregion
+    }
+
+    public async void ConvertBetweenRowAndObjectIDTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ActiveRoWindex
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetObjectIdAsync(System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetRowIndexAsync(System.Int64, System.Boolean)
+      #region Translate between rowIndex and objectID
+
+      //Get the active table view.
+      var tableView = TableView.Active;
+      if (tableView == null)
+        return;
+
+      // get the active rowindex
+      int rowIndex = tableView.ActiveRowIndex;
+      // increase
+      int newIndex = rowIndex + 10;
+      // get the objectID
+      long newOID = await tableView.GetObjectIdAsync(newIndex);
+
+      // get the rowIndex for a specific objectID
+      //   2nd parameter indicates if the search only occurs for the pages loaded
+      //   if pass false, then in the worst case, a full table scan will occur to 
+      //    find the objectID.
+      long OID = 100;
+      var idx = await tableView.GetRowIndexAsync(OID, true);
+
+      #endregion
+    }
+
+    public void GetSelectionTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetSelectedObjectIds
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetSelectedRowIndexes
+      #region Get selected rows  or row indexes
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      QueuedTask.Run(async () =>
+      {
+        // get the set of selected objectIDs 
+        var selOids = tv.GetSelectedObjectIds();
+        // get the set of selected row indexes
+        var selRows = tv.GetSelectedRowIndexes();
+
+      });
+      #endregion
+    }
+
+    public void SetSelectionTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.Select(IEnumerable<<System.Int64>, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetSelectedRowIndexes
+      #region Change selected rows 
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      QueuedTask.Run(async () =>
+      {
+        // set of selected OIDS
+        var newoids = new List<long>();
+        newoids.AddRange(new List<long>() { 10, 15, 17 });
+        tv.Select(newoids, true);
+
+
+        // add to set of selected row indexes
+        var selRows = tv.GetSelectedRowIndexes();
+        var newRows = new List<long>(selRows);
+        newRows.AddRange(new List<long>() { 21, 35 });
+        tv.Select(newRows, false);
+      });
+      #endregion
+    }
+
+    public void SelectAllTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanSelectAll
+      // cref: ArcGIS.Desktop.Mapping.TableView.SelectAll()
+      #region Select all rows
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanSelectAll)
+        tv.SelectAll();
+      #endregion
+    }
+
+    public void OtherSelectionTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanToggleRowSelection
+      // cref: ArcGIS.Desktop.Mapping.TableView.ToggleRowSelection()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanSwitchSelection
+      // cref: ArcGIS.Desktop.Mapping.TableView.SwitchSelection()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanClearSelection
+      // cref: ArcGIS.Desktop.Mapping.TableView.ClearSelection()
+      #region Toggle, Switch, Clear Selection
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // toggle the active rows selection
+      if (tv.CanToggleRowSelection)
+        tv.ToggleRowSelection();
+
+      // switch the selection
+      if (tv.CanSwitchSelection)
+        tv.SwitchSelection();
+
+      // clear the selection
+      if (tv.CanClearSelection)
+        tv.ClearSelection();
+      #endregion
+    }
+
+    public void ZoomSelectedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanZoomToSelected
+      // cref: ArcGIS.Desktop.Mapping.TableView.ZoomToSelected()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanPanToSelected
+      // cref: ArcGIS.Desktop.Mapping.TableView.PanToSelected()
+      #region Zoom or Pan To Selected Rows
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanZoomToSelected)
+        tv.ZoomToSelected();
+
+      if (tv.CanPanToSelected)
+        tv.PanToSelected();
+      #endregion
+    }
+
+    public void DeleteSelectedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanDeleteSelected
+      // cref: ArcGIS.Desktop.Mapping.TableView.DeleteSelected()
+      #region Delete Selected Rows
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanDeleteSelected)
+        tv.DeleteSelected(); 
+
+      #endregion
+    }
+
+    public void GetHighlightTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanGetHighlightedObjectIds
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetHighlightedObjectIds
+      #region Get highlighted row indexes
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      QueuedTask.Run(async () =>
+      {
+        IReadOnlyList<long> highlightedOIDs = null;
+        if (tv.CanGetHighlightedObjectIds)
+          // get the set of selected objectIDs 
+          highlightedOIDs = tv.GetHighlightedObjectIds();
+      });
+      #endregion
+    }
+
+    public void SetHighlightedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanHighlight
+      // cref: ArcGIS.Desktop.Mapping.TableView.Highlight(IEnumerable<<System.Int64>, System.Boolean)
+      #region Change highlighted rows 
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      QueuedTask.Run(() =>
+      {
+        // get list of current selected objectIDs
+        var selectedObjectIds = tv.GetSelectedObjectIds();
+        var idsToHighlight = new List<long>();
+
+        // add the first two selected objectIds to highlight
+        if (selectedObjectIds.Count >= 2)
+        {
+          idsToHighlight.Add(selectedObjectIds[0]);
+          idsToHighlight.Add(selectedObjectIds[1]);
+        }
+
+        // highlight
+        if (tv.CanHighlight)
+          tv.Highlight(idsToHighlight, true);
+      });
+      #endregion
+    }
+
+    public void OtherHighlightedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanToggleRowHighlight
+      // cref: ArcGIS.Desktop.Mapping.TableView.ToggleRowHighlight()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanSwitchHighlight
+      // cref: ArcGIS.Desktop.Mapping.TableView.SwitchHighlight()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanClearHighlighted
+      // cref: ArcGIS.Desktop.Mapping.TableView.ClearHighlighted()
+      #region Toggle, Switch, Clear Highlights
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // toggle the active rows selection
+      if (tv.CanToggleRowHighlight)
+        tv.ToggleRowHighlight();
+
+      // switch highlighted rows
+      if (tv.CanSwitchHighlight)
+        tv.SwitchHighlight();
+
+      // clear the highlights
+      if (tv.CanClearHighlighted)
+        tv.ClearHighlighted();
+      #endregion
+    }
+
+    public void ZoomHighlightedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanZoomToHighlighted
+      // cref: ArcGIS.Desktop.Mapping.TableView.ZoomToHighlighted()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanPanToHighlighted
+      // cref: ArcGIS.Desktop.Mapping.TableView.PanToHighlighted()
+      #region Zoom or Pan To Highlighted Rows
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanZoomToHighlighted)
+        tv.ZoomToHighlighted();
+
+      if (tv.CanPanToHighlighted)
+        tv.PanToHighlighted();
+      #endregion
+    }
+
+    public void DeleteHighlightedTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanDeleteHighlighted
+      // cref: ArcGIS.Desktop.Mapping.TableView.DeleteHighlighted()
+      #region Delete Highlighted Rows
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanDeleteHighlighted)
+        tv.DeleteHighlighted();
+
+      #endregion
+    }
+
+    public void FieldsTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetFields()
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetFieldIndex(System.String)
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetField(System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.FieldDescription
+      #region Field Access
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // field access
+      var flds = tv.GetFields();
+      var fldIdx = tv.GetFieldIndex("STATE_NAME");
+      var fldDesc = tv.GetField(fldIdx);
+
+      #endregion
+    }
+
+    public void ActiveFielTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.ActiveFieldIndex
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetField(System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetActiveField(System.String)
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetActiveField(System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.FieldDescription
+      #region Get or set the Active Field
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // get active field, active field name
+      var activeFieldIdx = tv.ActiveFieldIndex;
+      var fldDesc = tv.GetField(activeFieldIdx);
+      var fldName = fldDesc.Name;
+
+      // set active field by name
+      tv.SetActiveField("STATE_NAME");
+
+      // or set active field by index
+      tv.SetActiveField(3);
+      #endregion
+    }
+
+    public void SelectFieldTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetSelectedFields
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetSelectedFields(List<string>)
+      #region Select Fields
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // get selected fields
+      var selectedfields = tv.GetSelectedFields();
+
+      // set selected fields
+      tv.SetSelectedFields(new List<string> { "CITY_FIPS", "STATE_FIPS" });
+
+      #endregion
+    }
+
+    public async void SetfieldOrderTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanResetFieldOrder()
+      // cref: ArcGIS.Desktop.Mapping.TableView.ResetFieldOrder()
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetFieldOrderAsync(List<string>)
+      #region Set Field Order 
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      if (tv.CanResetFieldOrder)
+      {
+        tv.ResetFieldOrder();
+
+        var fldOrder = new List<string>();
+        fldOrder.Add("STATE_NAME");
+        fldOrder.Add("STATE_FIPS");
+        await tv.SetFieldOrderAsync(fldOrder);
+      }
+
+      #endregion
+    }
+
+    public void HideFieldsTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetHiddenFields()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanShowAllFields
+      // cref: ArcGIS.Desktop.Mapping.TableView.ShowAllFields()
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetHiddenFields(List<string>)
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanHideSelectedFields
+      // cref: ArcGIS.Desktop.Mapping.TableView.HideSelectedFields()
+      #region Show or Hide Fields
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // get list of hidden fields
+      var hiddenFields = tv.GetHiddenFields();
+
+
+      // show all fields
+      if (tv.CanShowAllFields)
+        tv.ShowAllFields();
+
+
+
+      // hide only "CITY_FIPS", "STATE_FIPS"
+      if (tv.CanShowAllFields)
+      {
+        // show all fields
+        tv.ShowAllFields();
+        tv.SetHiddenFields(new List<string> { "CITY_FIPS", "STATE_FIPS" });
+      }
+
+
+
+      // add "STATE_NAME to set of hidden fields
+      tv.SetHiddenFields(new List<string> { "STATE_NAME" });
+
+
+      // hide selected fields
+      if (tv.CanHideSelectedFields)
+        tv.HideSelectedFields();
+      #endregion
+    }
+
+    public async void FreezeFieldsTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.GetFrozenFields()
+      // cref: ArcGIS.Desktop.Mapping.TableView.ClearAllFrozenFieldsAsync()
+      // cref: ArcGIS.Desktop.Mapping.TableView.SetFrozenFieldsAsync(List<string>)
+      #region Freeze Fields
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // get list of frozen fields
+      var frozenfields = tv.GetFrozenFields();
+
+      // un freeze all fields
+      await tv.ClearAllFrozenFieldsAsync();
+
+
+      // freeze a set of fields
+      await tv.SetFrozenFieldsAsync(new List<string> { "CITY_FIPS", "STATE_FIPS" });
+
+      #endregion
+    }
+
+    public async void SortTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanSortDescending
+      // cref: ArcGIS.Desktop.Mapping.TableView.SortDescending()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanSortAscending
+      // cref: ArcGIS.Desktop.Mapping.TableView.SortAscending()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanCustomSort
+      // cref: ArcGIS.Desktop.Mapping.TableView.CustomSort()
+      // cref: ArcGIS.Desktop.Mapping.TableView.SortAsync
+      #region Sort 
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // sort the active field descending
+      if (tv.CanSortDescending)
+        tv.SortDescending();
+
+
+      // sort the active field ascending
+      if (tv.CanSortAscending)
+        tv.SortAscending();
+
+
+      // peform a custom sort programmatically
+      if (tv.CanCustomSort)
+      {
+        // sort fields
+        var dict = new Dictionary<string, FieldSortInfo>();
+        dict.Add("STATE_NAME", FieldSortInfo.Asc);
+        dict.Add("CITY_NAME", FieldSortInfo.Desc);
+        await tv.SortAsync(dict);
+      }
+
+
+      // perform a custom sort via the UI
+      if (tv.CanCustomSort)
+        tv.CustomSort();
+      #endregion
+    }
+
+
+    public void FinReplaceTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanFind
+      // cref: ArcGIS.Desktop.Mapping.TableView.Find()
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanFindAndReplace
+      // cref: ArcGIS.Desktop.Mapping.TableView.FindAndReplace()
+      #region Find and Replace
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // launch the find UI
+      if (tv.CanFind)
+        tv.Find();
+
+
+      // or launch the find and replace UI
+      if (tv.CanFindAndReplace)
+        tv.FindAndReplace();
+      #endregion
+    }
+
+    public void GoToTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanGoTo
+      // cref: ArcGIS.Desktop.Mapping.TableView.GoTo()
+      #region GoTo
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // launch the GoTo UI
+      if (tv.CanGoTo)
+        tv.GoTo();
+
+      #endregion
+    }
+
+    public void RefreshTableView()
+    {
+      // cref: ArcGIS.Desktop.Mapping.TableView.CanRefresh
+      // cref: ArcGIS.Desktop.Mapping.TableView.Refresh()
+      #region Refresh
+      var tv = TableView.Active;
+      if (tv == null)
+        return;
+
+      // refresh
+      if (tv.CanRefresh)
+        tv.Refresh();
+
+      #endregion
+    }
+
+    public void TableCaption()
+    {
+      // cref: ArcGIS.Desktop.Framework.FrameworkApplication.Panes
+      // cref: ArcGIS.Desktop.Mapping.ITablePane
+      // cref: ArcGIS.Desktop.Mapping.ITablePaneEx
+      // cref: ArcGIS.Desktop.Mapping.ITablePaneEx.Caption
+      // cref: ArcGIS.Desktop.Mapping.IExternalTablePane
+      // cref: ArcGIS.Desktop.Mapping.IExternalTablePane.Caption
+      #region Change table View caption
+
+      // find all the table panes (table panes hosting map data)
+      var tablePanes = FrameworkApplication.Panes.OfType<ITablePane>();
+      var tablePane = tablePanes.FirstOrDefault(p => (p as ITablePaneEx)?.Caption == "oldcCaption");
+      var tablePaneEx = tablePane as ITablePaneEx;
+      if (tablePaneEx != null)
+        tablePaneEx.Caption = "newCaption";
+
+      // find all the external table panes (table panes hosting external data)
+      var externalPanes = FrameworkApplication.Panes.OfType<IExternalTablePane>();
+      var externalTablePane = externalPanes.FirstOrDefault(p => p.Caption == "oldcCaption");
+      if (externalTablePane != null)
+        externalTablePane.Caption = "newCaption";
+      #endregion
+    }
+
+    public void TableViewFromPane()
+    {
+      // cref: ArcGIS.Desktop.Framework.FrameworkApplication.Panes
+      // cref: ArcGIS.Desktop.Mapping.ITablePane
+      // cref: ArcGIS.Desktop.Mapping.ITablePaneEx
+      // cref: ArcGIS.Desktop.Mapping.ITablePaneEx.TableView
+      // cref: ArcGIS.Desktop.Mapping.IExternalTablePane
+      // cref: ArcGIS.Desktop.Mapping.IExternalTablePane.TableView
+      #region Get TableView from table pane
+
+      TableView tv = null;
+
+      // find all the table panes (table panes hosting map data)
+      var tablePanes = FrameworkApplication.Panes.OfType<ITablePane>();
+      var tablePane = tablePanes.FirstOrDefault(p => (p as ITablePaneEx)?.Caption == "caption");
+      var tablePaneEx = tablePane as ITablePaneEx;
+      if (tablePaneEx != null)
+        tv = tablePaneEx.TableView;
+
+      // if it's not found, maybe it's an external table pane
+      if (tv == null)
+      {
+        // find all the external table panes (table panes hosting external data)
+        var externalPanes = FrameworkApplication.Panes.OfType<IExternalTablePane>();
+        var externalTablePane = externalPanes.FirstOrDefault(p => p.Caption == "caption");
+        if (externalTablePane != null)
+          tv = externalTablePane.TableView;
+      }
+      #endregion
+    }
+
+    
     #region ProSnippet Group: Features
     #endregion
 
@@ -834,7 +1537,7 @@ namespace Snippets
 
     // cref: ArcGIS.Desktop.Mapping.PopupContent
     // cref: ArcGIS.Desktop.Mapping.PopupContent.#ctor(System.String, System.String)
-    // cref: ArcGIS.Desktop.Mapping.MapView.ShowCustomPopup(ArcGIS.Desktop.Mapping.PopupContent)
+    // cref: ArcGIS.Desktop.Mapping.MapView.ShowCustomPopup
     #region Show a custom pop-up
 
     public void ShowCustomPopup()
@@ -857,7 +1560,7 @@ namespace Snippets
 
     // cref: ArcGIS.Desktop.Mapping.PopupDefinition
     // cref: ArcGIS.Desktop.Mapping.PopupDefinition.#ctor()
-    // cref: ArcGIS.Desktop.Mapping.MapView.ShowPopup(ArcGIS.Desktop.Mapping.(MapMember, System.Int64, ArcGIS.Desktop.Mapping.PopupDefinition)
+    // cref: ArcGIS.Desktop.Mapping.MapView.ShowPopup(ArcGIS.Desktop.Mapping.MapMember, System.Int64, ArcGIS.Desktop.Mapping.PopupDefinition)
     #region Show a pop-up for a feature using pop-up window properties
 
     public void ShowPopupWithWindowDef(MapMember mapMember, long objectID)
@@ -933,7 +1636,7 @@ namespace Snippets
         p => MessageBox.Show(string.Format("Map Member: {0}, ID: {1}", p.MapMember, p.IDString)),
         p => { return p != null; },
         "My custom command",
-        new BitmapImage(new Uri("pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMark16.png")) as ImageSource));
+        System.Windows.Application.Current.Resources["GenericCheckMark16"] as ImageSource));
 
       mapView.ShowCustomPopup(popups, commands, true);
     }
@@ -1003,7 +1706,7 @@ namespace Snippets
 
     #endregion
 
-    // cref: ArcGIS.Core.CIM.CIMBookmark.#ctor
+    // cref: ArcGIS.Core.CIM.CIMBookmark
     // cref: ArcGIS.Core.CIM.CIMBookmark.Camera
     // cref: ArcGIS.Core.CIM.CIMBookmark.Name
     // cref: ArcGIS.Core.CIM.CIMBookmark.ThumbnailImagePath
@@ -1442,8 +2145,9 @@ namespace Snippets
     #region ProSnippet Group: Graphic overlay
     #endregion
 
+    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, ArcGIS.Core.CIM.CIMGraphic, System.Double)
+    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, ArcGIS.Core.Geometry.Geometry, ArcGIS.Core.CIM.CIMSymbolReference, System.Double)
     // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, ArcGIS.Core.Geometry.Geometry, ArcGIS.Core.CIM.CIMSymbolReference, System.Double, System.Double)
-    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, System.IDisposable,ArcGIS.Core.Geometry.Geometry, ArcGIS.Core.CIM.CIMSymbolReference, System.Double)
     #region Graphic Overlay
     //Defined elsewhere
     private IDisposable _graphic = null;
@@ -1484,7 +2188,6 @@ namespace Snippets
     {
       // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, ArcGIS.Core.CIM.CIMGraphic, System.Double)
       // cref: ArcGIS.Core.CIM.CIMPictureGraphic
-      // cref: ArcGIS.Core.CIM.CIMPictureGraphic.#ctor
       // cref: ArcGIS.Core.CIM.CIMPictureGraphic.PictureURL
       // cref: ArcGIS.Core.CIM.CIMPictureGraphic.Box
       #region Graphic Overlay with CIMPictureGraphic
@@ -1631,7 +2334,7 @@ namespace Snippets
 
     #endregion
 
-    // cref: ArcGIS.Desktop.Mapping.MapView.GetFeatures(ArcGIS.Core.Geometry.Geometry)
+    // cref: ArcGIS.Desktop.Mapping.MapView.GetFeatures(ArcGIS.Core.Geometry.Geometry, bool, bool)
     // cref: ArcGIS.Desktop.Mapping.MapView.FlashFeature(ArcGIS.Desktop.Mapping.SelectionSet)
     #region Create a tool to identify the features that intersect the sketch geometry
 

@@ -85,7 +85,7 @@ namespace Content.Sharing.ProSnippet
     {
 
       // cref: ArcGIS.Desktop.Core.ArcGISPortal.GetSignOnUsername()
-      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetUserContentAsync(System.String, ArcGIS.Desktop.Core.Portal)
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetUserContentAsync(ArcGIS.Desktop.Core.ArcGISPortal, System.String, System.String)
       // cref: ArcGIS.Desktop.Core.Portal.PortalUserContent
       // cref: ArcGIS.Desktop.Core.Portal.PortalUserContent.PortalFolders
       // cref: ArcGIS.Desktop.Core.Portal.PortalFolder
@@ -114,7 +114,7 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetUserContentAsync(System.String, ArcGIS.Desktop.Core.Portal)
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetUserContentAsync(ArcGIS.Desktop.Core.ArcGISPortal, System.String, System.String)
       // cref: ArcGIS.Desktop.Core.Portal.PortalUserContent.PortalItems
       // cref: ArcGIS.Desktop.Core.Portal.PortalItemType
       // cref: ArcGIS.Desktop.Core.Portal.PortalItem.PortalItemType
@@ -145,7 +145,7 @@ namespace Content.Sharing.ProSnippet
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetGroupsFromUserAsync(System.String, ArcGIS.Desktop.Core.ArcGISPortal)
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetGroupsFromUserAsync(ArcGIS.Desktop.Core.ArcGISPortal, System.String)
       // cref: ArcGIS.Desktop.Core.Portal.PortalGroup
       #region Portal: Get the groups for the specified user
 
@@ -167,11 +167,11 @@ namespace Content.Sharing.ProSnippet
 
       // cref: ArcGIS.Desktop.Core.ArcGISPortal.GetSignOnUsername()
       // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.GetPortalInfoAsync(ArcGIS.Desktop.Core.ArcGISPortal)
-      // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.CreateForItemsOfType(ArcGIS.Desktop.Core.Portal.PortalItemType)
+      // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.CreateForItemsOfType(ArcGIS.Desktop.Core.Portal.PortalItemType, string)
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.OrganizationId
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.Limit
-      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.SearchForContentAsync(ArcGIS.Desktop.Core.Portal, ArcGIS.Desktop.Core.Portal.PortalQueryParameters)
+      // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.SearchForContentAsync(ArcGIS.Desktop.Core.ArcGISPortal, ArcGIS.Desktop.Core.Portal.PortalQueryParameters)
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryResultSet<T>
       #region Portal: Execute a portal search
 
@@ -355,7 +355,7 @@ namespace Content.Sharing.ProSnippet
       // cref: ArcGIS.Desktop.Core.EsriHttpResponseMessage
       // cref: ArcGIS.Desktop.Core.EsriHttpResponseMessage.Content
       // cref: ArcGIS.Desktop.Core.ItemFactory.Create(System.String, ArcGIS.Desktop.Core.ItemFactory.ItemType)
-      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams, ArcGIS.Desktop.Mapping.ILayerContainer)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer<T>(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
       // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region EsriHttpClient: Get a Service Layer and Add it to Pro
 

@@ -68,7 +68,7 @@ namespace MapAuthoring.VoxelLayers
 				// cref: ArcGIS.Core.CIM.CIMVoxelDataConnection.URI
 				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams
 				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.Create(ArcGIS.Core.CIM.CIMVoxelDataConnection)
-				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.IsVisible
+				// cref: ArcGIS.Desktop.Mapping.LayerCreationParams.IsVisible
 				// cref: ArcGIS.Desktop.Mapping.VoxelLayerCreationParams.Variables
 				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams
 				// cref: ArcGIS.Desktop.Mapping.VoxelVariableCreationParams.Variable
@@ -288,10 +288,10 @@ namespace MapAuthoring.VoxelLayers
 		{
 			// cref: ArcGIS.Desktop.Mapping.VoxelLayer
 			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SelectedVariableProfile
-			// cref: ArcGIS.Desktop.Mapping.VoxelVariableProfile.Variable
-			// cref: ArcGIS.Desktop.Mapping.VoxelVariableProfile.Renderer
-			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.MapMemberEventHint
-			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.MapMemberPropertiesChangedEventArgs.EventHints
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Variable
+			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVariableProfile.Renderer
+			// cref: ArcGIS.Desktop.Mapping.Events.MapMemberEventHint
+			// cref: ArcGIS.Desktop.Mapping.Events.MapMemberPropertiesChangedEventArgs.EventHints
 			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetChangedEvent.Subscribe
 			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs
 			// cref: ArcGIS.Desktop.Mapping.Voxel.Events.VoxelAssetEventArgs.ChangeType
@@ -1030,7 +1030,7 @@ namespace MapAuthoring.VoxelLayers
 			VoxelLayer voxelLayer = null;
 
 			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.SetSliceContainerVisibility
-			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetOrientationAndTilt(ArcGOS.Core.Geometry.Geometry3D)
+			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetOrientationAndTilt(ArcGIS.Desktop.Mapping.Voxel.Coordinate3D)
 			// cref: ArcGIS.Desktop.Mapping.VoxelLayer.GetNormal(System.Double, System.Double)
 			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition.Normal
 			// cref: ArcGIS.Desktop.Mapping.Voxel.VoxelVolume.UpdateSlice(ArcGIS.Desktop.Mapping.Voxel.SliceDefinition)

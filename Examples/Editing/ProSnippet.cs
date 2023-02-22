@@ -39,24 +39,20 @@ using ArcGIS.Desktop.Core;
 using System.Windows;
 using ArcGIS.Core.Events;
 using ArcGIS.Core.Data.Topology;
+using System.Xml.Linq;
+using Attribute = ArcGIS.Desktop.Editing.Attributes.Attribute;
 
 namespace EditingSDKExamples
 {
   class ProSnippet : MapTool
   {
-
-    Geometry geometry;
+    ArcGIS.Core.Geometry.Geometry geometry = null;
 
     public ProSnippet()
     {
       IsSketchTool = true;
       SketchType = SketchGeometryType.Rectangle;
       SketchOutputMode = SketchOutputMode.Map;
-    }
-
-    protected override Task<bool> OnSketchCompleteAsync(Geometry geometry)
-    {
-      return base.OnSketchCompleteAsync(geometry);
     }
 
     #region ProSnippet Group: Edit Operation Methods
@@ -73,6 +69,23 @@ namespace EditingSDKExamples
       var oid = 1;
       var layer = featureLayer;
       var standaloneTable = MapView.Active.Map.GetStandaloneTablesAsFlattenedList().FirstOrDefault();
+
+      var opEdit = new EditOperation();
+      // cref: ArcGIS.Desktop.Editing.EditOperation.IsEmpty
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Execute
+      // cref: ArcGIS.Desktop.Editing.EditOperation.ExecuteAsync
+      #region Edit Operation - check for actions before Execute
+
+      // Some times when using EditOperation.Modify you can unknowingly be attempting to set
+      //  an attribute to value 
+      //  setting 
+      // In this scenario the Modify action will detect that nothing is required
+      // and do nothing. Because no actions have occurred, the
+      // Consequently the Execute operation will fail. 
+      if (!opEdit.IsEmpty)
+        opEdit.Execute();
+
+      #endregion
 
       // cref: ArcGIS.Desktop.Editing.EditOperation.#ctor()
       // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.Layer, ArcGIS.Core.Geometry.Geometry)
@@ -105,7 +118,11 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      createFeatures.Execute();
+
+      if (!createFeatures.IsEmpty)
+      {
+        createFeatures.Execute(); //Execute will return true if the operation was successful and false if not.
+      }
 
       //or use async flavor
       //await createFeatures.ExecuteAsync();
@@ -121,7 +138,10 @@ namespace EditingSDKExamples
       var op = new ArcGIS.Desktop.Editing.EditOperation();
       op.Name = "Create my feature";
       op.Create(myTemplate, geometry);
-      op.Execute();
+      if (!op.IsEmpty)
+      {
+        var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
       #endregion
 
       // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember, System.Collections.Generic.Dictionary<string, object>)
@@ -139,7 +159,10 @@ namespace EditingSDKExamples
         var createOp = new ArcGIS.Desktop.Editing.EditOperation();
         createOp.Name = "Create from insp";
         createOp.Create(insp.MapMember, insp.ToDictionary(a => a.FieldName, a => a.CurrentValue));
-        createOp.Execute();
+        if (!createOp.IsEmpty)
+        {
+          var result = createOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
 
@@ -177,7 +200,12 @@ namespace EditingSDKExamples
         }
 
         // execute the edit (feature creation) operation
-        return createOperation.Execute();
+        if (createOperation.IsEmpty)
+        {
+          return createOperation.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
+        else
+          return false;
       });
       #endregion
 
@@ -188,7 +216,11 @@ namespace EditingSDKExamples
       createRow.Name = "Create a row in a table";
       //Creating a new row in a standalone table using the table template of your choice
       createRow.Create(tableTemplate);
-      createRow.Execute();
+      if (!createRow.IsEmpty)
+      {
+        var result = createRow.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
+
       #endregion
 
       // cref: ArcGIS.Desktop.Editing.EditOperation.Clip(ArcGIS.Desktop.Mapping.Layer, System.Int64, ArcGIS.Core.Geometry.Geometry, ArcGIS.Desktop.Editing.ClipMode)
@@ -199,7 +231,10 @@ namespace EditingSDKExamples
       clipFeatures.Clip(featureLayer, oid, clipPoly, ClipMode.PreserveArea);
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      clipFeatures.Execute();
+      if (!clipFeatures.IsEmpty)
+      {
+        var result = clipFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await clipFeatures.ExecuteAsync();
@@ -226,7 +261,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      cutFeatures.Execute();
+      if (!cutFeatures.IsEmpty)
+      {
+        var result = cutFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await cutFeatures.ExecuteAsync();
@@ -253,7 +291,10 @@ namespace EditingSDKExamples
 
         //Execute to execute the operation
         //Must be called within QueuedTask.Run
-        deleteFeatures.Execute();
+        if (!deleteFeatures.IsEmpty)
+        {
+          var result = deleteFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
 
         //or use async flavor
         //await deleteFeatures.ExecuteAsync();
@@ -278,13 +319,18 @@ namespace EditingSDKExamples
         var geom = insp2["SHAPE"] as Geometry;
 
         var rtoken = duplicateFeatures.Create(insp2.MapMember, insp2.ToDictionary(a => a.FieldName, a => a.CurrentValue));
-        if (duplicateFeatures.Execute())
+        if (!duplicateFeatures.IsEmpty)
         {
-          var modifyOp = duplicateFeatures.CreateChainedOperation();
-          modifyOp.Modify(featureLayer, (long)rtoken.ObjectID, GeometryEngine.Instance.Move(geom, 500.0, 500.0));
-          modifyOp.Execute();
+          if (duplicateFeatures.Execute())//Execute and ExecuteAsync will return true if the operation was successful and false if not
+          {
+            var modifyOp = duplicateFeatures.CreateChainedOperation();
+            modifyOp.Modify(featureLayer, (long)rtoken.ObjectID, GeometryEngine.Instance.Move(geom, 500.0, 500.0));
+            if (!modifyOp.IsEmpty)
+            {
+              var result = modifyOp.Execute();
+            }
+          }
         }
-
       }
 
       #endregion
@@ -301,7 +347,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      explodeFeatures.Execute();
+      if (!explodeFeatures.IsEmpty)
+      {
+        var result = explodeFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await explodeFeatures.ExecuteAsync();
@@ -340,7 +389,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      mergeFeatures.Execute();
+      if (!mergeFeatures.IsEmpty)
+      {
+        var result = mergeFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await mergeFeatures.ExecuteAsync();
@@ -371,7 +423,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      modifyFeature.Execute();
+      if (!modifyFeature.IsEmpty)
+      {
+        var result = modifyFeature.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await modifyFeatures.ExecuteAsync();
@@ -406,7 +461,10 @@ namespace EditingSDKExamples
       muultipleFeaturesInsp.Load(featureLayer, oidSet);
       muultipleFeaturesInsp["MOMC"] = 24;
       modifyFeatures.Modify(muultipleFeaturesInsp);
-      modifyFeatures.ExecuteAsync();
+      if (!modifyFeatures.IsEmpty)
+      {
+        var result = modifyFeatures.ExecuteAsync(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
       #endregion
 
       #region Search for layer features and update a field
@@ -443,7 +501,10 @@ namespace EditingSDKExamples
 
         // modify and execute
         modifyOp.Modify(insp);
-        modifyOp.Execute();
+        if (!modifyOp.IsEmpty)
+        {
+          var result = modifyOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
 
@@ -462,8 +523,10 @@ namespace EditingSDKExamples
       moveFeature.Name = "Move features";
       //at 2.x - moveFeature.Move(selectionDictionary, 10, 10);  //specify your units along axis to move the geometry
       moveFeature.Move(SelectionSet.FromDictionary(selectionDictionary), 10, 10);  //specify your units along axis to move the geometry
-
-      moveFeature.Execute();
+      if (!moveFeature.IsEmpty)
+      {
+        var result = moveFeature.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
       #endregion
 
       // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(LAYER,INT64,GEOMETRY,DICTIONARY{STRING,OBJECT})
@@ -479,7 +542,10 @@ namespace EditingSDKExamples
       var modifyFeatureCoord = new EditOperation();
       modifyFeatureCoord.Name = "Move features";
       modifyFeatureCoord.Modify(abLayer, selOid, moveToPoint.ToGeometry());  //Modify the feature to the new geometry 
-      modifyFeatureCoord.Execute();
+      if (!modifyFeatureCoord.IsEmpty)
+      {
+        var result = modifyFeatureCoord.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       #endregion
 
@@ -497,7 +563,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      planarizeFeatures.Execute();
+      if (!planarizeFeatures.IsEmpty)
+      {
+        var result = planarizeFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await planarizeFeatures.ExecuteAsync();
@@ -527,9 +596,12 @@ namespace EditingSDKExamples
       };
 
       //create editoperation and execute
-      var parrallelOp = new EditOperation();
-      parrallelOp.Create(parOffsetBuilder);
-      parrallelOp.Execute();
+      var parallelOp = new EditOperation();
+      parallelOp.Create(parOffsetBuilder);
+      if (!parallelOp.IsEmpty)
+      {
+        var result = parallelOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       #endregion
 
@@ -551,7 +623,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      reshapeFeatures.Execute();
+      if (!reshapeFeatures.IsEmpty)
+      {
+        var result = reshapeFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await reshapeFeatures.ExecuteAsync();
@@ -578,7 +653,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      rotateFeatures.Execute();
+      if (!rotateFeatures.IsEmpty)
+      {
+        var result = rotateFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await rotateFeatures.ExecuteAsync();
@@ -602,7 +680,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      scaleFeatures.Execute();
+      if (!scaleFeatures.IsEmpty)
+      {
+        var result = scaleFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await scaleFeatures.ExecuteAsync();
@@ -648,7 +729,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      splitFeatures.Execute();
+      if (!splitFeatures.IsEmpty)
+      {
+        var result = splitFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await splitAtPointsFeatures.ExecuteAsync();
@@ -687,7 +771,10 @@ namespace EditingSDKExamples
 
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
-      transformFeatures.Execute();
+      if (!transformFeatures.IsEmpty)
+      {
+        var result = transformFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await transformFeatures.ExecuteAsync();
@@ -718,7 +805,10 @@ namespace EditingSDKExamples
       //Performs linear rubbersheet transformation on the features belonging to "layer" that fall within the limited adjustment areas
       rubbersheetOp.Rubbersheet(layer, rubbersheetMethod);
       //Execute the operation
-      rubbersheetOp.Execute();
+      if (!rubbersheetOp.IsEmpty)
+      {
+        var result = rubbersheetOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //Alternatively, you can also perform rubbersheet by layer
       var rubbersheetMethod2 = new RubbersheetByLayers()
@@ -731,8 +821,11 @@ namespace EditingSDKExamples
 
       //Performs nearest neighbor rubbersheet transformation on the features belonging to "layer" that fall within the limited adjustment areas
       rubbersheetOp.Rubbersheet(layer, rubbersheetMethod2);
-      //Execute the operation
-      rubbersheetOp.Execute();
+      if (!rubbersheetOp.IsEmpty)
+      {
+        //Execute the operation
+        var result = rubbersheetOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       #endregion
 
@@ -747,9 +840,12 @@ namespace EditingSDKExamples
       clipCutPlanarizeFeatures.Split(featureLayer, oid, cutLine);
       clipCutPlanarizeFeatures.Planarize(featureLayer, oid);
 
-      //Note: An edit operation is a single transaction. 
-      //Execute the operations (in the order they were declared)
-      clipCutPlanarizeFeatures.Execute();
+      if (!clipCutPlanarizeFeatures.IsEmpty)
+      {
+        //Note: An edit operation is a single transaction. 
+        //Execute the operations (in the order they were declared)
+        clipCutPlanarizeFeatures.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await clipCutPlanarizeFeatures.ExecuteAsync();
@@ -776,7 +872,10 @@ namespace EditingSDKExamples
         newFeatureID = (long)token2.ObjectID;
       }
       //Must be within a QueuedTask
-      editOperation1.Execute();
+      if (!editOperation1.IsEmpty)
+      {
+        var result = editOperation1.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await editOperation1.ExecuteAsync();
@@ -791,7 +890,10 @@ namespace EditingSDKExamples
       //editOperation1 and editOperation2 show up as a single Undo operation on the UI even though
       //we had two transactions
       //Must be within a QueuedTask
-      editOperation2.Execute();
+      if (!editOperation2.IsEmpty)
+      {
+        var result = editOperation2.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
 
       //or use async flavor
       //await editOperation2.ExecuteAsync();
@@ -812,11 +914,57 @@ namespace EditingSDKExamples
       editOpAttach.AddAttachment(attachRowToken, @"c:\temp\image.jpg");
 
       //Must be within a QueuedTask
-      editOpAttach.Execute();
+      if (!editOpAttach.IsEmpty)
+      {
+        var result = editOpAttach.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
+      #endregion
+
+      string newName = "";
+      FeatureClass fc = null;
+      Geometry splitLine = null;
+
+      // cref: ArcGIS.Desktop.Editing.EditOperation
+      // cref: ArcGIS.Desktop.Editing.EditOperation.ExecuteMode
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Core.Data.Row,System.String, System.object)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Split(ArcGIS.Desktop.Mapping.Layer, System.Int64, ArcGIS.Core.Geometry.Geometry)
+      #region Order edits sequentially
+
+      // perform an edit and then a split as one operation.
+      QueuedTask.Run(() =>
+      {
+        var queryFilter = new QueryFilter();
+        queryFilter.WhereClause = "OBJECTID = " + oid.ToString();
+
+        // create an edit operation and name.
+        var op = new EditOperation();
+        op.Name = "modify followed by split";
+        // set the ExecuteMOde
+        op.ExecuteMode = ExecuteModeType.Sequential;
+
+        using (var rowCursor = fc.Search(queryFilter, false))
+        {
+          while (rowCursor.MoveNext())
+          {
+            using (var feature = rowCursor.Current as Feature)
+            {
+              op.Modify(feature, "NAME", newName);
+            }
+          }
+        }
+
+        op.Split(layer, oid, splitLine);
+        if (!op.IsEmpty)
+        {
+          bool result = op.Execute();
+        }
+        // else
+        //  The operation doesn't make any changes to the database so if executed it will fail
+      });
       #endregion
 
       // cref: ArcGIS.Desktop.Editing.EditOperation.SetOnUndone(System.Action)
-      // cref: ArcGIS.Desktop.Editing.EditOperation.SetOnComitted(System.Action{System.Boolean})
+      // cref: ArcGIS.Desktop.Editing.EditOperation.SetOnComitted(System.Action<System.Boolean>)
       // cref: ArcGIS.Desktop.Editing.EditOperation.SetOnRedone(System.Action)
       #region SetOnUndone, SetOnRedone, SetOnComitted
 
@@ -854,9 +1002,12 @@ namespace EditingSDKExamples
         Debug.WriteLine("Operation is committed");
       });
 
-      updateTestField.Execute();
+      if (!updateTestField.IsEmpty)
+      {
+        var result = updateTestField.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
+      #endregion
     }
-    #endregion
 
     #region ProSnippet Group: Enable Editing
     #endregion
@@ -919,42 +1070,6 @@ namespace EditingSDKExamples
       #endregion
 
     }
-
-    #region ProSnippet Group: Map Topology
-    #endregion
-
-    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition
-    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.BuildMapTopologyGraph(ArcGIS.Desktop.Mapping.MapView, System.Action<ArcGIS.Core.Data.Topology.TopologyGraph>)
-    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.GetNodes()
-    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.GetEdges()
-    // cref: ArcGIS.Core.Data.Topology.TopologyNode
-    // cref: ArcGIS.Core.Data.Topology.TopologyEdge
-    #region Build Map Topology
-    private async Task BuildGraphWithActiveView()
-    {
-      await QueuedTask.Run(() =>
-      {
-        //Build the map topology graph
-        MapView.Active.BuildMapTopologyGraph<TopologyDefinition>(async topologyGraph =>
-        {
-          //Getting the nodes and edges present in the graph
-          var topologyGraphNodes = topologyGraph.GetNodes();
-          var topologyGraphEdges = topologyGraph.GetEdges();
-
-          foreach (var node in topologyGraphNodes)
-          {
-            // do something with the node
-          }
-          foreach (var edge in topologyGraphEdges)
-          {
-            // do something with the edge
-          }
-
-          MessageBox.Show($"Number of topo graph nodes are:  {topologyGraphNodes.Count}.\n Number of topo graph edges are {topologyGraphEdges.Count}.", "Map Topology Info");
-        });
-      });
-    }
-    #endregion
 
 
     #region ProSnippet Group: Row Events
@@ -1362,7 +1477,7 @@ namespace EditingSDKExamples
       // assign the new attribute value to the field "Description"
       // if more than one features are loaded, the change applies to all features
       inspector["Description"] = "The new value.";
-      // apply the changes as an edit operation - but with no undo/redo
+      // apply the changes as an edit operation 
       await inspector.ApplyAsync();
       #endregion
     }
@@ -1415,7 +1530,7 @@ namespace EditingSDKExamples
 
       // cref: ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create(System.String,ArcGIS.Desktop.Editing.Attributes.Severity)
       // cref: ArcGIS.Desktop.Editing.Attributes.Attribute.AddValidate
-      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector._ctor
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.#ctor
       // cref: ArcGIS.Desktop.Editing.Attributes.Inspector
       #region Inspector.AddValidate
       var insp = new Inspector();
@@ -1468,7 +1583,10 @@ namespace EditingSDKExamples
         op.Name = "Blob Inspector";
         insp["Blobfield"] = msr;
         op.Modify(insp);
-        op.Execute();
+        if (!op.IsEmpty)
+        {
+          var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
     }
@@ -1516,7 +1634,10 @@ namespace EditingSDKExamples
             }
           }
         }, featLayer.GetTable());
-        editOp.Execute();
+        if (!editOp.IsEmpty)
+        {
+          var result = editOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
     }
@@ -1558,15 +1679,18 @@ namespace EditingSDKExamples
         var op = new EditOperation();
         op.Name = "Raster Inspector";
         op.Modify(insp);
-        op.Execute();
+        if (!op.IsEmpty)
+        {
+          var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
     }
 
     public static void WriteCompImageToRasterField()
     {
-      // cref: ArcGIS.Core.Data.Raster.RasterStorageDef._ctor
-      // cref: ArcGIS.Core.Data.Raster.RasterStorageDef._ctor()
+      // cref: ArcGIS.Core.Data.Raster.RasterStorageDef.#ctor
+      // cref: ArcGIS.Core.Data.Raster.RasterStorageDef.#ctor()
       // cref: ARCGIS.CORE.DATA.RASTER.RASTERSTORAGEDEF.SETCOMPRESSIONTYPE
       // cref: ARCGIS.CORE.DATA.RASTER.RASTERSTORAGEDEF.SETCOMPRESSIONQUALITY
       // cref: ARCGIS.DESKTOP.EDITING.EDITOPERATION.MODIFY(INSPECTOR)
@@ -1597,10 +1721,117 @@ namespace EditingSDKExamples
           var op = new EditOperation();
           op.Name = "Raster Inspector";
           op.Modify(insp);
-          op.Execute();
+          if (!op.IsEmpty)
+          {
+            var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+          }
         }
       });
       #endregion
+    }
+
+    #region ProSnippet Group: Inspector Provider Class
+    #endregion
+            
+    #region How to create a custom Feature inspector provider class
+
+    public class MyProvider : InspectorProvider
+    {
+        private System.Guid guid = System.Guid.NewGuid();
+        internal MyProvider()
+        {
+        }
+        public override System.Guid SharedFieldColumnSizeID()
+        {
+            return guid;
+        }
+
+        public override string CustomName(Attribute attr)
+        {
+            //Giving a custom name to be displayed for the field FeatureID
+            if (attr.FieldName == "FeatureID")
+                return "Feature Identification";
+
+            return attr.FieldName;
+        }
+        public override bool? IsVisible(Attribute attr)
+        {
+            //The field FontStyle will not be visible
+            if (attr.FieldName == "FontStyle")
+                return false;
+
+            return true;
+        }
+        public override bool? IsEditable(Attribute attr)
+        {
+            //The field DateField will not be editable
+            if (attr.FieldName == "DateField")
+                return false;
+
+            return true;
+        }
+        public override bool? IsHighlighted(Attribute attr)
+        {
+            //ZOrder field will be highlighted in the feature inspector grid
+            if (attr.FieldName == "ZOrder")
+                return true;
+
+            return false;
+        }
+
+        public override IEnumerable<Attribute> AttributesOrder(IEnumerable<Attribute> attrs)
+        {
+            //Reverse the order of display
+            var newList = new List<Attribute>();
+            foreach (var attr in attrs)
+            {
+                newList.Insert(0, attr);
+            }
+            return newList;
+        }
+
+        public override bool? IsDirty(Attribute attr)
+        {
+            //The field will not be marked dirty for FeatureID if you enter the value -1
+            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
+                return false;
+
+            return base.IsDirty(attr);
+        }
+
+        public override IEnumerable<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError> Validate(Attribute attr)
+        {
+            var errors = new List<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError>();
+
+            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "2"))
+                errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Value not allowed", ArcGIS.Desktop.Editing.Attributes.Severity.Low));
+
+            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
+                errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Invalid value", ArcGIS.Desktop.Editing.Attributes.Severity.High));
+
+            return errors;
+        }
+    }
+    #endregion
+
+    public async void InspectorProviderExample()
+    {
+        int oid = 1;
+        #region Using the custom inspector provider class
+        var layer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
+
+        var provider = new MyProvider();
+        Inspector _featureInspector = provider.Create();
+        //Create an embeddable control from the inspector class to display on the pane
+        var icontrol = _featureInspector.CreateEmbeddableControl();
+
+        await _featureInspector.LoadAsync(layer, oid);
+        var attribute = _featureInspector.Where(a => a.FieldName == "FontStyle").FirstOrDefault();
+        var visibility = attribute.IsVisible; //Will return false
+
+        attribute = _featureInspector.Where(a => a.FieldName == "ZOrder").FirstOrDefault();
+        var highlighted = attribute.IsHighlighted; //Will return true
+        #endregion
     }
 
     #region ProSnippet Group: Working with the Sketch
@@ -1817,12 +2048,128 @@ namespace EditingSDKExamples
       return base.OnToolActivateAsync(active);
     }
     #endregion
+  }
 
-    #region ProSnippet Group: Snapping
-    #endregion
+  #region ProSnippet Group: SketchTool
+  #endregion
+
+  // cref: ArcGIS.Desktop.Mapping.MapTool.ContextMenuID
+  // cref: ArcGIS.Desktop.Mapping.MapTool.ContextToolbarID
+  #region Set a MiniToolbar, ContextMenuID
+
+  // daml entries
+  // 
+  // <menus>
+  //  <menu id="MyMenu" caption="Nav">
+  //    <button refID="esri_mapping_prevExtentButton"/>
+  //    <button refID="esri_mapping_fixedZoomInButton"/>
+  //  </menu>
+  // </menus>
+  // <miniToolbars>
+  //   <miniToolbar id="MyMiniToolbar">
+  //    <row>
+  //      <button refID="esri_mapping_fixedZoomInButton"/>
+  //      <button refID="esri_mapping_prevExtentButton"/>
+  //    </row>
+  //   </miniToolbar>
+  // </miniToolbars>
+
+  public class SketchToolWithToolbar : MapTool
+  {
+    public SketchToolWithToolbar()
+    {
+      IsSketchTool = true;
+      SketchType = SketchGeometryType.Line;
+      SketchOutputMode = SketchOutputMode.Map;
+      ContextMenuID = "MyMenu";
+      ContextToolbarID = "MyMiniToolbar";
+    }
+  }
+  #endregion
+
+  // cref: ArcGIS.Desktop.Mapping.MapTool.SketchTip
+  #region Set a simple sketch tip
+  public class SketchToolWithSketchTip : MapTool
+  {
+    public SketchToolWithSketchTip()
+    {
+      IsSketchTool = true;
+      SketchType = SketchGeometryType.Line;
+      SketchOutputMode = SketchOutputMode.Map;
+      SketchTip = "hello World";
+    }
+  }
+  #endregion
+
+  public class EmbeddableControl1ViewModel : ArcGIS.Desktop.Framework.Controls.EmbeddableControl
+  {
+    public EmbeddableControl1ViewModel(XElement options, bool canChangeOptions) : base(options, canChangeOptions)
+    { }
+
+    public string Text;
+  }
+
+  // cref: ArcGIS.Desktop.Mapping.MapTool.SketchTipID
+  // cref: ArcGIS.Desktop.Mapping.MapTool.SketchTipEmbeddableControl
+  #region Set a custom UI Sketch Tip
+
+  // 1. Add an embeddable control using VS template.  This is the daml entry
+
+  //<categories>
+  //  <updateCategory refID = "esri_embeddableControls">
+  //    <insertComponent id="SketchTip_EmbeddableControl1" className="EmbeddableControl1ViewModel">
+  //      <content className = "EmbeddableControl1View"/>
+  //    </insertComponent>
+  //  </updateCategory>
+  // </categories>
+
+  // 2. Define UI controls on the EmbeddableControl1View
+  // 3. Define properties on the EmbeddableControl1ViewModel which
+  //    bind to the UI controls on the EmbeddableControl1View
+
+  public class SketchToolWithUISketchTip : MapTool
+  {
+    public SketchToolWithUISketchTip()
+    {
+      IsSketchTool = true;
+      SketchType = SketchGeometryType.Line;
+      SketchOutputMode = SketchOutputMode.Map;
+      SketchTipID = "SketchTip_EmbeddableControl1";
+    }
 
 
-    private async void Snapping()
+    protected override Task<bool> OnSketchModifiedAsync()
+    {
+      var sketchTipVM = SketchTipEmbeddableControl as EmbeddableControl1ViewModel;
+      if (sketchTipVM != null)
+      {
+        // modify properties on the sketchTipVM
+        QueuedTask.Run(async () =>
+        {
+          var sketch = await GetCurrentSketchAsync();
+          var line = sketch as Polyline;
+          var count = line.PointCount;
+
+          sketchTipVM.Text = "Vertex Count " + count.ToString();
+        });
+
+
+      }
+
+      return base.OnSketchModifiedAsync();
+    }
+    
+  }
+  #endregion
+
+  public class Snippets
+  { 
+
+  #region ProSnippet Group: Snapping
+  #endregion
+
+
+  private async void Snapping()
     {
       Map myMap = null;
       FeatureLayer fLayer = null;
@@ -1985,8 +2332,8 @@ namespace EditingSDKExamples
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Mapping.LayerSnapModes.SetSnapModes
-      // cref: ArcGIS.Desktop.Mapping.LayerSnapModes.SetSnapMode(ArcGIS.Desktop.Mapping.SnapMode, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.Snapping.SetSnapModes
+      // cref: ArcGIS.Desktop.Mapping.Snapping.SetSnapMode(ArcGIS.Desktop.Mapping.SnapMode, System.Boolean)
       // cref: ARCGIS.DESKTOP.MAPPING.Snapping.SetLayerSnapModes(IDictionary{Layer,LayerSnapModes},Boolean)      
       // cref: ARCGIS.DESKTOP.MAPPING.FEATURELAYER.SETSNAPPABLE
       #region Configure Snapping - Combined Example

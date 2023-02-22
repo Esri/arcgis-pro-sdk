@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArcGIS defaultAssembly="ArcGIS.Desktop.Workflow.Client.dll" defaultNamespace="ArcGIS.Desktop.Workflow.Client"
+        xmlns="http://schemas.esri.com/DADF/Registry"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
+  
+  <products>
+    <insertProduct id="esri_product_workflow_client" caption="Workflow Manager Next Generation" description="ArcGIS Workflow Manager Next Generation Extension" code="40,100" />
+  </products>
+
+  <modules>
+    <insertModule id="workflow_client_module" caption="Workflow Manager" className="WorkflowClientModule" autoLoad="false"
+                  productID="esri_product_workflow_client">
+      <tabs>
+        <!-- Modal tab for defining Location -->
+        <tab id="esri_workflow_defineLocationTab" caption="Define Job Location" condition="esri_workflow_defineLocationCondition" insert="after" tabGroupID="esri_workflow_workflowTabGroup" keytip="DL">
+          <group refID="esri_mapping_navigateGroup" />
+          <group refID="esri_workflow_locationSelectionGroup" />
+          <group refID="esri_mapping_inquiryGroup" />
+          <group refID="esri_workflow_defineLocationDrawGroup" />
+          <group refID="esri_workflow_defineLocationCloseGroup"/>
+        </tab>
+
+        <tab id="esri_workflow_webTab" caption="Web" condition="esri_workflow_client_openAppPane" insert="before" placeWith="esri_core_insertTab" keytip="W">
+          <group refID="esri_workflow_webAppGroup"/>
+        </tab>
+
+        <!-- TODO Home Tab -->
+        <!--<tab id="esri_workflow_openAppHomeTab" caption="Home" condition="esri_workflow_client_openAppPane" insert="before" placeWith="esri_core_insertTab" keytip="H">
+          
+        </tab>-->
+      </tabs>
+      
+      <groups>
+        <group id="esri_workflow_defineLocationCloseGroup" caption="Finish Step" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply16.png">
+          <button refID="esri_workflow_defineLocationFinish" size="large" />
+          <button refID="esri_workflow_defineLocationCancel" size="large" />
+        </group>
+
+        <group id="esri_workflow_locationSelectionGroup" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionSelectTool16.png">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+          <button refID="esri_geoprocessing_selectByAttributeButton" size="large" />
+          <button refID="esri_geoprocessing_selectByLocationButton" size="large" />
+          <button refID="esri_mapping_clearSelectionButton" size="middle" />
+          <button refID="esri_editing_DelSelFeaturesBtn" size="middle" />
+        </group>
+
+        <group id="esri_workflow_defineLocationDrawGroup" caption="Draw LOI" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingCreateFeaturesWindowShow16.png">
+          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large"/>
+          <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
+          <button refID="esri_workflow_clearLocation" size="large" />
+        </group>
+
+        <group id="esri_workflow_webAppGroup" caption="Navigation">
+          <button refID="esri_workflow_webAppHome" size="large" />
+          <button refID="esri_workflow_webAppBack" size="large" />
+          <button refID="esri_workflow_webAppForward" size="large" />
+          <button refID="esri_workflow_webAppRefresh" size="large" />
+        </group> 
+      </groups>
+
+      <controls>
+        <!-- Workflow Diagram Context Menu button -->
+        <button id="esri_workflow_workflowDiagramTabContextMenuSetCurrentButton" hidden="true"  className="ArcGIS.Desktop.Internal.Workflow.Client.JobDetailsPanel.SupportClasses.SetAsCurrentStepButton" caption="Set as Current" loadOnClick="false" extendedCaption="Set Selected Step as Current Step">
+          <tooltip heading="">
+            Set as Current Step.
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_clearLocation" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.ClearLocationButton" caption="Clear Location" extendedCaption="Clear Jobs Location" keytip="CL"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionClearSelected16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionClearSelected32.png">
+          <tooltip heading="Clear Location">
+            Clear the Location
+          </tooltip>
+        </button>
+        
+        <button id="esri_workflow_client_open_workflow_pane" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.OpenWorkflowPaneButton"
+               caption="Workflow Pane" extendedCaption="Open Workflow Server pane" keytip="WS" helpContextID="120004026" condition="esri_workflow_client_canAddOnlineWorkflowConnectionCondition"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowManagerLogo16.png"
+               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowManagerLogo32.png">
+          <tooltip heading="Workflow Pane">
+            Show the Workflow pane with jobs assigned to you and your groups.
+            <!-- TODO Would be nice to have different options, but that currently requires us to have loaded the Module -->
+            <disabledText>Not signed in to Portal</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_defineLocationCancel" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.LocationCancelButton" caption="Cancel" extendedCaption="Cancel Defining Job Location of Interest" keytip="C"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Cancel16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Cancel32.png">
+          <tooltip heading="Cancel Define Location">
+            Close the map and discard changes to the job's location
+          </tooltip>
+        </button>
+        <button id="esri_workflow_defineLocationFinish" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.LocationFinishButton" caption="Finish" keytip="F"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Workflow.Client;component/Resources/FinishJob16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Workflow.Client;component/Resources/FinishJob32.png">
+          <tooltip heading="Finish Define Location">
+            Save changes to the job's location and close the map
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_webAppHome" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.WebAppHomeButton" caption="Home" keytip="H" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_32.png">
+          <tooltip heading="Navigate back to home">
+            Return view to the initial web address for the step
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_webAppBack" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.WebAppBackButton" caption="Back" keytip="B" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AviationLeftArrowBlue16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AviationLeftArrowBlue32.png">
+          <tooltip heading="Navigate back to previous address">
+            Return view to the previous web address
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_webAppForward" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.WebAppForwardButton" caption="Forward" keytip="F" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AviationRightArrowBlue16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AviationRightArrowBlue32.png">
+          <tooltip heading="Navigate forward">
+            Move forward
+          </tooltip>
+        </button>
+
+        <button id="esri_workflow_webAppRefresh" hidden="true" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.WebAppRefreshButton" caption="Refresh" keytip="R" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh32.png">
+          <tooltip heading="Refresh web browser">
+            Refresh the browser
+          </tooltip>
+        </button>
+      </controls>
+
+      <menus>
+        <menu id="esri_workflow_workflowDiagramTabContextMenu" hidden="true" caption="WorkflowStepAction">
+          <button refID="esri_workflow_workflowDiagramTabContextMenuSetCurrentButton" />
+        </menu>
+      </menus>
+
+      <palettes>
+        <toolPalette id="esri_workflow_workflowViewPalette" itemsInRow="1" showItemCaption="true" caption="Workflow Manager" extendedCaption="Workflow Manager palette" keytip="WVP">
+          <tool refID="esri_workflow_client_open_workflow_pane"/>
+        </toolPalette>
+      </palettes>
+
+      <panes>
+        <!-- Open App caption is temp to start off with, but will be populated with the job name when view is loaded-->
+        <pane id="esri_workflow_client_openAppPane" caption="Web App" className="ArcGIS.Desktop.Internal.Workflow.Client.Views.OpenAppPaneViewModel"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NetworkAnalystDirectionsWindowShow16.png" isClosable="true"
+              defaultTab="esri_workflow_webTab">
+          <content className="ArcGIS.Desktop.Internal.Workflow.Client.Views.OpenAppPaneView" />
+        </pane>
+      </panes>
+      
+      <dockPanes>
+        <dockPane id="esri_workflow_client_workflowPane" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPaneViewModel"
+          dock="group" dockWith="esri_core_projectDockPane"
+          keytip="Workflow" initiallyVisible="false" >
+          <content className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPane" />
+        </dockPane>
+      </dockPanes>
+    </insertModule>
+  </modules>
+
+  <conditions>
+    <insertCondition id="esri_workflow_client_canAddOnlineWorkflowConnectionCondition" caption="A Workflow Connection can be opened">
+      <and>
+        <state id="esri_core_isSignedIn" />
+        <state id="esri_mapping_openProjectState"/>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_workflow_defineLocationCondition" caption="A Workflow user is defining a location">
+      <state id="esri_workflow_defineLocationState" />
+    </insertCondition>
+  </conditions>
+</ArcGIS>

@@ -1,6 +1,6 @@
 /*
 
-   Copyright 2018 Esri
+   Copyright 2022 Esri
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,194 +26,68 @@ using ArcGIS.Core.Data.UtilityNetwork;
 using ArcGIS.Core.Data.UtilityNetwork.Trace;
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Desktop.Workflow;
-using ArcGIS.Desktop.Workflow.Models;
+using ArcGIS.Desktop.Workflow.Client;
+using ArcGIS.Desktop.Workflow.Client.Models;
 
 namespace WorkflowManagerProSnippets
 
 {
   class ProSnippetsWorkflowManager
   {
-    public static async Task GetManagerObjectsAsync()
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager
-      // cref: ArcGIS.Desktop.Workflow.Models.ConfigurationManager
-      #region How to get managers objects
 
-      // WorkflowModule.GetManager returns a manager of the type specified
-      // keyword is currently just an empty string
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var configManager = wfCon.GetManager<ConfigurationManager>();
+    public static async Task GetIsConnected()
+    {
+      // cref: ArcGIS.Desktop.Workflow.Client.WorkflowClientModule.IsConnected
+      #region How to determine if there is an active Workflow Manager connection
+
+      // determine if there is an active Workflow Manager connection
+      var isConnected = WorkflowClientModule.IsConnected;
       #endregion
     }
 
-    // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-    // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-    // cref: ArcGIS.Desktop.Workflow.Models.ConfigurationManager.GetAllGroups()
-    // cref: ArcGIS.Desktop.Workflow.Models.ConfigItems.GroupInfo
-    public static async Task GetGroupsAsync()
+    public static async Task GetItemId()
     {
-      #region How to get groups
+      // cref: ArcGIS.Desktop.Workflow.Client.WorkflowClientModule.ItemId
+      #region How to get the Workflow Manager item Id
 
-      // GetAllGroups returns a list of Workflow Manager groups
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var configManager = wfCon.GetManager<ConfigurationManager>();
-      var allGroups = configManager.GetAllGroups();
-      #endregion
-    }
-    public static async Task GetUsersAsync()
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.ConfigurationManager.GetAllUsers()
-      // cref: ArcGIS.Desktop.Workflow.Models.ConfigItems.UserInfo
-      #region How to get users
-
-      // GetAllUsers returns a list of Workflow Manager users
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var configManager = wfCon.GetManager<ConfigurationManager>();
-      var allUsers = configManager.GetAllUsers();
+      // Get the Workflow Manager item Id
+      var itemId = WorkflowClientModule.ItemId;
       #endregion
     }
 
-    public static async Task GetJobTypesAsync()
+    public static async Task GetServerUrl()
     {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.ConfigurationManager.GetVisibleJobTypes()
-      // cref: ArcGIS.Desktop.Workflow.Models.ConfigItems.JobTypeDescription
-      #region How to get job types
+      // cref: ArcGIS.Desktop.Workflow.Client.WorkflowClientModule.ServerUrl
+      #region How to get the Workflow Manager server url
 
-      // GetVisibleJobTypes returns a list of job types
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var configManager = wfCon.GetManager<ConfigurationManager>();
-      var jobTypes = configManager.GetVisibleJobTypes();
+      // Get the Workflow Manager server url
+      var serverUrl = WorkflowClientModule.ServerUrl;
       #endregion
     }
 
-    public static async Task CreateJobAsync(string jobTypeID)
+    public static async Task GetJobId()
     {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.CreateNewJob(System.String)
-      #region How to create a job
+      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager
+      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager.GetJobId()
+      #region How to get the job Id associated with the active map view
 
-      // CreateJob returns an ID of a new job
-      // it is a passed a valid job type ID as an integer
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var jobID = jobManager.CreateNewJob(jobTypeID);
+      // Get the job Id associated with the active map view
+      var jobManager = WorkflowClientModule.JobsManager;
+      var jobId = jobManager.GetJobId();
       #endregion
     }
 
-
-    public static async Task GetJobAsync(string jobID)
+    public static async Task GetJobId(string mapUri)
     {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.GetJob(System.String)
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job
-      #region How to get a job
+      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager
+      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager.GetJobId()
+      #region How to get the job Id associated with a map
 
-      // GetJob returns an existing job
-      // it is passed a valid job ID as an integer
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var job = jobManager.GetJob(jobID);
+      // Get the job Id associated with a map
+      mapUri = "myMapUri"; // Get a reference to a map using the ArcGIS.Desktop.Mapping API (active view, project item, etc.)
+      var jobManager = WorkflowClientModule.JobsManager;
+      var jobId = jobManager.GetJobId(mapUri);
       #endregion
     }
-
-    public static async Task GetJobAsync(Map map)
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.GetJob(ArcGIS.Desktop.Mapping.Map)
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job
-      #region How to get a job associated with a map
-
-      // Get a job associated with the map
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var job = jobManager.GetJob(map);
-      if (job != null)
-      {
-        // Job found, do something with the job
-        var jobId = job.ID;
-      }
-      #endregion
-    }
-
-    public static async Task CloseJobAsync(IReadOnlyList<string> jobIdsToClose)
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.CloseJobs(System.Collections.Generic.IReadOnlyList<System.String>)
-      #region How to close a job
-
-      // CloseJobs returns a list of closed job IDs
-      // it is passed a list of job IDs to close
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var jobIDs = jobManager.CloseJobs(jobIdsToClose);
-      #endregion
-    }
-
-    public static async Task AccessJobChangeItAsync(string jobID)
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.GetJob(System.String)
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job.Description
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job.Save()
-      #region How to access job info and change it
-
-      // You can change many of the exposed properties of a job and then save them
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var job = jobManager.GetJob(jobID);
-      job.Description = "This is a test";
-      job.Save();
-      #endregion
-    }
-
-    public static async void ExecuteStepOnJobAsync(string jobID)
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.GetJob(System.String)
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job.GetCurrentSteps()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job.CanExecuteStep(System.String)
-      // cref: ArcGIS.Desktop.Workflow.Models.JobModels.Job.ExecuteStep(System.String)
-      #region How to Execute a step on a job
-
-      // Gets the current step
-      // checks to see if it can execute it
-      // proceeds to do so if it can
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var job = jobManager.GetJob(jobID);
-      string stepID = job.GetCurrentSteps().First();
-      if (job.CanExecuteStep(stepID).Item1)
-        job.ExecuteStep(stepID);
-      #endregion
-    }
-    public static async Task ExecuteQueryAsync()
-    {
-      // cref: ArcGIS.Desktop.Workflow.WorkflowModule.ConnectAsync()
-      // cref: ArcGIS.Desktop.Workflow.Models.WorkflowConnection.GetManager()
-      // cref: ArcGIS.Desktop.Workflow.Models.JobsManager.ExecuteQuery(System.String)
-      #region How to execute a Query
-
-      // ExecuteQuery returns a query result
-      // Its passed either an ID or a name
-      var wfCon = await WorkflowModule.ConnectAsync();
-      var jobManager = wfCon.GetManager<JobsManager>();
-      var queryResultReturn = jobManager.ExecuteQuery("All Jobs");
-      #endregion
-    }
-
   }
 }

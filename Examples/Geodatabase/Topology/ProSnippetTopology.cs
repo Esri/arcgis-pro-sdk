@@ -431,9 +431,9 @@ namespace GeodatabaseSDK.Topo
 
     #endregion ExploreTopologyGraph
 
-    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.FindClosestElement
-    // cref: ArcGIS.Core.Data.Topology.BuildGraph
-    // cref: ArcGIS.Core.Data.Topology.GetExtent
+    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.FindClosestElement<T>
+    // cref: ArcGIS.Core.Data.Topology.Topology.BuildGraph
+    // cref: ArcGIS.Core.Data.Topology.Topology.GetExtent
     // cref: ArcGIS.Core.Data.Topology.TopologyElement
     // cref: ArcGIS.Core.Data.Topology.TopologyElement.GetParentFeatures
     // cref: ArcGIS.Core.Data.Topology.FeatureInfo.FeatureClassName

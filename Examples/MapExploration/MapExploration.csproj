@@ -76,5 +76,6 @@
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\DataReviewer\ArcGIS.Desktop.DataReviewer.dll</HintPath>
       <Private>False</Private>
     </Reference>
-  </ItemGroup> 
+  </ItemGroup>
+  <Import Project="C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets" Condition="Exists('C:\Program Files\ArcGIS\Pro\bin\Esri.ProApp.SDK.Desktop.targets') AND !Exists('Esri.ArcGISPro.Extensions.targets')" />
 </Project>

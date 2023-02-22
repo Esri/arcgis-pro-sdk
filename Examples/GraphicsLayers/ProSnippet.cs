@@ -18,7 +18,7 @@ namespace GraphicsLayerExamples
     public void CreateGraphicsLayer()
     {
       // cref: ArcGIS.Desktop.Mapping.GraphicsLayerCreationParams
-      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer<T>(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
       // cref: ArcGIS.Desktop.Mapping.LayerFactory
       // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateGroupLayer(ArcGIS.Desktop.Mapping.ILayerContainerEdit, System.Int32, System.String)
       #region Create GraphicsLayer
@@ -253,7 +253,7 @@ namespace GraphicsLayerExamples
 
     public void CreateTextGraphicElement()
     {
-      // cref: ArcGIS.Desktop.Mapping.GraphicsLayerExtensions.AddElement(GraphicsLayer,MapPoint,CIMTextSymbol,String,String,Boolean,ElementInfo)
+      // cref: ArcGIS.Desktop.Mapping.GraphicsLayerExtensions.AddElement(GraphicsLayer,MapPoint,String,CIMTextSymbol,String,Boolean,ElementInfo)
       #region Text Graphic Element
       var graphicsLayer = MapView.Active.Map.GetLayersAsFlattenedList()
                           .OfType<ArcGIS.Desktop.Mapping.GraphicsLayer>().FirstOrDefault();

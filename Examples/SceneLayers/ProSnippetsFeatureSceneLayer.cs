@@ -116,7 +116,7 @@ namespace ProSnippetsFeatureSceneLayer
 
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
       // cref: ArcGIS.Desktop.Mapping.MapView.SelectFeaturesEx
-      // cref: ArcGIS.Desktop.Editing.Inspector.Load
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.Load
       #region Select features via the MapView
 
       //assume the geometry used in SelectFeaturesEx() is coming from a 

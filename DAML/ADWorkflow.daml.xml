@@ -893,22 +893,22 @@
     <insertCondition id="esri_workflow_workflowIndividualDataWorkspaceCondition" caption="Configuration has an individual data workspace">
       <state id="esri_workflow_workflowIndividualDataWorkspaceState" />
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowCreateJobUserPrivilegeCondition" caption="A Worflow job can be created">
+    <insertCondition id="esri_workflow_workflowCreateJobUserPrivilegeCondition" caption="A Workflow job can be created">
       <state id="esri_workflow_workflowCreateJobUserPrivilegeState" />
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowAssignAnyJobUserPrivilegeCondition" caption="A Worflow job can be assigned">
+    <insertCondition id="esri_workflow_workflowAssignAnyJobUserPrivilegeCondition" caption="A Workflow job can be assigned">
       <state id="esri_workflow_workflowAssignAnyJobUserPrivilegeState" />
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowExportJobsUserPrivilegeCondition" caption="A Worflow job can be exported">
+    <insertCondition id="esri_workflow_workflowExportJobsUserPrivilegeCondition" caption="A Workflow job can be exported">
       <state id="esri_workflow_workflowExportJobsUserPrivilegeState" />
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowCloseJobUserPrivilegeCondition" caption="A Worflow job can be closed">
+    <insertCondition id="esri_workflow_workflowCloseJobUserPrivilegeCondition" caption="A Workflow job can be closed">
       <state id="esri_workflow_workflowCloseJobUserPrivilegeState" />
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowReopenJobUserPrivilegeCondition" caption="A Worflow job can be reopened">
+    <insertCondition id="esri_workflow_workflowReopenJobUserPrivilegeCondition" caption="A Workflow job can be reopened">
       <state id="esri_workflow_workflowCanReopenClosedJobsUserPrivilegeState" />
     </insertCondition>    
-    <insertCondition id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition" caption="A Worflow user can subscribe to notifications">
+    <insertCondition id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeCondition" caption="A Workflow user can subscribe to notifications">
       <state id="esri_workflow_workflowCanSubscribeToNotificationsUserPrivilegeState" />
     </insertCondition>
     <insertCondition id="esri_workflow_updateJobPropertiesCondition" caption="A Workflow user can update job properties">
@@ -962,19 +962,19 @@
     <insertCondition id="esri_workflow_inWorkflowTabCondition" caption="The user can use workflow diagram navigation tool">
       <state id="esri_workflow_inWorkflowTabState"/>
     </insertCondition>
-    <insertCondition id="esri_workflow_DeleteJobsEnabledCondition" caption="A Worflow job can be deleted">
+    <insertCondition id="esri_workflow_DeleteJobsEnabledCondition" caption="A Workflow job can be deleted">
       <and>
         <state id="esri_workflow_onlineState"/>
         <state id="esri_workflow_workflowDeleteJobsUserPrivilegeState" />
       </and>
     </insertCondition>
-    <insertCondition id="esri_workflow_DeleteVersionEnabledCondition" caption="A Worflow job version can be deleted">
+    <insertCondition id="esri_workflow_DeleteVersionEnabledCondition" caption="A Workflow job version can be deleted">
       <and>
         <state id="esri_workflow_onlineState"/>
         <state id="esri_workflow_workflowDeleteVersionUserPrivilegeState" />
       </and>
     </insertCondition>
-    <insertCondition id="esri_workflow_workflowDeleteMXDUserPrivilegeCondition" caption="A Worflow job map can be deleted">
+    <insertCondition id="esri_workflow_workflowDeleteMXDUserPrivilegeCondition" caption="A Workflow job map can be deleted">
       <state id="esri_workflow_workflowDeleteMXDUserPrivilegeState" />
     </insertCondition>
   </conditions>

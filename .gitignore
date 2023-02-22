@@ -1,3 +1,10 @@
+#Data
+*.gdb
+*.zip
+*.7z
+*.sqlite
+*.bak
+
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 [Bb]in/
 [Oo]bj/
@@ -109,24 +116,3 @@ Backup*/
 UpgradeLog*.XML
 *.sqlite
 /.vs
-/Examples/ArcGIS.Desktop.Workflow.lua
-/Examples/ArcGIS.Desktop.UtilityNetworks.lua
-/Examples/ArcGIS.Desktop.TaskAssistant.lua
-/Examples/ArcGIS.Desktop.Sharing.lua
-/Examples/ArcGIS.Desktop.ParcelFabric.lua
-/Examples/ArcGIS.Desktop.MapExploration.lua
-/Examples/ArcGIS.Desktop.MapAuthoring.lua
-/Examples/ArcGIS.Desktop.Layouts.lua
-/Examples/ArcGIS.Desktop.GeoProcessing.lua
-/Examples/ArcGIS.Desktop.Editing.lua
-/Examples/ArcGIS.Desktop.Content.lua
-/Examples/ArcGIS.CoreHost.lua
-/Examples/ArcGIS.Core.Geometry.lua
-/Examples/ArcGIS.Core.Data.Raster.lua
-/Examples/Framework.lua
-/Examples/GeodatabaseSDK.lua
-/Examples/SDKExamplesSln2019.lua
-/Examples/SDKExamplesSln2017.lua
-/Examples/SceneLayers.lua
-/Examples/RegionToExampleMap.csv
-/Examples/app.config

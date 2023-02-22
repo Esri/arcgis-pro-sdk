@@ -129,7 +129,7 @@ namespace ProSnippetsEditingFeatureSceneLayer
 
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
-      // cref: ArcGIS.Desktop.Editing.Inspector.Load
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.Load
       // cref: ArcGIS.Desktop.Editing.EditOperation.Modify
       #region Edit the attributes of a FeatureSceneLayer
       //must support editing!

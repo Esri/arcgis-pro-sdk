@@ -83,7 +83,7 @@ namespace SDKExamples
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
-      #region gp_environments
+      #region Setting environments, MakeEnvironmentArray
       // get the syntax of the tool from Python window or from tool help page
       string in_features = @"C:\data\data.gdb\HighwaysWeb84";
             string out_features = @"C:\data\data.gdb\HighwaysUTM";
@@ -110,12 +110,12 @@ namespace SDKExamples
         {
 
       // cref: ARCGIS.DESKTOP.FRAMEWORK.THREADING.TASKS.PROGRESSDIALOG
-      // cref: ARCGIS.DESKTOP.FRAMEWORK.THREADING.TASKS.PROGRESSDIALOG._ctor
+      // cref: ARCGIS.DESKTOP.FRAMEWORK.THREADING.TASKS.PROGRESSDIALOG.#ctor
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
-      #region progress_dialog
+      #region Running Geoprocessing Tool with ProgressDialog
 
       var progDlg = new ProgressDialog("Running Geoprocessing Tool", "Cancel", 100, true);
             progDlg.Show();
@@ -145,7 +145,7 @@ namespace SDKExamples
         {
             // cref: gp_events;ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(System.String,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Nullable{System.Threading.CancellationToken},ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler,ArcGIS.Desktop.Core.Geoprocessing.GPExecuteToolFlags)
             // cref: gp_events;ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler
-            #region gp_events
+            #region GPTool Execute Event Handler
 
             System.Threading.CancellationTokenSource _cts;
 
@@ -196,7 +196,7 @@ namespace SDKExamples
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
       // cref: message_box;ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ShowMessageBox(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Core.Geoprocessing.IGPMessage},System.String,ArcGIS.Desktop.Core.Geoprocessing.GPMessageBoxStyle,System.String,System.String,ArcGIS.Desktop.Framework.Contracts.ViewModelBase)
-      #region message_box
+      #region Geoprocessing specialized MessageBox
       var gp_result = await Geoprocessing.ExecuteToolAsync("management.GetCount", Geoprocessing.MakeValueArray(@"C:\data\f.gdb\hello"));
             // this icon shows up left of content_header
             string icon_src = @"C:\data\Icons\ModifyLink32.png";
@@ -208,7 +208,7 @@ namespace SDKExamples
         {
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       // cref: open_dialog;ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.OpenToolDialog(System.String,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Boolean,ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler)
-      #region open_dialog
+      #region Geoprocessing Open ToolDialog
       string input_points = @"C:\data\ca_ozone.gdb\ozone_points";
             string output_polys = @"C:\data\ca_ozone.gdb\ozone_buff";
             string buffer_dist = "2000 Meters";

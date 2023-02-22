@@ -185,6 +185,78 @@ namespace Content.Snippets
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.Project.GetRecentProjects()
+      #region Get Recent Projects
+      var recentProjects = ArcGIS.Desktop.Core.Project.GetRecentProjects();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.ClearRecentProjects()
+      #region Clear Recent Projects
+      ArcGIS.Desktop.Core.Project.ClearRecentProjects();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.RemoveRecentProject(string)
+      #region Remove a Recent Project
+      ArcGIS.Desktop.Core.Project.RemoveRecentProject(projectPath);
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.GetPinnedProjects()
+      #region Get Pinned Projects
+
+      var pinnedProjects = ArcGIS.Desktop.Core.Project.GetPinnedProjects();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.ClearPinnedProjects()
+      #region Clear Pinned Projects
+      ArcGIS.Desktop.Core.Project.ClearPinnedProjects();
+      #endregion
+
+      string projectPath2 = "";
+      // cref: ArcGIS.Desktop.Core.Project.PinProject(string)
+      // cref: ArcGIS.Desktop.Core.Project.UnpinProject(string)
+      #region Pin / UnPin Projects
+      ArcGIS.Desktop.Core.Project.PinProject(projectPath);
+      ArcGIS.Desktop.Core.Project.UnpinProject(projectPath2);
+
+      #endregion
+
+      string templatePath = "";
+      // cref: ArcGIS.Desktop.Core.Project.GetRecentProjectTemplates()
+      #region Get Recent Project Templates
+      var recentTemplates = ArcGIS.Desktop.Core.Project.GetRecentProjectTemplates();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.ClearRecentProjectTemplates()
+      #region Clear Recent Project Templates
+      ArcGIS.Desktop.Core.Project.ClearRecentProjectTemplates();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.RemoveRecentProjectTemplate(string)
+      #region Remove a Recent Project Template
+      ArcGIS.Desktop.Core.Project.RemoveRecentProjectTemplate(templatePath);
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.GetPinnedProjectTemplates()
+      #region Get Pinned Project Templates
+
+      var pinnedTemplates = ArcGIS.Desktop.Core.Project.GetPinnedProjectTemplates();
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.Project.ClearPinnedProjectTemplates()
+      #region Clear Pinned Project Templates
+      ArcGIS.Desktop.Core.Project.ClearPinnedProjectTemplates();
+      #endregion
+
+      string templatePath2 = "";
+      // cref: ArcGIS.Desktop.Core.Project.PinProjectTemplate(string)
+      // cref: ArcGIS.Desktop.Core.Project.UnpinTemplateProject(string)
+      #region Pin / UnPin Project Templates
+      ArcGIS.Desktop.Core.Project.PinProjectTemplate(templatePath);
+      ArcGIS.Desktop.Core.Project.UnpinTemplateProject(templatePath2);
+
+      #endregion
+
+
       #region ProSnippet Group: Project Items
       #endregion
 
@@ -214,7 +286,7 @@ namespace Content.Snippets
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all project items
       IEnumerable<Item> allProjectItems = Project.Current.GetItems<Item>();
       foreach (var pi in allProjectItems)
@@ -224,7 +296,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.MapProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all "MapProjectItems" for a project
       IEnumerable<MapProjectItem> newMapItemsContainer = project.GetItems<MapProjectItem>();
 
@@ -239,13 +311,13 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.MapProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific "MapProjectItem"
       MapProjectItem mapProjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("EuropeMap"));
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.StyleProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all "StyleProjectItems"
       IEnumerable<StyleProjectItem> newStyleItemsContainer = null;
       newStyleItemsContainer = Project.Current.GetItems<StyleProjectItem>();
@@ -256,7 +328,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.StyleProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific "StyleProjectItem"
       var container = Project.Current.GetItems<StyleProjectItem>();
       StyleProjectItem testStyle = container.FirstOrDefault(style => (style.Name == "ArcGIS 3D"));
@@ -266,7 +338,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.StyleProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get the "Favorite" StyleProjectItem
 
       var fav_style_item = await QueuedTask.Run(() =>
@@ -278,7 +350,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.GDBProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all "GDBProjectItems"
       IEnumerable<GDBProjectItem> newGDBItemsContainer = null;
       newGDBItemsContainer = Project.Current.GetItems<GDBProjectItem>();
@@ -289,13 +361,13 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.GDBProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific "GDBProjectItem"
       GDBProjectItem GDBProjItem = Project.Current.GetItems<GDBProjectItem>().FirstOrDefault(item => item.Name.Equals("myGDB"));
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all "ServerConnectionProjectItems"
       IEnumerable<ServerConnectionProjectItem> newServerConnections = null;
       newServerConnections = project.GetItems<ServerConnectionProjectItem>();
@@ -306,13 +378,13 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.ServerConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific "ServerConnectionProjectItem"
       ServerConnectionProjectItem serverProjItem = Project.Current.GetItems<ServerConnectionProjectItem>().FirstOrDefault(item => item.Name.Equals("myServer"));
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all folder connections in a project
       //Gets all the folder connections in the current project
       var projectFolders = Project.Current.GetItems<FolderConnectionProjectItem>();
@@ -323,7 +395,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific folder connection
       //Gets a specific folder connection in the current project
       FolderConnectionProjectItem myProjectFolder = Project.Current.GetItems<FolderConnectionProjectItem>().FirstOrDefault(folderPI => folderPI.Name.Equals("myDataFolder"));
@@ -339,13 +411,13 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Gets a specific "LayoutProjectItem"
       LayoutProjectItem layoutProjItem = Project.Current.GetItems<LayoutProjectItem>().FirstOrDefault(item => item.Name.Equals("myLayout"));
       #endregion
 
       // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all layouts in a project
       //Gets all the layouts in the current project
       var projectLayouts = Project.Current.GetItems<LayoutProjectItem>();
@@ -356,13 +428,13 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get a specific "GeoprocessingProjectItem"
       GeoprocessingProjectItem GPProjItem = Project.Current.GetItems<GeoprocessingProjectItem>().FirstOrDefault(item => item.Name.Equals("myToolbox"));
       #endregion
 
       // cref: ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Get all GeoprocessingProjectItems in a project
       //Gets all the GeoprocessingProjectItem in the current project
       var GPItems = Project.Current.GetItems<GeoprocessingProjectItem>();
@@ -373,7 +445,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       #region Search project for a specific item
       List<Item> _mxd = new List<Item>();
       //Gets all the folder connections in the current project
@@ -411,7 +483,7 @@ namespace Content.Snippets
       #endregion
 
       // cref: ArcGIS.Desktop.Catalog.FolderConnectionProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Core.Item.Refresh
       #region Refresh the child item for a folder connection Item
       var contentItem = Project.Current.GetItems<FolderConnectionProjectItem>().First();
@@ -554,7 +626,7 @@ namespace Content.Snippets
       #endregion
 
 
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Core.Project.GetCatalogPane
       // cref: ArcGIS.Desktop.Core.IProjectWindow
       // cref: ArcGIS.Desktop.Core.Project.ProjectItemContainers

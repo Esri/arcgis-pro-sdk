@@ -44,6 +44,7 @@ namespace ProSnippetsTasks
 
       #endregion
 
+      // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.CanOpenTaskFile(System.String)
       // cref: ArcGIS.Desktop.TaskAssistant.TaskAssistantFactory.OpenTaskFileAsync(System.String)
       // cref: ArcGIS.Desktop.TaskAssistant.Exceptions.OpenTaskException
       #region Open a Task File - .esriTasks file
@@ -54,7 +55,9 @@ namespace ProSnippetsTasks
         string taskFile = @"c:\Tasks\Get Started.esriTasks";
         //At 2.x -
         //System.Guid guid = await TaskAssistantModule.OpenTaskAsync(taskFile);
-        var guid = await TaskAssistantFactory.Instance.OpenTaskFileAsync(taskFile);
+        System.Guid guid;
+        if (TaskAssistantFactory.Instance.CanOpenTaskFile(taskFile))
+          guid = await TaskAssistantFactory.Instance.OpenTaskFileAsync(taskFile);
 
         // TODO - retain the guid returned for use with CloseTaskItemAsync
       }

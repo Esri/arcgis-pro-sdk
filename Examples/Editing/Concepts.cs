@@ -58,10 +58,12 @@ namespace EditingSDKExamples
         Name = "Create my feature"
       };
       op.Create(myTemplate, myGeometry);
-      op.Execute();
+      if (!op.IsEmpty)
+      {
+        var result = op.Execute(); //Execute will return true if the operation was successful and false if not.
+      }
 
       return Task.FromResult(true);
-
     }
 
     protected void UpdateAttrib()
@@ -89,7 +91,10 @@ namespace EditingSDKExamples
           Name = "Extend"
         };
         op.Modify(insp);
-        op.Execute();
+        if (!op.IsEmpty)
+        {
+          var result = op.Execute(); //Execute will return true if the operation was successful and false if not.
+        }
       });
     }
 

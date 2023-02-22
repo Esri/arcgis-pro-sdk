@@ -42,7 +42,7 @@ namespace MapAuthoring.RealtimeProSnippet
       await QueuedTask.Run(() =>
       {
         // cref: ArcGIS.Desktop.Mapping.StreamLayer
-        // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams._ctor(Uri)
+        // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.#ctor(Uri)
         // cref: ArcGIS.Desktop.Mapping.Layer.SetVisibility
         // cref: ARCGIS.DESKTOP.MAPPING.ILAYERFACTORY.CREATELAYER(URI,ILAYERCONTAINEREDIT,INT32,STRING)
         #region Create Stream Layer with URI
@@ -71,7 +71,7 @@ namespace MapAuthoring.RealtimeProSnippet
         // cref: ArcGIS.Desktop.Mapping.StreamLayer
         // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.DefinitionQuery
         // cref: ARCGIS.DESKTOP.MAPPING.LAYERFACTORY.CREATELAYER
-        // cref: ArcGIS.Desktop.Mapping.DefinitionQuery._ctor(String,String)
+        // cref: ArcGIS.Desktop.Mapping.DefinitionQuery.#ctor(String,String)
         #region Create a stream layer with a definition query
         //Must be on the QueuedTask
         var url = "https://geoeventsample1.esri.com:6443/arcgis/rest/services/AirportTraffics/StreamServer";
@@ -131,7 +131,7 @@ namespace MapAuthoring.RealtimeProSnippet
         //StreamLayer streamLayer = null;
         //
 
-        // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.IsVisible
+        // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.IsVisible
         // cref: ARCGIS.DESKTOP.MAPPING.LAYERFACTORY.CREATELAYER
         // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer
         // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.Fields
@@ -713,7 +713,7 @@ namespace MapAuthoring.RealtimeProSnippet
               }
             }
           }
-          catch (TaskCanceledException tce)
+          catch (TaskCanceledException )
           {
             //Handle cancellation as needed
           }
@@ -758,7 +758,7 @@ namespace MapAuthoring.RealtimeProSnippet
           }
         }
       }
-      catch (TaskCanceledException tce)
+      catch (TaskCanceledException )
       {
         //Handle cancellation as needed
       }
@@ -1004,7 +1004,7 @@ namespace MapAuthoring.RealtimeProSnippet
                 }
               }
             }
-            catch(TaskCanceledException tce)
+            catch(TaskCanceledException )
             {
               //Handle cancellation as needed
             }

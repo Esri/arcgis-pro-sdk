@@ -129,7 +129,7 @@ namespace ProSnippetsPointCloudSceneLayer
 
         // cref: ArcGIS.Desktop.Mapping.PointCloudFilterDefinition.FromCIM
         // cref: ArcGIS.Desktop.Mapping.PointCloudSceneLayer.GetFilters
-        // cref: ArcGIS.Desktop.Mapping.PointCloudSceneLayer.ReturnValues
+        // cref: ArcGIS.Desktop.Mapping.PointCloudFilterDefinition.ReturnValues
         // cref: ArcGIS.Core.CIM.PointCloudReturnType
         // cref: ArcGIS.Core.CIM.CIMPointCloudFilter
         // cref: ArcGIS.Core.CIM.CIMPointCloudReturnFilter
@@ -201,7 +201,7 @@ namespace ProSnippetsPointCloudSceneLayer
         // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp
         // cref: ArcGIS.Core.CIM.CIMPointCloudStretchRenderer
         // cref: ArcGIS.Core.CIM.CIMPointCloudStretchRenderer.ColorRamp
-        // cref: ArcGIS.Core.CIM.CIMPointCloudStretchRenderer.ColorModulation
+        // cref: ArcGIS.Core.CIM.CIMPointCloudRenderer.ColorModulation
         // cref: ArcGIS.Core.CIM.CIMColorRamp
         // cref: ArcGIS.Core.CIM.CIMColorModulationInfo
         // cref: ArcGIS.Core.CIM.CIMColorModulationInfo.MinValue
@@ -254,7 +254,7 @@ namespace ProSnippetsPointCloudSceneLayer
         // cref: ArcGIS.Desktop.Mapping.PointCloudSceneLayer.CreateRenderer
         // cref: ArcGIS.Desktop.Mapping.PointCloudSceneLayer.SetRenderer
         // cref: ArcGIS.Desktop.Mapping.PointCloudRendererType
-        // cref: ArcGIS.Desktop.Mapping.PointCloudRendererDefinition.Fields
+        // cref: ArcGIS.Desktop.Mapping.PointCloudRendererDefinition.Field
         // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem
         // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp
         // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.LOOKUPITEM

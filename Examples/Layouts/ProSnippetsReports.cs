@@ -246,7 +246,7 @@ namespace ReportAPITesting
     public static Task<bool> DeleteReport(string reportName)
     {
       // cref: ArcGIS.Desktop.Reports.ReportProjectItem
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Core.Project.RemoveItem
       #region Delete a report
       //Note: Call within QueuedTask.Run()

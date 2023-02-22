@@ -337,13 +337,15 @@
     <insertCondition id="esri_geodatabase_dummyConditionWhichIsAlwaysFalse" caption="">
       <state id="esri_geodatabase_dummyStateWhichIsAlwaysFalse" />
     </insertCondition>
-    <insertCondition id="esri_projectItem_openWorkspaceReplicaCondition" caption="">
+    <insertCondition id="esri_projectItem_openReplicaCondition" caption="">
       <and>
         <state id="esri_license_hasStandardLicenseState" />
         <or>
           <state id="catalog_database_fgdb" />
           <state id="catalog_database_egdb" />
           <state id="esri_projectItem_geoDatabase"/>
+          <state id="catalog_dataset_fgdb" />
+          <state id="catalog_dataset_egdb" />
         </or>
         <not>
           <state id="esri_projectItem_isInvalid"/>
@@ -389,12 +391,9 @@
         <not>
           <state id="esri_projectItem_isInvalid"/>
         </not>
-        <or>
-          <state id="esri_projectItem_connectedAsAdmin" />
-          <not>
-            <state id="esri_projectItem_connectedBranch" />
-          </not>
-        </or>
+        <not>
+          <state id="esri_projectItem_connectedBranch" />
+        </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_projectItem_openSubtypesCondition" caption="">
@@ -483,6 +482,14 @@
       <state id="esri_projectItem_managedMosaicDataset"/>
     </insertCondition>
 
+    <insertCondition id="esri_projectItem_gdbTrajectoryDatasetCondition" caption="">
+      <state id="esri_projectItem_gdbTrajectoryDataset"/>
+    </insertCondition>
+
+    <!--<insertCondition id="esri_projectItem_managedTrajectoryDatasetCondition" caption="">
+      <state id="esri_projectItem_managedTrajectoryDataset"/>
+    </insertCondition>-->
+
     <insertCondition id="esri_projectItem_SelectedItemIsParcelTopologyEnabledCondition">
       <and>
         <state id="esri_license_hasStandardLicenseState" />
@@ -520,10 +527,6 @@
 
     <insertCondition id="esri_parcel_SelectedSupportParcelTopologyRulesCondition">
       <state id="esri_projectItem_SelectedSupportParcelTopologyRules"/>
-    </insertCondition>
-
-    <insertCondition id="esri_projectItem_adminCondition">
-      <state id ="esri_projectItem_admin"/>
     </insertCondition>
 
     <insertCondition id="esri_locator_CanShowProperties">
@@ -612,6 +615,7 @@
           <type id="fgdb_fc_annotation" />
           <type id="fgdb_fc_dimension" />
           <type id="fgdb_fc_multipatch" />
+          <type id="fgdb_fc_catalog_dataset"/>
           <type id="egdb_fc_general" />
           <type id="egdb_fc_cdw" />
           <type id="egdb_fc_db" />
@@ -622,6 +626,7 @@
           <type id="egdb_fc_multipatch" />
           <type id="egdb_fc_annotation" />
           <type id="egdb_fc_dimension" />
+          <type id="egdb_fc_catalog_dataset"/>
           <type id="fgdb_relationship" />
           <type id="egdb_relationship" />
           <type id="mgdb_relationship" />
@@ -630,8 +635,19 @@
           <type id="egdb_cdw_table" />
           <type id="egdb_db_table" />
           <type id="oledb_table" />
+          <type id="mgdb_table" />
           <type id="dataset_fgdb" />
           <type id="dataset_egdb" />
+          <type id="mgdb_fc_general" />
+          <type id="mgdb_fc_point" />
+          <type id="mgdb_fc_line" />
+          <type id="mgdb_fc_polygon" />
+          <type id="mgdb_fc_multipoint" />
+          <type id="mgdb_fc_annotation" />
+          <type id="mgdb_fc_dimension" />
+          <type id="mgdb_fc_multipatch" />
+          <type id="mgdb_fc_catalog_dataset"/>
+          <type id="dataset_mgdb" />
         </content>
       </insertComponent>
 
@@ -762,6 +778,7 @@
             <type id="dataset_fgdb" contextMenuID="fgdbItemFeatureDatasetTypeMenu"/>
             <type id="raster_dataset_fgdb" contextMenuID="gdbItemRasterItemMenu" />
             <type id="mosaic_dataset_fgdb" contextMenuID="gdbItemMosaicDatasetTypeMenu" />
+            <type id="trajectory_dataset_fgdb" contextMenuID="gdbItemTrajectoryDatasetTypeMenu" />
             <type id="fgdb_fc_general" />
             <type id="fgdb_fc_point" contextMenuID="fgdbItemFeatureClassTypeMenu" />
             <type id="fgdb_fc_line" contextMenuID="fgdbItemFeatureClassTypeMenu" />
@@ -769,6 +786,7 @@
             <type id="fgdb_fc_multipoint" contextMenuID="fgdbItemFeatureClassTypeMenu" />
             <type id="fgdb_fc_multipatch" contextMenuID="fgdbItemFeatureClassTypeMenu" />
             <type id="fgdb_fc_annotation" contextMenuID="fgdbAnnotationItemFeatureClassTypeMenu" />
+            <type id="fgdb_fc_catalog_dataset" contextMenuID="fgdbCatalogDatasetItemFeatureClassTypeMenu" />
             <type id="fgdb_fc_dimension" contextMenuID="fgdbDimensionItemFeatureClassTypeMenu" />
             <type id="fgdb_relationship" contextMenuID="fgdbItemRelationshipClassTypeMenu" />
             <type id="fgdb_gn" contextMenuID="gdbItemGeometricNetworkTypeMenu" />
@@ -790,6 +808,7 @@
             <type id="mgdb_fc_multipoint" contextMenuID="mgdbItemFeatureClassTypeMenu" />
             <type id="mgdb_fc_multipatch" contextMenuID="mgdbItemFeatureClassTypeMenu" />
             <type id="mgdb_fc_annotation" contextMenuID="mgdbAnnotationFeatureClassTypeMenu" />
+            <type id="mgdb_fc_catalog_dataset" contextMenuID="mgdbCatalogDatasetItemFeatureClassTypeMenu" />
             <type id="mgdb_fc_dimension" contextMenuID="mgdbDimensionFeatureClassTypeMenu" />
             <type id="mgdb_relationship" contextMenuID="mgdbItemRelationshipClassTypeMenu" />
             <type id="mgdb_table" contextMenuID="mgdbItemTableTypeMenu" />
@@ -808,8 +827,9 @@
         <content>
           <supportedTypeIDs>
             <type id="dataset_egdb"  contextMenuID="egdbItemFeatureDatasetTypeMenu" />
-            <type id="raster_dataset_egdb" contextMenuID="gdbItemRasterItemMenu" />
-            <type id="mosaic_dataset_egdb" contextMenuID="gdbItemMosaicDatasetTypeMenu" />
+            <type id="raster_dataset_egdb" contextMenuID="egdbItemRasterItemMenu" />
+            <type id="mosaic_dataset_egdb" contextMenuID="egdbItemMosaicDatasetTypeMenu" />
+            <type id="trajectory_dataset_egdb" contextMenuID="egdbItemTrajectoryDatasetTypeMenu" />
             <type id="egdb_fc_general" contextMenuID="egdbGeneralItemFeatureClassTypeMenu"/>
             <type id="egdb_fc_cdw" contextMenuID="egdbCDWItemFeatureClassTypeMenu"/>
             <type id="egdb_fc_db" contextMenuID="egdbDBItemFeatureClassTypeMenu"/>
@@ -819,6 +839,7 @@
             <type id="egdb_fc_multipoint" contextMenuID="egdbItemFeatureClassTypeMenu" />
             <type id="egdb_fc_multipatch" contextMenuID="egdbItemFeatureClassTypeMenu" />
             <type id="egdb_fc_annotation" contextMenuID="egdbAnnotationItemFeatureClassTypeMenu" />
+            <type id="egdb_fc_catalog_dataset" contextMenuID="egdbCatalogDatasetItemFeatureClassTypeMenu" />
             <type id="egdb_fc_dimension" contextMenuID="egdbDimensionItemFeatureClassTypeMenu" />
             <type id="egdb_relationship" contextMenuID="egdbItemRelationshipTypeMenu" />
             <type id="egdb_gn" contextMenuID="gdbItemGeometricNetworkTypeMenu" />
@@ -870,6 +891,7 @@
             <type id="cad_fc_polyline" />
             <type id="cad_fc_polygon" />
             <type id="cad_fc_multipatch" />
+            <type id="cad_fc_annotation" />
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -917,6 +939,15 @@
           <supportedTypeIDs>
             <type id="file_kml" />
             <type id="file_kmz" />
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+
+      <!--ENC items-->
+      <insertComponent id="esri_itemInfoType_ENCItem" className="ArcGIS.Desktop.Internal.Catalog.ENCItem">
+        <content contextMenuID="ENCItemMenu">
+          <supportedTypeIDs>
+            <type id="file_000" />
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -980,6 +1011,7 @@
             <type id="service_sublayer_feature_multipatch" contextMenuID="serviceContentItemMenu" />
             <type id="service_sublayer_feature_annotation" contextMenuID="serviceContentItemMenu" />
             <type id="service_sublayer_feature_dimension" contextMenuID="serviceContentItemMenu" />
+            <type id="service_sublayer_feature_catalog_dataset" contextMenuID="serviceContentItemMenu" />
             <type id="service_sublayer_image" contextMenuID="imageServiceSubItemMenu" />
             <type id="service_sublayer_scene" contextMenuID="serviceContentItemMenu" />
             <type id="service_sub_table" contextMenuID="serviceContentItemMenu" />
@@ -996,6 +1028,7 @@
             <type id="mosaic_dataset_egdb" />
             -->
             <type id="mosaic_dataset_general" contextMenuID="gdbItemMosaicDatasetTypeMenu"/>
+            <!--<type id="trajectory_dataset_general" contextMenuID="gdbItemTrajectoryDatasetTypeMenu"/>-->
             <type id="raster_product" contextMenuID="rasterProductItemMenu"/>
             <type id="raster_afr" contextMenuID="rasterProductItemMenu"/>
             <type id="raster_file_general" />
@@ -1426,6 +1459,7 @@
             <type id="portal_pagx" contextMenuID="onlinePageXItemMenu" />
             <type id="portal_task" contextMenuID="onlineTaskItemMenu" />
             <type id="portal_rptx" contextMenuID="portalItemRPTXTypeMenu" />
+            <type id="portal_report_template" contextMenuID="portalReportTemplateItemTypeMenu" />
             <type id="portal_gpkx" contextMenuID="onlineGeoprocessingPackageItemMenu" />
             <type id="portal_gpk" contextMenuID="onlineGeoprocessingPackageItemMenu" />
             <type id="portal_url_geocodingservice" contextMenuID="locatorItemMenu" />
@@ -1473,6 +1507,7 @@
             <type id="portal_url_webstyle" contextMenuID="esri_mapping_webStylxContextMenu" />
             <type id="portal_dlpk" contextMenuID="portalDLPKPackageItemMenu"/>
             <type id="portal_cad_dataset" contextMenuID="onlineItemMenu"/>
+            <type id="portal_ecd" contextMenuID="" />
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -1539,6 +1574,7 @@
             <type id="portal_sublayer_feature" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_anno" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_dimension" contextMenuID="onlineSubLayerItemMenu" />
+            <type id="portal_sublayer_feature_catalog_dataset" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_trace_network" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_point" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_line" contextMenuID="onlineSubLayerItemMenu" />
@@ -1547,6 +1583,7 @@
             <type id="portal_sublayer_feature_hosted" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_hosted_anno" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_hosted_dimension" contextMenuID="onlineSubLayerItemMenu" />
+            <type id="portal_sublayer_feature_hosted_catalog_dataset" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_hosted_trace_network" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_hosted_point" contextMenuID="onlineSubLayerItemMenu" />
             <type id="portal_sublayer_feature_hosted_line" contextMenuID="onlineSubLayerItemMenu" />
@@ -1861,6 +1898,12 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
             Show project item manage page.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_mosaicDatasetManageButton" className="esri_propertyPage_module:ShowProjectItemManagePage" caption="Manage"
+                extendedCaption="Shows the manage page of the project item" loadOnClick="false">
+          <tooltip heading="Manage">
+            Show project item manage page.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_projectItemManageButton" className="esri_database_module:ShowProjectItemManagePage" caption="Manage"
                 extendedCaption="Shows the manage page of the geodatabase" loadOnClick="false" condition="esri_projectItem_IsFileGDB">
           <tooltip heading="Manage">
@@ -2047,7 +2090,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         
         <menu id="folderConnectionItemMenu" caption="Folder Connection" extendedCaption="Context menu for folder connections">
-          <button refID="FolderConnectionProjectNewItemMenu" />
+          <button refID="FolderConnectionProjectNewItemMenu" separator="true"/>
           <menu refID="esri_makeDefaultFolderConnectionSubMenu" inline="true" separator="true"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
@@ -2062,7 +2105,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
 
         <menu id="folderGeneralItemMenu" caption="Folder General Item" extendedCaption="Context menu for folders within a folder connection">
-          <button refID="FolderConnectionProjectNewItemMenu"/>
+          <button refID="FolderConnectionProjectNewItemMenu" separator="true"/>
           <button refID="esri_core_addToProject" separator="true"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
@@ -2501,6 +2544,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="FileGDBAndEGDBFeatureClassExportItemMenu"/>
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2538,6 +2582,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <menu id="fgdbItemRelationshipClassTypeMenu" caption="Geodatabase Relationship Class" extendedCaption="Context menu for file geodatabase relationship classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_gdbItemManageButton" separator="true"/>
+          <button refID="esri_ReplicasViewButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2576,6 +2621,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2586,8 +2632,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <menu id="egdbItemRelationshipTypeMenu" caption="Geodatabase Relationship" extendedCaption="Context menu for enterprise geodatabase relationships">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_gdbItemManageButton" separator="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
+          <button refID="esri_gdbItemManageButton" separator="true"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCopyButton"  separator="true"/>
           <button refID="esri_core_editCopyPaths"/>
           <button refID="esri_core_editDeleteButton" separator="true"/>
@@ -2598,23 +2645,29 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <menu id="egdbGeneralItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for unregistered enterprise geodatabase feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="EGDBGeneralItemFeatureClassTypeExportItemMenu" separator="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
+          <button refID="esri_ReplicasViewButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="egdbCDWItemFeatureClassTypeMenu" caption="Feature Class" extendedCaption="Context menu for CDW feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
+          <button refID="esri_ReplicasViewButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -2623,7 +2676,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true"/>
           <button refID="EGDBGeneralItemFeatureClassTypeExportItemMenu" separator="true"/>
+          <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2639,6 +2694,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2668,6 +2724,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2679,17 +2736,67 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <menu id="mgdbAnnotationFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for sqlite feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_mapping_annotationFeatureClassProperties" separator="true"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
-        </menu>        
+        </menu>
+        <menu id="fgdbCatalogDatasetItemFeatureClassTypeMenu" caption="Geodatabase Catalog Dataset" extendedCaption="Context menu for file geodatabase catalog dataset feature classes">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" separator="true"/>
+          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
+          <button refID="esri_GDBCatalogDataset_AddItemsButton" separator="true"/>
+          <button refID="esri_GDBCatalogDataset_AddPortalItemsButton" />
+          <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
+          <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="egdbCatalogDatasetItemFeatureClassTypeMenu" caption="Geodatabase Catalog Dataset" extendedCaption="Context menu for enterprise geodatabase catalog dataset feature classes">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" />
+          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu" inline="true" />
+          <button refID="esri_GDBCatalogDataset_AddItemsButton" separator="true"/>
+          <button refID="esri_GDBCatalogDataset_AddPortalItemsButton" />
+          <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
+          <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_PrivilegesButton"/>
+          <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true" />
+        </menu>
+        <menu id="mgdbCatalogDatasetItemFeatureClassTypeMenu" caption="Geodatabase Catalog Dataset" extendedCaption="Context menu for sqlite catalog dataset feature classes">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
+          <button refID="esri_GDBCatalogDataset_AddItemsButton" separator="true"/>
+          <button refID="esri_GDBCatalogDataset_AddPortalItemsButton" />
+          <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
+          <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
         <menu id="fgdbDimensionItemFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for file geodatabase feature classes and utility networks">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -2711,6 +2818,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2722,12 +2830,14 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <menu id="mgdbDimensionFeatureClassTypeMenu" caption="Geodatabase Feature Class" extendedCaption="Context menu for mobile geodatabase feature classes">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_mapping_dimensionFeatureClassProperties" separator="true"/>
@@ -2840,6 +2950,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_mapping_generalGeocodeTableButton"/>
           <button refID="FileGDBAndEGDBItemTableTypeExportItemMenu"/>
           <dynamicMenu refID="esri_gdbItemManageDynamicMenu" inline="true"/>
+          <button refID="esri_ReplicasViewButton"/>
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
@@ -2870,6 +2981,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -2880,26 +2992,33 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <menu id="egdbCDWItemTableTypeMenu" caption="Table" extendedCaption="Context menu for CDW tables">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton" />
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_PrivilegesButton"/>
+          <button refID="esri_ReplicasViewButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="egdbDBItemTableTypeMenu" caption="Table" extendedCaption="Context menu for enterprise database tables">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
-          <button refID="FileGDBAndEGDBItemTableTypeExportItemMenu" separator="true"/>
+          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" separator="true"/>
           <button refID="esri_mapping_generalGeocodeTableButton"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
-          <button refID="esri_core_rename"/>
-          <button refID="esri_core_editDeleteButton" />
-          <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
+          <button refID="FileGDBAndEGDBItemTableTypeExportItemMenu" />
+          <dynamicMenu refID="esri_gdbItemRegisterWithGdbDynamicMenu" inline="true"/>
           <button refID="esri_PrivilegesButton"/>
           <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_ReplicasViewButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
@@ -3036,6 +3155,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_core_editDeleteButton" separator="true"/>
         </menu>
+        <menu id="portalReportTemplateItemTypeMenu" caption="Online Report Template" extendedCaption="Context menu for Online Report Template">
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+        </menu>
         <menu id="shapefileItemMenu" caption="Shapefile" extendedCaption="Context menu for shapefiles">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true" separator="true"/>
           <dynamicMenu refID="esri_projectItemOpenDesignViewMenu"  inline="true"/>
@@ -3050,6 +3172,16 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
         <menu id="googleEarthItemMenu" caption="Google Earth File" extendedCaption="Context menu for Google Earth files">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
+          <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
+        </menu>
+        <menu id="ENCItemMenu" caption="ENC File" extendedCaption="Context menu for ENC files">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton"/>
@@ -3104,13 +3236,12 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <menu id="BigDataContainerMenu" caption="Project Multifile Feature Connection Container" extendedCaption="Context menu for the Multifile Feature Connection container in the project">
           <button refID="esri_bdc_addExistingBDConnectionButton" />
           <button refID="esri_bdc_newBigDataConnectionButton" />
-          <!--<button refID="esri_core_editPasteButton" separator="true"/>-->
           <button refID="esri_itemInfoRefreshButton" separator="true"/>
         </menu>
         <menu id="bigDataFileItemMenuDefault" caption="Table" extendedCaption="Context menu for Multifile Feature Connection files">
           <button refID="esri_projectItemAddToProjectButton" separator="true"/>
-          <!--<button refID="esri_core_removeFromProject" separator="true"/>-->
           <button refID="esri_itemInfoRefreshButton" separator="true"/>
+          <button refID="esri_mfcSyncDatasetsButton"/>
           <button refID="esri_core_editCutButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -3118,23 +3249,24 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_core_openFileLocation"/>
-          <!--<button refID="esri_projectItemPropertiesButton" separator="true"/>-->
         </menu>
           <menu id="bigDataFileProjectItemMenu" caption="Table" extendedCaption="Context menu for Multifile Feature Connection files">
-          <button refID="esri_core_removeFromProject" separator="true"/>
+          <button refID="esri_core_removeFromProject" />
           <button refID="esri_itemInfoRefreshButton" separator="true"/>
-          <!--<button refID="esri_core_editCutButton" separator="true"/>-->
+          <button refID="esri_mfcSyncDatasetsButton"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_core_editCopyPaths"/>
           <button refID="esri_core_editPasteButton"/>
           <button refID="esri_core_editDeleteButton" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_core_openFileLocation"/>
-          <!--<button refID="esri_projectItemPropertiesButton" separator="true"/>-->
         </menu>
         <menu id="bigDataItemMenu" caption="Table" extendedCaption="Context menu for Multifile Feature Connection file items">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <button refID="esri_core_editCopyPaths" separator="true"/>
+          <button refID="esri_mfcItemRemoveButton" separator="true"/>
+          <button refID="esri_mfcItemDuplicateButton"/>
+          <button refID="esri_mfcItemPreviewButton"/>
           <button refID="esri_bdcItemPropertiesButton" separator="true"/>
         </menu>
 
@@ -3282,11 +3414,22 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
           <!--  <button refID="esri_core_editDeleteButton" /> -->
         </menu>
-        <menu id="gdbItemRasterItemMenu" caption="GDB Raster" extendedCaption="Context menu for geodatabase raster datasets">
+        <menu id="gdbItemRasterItemMenu" caption="GDB Raster" extendedCaption="Context menu for file geodatabase raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
         </menu>
-        <menu id="gdbItemMosaicDatasetTypeMenu" caption="Mosaic Dataset" contextMenu="true" extendedCaption="Context menu for mosaic datasets">
+        <menu id="egdbItemRasterItemMenu" caption="GDB Raster" extendedCaption="Context menu for enterprise geodatabase raster datasets">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_PrivilegesButton" separator="true"/>
+        </menu>
+        <menu id="gdbItemMosaicDatasetTypeMenu" caption="Mosaic Dataset" contextMenu="true" extendedCaption="Context menu for file geodatabase mosaic datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_mosaicDatasetManageButton" separator="true"/>
+        </menu>
+        <menu id="egdbItemMosaicDatasetTypeMenu" caption="Mosaic Dataset" contextMenu="true" extendedCaption="Context menu for enterprise geodatabase mosaic datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_mosaicDatasetManageButton" separator="true"/>
+          <button refID="esri_PrivilegesButton"/>
+          <menu refID="esri_EGDBItemLocksButton"/>
         </menu>
         <menu id="imageServiceItemMenu" caption="Image Service" contextMenu="true" extendedCaption="Context menu for ArcGIS Server image services">
           <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
@@ -3302,6 +3445,19 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <!-- <button refID="esri_core_editDeleteButton" /> -->
           <!--<button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>-->
+        </menu>
+
+        <menu id="gdbItemTrajectoryDatasetTypeMenu" caption="Trajectory Dataset" contextMenu="true" extendedCaption="Context menu for file geodatabase trajectory datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_mosaicDatasetManageButton" separator="true"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
+        </menu>
+        <menu id="egdbItemTrajectoryDatasetTypeMenu" caption="Trajectory Dataset" contextMenu="true" extendedCaption="Context menu for enterprise geodatabase trajectory datasets">
+          <dynamicMenu refID="esri_projectItemAddToMapDynamicMenu" inline="true"/>
+          <button refID="esri_mosaicDatasetManageButton" separator="true"/>
+          <button refID="esri_PrivilegesButton"/>
+          <menu refID="esri_EGDBItemLocksButton"/>
+          <button refID="esri_projectItemPropertiesButton" separator="true"/>
         </menu>
 
         <!-- context menus specific to the browse dialog -->
@@ -3360,18 +3516,20 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <!-- Database connections from the project (dynamically changed in GDBProjectItem)-->
         <menu id="EGDBProjectItemDatabaseMenu" caption="Enterprise Geodatabase Connection" extendedCaption="Context menu for enterprise databases added to a project">
+          <button refID="GDBProjectNewItemDatabaseMenu"/>
+          <button refID="esri_GDBRemoveButton"  separator="true"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <dynamicMenu refID="esri_projectItemGDBProjectNewImportExportItemDatabaseDynamicMenu" inline="true"/>
+          <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
+          <button refID="EGDBProjectItemMenuExportMenu"/>
+          <button refID="esri_itemInfoRefreshButton" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_GDBPasteToDatabase" />
           <button refID="esri_GDBPasteSpecialToDatabase" />
-          <button refID="esri_core_rename"  />
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_core_openFileLocation"/>
-          <button refID="esri_itemInfoRefreshButton" />
-          <button refID="esri_GDBRemoveButton"/>
-          <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_GDBDatabaseConnectionPropertiesButton" separator="true"/>
           <dynamicMenu refID="esri_projectItemEnableGeodatabaseDynamicMenu" inline="true"/>
           <button refID="esri_DatabasePropertiesButton" separator="true"/>
@@ -3662,9 +3820,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
         <menu id="VariableListContainerMenu" caption="Project Huff Model  Container" extendedCaption="Context menu for the huff model container in the project" hidden="true">
         </menu>
-        <menu id="BusinessAnalystContainerAddSubMenu" caption="Add" extendedCaption="Add Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAdd16.png" hidden="true">
+        <menu id="BusinessAnalystContainerAddSubMenu" caption="Add" extendedCaption="Add Business Analyst item" smallImage="GenericAdd16" hidden="true">
         </menu>
-        <menu id="BusinessAnalystContainerNewSubMenu" caption="New" extendedCaption="Create new Business Analyst item" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png" hidden="true">
+        <menu id="BusinessAnalystContainerNewSubMenu" caption="New" extendedCaption="Create new Business Analyst item" smallImage="GenericNewSparkleLarge16" hidden="true">
         </menu>
         <menu id="BusinessAnalystContainerMenu" caption="Project Business Analyst Container" extendedCaption="Context menu for the business analyst container in the project" hidden="true">
           <menu refID="BusinessAnalystContainerAddSubMenu" />
@@ -3679,8 +3837,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_GDBCreateRelationshipClassButton" />
           <button refID="esri_GDBCreateRasterDatasetButton" />
           <button refID="esri_GDBCreateMosaicDatasetButton" />
+          <button refID="esri_GDBCreateTrajectoryDatasetButton" />
+          <button refID="esri_GDBCreateCatalogDatasetButton" />
           <button refID="esri_GDBCreateNewToolboxButton" />
-          <dynamicMenu refID="esri_catalog_createCatalogDatasetDynamicMenu" inline="true"/>
         </menu>
         <menu id="MGDBProjectNewItemMenu" caption="New" contextMenu="true" extendedCaption="Context menu submenu for creating new items in a mobile geodatabase" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
           <button refID="esri_GDBCreateFeatureDatasetButton" />
@@ -3688,6 +3847,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_GDBCreateTableButton" />
           <button refID="esri_GDBCreateDatabaseViewButton" />
           <button refID="esri_GDBCreateRelationshipClassButton" />
+          <button refID="esri_GDBCreateCatalogDatasetButton" />
           <!--<button refID="esri_GDBCreateRasterDatasetButton" />
           <button refID="esri_GDBCreateMosaicDatasetButton" />-->
           <!--<button refID="esri_GDBCreateNewToolboxButtonInFolder" separator="true"/>-->
@@ -3705,8 +3865,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_GDBCreateRelationshipClassButton" />
           <button refID="esri_GDBCreateRasterDatasetButton" />
           <button refID="esri_GDBCreateMosaicDatasetButton" />
+          <button refID="esri_GDBCreateTrajectoryDatasetButton" />
+          <button refID="esri_GDBCreateCatalogDatasetButton" />
           <button refID="esri_GDBCreateNewToolboxButton" />
-          <dynamicMenu refID="esri_catalog_createCatalogDatasetDynamicMenu" inline="true"/>
         </menu>
         <menu id="NewGeodatabaseItemMenu" caption="New Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for adding new local datasources" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png" keytip="NG">
           <button refID="esri_geodatabase_newGeoDatabaseButton_contextMenu"/>
@@ -3731,6 +3892,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_ExportAcknowledgmentMessageReplicasButton"/>
           <button refID="esri_ImportMessageReplicasButton"/>
           <button refID="esri_ReExportUnacknowledgedMessagesReplicasButton" separator="true"/>
+          <button refID="esri_ImportSchemaChangesReplicasButton" separator="true"/>
+          <button refID="esri_ExportReplicaSchemaReplicasButton"/>
+          <button refID="esri_CompareReplicaSchemaReplicasButton" separator="true"/>
           <button refID="esri_ReplicasViewButton" separator="true"/>
         </menu>
         <menu id="EGDBDistributedGeodatabaseMenu" caption="Distributed Geodatabase" contextMenu="true" extendedCaption="Context menu submenu for managing items for a distributed Geodatabase">
@@ -3740,6 +3904,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_ExportAcknowledgmentMessageReplicasButton"/>
           <button refID="esri_ImportMessageReplicasButton"/>
           <button refID="esri_ReExportUnacknowledgedMessagesReplicasButton" separator="true"/>
+          <button refID="esri_ImportSchemaChangesReplicasButton" separator="true"/>
+          <button refID="esri_ExportReplicaSchemaReplicasButton"/>
+          <button refID="esri_CompareReplicaSchemaReplicasButton"/>
           <button refID="esri_ReplicasViewButton" separator="true"/>
         </menu>
         <menu id="EGDBAdministrationMenu" caption="Administration" contextMenu="true" extendedCaption="Context menu submenu for administration options for a distributed geodatabase">
@@ -3918,8 +4085,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_projectItemAddNewACSConnection"/>
         </menu>
         <menu id="esri_geodatabase_insertStats" caption="Statistical Data Collection" keytip="SD"
-              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxAdd32.png"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxAdd16.png">
+              largeImage="SdcxAdd32"
+              smallImage="SdcxAdd16">
           <button refID="esri_projectItemAddExistingStatisticalDataCollection"/>
           <button refID="esri_projectItemCreateStatisticalDataCollectionButton"/>
         </menu>
@@ -3932,7 +4099,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_dataReviewer_addReviewerConnectionButton"/>
         </menu>
         <menu id="esri_geodatabase_insertMenu" caption="Connections" extendedCaption="Ribbon menu for adding new items to a project"
-              keytip="C"
+              keytip="C" helpContextID="120003955"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseAdd32.png"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseAdd16.png">
           <tooltip heading="Add Connection">
@@ -4036,7 +4203,6 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_core_rename"/>
           <button refID="esri_core_openFileLocation"/>
           <menu refID="esri_metadataSubMenu" inline="true" separator="true"/>
-          <button refID="esri_fullmotionvideo_openDataSourcePropertiesButton" separator="true"/>
         </menu>
 
         <menu id="esri_manageParcelFabricItemMenu" caption="Manage" extendedCaption="Context menu submenu providing parcel fabric management options" contextMenu="true">
@@ -4071,7 +4237,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
                 caption="Remove From Project" extendedCaption="Remove a server connection from the project; on server connection context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="V">
           <tooltip heading="">Remove the server connection from the project.</tooltip>
         </button>
         <button id="esri_projectItemAddExistingServerConnection" className="esri_geodatabase_module:AddExistingServerConnection" caption="Add Server" keytip="AS" extendedCaption="Add an existing Server connection to the project; on Project Servers container context menu." condition="esri_mapping_openProjectCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerGenericAdd16.png" helpContextID="">
@@ -4156,8 +4322,8 @@ A new server connection file is created in the project's home folder and is refe
         </button>
         <button id="esri_projectItemCreateStatisticalDataCollectionButton" className="esri_businessAnalyst_Module:NewSDCXOnClick" caption="New Statistical Data Collection" extendedCaption="Create new Statistical Data Collection file in the project; on ribbon." helpContextID="" keytip="ND"
                 condition="esri_license_hasBusinessAnalystLicenseAndOpenMapProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxNew16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxNew32.png">
+                smallImage="SdcxNew16"
+                largeImage="SdcxNew32">
           <tooltip heading="New Statistical Data Collection">
             Create new Statistical Data Collection.
 
@@ -4168,8 +4334,8 @@ The project saves a reference to the statistical data collection file.
 
         <button id="esri_projectItemAddExistingStatisticalDataCollection" className="esri_businessAnalyst_Module:AddSDCXOnClick" caption="Add Statistical Data Collection" extendedCaption="Add an existing Statistical Data Collection to the project; on Statistical Data Collections container context menu." helpContextID="" keytip="SD"
                 condition="esri_license_hasBusinessAnalystLicenseAndOpenMapProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxAdd16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxAdd32.png">
+                smallImage="SdcxAdd16"
+                largeImage="SdcxAdd32">
           <tooltip heading="Add Statistical Data Collection">
             Add an existing statistical data collection file to the project.
 
@@ -4180,7 +4346,7 @@ The project saves a reference to the statistical data collection file.
         <button id="esri_projectItemStatisticalDataCollectionRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove" extendedCaption="Remove a statistical data collection from the project"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
+                smallImage="GenericDeleteBlack16"
                 helpContextID=""
                 hidden="true">
           <tooltip heading="">Remove the statistical data collection from the project.</tooltip>
@@ -4188,23 +4354,23 @@ The project saves a reference to the statistical data collection file.
         <button id="esri_projectItemSDCXItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove From Project" extendedCaption="Remove a Statistical Data Collection item from the project; on Statistical Data Collection context menu"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID=""
+                smallImage="GenericDeleteBlack16"
+                helpContextID="" menuKeytip="V"
                 hidden="true">
           <tooltip heading="">Remove the Statistical Data Collection item from the project.</tooltip>
         </button>
         <button id="esri_projectItemSegmentationTargetGroupItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove From Project" extendedCaption="Remove a Segmentation Target Group item from the project; on Remove a Segmentation Target Group context menu"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID=""
+                smallImage="GenericDeleteBlack16"
+                helpContextID="" menuKeytip="V"
                 hidden="true">
           <tooltip heading="">Remove the Segmentation Target Group item from the project.</tooltip>
         </button>
         <button id="esri_projectItemSegmentationProfileItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
-                caption="Remove" extendedCaption="Remove a Segmentation Profile item from the project; on Remove a Segmentation Profile context menu"
+                caption="Remove From Project" extendedCaption="Remove a Segmentation Profile item from the project; on Remove a Segmentation Profile context menu"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
+                smallImage="GenericDeleteBlack16"
                 helpContextID=""
                 hidden="true">
           <tooltip heading="">Remove the Segmentation Profile item from the project.</tooltip>
@@ -4212,16 +4378,16 @@ The project saves a reference to the statistical data collection file.
         <button id="esri_projectItemHuffModelItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove From Project" extendedCaption="Remove a Huff Model Calibration item from the project; on Remove a Huff Model Calibration context menu"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID=""
+                smallImage="GenericDeleteBlack16"
+                helpContextID="" menuKeytip="V"
                 hidden="true">
           <tooltip heading="">Remove the Huff Model Calibration item from the project.</tooltip>
         </button>
         <button id="esri_projectItemVariableListItemRemove" className="esri_core_module:RemoveProjectItem"  loadOnClick="false"
                 caption="Remove From Project" extendedCaption="Remove a Variable List item from the project; on Remove a Variable List context menu"
                 condition="esri_mapping_openProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID=""
+                smallImage="GenericDeleteBlack16"
+                helpContextID="" menuKeytip="V"
                 hidden="true">
           <tooltip heading="">Remove the Variable List item from the project.</tooltip>
         </button>
@@ -4240,7 +4406,7 @@ The project saves a reference to the statistical data collection file.
                 caption="Remove From Project" extendedCaption="Remove a folder connection from the project; on folder connection context menu"
                 condition="esri_projectItem_DefaultFolderSelectedCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="V">
           <tooltip heading="">
             Remove the folder connection from the project.<disabledText></disabledText>
           </tooltip>
@@ -4249,7 +4415,7 @@ The project saves a reference to the statistical data collection file.
                 caption="Remove From Project" extendedCaption="Remove a locator from the project; on locator context menu"
                 condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="V">
           <tooltip heading="">
             Remove the locator from the project.<disabledText></disabledText>
           </tooltip>
@@ -4274,7 +4440,7 @@ The project saves a reference to the statistical data collection file.
                 extendedCaption="Remove a geodatabase from the project; on geodatabase context menus"
                 condition="esri_projectItem_DefaultGDBIsNotSelectedCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="V">
           <tooltip heading="">
             Remove the item from the project. The project's reference to the file geodatabase or database connection file is removed. The file geodatabase or database connection file is not deleted.<disabledText></disabledText>
           </tooltip>
@@ -4385,16 +4551,6 @@ The project saves a reference to the statistical data collection file.
                 smallImage="" helpContextID="">
           <tooltip heading="">
             Convert one or more feature classes into a geodatabase.<disabledText></disabledText>
-          </tooltip>
-        </button>
-
-        <button id="esri_GDBTablesExportToGeodatabaseButton" className="esri_geodatabase_module:gdbExportTableToGeodatabase"
-                caption="Table(s) To Geodatabase..." loadOnClick="false"
-                condition="esri_projectItem_isValidCondition"
-                extendedCaption="Export one or more tables to a geodatabase table.; in Export context menu for geodatabases and feature datasets"
-                smallImage="" helpContextID="">
-          <tooltip heading="">
-            Convert one or more tables to a geodatabase table.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -4544,6 +4700,24 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
+        <button id="esri_GDBCatalogDataset_AddItemsButton" className="esri_geodatabase_module:gdbAddItemsToCatalogDataset"
+                caption="Add Items"
+                extendedCaption="Add items to catalog dataset."
+                smallImage="" helpContextID="">
+          <tooltip heading="">
+            Add items to catalog dataset.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_GDBCatalogDataset_AddPortalItemsButton" className="esri_geodatabase_module:gdbAddPortalItemsToCatalogDataset"
+        caption="Add Portal Items"
+        extendedCaption="Add portal items to catalog dataset."
+        smallImage="" helpContextID="">
+          <tooltip heading="">
+            Add portal items to catalog dataset.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_GDBCreateFeatureClassButton" className="esri_geodatabase_module:gdbLaunchCreateFeatureClassWizard"
                 caption="Feature Class" loadOnClick="false"
                 extendedCaption="Create a new feature class in a geodatabase; in New context menu for geodatabases and feature datasets"
@@ -4559,7 +4733,7 @@ The project saves a reference to the statistical data collection file.
                 caption="Catalog Dataset" loadOnClick="false"
                 extendedCaption="Create a new catalog dataset in a geodatabase; in New context menu for geodatabases and feature datasets"
                 condition="esri_projectItem_IsOnlyLocalGDBorEnterpriseGDBWithStandardLicenseCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseFeatureClassPolygon16.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogDataset16.png"
                 helpContextID="" keytip="CD" hidden="true">
           <tooltip heading="">
             Create a new catalog dataset in the geodatabase.<disabledText></disabledText>
@@ -4633,6 +4807,17 @@ The project saves a reference to the statistical data collection file.
                 helpContextID="" keytip="M">
           <tooltip heading="">
             Create a new mosaic dataset in the geodatabase.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_GDBCreateTrajectoryDatasetButton" loadOnClick="false"
+                className="esri_geoprocessing_module:Commands.gdbCreateTrajectoryDataset"
+                caption="Trajectory Dataset"
+                extendedCaption="Create a new trajectory dataset in a geodatabase; in New context menu for geodatabases"
+                condition="esri_license_HasStandardLicenseAndNotNonGDBItemCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TrajectoryDataset16.png"
+                helpContextID="" keytip="T">
+          <tooltip heading="">
+            Create a new trajectory dataset in the geodatabase.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_GDBCreateNewToolboxButton"
@@ -4744,7 +4929,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_GDBPasteToDatabase"
-                className="ArcGIS.Desktop.Framework.PasteCMD" assembly="ArcGIS.Desktop.Framework.dll" loadOnClick="false"
+                className="ArcGIS.Desktop.Framework.PasteCMD" assembly="ArcGIS.Desktop.Framework.dll" loadOnClick="false" menuKeytip="P"
                 caption="Paste" extendedCaption="Paste the item on the clipboard to a geodatabase; on context menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" helpContextID="">
           <tooltip heading="">
@@ -4752,7 +4937,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_GDBPasteSpecialToDatabase" className="ArcGIS.Desktop.Framework.PasteSpecialCMD" assembly="ArcGIS.Desktop.Framework.dll" loadOnClick="false"
-                caption="Paste Special" extendedCaption="Paste the item on the clipboard to a geodatabase; on context menu"
+                caption="Paste Special" menuKeytip="S" extendedCaption="Paste the item on the clipboard to a geodatabase; on context menu"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" helpContextID="120001196">
           <tooltip heading="">
             Paste the copied item(s) with an option to change the target item name(s) and configuration keyword.<disabledText></disabledText>
@@ -4925,14 +5110,19 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
-        <button id="esri_removeFavoriteButton" className="esri_core_module:RemoveFavorite" caption="Remove From Favorites" extendedCaption="Remove the item from project favorites; on Favorites item context menu" condition="esri_mapping_openProjectCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarRemove16.png" helpContextID="">
+        <button id="esri_removeFavoriteButton" className="esri_core_module:RemoveFavorite"
+                caption="Remove From Favorites"
+                extendedCaption="Remove the item from project favorites; on Favorites item context menu"
+                condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStarRemove16.png"
+                helpContextID="" menuKeytip="V">
           <tooltip heading="Remove">
             Remove the item from project favorites. The reference to the item is removed, but the item is not deleted. The item remains in all projects to which it was previously added.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_folderConnectionMakeDefaultButton" loadOnClick="false"
                 className="esri_geodatabase_module:MakeFolderConnectionProjectItemDefault"
-                caption="Make Default" keytip="H"
+                caption="Make Default" keytip="H" menuKeytip="K"
                 extendedCaption="Set the selected folder connection as the project's home folder; on folder connection context menu"
                 condition="esri_projectItem_DefaultFolderSelectedCondition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_32.png"
@@ -4943,7 +5133,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_GDBMakeDefaultButton" loadOnClick="false"
-                className="esri_geodatabase_module:MakeGeodatabaseProjectItemDefault" caption="Make Default" keytip="H"
+                className="esri_geodatabase_module:MakeGeodatabaseProjectItemDefault" caption="Make Default" keytip="H" menuKeytip="K"
                 extendedCaption="Set the selected geodatabase as the project's default geodatabase; on geodatabase context menu"
                 condition="esri_projectItem_geoDatabaseMakeDefaultCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericHome_B_16.png"
@@ -4990,7 +5180,7 @@ The project saves a reference to the statistical data collection file.
                 caption="View Metadata" extendedCaption="View metadata for the selected item; on context menu" loadOnClick="false"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MetadataDocument32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MetadataDocument16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="M">
           <tooltip heading="">
             View the item's metadata<disabledText></disabledText>
           </tooltip>
@@ -4999,7 +5189,7 @@ The project saves a reference to the statistical data collection file.
                 caption="Edit Metadata" extendedCaption="Edit metadata for the selected item; on context menu" loadOnClick="false"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil16.png"
-                helpContextID="">
+                helpContextID="" menuKeytip="E">
           <tooltip heading="">
             Edit the item's metadata<disabledText></disabledText>
           </tooltip>
@@ -5156,7 +5346,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_projectItemAddToProjectButton" className="esri_core_module:AddProjectItem" caption="Add To Project"
-                extendedCaption="Add a server or database to the project; on context menu"
+                extendedCaption="Add a server or database to the project; on context menu" menuKeytip="A"
                 condition="esri_mapping_openProjectCondition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png"
@@ -5195,11 +5385,39 @@ The project saves a reference to the statistical data collection file.
                 helpContextID="">
           <tooltip heading="">Create a new OLE DB Connection to the project. The project saves a reference to the OLE DB connection file.</tooltip>
         </button>
-		<button id="esri_bdcItemPropertiesButton" className="esri_bdc_module:ShowBDCProjectItemProperties" caption="Properties"
+		    <button id="esri_bdcItemPropertiesButton" className="esri_bdc_module:ShowBDCProjectItemProperties" caption="Properties"
                 extendedCaption="Shows the properties of the Multifile Feature Connection file" loadOnClick="false" condition="esri_mapping_openProjectCondition"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png">
           <tooltip heading="Properties">
             Show Multifile Feature Connection file properties.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_mfcSyncDatasetsButton" className="esri_bdc_module:SyncMFCDatasetsAsync" caption="Sync"
+              extendedCaption="Sync the multifile feature connection to include datasets that were recently added to the source location" loadOnClick="false" condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSync16.png">
+          <tooltip heading="Sync">
+            Sync the multifile feature connection to include datasets that were recently added to the source location.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_mfcItemDuplicateButton" className="esri_bdc_module:DuplicateMFCProjectItem" caption="Duplicate"
+                extendedCaption="Creates a duplicate of a multifile feature connection (MFC) dataset." loadOnClick="false" condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DuplicateItem16.png">
+          <tooltip heading="Duplicate">
+            Duplicate a dataset.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_mfcItemPreviewButton" className="esri_bdc_module:PreviewMFCProjectItem" caption="Preview"
+                extendedCaption="Creates a preview of the first ten features in a multifile feature connection (MFC) dataset" loadOnClick="false" condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png">
+          <tooltip heading="Preview">
+            Preview a sample of the dataset as a table.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_mfcItemRemoveButton" className="esri_bdc_module:RemoveMFCProjectItem" caption="Remove"
+                extendedCaption="Removes one or more datasets from an existing multifile feature connection (MFC). This tool only removes the dataset from the MFC file, the source data is not modified." loadOnClick="false" condition="esri_mapping_openProjectCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+          <tooltip heading="Remove">
+            Remove a dataset from the multifile feature connection. Data in the source folder will not be deleted.<disabledText></disabledText>
           </tooltip>
         </button>
 		  <button id="esri_bdc_addExistingBDConnectionButton" className="esri_geodatabase_module:AddExistingBigDataConnection" loadOnClick="false" caption="Add Multifile Feature Connection" extendedCaption="Add an existing Multifile Feature Connection" keytip="MFC" licenseLevel="advanced"
@@ -5207,7 +5425,7 @@ The project saves a reference to the statistical data collection file.
                 helpContextID="">
           <tooltip heading="">Add an existing Multifile Feature Connection to the project. The project saves a reference to the Multifile Feature Connection file.</tooltip>
         </button>
-        <button id="esri_bdc_newBigDataConnectionButton" className="esri_bdc_module:newBigDataConnection" loadOnClick="false" caption="New Multifile Feature Connection" extendedCaption="Create a new Multifile Feature Connection" keytip="MFC" licenseLevel="advanced"
+        <button id="esri_bdc_newBigDataConnectionButton" className="esri_bdc_module:NewBigDataConnection" loadOnClick="false" caption="New Multifile Feature Connection" extendedCaption="Create a new Multifile Feature Connection" keytip="MFC" licenseLevel="advanced"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BigDataFileShareNew32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BigDataFileShareNew16.png"
                 helpContextID="">
           <tooltip heading="">Create a new Multifile Feature Connection in the project. The project saves a reference to the Multifile Feature Connection file.</tooltip>
@@ -5248,7 +5466,7 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
 
-        <button id="esri_geodatabase_addFolderConnectionButton" className="AddFolderConnectionCmd" caption="Add Folder" extendedCaption="Add a new folder connection to the project; on ribbon" keytip="AF" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderConnectionAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderConnectionAdd16.png" helpContextID="">
+        <button id="esri_geodatabase_addFolderConnectionButton" className="AddFolderConnectionCmd" caption="Add Folder" extendedCaption="Add a new folder connection to the project; on ribbon" keytip="AF" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderConnectionAdd32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderConnectionAdd16.png" helpContextID="120000871">
           <tooltip heading="Add Folder Connection">
             Connect to an existing folder on the local computer or a shared folder on the network. The project saves a reference to the folder.<disabledText></disabledText>
           </tooltip>
@@ -5257,7 +5475,7 @@ The project saves a reference to the statistical data collection file.
         <button id="esri_layouts_AddNotebook" className="esri_geoprocessing_module:Commands.AddOpenNewNotebook" caption="New Notebook"
                 extendedCaption="Add a new notebook to current catalog home folder"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewNotebook32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewNotebook16.png" helpContextID="">
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewNotebook16.png" helpContextID="120003889">
           <tooltip heading="New Notebook">
             Create a new python notebook and add it to the project.<disabledText></disabledText>
           </tooltip>
@@ -5414,8 +5632,8 @@ A new server connection file is created in your roaming profile and is reference
           </tooltip>
         </button>
         <button id="esri_mapping_AddExistingStatisticalDataCollectionToFavoritesButton" className="esri_geodatabase_module:AddExistingStatisticalDataCollectionToFavorites" caption="Add Statistical Data Collection" extendedCaption="Add an existing Statistical Data Collection file to the project; on ribbon." condition="esri_mapping_openProjectCondition" helpContextID="" keytip="SD"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxFavorite16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SdcxFavorite32.png"
+                smallImage="SdcxFavorite16"
+                largeImage="SdcxFavorite32"
                 hidden="true">
           <tooltip heading="Add Statistical Data Collection">
             Add an existing Statistical Data Collection file to project favorites.
@@ -5514,6 +5732,27 @@ A new server connection file is created in your roaming profile and is reference
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReexportUnacknowledgedMessage16.png" helpContextID="">
           <tooltip heading="">
             Re-Export Unacknowledged Messages...<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_ImportSchemaChangesReplicasButton" className="esri_geodatabase_module:importReplicaSchema" caption="Import Schema Changes..."
+                extendedCaption="Open the Import Schema Changes GP tool; on context menu" condition="esri_projectItem_openWorkspaceReplicaCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportSchemaChanges16.png" helpContextID="">
+          <tooltip heading="">
+            Import Schema Changes...<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_ExportReplicaSchemaReplicasButton" className="esri_geodatabase_module:exportReplicaSchema" caption="Export Replica Schema..."
+                extendedCaption="Open the Export Replica Schema GP tool; on context menu" condition="esri_projectItem_openWorkspaceReplicaCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportReplicaSchema16.png" helpContextID="">
+          <tooltip heading="">
+            Export Replica Schema...<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_CompareReplicaSchemaReplicasButton" className="esri_geodatabase_module:compareReplicaSchema" caption="Compare Replica Schema..."
+                extendedCaption="Open the Compare Replica Schema GP tool; on context menu" condition="esri_projectItem_openWorkspaceReplicaCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CompareReplicaSchema16.png" helpContextID="">
+          <tooltip heading="">
+            Compare Replica Schema...<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_AttributeRulesViewButton"
@@ -5620,9 +5859,8 @@ A new server connection file is created in your roaming profile and is reference
           </tooltip>
         </button>
         <button id="esri_ConnectedUsersButton" className="esri_geodatabase_module:openConnectedUsersView"
-                condition="esri_projectItem_adminCondition"
                 caption="Connections" loadOnClick="false" extendedCaption="Open the connected users view"
-                helpContextID="">
+                helpContextID="" condition="esri_projectItem_isValidCondition">
           <tooltip heading="Open the connected users view.">
             Open the connected users dialog by admins for this data.
             <disabledText>
@@ -5684,7 +5922,7 @@ A new server connection file is created in your roaming profile and is reference
           </tooltip>
         </button>
         <button id="esri_favoriteItemAddToNewProjectsButton" className="esri_core_module:AddItemToNewProjects"
-                caption="Add To New Projects"
+                caption="Add To New Projects" menuKeytip="J"
                 extendedCaption="Automatically add a project favorite item to all new projects that are created; on Favorites item context menu"
                 condition="esri_mapping_openProjectCondition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PinFavorite32.png"
@@ -5789,7 +6027,6 @@ A new server connection file is created in your roaming profile and is reference
         <dynamicMenu id="esri_gdbItemRegisterWithGdbDynamicMenu" className="RegisterWithGdbDynamicMenu" caption="Register with Geodatabase" extendedCaption="Opens register with geodatabase geoprocessing tool on the selected item with the geodatabase; on context menu"/>
         <dynamicMenu id="esri_projectItemGDBProjectNewImportExportItemDatabaseDynamicMenu" className="GDBProjectNewImportExportItemDatabaseDynamicMenu" caption="New, Import, Export Menus" extendedCaption="Context menu submenus for creating new items, importing and exporting data in a geodatabase"/>
         <dynamicMenu id="esri_projectItemEnableGeodatabaseDynamicMenu" className="EnableGeodatabaseDynamicMenu" caption="Enable Enterprise Geodatabase" extendedCaption="Run the Enable Enterprise Geodatabase tool; on (non-geodatabase) database context menu"/>
-        <dynamicMenu id="esri_catalog_createCatalogDatasetDynamicMenu" className="CreateCatalogDatasetDynamicMenu" caption="Create Catalog Dataset" extendedCaption="Create Catalog Dataset; on (non-geodatabase) database context menu"/>
       </controls>
 
       <dockPanes>
@@ -5925,6 +6162,7 @@ A new server connection file is created in your roaming profile and is reference
 
   <propertySheets>
 
+    <!--Insert Sheets-->
     <insertSheet id="esri_catalog_agsConnectionPropertySheet" caption="Properties" pageHeight="540" pageWidth="750" resizable="true">
       <page id="esri_catalog_agsConnection_general_propertyPage" className="ArcGIS.Desktop.Catalog.AGSConnectionViewModel" caption="General">
         <content className="ArcGIS.Desktop.Catalog.AGSConnectionGeneralPage" />
@@ -5944,7 +6182,6 @@ A new server connection file is created in your roaming profile and is reference
       <page id="esri_catalog_featureClassIndexPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.IndexViewModel" caption="Indexes">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.IndexView" />
       </page>
-
       <page id="esri_catalog_featureClassRelationshipsPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.RelationshipsViewModel" caption="Relationships" condition="esri_projectItem_SelectedTableIsRegisteredWithGDB">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.RelationshipsView" />
       </page>
@@ -6100,12 +6337,12 @@ A new server connection file is created in your roaming profile and is reference
     <insertSheet id="esri_catalog_tinDatasetPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true" />
     <insertSheet id="esri_catalog_terrainDatasetPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true" />
 
-    <insertSheet id="esri_catalog_ReplicaPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
-      <page id="esri_catalog_ReplicaGeneralPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.GeneralViewModel" caption="General">
+    <insertSheet id="esri_catalog_GeodatabaseReplicaPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
+      <page id="esri_catalog_ReplicaGeneralPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.Geodatabase.GeodatabaseReplicaGeneralViewModel" caption="General">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.GeneralView" />
       </page>
-      <page id="esri_catalog_ReplicaDescriptionPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.DescriptionViewModel" caption="Description">
-        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.DescriptionView" />
+      <page id="esri_catalog_ReplicaDescriptionPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.Geodatabase.GeodatabaseReplicaDescriptionViewModel" caption="Description">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.Geodatabase.GeodatabaseReplicaDescriptionView" />
       </page>
       <page id="esri_catalog_ReplicaAdvancedPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.AdvancedViewModel" caption="Advanced"
             condition="esri_replica_SelectedIsNotCheckoutCondition">
@@ -6114,6 +6351,15 @@ A new server connection file is created in your roaming profile and is reference
       <page id="esri_catalog_ReplicaLogPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.ReplicaLogViewModel" caption="Replica Log"
 			      condition="esri_replica_SelectedIsNotCheckoutCondition">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.ReplicaLogView" />
+      </page>
+    </insertSheet>
+
+    <insertSheet id="esri_catalog_FeatureServiceReplicaPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
+      <page id="esri_catalog_ReplicaGeneralPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.FeatureService.FeatureServiceReplicaGeneralViewModel" caption="General">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.GeneralView" />
+      </page>
+      <page id="esri_catalog_ReplicaDescriptionPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.FeatureService.FeatureServiceReplicaDescriptionViewModel" caption="Description">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.Replica.FeatureService.FeatureServiceReplicaDescriptionView" />
       </page>
     </insertSheet>
 
@@ -6148,6 +6394,9 @@ A new server connection file is created in your roaming profile and is reference
       <page id="esri_catalog_datasourcesCadModelPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.ModelViewModel" caption="Model" condition="esri_project_cadDgnFileProjectItemSelectedCondition">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.ModelView" />
       </page>
+      <page id="esri_catalog_datasourcesDesignOptionPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.DesignOptionViewModel" caption="Design Options" condition="esri_project_bimRvtFileProjectItemSelectedCondition">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.DesignOptionView" />
+      </page>
       <page id="esri_catalog_datasourcesExternalReferecePropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.ExternalReferenceViewModel" caption="External Sources" condition="esri_project_cadRelatedProjectItemSelectedCondition">
         <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.DataSourcesFile.ExternalReferenceView" />
       </page>
@@ -6162,12 +6411,28 @@ A new server connection file is created in your roaming profile and is reference
       </page>
     </insertSheet>
 
+    <insertSheet id="esri_catalog_mosaicDatasetPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
+      <page id="esri_catalog_managePropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.ManageViewModel" caption="Manage">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.ManageView" />
+      </page>
+    </insertSheet>
+
+    <insertSheet id="esri_catalog_trajectoryDatasetPropertySheet" caption="Properties" pageHeight="410" pageWidth="640" resizable="true">
+      <page id="esri_catalog_managePropertyPage" className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.ManageViewModel" caption="Manage">
+        <content className="ArcGIS.Desktop.Internal.Catalog.PropertyPages.FeatureClass.ManageView" />
+      </page>
+    </insertSheet>
+    <!--Insert Sheets-->
+
+    <!--Update Sheets-->
     <updateSheet refID="esri_core_optionsPropertySheet">
       <insertPage id="esri_replica_optionsPropertyPage" className="ArcGIS.Desktop.Internal.Catalog.DistributedGeodatabase.ManageReplicas.BackStageReplicaOptionsViewModel" caption="Geodatabase Replication"
                   group="Application" placeWith="esri_geoprocessing_optionsPropertyPage" insert="after">
         <content className="ArcGIS.Desktop.Internal.Catalog.DistributedGeodatabase.ManageReplicas.BackStageReplicaOptionsView"/>
       </insertPage>
     </updateSheet>
+
+    <!--Update sheets-->
 
   </propertySheets>
 

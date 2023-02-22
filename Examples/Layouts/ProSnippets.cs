@@ -41,7 +41,7 @@ namespace ProSnippetsTasks
         #endregion
         async public void snippets_ProjectItems()
     {
-      // cref: ArcGIS.Desktop.Core.Project.GetItems
+      // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
       #region Reference layout project items and their associated layout
       //Reference layout project items and their associated layout.
@@ -115,7 +115,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Core.IProjectItem
       // cref: ArcGIS.Desktop.Core.ItemFactory
       // cref: ArcGIS.Desktop.Core.ItemFactory.Create
-      // cref: ArcGIS.Desktop.Core.Project.AddItem
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
       #region Import a pagx into a project
       //Import a pagx into a project.
 
@@ -463,6 +463,38 @@ namespace ProSnippetsTasks
 
       //Make an element to add to GraphicsLayer or Layout
       //var ge = ElementFactory.Instance.CreateGraphicElement(layout, graphic);
+      #endregion
+    }
+
+    public static void CreateOutlineGraphic(Layout layout, CIMGraphic cim_graphic)
+    {
+      // cref: ArcGIS.Desktop.Layouts.GraphicFactory.GetGraphicOutline
+      #region Get Graphic Outline
+      //given a graphic, extract its outline geometry
+
+      var graphic_outline = GraphicFactory.Instance.GetGraphicOutline(
+                              layout, cim_graphic);
+      //TODO - use the geometry - eg, make another graphic
+      var outline_graphic = GraphicFactory.Instance.CreateSimpleGraphic(graphic_outline);
+      //... etc.
+
+      #endregion
+
+      // cref: ArcGIS.Desktop.Layouts.GraphicFactory.GetGraphicOutline
+      #region Get Graphic Outline from Graphic Element
+      //given a graphic, extract its outline geometry
+
+      var graphic_elem = layout.GetElementsAsFlattenedList().OfType<GraphicElement>()?.FirstOrDefault();
+      if (graphic_elem != null)//can be point, line, poly, or text
+        return;
+
+      var outline = GraphicFactory.Instance.GetGraphicOutline(
+                              layout, graphic_elem.GetGraphic());
+      //create an element using the outline
+      var elem = ElementFactory.Instance.CreateGraphicElement(
+                          layout, outline);
+      //... etc.
+
       #endregion
     }
 
@@ -1333,7 +1365,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
       // cref: ArcGIS.Desktop.Layouts.TextType
-      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx._ctor
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor
       // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       #region Create Circle Text Element
 
@@ -1363,7 +1395,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
       // cref: ArcGIS.Desktop.Layouts.TextType
-      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx._ctor(Coordinate2D,Coordinate2D,Coordinate2D,Coordinate2D,SpatialReference)
+      // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.#ctor(Coordinate2D,Coordinate2D,Coordinate2D,Coordinate2D,SpatialReference)
       // cref: ArcGIS.Core.Geometry.CubicBezierBuilderEx.ToSegment
       #region Create Bezier Text Element
 
@@ -1394,7 +1426,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
       // cref: ArcGIS.Desktop.Layouts.TextType
-      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx._ctor(Coordinate2D,Double,Double,Double,ArcOrientation,SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(Coordinate2D,Double,Double,Double,ArcOrientation,SpatialReference)
       // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       // cref: ArcGIS.Core.Geometry.ArcOrientation
       #region Create Ellipse Text Element
@@ -1480,7 +1512,7 @@ namespace ProSnippetsTasks
     {
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreatePredefinedShapeGraphicElement
       // cref: ArcGIS.Desktop.Layouts.PredefinedShape
-      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx._ctor(MapPoint,MapPoint,Double,Double,Double,MinorOrMajor,ArcOrientation,SpatialReference)
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(MapPoint,MapPoint,Double,Double,Double,MinorOrMajor,ArcOrientation,SpatialReference)
       // cref: ArcGIS.Core.Geometry.ArcOrientation
       #region Create Predefined Shape Graphic Element
 
@@ -2107,10 +2139,10 @@ namespace ProSnippetsTasks
       #endregion
 
       // cref: ArcGIS.Desktop.Layouts.GroupElement
-      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElement(string)
+      // cref: ArcGIS.Desktop.Layouts.Layout.FindElements(IEnumerable<string>)
+      // cref: ArcGIS.Desktop.Mapping.IElementContainer.FindElement(string, bool)
       // cref: ArcGIS.Desktop.Layouts.Layout.FindElements
-      // cref: ArcGIS.Desktop.Mapping.IElementContainer.FindElement
-      // cref: ArcGIS.Desktop.Mapping.IElementContainer.FindElements
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateGroupElement
       #region Create a group element with elements
       //Create a group with a list of elements at the root level of the contents pane.
@@ -2939,6 +2971,84 @@ namespace ProSnippetsTasks
           }
         }
       });
+      #endregion
+    }
+
+    public void snippets_MapFrame2()
+    {
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.CanActivateMapFrame
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ActivateMapFrame
+      #region Activate Map Frame
+
+      //The active view must be a layout view.
+      var lv = LayoutView.Active;
+      if (lv == null)
+        return;
+      var layout = lv.Layout;
+      if (layout == null)
+        return;
+
+      //We can activate a map frame on the layout of the active view
+      var map_frame = layout.GetElementsAsFlattenedList()
+                         .OfType<MapFrame>().FirstOrDefault(mf => mf.Name == "Map 1");
+      if (map_frame == null)
+        return;
+      //can we activate the map frame?
+      if (lv.CanActivateMapFrame(map_frame))
+        //activate it - Note: we are on the UI thread!
+        lv.ActivateMapFrame(map_frame);
+
+      #endregion
+    }
+
+    public void snippets_MapFrame3()
+    {
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ActivatedMapFrame
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.DeactivateMapFrame
+      #region Deactivate Map Frame
+
+      //The active view must be a layout view.
+      var lv = LayoutView.Active;
+      if (lv == null)
+        return;
+      var layout = lv.Layout;
+      if (layout == null)
+        return;
+
+      //Deactivate any activated map frame
+      //Note: we are on the UI thread!
+      lv.DeactivateMapFrame();//no-op if nothing activated
+
+      //or - check if a  map frame is activated first...
+      if (lv.ActivatedMapFrame != null)
+        //Note: we are on the UI thread!
+        lv.DeactivateMapFrame();
+
+      #endregion
+    }
+
+    public void snippets_MapFrame4()
+    {
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ActivatedMapFrame
+      // cref: ArcGIS.Desktop.Layouts.LayoutView.ActivatedMapView
+      #region Get the Activated Map Frame and MapView
+
+      //The active view must be a layout view.
+      var lv = LayoutView.Active;
+      if (lv == null)
+        return;
+
+      var map_view = lv.ActivatedMapView;
+      if (map_view != null)
+      {
+        //TODO - use activated map view
+      }
+      var map_frame = lv.ActivatedMapFrame;
+      if (map_frame != null)
+      {
+        //TODO - use activated map frame
+      }
+
       #endregion
     }
 

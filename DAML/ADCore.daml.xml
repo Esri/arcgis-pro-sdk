@@ -16,11 +16,6 @@
     <insertAccelerator refID="esri_core_editCutButton" flags="Ctrl" key="X" />
     <insertAccelerator refID="esri_core_redoButton" flags="Ctrl" key="Y" />
     <insertAccelerator refID="esri_core_undoButton" flags="Ctrl" key="Z" />
-    <insertAccelerator refID="esri_datasourcesraster_stereoModelSelectorButton" flags="Ctrl+Shift" key="S" />
-    <insertAccelerator refID="esri_editing_ShowCreateFeaturesBtn" flags="Ctrl+Shift" key="C" />
-    <insertAccelerator refID="esri_editing_ShowEditFeaturesBtn" flags="Ctrl+Shift" key="M" />
-    <insertAccelerator refID="esri_mapping_selectContext" flags="Ctrl+Alt" key="S" />
-    <insertAccelerator refID="esri_mapping_exploreContext" flags="Ctrl+Alt" key="C" />
     <insertAccelerator refID="esri_core_CommandSearchControl" flags="Alt" key="Q" />
     <insertAccelerator refID="esri_core_groupContext" flags="Ctrl" key="G" />
     <insertAccelerator refID="esri_core_ungroupContext" flags="Ctrl+Shift" key="G" />
@@ -29,13 +24,87 @@
     <insertAccelerator refID="esri_core_editCopyPaths" flags="Ctrl+Alt" key="P" />
     <insertAccelerator refID="esri_core_SignOnRootCommand" flags="Alt" key="L"/>
     <insertAccelerator refID="esri_core_notificationButton" flags="Alt" key="W"/>
-    <insertAccelerator refID="esri_core_rename" key="F2"/>
-    <insertAccelerator refID="esri_core_refresh" key="F5"/>
-    <insertAccelerator refID="esri_core_rename_alias" key="F2" flags="Shift"/>
   </accelerators>
+
+  <shortcutTables>
+    <insertShortcutTable id="esri_core_catalogView_shortcuts"
+                         targetID="esri_core_resourcesPane"
+                         category="Catalog" caption="View">
+
+      <!-- traditional -->
+      <shortcut refID="esri_core_refresh" key="F5" />
+      <shortcut refID="esri_core_rename" key="F2"/>
+      <shortcut refID="esri_core_rename_alias" key="F2" flags="Ctrl"/>
+      <shortcut refID="esri_core_SearchCatalog" key="F" flags="Ctrl"/>
+      <shortcut refID="esri_editing_externalTable_openTablePaneButton" flags="Ctrl+Shift" key="T" />
+
+      <!-- Ctrl+Shift for operations (new/edit) -->
+      <shortcut refID="esri_folderConnectionAddButton" key="C" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_core_newFolderButton" key="F" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_layouts_projectContainer_NewLayout" key="L" flags="Ctrl+Shift" />
+      <shortcut refID="esri_GDBCreateNewFileGeodatabaseButton" key="D" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geodatabase_databaseConnectionButton" key="E" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geodatabase_newMobileGeoDatabaseButton" key="I" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geoprocessing_newToolboxButton_atbx" key="B" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_projectItemEditMetadata" key="M" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_projectDefaultContextMenu" key="N" flags="Ctrl+Shift"/>
+      
+      <!-- Alt for navigation -->
+      <shortcut refID="esri_core_ActivateCatalogPane" key="F3" flags="Alt"/>
+      <shortcut refID="esri_core_FocusTOC" key="F4" flags="Alt"/>
+      <shortcut refID="esri_core_Breadcrumb" key="F5" flags="Alt"/>
+      <shortcut refID="esri_core_ShowSortMenu" key="F6"/>
+      <shortcut refID="esri_core_FocusContent" key="F6" flags="Alt"/>
+      <shortcut refID="esri_core_ShowFilterMenu" key="F8" flags="Alt"/>
+      <shortcut refID="esri_projectItemViewMetadata" key="M" flags="Alt"/>
+      <shortcut refID="esri_core_ToggleDetails" key="D" flags="Alt"/>
+      <shortcut refID="esri_core_MoveBack" key="Left" flags="Alt"/>
+      <shortcut refID="esri_core_MoveForward" key="Right" flags="Alt"/>
+      <shortcut refID="esri_core_MoveUp" key="Up" flags="Alt"/>
+      <shortcut refID="esri_core_ShowProject" key="P" flags="Alt"/>
+      <shortcut refID="esri_core_ShowPortal" key="O" flags="Alt"/>
+      <shortcut refID="esri_core_ShowComputer" key="Z" flags="Alt"/>
+      <shortcut refID="esri_core_ShowFavorites" key="F" flags="Alt"/>
+      <shortcut refID="esri_core_ShowCatalogOptions" key="B" flags="Alt"/>
+    </insertShortcutTable>
     
+    <insertShortcutTable id="esri_core_catalogPane_shortcuts"
+                         targetID="esri_core_projectDockPane"
+                         category="Catalog" caption="Pane">
+
+      <!-- traditional -->
+      <shortcut refID="esri_core_refresh" key="F5"/>
+      <shortcut refID="esri_core_rename" key="F2"/>
+      <shortcut refID="esri_core_rename_alias" key="F2" flags="Shift"/>
+      <shortcut refID="esri_core_SearchCatalog" key="F" flags="Ctrl"/>
+      <shortcut refID="esri_editing_externalTable_openTablePaneButton" flags="Ctrl+Shift" key="T" />
+
+      <!-- Ctrl+Shift for operations (new/edit) -->
+      <shortcut refID="esri_folderConnectionAddButton" key="C" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_core_newFolderButton" key="F" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_layouts_projectContainer_NewLayout" key="L" flags="Ctrl+Shift" />
+      <shortcut refID="esri_GDBCreateNewFileGeodatabaseButton" key="D" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geodatabase_databaseConnectionButton" key="E" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geodatabase_newMobileGeoDatabaseButton" key="I" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_geoprocessing_newToolboxButton_atbx" key="B" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_projectItemEditMetadata" key="M" flags="Ctrl+Shift"/>
+      <shortcut refID="esri_projectDefaultContextMenu" key="N" flags="Ctrl+Shift"/>
+
+      <!-- Alt for navigation -->
+      <shortcut refID="esri_core_ActivateResourcesPane" key="F3" flags="Alt" />
+      <shortcut refID="esri_core_ShowSortMenu" key="F6" flags="Alt"/>
+      <shortcut refID="esri_core_ShowFilterMenu" key="F8" flags="Alt"/>
+      <shortcut refID="esri_projectItemViewMetadata" key="M" flags="Alt"/>
+      <shortcut refID="esri_core_MoveBack" key="Left" flags="Alt"/>
+      <shortcut refID="esri_core_ProjectDP" key="P" flags="Alt"/>
+      <shortcut refID="esri_core_PortalDP" key="O" flags="Alt"/>
+      <shortcut refID="esri_core_ShowComputer" key="Z" flags="Alt"/>
+      <shortcut refID="esri_core_FavoritesDP" key="F" flags="Alt"/>
+      <shortcut refID="esri_core_ShowCatalogOptions" key="B" flags="Alt"/>
+    </insertShortcutTable>
+  </shortcutTables>
+  
   <DockPaneSets>
-    
     <!--DockPane Reset for Mapping (Default)-->
     <insertDockPaneSet id="esri_DockPaneReset_Mapping" caption="Reset Panes for Mapping (Default)">
       <DockPaneID refID="esri_core_projectDockPane"/>
@@ -182,27 +251,54 @@
     <control refID="esri_mapping_exploreTool" size ="small" isChecked="false"/>
     <control refID="esri_mapping_rectangleZoom" size ="small" isChecked="false"/>
     <control refID="esri_mapping_showLocateDockPane" size ="small" isChecked="false"/>
-    <control refID="esri_core_Shortcuts" size="small"/>
   </quickAccessToolbar>
 
   <modules>
     <insertModule id="esri_core_module" className="CoreModule" caption="Project Module" description="Project Module" autoLoad="true">
 
       <panes>
-        <pane id="esri_core_startPage" caption="Start Page" className="StartPageViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/StartPage16.png" isClosable="true">
+        <pane id="esri_core_startPage" caption="Start Page" className="StartPageViewModel" smallImage="StartPage16" isClosable="true">
           <content className="StartPage" />
         </pane>
-        <!--<pane id="esri_core_resourcesPane" caption="Project" className="ProjectViewViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject16.png" isClosable="true" defaultTab="esri_core_homeTab" isDropTarget="false">
-          <content className="ProjectViewView" />
-        </pane>-->
-        <pane id="esri_core_resourcesPane" caption="Catalog" className="ProjectPaneVM" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject16.png" isClosable="true" defaultTab="esri_core_homeTab" isDropTarget="false">
+
+        <pane id="esri_core_resourcesPane" caption="Catalog" extendedCaption="Catalog View" className="ProjectPaneVM" smallImage="ArcGISProject16" isClosable="true" defaultTab="esri_core_homeTab" isDropTarget="false">
           <content className="ProjectPane" />
+          <keyCommands>
+            <keyCommand id="esri_core_ShowCatalogOptions" caption="Catalog Browsing Options" tooltip="Open the Catalog Browsing tab in the Options dialog box."/>
+            <keyCommand id="esri_core_SearchCatalog" caption="Search" tooltip="Go to the Search text box."/>
+            <keyCommand id="esri_core_FocusContent" caption="Contents List" tooltip="Go to Catalog view contents list."/>
+            <keyCommand id="esri_core_FocusTOC" caption="Contents Pane" tooltip="Go to the Catalog view's Contents pane."/>
+            <keyCommand id="esri_core_ToggleDetails" caption="Show/hide Details Panel" tooltip="Show/hide the Details panel."/>
+            <keyCommand id="esri_core_Breadcrumb" caption="Go To Location Bar" tooltip="Go to the location bar."/>
+            <keyCommand id="esri_core_MoveBack" caption="Go Back" tooltip="Go back to the previous location."/>
+            <keyCommand id="esri_core_MoveForward" caption="Go Forward" tooltip="Return to a visited location."/>
+            <keyCommand id="esri_core_MoveUp" caption="Go Up" tooltip="Go up one level."/>
+            <keyCommand id="esri_core_ShowSortMenu" caption="Sort Menu" tooltip="Show sort menu."/>
+            <keyCommand id="esri_core_ShowFilterMenu" caption="Filter Menu" tooltip="Show filter menu."/>
+            <keyCommand id="esri_core_ShowPortal" caption="Go To Portal" tooltip="Go to Portal."/>
+            <keyCommand id="esri_core_ShowComputer" caption="Go To Computer" tooltip="Go to Computer."/>
+            <keyCommand id="esri_core_ShowFavorites" caption="Go To Favorites" tooltip="Go to Favorites."/>
+            <keyCommand id="esri_core_ShowProject" caption="Go To Project" tooltip="Go to Project."/>
+            <keyCommand id="esri_core_ActivateCatalogPane" caption="Catalog Pane" tooltip="Go to the Catalog pane." />
+          </keyCommands>
         </pane>
       </panes>
 
       <dockPanes>
-        <dockPane id="esri_core_projectDockPane" caption="Catalog" className="ProjectDockPaneVM" dock="right" width="320">
+        <dockPane id="esri_core_projectDockPane" caption="Catalog" extendedCaption="Catalog Pane" className="ProjectDockPaneVM" dock="right" width="320">
           <content className="ProjectDockPane" />
+          <keyCommands>
+            <keyCommand id="esri_core_MoveBack" caption="Go Back" tooltip="Go back to the previous location."/>
+            <keyCommand id="esri_core_ShowSortMenu" caption="Sort Menu" tooltip="Show sort menu."/>
+            <keyCommand id="esri_core_ShowFilterMenu" caption="Filter Menu" tooltip="Show filter menu."/>
+            <keyCommand id="esri_core_ShowCatalogOptions" caption="Catalog Browsing Options" tooltip="Open the Catalog Browsing tab in the Options dialog box."/>
+            <keyCommand id="esri_core_SearchCatalog" caption="Search" tooltip="Go to the Search text box."/>
+            <keyCommand id="esri_core_PortalDP" caption="Go To Portal" tooltip="Go to Portal."/>
+            <keyCommand id="esri_core_ShowComputer" caption="Go To Computer" tooltip="Go to Computer."/>
+            <keyCommand id="esri_core_ProjectDP" caption="Go To Project" tooltip="Go to Project."/>
+            <keyCommand id="esri_core_FavoritesDP" caption="Go To Favorites" tooltip="Go to Favorites."/>
+            <keyCommand id="esri_core_ActivateResourcesPane" caption="Catalog View" tooltip="Go to the Catalog view." />
+          </keyCommands>
         </dockPane>
         <!--<dockPane id="esri_core_projectDockPane" caption="Project" className="ProjectDockPaneViewModel" dock="right"  keytip="prj">
           <content className="ProjectDockPaneView" />
@@ -229,7 +325,7 @@
           <group refID="esri_metadata_metadataViewGroup" />
         </tab>
         <tab id="esri_core_insertTab" caption="Insert"  keytip="N">
-          <group refID="esri_core_projectData"/>
+          <group refID="esri_core_projectData"/>     
           <group refID="esri_project_styles"/>
           <group refID="esri_core_favoritesData"/>
         </tab>
@@ -262,6 +358,13 @@
           <group refID="esri_core_previewPreviewGroup" />
           <group refID="esri_core_previewThumbnail" />
         </tab>
+
+        <tab id="esri_core_helpTab" caption="Help" insert="after" keytip="H">
+          <group refID="esri_core_customizeGroup"/>
+          <group refID="esri_core_helpGroup"/>
+          <group refID="esri_core_performanceGroup"/>
+          <group refID="esri_core_contactGroup"/>
+        </tab>
       </tabs>
 
       <tabGroups>
@@ -272,55 +375,71 @@
       </tabGroups>
 
       <groups>
-        <group id="esri_core_projectData" caption="Project" sizePriorities="25,125,225" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject16.png">
-          <insertButton refID="esri_mapping_newMapPalette" size="large" />
-          <insertGallery refID="esri_layouts_gallery" size="large" />
-          
-          <insertButton refID="esri_reports_newReportSplitButton" size="middle" />
-          <insertSplitButton refID="esri_geodatabase_AddNewOrExistingNotebookSplitButton" size="middle"/>
-          <insertButtonPalette refID="esri_geoprocessing_insertMenu" size="middle"/>
-          
-          <insertButton refID="esri_layouts_importMap" size="middle" />
-          <insertGallery refID="esri_layouts_templateGallery" size="middle" />
-          <insertButtonPalette refID="esri_task_insertMenu" size="middle"/>
-          
-          <insertMenu refID="esri_geodatabase_insertMenu" size="large"/>
-          <insertButton refID="esri_geodatabase_addFolderConnectionButton" size="large"/>       
+        <group id="esri_core_helpGroup" caption="Help" keytip="H">
+          <menu refID="esri_core_helpMenu" size="large"/>
+          <button refID="esri_core_learningBtn" size="large" />
+        </group>
+        <group id="esri_core_customizeGroup" caption="Customize" keytip="C">
+          <button refID="esri_core_ribbonBtn" size="middle" />
+          <button refID="esri_core_qatBtn" size="middle" />
+        </group>
+        <group id="esri_core_performanceGroup" caption="Performance" keytip="P">
+          <button refID="esri_core_monitorBtn" size="large" />
+        </group>
+        <group id="esri_core_contactGroup" caption="Contact Us" keytip="C">
+          <button refID="esri_core_communityBtn" size="large" />
+          <button refID="esri_core_supportBtn" size="large" />
         </group>
 
-        <group id="esri_core_favoritesData" caption="Favorites" sizePriorities="25,125,225" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStar16.png">
+        <group id="esri_core_projectData" caption="Project" sizePriorities="25,125,225" smallImage="ArcGISProject16">
+          <button refID="esri_mapping_newMapPalette" size="large" />
+          <gallery refID="esri_layouts_gallery" size="large" />
+          
+          <button refID="esri_reports_newReportSplitButton" size="middle" />
+          <splitButton refID="esri_geodatabase_AddNewOrExistingNotebookSplitButton" size="middle"/>
+          <buttonPalette refID="esri_geoprocessing_insertMenu" size="middle"/>
+          
+          <button refID="esri_layouts_importMap" size="middle" />
+          <gallery refID="esri_layouts_templateGallery" size="middle" />
+          <buttonPalette refID="esri_task_insertMenu" size="middle"/>
+          
+          <menu refID="esri_geodatabase_insertMenu" size="large"/>
+          <button refID="esri_geodatabase_addFolderConnectionButton" size="large"/>       
+        </group>
+
+        <group id="esri_core_favoritesData" caption="Favorites" sizePriorities="25,125,225" smallImage="FavoriteStar16">
 
         </group>
 
-        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" condition="esri_core_projectItem_resourcesPane">
+        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="GenericOptions16" condition="esri_core_projectItem_resourcesPane">
           <buttonPalette refID="esri_core_popupTooltipPalette" size="large" />
           <button refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
           <buttonPalette refID="esri_core_projectViewDisplayType" size="middle" />
         </group>
 
-        <group id="esri_core_clipboardGroup" caption="Clipboard" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+        <group id="esri_core_clipboardGroup" caption="Clipboard" smallImage="EditPaste16">
           <buttonPalette refID="esri_core_editPasteSplitButton" size="large"  />
           <subgroup refID="esri_core_editBtns"/>
         </group>
 
-        <group id="esri_core_organize" caption="Organize" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+        <group id="esri_core_organize" caption="Organize" smallImage="EditPaste16">
           <button refID="esri_core_openButton" size="large" />
           <subgroup refID="esri_core_organizeItems1"/>
           <subgroup refID="esri_core_organizeItems2"/>
           <subgroup refID="esri_core_organizeItems3"/>
         </group>
 
-        <group id="esri_core_update" caption="Update" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+        <group id="esri_core_update" caption="Update" smallImage="EditPaste16">
         </group>
 
-        <group id="esri_core_create" caption="Create" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png">
+        <group id="esri_core_create" caption="Create" smallImage="EditPaste16">
           <dynamicMenu refID="esri_core_newItemsDynamicMenu"/>
           <dynamicMenu refID="esri_core_addItemsDynamicMenu"/>
           <dynamicMenu refID="esri_core_importItemsDynamicMenu"/>
           <!--<subgroup refID="esri_core_newItems"/>-->
         </group>
 
-        <group id="esri_core_dockWindows" caption="Windows" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectWindow16.png" >
+        <group id="esri_core_dockWindows" caption="Windows" smallImage="ArcGISProjectWindow16" >
           <dynamicMenu refID="esri_dockPaneSetDynamicMenu" size ="large"/>
           <subgroup refID="esri_core_WindowControls"/>
           <subgroup refID="esri_core_WindowControlsGP"/>
@@ -361,38 +480,78 @@
     </palettes>
 
       <controls>
-        <button id="esri_core_notificationButton" className="NotificationButton" caption="Notification" keytip="W">
-			<tooltip heading="Notifications">
-                See messages regarding ArcGIS Pro, the project, or items in the project. Notifications are available when there is a blue dot.<disabledText></disabledText>
+        <button id="esri_core_onlineHelpBtn" caption="Online Help" keytip="O"
+                className="ArcGIS.Desktop.Framework.Help.OnlineHelpCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="" largeImage="">
+          <tooltip heading="Online Help">Open the web help.</tooltip>
+        </button>
+        <button id="esri_core_offlineHelpBtn" caption="Offline Help" keytip="H" loadOnClick="false"
+                className="ArcGIS.Desktop.Framework.Help.OfflineHelpCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="" largeImage="">
+          <tooltip heading="Offline Help">Open the offline help.
+            <disabledText>Install the offline help to enable this command.</disabledText>
           </tooltip>
-		</button>
-        <button id="esri_core_SignOnRootCommand" className="SignInRootCmd" caption="SignOn">
-		    <tooltip heading="Sign-in Status">
-                Sign in or out of ArcGIS Online or your ArcGIS organization.
-            </tooltip>
-		</button>
-        <button id="esri_core_LivingAtlas" className="LivingAtlasCmd" caption="Living Atlas">
-          <tooltip>Set the current location to the Living Atlas</tooltip>
         </button>
-        <button id="esri_core_Folders" className="FoldersCmd" caption="Folders">
-          <tooltip>Set the current location to Folder Connections</tooltip>
+        <button id="esri_core_languageBtn" caption="Language Settings..." keytip="L" helpContextID="120001217"
+                className="ArcGIS.Desktop.Framework.Help.LanguageCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="GenericOptions16" largeImage="GenericOptions32">
+          <tooltip heading="Language Settings">Choose the language to display. Languages appear as offline help options after their corresponding language pack for the help is installed.</tooltip>
         </button>
-        <button id="esri_core_Maps" className="MapsCmd" caption="Maps">
-          <tooltip>Set the current location to the Maps container</tooltip>
+        <button id="esri_core_learningBtn" caption="Learning Resources" keytip="L" helpContextID="120003935"
+                className="ArcGIS.Desktop.Framework.Help.LearningCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="ArcGISLearnColor16" largeImage="ArcGISLearnColor32">
+          <tooltip>Build your ArcGIS Pro skills with tutorials and other resources.</tooltip>
+        </button>
+        <button id="esri_core_ribbonBtn" caption="Ribbon" keytip="R" helpContextID="120001218"
+                className="ArcGIS.Desktop.Framework.Help.RibbonCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="CustomizeRibbon16" largeImage="CustomizeRibbon32">
+          <tooltip heading="Customize the Ribbon">Arrange commands on ribbon tabs to make your interaction more efficient.</tooltip>
+        </button>
+        <button id="esri_core_qatBtn" caption="Quick Access Toolbar" keytip="Q" helpContextID="120001461"
+                className="ArcGIS.Desktop.Framework.Help.QatCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="QuickAccessToolbar16" largeImage="QuickAccessToolbar32">
+          <tooltip heading="Customize Quick Access Toolbar">Add, remove, and reorder commands on the Quick Access Toolbar.</tooltip>
+        </button>
+        <button id="esri_core_monitorBtn" caption="Diagnostic Monitor" keytip="M" helpContextID="120002882"
+                className="ArcGIS.Desktop.Framework.Help.MonitorCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="DiagnosticsMonitor16" largeImage="DiagnosticsMonitor32">
+          <tooltip heading="Diagnostic Monitor">Identify the cause of application problems by monitoring the flow of status information, logs, and events.</tooltip>
+        </button>
+        <button id="esri_core_supportBtn" caption="Technical Support" keytip="S"
+                className="ArcGIS.Desktop.Framework.Help.SupportCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="BusinessAnalystSupport32" largeImage="BusinessAnalystSupport32">
+          <tooltip heading="Technical Support">Contact Esri Technical Support to troubleshoot software problems.</tooltip>
+        </button>
+        <button id="esri_core_communityBtn" caption="Esri Community" keytip="C"
+                className="ArcGIS.Desktop.Framework.Help.CommunityCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="ArcGISProGeoNetColor16" largeImage="ArcGISProGeoNetColor32">
+          <tooltip heading="Esri Community">Engage with the community of ArcGIS Pro users to find answers to your questions, provide answers to others, suggest ideas, and more.</tooltip>
+        </button>
+
+        <button id="esri_core_notificationButton" className="NotificationButton" caption="Notification" keytip="W">
+          <tooltip heading="Notifications">
+            See messages regarding ArcGIS Pro, the project, or items in the project. Notifications are available when there is a blue dot.<disabledText></disabledText>
+          </tooltip>
         </button>
         
+        <button id="esri_core_SignOnRootCommand" className="SignInRootCmd" caption="SignOn">
+          <tooltip heading="Sign-in Status">
+            Sign in or out of ArcGIS Online or your ArcGIS organization.
+          </tooltip>
+        </button>
+           
         <button id="esri_itemInfoRefreshButton" className="RefreshCmd" loadOnClick="false"
           caption="Refresh" extendedCaption="Refresh the selected container in the Project pane; on context menu"
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png" helpContextID="">
+          smallImage="GenericRefresh16" helpContextID="">
           <tooltip heading="">Update the contents list to include any items that were recently added to this location.</tooltip>
         </button>
 
         <!-- show project dock pane -->
         <button id="esri_core_showProjectDockPane" className="esri_core_module:ShowProjectDockPane"
                 caption="Catalog Pane" extendedCaption="Show the Catalog pane; on ribbon"
-                condition="esri_mapping_openProjectCondition" keytip="CP"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectWindow32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectWindow16.png">
+                condition="esri_mapping_openProjectCondition" keytip="CP" helpContextID="120003938"
+                largeImage="ArcGISProjectWindow32"
+                smallImage="ArcGISProjectWindow16">
           <tooltip heading="Catalog">
             Show the Catalog pane. You can access items in and available to the project, whether they are available on a local or network computer, or from a database, a server, ArcGIS Online, or your organization's portal.
 
@@ -402,9 +561,9 @@ With the Catalog pane you can drag and drop items onto a map, a model, or a tool
         <!-- show project view -->
         <button id="esri_core_showProjectView" className="esri_core_module:ShowProjectView"
                 caption="Catalog View" extendedCaption="Show the Catalog view; on ribbon"
-                condition="esri_mapping_openProjectCondition" keytip="CV"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProject16.png">
+                condition="esri_mapping_openProjectCondition" keytip="CV" helpContextID="120003939"
+                largeImage="ArcGISProject32"
+                smallImage="ArcGISProject16">
           <tooltip heading="">
             Open a view that provides access to items in and available to the project. All items and actions that are available in the Catalog pane are also available in the Catalog view. You can also access detailed information about available items.
 
@@ -415,8 +574,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <button id="esri_core_projectDetailsView"
                 className="ArcGIS.Desktop.Internal.Core.CatalogViewDetails"
                 condition="esri_core_resourcesPane"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddList16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddList32.png"
+                smallImage="ModelBuilderAddList16"
+                largeImage="ModelBuilderAddList32"
                 caption="Columns" extendedCaption="Display Type Columns" keytip="C" loadOnClick="true">
           <tooltip heading="Columns">
             Display information for each item in columns.
@@ -426,8 +585,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <button id="esri_core_projectTilesView"
                 className="ArcGIS.Desktop.Internal.Core.CatalogViewTiles"
                 condition="esri_core_resourcesPane"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewGallery16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ViewGallery32.png"
+                smallImage="ViewGallery16"
+                largeImage="ViewGallery32"
                 caption="Tiles" extendedCaption="Display Type Tiles" keytip="T" loadOnClick="true">
           <tooltip heading="Tiles">
             Display a thumbnail and other information on tiles.
@@ -437,8 +596,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <!-- Backstage -->
         <button id="esri_core_showOptionsSheetButton" className="esri_core_module:ArcGIS.Desktop.Internal.Core.IInternalCoreModule.ShowOptionsSheet"
                 caption="Options" extendedCaption="Show the Options dialog; on the Project tab"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOptions16.png" keytip="T">
+                largeImage="GenericOptions32"
+                smallImage="GenericOptions16" keytip="T">
           <tooltip heading="">
             Show the Options dialog box.<disabledText></disabledText>
           </tooltip>
@@ -448,52 +607,53 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
             Get Help for the application.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_exitApplicationButton" className="esri_core_module:ExitApplication" caption="Exit" extendedCaption="Stop ArcGIS Pro; on the Project tab" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close16.png" keytip="X">
+        <button id="esri_core_exitApplicationButton" className="esri_core_module:ExitApplication" caption="Exit" extendedCaption="Stop ArcGIS Pro; on the Project tab" smallImage="Close16" keytip="X">
           <tooltip heading="">
             Close the ArcGIS Pro application.<disabledText></disabledText>
           </tooltip>
         </button>
         <!--Home - Clipboard-->
         <button id="esri_core_editPasteButton" caption="Paste" extendedCaption="Paste the item on the clipboard"
-                keytip="P" loadOnClick="false"
+                keytip="P" menuKeytip="P" loadOnClick="false"
                 className="ArcGIS.Desktop.Framework.PasteCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" >
+                largeImage="EditPaste32"
+                smallImage="EditPaste16" >
           <tooltip heading="">
             Paste from clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_core_editPasteSpecialButton" caption="Paste Special" extendedCaption="Paste the item on the clipboard using special settings" keytip="S" loadOnClick="false"
                 className="ArcGIS.Desktop.Framework.PasteSpecialCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditPaste16.png" >
+                largeImage="EditPaste32"
+                smallImage="EditPaste16"
+                helpContextID="120002789">
           <tooltip heading="">
             Paste special from clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_editCutButton" caption="Cut" extendedCaption="Cut the selected item and place the item on the clipboard" loadOnClick="false" keytip="X"
+        <button id="esri_core_editCutButton" caption="Cut" extendedCaption="Cut the selected item and place the item on the clipboard" loadOnClick="false" keytip="X" menuKeytip="U"
                 className="ArcGIS.Desktop.Framework.CutCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCut32.png">
+                smallImage="EditCut16"
+                largeImage="EditCut32">
           <tooltip heading="">
             Cut selection to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_core_editCopyButton" caption="Copy" extendedCaption="Copy the highlighted item(s) to the clipboard"
-                loadOnClick="false" keytip="CO"
+                loadOnClick="false" keytip="CO" menuKeytip="C"
                 className="ArcGIS.Desktop.Framework.CopyCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditCopy32.png">
+                smallImage="EditCopy16"
+                largeImage="EditCopy32">
           <tooltip heading="">
             Copy selection to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_core_editCopyPaths" caption="Copy Path"
                 extendedCaption="Copy the path of the selected items to the Clipboard."
-                loadOnClick="false" keytip="CP"
+                loadOnClick="false" keytip="CP" menuKeytip="Y"
                 className="ArcGIS.Desktop.Framework.CopyPathCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopyPath16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CopyPath32.png">
+                smallImage="CopyPath16"
+                largeImage="CopyPath32">
           <tooltip heading="">
             Copy the path of the selected items to the Clipboard.
             <disabledText>
@@ -503,7 +663,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
         <button id="esri_core_Remove" className="RemoveProjectItemCmd" loadOnClick="false" keytip="RM"
                 caption="Remove" extendedCaption="Remove the item from the project."
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png">
+                smallImage="GenericDeleteBlack16">
           <tooltip heading="">
             Remove the selected items from the project or remove the selected items from the Favorites collection. This command does not delete items.
             <disabledText></disabledText>
@@ -511,10 +671,10 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
         <button id="esri_core_editDeleteButton"
                 caption="Delete" extendedCaption="Delete the selection; on map editing context menu"
-                loadOnClick="false" keytip="D"
+                loadOnClick="false" keytip="D" menuKeytip="D"
                 className="ArcGIS.Desktop.Framework.DeleteCMD" assembly="ArcGIS.Desktop.Framework.dll"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard32.png">
+                smallImage="GenericDiscard16"
+                largeImage="GenericDiscard32">
           <tooltip heading="">
             Delete the selected items. For items that reference a file or folder on disk, the file or folder is deleted in the file system.<disabledText></disabledText>
           </tooltip>
@@ -523,8 +683,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
                 caption="Folder" extendedCaption="Add new folder"
                 loadOnClick="false" keytip="NF"
                 className="CreateFolderCmd"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderNew16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderNew32.png">
+                smallImage="FolderNew16"
+                largeImage="FolderNew32">
           <tooltip heading="">
             Create a new folder.
             <disabledText></disabledText>
@@ -535,8 +695,9 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
                 caption="Repair" extendedCaption="Repair the broken project item"
                 loadOnClick="false" keytip="RI"
                 className="RepairProjectItemCmd"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ProjectRepair16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ProjectRepair32.png">
+                helpContextID="120003936"
+                smallImage="ProjectRepair16"
+                largeImage="ProjectRepair32">
           <tooltip heading="">
             Repair the broken project item. 
             <disabledText>A project item can only be repaired when the project's reference to the item is broken, for example, when the file or folder associated with the project item cannot be located on the file system.</disabledText>
@@ -544,23 +705,23 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
 
         <!--Project related buttons-->
-        <button id="esri_core_saveProjectButton" className="Project+ProjectSaveCmd" flipImageRTL="true" caption="Save" extendedCaption="Save changes to the current project; on Project tab" loadOnClick="false" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectSave32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectSave16.png" keytip="S">
+        <button id="esri_core_saveProjectButton" className="Project+ProjectSaveCmd" flipImageRTL="true" caption="Save Project" extendedCaption="Save changes to the current project; on Project tab" loadOnClick="false" condition="esri_mapping_openProjectCondition" largeImage="ArcGISProjectSave32" smallImage="ArcGISProjectSave16" keytip="S">
           <tooltip heading="">
             Save the project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_saveProjectAsButton" className="Project+ProjectSaveAsCmd" flipImageRTL="true" caption="Save As" extendedCaption="Save the current project to a new file; on Project tab" condition="esri_mapping_openProjectCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectSaveAs32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectSaveAs16.png" keytip="A">
+        <button id="esri_core_saveProjectAsButton" className="Project+ProjectSaveAsCmd" flipImageRTL="true" caption="Save Project As" extendedCaption="Save the current project to a new file; on Project tab" condition="esri_mapping_openProjectCondition" largeImage="ArcGISProjectSaveAs32" smallImage="ArcGISProjectSaveAs16" keytip="A">
           <tooltip heading="">
             Save a copy of the ArcGIS Project file to a new location or with a new name.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_newProjectButton" className="esri_core_module:CreateNewProject" caption="New" extendedCaption="Create a new project; on quick access toolbar" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectNew16.png">
-          <tooltip heading="">
+        <button id="esri_core_newProjectButton" className="esri_core_module:CreateNewProject" caption="New Project" smallImage="ArcGISProjectNew16">
+          <tooltip heading="New Project">
             Create a new project.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_openProjectButton" className="esri_core_module:OpenProject" caption="Open" extendedCaption="Open an existing project; on quick access toolbar" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectOpenState32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ArcGISProjectOpenState16.png">
-          <tooltip heading="">
+        <button id="esri_core_openProjectButton" className="esri_core_module:OpenProject" caption="Open Project" largeImage="ArcGISProjectOpenState32" smallImage="ArcGISProjectOpenState16">
+          <tooltip heading="Open Project">
             Open an existing project.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -568,40 +729,31 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <labelControl id="esri_emptyLabel1" caption=" " hasTwoLines="false" />
 
         <!--Undo / Redo controls-->
-        <customControl id="esri_core_undoHistory" caption="Undo" extendedCaption="Show the history of previous operations that can be undone; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.UndoHistoryVM" assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_16.png" loadOnClick="false">
+        <customControl id="esri_core_undoHistory" caption="Undo" extendedCaption="Show the history of previous operations that can be undone; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.UndoHistoryVM" assembly="ArcGIS.Desktop.Framework.dll" smallImage="EditUndo_B_16" loadOnClick="false">
           <content className="ArcGIS.Desktop.Framework.UndoRedo.UndoRedoControl" assembly="ArcGIS.Desktop.Framework.dll" />
           <tooltip heading="Undo">
             Undo the previous operation.<disabledText></disabledText>
           </tooltip>
         </customControl>
-        <customControl id="esri_core_redoHistory" caption="Redo" extendedCaption="Show the history of previous operations that can be redone; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.RedoHistoryVM" assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditRedo_B_16.png" loadOnClick="false">
+        <customControl id="esri_core_redoHistory" caption="Redo" extendedCaption="Show the history of previous operations that can be redone; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.RedoHistoryVM" assembly="ArcGIS.Desktop.Framework.dll" smallImage="EditRedo_B_16" loadOnClick="false">
           <content className="ArcGIS.Desktop.Framework.UndoRedo.UndoRedoControl" assembly="ArcGIS.Desktop.Framework.dll" />
           <tooltip heading="Redo">
             Redo the previous operation.<disabledText></disabledText>
           </tooltip>
         </customControl>
-        <button id="esri_core_undoButton" caption="Undo" extendedCaption="Undo the previous operation; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.UndoCommand" assembly="ArcGIS.Desktop.Framework.dll" flipImageRTL="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditUndo_B_16.png" loadOnClick="false">
+        <button id="esri_core_undoButton" caption="Undo" extendedCaption="Undo the previous operation; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.UndoCommand" assembly="ArcGIS.Desktop.Framework.dll" flipImageRTL="true" largeImage="EditUndo_B_32" smallImage="EditUndo_B_16" loadOnClick="false">
           <tooltip heading="">
             Undo the previous operation.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_redoButton" caption="Redo" extendedCaption="Redo the previous operation; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.RedoCommand" assembly="ArcGIS.Desktop.Framework.dll" flipImageRTL="true" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditRedo_B_32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditRedo_B_16.png" loadOnClick="false">
+        <button id="esri_core_redoButton" caption="Redo" extendedCaption="Redo the previous operation; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.RedoCommand" assembly="ArcGIS.Desktop.Framework.dll" flipImageRTL="true" largeImage="EditRedo_B_32" smallImage="EditRedo_B_16" loadOnClick="false">
           <tooltip heading="">
             Redo the previous operation.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_Shortcuts" caption="Shortcuts" extendedCaption="Show current shortcuts"
-                className="ArcGIS.Desktop.Internal.Framework.Shortcuts.ShortcutsCmd" assembly="ArcGIS.Desktop.Framework.dll"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil16.png"
-                loadOnClick="false">
-          <tooltip heading="">
-            Show the active shortcuts.<disabledText></disabledText>
-          </tooltip>
-        </button>
 
         <!--Dockpane control-->
-        <dynamicMenu id="esri_dockPaneSetDynamicMenu" className="ArcGIS.Desktop.Framework.DockPaneSetChooser" assembly="ArcGIS.Desktop.Framework.dll" caption="Reset Panes" extendedCaption="Reset application panes to a predefined set; on View tab and quick access toolbar" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ResetPanes16.png" keytip="RP" hidden="false">
+        <dynamicMenu id="esri_dockPaneSetDynamicMenu" className="ArcGIS.Desktop.Framework.DockPaneSetChooser" assembly="ArcGIS.Desktop.Framework.dll" caption="Reset Panes" extendedCaption="Reset application panes to a predefined set; on View tab and quick access toolbar" largeImage="ResetPanes32" smallImage="ResetPanes16" keytip="RP" hidden="false">
           <tooltip heading="Reset Panes">
             Reset application panes to a predefined set.
             <disabledText></disabledText>
@@ -610,20 +762,20 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
            
 
         <!-- basic operations on project items -->
-        <button id="esri_core_rename" caption="Rename" keytip="RN" extendedCaption="Rename the selected item; on context menu"
+        <button id="esri_core_rename" caption="Rename" keytip="RN" menuKeytip="R" extendedCaption="Rename the selected item; on context menu"
                 className="RenameCmd"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rename16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rename32.png"
+                smallImage="Rename16"
+                largeImage="Rename32"
                 loadOnClick="false">
           <tooltip heading="Rename">
             Rename the selected item. For project items that reference a file or folder on disk, the file or folder is renamed in the file system.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_core_openFileLocation" caption="Show In File Explorer" keytip="OF" extendedCaption="Open the file location for the selected item; on context menu"
+        <button id="esri_core_openFileLocation" caption="Show In File Explorer" keytip="OF" menuKeytip="X" extendedCaption="Open the file location for the selected item; on context menu"
            className="OpenFileLocationCmd"
-           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOpen16.png"
-           largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOpen32.png"
+           smallImage="GenericOpen16"
+           largeImage="GenericOpen32"
            loadOnClick="false">
           <tooltip heading="Show In File Explorer">
             Open the file location for the selected item.<disabledText></disabledText>
@@ -632,8 +784,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         
         <button id="esri_core_rename_alias" caption="Change Alias" keytip="CA" extendedCaption="Change the selected item's alias"
                 className="RenameAliasCmd"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericPencil32.png"
+                smallImage="GenericPencil16"
+                largeImage="GenericPencil32"
                 loadOnClick="false">
           <tooltip heading="Change Alias">
             Change the selected item's alias.<disabledText></disabledText>
@@ -642,8 +794,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
 
         <button id="esri_core_remove_alias" caption="Remove Alias" keytip="RA" extendedCaption="Remove the selected item's alias"
                 className="RemoveAliasCmd"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack32.png"
+                smallImage="GenericDeleteBlack16"
+                largeImage="GenericDeleteBlack32"
                 loadOnClick="false">
           <tooltip heading="Remove Alias">
             Remove the selected item's alias.<disabledText></disabledText>
@@ -653,7 +805,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         <!--ribbonToolbar controls-->
         <customControl id="esri_activeTool" isDropDown="false" className="ArcGIS.Desktop.Framework.Controls.ActiveToolControlViewModel"
                        assembly="ArcGIS.Desktop.Framework.dll"
-                       smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png"
+                       smallImage="User16"
                        loadOnClick="false">
           <content className="ArcGIS.Desktop.Framework.Controls.ActiveTool" assembly="ArcGIS.Desktop.Framework.dll"/>
           <tooltip heading="Active Tool">
@@ -662,7 +814,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </customControl>
         
         <customControl id="esri_core_notificationControl" isDropDown="false" className="ArcGIS.Desktop.Framework.NotificationControlViewModel"
-            assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="W">
+            assembly="ArcGIS.Desktop.Framework.dll" smallImage="User16" loadOnClick="false" keytip="W">
           <content className="ArcGIS.Desktop.Framework.NotificationControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
           <tooltip heading="Notifications">
             See messages regarding ArcGIS Pro, the project, or items in the project. Notifications are available when there is a blue dot.<disabledText></disabledText>
@@ -670,26 +822,26 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </customControl>
 
         <customControl id="esri_core_CommandSearchControl" caption="Command Search" isDropDown="false" className="ArcGIS.Desktop.Framework.TellMeControlViewModel" helpContextID="120002723"
-                  assembly="ArcGIS.Desktop.Framework.dll" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/User16.png" loadOnClick="false" keytip="H">
-        <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
-        <tooltip heading="Command Search">
-          Search for and execute commands, tools, and help.<disabledText></disabledText>
-        </tooltip>
-      </customControl>
-        <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" flipImageRTL="true" keytip="CT" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ContentsWindowShow16.png">
+                  assembly="ArcGIS.Desktop.Framework.dll" smallImage="User16" loadOnClick="false" keytip="H">
+          <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
+          <tooltip heading="Command Search">
+            Search for and execute commands, tools, and help.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
+        <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents" extendedCaption="Show the Contents pane; on ribbon" flipImageRTL="true" keytip="CT" largeImage="ContentsWindowShow32" smallImage="ContentsWindowShow16" helpContextID="120003937">
           <tooltip heading="">
             Show the Contents pane.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <!-- linked items -->
-        <button id="esri_core_unlinkPortalItemButton" className="esri_core_module:UnlinkPortalItem" caption="Unlink" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOverlayLinked16.png" loadOnClick="false">
+        <button id="esri_core_unlinkPortalItemButton" className="esri_core_module:UnlinkPortalItem" caption="Unlink" smallImage="GenericOverlayLinked16" loadOnClick="false">
           <tooltip heading="">
             Unlink portal item<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_core_syncPortalItemButton" className="esri_core_module:SyncPortalItem" caption="Update" extendedCaption="Delete the copy of the item in the project and re-add the original portal item; on map context menu" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericOnlineSync16.png" loadOnClick="false">
+        <button id="esri_core_syncPortalItemButton" className="esri_core_module:SyncPortalItem" caption="Update" extendedCaption="Delete the copy of the item in the project and re-add the original portal item; on map context menu" smallImage="GenericOnlineSync16" loadOnClick="false">
           <tooltip heading="Update Map or Scene">
             Delete this map or scene and replace it with the current version of its linked portal item. To preserve changes you have made in ArcGIS Pro, make a copy of the map or scene, or save it as a map file, before you update.
             <disabledText></disabledText>
@@ -698,8 +850,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
 
         <button id="esri_core_projectViewClearSort" className="CatalogSortButton"
                 condition="esri_core_resourcesPane"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
+                smallImage="SortCustom16"
+                largeImage="SortCustom32"
           caption="Default Sort" extendedCaption="Clear sorting" keytip="S" loadOnClick="false">
           <tooltip heading="Default Sort">
             Remove sorting that was applied to the contents list. Returns items in the list to their original order.
@@ -709,8 +861,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
 
         <button id="esri_core_projectViewLayoutCheckBoxOpen" className="ArcGIS.Desktop.Internal.Core.ProjectViewChangeLayoutCheckBox" 
                 condition="esri_core_resourcesPane"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HideDetailsPanel32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/HideDetailsPanel16"                
+                largeImage="HideDetailsPanel32"
+                smallImage="HideDetailsPanel16"                
                 caption="Details Panel" extendedCaption="Show the Details panel in the Catalog view, e.g. to see metadata or style items; on ribbon" keytip="SD" loadOnClick="false">
           <tooltip heading="">
             Show the Details panel in the Catalog view. This lets you preview an item's data, view its metadata, and manage style items within a style.<disabledText></disabledText>
@@ -718,8 +870,8 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
 
         <button id="esri_core_HideItemTooltips" className="ArcGIS.Desktop.Internal.Core.HideTooltips"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDisable16"
+                largeImage="CatalogPopUpDisable32"
+                smallImage="CatalogPopUpDisable16"
                 caption="Hide Pop-ups" extendedCaption="Show pop-ups in the catalog pane." keytip="NP" loadOnClick="false">
           <tooltip heading="Hide Pop-ups">
             Do not show information such as an item's location in a pop-up when you mouse over it in the Catalog pane.
@@ -727,16 +879,16 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
         </button>
         <button id="esri_core_ShowItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowItemTooltips"
                 caption="Show Pop-ups" extendedCaption="Show simple pop-ups in the catalog pane." keytip="SP" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUp16">
+                largeImage="CatalogPopUp32"
+                smallImage="CatalogPopUp16">
           <tooltip heading="Show Pop-ups">
             Show information such as an item's location in a pop-up when you mouse over it in the Catalog pane.
           </tooltip>
         </button>
         <button id="esri_core_ShowDetailedItemTooltips" className="ArcGIS.Desktop.Internal.Core.ShowDetailedItemTooltips"
                 caption="Show Detailed Pop-ups" extendedCaption="Show detailed pop-ups in the catalog pane." keytip="AP" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDetailed32"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CatalogPopUpDetailed16">
+                largeImage="CatalogPopUpDetailed32"
+                smallImage="CatalogPopUpDetailed16">
           <tooltip heading="Show Detailed Pop-ups">
 Show information such as an item's thumbnail and tags as well as its location in a pop-up when you mouse over the item in the Catalog pane. This option can help you find an item when you are not familiar with the contents of a portal, disk, database, or server. However, it can reduce overall performance when browsing enterprise geodatabases and ArcGIS Server services, and when accessing items with a slow internet or network connection.
           </tooltip>
@@ -745,32 +897,32 @@ Show information such as an item's thumbnail and tags as well as its location in
         <button id="esri_core_previewZoomToSelectionButton" condition="esri_core_previewZoomToSelectionButton"
                 className="CorePreviewItemZoomToSelection"
                 caption="Zoom To Selection" extendedCaption="Zoom to selected features" keytip="ZS" loadOnClick="false"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionZoomToSelected16.png">
+                smallImage="SelectionZoomToSelected16">
           <tooltip heading="">
             Zoom to the selected features of all layers.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_previewZoomFullButton" caption="Zoom Full Extent" keytip="FE" className="CorePreviewItemZoomToFull" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFullExtent16.png" loadOnClick="false">
+        <button id="esri_core_previewZoomFullButton" caption="Zoom Full Extent" keytip="FE" className="CorePreviewItemZoomToFull" smallImage="ZoomFullExtent16" loadOnClick="false">
           <tooltip heading="Full Extent">
             Zoom to the full extent of the data in the view.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_previewFixedZoomInButton" caption="Fixed Zoom In" extendedCaption="Fixed zoom in" keytip="ZI" className="CorePreviewItemFixedZoomIn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomIn_B_16.png" loadOnClick="false">
+        <button id="esri_core_previewFixedZoomInButton" caption="Fixed Zoom In" extendedCaption="Fixed zoom in" keytip="ZI" className="CorePreviewItemFixedZoomIn" smallImage="ZoomFixedZoomIn_B_16" loadOnClick="false">
           <tooltip heading="Fixed Zoom In">
             Zoom in a fixed distance.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_previewFixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Fixed zoom out" keytip="ZO" className="CorePreviewItemFixedZoomOut" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" loadOnClick="false">
+        <button id="esri_core_previewFixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Fixed zoom out" keytip="ZO" className="CorePreviewItemFixedZoomOut" smallImage="ZoomFixedZoomOut_B_16" loadOnClick="false">
           <tooltip heading="Fixed Zoom Out">
             Zoom out a fixed distance.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_previewPrevExtentButton" caption="Previous Extent" extendedCaption="Previous extent" keytip="PE" flipImageRTL="true" className="CorePreviewItemPrevExtent" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueLeftArrowLongTail16.png" loadOnClick="false">
+        <button id="esri_core_previewPrevExtentButton" caption="Previous Extent" extendedCaption="Previous extent" keytip="PE" flipImageRTL="true" className="CorePreviewItemPrevExtent" smallImage="GenericBlueLeftArrowLongTail16" loadOnClick="false">
           <tooltip heading="Previous Extent">
             Go to the previous extent.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_core_previewNextExtentButton" caption="Next Extent" extendedCaption="Next extent" keytip="NE" flipImageRTL="true" className="CorePreviewItemNextExtent" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail16.png" loadOnClick="false">
+        <button id="esri_core_previewNextExtentButton" caption="Next Extent" extendedCaption="Next extent" keytip="NE" flipImageRTL="true" className="CorePreviewItemNextExtent" smallImage="GenericBlueRightArrowLongTail16" loadOnClick="false">
           <tooltip heading="Next Extent">
             Go to the next extent.<disabledText></disabledText>
           </tooltip>
@@ -783,17 +935,17 @@ Show information such as an item's thumbnail and tags as well as its location in
         </checkBox>
         <button id="esri_core_previewCaptureThumbnail" caption="Create" className="CorePreviewItemCaptureThumbnail"
                 condition="esri_core_previewCaptureThumbnail_condition" keytip="TC"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ItemThumbnailCreate16.png" >
+                largeImage="ItemThumbnailCreate32"
+                smallImage="ItemThumbnailCreate16" >
           <tooltip heading="">
             Captures thumbnail from the preview area and updates metadata.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_core_refresh" caption="Refresh" keytip="RF" className="RefreshCmd" loadOnClick="false" 
+        <button id="esri_core_refresh" caption="Refresh" keytip="RF" menuKeytip="R" className="RefreshCmd" loadOnClick="false" 
                 extendedCaption="Refresh the selected item" helpContextID="120002719"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericRefresh16.png">
+                largeImage="GenericRefresh32"
+                smallImage="GenericRefresh16">
           <tooltip heading="Refresh">Update the contents of a location or selected item.
             <disabledText></disabledText>
           </tooltip>
@@ -801,33 +953,33 @@ Show information such as an item's thumbnail and tags as well as its location in
 
         <button id="esri_core_openButton" caption="Open" keytip="O" className="OpenCmd" loadOnClick="false"
                 extendedCaption="Browse into the selected item"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/launch32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/launch16.png">
+                largeImage="launch32"
+                smallImage="launch16">
           <tooltip heading="Open">Open the item in its view or pane, or browse into the item to see its contents.
             <disabledText></disabledText>
           </tooltip>
         </button>
         
         <button id="esri_core_addToProject" caption="Add To Project" keytip="AP" className="AddToProjectCmd" loadOnClick="false"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png">
+                largeImage="GenericAddGreen32"
+                smallImage="GenericAddGreen16" menuKeytip="A">
           <tooltip heading="">Add an existing item to the project. The project saves a reference to the file or folder stored on the file system.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_core_removeFromProject" className="esri_core_module:RemoveProjectItem" keytip="RFP"  loadOnClick="false"
+        <button id="esri_core_removeFromProject" className="esri_core_module:RemoveProjectItem" keytip="RFP" menuKeytip="V" loadOnClick="false"
                 caption="Remove From Project" extendedCaption="Remove item from the project"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteBlack16.png"
+                smallImage="GenericDeleteBlack16"
                 helpContextID="">
           <tooltip heading="">Remove the item from the project.</tooltip>
         </button>
         
         <button id="esri_addFavoriteButton" className="AddToFavoritesCmd" loadOnClick="false"
-                caption="Add To Favorites" keytip="FA" 
+                caption="Add To Favorites" keytip="FA" menuKeytip="F"
                 extendedCaption="Add an item to project favorites; on context menu for folders, databases, and servers that have been added to the project"
                 condition="esri_projectItem_isValidAndOpenProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FavoriteStar16.png" helpContextID="">
+                smallImage="FavoriteStar16" helpContextID="">
           <tooltip heading="">
             Add the item to project favorites. Project favorites saves a reference to the existing item. If the item is not in a location that is accessible from other machines, it won't be available when using a different computer.<disabledText></disabledText>
           </tooltip>
@@ -836,57 +988,66 @@ Show information such as an item's thumbnail and tags as well as its location in
         <button id="esri_addProjectItemToNewProjectsButton" className="AddItemToNewProjectsCmd" loadOnClick="false"
                 caption="Add To New Projects" keytip="FP" extendedCaption="Add to new projects"
                 condition="esri_projectItem_isValidAndOpenProjectCondition"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PinFavorite16.png"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PinFavorite32.png"
-                helpContextID="">
+                smallImage="PinFavorite16"
+                largeImage="PinFavorite32"
+                helpContextID="" menuKeytip="J">
           <tooltip heading="">
             Add the item to project favorites and to all new projects. Project favorites saves a reference to the existing item. When a new project is create, a reference to the item is automatically added.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_sortClear" caption="Clear" className="SortClearCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">
             <disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_sortType" caption="Type" keytip="T" className="SortTypeCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list alphabetically by type. Items are initially sorted in ascending order. When sorted by type a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_sortDate" caption="Date Modified" keytip="D" className="SortDateCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list by date. Items are initially sorted in from newest to oldest. When sorted by date a second time, items are arranged from oldest to newest.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
+        <button id="esri_core_sortDateCreated" caption="Date Created" keytip="C" className="SortDateCreatedCmd"
+        largeImage="SortCustom32"
+        smallImage="SortCustom16">
+          <tooltip heading="">
+            Sort the contents list by date created. Items are initially sorted in from newest to oldest. When sorted by date a second time, items are arranged from oldest to newest.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_core_sortName" caption="Name" keytip="N" className="SortNameCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list alphabetically by name. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_sortAlias" caption="Alias" keytip="A" className="SortAliasCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list alphabetically by alias. Items are initially sorted in ascending order. When sorted by alias a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_core_sortPath" caption="Path" keytip="P" className="SortPathCmd"
-        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+        largeImage="SortCustom32"
+        smallImage="SortCustom16">
           <tooltip heading="">
             Sort the contents list alphabetically by path. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
             <disabledText></disabledText>
@@ -894,8 +1055,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         </button>
 
         <button id="esri_core_sortSize" caption="Size" keytip="S" className="SortSizeCmd"
-        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+        largeImage="SortCustom32"
+        smallImage="SortCustom16">
           <tooltip heading="">
             Sort the contents list alphabetically by size. Items are initially sorted in ascending order. When sorted by name a second time, items are arranged in descending order.
             <disabledText></disabledText>
@@ -903,16 +1064,16 @@ Show information such as an item's thumbnail and tags as well as its location in
         </button>
 
         <button id="esri_core_sortCategory" caption="Category" keytip="C" className="SortCategoryCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list alphabetically by category. Items are initially sorted in ascending order. When sorted by category a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
         </button>
         
         <button id="esri_core_sortKey" caption="Key" keytip="K" className="SortKeyCmd"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                largeImage="SortCustom32"
+                smallImage="SortCustom16">
           <tooltip heading="">Sort the contents list using the internal key for style items. Items are initially sorted in ascending order. When sorted by key a second time, items are arranged in descending order.
             <disabledText></disabledText>
           </tooltip>
@@ -927,8 +1088,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         </button>
 
         <dynamicMenu id="esri_core_sortColumns" className="SortDynamicMenu" caption="Sort" keytip="SO" loadOnClick="false"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SortCustom16.png">
+                     largeImage="SortCustom32"
+                     smallImage="SortCustom16">
           <tooltip heading="Sort">Sort the contents list using item properties.
             <disabledText></disabledText>
           </tooltip>
@@ -937,8 +1098,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_addItemsDynamicMenu" className="AddItemsDynamicMenu" 
                      caption="Add" keytip="AI" 
                      loadOnClick="false" 
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png">
+                     largeImage="GenericAddGreen32"
+                     smallImage="GenericAddGreen16">
           <tooltip heading="Add">Add an existing item to the project.
             <disabledText></disabledText>
           </tooltip>
@@ -947,8 +1108,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_addItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu" className="AddItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu"
                      caption="Add" keytip="AI"
                      loadOnClick="false"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericAddGreen16.png">
+                     largeImage="GenericAddGreen32"
+                     smallImage="GenericAddGreen16">
           <tooltip heading="Add">
             Add an existing item to the project.
             <disabledText></disabledText>
@@ -958,8 +1119,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_newItemsDynamicMenu" className="NewItemsDynamicMenu" 
                      caption="New" keytip="NI" 
                      loadOnClick="false" 
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
+                     largeImage="GenericNewSparkleLarge32"
+                     smallImage="GenericNewSparkleLarge16">
           <tooltip heading="New">Create a new project item.
             <disabledText></disabledText>
           </tooltip>
@@ -969,8 +1130,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_newItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu" className="NewItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu"
                      caption="New" keytip="NI"
                      loadOnClick="false"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
+                     largeImage="GenericNewSparkleLarge32"
+                     smallImage="GenericNewSparkleLarge16">
           <tooltip heading="New">
             Create a new project item.
             <disabledText></disabledText>
@@ -981,8 +1142,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_importItemsDynamicMenu" keytip="II" className="ImportItemsDynamicMenu"
                      caption="Import"
                      loadOnClick="false" autoDisableWhenPopupContentIsDisabled="false"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png">
+                     largeImage="GenericImport32"
+                     smallImage="GenericImport16">
           <tooltip heading="Import">
             Import an item into the project. The original item's content will be converted to the ArcGIS Pro format.
             <disabledText></disabledText>
@@ -992,8 +1153,8 @@ Show information such as an item's thumbnail and tags as well as its location in
         <dynamicMenu id="esri_core_importItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu" keytip="II" className="ImportItemsDynamicMenuForCatalogDockPaneWhitespaceContextMenu"
                      caption="Import"
                      loadOnClick="false" autoDisableWhenPopupContentIsDisabled="false"
-                     largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport32.png"
-                     smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png">
+                     largeImage="GenericImport32"
+                     smallImage="GenericImport16">
           <tooltip heading="Import">
             Import an item into the project. The original item's content will be converted to the ArcGIS Pro format.
             <disabledText></disabledText>
@@ -1068,8 +1229,15 @@ Show information such as an item's thumbnail and tags as well as its location in
       </subgroups>
 
       <menus>
+        <menu id="esri_core_helpMenu" caption="Help" keytip="H"
+              smallImage="ArcGISProHelp16" largeImage="ArcGISProHelp32">
+          <tooltip heading="Help">Open the help documentation on the web or on your computer and set language options. </tooltip>
+          <button refID="esri_core_onlineHelpBtn"/>
+          <button refID="esri_core_offlineHelpBtn"/>
+          <button refID="esri_core_languageBtn"/>
+        </menu>
         <menu id="esri_core_NewMaps" caption="New Map" keytip="NM"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapNew16.png">
+              smallImage="MapNew16">
           <tooltip heading="New Map options"/>
           <button refID="esri_mapping_newMapButton"/>
           <button refID="esri_mapping_newSceneButton"/>
@@ -1078,7 +1246,7 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_mapping_newBasemapButton"/>
         </menu>
         <menu id="esri_core_NewDatabases" caption="New Database" keytip="ND"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeodatabaseNew16.png">
+              smallImage="GeodatabaseNew16">
           <tooltip heading="New Database options"/>
           <button refID="esri_geodatabase_newGeoDatabaseButton"/>
           <button refID="esri_geodatabase_newMobileGeoDatabaseButton"/>
@@ -1086,14 +1254,14 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_geodatabase_newOLEDBConnectionButton"/>
         </menu>
         <menu id="esri_core_NewToolboxes" caption="New Toolbox" keytip="NT"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingToolboxNew16.png">
+              smallImage="GeoprocessingToolboxNew16">
           <tooltip heading="New Toolbox options"/>
           <button refID="esri_geoprocessing_newToolboxButton_atbx"/>
           <button refID="esri_geoprocessing_newToolboxButton"/>
           <button refID="esri_geoprocessing_newPythonToolboxButton"/>
         </menu>
         <menu id="esri_coreNewServer" caption="New Server" keytip="NS"
-              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ServerArcGISNew16.png">
+              smallImage="ServerArcGISNew16">
           <tooltip heading="New Server options"/>
           <button refID="esri_mapping_AGSConnectionButton"/>
           <button refID="esri_mapping_OGCAPIConnectionButton"/>
@@ -1127,7 +1295,8 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_itemInfoRefreshButton" />
         </menu>
         
-        <menu id="esri_projectDefaultContextMenu" caption="-">
+        <menu id="esri_projectDefaultContextMenu" caption="Project Menu">
+          <tooltip>Show the project menu.</tooltip>
           <dynamicMenu refID="esri_core_newItemsDynamicMenu"/>
           <dynamicMenu refID="esri_core_addItemsDynamicMenu"/>
           <dynamicMenu refID="esri_core_importItemsDynamicMenu"/>
@@ -1143,8 +1312,8 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_favoriteItemAddToProjectButton"/>
           <dynamicMenu refID="esri_favoritesItemPersistDynamicMenu" inline="true"/>
           <button refID="esri_removeFavoriteButton" separator="true"/>
-          <button refID="esri_core_rename" separator="true"/>
-          <dynamicMenu refID="esri_favoritesGeodatabasePropertyMenu" inline="true"/>
+          <menu refID="AliasProjectItemMenu"/>
+          <!--<dynamicMenu refID="esri_favoritesGeodatabasePropertyMenu" inline="true"/>-->
         </menu>
       </menus>
 
@@ -1371,6 +1540,10 @@ Show information such as an item's thumbnail and tags as well as its location in
       <content className="ProjectOpenBackStage" />
     </insertTab>
 
+    <insertTab id="esri_core_infoTab" caption="Info" extendedCaption="Project information; on Project tab" className="InfoBackstageViewModel" condition="esri_mapping_openProjectCondition"  keytip="I">
+      <content className="InfoBackstageView" />
+    </insertTab>
+
     <insertButton refID="esri_core_saveProjectButton" />
     <insertButton refID="esri_core_saveProjectAsButton" />
 
@@ -1406,6 +1579,10 @@ Show information such as an item's thumbnail and tags as well as its location in
       <content className="ArcGIS.Desktop.Framework.AboutView" assembly="ArcGIS.Desktop.Framework.dll"/>
     </insertTab>
 
+    <insertTab id="esri_core_learningResourcesTab" caption="Learning Resources" extendedCaption="Learning resources page; on Project tab" className="LearningResourcesBackstageViewModel"  keytip="R">
+      <content className="LearningResourcesBackstageView" />
+    </insertTab>
+
     <insertButton refID="esri_core_exitApplicationButton" separator="true"/>
   </backstage>
 
@@ -1416,4 +1593,5 @@ Show information such as an item's thumbnail and tags as well as its location in
     <control refID="esri_core_undoSplitButton" size="small"/>
     <control refID="esri_core_redoSplitButton" size="small"/>
   </quickAccessToolbar>
+
 </ArcGIS>

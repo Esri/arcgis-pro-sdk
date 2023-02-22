@@ -40,7 +40,7 @@ namespace ProSnippetsTasks
     public async void Examples()
     {
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer
-      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer``1(LayerCreationParams,ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer<T>(LayerCreationParams,ILayerContainerEdit)
       // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.#ctor(Uri)
       // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.IsVisible
       // cref: ArcGIS.Desktop.Mapping.LayerFactory

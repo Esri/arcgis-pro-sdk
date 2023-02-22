@@ -336,12 +336,10 @@ namespace CartoFeatures.ProSnippet
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke(ArcGIS.Core.CIM.CIMColor,System.Double)
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarker(ArcGIS.Core.CIM.CIMColor,System.Double, ArcGIS.Desktop.Mapping.SimpleMarkerStyle)
       // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnVertices
-      // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnVertices.#ctor
       // cref: ArcGIS.Core.CIM.CIMMarkerStrokePlacement.AngleToLine
       // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnVertices.PlaceOnEndPoints
       // cref: ArcGIS.Core.CIM.CIMMarkerStrokePlacement.Offset
       // cref: ArcGIS.Core.CIM.CIMLineSymbol
-      // cref: ArcGIS.Core.CIM.CIMLineSymbol.#ctor
       // cref: ArcGIS.Core.CIM.CIMSymbolLayer
       #region How to construct a multilayer line symbol with circle markers on the line ends
 
@@ -368,11 +366,9 @@ namespace CartoFeatures.ProSnippet
       // cref: ArcGIS.Core.CIM.CIMMarker.Rotation
       // cref: ArcGIS.Core.CIM.CIMMarker.MarkerPlacement
       // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnLine
-      // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnLine.#ctor
       // cref: ArcGIS.Core.CIM.CIMMarkerStrokePlacement.AngleToLine
       // cref: ArcGIS.Core.CIM.CIMMarkerPlacementOnLine.RelativeTo
       // cref: ArcGIS.Core.CIM.CIMLineSymbol
-      // cref: ArcGIS.Core.CIM.CIMLineSymbol.#ctor
       // cref: ArcGIS.Core.CIM.CIMSymbolLayer
       #region How to construct a multilayer line symbol with an arrow head on the end
 
@@ -537,7 +533,7 @@ namespace CartoFeatures.ProSnippet
     private static void SymbolLookup(FeatureLayer featureLayer)
     {
       // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CanLookupSymbol()
-      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.LookupSymbol(System.Long, ArcGIS.Desktop.Mapping.MapView)
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.LookupSymbol(System.Int64, ArcGIS.Desktop.Mapping.MapView)
       #region Lookup Symbol
       //Note: Run within QueuedTask.Run
       //Get the selection
@@ -795,8 +791,8 @@ namespace CartoFeatures.ProSnippet
     // cref: ArcGIS.Desktop.Mapping.SymbolStyleItem.Symbol
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer.Symbol
-    // cref: ArcGIS.Core.CIM.CIMSymbol.MakeSymbolReference
-    // cref: ArcGIS.Core.CIM.CIMSymbol.SetRealWorldUnits
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.MakeSymbolReference
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.SetRealWorldUnits
     #region How to apply a symbol from style to a feature layer
 
     public Task SetFeatureLayerSymbolFromStyleItemAsync(
@@ -832,8 +828,8 @@ namespace CartoFeatures.ProSnippet
     // cref: ArcGIS.Desktop.Mapping.SymbolStyleItem.Symbol
     // cref: ArcGIS.Desktop.Mapping.StyleItemType
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer.Symbol
-    // cref: ArcGIS.Core.CIM.CIMSymbol.MakeSymbolReference
-    // cref: ArcGIS.Core.CIM.CIMSymbol.SetRealWorldUnits
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.MakeSymbolReference
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.SetRealWorldUnits
     #region How to apply a point symbol from a style to a feature layer
 
     // var map = MapView.Active.Map;
@@ -880,11 +876,11 @@ namespace CartoFeatures.ProSnippet
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer()
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer()
     // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.SearchColorRamps
-    // cref: ArcGIS.Desktop.Mapping.UniqueValueRendererDefinition._CTOR
+    // cref: ArcGIS.Desktop.Mapping.UniqueValueRendererDefinition.#ctor
     // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer.Symbol
-    // cref: ArcGIS.Core.CIM.CIMSymbol.MakeSymbolReference
-    // cref: ArcGIS.Core.CIM.CIMSymbol.SetRealWorldUnits
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.MakeSymbolReference
+    // cref: ArcGIS.Desktop.Mapping.SymbolExtensionMethods.SetRealWorldUnits
     #region How to apply a color ramp from a style to a feature layer
 
     public async Task ApplyColorRampAsync(FeatureLayer featureLayer, List<string> fields)

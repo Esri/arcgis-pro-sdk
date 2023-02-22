@@ -35,6 +35,8 @@ using Attribute = ArcGIS.Desktop.Editing.Attributes.Attribute;
 using ArcGIS.Desktop.Framework;
 using System.Windows.Input;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Core.Data.Topology;
+using ArcGIS.Desktop.Framework.Dialogs;
 
 namespace EditingSDKExamples
 {
@@ -48,36 +50,6 @@ namespace EditingSDKExamples
       SketchOutputMode = SketchOutputMode.Map;
     }
 
-    public void OpMgr()
-    {
-      var editOp = new EditOperation();
-      editOp.Name = "My Name";
-      editOp.Execute();
-
-      //elsewhere
-      editOp.UndoAsync();
-
-      #region ProSnippet Group: Undo / Redo
-      #endregion
-
-      // cref: ArcGIS.Desktop.Framework.OperationManager
-      // cref: ArcGIS.Desktop.Framework.OperationManager.CanUndo
-      // cref: ArcGIS.Desktop.Framework.OperationManager.UndoAsync()
-      // cref: ArcGIS.Desktop.Framework.OperationManager.CanRedo
-      // cref: ArcGIS.Desktop.Framework.OperationManager.RedoAsync()
-      // cref: ARCGIS.DESKTOP.MAPPING.MAP.OPERATIONMANAGER
-      #region Undo/Redo the Most Recent Operation
-
-      //undo
-      if (MapView.Active.Map.OperationManager.CanUndo)
-        MapView.Active.Map.OperationManager.UndoAsync();//await as needed
-
-      //redo
-      if (MapView.Active.Map.OperationManager.CanRedo)
-        MapView.Active.Map.OperationManager.RedoAsync();//await as needed
-
-      #endregion
-    }
 
     #region ProSnippet Group: Edit Templates
     #endregion
@@ -139,7 +111,8 @@ namespace EditingSDKExamples
     // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
     // cref: ArcGIS.Core.CIM.CIMRowTemplate
     // cref: ArcGIS.Core.CIM.CIMEditingTemplate.DefaultToolGUID
-    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.GetDefinition( ArcGIS.Core.CIM.CIMEditingTemplate)
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.GetDefinition()
+    // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.SetDefinition(ArcGIS.Core.CIM.CIMEditingTemplate)
     #region Change Default Edit tool for a template
     public Task ChangeTemplateDefaultToolAsync(ArcGIS.Desktop.Mapping.FeatureLayer flayer,
                       string toolContentGUID, string templateName)
@@ -200,7 +173,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.ActivateDefaultToolAsync
       // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.ToolIDs
       // cref: ArcGIS.Core.CIM.CIMExtensions.GetExcludedToolIDs(ArcGIS.Core.CIM.CIMEditingTemplate)
-      // cref: ArcGIS.Core.CIM.CIMExtensions.SetExcludedToolIDs(ArcGIS.Core.CIM.CIMEditingTemplate,System.Collections.Generic.IEnumerable{System.String})
+      // cref: ArcGIS.Core.CIM.CIMExtensions.SetExcludedToolIDs(ArcGIS.Core.CIM.CIMEditingTemplate,System.String[])
       // cref: ArcGIS.Core.CIM.CIMExtensions.AllowToolID(ArcGIS.Core.CIM.CIMEditingTemplate,System.String)
       // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.FeatureTemplates
       // cref: ARCGIS.DESKTOP.MAPPING.LAYER.GETDEFINITION
@@ -285,12 +258,12 @@ namespace EditingSDKExamples
       #endregion
 
       // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.GETDEFINITION
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Description
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Name
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate.Description
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate.Name
       // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
       // cref: ArcGIS.Core.CIM.CIMRowTemplate
-      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.Core.CIM.CIMEditingTemplate)
       // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CreateTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String,System.String,ArcGIS.Desktop.Editing.Attributes.Inspector,System.String,System.String[],System.String[])
       // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate
       // cref: ArcGIS.Desktop.Editing.Templates.EditingRowTemplate
@@ -314,10 +287,10 @@ namespace EditingSDKExamples
       #endregion
 
       // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.GETDEFINITION
-      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.SETDEFINITION(ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate)
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Description
-      // cref: ArcGIS.ArcGIS.Core.CIM.CIMEditingTemplate.Name
+      // cref: ARCGIS.DESKTOP.EDITING.TEMPLATES.EDITINGTEMPLATE.SETDEFINITION(ArcGIS.Core.CIM.CIMEditingTemplate)
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate.Description
+      // cref: ArcGIS.Core.CIM.CIMEditingTemplate.Name
       // cref: ArcGIS.Core.CIM.CIMBasicRowTemplate
       // cref: ArcGIS.Core.CIM.CIMRowTemplate
       #region Update a Table Template
@@ -517,8 +490,13 @@ namespace EditingSDKExamples
         // Queue feature creation
         createOperation.Create(CurrentTemplate.Layer, insp);
 
-        // Execute the operation
-        return createOperation.Execute();
+        if (!createOperation.IsEmpty)
+        {
+          // Execute the operation
+          return createOperation.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
+        else
+          return false;
       });
       return result;
     }
@@ -569,7 +547,10 @@ namespace EditingSDKExamples
         EditOperation op = new EditOperation();
         op.Name = "Update annotation";
         op.Modify(insp);
-        op.Execute();
+        if (!op.IsEmpty)
+        {
+          var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
       #endregion
 
@@ -606,7 +587,10 @@ namespace EditingSDKExamples
           EditOperation op = new EditOperation();
           op.Name = "Change annotation angle";
           op.Modify(insp);
-          op.Execute();
+          if (!op.IsEmpty)
+          {
+            var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+          }
         }
       });
 
@@ -656,13 +640,219 @@ namespace EditingSDKExamples
         EditOperation op = new EditOperation();
         op.Name = "modify symbol";
         op.Modify(insp);
-        bool result = op.Execute();
+        if (!op.IsEmpty)
+        {
+          bool result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
       });
 
       #endregion
     }
 
-    #region ProSnippet Group : Ground to Grid
+
+    #region ProSnippet Group: Undo / Redo
+    #endregion
+    public void OpMgr()
+    {
+      var editOp = new EditOperation();
+      editOp.Name = "My Name";
+      if (!editOp.IsEmpty)
+      {
+        var result = editOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
+
+      //elsewhere
+      editOp.UndoAsync();
+
+      // cref: ArcGIS.Desktop.Framework.OperationManager
+      // cref: ArcGIS.Desktop.Framework.OperationManager.CanUndo
+      // cref: ArcGIS.Desktop.Framework.OperationManager.UndoAsync()
+      // cref: ArcGIS.Desktop.Framework.OperationManager.CanRedo
+      // cref: ArcGIS.Desktop.Framework.OperationManager.RedoAsync()
+      // cref: ARCGIS.DESKTOP.MAPPING.MAP.OPERATIONMANAGER
+      #region Undo/Redo the Most Recent Operation
+
+      //undo
+      if (MapView.Active.Map.OperationManager.CanUndo)
+        MapView.Active.Map.OperationManager.UndoAsync();//await as needed
+
+      //redo
+      if (MapView.Active.Map.OperationManager.CanRedo)
+        MapView.Active.Map.OperationManager.RedoAsync();//await as needed
+
+      #endregion
+    }
+
+    #region ProSnippet Group: Topology Properties
+    #endregion
+
+    public async void Topology()
+    {
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetAvailableTopologiesAsync(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Editing.TopologyProperties
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties
+      #region Get List of available topologies in the map
+
+      QueuedTask.Run(async () =>
+      {
+        var map = MapView.Active.Map;
+        //Get a list of all the available topologies for the map
+        var availableTopologies = await map.GetAvailableTopologiesAsync();
+
+        var gdbTopologies = availableTopologies.OfType<GeodatabaseTopologyProperties>();
+        var mapTopologies = availableTopologies.OfType<MapTopologyProperties>();
+      });
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetActiveTopologyAsync(ArcGIS.Desktop.Mapping.Map, System.String)
+      // cref: ArcGIS.Desktop.Editing.TopologyProperties
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties
+      // cref: ArcGIS.Desktop.Editing.NoTopologyProperties
+      #region Get the properties of the active topology in the map
+      var map = MapView.Active.Map;
+      var activeTopologyProperties = await map.GetActiveTopologyAsync();
+      var isMapTopology = activeTopologyProperties is MapTopologyProperties;
+      var isGdbTopology = activeTopologyProperties is GeodatabaseTopologyProperties;
+      var isNoTopology = activeTopologyProperties is NoTopologyProperties;
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTopologyAsync(ArcGIS.Desktop.Mapping.Map, System.String)
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties.Tolerance
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties.DefaultTolerance
+      #region Get map topology properties 
+      var mapTopoProperties = await map.GetTopologyAsync("Map") as MapTopologyProperties;
+      var tolerance_m = mapTopoProperties.Tolerance;
+      var defaultTolerance_m = mapTopoProperties.DefaultTolerance;
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTopologyAsync(ArcGIS.Desktop.Mapping.Map, System.String)
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties.WorkspaceName
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties.TopologyLayer
+      // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties.ClusterTolerance
+      #region Get geodatabase topology properties by name
+      var topoProperties = await map.GetTopologyAsync("TopologyName") as GeodatabaseTopologyProperties;
+
+      var workspace = topoProperties.WorkspaceName;
+      var topoLayer = topoProperties.TopologyLayer;
+      var clusterTolerance = topoProperties.ClusterTolerance;
+
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CanSetMapTopology(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.SetMapTopologyAsync(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Editing.MapTopologyProperties
+      #region Set Map Topology as the current topology
+      if (map.CanSetMapTopology())
+      {
+        //Set the topology of the map as map topology
+        mapTopoProperties = await map.SetMapTopologyAsync() as MapTopologyProperties;
+      }
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CanClearTopology(ArcGIS.Desktop.Mapping.Map)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.ClearTopologyAsync(ArcGIS.Desktop.Mapping.Map)
+      #region Set 'No Tpology' as the current topology
+
+      if (map.CanClearTopology())
+      {
+        //Clears the topology of the map - no topology
+        await map.ClearTopologyAsync();
+      }
+
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CanSetActiveTopology(ArcGIS.Desktop.Mapping.Map, System.String)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.SetActiveTopologyAsync(ArcGIS.Desktop.Mapping.Map, System.String)
+      #region Set the current topology by name
+
+      if (map.CanSetActiveTopology("TopologyName"))
+      {
+        await map.SetActiveTopologyAsync("TopologyName");
+      }
+
+      #endregion
+
+      GeodatabaseTopologyProperties gdbTopoProperties = null;
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CanSetActiveTopology(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Editing.TopologyProperties)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.SetActiveTopologyAsync(ArcGIS.Desktop.Mapping.Map, ArcGIS.Desktop.Editing.TopologyProperties)
+      #region Set the current topology by topologyProperties 
+
+      if (map.CanSetActiveTopology(gdbTopoProperties))
+      {
+        await map.SetActiveTopologyAsync(gdbTopoProperties);
+      }
+
+      #endregion
+    }
+
+    #region ProSnippet Group: Map Topology
+    #endregion
+
+    // cref: ArcGIS.Core.Data.Topology.TopologyDefinition
+    // cref: ArcGIS.Desktop.Mapping.MappingExtensions.BuildMapTopologyGraph<T>(ArcGIS.Desktop.Mapping.MapView, System.Action<ArcGIS.Core.Data.Topology.TopologyGraph>)
+    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.GetNodes()
+    // cref: ArcGIS.Core.Data.Topology.TopologyGraph.GetEdges()
+    // cref: ArcGIS.Core.Data.Topology.TopologyNode
+    // cref: ArcGIS.Core.Data.Topology.TopologyEdge
+    #region Build Map Topology
+    private async Task BuildGraphWithActiveView()
+    {
+      await QueuedTask.Run(() =>
+      {
+        //Build the map topology graph
+        MapView.Active.BuildMapTopologyGraph<TopologyDefinition>(async topologyGraph =>
+        {
+          //Getting the nodes and edges present in the graph
+          var topologyGraphNodes = topologyGraph.GetNodes();
+          var topologyGraphEdges = topologyGraph.GetEdges();
+
+          foreach (var node in topologyGraphNodes)
+          {
+            // do something with the node
+          }
+          foreach (var edge in topologyGraphEdges)
+          {
+            // do something with the edge
+          }
+
+          MessageBox.Show($"Number of topo graph nodes are:  {topologyGraphNodes.Count}.\n Number of topo graph edges are {topologyGraphEdges.Count}.", "Map Topology Info");
+        });
+      });
+    }
+    #endregion
+
+
+    #region ProSnippet Group: Attributes Pane Context MenuItems
+    #endregion
+
+    protected async void ContextMenuItem()
+    {
+      // cref: ArcGIS.Desktop.Framework.FrameworkApplication.ContextMenuDataContextAs<T>
+      #region Retrieve SelectionSet from command added to Attribute Pane Context Menu  
+      await QueuedTask.Run(async () =>
+      {
+        var selSet = FrameworkApplication.ContextMenuDataContextAs<SelectionSet>();
+        if (selSet == null)
+          return;
+
+        int count = selSet.Count;
+        if (count == 0)
+          return;
+
+        var op = new EditOperation();
+        op.Name = "Delete context";
+        op.Delete(selSet);
+        await op.ExecuteAsync();
+      });
+      #endregion
+    }
+
+    #region ProSnippet Group: Ground to Grid
     #endregion
 
     internal void G2G()
@@ -744,6 +934,23 @@ namespace EditingSDKExamples
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.EditingOptions
+      // cref: ArcGIS.Desktop.Core.EditingOptions
+      // cref: ArcGIS.Desktop.Core.AnnotationFollowMode
+      // cref: ArcGIS.Desktop.Core.AnnotationPlacementMode
+      #region Get/Set Editing Annotation Options
+      var eOptions = ApplicationOptions.EditingOptions;
+
+      var followLinkedLines = eOptions.AutomaticallyFollowLinkedLineFeatures;
+      var followLinedPolygons = eOptions.AutomaticallyFollowLinkedPolygonFeatures;
+      var usePlacementProps = eOptions.UseAnnotationPlacementProperties;
+      var followMode = eOptions.AnnotationFollowMode;
+      var placementMode = eOptions.AnnotationPlacementMode;
+
+     
+      eOptions.AnnotationFollowMode = AnnotationFollowMode.Parallel;
+      eOptions.AnnotationPlacementMode = AnnotationPlacementMode.Left;
+      #endregion
     }
 
     public void SymbologyOptions()

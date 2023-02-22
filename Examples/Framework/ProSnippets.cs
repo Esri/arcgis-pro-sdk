@@ -350,7 +350,7 @@ namespace Framework.Snippets
     {
       // cref: ARCGIS.DESKTOP.FRAMEWORK.Notification
       // cref: ARCGIS.DESKTOP.FRAMEWORK.Dialogs.MessageBox.Show(Window,String,String,MessageBoxButton,MessageBoxImage,MessageBoxResult,String,String,String)
-      // cref: ARCGIS.DESKTOP.FRAMEWORK.Dialogs.MessageBox.Show(Boolean,String,Window,String,String,MessageBoxButton,MessageBoxImage,MessageBoxResult,String,String,String)
+      // cref: ARCGIS.DESKTOP.FRAMEWORK.Dialogs.MessageBox.Show(Boolean@,String,Window,String,String,MessageBoxButton,MessageBoxImage,MessageBoxResult,String,String,String)
       #region Display a Pro MessageBox
 
       ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show("Some Message", "Some title", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.Yes);
@@ -366,7 +366,7 @@ namespace Framework.Snippets
       Notification notification = new Notification();
       notification.Title = FrameworkApplication.Title;
       notification.Message = "Notification 1";
-      notification.ImageUrl = @"pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ToastLicensing32.png";
+      notification.ImageSource = System.Windows.Application.Current.Resources["ToastLicensing32"] as ImageSource;
 
       ArcGIS.Desktop.Framework.FrameworkApplication.AddNotification(notification);
       #endregion

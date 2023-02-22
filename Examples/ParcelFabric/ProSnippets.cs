@@ -33,11 +33,35 @@ using System.Windows;
 
 namespace ParcelFabricSDKSamples
 {
-   class ProSnippets
-   {
+  class ProSnippets
+  {
     //Enclose the snippet you want to share on the wiki with the region
     //Region name will show up as Snippet name.
     //Check out any of the ProSnippet md pages on the SDK wiki.
+
+    protected async void AddParcelLayer()
+    {
+      // cref: ArcGIS.Desktop.Mapping.ParcelLayer
+      // cref: ArcGIS.Desktop.Mapping.ParcelLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.ParcelLayerCreationParams.#ctor(System.Uri)
+      #region Add a Parcel Layer to the map
+      string path = @"C:\MyTestData\MyFileGeodatabase.gdb\MyFeatureDS\MyFabric";
+      await QueuedTask.Run(() =>
+      {
+        var lyrCreateParams = new ParcelLayerCreationParams(new Uri(path));
+        try
+        {
+          var parcelLayer = LayerFactory.Instance.CreateLayer<ParcelLayer>(
+            lyrCreateParams, MapView.Active.Map);
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message, "Add Parcel Fabric Layer");
+        }
+      });
+      #endregion
+    }
+
     protected async void GetActiveRecord()
     {
       // cref: ArcGIS.Desktop.Mapping.ParcelLayer
@@ -145,67 +169,67 @@ namespace ParcelFabricSDKSamples
       // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetParcelLineLayerByTypeNameAsync(ArcGIS.Desktop.Mapping.ParcelLayer, System.String)
       // cref: ArcGIS.Desktop.Editing.EditOperation.CopyLineFeaturesToParcelType(ArcGIS.Desktop.Mapping.Layer, System.Collections.Generic.IEnumerable<System.Int64>, ArcGIS.Desktop.Mapping.Layer, ArcGIS.Desktop.Mapping.Layer)
       #region Copy standard line features into a parcel type
-      string errorMessage = await QueuedTask.Run( async () =>
-      {
+      string errorMessage = await QueuedTask.Run(async () =>
+     {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select a target parcel polygon layer in the table of contents.";
+         return "Please select a target parcel polygon layer in the table of contents.";
         //get the feature layer that's selected in the table of contents
         var destPolygonL = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().FirstOrDefault();
-        try
-        {
-          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+       try
+       {
+         var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
           //if there is no fabric in the map then bail
           if (myParcelFabricLayer == null)
-            return "There is no fabric in the map.";
-          var pRec = myParcelFabricLayer.GetActiveRecord();
-          if (pRec == null)
-            return "There is no Active Record. Please set the active record and try again.";
-          string ParcelTypeName = "";
-          IEnumerable<string> parcelTypeNames = await myParcelFabricLayer.GetParcelTypeNamesAsync();
-          foreach (string parcelTypeNm in parcelTypeNames)
-          {
-            var polygonLyrParcelTypeEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(parcelTypeNm);
-            foreach (FeatureLayer lyr in polygonLyrParcelTypeEnum)
-              if (lyr == destPolygonL)
-              {
-                ParcelTypeName = parcelTypeNm;
-                break;
-              }
-          }
-          if (String.IsNullOrEmpty(ParcelTypeName))
-            return "Please select a target parcel polygon layer in the table of contents.";
-          var srcFeatLyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name.Contains("MySourceLines") && l.IsVisible);
-          if (srcFeatLyr == null)
-            return "Looking for a layer named 'MySourceLines' in the table of contents.";
+           return "There is no fabric in the map.";
+         var pRec = myParcelFabricLayer.GetActiveRecord();
+         if (pRec == null)
+           return "There is no Active Record. Please set the active record and try again.";
+         string ParcelTypeName = "";
+         IEnumerable<string> parcelTypeNames = await myParcelFabricLayer.GetParcelTypeNamesAsync();
+         foreach (string parcelTypeNm in parcelTypeNames)
+         {
+           var polygonLyrParcelTypeEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(parcelTypeNm);
+           foreach (FeatureLayer lyr in polygonLyrParcelTypeEnum)
+             if (lyr == destPolygonL)
+             {
+               ParcelTypeName = parcelTypeNm;
+               break;
+             }
+         }
+         if (String.IsNullOrEmpty(ParcelTypeName))
+           return "Please select a target parcel polygon layer in the table of contents.";
+         var srcFeatLyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name.Contains("MySourceLines") && l.IsVisible);
+         if (srcFeatLyr == null)
+           return "Looking for a layer named 'MySourceLines' in the table of contents.";
           //now get the line layer for this parcel type
           var destLineLyrEnum = await myParcelFabricLayer.GetParcelLineLayerByTypeNameAsync(ParcelTypeName);
-          if (destLineLyrEnum.Count() == 0) //make sure there is one in the map
+         if (destLineLyrEnum.Count() == 0) //make sure there is one in the map
             return ParcelTypeName + " not found.";
-          var destLineL = destLineLyrEnum.FirstOrDefault();
-          if (destLineL == null || destPolygonL == null)
-            return "";
-          var editOper = new EditOperation()
-          {
-            Name = "Copy Line Features To Parcel Type",
-            ProgressMessage = "Copy Line Features To Parcel Type...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
-          var ids = new List<long>((srcFeatLyr as FeatureLayer).GetSelection().GetObjectIDs());
-          if (ids.Count == 0)
-            return "No selected lines were found. Please select line features and try again.";
-          editOper.CopyLineFeaturesToParcelType(srcFeatLyr, ids, destLineL, destPolygonL);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
-      });
+         var destLineL = destLineLyrEnum.FirstOrDefault();
+         if (destLineL == null || destPolygonL == null)
+           return "";
+         var editOper = new EditOperation()
+         {
+           Name = "Copy Line Features To Parcel Type",
+           ProgressMessage = "Copy Line Features To Parcel Type...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
+         var ids = new List<long>((srcFeatLyr as FeatureLayer).GetSelection().GetObjectIDs());
+         if (ids.Count == 0)
+           return "No selected lines were found. Please select line features and try again.";
+         editOper.CopyLineFeaturesToParcelType(srcFeatLyr, ids, destLineL, destPolygonL);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
+     });
       if (!string.IsNullOrEmpty(errorMessage))
         MessageBox.Show(errorMessage, "Copy Line Features To Parcel Type.");
       #endregion
@@ -216,57 +240,57 @@ namespace ParcelFabricSDKSamples
       // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetParcelPolygonLayerByTypeNameAsync(ArcGIS.Desktop.Mapping.ParcelLayer, System.String)
       // cref: ArcGIS.Desktop.Editing.EditOperation.CopyParcelLinesToParcelType(ArcGIS.Desktop.Mapping.ParcelLayer, ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Desktop.Mapping.Layer, ArcGIS.Desktop.Mapping.Layer, System.Boolean, System.Boolean, System.Boolean)
       #region Copy parcel lines to a parcel type
-      string errorMessage = await QueuedTask.Run( async () =>
-      {
+      string errorMessage = await QueuedTask.Run(async () =>
+     {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select a source parcel polygon feature layer in the table of contents.";
-        try
-        {
-          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-          if (myParcelFabricLayer == null)
-            return "No parcel layer found in the map.";
+         return "Please select a source parcel polygon feature layer in the table of contents.";
+       try
+       {
+         var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+         if (myParcelFabricLayer == null)
+           return "No parcel layer found in the map.";
 
           //get the feature layer that's selected in the table of contents
           var srcParcelFeatLyr = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().FirstOrDefault();
-          string sTargetParcelType = "Tax";
-          var destLineLEnum = await myParcelFabricLayer.GetParcelLineLayerByTypeNameAsync(sTargetParcelType);
-          if (destLineLEnum.Count() == 0)
-            return "";
-          var destLineL = destLineLEnum.FirstOrDefault();
-          var destPolygonLEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(sTargetParcelType);
-          if (destPolygonLEnum.Count() == 0)
-            return "";
-          var destPolygonL = destPolygonLEnum.FirstOrDefault();
-          if (destLineL == null || destPolygonL == null)
-            return "";
-          var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-          if (theActiveRecord == null)
-            return "There is no Active Record. Please set the active record and try again.";
-          var editOper = new EditOperation()
-          {
-            Name = "Copy Lines To Parcel Type",
-            ProgressMessage = "Copy Lines To Parcel Type ...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
-          var ids = new List<long>(srcParcelFeatLyr.GetSelection().GetObjectIDs());
-          if (ids.Count == 0)
-            return "No selected parcels found. Please select parcels and try again.";
+         string sTargetParcelType = "Tax";
+         var destLineLEnum = await myParcelFabricLayer.GetParcelLineLayerByTypeNameAsync(sTargetParcelType);
+         if (destLineLEnum.Count() == 0)
+           return "";
+         var destLineL = destLineLEnum.FirstOrDefault();
+         var destPolygonLEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(sTargetParcelType);
+         if (destPolygonLEnum.Count() == 0)
+           return "";
+         var destPolygonL = destPolygonLEnum.FirstOrDefault();
+         if (destLineL == null || destPolygonL == null)
+           return "";
+         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
+         if (theActiveRecord == null)
+           return "There is no Active Record. Please set the active record and try again.";
+         var editOper = new EditOperation()
+         {
+           Name = "Copy Lines To Parcel Type",
+           ProgressMessage = "Copy Lines To Parcel Type ...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
+         var ids = new List<long>(srcParcelFeatLyr.GetSelection().GetObjectIDs());
+         if (ids.Count == 0)
+           return "No selected parcels found. Please select parcels and try again.";
           //add the standard feature line layers source, and their feature ids to a new Dictionary
           var sourceParcelFeatures = new Dictionary<MapMember, List<long>>();
-          sourceParcelFeatures.Add(srcParcelFeatLyr, ids);
-          editOper.CopyParcelLinesToParcelType(myParcelFabricLayer, SelectionSet.FromDictionary(sourceParcelFeatures), destLineL, destPolygonL, true, false, true);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
-      });
+         sourceParcelFeatures.Add(srcParcelFeatLyr, ids);
+         editOper.CopyParcelLinesToParcelType(myParcelFabricLayer, SelectionSet.FromDictionary(sourceParcelFeatures), destLineL, destPolygonL, true, false, true);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
+     });
       if (!string.IsNullOrEmpty(errorMessage))
         MessageBox.Show(errorMessage, "Copy Parcel Lines To Parcel Type.");
       #endregion
@@ -276,107 +300,107 @@ namespace ParcelFabricSDKSamples
       // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetActiveRecord(ArcGIS.Desktop.Mapping.ParcelLayer)
       // cref: ArcGIS.Desktop.Editing.EditOperation.AssignFeaturesToRecord(ArcGIS.Desktop.Mapping.ParcelLayer, ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Desktop.Editing.ParcelRecord)
       #region Assign features to active record
-      string errorMessage = await QueuedTask.Run( () =>
-      {
+      string errorMessage = await QueuedTask.Run(() =>
+     {
         //check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select a source feature layer in the table of contents.";
+         return "Please select a source feature layer in the table of contents.";
         //first get the feature layer that's selected in the table of contents
         var srcFeatLyr = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().FirstOrDefault();
-        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-        if (myParcelFabricLayer == null)
-          return "No parcel layer found in the map.";
-        try
-        {
-          var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-          if (theActiveRecord == null)
-            return "There is no Active Record. Please set the active record and try again.";
-          var editOper = new EditOperation()
-          {
-            Name = "Assign Features to Record",
-            ProgressMessage = "Assign Features to Record...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
+       var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+       if (myParcelFabricLayer == null)
+         return "No parcel layer found in the map.";
+       try
+       {
+         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
+         if (theActiveRecord == null)
+           return "There is no Active Record. Please set the active record and try again.";
+         var editOper = new EditOperation()
+         {
+           Name = "Assign Features to Record",
+           ProgressMessage = "Assign Features to Record...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
           //add parcel type layers and their feature ids to a new Dictionary
           var ids = new List<long>(srcFeatLyr.GetSelection().GetObjectIDs());
-          var sourceFeatures = new Dictionary<MapMember, List<long>>();
-          sourceFeatures.Add(srcFeatLyr, ids);
-          editOper.AssignFeaturesToRecord(myParcelFabricLayer, 
-            SelectionSet.FromDictionary(sourceFeatures), theActiveRecord);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
-      });
+         var sourceFeatures = new Dictionary<MapMember, List<long>>();
+         sourceFeatures.Add(srcFeatLyr, ids);
+         editOper.AssignFeaturesToRecord(myParcelFabricLayer,
+           SelectionSet.FromDictionary(sourceFeatures), theActiveRecord);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
+     });
       if (!string.IsNullOrEmpty(errorMessage))
         MessageBox.Show(errorMessage, "Assign Features To Record.");
       #endregion
     }
     protected async void CreateParcelSeeds()
     {
-      string errorMessage = await QueuedTask.Run( async () =>
-      {
+      string errorMessage = await QueuedTask.Run(async () =>
+     {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select a target parcel polygon layer in the table of contents";
+         return "Please select a target parcel polygon layer in the table of contents";
         //get the feature layer that's selected in the table of contents
         var destPolygonL = MapView.Active.GetSelectedLayers().FirstOrDefault() as FeatureLayer;
-        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-        if (myParcelFabricLayer == null)
-          return "Parcel layer not found in map.";
+       var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+       if (myParcelFabricLayer == null)
+         return "Parcel layer not found in map.";
 
         //is it a fabric parcel type layer?
         string ParcelTypeName = "";
-        IEnumerable<string> parcelTypeNames = await myParcelFabricLayer.GetParcelTypeNamesAsync();
-        foreach (string parcelTypeNm in parcelTypeNames)
-        {
-          var polygonLyrParcelTypeEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(parcelTypeNm);
-          foreach (FeatureLayer lyr in polygonLyrParcelTypeEnum)
-            if (lyr == destPolygonL)
-            {
-              ParcelTypeName = parcelTypeNm;
-              break;
-            }
-        }
-        if (String.IsNullOrEmpty(ParcelTypeName))
-          return "Please select a target parcel polygon layer in the table of contents.";
-        var destLineL = await myParcelFabricLayer.GetParcelLineLayerByTypeNameAsync(ParcelTypeName);
-        if (destLineL == null)
-          return "";
+       IEnumerable<string> parcelTypeNames = await myParcelFabricLayer.GetParcelTypeNamesAsync();
+       foreach (string parcelTypeNm in parcelTypeNames)
+       {
+         var polygonLyrParcelTypeEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync(parcelTypeNm);
+         foreach (FeatureLayer lyr in polygonLyrParcelTypeEnum)
+           if (lyr == destPolygonL)
+           {
+             ParcelTypeName = parcelTypeNm;
+             break;
+           }
+       }
+       if (String.IsNullOrEmpty(ParcelTypeName))
+         return "Please select a target parcel polygon layer in the table of contents.";
+       var destLineL = await myParcelFabricLayer.GetParcelLineLayerByTypeNameAsync(ParcelTypeName);
+       if (destLineL == null)
+         return "";
 
         // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetActiveRecord(ArcGIS.Desktop.Mapping.ParcelLayer)
         // cref: ArcGIS.Desktop.Editing.EditOperation.CreateParcelSeedsByRecord(ArcGIS.Desktop.Mapping.ParcelLayer, System.Guid, ArcGIS.Core.Geometry.Envelope,  System.Collections.Generic.IEnumerable<ArcGIS.Desktop.Mapping.MapMember>)
         #region Create parcel seeds
         try
-        {
-          var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-          if (theActiveRecord == null)
-            return "There is no Active Record. Please set the active record and try again.";
+       {
+         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
+         if (theActiveRecord == null)
+           return "There is no Active Record. Please set the active record and try again.";
 
-          var guid = theActiveRecord.Guid;
-          var editOper = new EditOperation()
-          {
-            Name = "Create Parcel Seeds",
-            ProgressMessage = "Create Parcel Seeds...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
-          editOper.CreateParcelSeedsByRecord(myParcelFabricLayer, guid, MapView.Active.Extent);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
+         var guid = theActiveRecord.Guid;
+         var editOper = new EditOperation()
+         {
+           Name = "Create Parcel Seeds",
+           ProgressMessage = "Create Parcel Seeds...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
+         editOper.CreateParcelSeedsByRecord(myParcelFabricLayer, guid, MapView.Active.Extent);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
         #endregion
       });
       if (!string.IsNullOrEmpty(errorMessage))
@@ -384,36 +408,36 @@ namespace ParcelFabricSDKSamples
     }
     protected async void BuildParcels()
     {
-      string errorMessage = await QueuedTask.Run( () =>
-      {
+      string errorMessage = await QueuedTask.Run(() =>
+     {
         // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetActiveRecord(ArcGIS.Desktop.Mapping.ParcelLayer)
         // cref: ArcGIS.Desktop.Editing.EditOperation.BuildParcelsByRecord(ArcGIS.Desktop.Mapping.ParcelLayer, System.Guid, System.Collections.Generic.IEnumerable<ArcGIS.Desktop.Mapping.MapMember>)
         #region Build parcels
         try
-        {
-          var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-          if (myParcelFabricLayer == null)
-            return "Parcel layer not found in map.";
+       {
+         var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+         if (myParcelFabricLayer == null)
+           return "Parcel layer not found in map.";
 
-          var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-          var guid = theActiveRecord.Guid;
-          var editOper = new EditOperation()
-          {
-            Name = "Build Parcels",
-            ProgressMessage = "Build Parcels...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = true
-          };
-          editOper.BuildParcelsByRecord(myParcelFabricLayer, guid);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
+         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
+         var guid = theActiveRecord.Guid;
+         var editOper = new EditOperation()
+         {
+           Name = "Build Parcels",
+           ProgressMessage = "Build Parcels...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = true
+         };
+         editOper.BuildParcelsByRecord(myParcelFabricLayer, guid);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
         #endregion
       });
       if (!string.IsNullOrEmpty(errorMessage))
@@ -421,59 +445,59 @@ namespace ParcelFabricSDKSamples
     }
     protected async void DuplicateParcels()
     {
-      string errorMessage = await QueuedTask.Run( async () =>
-      {
+      string errorMessage = await QueuedTask.Run(async () =>
+     {
         // check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select the source layer in the table of contents.";
+         return "Please select the source layer in the table of contents.";
 
         // cref: ArcGIS.Desktop.Mapping.ParcelFabricExtensions.GetParcelPolygonLayerByTypeNameAsync(ArcGIS.Desktop.Mapping.ParcelLayer, System.String)
         // cref: ArcGIS.Desktop.Editing.EditOperation.DuplicateParcels(ArcGIS.Desktop.Mapping.ParcelLayer, ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Desktop.Editing.ParcelRecord, ArcGIS.Desktop.Mapping.Layer)
         #region Duplicate parcels
         var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-        if (myParcelFabricLayer == null)
-          return "Parecl layer not found in the map.";
+       if (myParcelFabricLayer == null)
+         return "Parecl layer not found in the map.";
         //get the source polygon layer from the parcel fabric layer type, in this case a layer called Lot
         var srcFeatLyrEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync("Lot");
-        if (srcFeatLyrEnum.Count() == 0)
-          return "";
-        var sourcePolygonL = srcFeatLyrEnum.FirstOrDefault();
+       if (srcFeatLyrEnum.Count() == 0)
+         return "";
+       var sourcePolygonL = srcFeatLyrEnum.FirstOrDefault();
         //get the target polygon layer from the parcel fabric layer type, in this case a layer called Tax
         var targetFeatLyrEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync("Tax");
-        if (targetFeatLyrEnum.Count() == 0)
-          return "";
-        var targetFeatLyr = targetFeatLyrEnum.FirstOrDefault();
-        var ids = new List<long>(sourcePolygonL.GetSelection().GetObjectIDs());
-        if (ids.Count == 0)
-          return "No selected parcels found. Please select parcels and try again.";
+       if (targetFeatLyrEnum.Count() == 0)
+         return "";
+       var targetFeatLyr = targetFeatLyrEnum.FirstOrDefault();
+       var ids = new List<long>(sourcePolygonL.GetSelection().GetObjectIDs());
+       if (ids.Count == 0)
+         return "No selected parcels found. Please select parcels and try again.";
         //add polygon layers and the feature ids to be duplicated to a new Dictionary
         var sourceFeatures = new Dictionary<MapMember, List<long>>();
-        sourceFeatures.Add(sourcePolygonL, ids);
-        try
-        {
-          var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
-          if (theActiveRecord == null)
-            return "There is no Active Record. Please set the active record and try again.";
-          var editOper = new EditOperation()
-          {
-            Name = "Duplicate Parcels",
-            ProgressMessage = "Duplicate Parcels...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
-          editOper.DuplicateParcels(myParcelFabricLayer, 
-            SelectionSet.FromDictionary(sourceFeatures), theActiveRecord, targetFeatLyr);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
+       sourceFeatures.Add(sourcePolygonL, ids);
+       try
+       {
+         var theActiveRecord = myParcelFabricLayer.GetActiveRecord();
+         if (theActiveRecord == null)
+           return "There is no Active Record. Please set the active record and try again.";
+         var editOper = new EditOperation()
+         {
+           Name = "Duplicate Parcels",
+           ProgressMessage = "Duplicate Parcels...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
+         editOper.DuplicateParcels(myParcelFabricLayer,
+           SelectionSet.FromDictionary(sourceFeatures), theActiveRecord, targetFeatLyr);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
         #endregion
         return "";
-      });
+     });
       if (!string.IsNullOrEmpty(errorMessage))
         MessageBox.Show(errorMessage, "Duplicate Parcels.");
     }
@@ -531,7 +555,7 @@ namespace ParcelFabricSDKSamples
             SelectNewFeatures = true,
             SelectModifiedFeatures = false
           };
-          editOper.SetParcelHistoryRetired(myParcelFabricLayer, 
+          editOper.SetParcelHistoryRetired(myParcelFabricLayer,
             SelectionSet.FromDictionary(sourceFeatures), theActiveRecord);
           if (!editOper.Execute())
             return editOper.ErrorMessage;
@@ -594,7 +618,7 @@ namespace ParcelFabricSDKSamples
           var ids = new List<long>(parcelPolygonLyr.GetSelection().GetObjectIDs());
           var sourceParcelFeatures = new Dictionary<MapMember, List<long>>();
           sourceParcelFeatures.Add(parcelPolygonLyr, ids);
-          editOper.ShrinkParcelsToSeeds(myParcelFabricLayer,SelectionSet.FromDictionary(sourceParcelFeatures));
+          editOper.ShrinkParcelsToSeeds(myParcelFabricLayer, SelectionSet.FromDictionary(sourceParcelFeatures));
           if (!editOper.Execute())
             return editOper.ErrorMessage;
         }
@@ -610,48 +634,48 @@ namespace ParcelFabricSDKSamples
     }
     protected async void ChangeParcelType()
     {
-      string errorMessage = await QueuedTask.Run( async () =>
-      {
+      string errorMessage = await QueuedTask.Run(async () =>
+     {
         //check for selected layer
         if (MapView.Active.GetSelectedLayers().Count == 0)
-          return "Please select a source layer in the table of contents";
+         return "Please select a source layer in the table of contents";
         //get the feature layer that's selected in the table of contents
         var sourcePolygonL = MapView.Active.GetSelectedLayers().OfType<FeatureLayer>().FirstOrDefault();
-        if (sourcePolygonL == null)
-          return "";
-        var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
-        if (myParcelFabricLayer == null)
-          return "";
-        var targetFeatLyrEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync("Tax");
-        if (targetFeatLyrEnum.Count() == 0)
-          return "";
-        var targetFeatLyr = targetFeatLyrEnum.FirstOrDefault(); //the target parcel polygon feature layer
+       if (sourcePolygonL == null)
+         return "";
+       var myParcelFabricLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<ParcelLayer>().FirstOrDefault();
+       if (myParcelFabricLayer == null)
+         return "";
+       var targetFeatLyrEnum = await myParcelFabricLayer.GetParcelPolygonLayerByTypeNameAsync("Tax");
+       if (targetFeatLyrEnum.Count() == 0)
+         return "";
+       var targetFeatLyr = targetFeatLyrEnum.FirstOrDefault(); //the target parcel polygon feature layer
 
         // cref: ArcGIS.Desktop.Editing.EditOperation.ChangeParcelType(ArcGIS.Desktop.Mapping.ParcelLayer, ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Desktop.Mapping.Layer, ArcGIS.Desktop.Mapping.Layer)
         #region Change parcel type
         //add polygon layers and the feature ids to change the type on to a new Dictionary
         var ids = new List<long>(sourcePolygonL.GetSelection().GetObjectIDs());
-        var sourceFeatures = new Dictionary<MapMember, List<long>>();
-        sourceFeatures.Add(sourcePolygonL, ids);
-        try
-        {
-          var editOper = new EditOperation()
-          {
-            Name = "Change Parcel Type",
-            ProgressMessage = "Change Parcel Type...",
-            ShowModalMessageAfterFailure = true,
-            SelectNewFeatures = true,
-            SelectModifiedFeatures = false
-          };
-          editOper.ChangeParcelType(myParcelFabricLayer, SelectionSet.FromDictionary(sourceFeatures), targetFeatLyr);
-          if (!editOper.Execute())
-            return editOper.ErrorMessage;
-        }
-        catch (Exception ex)
-        {
-          return ex.Message;
-        }
-        return "";
+       var sourceFeatures = new Dictionary<MapMember, List<long>>();
+       sourceFeatures.Add(sourcePolygonL, ids);
+       try
+       {
+         var editOper = new EditOperation()
+         {
+           Name = "Change Parcel Type",
+           ProgressMessage = "Change Parcel Type...",
+           ShowModalMessageAfterFailure = true,
+           SelectNewFeatures = true,
+           SelectModifiedFeatures = false
+         };
+         editOper.ChangeParcelType(myParcelFabricLayer, SelectionSet.FromDictionary(sourceFeatures), targetFeatLyr);
+         if (!editOper.Execute())
+           return editOper.ErrorMessage;
+       }
+       catch (Exception ex)
+       {
+         return ex.Message;
+       }
+       return "";
         #endregion
       });
       if (!string.IsNullOrEmpty(errorMessage))
@@ -870,7 +894,7 @@ namespace ParcelFabricSDKSamples
           foreach (var info in typeInfo)
           {
             if (info.Name.ToLower() == myParcelTypeName.ToLower())
-            { 
+            {
               lineFCType = info.LineFeatureTable as FeatureClass;
               polyFCType = info.PolygonFeatureTable as FeatureClass;
               break;
@@ -958,5 +982,18 @@ namespace ParcelFabricSDKSamples
       return myParcelFabricDataset;
     }
     #endregion
-  }
+
+    public static async void IsControlledByPacelFabric()
+    {
+      var map = MapView.Active.Map;
+
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.IsControlledByParcelFabricAsync(ArcGIS.Desktop.Mapping.Layer, ArcGIS.Desktop.Mapping.ParcelFabricType)
+      // cref: ArcGIS.Desktop.Mapping.ParcelFabricType
+      #region Check if layer is controlled by parcel fabric
+      var layer = map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(l => l.Name == "Records");
+      bool isProFabric = await layer.IsControlledByParcelFabricAsync(ParcelFabricType.ParcelFabric);
+      bool isArcMapFabric = await layer.IsControlledByParcelFabricAsync(ParcelFabricType.ParcelFabricForArcMap);
+      #endregion
+    }
+}
 }  

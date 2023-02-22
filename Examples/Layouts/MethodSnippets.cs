@@ -399,7 +399,7 @@ namespace Layout_HelpExamples
         #endregion GraphicElement_Clone
 
         // cref: ArcGIS.Desktop.Layouts.GraphicElement.SetGraphic(ArcGIS.Core.CIM.CIMGraphic)
-        // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic(ArcGIS.Core.CIM.CIMGraphic)
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.GetGraphic()
         // cref: ArcGIS.Core.CIM.CIMGraphic
         #region GraphicElement_Get_And_SetGraphic
 
@@ -419,7 +419,7 @@ namespace Layout_HelpExamples
      
 
       // cref: ArcGIS.Desktop.Layouts.TextProperties
-      // cref: ArcGIS.Desktop.Layouts.TextProperties._CTOR
+      // cref: ArcGIS.Desktop.Layouts.TextProperties.#ctor(System.String,System.String,System.Double,System.String)
       #region TextElement_TextPropertiesConstructor
       TextProperties txtProp = new TextProperties("String", "Times New Roman", 24, "Regular");
       #endregion TextElement_TextPropertiesConstructor

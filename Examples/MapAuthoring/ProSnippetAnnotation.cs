@@ -104,7 +104,7 @@ namespace AnnotationSnippets
 			var oid = 1;
 
 			// cref: ArcGIS.Desktop.Editing.Attributes.Attribute
-			// cref: ArcGIS.Desktop.Editing.Inspector.Load
+			// cref: ArcGIS.Desktop.Editing.Attributes.Inspector.Load
 			// cref: ArcGIS.Desktop.Editing.EditOperation.Modify
 			#region Update Annotation Text via attribute. Caveat: The TEXTSTRING Anno attribute must exist
 

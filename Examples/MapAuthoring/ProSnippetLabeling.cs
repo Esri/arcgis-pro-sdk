@@ -74,8 +74,6 @@ namespace LabelingSnippets
         // cref: ArcGIS.Core.CIM.CIMMap.GeneralPlacementProperties
         // cref: ArcGIS.Core.CIM.CIMMaplexGeneralPlacementProperties
         // cref: ArcGIS.Core.CIM.CIMStandardGeneralPlacementProperties
-        // cref: ArcGIS.Core.CIM.CIMStandardGeneralPlacementProperties.#ctor
-        // cref: ArcGIS.Core.CIM.CIMMaplexGeneralPlacementProperties.#ctor
         #region Change the active map's labeling engine from Standard to Maplex or vice versa
         //Note: call within QueuedTask.Run()
 
@@ -221,7 +219,6 @@ namespace LabelingSnippets
       return QueuedTask.Run(() =>
       {
         // cref: ArcGIS.Core.CIM.CIMStandardLineLabelPosition
-        // cref: ArcGIS.Core.CIM.CIMStandardLineLabelPosition.#ctor
         // cref: ArcGIS.Core.CIM.CIMStandardLineLabelPosition.Perpendicular
         // cref: ArcGIS.Core.CIM.CIMStandardLineLabelPosition.Parallel
         // cref: ArcGIS.Core.CIM.CIMStandardLineLabelPosition.ProduceCurvedLabels
@@ -422,7 +419,6 @@ namespace LabelingSnippets
 
         // cref: ArcGIS.Core.CIM.CIMLabelClass.MaplexLabelPlacementProperties
         // cref: ArcGIS.Core.CIM.CIMMaplexRotationProperties
-        // cref: ArcGIS.Core.CIM.CIMMaplexRotationProperties.#ctor
         // cref: ArcGIS.Core.CIM.CIMMaplexRotationProperties.Enable
         // cref: ArcGIS.Core.CIM.CIMMaplexRotationProperties.RotationField
         // cref: ArcGIS.Core.CIM.CIMMaplexRotationProperties.AdditionalAngle

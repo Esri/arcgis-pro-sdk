@@ -308,6 +308,7 @@
 
         <!-- Reviewer Manage Quality Tabs -->
         <tab id="esri_dataReviewer_ManageQualityTab" caption="Manage Quality"  condition ="esri_dataReviewer_ManageQualityCondition" insert="before" placeWith="esri_mapping_homeTab" keytip="Q">
+          <group refID="esri_dataReviewer_Selection" />
           <group refID="esri_dataReviewer_VisualReviewGroup"/>
           <group refID="esri_dataReviewer_Results"/>
           <group refID="esri_dataReviewer_CloseGroup"/>
@@ -317,7 +318,7 @@
 
       <groups>
 
-        <group id ="esri_dataReviewer_DataReviewerGroup" hidden="true" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ">
+        <group id ="esri_dataReviewer_DataReviewerGroup" hidden="true" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ" smallImage="DataReviewerLifecycleVerified16">
           <button refID="esri_dataReviewer_ManageQuality" size="large"/>
         </group>
 
@@ -329,6 +330,13 @@
           <button refID="esri_dataReviewer_Symbolize" size="large"/>
         </group>
 
+        <group id ="esri_dataReviewer_Selection" hidden="true" caption="Selection">
+          <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
+          <button refID="esri_geoprocessing_selectByAttributeButton" size="large"/>
+          <button refID="esri_geoprocessing_selectByLocationButton" size="large"/>
+          <button refID="esri_mapping_clearSelectionButton" size="middle" />
+        </group>
+        
         <group id="esri_dataReviewer_VisualReviewGroup" hidden="true" caption="Semi-Automated Review">
           <button refID="esri_dataReviewer_evalFeaturesButton" size="large"/>
           <customControl refID="esri_dataReviewer_FlagMissingFeatures" size="large" />
@@ -371,13 +379,13 @@ Results are organized by session and stored in feature classes and tables in eit
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_UpdateConnection" hidden="true" caption="Update Results Connection..." extendedCaption = "Update connection to Reviewer Results in Project" className="esri_dataReviewer_dataReviewerModule:OnClick_UpdateReviewResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerConnection16.png">
+        <button id="esri_dataReviewer_ReviewResults_UpdateConnection" hidden="true" caption="Update Results Connection" extendedCaption = "Update connection to Reviewer Results in Project" className="esri_dataReviewer_dataReviewerModule:OnClick_UpdateReviewResults" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerConnection16.png">
           <tooltip heading="Update Results Connection">
             Update a connection to results referenced by the project.
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_ReviewResults_RemoveConnection" hidden="true" caption="Remove Results Connection" extendedCaption = "Remove Reviewer Results from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+        <button id="esri_dataReviewer_ReviewResults_RemoveConnection" hidden="true" caption="Remove From Project" extendedCaption = "Remove Reviewer Results from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveConnection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
           <tooltip heading="Remove Results Connection">
             Remove a connection to results stored in an existing Reviewer workspace.
             <disabledText></disabledText>
@@ -396,8 +404,8 @@ Results are organized by session and stored in feature classes and tables in eit
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_BatchJob_Remove" hidden="true" caption="Remove" extendedCaption = "Remove Reviewer Batch Job from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveBatchJob" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
-          <tooltip heading="Remove">
+        <button id="esri_dataReviewer_BatchJob_Remove" hidden="true" caption="Remove From Project" extendedCaption = "Remove Reviewer Batch Job from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveBatchJob" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+          <tooltip heading="Remove From Project">
             Remove the reference to the selected Data Reviewer Batch Job from the project.
             <disabledText></disabledText>
           </tooltip>
@@ -409,7 +417,7 @@ Results are organized by session and stored in feature classes and tables in eit
                 keytip="EX"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ImportRules16.png">
           <tooltip heading="">
-            Export Batch Job to Attribute Rules
+            Exports Data Reviewer batch job check configuration into Reviewer Validation Attribute rule configurations by generating comma-separated value (.csv) files.
           </tooltip>
         </button>
 
@@ -420,8 +428,8 @@ Results are organized by session and stored in feature classes and tables in eit
             <disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_dataReviewer_Session_RemoveSession" hidden="true" caption="Remove" extendedCaption = "Remove Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveSession" condition="esri_dataReviewer_RemoveSessionCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
-          <tooltip heading="Remove">
+        <button id="esri_dataReviewer_Session_RemoveSession" hidden="true" caption="Remove From Project" extendedCaption = "Remove Reviewer Session from Project" className="esri_dataReviewer_dataReviewerModule:OnClick_RemoveSession" condition="esri_dataReviewer_RemoveSessionCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png">
+          <tooltip heading="Remove From Project">
             Remove the reference to the session from the project.
             <disabledText></disabledText>
           </tooltip>
@@ -473,7 +481,13 @@ Results are organized by session and stored in feature classes and tables in eit
           </tooltip>
         </button>
 
-        <button id="esri_dataReviewer_ManageQuality" hidden="true" caption="Manage Quality" extendedCaption = "Manage the quality of the data" className="esri_dataReviewer_dataReviewerModule:ManageQuality" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerLifecycleVerified16.png" condition="esri_mapping_mapPane" keytip="Q">
+        <!-- adding a dummy button to the popup menu which is showing up when clicking the burger button on ReviewerResultPane -->
+        <!-- this is a workaround solution for issue 1340. https://devtopia.esri.com/ArcGISPro/ps-data-reviewer/issues/1340 -->
+        <!-- this button will be removed once the Popup menu is loaded -->
+        <button id="esri_dataReviewer_dummyButton" />
+        <!-- End Dummy button-->
+
+        <button id="esri_dataReviewer_ManageQuality" hidden="true" caption="Manage Quality" extendedCaption = "Manage the quality of the data" className="esri_dataReviewer_dataReviewerModule:ManageQuality" largeImage="DataReviewerLifecycleVerified32" smallImage="DataReviewerLifecycleVerified16" condition="esri_mapping_mapPane" keytip="Q" helpContextID="120003940">
           <tooltip heading="Manage Quality">
             Improve data quality using automated tools to detect, track and report errors.
             <disabledText>Authorize and enable the Data Reviewer Extension to access this functionality.</disabledText>
@@ -550,14 +564,17 @@ Results are organized by session and stored in feature classes and tables in eit
         <menu id="esri_dataReviewer_ReviewResultsContextMenu" caption="Reviewer Results" extendedCaption = "Context menu for Reviewer Session Results Project item" contextMenu="true">
           <button refID="esri_dataReviewer_ReviewResults_AddSession" />
           <button refID="esri_dataReviewer_ReviewResults_NewSession" />
-          <button refID="esri_dataReviewer_ReviewResults_RemoveConnection"  />
-          <button refID="esri_dataReviewer_ReviewResults_UpdateConnection"  />
+          <button refID="esri_dataReviewer_ReviewResults_RemoveConnection" separator="true" />
+          <button refID="esri_dataReviewer_ReviewResults_UpdateConnection" separator="true" />
         </menu>
         <!--Reviewer Batch Jobs project item context menu-->
         <menu id="esri_dataReviewer_BatchJobsContextMenu" caption="Batch Jobs Menu" extendedCaption = "Context Menu for Reviewer Batch Job Project item" contextMenu="true">
           <menu refID="esri_dataReviewer_ExecuteBatchJobMenu" />
           <button refID="esri_dataReviewer_ExportToAttributeRules"  separator="true" />
           <button refID="esri_dataReviewer_BatchJob_Remove"  separator="true" />
+          <button refID="esri_core_editCopyButton" separator="true" />
+          <button refID="esri_core_editCopyPaths" />
+          <button refID="esri_core_openFileLocation" separator="true"/>
           <button refID="esri_projectItemViewMetadata"  separator="true" />
         </menu>
         <!--Reviewer Batch Jobs ExecuteBatchJob sub menu-->
@@ -568,11 +585,15 @@ Results are organized by session and stored in feature classes and tables in eit
         <!--Review Sessions project item context menu-->
         <menu id="esri_dataReviewer_SessionContextMenu" caption="Reviewer Session" extendedCaption = "Context menu for Reviewer Sessions Project item" contextMenu="true">
           <button refID="esri_dataReviewer_Session_OpenResults" />
-          <button refID="esri_dataReviewer_Session_MakeDefault" />
-          <button refID="esri_dataReviewer_Session_RemoveSession"  />
+          <button refID="esri_dataReviewer_Session_MakeDefault" separator="true" />
+          <button refID="esri_dataReviewer_Session_RemoveSession" />
           <button refID="esri_dataReviewer_Session_DeleteSession" separator="true"  />
         </menu>
 
+        <!--menu for reviewer results pane burger button. Current only view definitions are in this menu and they are added programmatically-->
+        <menu id="esri_dataReviewer_ResultsPaneBurgerButtonContextMenu" hidden="true" caption="Reviewer Results Pane Menu" extendedCaption = "Menu for Reviewer Results pane">
+          <button refID ="esri_dataReviewer_dummyButton"/>
+        </menu>
 
         <!--context menu for selected items in results grid-->
         <menu id="esri_dataReviewer_SelectedResultsContextMenu" caption="Selected Results Context Menu" extendedCaption = "Context menu for actions to perform on selected results">
@@ -583,8 +604,11 @@ Results are organized by session and stored in feature classes and tables in eit
 
         <menu id="esri_dataReviewer_batchJobFolderConnectionMenu" caption="Batch Job Menu" extendedCaption = "Context menu for Batch Jobs in Folder">
           <button refID="esri_dataReviewer_batchJobAddToProjectButton"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton" />
+          <button refID="esri_core_editCopyPaths" />
+          <button refID="esri_core_openFileLocation" separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
-          <button refID="esri_core_editCopyButton" separator="true"/>
         </menu>
 
         <menu id="esri_dataReviewer_MetadataResultsContextMenu" caption="Selected Metadata Results Context Menu" extendedCaption = "Context menu for actions to perform on selected metadata results">

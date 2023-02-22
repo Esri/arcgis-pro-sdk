@@ -16,7 +16,7 @@
     
     <updateCategory refID="esri_core_projectContainers">
       <insertComponent id="esri_tasks_TaskContainer" className="ArcGIS.Desktop.Internal.TaskAssistant.TaskContainer" insert="after" placeWith="esri_geodatabase_serverConnectionContainer">
-        <content type="Task" displayName="Tasks" contextMenu="esri_task_insertMenu" />
+        <content type="Task" displayName="Tasks" contextMenu="esri_task_catalogMenu" />
       </insertComponent>
     </updateCategory>
 
@@ -175,14 +175,14 @@
           <state id="esri_taskassistant_locked" />
         </not>
       </and>
-    </insertCondition>       
+    </insertCondition>
     <insertCondition id="esri_tasks_HasProjectTasksCondition" caption="Are there task items associated with the current project">
       <and>
         <state id="esri_taskassistant_hasProjectTaskFiles" />
         <not>
           <state id="esri_taskassistant_locked" />
         </not>
-      </and>     
+      </and>
     </insertCondition>
     <insertCondition id="esri_tasks_IsTaskFileLoadedCondition" caption="Is there a task item currently loaded">
       <and>
@@ -197,7 +197,7 @@
         <state id="esri_mapping_openProjectState" />
         <not>
           <state id="esri_taskassistant_locked" />
-        </not> 
+        </not>
       </and>
     </insertCondition>
     <insertCondition id="esri_tasks_IsTaskFileLoadedExecuteOnlyCondition" caption="Is there a task item currently loaded (and not in Design mode)">
@@ -244,7 +244,7 @@
       
       <controls>
         <!--ribbon buttons-->
-        <button id="esri_tasks_ShowTasks" caption="Tasks" keytip="TK" className="esri_taskassistant_TaskAssistantModule:ShowTaskAssistant" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant16.png" helpContextID="">
+        <button id="esri_tasks_ShowTasks" caption="Tasks" keytip="TK" className="esri_taskassistant_TaskAssistantModule:ShowTaskAssistant" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskAssistant16.png" helpContextID="120000982">
           <tooltip heading="Tasks">Show the Tasks pane. 
           
 Tasks are a set of preconfigured steps that guide you through a workflow. You can run tasks and configure task steps. Tasks can be used to implement best practice workflows, show correct workflows and improve overall software efficiency.<disabledText></disabledText></tooltip>
@@ -255,7 +255,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         </button>
         
         <!--project pane Project Container context menuItems-->
-        <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="TI">                
+        <button id="esri_tasks_NewProjectTaskItem" caption="New Task Item" className="ArcGIS.Desktop.Internal.TaskAssistant.CreateNewTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItemNew16.png" condition="esri_tasks_openProjectCondition" helpContextID="120000982" keytip="TI">                
           <tooltip heading="">Create a new task item in the project. A task item contains a set of tasks. The new task item is saved within the project.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_tasks_ImportTaskFile" caption="Import And Open Task" extendedCaption="Browse to an esri Task File" className="ArcGIS.Desktop.Internal.TaskAssistant.ImportTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericImport16.png" condition="esri_tasks_openProjectCondition" helpContextID="" keytip="O">
@@ -281,7 +281,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         <button id="esri_tasks_UpdateProjectTaskItem" caption="Check For Updates" className="ArcGIS.Desktop.Internal.TaskAssistant.UpdateTaskFileContextCommand" condition="esri_tasks_disabledCondition" helpContextID="">
           <tooltip heading="">Check for updates to the task item.<disabledText>Not available yet</disabledText></tooltip>
         </button>
-        <button id="esri_tasks_RemoveProjectTaskItem" caption="Delete" extendedCaption="Delete the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.RemoveTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
+        <button id="esri_tasks_RemoveProjectTaskItem" caption="Delete" extendedCaption="Delete the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.RemoveTaskFileContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="" menuKeytip="D">
           <tooltip heading="">Delete the task item.<disabledText></disabledText></tooltip>
         </button>
         <button id="esri_tasks_ProjectTaskItemProperties" caption="Properties" extendedCaption="View the properties of the task item." className="ArcGIS.Desktop.Internal.TaskAssistant.TaskItemPropertiesContextCommand" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png" condition="esri_tasks_ExecuteOnlyCondition" helpContextID="">
@@ -399,6 +399,14 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
         </menu>
         
         <menu id="esri_task_insertMenu" caption="Task" extendedCaption="Ribbon add task items menu" keytip="TA" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png">
+          <tooltip heading="Task">Add task items to your project.</tooltip>
+          <button refID="esri_tasks_NewProjectTaskItem" />
+          <menu refID="esri_tasks_ImportTaskFileMenu"/>
+
+
+        </menu>
+
+        <menu id="esri_task_catalogMenu" caption="Task" extendedCaption="Catalog add task items menu" keytip="TA" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TaskItem16.png">
           <tooltip heading="Task">Add task items to your project.</tooltip>
           <button refID="esri_tasks_NewProjectTaskItem" />
           <menu refID="esri_tasks_ImportTaskFileMenu"/>

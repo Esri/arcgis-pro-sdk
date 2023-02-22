@@ -75,6 +75,9 @@
     <Reference Include="ArcGIS.Desktop.DataReviewer">
       <HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\DataReviewer\ArcGIS.Desktop.DataReviewer.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="ArcGIS.Desktop.Workflow.Client">
+      <HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Workflow\ArcGIS.Desktop.Workflow.Client.dll</HintPath>
     </Reference>   
   </ItemGroup>
 </Project>
