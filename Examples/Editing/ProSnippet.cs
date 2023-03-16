@@ -867,36 +867,22 @@ namespace EditingSDKExamples
       long newFeatureID = -1;
       //The Create operation has to execute so we can get an object_id
       var token2 = editOperation1.Create(this.CurrentTemplate, polygon);
+      
+      //Must be within a QueuedTask
+      editOperation1.Execute(); //Note: Execute and ExecuteAsync will return true if the operation was successful and false if not
       if (editOperation1.IsSucceeded)
       {
         newFeatureID = (long)token2.ObjectID;
+        //Now, because we have the object id, we can add the attachment.  As we are chaining it, adding the attachment 
+        //can be undone as part of the "Undo Create" operation. In other words, only one undo operation will show on the 
+        //Pro UI and not two.
+        var editOperation2 = editOperation1.CreateChainedOperation();
+        //Add the attachement using the new feature id
+        editOperation2.AddAttachment(this.CurrentTemplate.Layer, newFeatureID, @"C:\data\images\Hydrant.jpg");
+        //Execute the chained edit operation. editOperation1 and editOperation2 show up as a single Undo operation
+        //on the UI even though we had two transactions
+        editOperation2.Execute();  
       }
-      //Must be within a QueuedTask
-      if (!editOperation1.IsEmpty)
-      {
-        var result = editOperation1.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
-      }
-
-      //or use async flavor
-      //await editOperation1.ExecuteAsync();
-
-      //Now, because we have the object id, we can add the attachment.  As we are chaining it, adding the attachment 
-      //can be undone as part of the "Undo Create" operation. In other words, only one undo operation will show on the 
-      //Pro UI and not two.
-      var editOperation2 = editOperation1.CreateChainedOperation();
-      //Add the attachement using the new feature id
-      editOperation2.AddAttachment(this.CurrentTemplate.Layer, newFeatureID, @"C:\data\images\Hydrant.jpg");
-
-      //editOperation1 and editOperation2 show up as a single Undo operation on the UI even though
-      //we had two transactions
-      //Must be within a QueuedTask
-      if (!editOperation2.IsEmpty)
-      {
-        var result = editOperation2.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
-      }
-
-      //or use async flavor
-      //await editOperation2.ExecuteAsync();
 
       #endregion
 
