@@ -13,7 +13,7 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 #### Developing with ArcGIS Pro
 
 * [Overview of the ArcGIS Pro SDK](#overview-of-the-arcgis-pro-sdk)
-* [What's New for Developers at 3.0](#whats-new-for-developers-at-30)
+* [What's New for Developers at 3.2](#whats-new-for-developers-at-32)
 * [Installing ArcGIS Pro SDK for .NET](#installing-arcgis-pro-sdk-for-net)
 * [Release notes](#release-notes)
 * [Resources](#resources)
