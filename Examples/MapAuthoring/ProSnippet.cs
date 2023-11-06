@@ -16,6 +16,7 @@
    limitations under the License.
 
 */
+using ArcGIS.Core.Arcade;
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
@@ -2195,69 +2196,6 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    #region ProSnippet Group: Arcade
-    #endregion
-
-    protected static void ArcadeRenderer()
-    {
-      // cref: ArcGIS.Core.CIM.CIMExpressionInfo
-      // cref: ArcGIS.Core.CIM.CIMExpressionInfo.Expression
-      // cref: ArcGIS.Core.CIM.CIMExpressionInfo.Title
-      // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.ValueExpressionInfo
-      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer
-      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer
-      #region Modify renderer using Arcade
-      var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
-      if (lyr == null) return;
-      QueuedTask.Run(() =>
-      {
-        // GetRenderer from Layer (assumes it is a unique value renderer)
-        var uvRenderer = lyr.GetRenderer() as CIMUniqueValueRenderer;
-        if (uvRenderer == null) return;
-        //layer has STATE_NAME field
-        //community sample Data\Admin\AdminSample.aprx
-        string expression = "if ($view.scale > 21000000) { return $feature.STATE_NAME } else { return 'All' }";
-        CIMExpressionInfo updatedExpressionInfo = new CIMExpressionInfo
-        {
-          Expression = expression,
-          Title = "Custom" // can be any string used for UI purpose.
-        };
-        //set the renderer's expression
-        uvRenderer.ValueExpressionInfo = updatedExpressionInfo;
-
-        //SetRenderer on Layer
-        lyr.SetRenderer(uvRenderer);
-      });
-      #endregion
-    }
-    protected static void ArcadeLabeling()
-    {
-      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer
-      // cref: ArcGIS.Core.CIM.CIMGeoFeatureLayerBase.LabelClasses
-      // cref: ArcGIS.Core.CiM.CIMLabelClass
-      // cref: ArcGIS.Core.CiM.CIMLabelClass.Expression
-      // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer
-      #region Modify label expression using Arcade
-      var lyr = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault(f => f.ShapeType == esriGeometryType.esriGeometryPolygon);
-      if (lyr == null) return;
-      QueuedTask.Run(() =>
-      {
-        //Get the layer's definition
-        //community sample Data\Admin\AdminSample.aprx
-        var lyrDefn = lyr.GetDefinition() as CIMFeatureLayer;
-        if (lyrDefn == null) return;
-        //Get the label classes - we need the first one
-        var listLabelClasses = lyrDefn.LabelClasses.ToList();
-        var theLabelClass = listLabelClasses.FirstOrDefault();
-        //set the label class Expression to use the Arcade expression
-        theLabelClass.Expression = "return $feature.STATE_NAME + TextFormatting.NewLine + $feature.POP2000;";
-        //Set the label definition back to the layer.
-        lyr.SetDefinition(lyrDefn);
-      });
-
-      #endregion
-    }
-
     #region ProSnippet Group: Elevation Surface Layers
     #endregion
 
@@ -3728,5 +3666,6 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
     }
+
   }
 }

@@ -165,9 +165,10 @@
         <buttonPalette id="esri_networkanalysis_utility_CrossSection_BtnPalette" dropDown="false" showItemCaption="true" itemsInRow="1" caption="Cross Section" extendedCaption="Cross section of a utility network">
           <button refID="esri_networkanalysis_utility_CrossSection_Btn" />
         </buttonPalette>
-         <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace Locations" extendedCaption="Set Trace Locations" keytip="TL">
+         <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace" extendedCaption="Set Trace Locations, Select and Run Named Trace Configurations." keytip="TL">
            <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
            <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
+           <tool refID="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"/>
            <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
          </toolPalette>
          <toolPalette id="esri_networkanalysis_utility_ValidateBtnPalette" itemsInRow="1" showItemCaption="true" caption="Validate" extendedCaption="Validate Network Topology" keytip="VT">
@@ -556,8 +557,8 @@
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png"
                 className="esri_networkanalysis_utility_module:ShowModifyStartingPointsWindow"
                 keytip="SP">
-          <tooltip heading="Set Trace Locations">
-            Show the set trace locations pane. This allows you to access commands and tools to set starting points.<disabledText></disabledText>
+          <tooltip heading="Set Starting Points">
+            Show the Trace pane. This allows you to access commands and tools to set starting points.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_trace_ShowSetBarriersBtn"
@@ -568,18 +569,29 @@
                 className="esri_networkanalysis_utility_module:ShowModifyBarriersWindow"
                 keytip="B">
           <tooltip heading="Set Barriers">
-            Show the set trace locations pane. This allows you to access commands and tools to set barriers.<disabledText></disabledText>
+            Show the Trace pane. This allows you to access commands and tools to set barriers.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"
+                caption="Named Configurations" extendedCaption="Select Named Trace Configuration"
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NamedTraceConfiguration32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NamedTraceConfiguration16.png"
+                className="esri_networkanalysis_utility_module:ShowNamedConfigurationsWindow"
+                keytip="B">
+          <tooltip heading="Select Named Trace Configuration">
+            Show the Trace pane. This allows you to access commands and tools to select and run named trace configurations in your network.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_trace_ClearAllBtn"
-                caption="Clear All" extendedCaption="Clear All Trace Locations"
+                caption="Clear All" extendedCaption="Clear All Trace Locations and Unselect Named Trace Configuration"
                 condition="esri_networkanalysis_utility_TraceTool_Condition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/clear-tracing-32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/clear-tracing-16.png"
                 className="esri_networkanalysis_utility_module:ClearAllTraceLocations"
                 keytip="CL">
           <tooltip heading="Clear All">
-            Clear All Trace Locations.<disabledText></disabledText>
+            Clear all trace locations and unselect named trace configuration.<disabledText></disabledText>
           </tooltip>
         </button>        
         <tool id="esri_networkanalysis_trace_SelectStartingPointsTool"
@@ -603,7 +615,7 @@
           <tooltip heading="Select barriers">
             Select barriers where the trace will terminate.<disabledText></disabledText>
           </tooltip>
-        </tool>     
+        </tool>
         <button id="esri_networkanalysis_utility_ApplySelection_Btn" 
                 className="Tools.PropagateSelectionButton" 
                 caption="Apply To Maps" extendedCaption="Apply selection to the geographic maps" loadOnClick="false" 
@@ -670,7 +682,7 @@
           <content className="ModifyAssociationsView" />
         </dockPane>
         <dockPane id="esri_networkanalysis_utility_ModifyStartingPointsAndBarriersPane"
-                  caption="Trace Locations"
+                  caption="Trace"
                   className="ModifyStartingPointsAndBarriersViewModel"
                   dock="group"
                   initiallyVisible="false"

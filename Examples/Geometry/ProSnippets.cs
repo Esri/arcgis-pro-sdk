@@ -308,6 +308,121 @@ namespace ProSnippetsGeometry
       }
 
       {
+        // cref: ArcGIS.Core.Geometry.SpatialReference.GetWkt2(ArcGIS.Core.Geometry.WktFormatMode)
+        // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.GetWkt2(ArcGIS.Core.Geometry.WktFormatMode)
+        // cref: ArcGIS.Core.Geometry.WktFormatMode
+        #region SpatialReference WKT2
+
+        SpatialReference sr = SpatialReferences.WebMercator;
+
+        // Get Esri WKT
+        string wkt = sr.Wkt;
+        /*
+          PROJCS["WGS_1984_Web_Mercator_Auxiliary_Sphere",
+           GEOGCS["GCS_WGS_1984",
+            DATUM["D_WGS_1984",
+             SPHEROID["WGS_1984", 6378137.0, 298.257223563]],
+            PRIMEM["Greenwich", 0.0],
+            UNIT["Degree", 0.0174532925199433]],
+           PROJECTION["Mercator_Auxiliary_Sphere"],
+           PARAMETER["False_Easting", 0.0],
+           PARAMETER["False_Northing", 0.0],
+           PARAMETER["Central_Meridian", 0.0],
+           PARAMETER["Standard_Parallel_1", 0.0],
+           PARAMETER["Auxiliary_Sphere_Type", 0.0],
+           UNIT["Meter", 1.0]]
+        */
+
+        // Get OGC WKT2
+        string wkt2 = sr.GetWkt2(WktFormatMode.None);
+        /*
+          PROJCRS["WGS_1984_Web_Mercator_Auxiliary_Sphere",
+           BASEGEOGCRS["GCS_WGS_1984",
+            DYNAMIC[FRAMEEPOCH[1990.5], MODEL["AM0-2"]],
+            DATUM["D_WGS_1984",
+             ELLIPSOID["WGS_1984", 6378137.0, 298.257223563, LENGTHUNIT["Meter", 1.0]]],
+            PRIMEM["Greenwich", 0.0, ANGLEUNIT["Degree", 0.0174532925199433]],
+            CS[ellipsoidal, 2],
+            AXIS["Latitude (lat)", north, ORDER[1]],
+            AXIS["Longitude (lon)", east, ORDER[2]],
+            ANGLEUNIT["Degree", 0.0174532925199433]],
+           CONVERSION["Mercator_Auxiliary_Sphere",
+            METHOD["Mercator_Auxiliary_Sphere"],
+            PARAMETER["False_Easting", 0.0, LENGTHUNIT["Meter", 1.0]],
+            PARAMETER["False_Northing", 0.0, LENGTHUNIT["Meter", 1.0]],
+            PARAMETER["Central_Meridian", 0.0, ANGLEUNIT["Degree", 0.0174532925199433]],
+            PARAMETER["Standard_Parallel_1", 0.0, ANGLEUNIT["Degree", 0.0174532925199433]],
+            PARAMETER["Auxiliary_Sphere_Type", 0.0]],
+           CS[Cartesian, 2],
+           AXIS["Easting (X)", east, ORDER[1]],
+           AXIS["Northing (Y)", north, ORDER[2]],
+           LENGTHUNIT["Meter", 1.0]]
+        */
+
+        // You can create a spatial reference with the Esri WKT string or the OCG WKT2 string
+        sr = SpatialReferenceBuilder.CreateSpatialReference(wkt2);
+
+        // Get OGC WKT2 including authority in top-level objects
+        // In this case the authority is written as ID["EPSG",3857]
+        wkt2 = sr.GetWkt2(WktFormatMode.AuthorityTop);
+        /*  
+          PROJCRS["WGS_1984_Web_Mercator_Auxiliary_Sphere",
+           BASEGEOGCRS["GCS_WGS_1984",
+           DYNAMIC[FRAMEEPOCH[1990.5],MODEL["AM0-2"]],
+           DATUM["D_WGS_1984",
+            ELLIPSOID["WGS_1984",6378137.0,298.257223563,LENGTHUNIT["Meter",1.0]]],
+           PRIMEM["Greenwich",0.0,ANGLEUNIT["Degree",0.017453292519943295]],
+           CS[ellipsoidal,2],
+           AXIS["Latitude (lat)",north,ORDER[1]],
+           AXIS["Longitude(lon)",east,ORDER[2]],
+           ANGLEUNIT["Degree",0.017453292519943295]],
+           CONVERSION["Mercator_Auxiliary_Sphere",
+            METHOD["Mercator_Auxiliary_Sphere"],
+            PARAMETER["False_Easting",0.0,LENGTHUNIT["Meter",1.0]],
+            PARAMETER["False_Northing",0.0,LENGTHUNIT["Meter",1.0]],
+            PARAMETER["Central_Meridian",0.0,ANGLEUNIT["Degree",0.017453292519943295]],
+            PARAMETER["Standard_Parallel_1",0.0,ANGLEUNIT["Degree",0.017453292519943295]],
+            PARAMETER["Auxiliary_Sphere_Type",0.0]],
+            CS[Cartesian,2],
+            AXIS["Easting (X)",east,ORDER[1]],
+            AXIS["Northing (Y)",north,ORDER[2]],
+            LENGTHUNIT["Meter",1.0],
+            ID["EPSG",3857]]
+        */
+
+        // Get OGC WKT2 including authority in all objects
+        // Authority is written as ID["ESPG",<id>] or ID["Esri",<id>]
+        wkt2 = sr.GetWkt2(WktFormatMode.AuthorityAll);
+        /*
+          PROJCRS["WGS_1984_Web_Mercator_Auxiliary_Sphere",
+           BASEGEOGCRS["GCS_WGS_1984",
+            DYNAMIC[FRAMEEPOCH[1990.5],MODEL["AM0-2"]],
+            DATUM["D_WGS_1984",
+             ELLIPSOID["WGS_1984",6378137.0,298.257223563,LENGTHUNIT["Meter",1.0,ID["EPSG",9001]],ID["EPSG",7030]],
+             ID["EPSG",6326]],
+            PRIMEM["Greenwich",0.0,ANGLEUNIT["Degree",0.017453292519943295,ID["EPSG",9102]],ID["EPSG",8901]],
+            CS[ellipsoidal,2],
+            AXIS["Latitude (lat)",north,ORDER[1]],
+            AXIS["Longitude(lon)",east,ORDER[2]],
+            ANGLEUNIT["Degree",0.017453292519943295,ID["EPSG",9102]],ID["EPSG",4326]],
+            CONVERSION["Mercator_Auxiliary_Sphere",
+             METHOD["Mercator_Auxiliary_Sphere",ID["Esri",43104]],
+             PARAMETER["False_Easting",0.0,LENGTHUNIT["Meter",1.0,ID["EPSG",9001]],ID["Esri",100001]],
+             PARAMETER["False_Northing",0.0,LENGTHUNIT["Meter",1.0,ID["EPSG",9001]],ID["Esri",100002]],
+             PARAMETER["Central_Meridian",0.0,ANGLEUNIT["Degree",0.017453292519943295,ID["EPSG",9102]],ID["Esri",100010]],
+             PARAMETER["Standard_Parallel_1",0.0,ANGLEUNIT["Degree",0.017453292519943295,ID["EPSG",9102]],ID["Esri",100025]],
+             PARAMETER["Auxiliary_Sphere_Type",0.0,ID["Esri",100035]]],
+            CS[Cartesian,2],
+            AXIS["Easting(X)",east,ORDER[1]],
+            AXIS["Northing (Y)",north,ORDER[2]],
+            LENGTHUNIT["Meter",1.0,ID["EPSG",9001]],
+            ID["EPSG",3857]]
+        */
+
+        #endregion Spatial Reference WKT2
+      }
+
+      {
         // cref: ArcGIS.Core.Geometry.SpatialReference.ToJson
         // cref: ArcGIS.Core.Geometry.SpatialReference.ToXml
         // cref: ArcGIS.Core.Geometry.SpatialReferenceBuilder.FromJson(System.String)
@@ -1437,6 +1552,84 @@ namespace ProSnippetsGeometry
       polyline = polylineBuilder.ToGeometry();
 
       // polyline still has 2 parts; but now has 7 points 
+
+      #endregion
+    }
+
+    public Polyline Create3DPolylineFrom2DPolyline(Polyline polyline)
+    {
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasZ
+      // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.ReplaceSegment
+      #region Create 3D Polyline and set Z-values while preserving curve segments
+
+      PolylineBuilderEx polylineBuilder = new PolylineBuilderEx(polyline);
+      polylineBuilder.HasZ = true;
+
+      // The HasZ property is set to true for all the points in
+      // polyline3D when you call ToGeometry().
+      Polyline polyline3D = polylineBuilder.ToGeometry();
+
+      // For this example, create Z-values. 
+      // You may want to pass them in as a parameter.
+      int numPoints = polyline3D.PointCount;
+      double[] zValues = new double[numPoints];
+      for (int i = 0; i < numPoints; i++)
+      {
+        zValues[i] = i % 2 == 0 ? 2 : 1;
+      }
+
+      // We need to know at which point index each part starts
+      int partPointIndex = 0;  
+      int numParts = polyline3D.PartCount;
+
+      for (int i = 0; i < numParts; i++)
+      {
+        var part = polyline3D.Parts[i];
+        int numSegments = part.Count;
+
+        for (int j = 0; j < numSegments; j++)
+        {
+          Segment segment = part[j];
+
+          MapPointBuilderEx pointBuilder = new MapPointBuilderEx(segment.StartPoint);
+          pointBuilder.Z = zValues[partPointIndex++];
+          MapPoint startPoint = pointBuilder.ToGeometry();
+
+          // Make sure that the end point of this segment is the same as the start point of the next segment
+          pointBuilder = new MapPointBuilderEx(segment.EndPoint);
+          pointBuilder.Z = zValues[partPointIndex];
+          MapPoint endPoint = pointBuilder.ToGeometry();
+
+          SegmentType segmentType = segment.SegmentType;
+          SegmentBuilderEx segmentBuilder = null;
+          switch (segmentType)
+          {
+            case SegmentType.Line:
+              segmentBuilder = new LineBuilderEx((LineSegment)segment);
+              break;
+            case SegmentType.Bezier:
+              segmentBuilder = new CubicBezierBuilderEx((CubicBezierSegment)segment);
+              break;
+            case SegmentType.EllipticArc:
+              segmentBuilder = new EllipticArcBuilderEx((EllipticArcSegment)segment);
+              break;
+          }
+
+          // Only change the start and end point which now have Z-values set. 
+          // This will preserve the curve if the segment is an EllipticArcSegment or CubicBezierSegment.
+          segmentBuilder.StartPoint = startPoint;
+          segmentBuilder.EndPoint = endPoint;
+          segment = segmentBuilder.ToSegment();
+
+          polylineBuilder.ReplaceSegment(i, j, segment);
+        }
+
+        // Move point index for the next part
+        partPointIndex++;
+      }
+
+      polyline3D = polylineBuilder.ToGeometry();
+      return polyline3D;
 
       #endregion
     }

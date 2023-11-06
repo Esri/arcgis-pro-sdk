@@ -983,7 +983,7 @@ namespace Snippets
 
     public void SetSelectionTableView()
     {
-      // cref: ArcGIS.Desktop.Mapping.TableView.Select(IEnumerable<<System.Int64>, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.TableView.Select(System.Collections.Generic.IEnumerable{System.Int64},System.Boolean)
       // cref: ArcGIS.Desktop.Mapping.TableView.GetSelectedRowIndexes
       #region Change selected rows 
       var tv = TableView.Active;
@@ -1104,7 +1104,7 @@ namespace Snippets
     public void SetHighlightedTableView()
     {
       // cref: ArcGIS.Desktop.Mapping.TableView.CanHighlight
-      // cref: ArcGIS.Desktop.Mapping.TableView.Highlight(IEnumerable<<System.Int64>, System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.TableView.Highlight(System.Collections.Generic.IEnumerable{System.Int64},System.Boolean)
       #region Change highlighted rows 
       var tv = TableView.Active;
       if (tv == null)

@@ -68,7 +68,7 @@ namespace Layout_HelpExamples
       //Check to see if the path is valid and export
       if (pdf.ValidateOutputFilePath())
       {
-        layout.Export(pdf);  //Export the PDF 
+        await QueuedTask.Run(() => layout.Export(pdf)); //Export the PDF
       }
       #endregion Layout_ExportPDF
     }

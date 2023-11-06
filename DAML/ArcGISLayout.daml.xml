@@ -10,6 +10,88 @@
     <dependency name="ADGeoDatabase.daml"/>
     <dependency name="ADMapping.daml"/>
   </dependencies>
+
+  <shortcutTables>
+    <insertShortcutTable id="esri_reports_General" targetID="esri_reports_reportPane"
+                         caption="General" isPrimary="true"
+                         description="Report shortcuts perform commands on an active report view such
+                                      as selecting and formatting elements, inserting new elements, and
+                                      sharing the report."
+                         category="Reports">
+      <shortcut refID="esri_reports_pageNavigateTool" flags="Ctrl+Alt" key="C"/>
+      <shortcut refID="esri_reports_pageZoomFullButton" flags="None" key="INSERT"/>
+      <shortcut refID="esri_reports_pageZoomToSelected" flags="None" key="G"/>
+      <shortcut refID="esri_reports_pageZoomPageWidthButton" flags="None" key="W"/>
+      <shortcut refID="esri_reports_pageZoom100PercentButton" flags="None" key="P"/>
+      <shortcut refID="esri_reports_pagePrevExtentButton" flags="None" key="OemComma"/>
+      <shortcut refID="esri_reports_pageNextExtentButton" flags="None" key="OemPeriod"/>
+      <shortcut refID="esri_reports_selectByRectangleTool" flags="Ctrl+Alt" key="S"/>
+      <shortcut refID="esri_reports_selectAllButton" flags="Ctrl" key="A"/>
+      <shortcut refID="esri_reports_clearSelectionButton" flags="Ctrl" key="BACKSPACE"/>
+      <shortcut refID="esri_reports_editDeleteButton" flags="None" key="Delete"/>
+      <!--<shortcut refID="esri_reports_pageOrientationGallery" flags="None" key="O"/>-->
+      <!--<shortcut refID="esri_reports_pageSizeGallery" flags="None" key="S"/>-->
+      <shortcut refID="esri_reports_showHideRulersCheck" flags="Alt" key="R"/>
+      <shortcut refID="esri_reports_showHideGuidesCheck" flags="Alt" key="G"/>
+      <shortcut refID="esri_reports_editGroupingSortingButton" flags="Ctrl+Alt" key="G"/>
+      <shortcut refID="esri_reports_addReportSupplementalPageButton" flags="Alt+Shift" key="S"/>
+      <shortcut refID="esri_reports_addSubReportButton" flags="Shift" key="S"/>
+      <shortcut refID="esri_reports_addRelatedReportButton" flags="Ctrl" key="R"/>
+      <shortcut refID="esri_reports_newFieldElementTool" flags="Alt" key="F"/>
+      <!--<shortcut refID="esri_reports_statisticToolPalette" flags="Ctrl+Alt" key="S"/>-->
+      <shortcut refID="esri_reports_addGroupButton" flags="Alt" key="P"/>
+      <shortcut refID="esri_reports_newAttachmentTool" flags="Ctrl+Alt" key="A"/>
+      <shortcut refID="esri_reports_newDynamicPictureTool" flags="Ctrl+Alt" key="D"/>
+      <!--<shortcut refID="esri_reports_newChartGallery" flags="Ctrl+Alt" key="C"/>-->
+      <!--<shortcut refID="esri_reports_newMapFrameGallery" flags="Alt" key="M"/>-->
+      <shortcut refID="esri_reports_newRectangleParagraphTool" flags="Alt" key="T"/>
+      <!--<shortcut refID="esri_reports_dynamicTextGallery" flags="Alt" key="D"/>-->
+      <shortcut refID="esri_reports_newPictureTool" flags="Alt+Shift" key="P"/>
+      <shortcut refID="esri_sharing_SaveAsRptX" flags="Ctrl+Alt" key="R"/>
+      <shortcut refID="esri_sharing_convertReportToTemplate" flags="Ctrl+Alt" key="T"/>
+      <shortcut refID="esri_sharing_exportReportButton" flags="Ctrl" key="E"/>
+    </insertShortcutTable>
+
+    <insertShortcutTable id="esri_layouts_edit" category="Layout" caption="General"
+                         targetID="esri_layouts_layoutPane" isPrimary="true"
+                         description="Layout shortcuts perform actions on an active layout view, such
+                                      as inserting, selecting, and formatting elements.">     
+      <shortcut refID="esri_layouts_selectByRectangleTool" flags="None" key="S" />
+
+      <shortcut refID="esri_layouts_pagePrevExtentButton" flags="None" key="OemComma" />
+      <shortcut refID="esri_layouts_pageNextExtentButton" flags="None" key="OemPeriod" />
+
+      <shortcut refID="esri_layouts_pageZoomFullButton" flags="None" key="Insert" />
+      <shortcut refID="esri_layouts_pageFixedZoomOutButton" flags="None" key="OemMinus" />
+      <shortcut refID="esri_layouts_pageFixedZoomInButton" flags="None" key="OemPlus" />
+
+      <shortcut refID="esri_layouts_showHideRulersCheck" flags="None" key="R" />
+      <shortcut refID="esri_layouts_showHideGuidesCheck" flags="None" key="G" />
+      <shortcut refID="esri_layouts_showHideMargins" flags="None" key="M" />
+      
+      <shortcut refID="esri_layouts_selectAllButton" flags="Ctrl" key="A" />
+      <shortcut refID="esri_layouts_clearSelectionButton" flags="Ctrl" key="Backspace" />
+      <shortcut refID="esri_layouts_deleteSelectionButton" flags="None" key="Delete"/>
+            
+      <shortcut refID="esri_layouts_nudgeLeft" flags="Shift" key="Left"/>
+      <shortcut refID="esri_layouts_nudgeDown" flags="Shift" key="Down"/>
+      <shortcut refID="esri_layouts_nudgeRight" flags="Shift" key="Right"/>
+      <shortcut refID="esri_layouts_nudgeUp" flags="Shift" key="Up"/>
+
+      <shortcut refID="esri_layouts_addVerticesButton" flags="None" key="A" />
+      <shortcut refID="esri_layouts_deleteVerticesButton" flags="None" key="D" />
+
+      <shortcut refID="esri_layouts_activateMap" flags="None" key="Q" />
+
+      <shortcut refID="esri_editing_table_openTablePaneButton" flags="Ctrl" key="T" />
+    </insertShortcutTable>
+
+    <insertShortcutTable id="esri_layouts_mapActive" caption="Activated Map" category="Layout"
+                         targetID="esri_mapping_mapPane" condition="esri_layouts_mapActivatedCondition"
+                         description="Shortcuts specific to an activated map frame.">
+          <shortcut refID="esri_layouts_deactivateMap" flags="None" key="Q" />
+    </insertShortcutTable>
+  </shortcutTables>
   
   <categories>
     <updateCategory refID="esri_mapping_elementFactories">
@@ -64,7 +146,7 @@
       <insertComponent id="esri_itemInfoType_PresentationProjectItem" className="ArcGIS.Desktop.Internal.Presentations.PresentationProjectItem" containerType="Presentation">
         <content>
           <supportedTypeIDs>
-            <type id="cim_presentation"  contextMenuID="esri_presentations_itemContextMenu"/>
+            <type id="cim_presentation" contextMenuID="esri_presentations_itemContextMenu"/>
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -221,6 +303,9 @@
                   showLoadingMessage="true"
                   delayLoadMessage="Print Layout...">
           <content className="ArcGIS.Desktop.Internal.Layouts.DockPanes.PrintDockPane"/>
+        </dockPane>
+        <dockPane id="esri_presentations_pagePropertyDockPane" caption="Page Properties" className="ArcGIS.Desktop.Internal.Presentations.PagePropertyPaneViewModel" dock="group" condition="esri_presentations_viewPaneCondition" dockWith="esri_core_projectDockPane" keytip="Page" initiallyVisible="false" helpContextID="120000982" hasHelp="false" delayLoadMessage="Create a new presentation view and add a new page">
+          <content className="ArcGIS.Desktop.Internal.Presentations.PagePropertyPane" />
         </dockPane>
       </dockPanes>
 
@@ -469,9 +554,9 @@
                caption="Show"
                hidden="true"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers16.png">
-          <checkBox refID="esri_layouts_showHideRulersCheck"
+          <checkBox refID="esri_reports_showHideRulersCheck"
                     size="small"/>
-          <checkBox refID="esri_layouts_showHideGuidesCheck"
+          <checkBox refID="esri_reports_showHideGuidesCheck"
                     size="small"/>
         </group>
         <group id="esri_layouts_pageNavigateGroup"
@@ -1086,9 +1171,7 @@
           <comboBox refID="esri_layouts_northTypeComboBox"
                     size="middle"/>
           <editBox refID="esri_layouts_northCalibrationAngleEditBox"
-                   size="middle"/>
-          <editBox refID="esri_layouts_northCalculatedAngleEditBox"
-                   size="large"/>
+                   size="middle"/>          
         </group>
 
         <!--Divisions for scale-bars-->
@@ -1214,7 +1297,7 @@
         <toolPalette id="esri_layouts_selectToolPalette"
                      caption="Select"
                      keytip="SE"
-                     extendedCaption="Select elements.">
+                     extendedCaption="Select layout elements">
           <tool refID="esri_layouts_selectByRectangleTool"/>
           <tool refID="esri_layouts_selectByPolygonTool"/>
           <tool refID="esri_layouts_selectByLassoTool"/>
@@ -1418,8 +1501,7 @@
         <!--Insert Graphic Element-->
         <gallery id="esri_layouts_insertElementGalleryLayout"
                  hidden="true"
-                 caption="Graphic"
-                 keytip="IG"
+                 keytip="IG"                 
                  extendedCaption="Gallery"
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.InsertLayoutGraphicElementGallery"
                  itemsInRow="4"
@@ -1437,9 +1519,8 @@
         </gallery>
 
         <gallery id="esri_layouts_insertElementGalleryGraphics"
-                 hidden="true"
-                 caption="Graphic"
-                 keytip="IG"
+                 hidden="true"                 
+                 keytip="IG"                
                  extendedCaption="Gallery"
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.InsertMapGraphicElementGallery"
                  itemsInRow="4"
@@ -1614,7 +1695,7 @@
         <gallery id="esri_layouts_lineStyleGalleryInLine"
                  hidden="true"
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LineStyleGalleryInLine"
-                 caption="Line"
+                 caption="Line" 
                  keytip="LG"
                  extendedCaption="Change symbol of line elements."
                  loadOnClick="false"
@@ -1726,7 +1807,7 @@
                  keytip="DT"
                  extendedCaption="Gallery"
                  itemsInRow="3"
-                 itemWidth="154"
+                 itemWidth="170"
                  resizable="true"
                  showGroup="true"
                  showHelp="true"
@@ -2154,7 +2235,7 @@
 
         <gallery id="esri_layouts_elevationGuideBarStyleGalleryInLine"
                  hidden="true"
-                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ElevationGuideBarStyleGalleryInLine"
+                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ElevationGuideBarStyleGalleryInLine"                 
                  itemWidth="150"
                  caption="Elevation Guide Bar"
                  keytip="BG"
@@ -2452,16 +2533,16 @@
               helpContextID="">
           <tooltip heading=""
                    image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScreenTipNavigateTool.png">
-            1. Pan
-            2. Zoom
-            3. Continuous zoom
+1. Pan
+2. Zoom
+3. Continuous zoom
 
-            Quick shortcuts:
-            Shift = zoom rectangle
-            Insert = zoom to full page
-            C = explore when using another tool
-            &#60; = previous extent
-            &#62; = next extent
+Quick shortcuts:
+Shift = zoom rectangle
+Insert = zoom to full page
+C = explore when using another tool
+&#60; = previous extent
+&#62; = next extent
             <disabledText></disabledText>
           </tooltip>
         </tool>
@@ -2560,7 +2641,7 @@
                 condition="esri_layouts_condition"
                 helpContextID="">
           <tooltip heading="100%">
-            Zoom to display elements at their actual size.<disabledText></disabledText>
+            Zoom to display the layout at 100%. At this zoom level the size on the screen matches the size of the page if it were printed.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_pageZoomToSelected"
@@ -2871,7 +2952,7 @@
         </button>
 
         <button id="esri_layouts_addGuides"
-                caption="Add Guides..."
+                caption="Add Multiple Guides"
                 extendedCaption="Layout"
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddGuidesButton"
                 helpContextID="">
@@ -3362,7 +3443,7 @@
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png"
                 caption="Select"
                 extendedCaption="Layout"
-                condition="esri_layouts_layoutPaneCondition"
+                condition="esri_layouts_layoutPaneOrAnyReportPaneCondition"
                 helpContextID=""
                 flipImageRTL="true">
           <tooltip heading="Select by Rectangle">
@@ -4722,18 +4803,6 @@
                  helpContextID="">
           <tooltip heading="Calibration Angle">
             Calibrate the north arrow by adding an additional angle.<disabledText></disabledText>
-          </tooltip>
-        </editBox>
-
-        <editBox id="esri_layouts_northCalculatedAngleEditBox"
-                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NorthCalculatedAngleEditBox"
-                 caption="Calculated Angle"
-                 extendedCaption="North Arrow"
-                 keytip="CL"
-                 sizeString="000000"
-                 helpContextID="">
-          <tooltip heading="Calculated Angle">
-            View the calculated rotation angle of the north arrow.<disabledText></disabledText>
           </tooltip>
         </editBox>
 
@@ -6369,7 +6438,7 @@
         </button>
 
         <button id="esri_layouts_importMap"
-                hidden="true"
+                hidden="false"
                 className="esri_layouts:ImportDocument"
                 caption="Import Map"
                 keytip="IM" helpContextID="120003966"
@@ -6536,6 +6605,7 @@
           <button refID="esri_layouts_projectItem_ExportLayout"/>
           <button refID="esri_core_editCopyButton"
                  separator="true"/>
+          <button refID="esri_core_duplicateButton" separator="false"/>
           <button refID="esri_layouts_projectItem_RemoveLayout" separator="true"/>
           <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata"
@@ -7106,6 +7176,21 @@
           <group refID="esri_reports_propertyGroup"/>
         </tab>
 
+        <tab id="esri_reportTemplates_homeTab"
+             caption="Report Template"
+             condition="esri_reportTemplates_reportTemplatePane"
+             keytip="T"
+             insert="before"
+             placeWith="esri_core_insertTab">
+          <group refID="esri_layouts_clipboardGroup"/>
+          <group refID="esri_reportTemplates_customGroup"/>
+          <group refID="esri_reports_pageNavigateGroup"/>
+          <group refID="esri_reports_selectionGroup"/>
+          <group refID="esri_reports_pageDesignGroup"/>
+          <group refID="esri_reports_pageShowGroup"/>
+          <!--<group refID="esri_reports_propertyGroup"/>-->
+        </tab>
+
         <!--<tab id="esri_reports_insertTab" caption="Insert" condition="esri_reports_reportPane" keytip="N">
           <group refID="esri_core_projectData"/>
           <group refID="esri_reports_reportGroup"/>
@@ -7231,32 +7316,32 @@
         <group id="esri_reports_pageNavigateGroup"
                caption="Navigate"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png">
-          <tool refID="esri_layouts_pageNavigateTool"
+          <tool refID="esri_reports_pageNavigateTool"
                 size="large"/>
           <button refID="esri_reports_pageZoomFullButton"
                   size="small"/>
-          <button refID="esri_layouts_pageZoomToSelected"
+          <button refID="esri_reports_pageZoomToSelected"
                   size="small"/>
-          <button refID="esri_layouts_pagePrevExtentButton"
+          <button refID="esri_reports_pagePrevExtentButton"
                   size="small"/>
-          <button refID="esri_layouts_pageZoomPageWidthButton"
+          <button refID="esri_reports_pageZoomPageWidthButton"
                   size="small"/>
-          <button refID="esri_layouts_pageZoom100PercentButton"
+          <button refID="esri_reports_pageZoom100PercentButton"
                   size="small"/>
-          <button refID="esri_layouts_pageNextExtentButton"
+          <button refID="esri_reports_pageNextExtentButton"
                   size="small"/>
         </group>
 
         <group id="esri_reports_selectionGroup"
                caption="Elements"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png">
-          <toolPalette refID="esri_layouts_selectToolPalette"
+          <toolPalette refID="esri_reports_selectToolPalette"
                        size="large"/>
           <button refID="esri_reports_selectAllButton"
                   size="middle"/>
           <button refID="esri_reports_clearSelectionButton"
                   size="middle"/>
-          <button refID="esri_core_editDeleteButton"
+          <button refID="esri_reports_editDeleteButton"
                   size="middle"/>
         </group>
 
@@ -7286,6 +7371,20 @@
           <gallery refID="esri_reports_newChartGallery"/>
         </group>
 
+        <group id="esri_reportTemplates_insertDataGroup"
+               caption="Data"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableFieldsView16.png"
+               keytip="R"
+               condition="esri_reportTemplates_reportTemplatePane">
+          <tool refID="esri_reports_newFieldElementTool"/>
+          <tool refID="esri_reportTemplates_autoFillFieldElements"/>
+          <toolPalette refID="esri_reports_statisticToolPalette"/>
+          <Button refID="esri_reports_addGroupButton"/>
+          <tool refID="esri_reports_newAttachmentTool"/>
+          <tool refID="esri_reports_newDynamicPictureTool"/>
+          <tool refID="esri_reports_newReportChartFrameTool"/>
+        </group>
+
         <group id="esri_reports_generalGroup"
                caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
@@ -7298,7 +7397,7 @@
                caption="Size"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Details16.png"
                keytip="S"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_anyReportPane">
           <customControl refID="esri_reports_sizeControl"/>
         </group>
 
@@ -7314,7 +7413,7 @@
                caption="Appearance"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EffectsTransparency16.png"
                keytip="A"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_anyReportPane">
           <customControl refID="esri_reports_colorControl"/>
         </group>
 
@@ -7323,7 +7422,7 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png"
                launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton"
                launcherKeytip="TO"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_anyReportPane">
           <tool refID="esri_reports_newRectangleParagraphTool"
                 size="middle"/>
           <gallery refID="esri_reports_dynamicTextGallery"
@@ -7336,7 +7435,7 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png"
                launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton"
                launcherKeytip="GO"
-               condition="esri_reports_reportPane">
+               condition="esri_reports_anyReportPane">
           <toolPalette refID="esri_reports_newPolygonGraphicToolPalette"
                        size="middle"/>
           <toolPalette refID="esri_reports_newLineGraphicToolPalette"
@@ -7358,6 +7457,14 @@
                        size="middle"/>
         </group>
 
+        <group id="esri_reportTemplates_insertMapFrameGroup"
+               caption="Map Frames"
+               condition="esri_reportTemplates_reportTemplatePane"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrameNew16.png">
+          <toolPalette refID="esri_reports_newMapFrameToolPalette"
+                       size="large"/>
+        </group>
+
         <!--Catalog Groups-->
         <group id="esri_project_report"
                caption="Project">
@@ -7372,6 +7479,16 @@
           <button refID="esri_reports_addReportSupplementalPageButton" />
           <button refID="esri_reports_addSubReportButton" />
           <button refID="esri_reports_addRelatedReportButton"/>
+        </group>
+
+        <group id="esri_reportTemplates_reportGroup"
+               caption="Report Section"
+               condition="esri_reportTemplates_reportTemplatePane"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png">
+          <button refID="esri_reports_addReportSupplementalPageButton" />
+          <button refID="esri_reportTemplates_addNewTemplateSubReportButton" />
+          <button refID="esri_reportTemplates_addExistingTemplateSubReportButton" />
+          <button refID="esri_reports_addTemplateRelatedReportButton"/>
         </group>
 
         <group id="esri_reports_activatedMapGroup"
@@ -7401,6 +7518,16 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png">
           <button refID="esri_reports_editGroupingSortingButton"/>
         </group>
+
+        <group id="esri_reportTemplates_customGroup"
+               caption="Template"
+               condition="esri_reportTemplates_reportTemplatePane"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateFile16.png">
+          <button refID="esri_reportTemplates_newReportTemplateRibbon"/>
+          <button refID="esri_reportTemplates_openReportTemplateRibbon"/>
+          <button refID="esri_reportTemplates_saveTemplateSplitButton"/>
+          <button refID="esri_reportTemplates_newReportFromTemplateButton"/>
+        </group>
       </groups>
 
       <galleries>
@@ -7410,7 +7537,7 @@
                  keytip="DT"
                  extendedCaption="Gallery"
                  itemsInRow="3"
-                 itemWidth="154"
+                 itemWidth="170"
                  resizable="true"
                  showGroup="true"
                  showHelp="true"
@@ -7518,6 +7645,73 @@
       </galleries>
 
       <controls>
+        <button id="esri_reports_pageZoomToSelected"
+                caption="Zoom To Selected"
+                extendedCaption="Selected report elements"
+                keytip="ZE"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomToSelectedElements"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementsZoomToSelected16.png"
+                condition="esri_layouts_selectedElementsCondition"
+                helpContextID="">
+          <tooltip heading="Selected Elements">
+            Zoom to the extent of the selected elements.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoomPageWidthButton"
+                caption="Page Width"
+                extendedCaption="Report"
+                keytip="PW"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomToPageWidth"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomPageWidth16.png"
+                condition="esri_layouts_condition"
+                helpContextID="">
+          <tooltip heading="Page Width">
+            Zoom to the width of the page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoom100PercentButton"
+                caption="Zoom to 100%"
+                extendedCaption="Report"
+                keytip="Z1"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomTo100Percent"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomTo100Percent16.png"
+                condition="esri_layouts_condition"
+                helpContextID="">
+          <tooltip heading="100%">
+            Zoom to display elements at their actual size.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pagePrevExtentButton"
+                caption="Previous Extent"
+                extendedCaption="Report"
+                keytip="PX"
+                flipImageRTL="true"
+                className="esri_layouts:PreviousNavigationPos"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomPreviousExtent16.png"
+                condition="esri_layouts_condition"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Previous Extent">
+            Go to the previous extent.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageNextExtentButton"
+                caption="Next Extent"
+                extendedCaption="Report"
+                keytip="NX"
+                flipImageRTL="true"
+                className="esri_layouts:NextNavigationPos"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomNextExtent16.png"
+                condition="esri_layouts_condition"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Next Extent">
+            Go to the next extent.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_reports_projectContainer_NewReport"
                 caption="New Report"
                 extendedCaption="Create new report"
@@ -7579,6 +7773,117 @@
                 keytip="IR">
           <tooltip heading="Import Report">
             A report stored in an ArcGIS Pro report file is added to the project and opened. A copy of the report is added to the project. Future changes to the report file are not reflected in the project.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_newReportTemplateRibbon"
+                caption="New"
+                extendedCaption="Create a new custom report template"
+                className="esri_reports_module:Commands.NewCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile32.png"
+                loadOnClick="false"
+                helpContextID=""
+                keytip="TN">
+          <tooltip heading="New Custom Template">
+            Create a new custom report template. <disabledText>Cannot create a new template. The default template file is missing.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_newReportTemplate"
+                caption="New Custom Template"
+                extendedCaption="Create a new custom report template"
+                className="esri_reports_module:Commands.NewCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile32.png"
+                loadOnClick="false"
+                helpContextID=""
+                keytip="NT">
+          <tooltip heading="New Custom Template">
+            Create a new custom report template. <disabledText>Cannot create a new template. The default template file is missing.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_openReportTemplateRibbon"
+                caption="Open"
+                extendedCaption="Open a custom report template"
+                className="esri_reports_module:Commands.OpenCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderOpenState16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderOpenState32.png"
+                loadOnClick="false"
+                helpContextID=""
+                keytip="TO">
+          <tooltip heading="Open Custom Template">
+            Open a custom report template. <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_openReportTemplate"
+                caption="Open Custom Template"
+                extendedCaption="Open a custom report template"
+                className="esri_reports_module:Commands.OpenCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderOpenState16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FolderOpenState32.png"
+                loadOnClick="false"
+                helpContextID=""
+                keytip="OT">
+          <tooltip heading="Open Custom Template">
+            Open a custom report template. <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_saveTemplateFileButton"
+                hidden="true"
+                caption="Save"
+                loadOnClick="false"
+                extendedCaption="CustomReportTemplate"
+                keytip="TS"
+                className="esri_reports_module:Commands.SaveCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave32.png"
+                helpContextID=""
+                condition="esri_reportTemplates_reportTemplatePane">
+          <tooltip heading="Save">
+            Save the template edits or save the template as a new template in a new location.<disabledText>Template has not been edited.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_saveTemplateButton"
+                hidden="false"
+                caption="Save"
+                loadOnClick="false"
+                extendedCaption="CustomReportTemplate"
+                keytip="TS"
+                className="esri_reports_module:Commands.SaveCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericSave32.png"
+                helpContextID=""
+                condition="esri_reportTemplates_reportTemplatePane">
+          <tooltip heading="Save">
+            Save the template.<disabledText>Template has not been edited.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_saveAsTemplateButton"
+                hidden="false"
+                caption="Save As"
+                extendedCaption="CustomReportTemplate"
+                keytip="SA"
+                className="esri_reports_module:Commands.SaveAsCustomReportTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingSaveEdits_B_32.png"
+                helpContextID=""
+                condition="esri_reportTemplates_reportTemplatePane">
+          <tooltip heading="Save As">
+            Save the template with a new name and new location.<disabledText>Make a template the active view.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_newReportFromTemplateButton"
+                hidden="false"
+                caption="New Report"
+                loadOnClick="false"
+                extendedCaption="New Report From Template"
+                keytip="TR"
+                className="esri_reports_module:Commands.NewReportFromTemplate"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReport32.png"
+                helpContextID=""
+                condition="esri_reportTemplates_reportTemplatePane">
+          <tooltip heading="New Report From Template">
+            Create a new report using the active template.<disabledText>Make a template the active view.</disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_projectItem_OpenReportView"
@@ -7654,7 +7959,7 @@
                 className="esri_layouts:ClearSelection"
                 caption="Clear Selection"
                 keytip="CS"
-                extendedCaption="Clear element selection"
+                extendedCaption="Clear report element selection"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutClearSelected16.png"
                 condition="esri_layouts_selectedElementsCondition"
@@ -7680,7 +7985,7 @@
                 caption="Properties"
                 extendedCaption="Open report document properties"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="">
             Show the properties for the report.<disabledText></disabledText>
@@ -7691,7 +7996,7 @@
                 caption="Properties"
                 extendedCaption="Open report properties"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="">
             Show the properties for the report section.<disabledText></disabledText>
@@ -7702,7 +8007,7 @@
                 caption="Properties"
                 extendedCaption="Properties for the Related Report."
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="">
             Show the properties for the Related Report.<disabledText></disabledText>
@@ -7713,7 +8018,7 @@
                 caption="Properties"
                 extendedCaption="Open page setup properties"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="">
             Show the properties for the report.<disabledText></disabledText>
@@ -7776,12 +8081,13 @@
         <button id="esri_reports_addRelatedReportButton"
                 caption="Related Report"
                 extendedCaption="Add related report"
-                className="esri_reports_module:Commands.OnOpenReportWizardForRelatedReport"
+                className="esri_reports_module:Commands.AddRelatedReport"
                 keytip="RR"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport32.png"
                 condition="esri_reports_addRelatedReportCondition"
-                helpContextID="">
+                helpContextID=""
+                loadOnClick="false">
           <tooltip heading="Add Related Report">
             Add a Related Report into the report.<disabledText>Activate a Details or Related Report subsection.</disabledText>
           </tooltip>
@@ -7789,14 +8095,29 @@
         <button id="esri_reports_addRelatedReportContextMenuButton"
                 caption="New Related Report"
                 extendedCaption="Add related report"
-                className="esri_reports_module:Commands.OnOpenReportWizardForRelatedReport"
+                className="esri_reports_module:Commands.AddRelatedReport"
                 keytip="RR"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport32.png"
                 condition="esri_reports_addRelatedReportCondition"
-                helpContextID="">
+                helpContextID=""
+                loadOnClick="false">
           <tooltip heading="Add Related Report">
-            Add a Related Report into the report.<disabledText></disabledText>
+            Add a Related Report into the report.<disabledText>Cannot create a new related report template. The default template file is missing.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_addTemplateRelatedReportButton"
+                caption="Related Report"
+                extendedCaption="Add related report"
+                className="esri_reports_module:Commands.AddRelatedReport"
+                keytip="RR"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewRelatedReport32.png"
+                condition="esri_reports_addRelatedReportCondition"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Add Related Report">
+            Add a Related Report into the report template.<disabledText>Cannot create a new related report template. Activate a Details or Related Report subsection, or the default template file is missing.</disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_removeRelatedReportButton"
@@ -7829,7 +8150,7 @@
                 keytip="SP"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewSupplementalSection16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewSupplementalSection32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="Add Supplemental Page">
             Add a supplemental page into the report.<disabledText>Select a Report section in the Contents pane.</disabledText>
@@ -7849,13 +8170,41 @@
             Add a subreport into the report.<disabledText>Select a Report section in the Contents pane.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_reportTemplates_addNewTemplateSubReportButton"
+                caption="New Template"
+                extendedCaption="Add template subreport"
+                className="esri_reports_module:Commands.AddNewTemplateSubReportRibbon"
+                keytip="NT"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NewReportTemplateFile32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Add New Template Subreport">
+            Add a new template subreport into the report template.<disabledText>The default template file is missing.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_addExistingTemplateSubReportButton"
+                caption="Existing Template"
+                extendedCaption="Add existing template subreport"
+                className="esri_reports_module:Commands.AddExistingTemplateSubReportRibbon"
+                keytip="ET"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateFile16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateFile32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Add Existing Template Subreport">
+            Add an existing template subreport into the report template.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
         <button id="esri_reports_addReportSupplementalPageAboveButton"
                 caption="Add Supplemental Page Above"
                 extendedCaption="Add supplemental page above current section"
                 className="esri_reports_module:Commands.AddReportSupplementalPageAbove"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageAbove16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageAbove32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="Add Supplemental Page Above">
             Add a supplemental page into the report above this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
@@ -7867,7 +8216,7 @@
                 className="esri_reports_module:Commands.AddReportSupplementalPageBelow"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageBelow16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSupplementalPageBelow32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="Add Supplemental Page Below">
             Add a supplemental page into the report below this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
@@ -7897,13 +8246,61 @@
             Add a subreport into the report below this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_reportTemplates_addNewTemplateSubReportAboveButton"
+                caption="Add New Template Subreport Above"
+                extendedCaption="Add a new template subreport above current section"
+                className="esri_reports_module:Commands.AddNewTemplateSubReportAbove"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportAbove16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportAbove32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID="">
+          <tooltip heading="Add New Template Subreport Above">
+            Add a new template subreport into the report template above this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_addNewTemplateSubReportBelowButton"
+                caption="Add New Template Subreport Below"
+                extendedCaption="Add a new template subreport below current section"
+                className="esri_reports_module:Commands.AddNewTemplateSubReportBelow"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportBelow16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportBelow32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID="">
+          <tooltip heading="Add New Template Subreport Below">
+            Add a new template subreport into the report template below this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_addExistingTemplateSubReportAboveButton"
+                caption="Add Existing Template Subreport Above"
+                extendedCaption="Add an existing template subreport above current section"
+                className="esri_reports_module:Commands.AddExistingTemplateSubReportAbove"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportAbove16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportAbove32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID="">
+          <tooltip heading="Add Existing Template Subreport Above">
+            Add an existing template subreport into the report template above this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reportTemplates_addExistingTemplateSubReportBelowButton"
+                caption="Add Existing Template Subreport Below"
+                extendedCaption="Add an existing template subreport below current section"
+                className="esri_reports_module:Commands.AddExistingTemplateSubReportBelow"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportBelow16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddSubreportBelow32.png"
+                condition="esri_reportTemplates_reportTemplatePane"
+                helpContextID="">
+          <tooltip heading="Add Existing Template Subreport Below">
+            Add an existing template subreport into the report template below this section.<disabledText>Select a Report section in the Contents pane.</disabledText>
+          </tooltip>
+        </button>
         <button id="esri_reports_moveReportSectionElementUpButton"
                 caption="Move Section Up"
                 extendedCaption="Move report section up"
                 className="esri_reports_module:Commands.MoveReportSectionElementUp"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueUpArrowLongTail16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueUpArrowLongTail32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID=""
                 loadOnClick="false">
           <tooltip heading="Move Section Up">
@@ -7916,7 +8313,7 @@
                 className="esri_reports_module:Commands.MoveReportSectionElementDown"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueDownArrowLongTail16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueDownArrowLongTail32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID=""
                 loadOnClick="false">
           <tooltip heading="Move Section Down">
@@ -7941,7 +8338,7 @@
                 className="esri_reports_module:Commands.RemoveReportSupplementalPage"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID="">
           <tooltip heading="Remove Supplemental Page">
             Remove the supplemental page from the report.<disabledText>Select a supplemental page section in the Contents pane.</disabledText>
@@ -7976,11 +8373,22 @@
                 caption="Include Page Numbers"
                 extendedCaption="Add page numbers to supplemental page"
                 className="ArcGIS.Desktop.Internal.Reports.Ribbon.IncludePageNumbersButton"
-                condition="esri_reports_supplementalPageSectionActiveCondition"
+                condition="esri_reports_supplementalPageIncludeNumbersCondition"
                 helpContextID=""
                 loadOnClick="false">
           <tooltip heading="Include Page Numbers">
             Include page numbers on this page when exporting the report.<disabledText>A layout page section must be selected in the Contents pane, or the layout is missing or invalid.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_startNewSupplementalPageButton"
+                caption="Start on New Page"
+                extendedCaption="Start supplemental page on a new page"
+                className="ArcGIS.Desktop.Internal.Reports.Ribbon.StartNewSupplementalPageButton"
+                condition="esri_reports_supplementalPageIncludeNumbersCondition"
+                helpContextID=""
+                loadOnClick="false">
+          <tooltip heading="Start on New Page">
+            Start supplemental page on a new page.<disabledText>A layout page section must be selected in the Contents pane, or the layout is missing or invalid.</disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_removeReportSectionButton"
@@ -7989,7 +8397,7 @@
                 className="esri_reports_module:Commands.RemoveReportSection"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
-                condition="esri_reports_reportPane"
+                condition="esri_reports_anyReportPane"
                 helpContextID=""
                 loadOnClick="false">
           <tooltip heading="Remove Section">
@@ -8055,7 +8463,17 @@
             Open the Grouping and Sorting options for the report or related report.<disabledText>Select a Report or Related Report section.</disabledText>
           </tooltip>
         </button>
-
+        <button id="esri_reports_editDeleteButton"
+                caption="Delete" extendedCaption="Delete selected report elements"
+                loadOnClick="false" keytip="D" menuKeytip="D"
+                className="ArcGIS.Desktop.Framework.DeleteCMD" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="GenericDiscard16"
+                largeImage="GenericDiscard32">
+          <tooltip heading="">
+            Delete the selected items. For items that reference a file or folder on disk, the file or folder is deleted in the file system.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <!-- Custom Controls -->
         <customControl id="esri_reports_generalControl"
                        caption="Design General"
@@ -8090,6 +8508,32 @@
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatColor" />
         </customControl>
 
+        <!-- Checkboxes-->
+        <checkBox id="esri_reports_showHideRulersCheck"
+                  caption="Rulers"
+                  extendedCaption="Report"
+                  keytip="UL"
+                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowHideRulersCheckBox"
+                  loadOnClick="false"
+                  hidden="false"
+                  helpContextID="">
+          <tooltip heading="Show or Hide Rulers">
+            Show or hide the rulers.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+        <checkBox id="esri_reports_showHideGuidesCheck"
+                  caption="Guides"
+                  extendedCaption="Report"
+                  keytip="GU"
+                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowHideGuidesCheckBox"
+                  loadOnClick="false"
+                  hidden="false"
+                  helpContextID="">
+          <tooltip heading="Show or Hide Guides">
+            Show or hide the guides.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+
         <!-- Tools -->
         <tool id="esri_reports_newFieldElementTool"
               caption="Field"
@@ -8102,6 +8546,19 @@
               helpContextID="">
           <tooltip heading="New Field Element">
             Create a new field element on the report by drawing a rectangle.<disabledText>Activate a Group Header, Details or Group Footer subsection.</disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reportTemplates_autoFillFieldElements"
+              caption="Autofill Fields"
+              extendedCaption="Auto fill field elements to report template"
+              className="esri_reports_module:Commands.TemplateAutoFillFieldElements"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateAutoFillFields16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateAutoFillFields32.png"
+              condition="esri_reports_detailsSectionActiveCondition"
+              keytip="AF"
+              helpContextID="">
+          <tooltip heading="New Field Elements">
+            Add multiple field elements to the report template.<disabledText>Activate the Details subsection.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_reports_addAvgStatisticTool"
@@ -8215,6 +8672,7 @@
               extendedCaption="Create new chart frame element"
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/New_Chart16.png"
               largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/New_Chart32.png"
+              condition="esri_reportTemplates_canAddChartElementCondition"
               loadOnClick="false"
               helpContextID="">
           <tooltip heading="New Chart Frame">
@@ -8223,6 +8681,29 @@
         </tool>
 
         <!-- Wrapped Tools -->
+        <tool id="esri_reports_pageNavigateTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateTool"
+              caption="Navigate"
+              keytip="NA"
+              extendedCaption="Report"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png"
+              helpContextID="">
+          <tooltip heading=""
+                   image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScreenTipNavigateTool.png">
+1. Pan
+2. Zoom
+3. Continuous zoom
+
+Quick shortcuts:
+Shift = zoom rectangle
+Insert = zoom to full page
+C = explore when using another tool
+&#60; = previous extent
+&#62; = next extent
+            <disabledText></disabledText>
+          </tooltip>
+        </tool>
         <tool id="esri_reports_newPointTool"
               className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewPointTool"
               caption="Point"
@@ -8365,7 +8846,7 @@
               condition="esri_reports_canAddFieldElementCondition"
               helpContextID="">
           <tooltip heading="New Dynamic Picture">
-            Insert a dynamic picture on the report based on a field or expression.<disabledText>Activate the Details subsection.</disabledText>
+            Insert a dynamic picture on the report based on a field or expression.<disabledText>Activate a Group Header, Details, or Group Footer subsection.</disabledText>
           </tooltip>
         </tool>
         <!--<tool id="esri_reports_newSplinedTextTool" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewSplinedTextTool" caption="Curved Text" extendedCaption="Create a new report line text." smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementSplinedText32.png" helpContextID="" condition="esri_reports_canAddElementCondition">
@@ -8395,6 +8876,78 @@
           <tooltip heading="New Ellipse Paragraph">Create a new paragraph on the report by drawing an ellipse.<disabledText>Select a report section in the Contents pane.</disabledText></tooltip>
         </tool>-->
 
+        <!-- Selection Tools -->
+        <tool id="esri_reports_selectByRectangleTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectTool"
+              keytip="R"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png"
+              caption="Rectangle"
+              extendedCaption="Report selection"
+              loadOnClick="false"
+              helpContextID=""
+              flipImageRTL="true">
+          <tooltip heading="Select by Rectangle">
+            Select elements by clicking them or dragging a box around them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_selectByPolygonTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectByPolygonTool"
+              keytip="P"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectPolygonTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectPolygonTool16.png"
+              caption="Polygon"
+              extendedCaption="Report selection"
+              condition="esri_layouts_elementsSourceCondition"
+              helpContextID=""
+              flipImageRTL="true">
+          <tooltip heading="Select by Polygon">
+            Select elements by drawing a polygon around them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_selectByLassoTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectByLassoTool"
+              keytip="S"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectLassoTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectLassoTool16.png"
+              caption="Lasso"
+              extendedCaption="Report selection"
+              condition="esri_layouts_elementsSourceCondition"
+              helpContextID=""
+              flipImageRTL="true">
+          <tooltip heading="Select by Lasso">
+            Select elements by drawing a freehand shape around them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_selectByCircleTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectByCircleTool"
+              keytip="C"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectCircleTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectCircleTool16.png"
+              caption="Circle"
+              extendedCaption="Report selection"
+              condition="esri_layouts_elementsSourceCondition"
+              helpContextID=""
+              flipImageRTL="true">
+          <tooltip heading="Select by Circle">
+            Select elements by dragging a circle around them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <tool id="esri_reports_selectByLineTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutSelectByLineTool"
+              keytip="L"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectLineTool32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectLineTool16.png"
+              caption="Line"
+              extendedCaption="Report selection"
+              condition="esri_layouts_elementsSourceCondition"
+              helpContextID=""
+              flipImageRTL="true">
+          <tooltip heading="Select by Line">
+            Select elements by drawing a line that intersects them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        
         <!--Insert Map Frame-->
         <tool id="esri_reports_newMapFrameRectangleTool"
               caption="Rectangle"
@@ -8471,10 +9024,32 @@
           <button refID="esri_reports_projectContainer_NewReport" />
           <button refID="esri_reports_NewReport_Keytip" />
           <button refID="esri_reports_importReportFile" />
+          <button refID="esri_reportTemplates_newReportTemplate" separator="true"/>
+          <button refID="esri_reportTemplates_openReportTemplate"/>
+        </splitButton>
+
+        <splitButton id="esri_reportTemplates_saveTemplateSplitButton"
+                     hidden ="false"
+                     caption="Save A Template"
+                     extendedCaption="ReportTemplateBuilder"
+                     keytip="TS">
+          <button refID="esri_reportTemplates_saveTemplateFileButton" />
+          <button refID="esri_reportTemplates_saveTemplateButton" />
+          <button refID="esri_reportTemplates_saveAsTemplateButton" />
         </splitButton>
       </splitButtons>
 
       <palettes>
+        <toolPalette id="esri_reports_selectToolPalette"
+                     caption="Select"
+                     keytip="SE"
+                     extendedCaption="Select report elements">
+          <tool refID="esri_reports_selectByRectangleTool"/>
+          <tool refID="esri_reports_selectByPolygonTool"/>
+          <tool refID="esri_reports_selectByLassoTool"/>
+          <tool refID="esri_reports_selectByCircleTool"/>
+          <tool refID="esri_reports_selectByLineTool"/>
+        </toolPalette>
         <toolPalette id="esri_reports_statisticToolPalette"
                      itemsInRow="1"
                      showItemCaption="true"
@@ -8547,6 +9122,7 @@
           <!--<button refID="esri_sharing_SaveAsReportFile"/>-->
           <button refID="esri_core_editCopyButton"
                   separator="true"/>
+          <button refID="esri_core_duplicateButton" separator="false"/>
           <!--<button refID="esri_layouts_projectItem_ExportLayout"/>-->
           <button refID="esri_reports_projectItem_RemoveReport" separator="true"/>
           <button refID="esri_core_rename"/>
@@ -8590,7 +9166,7 @@
           <button refID="esri_core_editCutButton"
                   separator="true"/>
           <button refID="esri_core_editCopyButton"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_reports_editDeleteButton"/>
           <button refID="esri_layouts_ConvertToGraphicsButton"
                   separator="true"/>
           <button refID="esri_layouts_groupSelectedElementsButton"
@@ -8610,6 +9186,18 @@
           <submenu refID="esri_reports_addAboveMenu"
                    separator="true"/>
           <submenu refID="esri_reports_addBelowMenu"/>
+          <menu refID="esri_reports_reportSectionContextSubmenu" inline="true" separator="true"/>
+        </menu>
+
+        <menu id="esri_reportTemplates_reportSectionContextMenu"
+              contextMenu="true">
+          <submenu refID="esri_reportTemplates_addAboveMenu"
+                   separator="true"/>
+          <submenu refID="esri_reportTemplates_addBelowMenu"/>
+          <menu refID="esri_reports_reportSectionContextSubmenu" inline="true" separator="true"/>
+        </menu>
+
+        <menu id="esri_reports_reportSectionContextSubmenu">
           <button refID="esri_reports_moveReportSectionElementUpButton"
                   separator="true"/>
           <button refID="esri_reports_moveReportSectionElementDownButton"/>
@@ -8617,7 +9205,7 @@
                   separator="true"/>
           <button refID="esri_reports_pageZoomFullButton"
                   separator="true"/>
-          <button refID="esri_layouts_pageZoom100PercentButton"/>
+          <button refID="esri_reports_pageZoom100PercentButton"/>
           <button refID="esri_reports_navigateContext"
                   separator="true"/>
           <button refID="esri_layouts_selectContext"/>
@@ -8717,6 +9305,7 @@
           <button refID="esri_reports_editReportLayoutPageButton"/>
           <button refID="esri_reports_reportPageIncludeNumbersButton"
                   separator="true"/>
+          <button refID="esri_reports_startNewSupplementalPageButton"/>
           <submenu refID="esri_reports_addAboveMenu"
                    separator="true"/>
           <submenu refID="esri_reports_addBelowMenu"/>
@@ -8729,6 +9318,23 @@
           <button refID="esri_sharing_SaveAsLayoutFileReportPage"
                   separator="true"/>
           <!--<button refID="esri_reports_layoutPage_LayoutProperties" separator="true"/>-->
+        </menu>
+
+        <menu id="esri_reportTemplates_reportLayoutPageContextMenu"
+              caption="Layout Page Menu"
+              extendedCaption="Context menu for Layout Page supplemental section."
+              contextMenu="true">
+          <button refID="esri_reports_reportPageIncludeNumbersButton"
+                  separator="true"/>
+          <button refID="esri_reports_startNewSupplementalPageButton"/>
+          <submenu refID="esri_reportTemplates_addAboveMenu"
+                   separator="true"/>
+          <submenu refID="esri_reportTemplates_addBelowMenu"/>
+          <button refID="esri_reports_moveReportSectionElementUpButton"
+                  separator="true"/>
+          <button refID="esri_reports_moveReportSectionElementDownButton"/>
+          <button refID="esri_reports_removeReportSupplementalPageButton"
+                  separator="true"/>
         </menu>
 
         <menu id="esri_reports_addAboveMenu"
@@ -8757,6 +9363,32 @@
           <button refID="esri_reports_addNewReportBelowButton"/>
         </menu>
 
+        <menu id="esri_reportTemplates_addAboveMenu"
+              caption="Add Above"
+              keytip="AA"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertPageAbove16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertPageAbove32.png">
+          <tooltip heading="Align">
+            Add report section above selected section.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_reports_addReportSupplementalPageAboveButton"/>
+          <button refID="esri_reportTemplates_addNewTemplateSubReportAboveButton"/>
+          <button refID="esri_reportTemplates_addExistingTemplateSubReportAboveButton"/>
+        </menu>
+
+        <menu id="esri_reportTemplates_addBelowMenu"
+              caption="Add Below"
+              keytip="AB"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertPageBelow16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertPageBelow32.png">
+          <tooltip heading="Align">
+            Add report section below selected section.<disabledText></disabledText>
+          </tooltip>
+          <button refID="esri_reports_addReportSupplementalPageBelowButton"/>
+          <button refID="esri_reportTemplates_addNewTemplateSubReportBelowButton"/>
+          <button refID="esri_reportTemplates_addExistingTemplateSubReportBelowButton"/>
+        </menu>
+
         <menu id="esri_report_mapFrameStaticContextMenu"
               caption="Map Frame Element Menu"
               extendedCaption="Element context menu for static map frame of a report."
@@ -8771,7 +9403,7 @@
                   separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editPasteButton"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_reports_editDeleteButton"/>
           <button refID="esri_layouts_groupSelectedElementsButton"
                   separator="true"/>
           <button refID="esri_layouts_ungroupSelectedElementsButton"/>
@@ -8798,7 +9430,7 @@
                   separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editPasteButton"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_reports_editDeleteButton"/>
           <button refID="esri_layouts_groupSelectedElementsButton"
                   separator="true"/>
           <button refID="esri_layouts_ungroupSelectedElementsButton"/>
@@ -8847,7 +9479,7 @@
                   separator="true"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editPasteButton"/>
-          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_reports_editDeleteButton"/>
           <button refID="esri_layouts_groupSelectedElementsButton"
                   separator="true"/>
           <button refID="esri_layouts_ungroupSelectedElementsButton"/>
@@ -8862,7 +9494,6 @@
           <button refID="esri_layouts_showElementDockPaneButton"
                   separator="true"/>
         </menu>
-
       </menus>
 
       <panes>
@@ -8872,7 +9503,18 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
               isClosable="true"
               defaultTab="esri_reports_homeTab"
-              defaultTool="esri_layouts_selectByRectangleTool"
+              defaultTool="esri_reports_selectByRectangleTool"
+              isDropTarget="false">
+          <content className="ArcGIS.Desktop.Internal.Reports.ReportPaneView"/>
+        </pane>
+        
+        <pane id="esri_reportTemplates_reportTemplatePane"
+              caption="Report Template"
+              className="ArcGIS.Desktop.Internal.Reports.ReportPaneViewModel"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ReportTemplateFile16.png"
+              isClosable="true"
+              defaultTab="esri_reportTemplates_homeTab"
+              defaultTool="esri_reports_selectByRectangleTool"
               isDropTarget="false">
           <content className="ArcGIS.Desktop.Internal.Reports.ReportPaneView"/>
         </pane>
@@ -8882,21 +9524,24 @@
 
     <insertModule id="esri_presentations" className="ArcGIS.Desktop.Presentations.PresentationsModule" caption="Presentations" description="Presentations module" autoLoad="false">
       <tabs>
-        <tab id="esri_presentations_homeTab" caption="Presentation" condition="esri_presentations_viewPaneCondition" keytip="P" placeWith="esri_core_insertTab" insert="before">
+        <tab id="esri_presentations_homeTab" caption="Presentation" isCustomizable="false" condition="esri_presentations_viewPaneCondition" keytip="XP" placeWith="esri_core_insertTab" insert="before">
           <group refID="esri_presentations_clipboardGroup"/>
           <group refID="esri_presentations_pageNavigationGroup"/>
           <group refID="esri_presentations_mapNavigationGroup"/>
           <group refID="esri_presentations_elementsGroup"/>
+          <group refID="esri_presentations_pageSetupGroup"/>
+          <group refID="esri_presentations_playbackGroup"/>
+          <group refID="esri_presentations_shareGroupTab"/>
         </tab>
       </tabs>
 
       <groups>
-        <group id="esri_presentations_insertGroup" caption="Presentation" keytip="IP" condition="esri_presentations_SupportPresentationCondition"
+        <group id="esri_presentations_insertGroup" caption="Presentation" isCustomizable="false" keytip="IP" condition="esri_presentations_SupportPresentationCondition"
        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewPresentation16.png">
           <button refID="esri_presentations_newPresentationButton"/>
         </group>
         
-        <group id="esri_presentations_insertPagesGroup" caption="Page" keytip="IPP" condition="esri_presentations_insertPageCondition">
+        <group id="esri_presentations_insertPagesGroup" caption="Page" isCustomizable="false" keytip="IPP" condition="esri_presentations_insertPageCondition">
           <gallery refID="esri_presentations_newMapPageSourceGallery" inline="false" size="large"/>
           <button refID="esri_presentations_insertBlankPresentationPageButton"/>
           <button refID="esri_presentations_insertImagePresentationPageButton"/>        
@@ -8918,7 +9563,15 @@
           <button refID="esri_presentations_prevPageExtentButton" size="middle"/>
           <button refID="esri_presentations_nextPageExtentButton" size="middle"/>
         </group>
-        
+
+        <group id="esri_presentations_playbackGroup" caption="Playback" keytip="PB">
+          <splitButton refID="esri_presentations_fullScreenSplitButton"/> 
+        </group>
+
+        <group id="esri_presentations_pageSetupGroup" caption="Page Setup" keytip="PS"> 
+          <customControl refID="esri_presentations_aspectRatioComboBox" size="large"/>
+        </group>
+
         <group id="esri_presentations_elementsGroup" caption="Elements" keytip="EL" condition="esri_presentations_canEditElementsCondition">
           <button refID="esri_presentations_selectButton"
                          size="large"/>
@@ -8936,8 +9589,8 @@
                       size="middle"/>
         </group>
 
-        <group hidden="true" id="esri_presentations_insertElementsGroup" caption="Elements" keytip="EL" condition="esri_presentations_canEditElementsCondition">
-          <gallery refID="esri_layouts_insertElementGalleryGraphics" inline="true" size="large"/>
+        <group hidden="true" id="esri_presentations_insertElementsGroup" caption="Elements" isCustomizable="false" keytip="EL" condition="esri_presentations_canEditElementsCondition">
+          <gallery refID="esri_presentations_insertElementGalleryGraphics" inline="true" size="large"/>
         </group>
 
         <group id="esri_presentations_clipboardGroup"
@@ -8953,12 +9606,16 @@
           <!--<button refID="esri_core_editCopyPaths" size="middle" />
           <button refID="esri_core_editDeleteButton" size="middle"/>-->
         </group>
+
+        <group id="esri_presentations_shareGroupTab" caption="Output" extendedCaption="Presentations Output" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png" condition="esri_presentations_viewPaneCondition">
+          <button refID="esri_presentations_exportToVideo" size="large"/>
+        </group>
       </groups>
       
       <controls>
-        <button hidden="true" id="esri_presentations_newPresentationButton" className="esri_presentations:CreateNewPresentationAsync" caption="New Presentation" extendedCaption="Create" keytip="NP" condition="esri_presentations_SupportPresentationCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewPresentation32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewPresentation16.png">
+        <button hidden="true" id="esri_presentations_newPresentationButton" className="esri_presentations:CreateNewPresentationAsync" caption="New Presentation" extendedCaption="Create" keytip="NP" helpContextID="120004196" condition="esri_presentations_SupportPresentationCondition" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewPresentation32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewPresentation16.png">
           <tooltip heading="">
-            Create a new presentation. The new presentation is saved within the project.<disabledText></disabledText>
+            Create a new presentation and add it to the project. The new presentation is saved within the project.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -8979,33 +9636,51 @@
             Select elements by clicking them or dragging a box around them.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <button hidden="true" id="esri_presentations_navigatePageButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.PresentationSelectButton" caption="Navigate" extendedCaption="Navigate page" keytip="NP" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool32.png" loadOnClick="false">
+          <tooltip heading="">
+            Navigate the page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_presentations_showPagePropsButton"
+        caption="Properties"
+        extendedCaption="Show Properties"
+        className="esri_presentations:ShowPageProperties"
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
+        largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png"
+        helpContextID="">
+          <tooltip heading="Page Properties">
+            Show the Page Properties pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button hidden="true" id="esri_presentations_activateMapButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ActivateMapButton" caption="Activate" extendedCaption="Activate map" keytip="AM" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/3DNavigationTool16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/3DNavigationTool32.png" loadOnClick="false">
+          <tooltip heading="">
+            Activate the map to navigate and interact with the map.<disabledText></disabledText>
+          </tooltip>
+        </button>
         
         <button hidden="true" id="esri_presentations_selectAllButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.PresentationSelectAllButton" caption="Select All" keytip="SA" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll32.png" loadOnClick="false">
           <tooltip heading="">
             Select all elements.<disabledText></disabledText>
           </tooltip>
         </button>
-        
-        <button hidden="true" id="esri_presentations_insertMapPresentationPagesButton" className="esri_presentations:InsertMapPages" caption="Map" extendedCaption="Insert" keytip="IM" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Map32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Map16.png">
-          <tooltip heading="">
-            Insert a new map page to the presentation.<disabledText></disabledText>
-          </tooltip>
-        </button>
 
-        <button hidden="true" id="esri_presentations_insertImagePresentationPageButton" className="esri_presentations:InsertImagePage" caption="Image" extendedCaption="Insert" keytip="II" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Image32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Image16.png">
-          <tooltip heading="">
+        <button hidden="true" id="esri_presentations_insertImagePresentationPageButton" className="esri_presentations:InsertImagePage" caption="Image" extendedCaption="Insert" keytip="II" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewImagePage32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewImagePage16.png">
+          <tooltip heading="New Image Page">
             Insert a new image page to the presentation.<disabledText></disabledText>
           </tooltip>
         </button>
 
-        <button hidden="true" id="esri_presentations_insertVideoPresentationPageButton" className="esri_presentations:InsertVideoPage" caption="Video" extendedCaption="Insert" keytip="IB" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimExportMovie32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimExportMovie16.png">
-          <tooltip heading="">
+        <button hidden="true" id="esri_presentations_insertVideoPresentationPageButton" className="esri_presentations:InsertVideoPage" caption="Video" extendedCaption="Insert" keytip="IB" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewVideoPage32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewVideoPage16.png">
+          <tooltip heading="New Video Page">
             Insert a new video page to the presentation.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <button hidden="true" id="esri_presentations_insertBlankPresentationPageButton" className="esri_presentations:InsertBlankPage" caption="Blank" extendedCaption="Insert" keytip="BV" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertBlankPageType32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertBlankPageType16.png">
-          <tooltip heading="">
+          <tooltip heading="New Blank Page">
             Insert a new blank page to the presentation.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -9017,12 +9692,12 @@
         </button>
         <button hidden="true" id="esri_presentations_prevPageExtentButton" caption="Previous Extent" extendedCaption="Page" keytip="PE" flipImageRTL="true" className="esri_mapping:PreviousNavigationPos" condition="esri_presentations_isElementsEditModeCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomPreviousExtent16.png" loadOnClick="false">
           <tooltip heading="Previous Extent">
-            Go to the previous extent.<disabledText>The earliest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
+            Go to the previous extent.<disabledText>The earliest extent is reached.</disabledText>
           </tooltip>
         </button>
         <button hidden="true" id="esri_presentations_nextPageExtentButton" caption="Next Extent" extendedCaption="Page" keytip="NE" flipImageRTL="true" className="esri_mapping:NextNavigationPos" condition="esri_presentations_isElementsEditModeCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomNextExtent16.png" loadOnClick="false">
           <tooltip heading="Next Extent">
-            Go to the next extent.<disabledText>The latest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
+            Go to the next extent.<disabledText>The latest extent is reached.</disabledText>
           </tooltip>
         </button>
 
@@ -9033,12 +9708,12 @@
         </button>
         <button hidden="true" id="esri_presentations_prevMapExtentButton" caption="Previous Extent" extendedCaption="Map View" keytip="PE" flipImageRTL="true" className="esri_mapping:PreviousNavigationPos" condition="esri_presentations_isMapFrameActivatedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueLeftArrowLongTail16.png" loadOnClick="false">
           <tooltip heading="Previous Extent">
-            Go to the previous extent.<disabledText>The earliest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
+            Go to the previous extent.<disabledText>The earliest extent is reached.</disabledText>
           </tooltip>
         </button>
         <button hidden="true" id="esri_presentations_nextMapExtentButton" caption="Next Extent" extendedCaption="Map View" keytip="NE" flipImageRTL="true" className="esri_mapping:NextNavigationPos" condition="esri_presentations_isMapFrameActivatedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlueRightArrowLongTail16.png" loadOnClick="false">
           <tooltip heading="Next Extent">
-            Go to the next extent.<disabledText>The latest extent is reached. Or, if you are mapping a location device, turn off its auto-navigation mode.</disabledText>
+            Go to the next extent.<disabledText>The latest extent is reached.</disabledText>
           </tooltip>
         </button>
         <button hidden="true" id="esri_presentations_fixedZoomOutButton" caption="Fixed Zoom Out" extendedCaption="Map View" keytip="ZO" className="esri_mapping:FixedZoomOut" condition="esri_presentations_isMapFrameActivatedCondition" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomFixedZoomOut_B_16.png" loadOnClick="false">
@@ -9086,6 +9761,73 @@
             Copy selection to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
+        
+        <button hidden="true" id="esri_presentations_fullScreenButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.FullScreenButton" caption="Full Screen" keytip="FS" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFullScreen16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFullScreen32.png" loadOnClick="false">
+          <tooltip heading="">
+            Start presenting in full screen mode.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <customControl id="esri_presentations_aspectRatioComboBox"
+                       keytip="AR"
+                       className="ArcGIS.Desktop.Internal.Presentations.Ribbon.AspectRatioDropdownViewModel"
+                       loadOnClick="false"
+                       disableIfBusy="false">
+          <content className="ArcGIS.Desktop.Internal.Presentations.Ribbon.AspectRatioDropdownView" />
+        </customControl>
+
+        <button hidden="true" id="esri_presentations_exportToVideo" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ExportButton" caption="Export" keytip="PEP" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportPresentation16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ExportPresentation32.png" loadOnClick="false">
+          <tooltip heading="">
+            Export the pages to a video or a set of images.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <tool id="esri_presentations_newPictureTool"
+             className="ArcGIS.Desktop.Internal.Presentations.Ribbon.NewPictureTool"
+             caption="Picture"
+             extendedCaption="Layout"
+             keytip="PC"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png"
+             largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture32.png"
+             helpContextID=""
+             condition="esri_layouts_elementsTargetCondition">
+          <tooltip heading="Picture">
+            Picture<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        
+        <tool id="esri_presentations_pageNavigaionTool"
+             className="ArcGIS.Desktop.Internal.Presentations.PresentationPageNavTool"
+             keytip="R"
+             largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool32.png"
+             smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png"
+             caption="Rectangle"
+             extendedCaption="Element selection"
+             loadOnClick="false"
+             helpContextID=""
+             flipImageRTL="true">
+          <tooltip heading="Select by Rectangle">
+            Select elements by clicking them or dragging a box around them.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <tool id="esri_presentations_exploreTool" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ExploreTool" helpContextID="120000808" caption="Explore" extendedCaption="Navigate/Identify active view" keytip="E" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/3DNavigationTool32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/3DNavigationTool16.png" loadOnClick="false" condition="esri_mapping_mapPaneOrEquivalent">
+          <tooltip heading="" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScreenTipNavigateTool.png">
+1. View pop-ups and pan
+2. Zoom, rotate / tilt (3D-only)
+3. Zoom continuous
+
+Quick shortcuts:
+Shift = zoom rectangle
+Ctrl = view pop-ups within rectangle
+N = point north
+B = look around (in 3D)
+C = explore when using another tool
+V = rotate / tilt
+Ctrl+Alt+C = quick enable
+            <disabledText></disabledText>
+          </tooltip>
+        </tool>
       </controls>
 
       <galleries>
@@ -9096,6 +9838,7 @@
                  extendedCaption="Gallery"
                  keytip="MG"
                  loadOnClick="false"
+                 condition="esri_projectHasMapsCondition"
                  itemsInRow="3"
                  itemWidth="140"
                  itemHeight="115"
@@ -9105,10 +9848,11 @@
                  resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Presentations/PresentationGalleryTemplates.xaml"
                  templateID="MapPageTemplate"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MapFrameNew32.png"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertNewMapPage32.png"
                  helpContextID="">
           <tooltip heading="New Map Page">
-            Insert a new map page to the presentation.<disabledText></disabledText>
+            Insert a new map page to the presentation.
+            <disabledText>A map page requires a map or a scene within the project.</disabledText>
           </tooltip>
         </gallery>
 
@@ -9129,6 +9873,35 @@
             Zoom to, create, or manage bookmarks for maps within your project.<disabledText></disabledText>
           </tooltip>
         </gallery>
+
+        <gallery id="esri_presentations_monitorGallery" keytip="MG" caption="Monitors" extendedCaption="Open the monitor gallery" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.MonitorGallery" resizable="true" loadOnClick="false" showGroup="false" showItemCaption="true" showItemCaptionBelow="true" itemsInRow="1" templateID="MonitorGalleryItemTemplate"
+ smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFullScreen16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFullScreen32.png"
+ dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Presentations/PresentationGalleryTemplates.xaml">
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </gallery>
+
+        <gallery id="esri_presentations_insertElementGalleryGraphics"
+          hidden="true"
+          keytip="IG"
+          extendedCaption="Gallery"
+          className="ArcGIS.Desktop.Internal.Presentations.Ribbon.InsertPresentationElementGallery"
+          itemsInRow="4"
+          itemWidth="35"
+          showGroup="true"
+          scrollToSelectedItemInRibbon="true"
+          dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
+          templateID="InsertElementGallery"
+          helpContextID=""
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText16.png"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementPolygonText32.png">
+          <tooltip heading="Insert Graphic Element">
+            Insert a new graphic element.<disabledText></disabledText>
+          </tooltip>
+          <checkBox refID="esri_layouts_lastToolActive"/>
+        </gallery>
+
       </galleries>
 
       <menus>
@@ -9149,13 +9922,99 @@
         <menu hidden="true" id="esri_presentations_pageNavigaionContextMenu" caption="Navigation" extendedCaption="Open Navigation context menu" contextMenu="true">
           <button refID="esri_presentations_fullPageExtentButton"/>
           <button refID="esri_presentations_prevPageExtentButton"/>
-          <button refID="esri_presentations_nextPageExtentButton"/>  
+          <button refID="esri_presentations_nextPageExtentButton"/>
+          <button refID="esri_presentations_editPasteButton" separator="true"/>
+          <button refID="esri_presentations_editPasteSpecialButton"/>
+          <button refID="esri_presentations_selectAllButton" separator="true"/>
+          <button refID="esri_layouts_clearSelectionButton"/>
+          <button refID="esri_layouts_pageZoomToSelected"/>
+          <button refID="esri_presentations_showPagePropsButton" separator="true"/>
         </menu>
+
+        <menu hidden="true" id="esri_presentations_mapPageNavigaionContextMenu" caption="Navigation" extendedCaption="Open Navigation context menu" contextMenu="true">
+          <button refID="esri_presentations_activateMapButton"/>
+          <button refID="esri_presentations_fullPageExtentButton" separator="true"/>
+          <button refID="esri_presentations_prevPageExtentButton"/>
+          <button refID="esri_presentations_nextPageExtentButton"/>
+          <button refID="esri_presentations_editPasteButton" separator="true"/>
+          <button refID="esri_presentations_editPasteSpecialButton"/>
+          <button refID="esri_presentations_selectAllButton" separator="true"/>
+          <button refID="esri_layouts_clearSelectionButton"/>
+          <button refID="esri_layouts_pageZoomToSelected"/>
+          <button refID="esri_presentations_showPagePropsButton" separator="true"/>
+        </menu>
+
+        <menu hidden="true" id="esri_presentations_mapNavigaionContextMenu" caption="Selection" extendedCaption="Open pop-up context menu" contextMenu="true">
+          <button refID="esri_presentations_fullMapExtentButton"/>
+          <button refID="esri_presentations_prevMapExtentButton"/>
+          <button refID="esri_presentations_nextMapExtentButton"/>
+          <button refID="esri_presentations_navigatePageButton" separator="true"/>
+        </menu>
+        
+        <!--Common items at start of map graphics context menu.-->
+        <menu id="esri_presentations_elementPreCommonMenu"
+              caption="Element Menu"
+              extendedCaption="Element context menu"
+              contextMenu="true">
+          <button refID="esri_layouts_pageZoomToSelected"/>
+          <button refID="esri_core_editCutButton"
+                  separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID="esri_core_editPasteButton"/>
+          <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_layouts_groupSelectedElementsButton"
+                  separator="true"/>
+          <button refID="esri_layouts_ungroupSelectedElementsButton"/>
+          <submenu refID="esri_layouts_orderMenu"
+                   separator="true"/>
+          <submenu refID="esri_layouts_nudgeMenu"/>
+          <submenu refID="esri_layouts_alignMenu"/>
+          <submenu refID="esri_layouts_distributeMenu"/>
+          <submenu refID="esri_layouts_rotateOrFlipMenu"/>
+          <submenu refID="esri_layouts_mergeShapesMenu"/>
+          <button refID="esri_layouts_saveAsStyle"
+                  separator="true"/>
+        </menu>
+
+        <!--Common items at end of element context menu.   Layout and Map.-->
+        <menu id="esri_presentations_elementPostCommonMenu"
+              caption="Element Menu"
+              extendedCaption="Element context menu"
+              contextMenu="true">
+          <!--<button refID="esri_layouts_navigateContext"/>-->
+          <button refID="esri_layouts_selectContext"/>
+          <button refID="esri_layouts_editVerticesContext"/>
+          <button refID="esri_layouts_showElementDockPaneButton"
+                  separator="true"/>
+        </menu>
+
+        <menu hidden="true" id="esri_presentations_elementContextMenu" caption="Element Menu" extendedCaption="Element context menu." contextMenu="true">
+          <menu refID="esri_presentations_elementPreCommonMenu"
+                inline="true"/>
+          <menu refID="esri_presentations_elementPostCommonMenu"
+                inline="true"
+                separator="true"/>
+        </menu>
+
+        <menu id="esri_presentations_textElementContextMenu"
+        caption="Text Menu"
+        extendedCaption="Perform operations on a text element."
+        contextMenu="true">
+          <menu refID="esri_presentations_elementPreCommonMenu"
+                inline="true"/>
+          <menu refID="esri_layouts_textElementCommonMenu"
+                inline="true"
+                separator="true"/>
+          <menu refID="esri_presentations_elementPostCommonMenu"
+                inline="true"
+                separator="true"/>
+        </menu>
+
       </menus>
 
       <splitButtons>
         <splitButton hidden="true" id="esri_presentations_exploreSplitButton" keytip="E" extendedCaption="Open current explore tool" condition="esri_presentations_isMapPageCondition">
-          <tool refID="esri_mapping_exploreTool" />
+          <tool refID="esri_presentations_exploreTool" />
           <button refID="esri_mapping_infoTopmostLayerButton" />
           <button refID="esri_mapping_infoAllLayersButton" />
           <button refID="esri_mapping_infoSelectableLayersButton" />
@@ -9169,6 +10028,11 @@
           <button refID="esri_presentations_editPasteButton"/>
           <button refID="esri_presentations_editPasteSpecialButton"/>
         </splitButton>
+
+        <splitButton id="esri_presentations_fullScreenSplitButton" caption="Full Screen" keytip="FS" hidden="true" hideTooltip="false">
+          <button refID="esri_presentations_fullScreenButton"/>
+          <gallery refID="esri_presentations_monitorGallery"/>
+        </splitButton>
       </splitButtons>
 
       <palettes>
@@ -9177,7 +10041,7 @@
 
       <panes>
         <pane id="esri_presentations_viewPane" caption="Presentation" className="ArcGIS.Desktop.Internal.Presentations.PresentationViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationView16.png" isClosable="true"
-              defaultTab="esri_presentations_homeTab" defaultTool="esri_layouts_selectByRectangleTool">
+              defaultTab="esri_presentations_homeTab" defaultTool="esri_presentations_pageNavigaionTool">
           <content className="ArcGIS.Desktop.Internal.Presentations.PresentationView"/>
         </pane>
       </panes>
@@ -9203,10 +10067,19 @@
           <insertGroup refID="esri_reports_reportGroup"
                        insert="after"
                        placeWith="esri_core_projectData"/>
+          <insertGroup refID="esri_reportTemplates_reportGroup"
+                       insert="after"
+                       placeWith="esri_core_projectData"/>
           <insertGroup refID="esri_reports_insertDataGroup"
                        insert="after"
                        placeWith="esri_reports_reportGroup"/>
+          <insertGroup refID="esri_reportTemplates_insertDataGroup"
+                       insert="after"
+                       placeWith="esri_reports_reportGroup"/>
           <insertGroup refID="esri_reports_insertMapFrameGroup"
+                       insert="after"
+                       placeWith="esri_reports_insertDataGroup"/>
+          <insertGroup refID="esri_reportTemplates_insertMapFrameGroup"
                        insert="after"
                        placeWith="esri_reports_insertDataGroup"/>
           <insertGroup refID="esri_reports_insertTextGroup"
@@ -9474,6 +10347,14 @@
                   caption="Page Query"
                   condition="esri_mapping_subtypeValueLayerAndStreamServiceNotSelectedCondition">
         <content className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.PageQueryView"/>
+      </insertPage>      
+    </updateSheet>
+    <updateSheet refID="esri_mapping_mosaicLayerPropertySheet">
+      <insertPage id="esri_layouts_pageQueryPage"
+                  className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.PageQueryViewModel"
+                  caption="Page Query"
+                  condition="esri_mapping_subtypeValueLayerAndStreamServiceNotSelectedCondition">
+        <content className="ArcGIS.Desktop.Internal.Layouts.PropertyPages.PageQueryView"/>
       </insertPage>
     </updateSheet>
     <updateSheet refID="esri_mapping_catalogLayerPropertySheet">
@@ -9599,6 +10480,33 @@
       </page>
     </insertSheet>
 
+    <insertSheet id="esri_presentations_propertySheet"
+                 caption="Presentation Properties"
+                 pageHeight="465"
+                 pageWidth="640"
+                 resizable="true">
+      <page id="esri_presentations_presentationGeneralPage"
+            className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsGeneralPropPageViewModel"
+            caption="General">
+        <content className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsGeneralPropPage"/>
+      </page>
+      <page id="esri_reports_reportDescriptionPropertyPage"
+            className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportDescriptionViewModel"
+            caption="Metadata">
+        <content className="ArcGIS.Desktop.Internal.Reports.PropertyPages.ReportDescriptionView" />
+      </page>
+      <page id="esri_presentations_presentationPageSetupPage"
+            className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsPageSetupPageViewModel"
+            caption="Page Setup">
+        <content className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsPageSetupPage"/>
+      </page>
+      <page id="esri_presentations_presentationColorManagementPage"
+            className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsColorManagementPageViewModel"
+            caption="Color Management">
+        <content className="ArcGIS.Desktop.Internal.Presentations.PropertyPages.PresentationsColorManagementPage"/>
+      </page>
+    </insertSheet>
+
   </propertySheets>
 
   <conditions>
@@ -9618,6 +10526,7 @@
         <state id="esri_layouts_mapFrameActivated"/>
         <state id="esri_reports_reportPane" />
         <state id="esri_report_mapFrameActivated" />
+        <state id="esri_reportTemplates_reportTemplatePane" />
       </or>
     </insertCondition>
 
@@ -9628,12 +10537,22 @@
       </or>
     </insertCondition>
 
+    <insertCondition id="esri_layouts_layoutPaneOrAnyReportPaneCondition">
+      <or>
+        <state id="esri_layouts_layoutPane" />
+        <state id="esri_reports_reportPane" />
+        <state id="esri_reportTemplates_reportTemplatePane" />
+      </or>
+    </insertCondition>
+
     <insertCondition id="esri_layouts_elementsSourceCondition"
                      description ="A condition in which there are potentially elements in the active pane.">
       <or>
         <state id="esri_layouts_layoutPane" />
         <state id="esri_reports_reportPane" />
+        <state id="esri_reportTemplates_reportTemplatePane" />
         <state id="esri_mapping_mapPane" />
+        <state id="esri_presentations_viewPane"/>       
       </or>
     </insertCondition>
 
@@ -9643,6 +10562,7 @@
         <state id="esri_mapping_mapPane" />
         <state id="esri_layouts_layoutPane" />
         <state id="esri_reports_reportPane" />
+        <state id="esri_presentations_viewPane"/>
       </or>
     </insertCondition>
 
@@ -9899,6 +10819,7 @@
         <state id="esri_layouts_multiElementCondition"/>
         <state id="esri_layouts_multiFrameCondition"/>
         <state id="esri_layouts_scaleBarPolygonCondition"/>
+        <state id="esri_layouts_extentIndicatorSymbolCondition"/>
         <state id="esri_layouts_extentIndicatorCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderPolygonCondition"/>
         <state id="esri_layouts_mapGridPolygonCondition"/>
@@ -10023,6 +10944,7 @@
         <state id="esri_layouts_mapFrameBorderCondition"/>
         <state id="esri_layouts_mapFrameShadowCondition"/>
         <state id="esri_layouts_extentIndicatorCondition"/>
+        <state id="esri_layouts_extentIndicatorSymbolCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderLineCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderPolygonCondition"/>
         <state id="esri_layouts_extentIndicatorGeneralizationCondition"/>
@@ -10154,7 +11076,10 @@
     <!---->
     <insertCondition id="esri_reports_compositeFromatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
           <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
@@ -10168,7 +11093,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_showGeneralGroupFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
           <state id="ArcGIS_Desktop_Reports_ReportGroupHeader"/>
@@ -10179,7 +11107,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_pageHeaderFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
         </or>
@@ -10187,7 +11118,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_reportHeaderFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportHeader"/>
         </or>
@@ -10195,7 +11129,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_groupHeaderFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportGroupHeader"/>
         </or>
@@ -10203,7 +11140,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_detailsFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportDetails"/>
         </or>
@@ -10211,7 +11151,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_pageFooterHeaderFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportPageFooter"/>
           <state id="ArcGIS_Desktop_Reports_ReportPageHeader"/>
@@ -10220,7 +11163,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_pageFooterFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportPageFooter"/>
         </or>
@@ -10228,7 +11174,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_reportFooterFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportFooter"/>
         </or>
@@ -10236,7 +11185,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_groupFooterFormatCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="ArcGIS_Desktop_Reports_ReportGroupFooter"/>
         </or>
@@ -10244,13 +11196,19 @@
     </insertCondition>
     <insertCondition id="esri_reports_reportSectionActiveCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <state id="esri_report_reportSectionActiveStateId" />
       </and>
     </insertCondition>
     <insertCondition id="esri_reports_canAddFieldElementCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="esri_report_groupHeaderActiveStateId"/>
           <state id="esri_report_groupFooterActiveStateId"/>
@@ -10260,7 +11218,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_canAddFieldStatisticElementCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="esri_report_groupHeaderActiveStateId"/>
           <state id="esri_report_groupFooterActiveStateId"/>
@@ -10270,7 +11231,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_canAddElementCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="esri_report_reportHeaderActiveStateId"/>
           <state id="esri_report_pageHeaderActiveStateId"/>
@@ -10287,7 +11251,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_canAddGroupCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <state id="esri_report_reportSectionActiveStateId" />
         <not>
           <state id="esri_report_layoutPageActiveStateId"/>
@@ -10306,7 +11273,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_detailsSectionActiveCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <state id="esri_report_detailsActiveStateId"/>
       </and>
     </insertCondition>
@@ -10321,9 +11291,26 @@
         </or>
       </and>
     </insertCondition>
+    <insertCondition id="esri_reportTemplates_canAddChartElementCondition">
+      <and>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
+        <or>
+          <state id="esri_report_reportHeaderActiveStateId"/>
+          <state id="esri_report_groupHeaderActiveStateId"/>
+          <state id="esri_report_groupFooterActiveStateId"/>
+          <state id="esri_report_reportFooterActiveStateId"/>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_reports_addRelatedReportCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <or>
           <state id="esri_report_detailsActiveStateId"/>
           <state id="esri_report_relatedReportActiveStateId"/>
@@ -10337,6 +11324,16 @@
         <!--<state id="ArcGIS_Desktop_Reports_ReportPageSection"/>-->
       </and>
     </insertCondition>
+    <insertCondition id="esri_reports_supplementalPageIncludeNumbersCondition">
+      <and>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
+        <state id="esri_report_layoutPageActiveStateId"/>
+        <!--<state id="ArcGIS_Desktop_Reports_ReportPageSection"/>-->
+      </and>
+    </insertCondition>
     <insertCondition id="esri_reports_validReportLayer">
       <or>
         <state id="esri_mapping_allTableLayersSelectedState"/>
@@ -10346,7 +11343,10 @@
     </insertCondition>
     <insertCondition id="esri_reports_canAddMapFrameElementCondition">
       <and>
-        <state id="esri_reports_reportPane"/>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
         <state id="esri_report_mapFrameSupportedStateId"/>
       </and>
     </insertCondition>
@@ -10354,6 +11354,15 @@
     <insertCondition id="esri_report_mapActivatedCondition"
                      caption="A map is activated">
       <state id="esri_report_mapFrameActivated"/>
+    </insertCondition>
+
+    <insertCondition id="esri_reports_anyReportPane">
+      <and>
+        <or>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_reportTemplates_reportTemplatePane"/>
+        </or>
+      </and>
     </insertCondition>
 
     <!--Snapping agent buttons-->
@@ -10394,6 +11403,13 @@
     <insertCondition id="esri_presentations_canEditElementsCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
+        <state id="esri_presentations_hasActivePage"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_presentations_hasPagesCondition">
+      <and>
+        <state id="esri_presentations_viewPane"/>
         <state id="esri_presentations_hasPages"/>
       </and>
     </insertCondition>
@@ -10401,7 +11417,7 @@
     <insertCondition id="esri_presentations_isElementsEditModeCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
-        <state id="esri_presentations_hasPages"/>
+        <state id="esri_presentations_hasActivePage"/>
         <not>
           <state id="esri_presentations_mapFrameActivated"/>
         </not>
@@ -10411,7 +11427,7 @@
     <insertCondition id="esri_presentations_isMapFrameActivatedCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
-        <state id="esri_presentations_hasPages"/>
+        <state id="esri_presentations_hasActivePage"/>
         <state id="esri_presentations_isMapPage"/>
         <state id="esri_presentations_mapFrameActivated"/>
       </and>
@@ -10420,7 +11436,7 @@
     <insertCondition id="esri_presentations_isMapPageCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
-        <state id="esri_presentations_hasPages"/>
+        <state id="esri_presentations_hasActivePage"/>
         <state id="esri_presentations_isMapPage"/>
       </and>
     </insertCondition>
@@ -10434,5 +11450,9 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_projectHasMapsCondition">
+      <state id="esri_projectHasMaps"/>
+    </insertCondition>
+    
   </conditions>
 </ArcGIS>

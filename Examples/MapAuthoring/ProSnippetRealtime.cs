@@ -621,7 +621,7 @@ namespace MapAuthoring.RealtimeProSnippet
       QueryFilter qfilter = null;
 
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.SearchAndSubscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync()
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       // cref: ArcGIS.Core.Data.Realtime.RealtimeRow.GetRowSource()
@@ -681,7 +681,7 @@ namespace MapAuthoring.RealtimeProSnippet
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.SearchAndSubscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync()
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       // cref: ArcGIS.Core.Data.Realtime.RealtimeRow.GetRowSource()
@@ -729,7 +729,7 @@ namespace MapAuthoring.RealtimeProSnippet
       bool SomeConditionForCancel = false;
 
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.SearchAndSubscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync(System.Threading.CancellationToken)
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync(System.Threading.CancellationToken)
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       #region Explicitly Cancel WaitForRowsAsync
@@ -862,7 +862,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
       // cref: ArcGIS.Core.Data.Realtime.RealtimeFeatureClass.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync()
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync(System.Threading.CancellationToken)
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       // cref: ArcGIS.Core.Data.Realtime.RealtimeRow.GetRowSource()
@@ -922,7 +922,7 @@ namespace MapAuthoring.RealtimeProSnippet
 
       // cref: ArcGIS.Core.Data.Realtime.RealtimeFeatureClass.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync()
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       // cref: ArcGIS.Core.Data.Realtime.RealtimeRow.GetRowSource()
@@ -972,7 +972,7 @@ namespace MapAuthoring.RealtimeProSnippet
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.StreamLayer.Subscribe(ArcGIS.Core.Data.QueryFilter,System.Boolean)
-      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.WaitForRowsAsync(System.Threading.CancellationToken)
+      // cref: ArcGIS.Core.Data.Realtime.RealtimeCursorBase.WaitForRowsAsync(System.Threading.CancellationToken)
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.MoveNext()
       // cref: ArcGIS.Core.Data.Realtime.RealtimeCursor.Current
       // cref: ArcGIS.Core.Data.Realtime.RealtimeRow.GetRowSource()

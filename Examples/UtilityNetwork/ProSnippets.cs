@@ -32,7 +32,8 @@ using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
 using ArcGIS.Core.Geometry;
 
-namespace UtilityNetworkProSnippets { 
+namespace UtilityNetworkProSnippets
+{
 
   class ProSnippetsUtilityNetwork
   {
@@ -153,7 +154,58 @@ namespace UtilityNetworkProSnippets {
       }
     }
     #endregion
-    
+
+    #region Get percentage along a polyline
+    public double GetPolylineStartingPercentage(Element startingPointElement, Geometry clickedPoint, FeatureLayer featureLayer)
+    {
+      // Find feature            
+      QueryFilter queryFilter = new QueryFilter()
+      {
+        ObjectIDs = new List<long>() { startingPointElement.ObjectID }
+      };
+
+
+      using (RowCursor rowCursor = featureLayer.GetFeatureClass().Search(queryFilter, false))
+      {
+        if (!rowCursor.MoveNext())
+        {
+          return 0;
+        }
+
+        using (Row row = rowCursor.Current)
+        {
+          try
+          {
+            Feature feature = row as Feature;
+
+            Polyline polyline = feature.GetShape() as Polyline;
+            ICollection<Segment> segments = new List<Segment>();
+            polyline.GetAllSegments(ref segments);
+
+            IList<Segment> segments2 = segments as IList<Segment>;
+
+            MapPoint startPoint = segments2[0].StartPoint;
+            MapPoint endPoint = segments2[segments2.Count - 1].EndPoint;
+            MapPoint clickedMapPoint = clickedPoint as MapPoint;
+
+
+            LineSegment line = LineBuilderEx.CreateLineSegment(startPoint, endPoint);
+            MapPoint outPoint = GeometryEngine.Instance.QueryPointAndDistance(line, SegmentExtensionType.NoExtension, clickedMapPoint, AsRatioOrLength.AsRatio,
+                out double distanceAlongCurve, out double distanceFromCurve, out LeftOrRightSide side);
+
+
+            return distanceAlongCurve;
+          }
+          catch (Exception e)
+          {
+            // Handle exceptions
+          }
+        }
+      }
+      return 0;
+    }
+    #endregion
+
 
     #region ProSnippet Group: Editing Associations
     #endregion
@@ -262,9 +314,9 @@ namespace UtilityNetworkProSnippets {
       List<string> additionalFieldsToFetch = new List<string> { "ObjectId", "AssetName", "AssetGroup", "AssetType" };
 
       // Set downward traversal with maximum depth level of 3 
-      TraverseAssociationsDescription traverseAssociationsDescription = new TraverseAssociationsDescription(TraversalDirection.Ascending, 3) 
-      { 
-        AdditionalFields = additionalFieldsToFetch 
+      TraverseAssociationsDescription traverseAssociationsDescription = new TraverseAssociationsDescription(TraversalDirection.Ascending, 3)
+      {
+        AdditionalFields = additionalFieldsToFetch
       };
 
       // Get traverse associations result from the staring element up to depth level 3
@@ -275,7 +327,7 @@ namespace UtilityNetworkProSnippets {
 
       // KeyValue mapping between involved elements and their field name-values 
       //At 2.x - IReadOnlyDictionary<Element, IReadOnlyList<AssociationElementFieldValue>> associationElementValuePairs = traverseAssociationsResult.AdditionalFieldValues;
-      IReadOnlyDictionary<Element, IReadOnlyList<FieldValue>> associationElementValuePairs = 
+      IReadOnlyDictionary<Element, IReadOnlyList<FieldValue>> associationElementValuePairs =
         traverseAssociationsResult.AdditionalFieldValues;
 
       foreach (KeyValuePair<Element, IReadOnlyList<FieldValue>> keyValuePair in associationElementValuePairs)
@@ -306,7 +358,7 @@ namespace UtilityNetworkProSnippets {
         DomainNetwork domainNetwork = utilityNetworkDefinition.GetDomainNetwork(domainNetworkName);
         Tier tier = domainNetwork.GetTier(tierName);
       }
-      
+
       #endregion
     }
 
@@ -324,7 +376,7 @@ namespace UtilityNetworkProSnippets {
 
         mapView.Redraw(true);
       }
-      
+
       #endregion
     }
 
@@ -350,7 +402,7 @@ namespace UtilityNetworkProSnippets {
       // ...
 
       // At some point, a subnetwork will need to be deleted.
-      
+
       // First step is to disable the controller
       subnetworkManager.DisableControllerInEditOperation(elementR1);
 
@@ -424,6 +476,46 @@ namespace UtilityNetworkProSnippets {
       #endregion
     }
 
+    // cref:ArcGIS.Core.Data.UtilityNetwork.Subnetwork.Export
+    #region Export Subnetwork
+
+    public void ExportSubnetwork(UtilityNetwork utilityNetwork, string subnetworkName, Uri exportResultJsonPath)
+    {
+      using (UtilityNetworkDefinition utilityNetworkDefinition = utilityNetwork.GetDefinition())
+      using (SubnetworkManager subnetworkManager = utilityNetwork.GetSubnetworkManager())
+      {
+        Subnetwork subnetwork = subnetworkManager.GetSubnetwork(subnetworkName);
+
+        IReadOnlyList<NetworkAttribute> networkAttributes = utilityNetworkDefinition.GetNetworkAttributes();
+        IReadOnlyList<NetworkSource> networkSources = utilityNetworkDefinition.GetNetworkSources();
+
+        // Export options
+        SubnetworkExportOptions subnetworkExportOptions = new SubnetworkExportOptions()
+        {
+          SetAcknowledged = false,
+          IncludeDomainDescriptions = true,
+          IncludeGeometry = true,
+          ServiceSynchronizationType = ServiceSynchronizationType.Asynchronous,
+
+          SubnetworkExportResultTypes = new List<SubnetworkExportResultType>()
+          {
+            SubnetworkExportResultType.Connectivity,
+            SubnetworkExportResultType.Features
+          },
+
+          ResultNetworkAttributes = new List<NetworkAttribute>(networkAttributes),
+
+          ResultFieldsByNetworkSourceID = new Dictionary<int, List<string>>()
+            { { networkSources[0].ID, new List<string>() { "OBJECTID" } } }
+        };
+
+
+        subnetwork.Export(exportResultJsonPath, subnetworkExportOptions);
+      }
+    }
+    #endregion
+
+
     #region ProSnippet Group: Tracing
     #endregion
 
@@ -491,14 +583,14 @@ namespace UtilityNetworkProSnippets {
 
         // Combine these two comparisons together with "And"
         And lifecycleFilter = new And(inDesignNetworkAttributeComparison, inServiceNetworkAttributeComparison);
-        
+
         // Final condition stops traversal if Lifecycle <> "In Design" and Lifecycle <> "In Service"
         traceConfiguration.Traversability.Barriers = lifecycleFilter;
       }
 
       #endregion
     }
-    
+
     private void ApplyFunction(UtilityNetworkDefinition utilityNetworkDefinition, TraceConfiguration traceConfiguration)
     {
       // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetworkDefinition.GetNetworkAttribute(System.String)
@@ -661,16 +753,15 @@ namespace UtilityNetworkProSnippets {
       {
         // Get a tracer from the trace manager using the named trace configuration
         Tracer upstreamTracer = traceManager.GetTracer(namedTraceConfiguration);
-        
+
         // Trace argument holding the trace input parameters
-        TraceArgument upstreamTraceArgument = new TraceArgument(namedTraceConfiguration, new List<Element> {startElement});
-        
+        TraceArgument upstreamTraceArgument = new TraceArgument(namedTraceConfiguration, new List<Element> { startElement });
+
         // Trace results 
         IReadOnlyList<Result> upstreamTraceResults = upstreamTracer.Trace(upstreamTraceArgument);
       }
     }
     #endregion
-
 
 
     #region ProSnippet Group: Network Diagrams

@@ -34,6 +34,8 @@ using ArcGIS.Desktop.Core.Events;
 using ArcGIS.Core.Events;
 using ArcGIS.Desktop.Mapping.Events;
 using System.Linq;
+using ArcGIS.Desktop.Framework.Controls;
+using ArcGIS.Desktop.Internal.Framework.Metro;
 
 namespace Framework.Snippets
 {
@@ -182,6 +184,39 @@ namespace Framework.Snippets
       }
       #endregion
 
+    }
+
+    //public class ProWindow1 : Window
+    //{
+    //  public ProWindow1(double x, double y)
+    //  {
+    //  }
+    //  public bool SaveWindowPosition { get; set; }
+    //}
+
+    public void ShowProWindow()
+    {
+      #region ProWindow Position on Screen 
+      ProWindow1 _prowindow1 = null;
+      {
+        double left = 150; //Window's left edge, in relation to the desktop
+        double top = 150; //Window's top edge, in relation to the desktop
+        //already open?
+        if (_prowindow1 != null)
+          return;
+        _prowindow1 = new ProWindow1(left, top); //create window
+        _prowindow1.Owner = FrameworkApplication.Current.MainWindow;
+        _prowindow1.Closed += (o, e) => { _prowindow1 = null; };
+
+        //MetroWindows remember their last location unless SaveWindowPosition is set to
+        //false.
+        _prowindow1.SaveWindowPosition = false; //set to false to override the last position
+
+        _prowindow1.Show();
+        //uncomment for modal
+        //_prowindow1.ShowDialog();
+      }
+      #endregion
     }
 
     public void Foo()

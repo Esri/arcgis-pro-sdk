@@ -520,6 +520,41 @@ namespace EditingSDKExamples
     {
       BasicFeatureLayer annoLayer = MapView.Active.Map.GetLayersAsFlattenedList().First() as BasicFeatureLayer;
       var oid = 1;
+      MapPoint pnt = null;
+
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
+      // cref: ArcGIS.Desktop.Editing.AnnotationProperties.TextString
+      // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.SetAnnotationProperties(ArcGIS.Desktop.Editing.AnnotationProperties)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.Desktop.Editing.Attributes.Inspector)
+      #region Programmatically Create an Annotation Feature
+
+      await QueuedTask.Run(() =>
+      {
+        // annoLayer is ~your~ Annotation layer...
+        // pnt is ~your~ Annotation geometry ...
+        var op = new EditOperation();
+        // Use the inspector
+        var insp = new Inspector();
+        insp.LoadSchema(annoLayer);
+        // get the annotation properties from the inspector
+        AnnotationProperties annoProperties = insp.GetAnnotationProperties();
+        // change the annotation text 
+        annoProperties.TextString = DateTime.Now.ToLongTimeString();
+        // change font color to green
+        annoProperties.Color = ColorFactory.Instance.GreenRGB;
+        // change the horizontal alignment
+        annoProperties.HorizontalAlignment = HorizontalAlignment.Center;
+        annoProperties.Shape = pnt;
+        // set the annotation properties back on the inspector
+        insp.SetAnnotationProperties(annoProperties);
+        // create the annotation
+        op.Create(annoLayer, insp); 
+        if (!op.IsEmpty)
+        {
+          var result = op.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+        }
+      });
+      #endregion
 
       // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.GetAnnotationProperties
       // cref: ArcGIS.Desktop.Editing.AnnotationProperties.TextString
@@ -705,7 +740,7 @@ namespace EditingSDKExamples
       });
       #endregion
 
-      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetActiveTopologyAsync(ArcGIS.Desktop.Mapping.Map, System.String)
+      // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetActiveTopologyAsync(ArcGIS.Desktop.Mapping.Map)
       // cref: ArcGIS.Desktop.Editing.TopologyProperties
       // cref: ArcGIS.Desktop.Editing.MapTopologyProperties
       // cref: ArcGIS.Desktop.Editing.GeodatabaseTopologyProperties

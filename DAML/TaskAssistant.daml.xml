@@ -425,6 +425,7 @@ Tasks are a set of preconfigured steps that guide you through a workflow. You ca
           <button refID="esri_tasks_UpdateProjectTaskItem"  separator="true"/>
           <menu refID="esri_tasks_ShareProjectItemContextMenu" inline="false"/>
           <button refID="esri_tasks_RemoveProjectTaskItem" separator="true"/>
+          <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata" separator="false"/>
         </menu>

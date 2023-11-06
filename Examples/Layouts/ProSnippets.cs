@@ -1250,7 +1250,7 @@ namespace ProSnippetsTasks
         //          LayoutElementFactory.Instance.CreatePointTextGraphicElement(
         //                                  layout, llTitle, null) as TextElement;
         TextElement titleGraphics = ElementFactory.Instance.CreateTextGraphicElement(
-                      container, TextType.PointText, llTitle.ToMapPoint()) as TextElement;
+                      container, TextType.PointText, llTitle.ToMapPoint(), null, title) as TextElement;
 
         //Modify the text properties
         titleGraphics.SetTextProperties(new TextProperties(title, "Arial", 24, "Bold"));
@@ -2770,6 +2770,140 @@ namespace ProSnippetsTasks
         }
       });
       #endregion
+    }
+
+    #region ProSnippet Group: Style Layout Elements
+    #endregion
+    public void ApplyNorthArrowStyle()
+    {
+      var layout = LayoutView.Active?.Layout;
+      if (layout == null) return;
+      QueuedTask.Run(() => {
+        // cref: ArcGIS.Desktop.Layouts.Element.CanApplyStyle 
+        // cref: ArcGIS.Desktop.Layouts.Element.ApplyStyle
+        #region Apply a style to a North Arrow
+        //Run within QueuedTask context.
+        //Get the Style project items in the project
+        var styleProjectItems = Project.Current?.GetItems<StyleProjectItem>();
+        //Get the ArcGIS 2D Style Project Item
+        var styleProjectItem = 
+        styleProjectItems.FirstOrDefault(s => s.Name == "ArcGIS 2D");
+        if (styleProjectItem == null) return;
+        //Get the north arrow style item you need
+        var northArrowStyleItem = 
+        styleProjectItem.SearchSymbols(StyleItemType.NorthArrow, "ArcGIS North 18").FirstOrDefault();
+        if (northArrowStyleItem == null) return;
+        //Select a North arrow layout element
+        var northArrowElement = layout.GetSelectedElements().OfType<NorthArrow>().FirstOrDefault();
+        if (northArrowElement != null)
+        {
+          //Check if the input style can be applied to the element
+          if (northArrowElement.CanApplyStyle(northArrowStyleItem))
+            //Apply the style
+            northArrowElement.ApplyStyle(northArrowStyleItem);
+        }
+        #endregion
+      });
+    }
+
+    public void ApplyGridAndGraticulesStyle()
+    {
+      var layout = LayoutView.Active?.Layout;
+      if (layout == null) return;
+      QueuedTask.Run(() => {
+        // cref: ArcGIS.Core.CIM.CIMGraticule 
+        // cref: ArcGIS.Core.CIM.CIMMapGrid
+        // cref: ArcGIS.Core.CIM.CIMMapGrid
+        #region Apply a style to Grid and Graticules
+        //Run within QueuedTask context.
+        //Get the Style project items in the project
+        var styleProjectItems = Project.Current?.GetItems<StyleProjectItem>();
+        //Get the ArcGIS 2D Style Project Item
+        var styleProjectItem = 
+        styleProjectItems.OfType<StyleProjectItem>().FirstOrDefault(s => s.Name == "ArcGIS 2D");
+        if (styleProjectItem == null) return;
+        //Get the grid style item you need
+        var gridStyleItem = 
+        styleProjectItem.SearchSymbols(StyleItemType.Grid, "Blue Vertical Label Graticule").FirstOrDefault();
+        if (gridStyleItem == null) return;
+        var symbolItemName = gridStyleItem.Name;
+        var girdGraticuleObject = gridStyleItem.GetObject() as CIMMapGrid;
+
+        var mapFrame = layout.GetElements().OfType<MapFrame>().FirstOrDefault();
+        var cmf = mapFrame.GetDefinition() as CIMMapFrame;
+        //note, if page units are _not_ inches then grid's gridline
+        //lengths and offsets would need to be converted to the page units
+        var mapGrids = new List<CIMMapGrid>();
+        if (cmf.Grids != null)
+          mapGrids.AddRange(cmf.Grids);
+
+        //var cimMapGrid = SymbolStyleItem.GetObject() as CIMMapGrid;
+
+        switch (girdGraticuleObject)
+        {
+          case CIMGraticule:
+            var gridGraticule = girdGraticuleObject as CIMGraticule;
+            gridGraticule.Name = symbolItemName;
+            gridGraticule.SetGeographicCoordinateSystem(mapFrame.Map.SpatialReference);
+            //assign grid to the frame             
+            mapGrids.Add(gridGraticule);
+
+            break;
+          case CIMMeasuredGrid:
+            var gridMeasure = girdGraticuleObject as CIMMeasuredGrid;
+            gridMeasure.Name = symbolItemName;
+            gridMeasure.SetProjectedCoordinateSystem(mapFrame.Map.SpatialReference);
+            //assign grid to the frame
+            mapGrids.Add(gridMeasure);
+
+            break;
+          case CIMReferenceGrid:
+            var gridReference = girdGraticuleObject as CIMReferenceGrid;
+            gridReference.Name = symbolItemName;
+            //assign grid to the frame
+            mapGrids.Add(gridReference);
+            break;
+        }
+
+        cmf.Grids = mapGrids.ToArray();
+        mapFrame.SetDefinition(cmf);
+        #endregion
+      });
+
+    }
+
+    public void ApplyStyleToGraphicElements()
+    {
+      var layout = LayoutView.Active?.Layout;
+      if (layout == null) return;
+      QueuedTask.Run(() => {
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.CanApplyStyle 
+        // cref: ArcGIS.Desktop.Layouts.GraphicElement.ApplyStyle
+        #region Apply a style to a Graphic Element
+        //Run within QueuedTask context.
+        //Get the Style project items in the project
+        var styleProjectItems = Project.Current?.GetItems<StyleProjectItem>();
+        //Get the ArcGIS 2D Style Project Item
+        var styleProjectItem = 
+        styleProjectItems.OfType<StyleProjectItem>().FirstOrDefault(s => s.Name == "ArcGIS 2D");
+        if (styleProjectItem == null) return;
+        //Get the north arrow style item you need
+        var pointStyleItem = 
+        styleProjectItem.SearchSymbols(StyleItemType.PointSymbol, "Circle 3").FirstOrDefault();
+        if (pointStyleItem == null) return;
+        //Select a North arrow layout element
+        var layoutPointElement = layout.GetSelectedElements().FirstOrDefault();
+        if (layoutPointElement != null && layoutPointElement is GraphicElement ge)
+        {
+          if (layoutPointElement.CanApplyStyle(pointStyleItem))
+          {
+            //The magic happens here
+            //for Graphic Elements such as Point, Lines, Polys, text, preserve size.           
+            ge.ApplyStyle(pointStyleItem, true); 
+          }
+        }
+        #endregion
+      });
     }
 
     #region ProSnippet Group: Layout Snapping

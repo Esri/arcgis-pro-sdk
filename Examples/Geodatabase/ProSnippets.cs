@@ -18,7 +18,6 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -281,7 +280,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
           RelationshipClassDefinition enterpriseDefinition = geodatabase.GetDefinition<RelationshipClassDefinition>("LocalGovernment.GDB.AddressPointHasSiteAddresses");
           IReadOnlyList<Definition> enterpriseDefinitions = geodatabase.GetRelatedDefinitions(enterpriseDefinition, DefinitionRelationshipType.DatasetsRelatedThrough);
-          FeatureClassDefinition enterpriseAddressPointDefinition = enterpriseDefinitions.First(defn => defn.GetName().Equals("LocalGovernment.GDB.AddressPoint")) 
+          FeatureClassDefinition enterpriseAddressPointDefinition = enterpriseDefinitions.First(defn => defn.GetName().Equals("LocalGovernment.GDB.AddressPoint"))
             as FeatureClassDefinition;
 
           FeatureDatasetDefinition featureDatasetDefinition = geodatabase.GetDefinition<FeatureDatasetDefinition>("LocalGovernment.GDB.Address");
@@ -1252,13 +1251,13 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       {
         using (Geodatabase geodatabase = new Geodatabase(new FileGeodatabaseConnectionPath(new Uri("C:\\Data\\LocalGovernment.gdb"))))
         using (Database database = new Database(new DatabaseConnectionProperties(EnterpriseDatabaseType.Oracle)
-          {
-            AuthenticationMode = AuthenticationMode.DBMS,
-            Instance = "instance",
-            User = "user",
-            Password = "password",
-            Database = "database"
-          }))
+        {
+          AuthenticationMode = AuthenticationMode.DBMS,
+          Instance = "instance",
+          User = "user",
+          Password = "password",
+          Database = "database"
+        }))
 
         using (FeatureClass leftFeatureClass = geodatabase.OpenDataset<FeatureClass>("Hospital"))
         using (Table rightTable = database.OpenTable(database.GetQueryDescription("FacilitySite")))
@@ -2638,6 +2637,91 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       #endregion
     }
 
+    // cref: ArcGIS.Core.Data.FeatureDataset.GetDefinition``1(String)
+    // cref: ArcGIS.Core.Data.FeatureDataset.GetDefinition
+    #region Iterate datasets inside a feature dataset
+
+    public void IterateDatasetsFromAFeatureDataset(Geodatabase geodatabase, string featureDatasetName = "City", string featureClassInFeatureDataset = "Buildings")
+    {
+      // Open a feature dataset
+      using (FeatureDataset cityFeatureDataset = geodatabase.OpenDataset<FeatureDataset>(featureDatasetName))
+      {
+        // Get a feature class definition from a feature dataset
+        FeatureClassDefinition buildingsFeatureClassDefinition = cityFeatureDataset.GetDefinition<FeatureClassDefinition>(featureClassInFeatureDataset);
+
+        // Iterate dataset definition
+        IReadOnlyList<FeatureClassDefinition> cityFeatureClassDefinitions = cityFeatureDataset.GetDefinitions<FeatureClassDefinition>();
+        foreach (FeatureClassDefinition cityFeatureClassDefinition in cityFeatureClassDefinitions)
+        {
+          // Use feature class definition
+        }
+      }
+    }
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.AttributeRuleDefinition.GetIsFieldEditable
+    // cref: ArcGIS.Core.Data.AttributeRuleDefinition.GetEvaluationOrder
+    // cref: ArcGIS.Core.Data.AttributeRuleDefinition.GetTriggeringEvents
+    // cref: ArcGIS.Core.Data.AttributeRuleDefinition.GetScriptExpression
+    // cref: ArcGIS.Core.Data.TableDefinition.GetAttributeRules
+    #region Get attribute rules of a dataset
+
+    public void GetAttributeRules(Geodatabase geodatabase, string tableName)
+    {
+      using (TableDefinition tableDefinition = geodatabase.GetDefinition<TableDefinition>(tableName))
+      {
+        // Get all attribute rule types
+        IReadOnlyList<AttributeRuleDefinition> ruleDefinitions = tableDefinition.GetAttributeRules();
+
+        // Iterate rule definitions
+        foreach (AttributeRuleDefinition ruleDefinition in ruleDefinitions)
+        {
+          AttributeRuleType ruleType = ruleDefinition.GetAttributeRuleType();
+          string ruleDescription = ruleDefinition.GetDescription();
+          bool isAttributeFieldEditable = ruleDefinition.GetIsFieldEditable();
+          string arcadeVersionToSupportRule = ruleDefinition.GetMinimumArcadeVersion();
+          int ruleEvaluationOrder = ruleDefinition.GetEvaluationOrder();
+          AttributeRuleTriggers triggeringEvents = ruleDefinition.GetTriggeringEvents();
+          string scriptExpression = ruleDefinition.GetScriptExpression();
+
+          // more properties
+        }
+      }
+    }
+
+    #endregion
+
+    // cref: ARCGIS.CORE.DATA.TABLE.CREATEROWBUFFER
+    // cref: ARCGIS.CORE.DATA.TABLE.CREATEROWBUFFER()
+    #region Creating  a row buffer from a template row
+
+    public void CreateRowBufferFromARow(Table table)
+    {
+      using (RowCursor rowCursor = table.Search())
+      {
+        if (rowCursor.MoveNext())
+        {
+          using (Row templateRow = rowCursor.Current)
+          {
+            RowBuffer rowBuffer = table.CreateRowBuffer(templateRow);
+
+            // Manipulate row buffer
+            // Doesn't allow copying values of ObjectID and GlobalID
+            //
+            // rowBuffer["Field"] = "Update";
+            //
+
+            // create a new row
+            table.CreateRow(rowBuffer);
+          }
+        }
+      }
+    }
+
+    #endregion
+
+
     #region ProSnippet Group: Extension Ids
     #endregion
 
@@ -2684,7 +2768,58 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
     #region ProSnippet Group: DDL
     #endregion
+
+    // cref: ArcGIS.Core.Data.DDL.FeatureClassDescription
+    // cref: ArcGIS.Core.Data.DDL.FieldDescription
+    // cref: ArcGIS.Core.Data.DDL.ShapeDescription
+    // cref: ArcGIS.Core.Data.FieldType
+    #region 64-bit Integer field
+
+    FieldDescription bigIntegerFieldDescription = new FieldDescription("BigInteger_64", FieldType.BigInteger);
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.DDL.FeatureClassDescription
+    // cref: ArcGIS.Core.Data.DDL.FieldDescription
+    // cref: ArcGIS.Core.Data.DDL.ShapeDescription
+    // cref: ArcGIS.Core.Data.FieldType
+    #region ObjectID field
+
+    // 64-bit
+    FieldDescription oidFieldDescription_64 = new FieldDescription("ObjectID_64", FieldType.OID)
+    {
+      Length = 8
+    };
     
+    // 32-bit
+    FieldDescription oidFieldDescription_32 = new FieldDescription("ObjectID_32", FieldType.OID)
+    {
+      Length = 4
+    };
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.DDL.FeatureClassDescription
+    // cref: ArcGIS.Core.Data.DDL.FieldDescription
+    // cref: ArcGIS.Core.Data.DDL.ShapeDescription
+    // cref: ArcGIS.Core.Data.FieldType
+    #region DateOnly, TimeOnly, and TimestampOffset  field
+    // Earthquake occurrences date and time
+    
+    // 9/28/2014 (DateOnly)
+    FieldDescription earthquakeDateOnlyFieldDescription = new FieldDescription("Earthquake_DateOnly", FieldType.DateOnly);
+
+    // 1:16:42 AM (TimeOnly)
+    FieldDescription earthquakeTimeOnlyFieldDescription = new FieldDescription("Earthquake_TimeOnly", FieldType.TimeOnly);
+
+    // 9/28/2014 1:16:42.000 AM -09:00 (Timestamp with Offset)
+    FieldDescription earthquakeTimestampOffsetFieldDescription = new FieldDescription("Earthquake_TimestampOffset_Local", FieldType.TimestampOffset);
+
+    // 9/28/2014 1:16:42 AM (DateTime)
+    FieldDescription earthquakeDateFieldDescription = new FieldDescription("Earthquake_Date", FieldType.Date);
+
+    #endregion
+
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.TableDescription)
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Build
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.ErrorMessages
@@ -3830,8 +3965,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.MemoryConnectionProperties.#ctor()
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.DDL.SchemaBuilder.CreateGeodatabase(MemoryConnectionProperties)
+    // cref: ArcGIS.Core.Data.MemoryConnectionProperties.#ctor
+    // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.CreateGeodatabase(ArcGIS.Core.Data.MemoryConnectionProperties)
     #region Creating the memory geodatabase
     public Geodatabase GetMemoryGeodatabase()
     {
@@ -3847,8 +3982,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ARCGIS.CORE.ARCGIS.CORE.DATA.SPATIALQUERYFILTER.SPATIALRELATIONSHIP
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.SpatialQueryFilter.SpatialRelationshipDescription
+    // cref: ArcGIS.Core.Data.SPATIALQUERYFILTER.SPATIALRELATIONSHIP
+    // cref: ArcGIS.Core.Data.SpatialQueryFilter.SpatialRelationshipDescription
     #region Spatial query filter with DE9-IM spatial relationships 
     public void FindSpatiallyRelatedFeaturesUsingDE9IMPredicate(Geodatabase geodatabase, FeatureClass polygonFeatureClass, FeatureClass polylineFeatureClass)
     {
@@ -3881,8 +4016,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ARCGIS.CORE.ARCGIS.CORE.DATA.GEODATABASE.OPENDATASET
-    // cref: ARCGIS.CORE.ARCGIS.CORE.DATA.REGISTRATIONTYPE
+    // cref: ArcGIS.Core.Data.GEODATABASE.OpenDataset``1(System.String)
+    // cref: ArcGIS.Core.Data.REGISTRATIONTYPE
     #region Check if table is versioned
     public bool IsTableVersioned(Geodatabase geodatabase, string tableName)
     {
@@ -3899,9 +4034,9 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(String,TableDescription,IEnumerable{String})
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(Index,TableDescription)
-    // cref: ArcGIS.Core.ArcGIS.Core.Data.DDL.SchemaBuilder.Create(IndexDescription)
+    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(System.String,ArcGIS.Core.Data.DDL.TableDescription,System.Collections.Generic.IEnumerable{System.String})
+    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(Index,TableDescription)
+    // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(IndexDescription)
     #region Creating a table with index from scratch
     public void CreatingTableWithIndex(SchemaBuilder schemaBuilder)
     {
@@ -3926,8 +4061,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription#ctor(String,TableDescription,IEnumerable{String})
-    // cref: ArcGIS.Core.Data.DDL.SpatialIndexDescription#ctor
+    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(String,TableDescription,IEnumerable{String})
+    // cref: ArcGIS.Core.Data.DDL.SpatialIndexDescription.#ctor(ArcGIS.Core.Data.DDL.FeatureClassDescription)
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(IndexDescription)
     #region Adding indexes in pre-existing dataset
     public void AddingIndexes(SchemaBuilder schemaBuilder, FeatureClassDefinition featureClassDefinition)
@@ -3959,8 +4094,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription#ctor(Index,TableDescription)
-    // cref: cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete
+    // cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(Index,TableDescription)
+    // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete
     #region Removing attribute index
     public void RemoveAttributeIndex(SchemaBuilder schemaBuilder, FeatureClassDefinition featureClassDefinition, string attributeIndexName)
     {
@@ -3978,7 +4113,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.Data.DDL.SpatialIndexDescription#ctor
+    // cref: ArcGIS.Core.Data.DDL.SpatialIndexDescription.#ctor
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete
     #region Removing spatial index
     public void RemoveSpatialIndex(SchemaBuilder schemaBuilder, FeatureClassDefinition featureClassDefinition)
@@ -4018,7 +4153,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion
 
-    // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Rename.
+    // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Rename
     #region Rename domain
     public void RenameDomain(Geodatabase geodatabase, string rangeDomainOldName = "PipeDiameter", string rangeDomainNewName = "PipeDiam")
     {
@@ -4046,7 +4181,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     #endregion
 
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(TableDescription)
-    // cref: ArcGIS.Core.Data.DDL.SubtypeFieldDescription#ctor
+    // cref: ArcGIS.Core.Data.DDL.SubtypeFieldDescription.#ctor
     #region Creating table with subtypes
     public void CreateTableWithSubtypes(SchemaBuilder schemaBuilder)
     {
@@ -4105,8 +4240,8 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     #endregion
 
     // cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(RelationshipClassDescription)
-    // cref: ArcGIS.Core.Data.DDL.RelationshipClassDescription#ctor
-    // cref: ArcGIS.Core.Data.DDL.SubtypeFieldDescription#ctor
+    // cref: ArcGIS.Core.Data.DDL.RelationshipClassDescription.#ctor
+    // cref: ArcGIS.Core.Data.DDL.SubtypeFieldDescription.#ctor
     #region Creating relationship class
     public void CreateRelationshipWithRelationshipRules(SchemaBuilder schemaBuilder)
     {
@@ -4318,6 +4453,6 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       schemaBuilder.Build();
     }
     #endregion
-
+    
   }
 }

@@ -867,7 +867,7 @@ namespace EditingSDKExamples
       long newFeatureID = -1;
       //The Create operation has to execute so we can get an object_id
       var token2 = editOperation1.Create(this.CurrentTemplate, polygon);
-      
+
       //Must be within a QueuedTask
       editOperation1.Execute(); //Note: Execute and ExecuteAsync will return true if the operation was successful and false if not
       if (editOperation1.IsSucceeded)
@@ -881,7 +881,7 @@ namespace EditingSDKExamples
         editOperation2.AddAttachment(this.CurrentTemplate.Layer, newFeatureID, @"C:\data\images\Hydrant.jpg");
         //Execute the chained edit operation. editOperation1 and editOperation2 show up as a single Undo operation
         //on the UI even though we had two transactions
-        editOperation2.Execute();  
+        editOperation2.Execute();
       }
 
       #endregion
