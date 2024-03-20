@@ -314,7 +314,7 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 * [ProConcepts: Distributing Add-Ins Online](../../wiki/ProConcepts-Distributing-Add-Ins-Online)
 * [ProConcepts: Migrating to ArcGIS Pro](../../wiki/ProConcepts-Migrating-to-ArcGIS-Pro)
 * [FAQ](../../wiki/FAQ)
-* [Dev Summit Tech Sessions](tech-sessions)
+* [Dev Summit Tech Sessions](../../wiki/tech-sessions)
 
 ## Overview of the ArcGIS Pro SDK
 
