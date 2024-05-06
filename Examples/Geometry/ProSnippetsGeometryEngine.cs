@@ -20,11 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ArcGIS.Core.Data;
 using ArcGIS.Core.Geometry;
-using ArcGIS.Desktop.Framework.Threading.Tasks;
-using ArcGIS.Desktop.Mapping;
-
 
 namespace ProSnippetsGeometry
 {
@@ -33,7 +29,7 @@ namespace ProSnippetsGeometry
     #region ProSnippet Group: GeometryEngine functions
     #endregion
 
-    public void AccelerateGeomtries()
+    public void AccelerateGeometries()
     {
       Polygon polygon = null;
       IEnumerable<Polygon> testPolygons = null;
@@ -1162,6 +1158,8 @@ namespace ProSnippetsGeometry
 
     public void GeodesicArea()
     {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.AreaUnit)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry)
       // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.AreaUnit)
       // cref: ArcGIS.Core.Geometry.IGeometryEngine.GeodesicArea(ArcGIS.Core.Geometry.Geometry)
       #region Calculate the Geodesic Area of a polygon
@@ -1942,21 +1940,6 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
-    public void SetMsAsDistance()
-    {
-      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
-      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
-      #region Set M values to the cumulative length from the start of the multipart - SetMsAsDistance
-
-      string json = "{\"hasM\":true,\"rings\":[[[0,0],[0,3000],[4000,3000],[4000,0],[0,0]]],\"spatialReference\":{\"wkid\":3857}}";
-      Polygon polygon = PolygonBuilderEx.FromJson(json);
-
-      Polygon outPolygon = GeometryEngine.Instance.SetMsAsDistance(polygon, AsRatioOrLength.AsLength) as Polygon;
-      ReadOnlyPointCollection outPoints = outPolygon.Points;
-      // outPoints M values are { 0, 3000, 7000, 10000, 14000 };
-      #endregion
-    }
-
     public void InsertMAtDistance()
     {
       // cref: ArcGIS.Core.Geometry.GeometryEngine.InsertMAtDistance(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.AsRatioOrLength,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
@@ -2074,11 +2057,219 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void CalibrateMsByDistance()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.CalibrateMsByDistance(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Boolean,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.CalibrateMsByDistance(ArcGIS.Core.Geometry.Multipart,System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.UpdateMMethod,System.Boolean,System.Double)
+      #region Calibrate M-values using segment lengths and M values from input points - CalibrateMsByDistance
+
+      List<MapPoint> points = new List<MapPoint>();
+
+      MapPointBuilderEx pointBuilder = new MapPointBuilderEx(0, 0);
+      pointBuilder.HasM = true;
+      pointBuilder.M = 0;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 8);
+      pointBuilder.M = 12;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 18);
+      pointBuilder.M = 10;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 28);
+      pointBuilder.M = 14;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 32);
+      pointBuilder.M = 20;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 38);
+      pointBuilder.M = 26;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 50);
+      pointBuilder.M = 30;
+      points.Add(pointBuilder.ToGeometry());
+
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(points, AttributeFlags.HasM);
+      // The points in the polyline are (0, 0, 0), (0, 8, 12), (0, 18, 10), (0, 28, 14), (0, 32, 20), (0, 38, 26), (0, 50, 30)
+
+      // Calibrate Ms using points (0, 8, 15), (0, 28, 30), (0, 38, 20)
+      points.Clear();
+      pointBuilder.SetValues(0, 8);
+      pointBuilder.M = 15;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 28);
+      pointBuilder.M = 30;
+      points.Add(pointBuilder.ToGeometry());
+
+      pointBuilder.SetValues(0, 38);
+      pointBuilder.M = 20;
+      points.Add(pointBuilder.ToGeometry());
+
+      double cutOffDistance = polyline.Length;
+
+      // ExtrapolateBefore
+      Polyline updatedPolyline = GeometryEngine.Instance.CalibrateMsByDistance(polyline, points, UpdateMMethod.ExtrapolateBefore, true, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0, 0, 9), (0, 8, 15), (0, 18, 10), (0, 28, 30), (0, 32, 20), (0, 38, 20), (0, 50, 30)
+
+      // Interpolate
+      updatedPolyline = GeometryEngine.Instance.CalibrateMsByDistance(polyline, points, UpdateMMethod.Interpolate, true, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0, 0, 0), (0, 8, 15), (0, 18, 22.5), (0, 28, 30), (0, 32, 26), (0, 38, 20), (0, 50, 30)
+
+      // ExtrapolateAfter
+      updatedPolyline = GeometryEngine.Instance.CalibrateMsByDistance(polyline, points, UpdateMMethod.ExtrapolateAfter, true, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0, 0, 0), (0, 8, 15), (0, 18, 10), (0, 28, 30), (0, 32, 20), (0, 38, 20), (0, 50, 8)
+
+      // ExtrapolateBefore and Interpolate and ExtrapolateAfter
+      updatedPolyline = GeometryEngine.Instance.CalibrateMsByDistance(polyline, points, UpdateMMethod.ExtrapolateAfter, true, cutOffDistance) as Polyline;
+      // The points in the updated polyline are
+      // (0, 0, 9), (0, 8, 15), (0, 18, 22.5), (0, 28, 30), (0, 32, 26), (0, 38, 20), (0, 50, 8)
+
+      #endregion
+    }
+
+    public void DropMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.DropMs(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.DropMs(ArcGIS.Core.Geometry.Geometry)
+      #region Set all the M-values to NaN - DropMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[-4,2,1],[-4,5,2],[-2,5,3],[-2,7,4],[2,7,5]],[[4,1,-1],[2,1,-2],[2,-2,-3],[-3,-2,-4],[-3,0,-5]]]}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Polyline outputPolyline = GeometryEngine.Instance.DropMs(polyline) as Polyline;
+      // outputPolyline.HasM = true. Every M-value is NaN.
+      // outputPolyline.ToJson() = {"hasM":true,"paths":[[[-4,2,null],[-4,5,null],[-2,5,null],[-2,7,null],[2,7,null]],[[4,1,-null],[2,1,null],[2,-2,null],[-3,-2,null],[-3,0,null]]]}
+     
+      #endregion
+    }
+
+    public void ExtrapolateMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ExtrapolateMs(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.ExtrapolateMMethod,System.Int32,System.Int32,System.Int32,System.Int32)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ExtrapolateMs(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.ExtrapolateMMethod,System.Int32,System.Int32,System.Int32,System.Int32)
+      #region Extrapolate M-values based on a range defined by part and vertex indices - ExtrapolateMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[2,0,50],[2,1,40],[3,1,30],[3,5,60],[7,5,12],[7,1,20],[9,1,28],[9,3,10]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      // Extrapolate M-values from part 0, point 3 to part 0, point 5
+      Polyline outPolyline = GeometryEngine.Instance.ExtrapolateMs(polyline, ExtrapolateMMethod.ExtrapolateBefore, 0, 3, 0, 5) as Polyline;
+      // The points in outPolyline are (x, y, m):
+      // ( 2, 0, 90 ), ( 2, 1, 85 ), ( 3, 1, 80 ), ( 3, 5, 60 ), ( 7, 5, 12 ), ( 7, 1, 20 ), ( 9, 1, 28 ), ( 9, 3, 10 )
+
+      json = "{\"hasM\":true,\"paths\":[[[2,0,50],[2,1,40],[3,1,30],[3,5,60],[7,5,12],[7,1,20],[9,1,28],[9,3,10]],[[5,-4,-10],[5,-2,-40],[10,-2,-60],[10,-6,-50],[8,-6,-40],[8,-4,-80],[6,-4,-90]]],\"spatialReference\":{\"wkid\":4326}}";
+      polyline = PolylineBuilderEx.FromJson(json);
+
+      // Extrapolate M-values from part 0, point 5 to part1, point 1
+      outPolyline = GeometryEngine.Instance.ExtrapolateMs(polyline, ExtrapolateMMethod.ExtrapolateAfter, 0, 5, 1, 1) as Polyline;
+      // The points in part 0 of outPolyline don't change. They are (x, y, m):
+      // ( 2, 0, 50 ), ( 2, 1, 40 ), ( 3, 1, 30 ), ( 3, 5, 60 ), ( 7, 5, 12 ), ( 7, 1, 20 ), ( 9, 1, 28 ), ( 9, 3, 10 )
+
+      // The points in part 1 of outPolyline are (x, y, m):
+      // ( 5, -4, -10 ), ( 5, -2, -40 ), ( 10, -2, -90 ), ( 10, -6, -130 ), ( 8, -6, -150 ), ( 8, -4, -170 ), ( 6, -4, -190 )
+
+      #endregion
+    }
+
+    public void GetDistancesAtM()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetDistancesAtM(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetDistancesAtM(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength,System.Double)
+      #region Get a list of distances along the multipart at points with the specified M-value - GetDistancesAtM
+
+      string json = "{\"hasM\":true,\"paths\":[[[-4,1,1],[-4,3,2],[-2,3,3],[-2,5,1]],[[3,5,1],[3,2,2],[6,2,3],[6,-2,2]]]}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      // Get the distances as length measured from the start of the multipart
+      IReadOnlyList<double> distances = GeometryEngine.Instance.GetDistancesAtM(polyline, AsRatioOrLength.AsLength, 2);
+      // distances.Count = 4
+      // distances[0] = 2 measured to the point (-4, 3, 2)
+      // distances[1] = 5 measured to the point (-2, 4, 2). Its M-value is interpolated from the segment (-2, 3, 3) -> (-2, 5, 1)
+      // distances[2] = 9 measured to the point (3, 2, 2) 
+      // distances[3] = 16 measured to the point (6, -2, 2)
+
+      // Get the distances as a ratio of the distance measured from the start of the multipart and the total length of the multipart
+      distances = GeometryEngine.Instance.GetDistancesAtM(polyline, AsRatioOrLength.AsRatio, 2);
+      // distances.Count = 4;
+      // distances are { 0.125, 0.3125, 0.5625, 1 }
+
+      #endregion
+    }
+
+    public void GetSubCurveBetweenMsEx()
+    {
+      // cref: ArcGIS.Core.Geometry.MSubCurveRelation
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetSubCurveBetweenMsEx(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.MSubCurveRelation@,ArcGIS.Core.Geometry.MSubCurveRelation@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurveBetweenMsEx(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.MSubCurveRelation@,ArcGIS.Core.Geometry.MSubCurveRelation@)
+      #region Get a polyline and other details corresponding to the subcurve(s) between the specified M-values - GetSubCurveBetweenMsEx
+
+      string json = "{\"hasM\":true,\"paths\":[[[-2000,0,1],[-1000,1000,-1],[-1000,0,3],[1000,1000,4],[2000,1000,5],[2000,2000,6],[3000,2000,7],[4000,0,8]]],\"spatialReference\":{\"wkid\":3857}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      // Get the subcurve between M-values 2 and 6
+      MSubCurveRelation fromDetail, toDetail;
+      Polyline subCurve = GeometryEngine.Instance.GetSubCurveBetweenMsEx(polyline, 2, 6, out fromDetail, out toDetail);
+      // The subcurve has one part and five points. The subcurve points are (x, y, m):
+      // (-1000, 250, 2), (-1000, 0, 3), (1000, 1000, 4), (2000, 1000, 5), (2000, 2000, 6)
+      // fromDetail = toDetail = MSubCurveRelation.MBetweenMinMax
+
+      // Get the subcurve between M-values -2 and 3.5
+      subCurve = GeometryEngine.Instance.GetSubCurveBetweenMsEx(polyline, -2, 3.5, out fromDetail, out toDetail);
+      // The subcurve has two parts and five points.
+      // The subcurve points in part 0 are (x, y, m): (-1000, 1000, -1), (-2000, 0, 1)
+      // The subcurve points in part 1 are (x, y, m): (-1000, 1000, -1), (-1000, 0, 3), (0, 500, 3.5)
+      // fromDetail = MSubCurveRelation.MBelowMin, toDetail = MSubCurveRelation.MBetweenMinMax
+
+      #endregion
+    }
+
+    public void GetMMonotonicity()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.GetMMonotonicity(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetMMonotonicity(ArcGIS.Core.Geometry.Multipart)
+      #region Get a combination of monotonicity values that describes all trends in the M-values over the length of the multipart - GetMMonotonicity
+
+      string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,5],[-1000,-2000,0]]]}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Monotonicity monotonicity = GeometryEngine.Instance.GetMMonotonicity(polyline);
+      // monotonicity = Monotonicity.ValueDecreases
+
+      // Create a polygon from the polyline
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(polyline);
+      monotonicity = GeometryEngine.Instance.GetMMonotonicity(polygon);
+      // monotonicity = ValueIncreases | ValueDecreases
+
+      json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,10],[-2000,-2000,10],[-1000,-2000,10]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+      monotonicity = GeometryEngine.Instance.GetMMonotonicity(polygon);
+      // monotonicity = Monotonicity.ValueLevel
+
+      json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,null],[-2000,-2000,5],[-1000,-2000,10]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+      monotonicity = GeometryEngine.Instance.GetMMonotonicity(polyline);
+      // monotonicity = ValueIncreases | ValueEmpty
+
+      // Create an empty polyline
+      Polyline emptyPolyline = PolylineBuilderEx.FromJson("{\"hasM\":true,\"paths\":[]}");
+      monotonicity = GeometryEngine.Instance.GetMMonotonicity(emptyPolyline);
+      // monotonicity = Monotonicity.None
+
+      #endregion
+    }
+
     public void InterpolateMsBetween()
     {
       // cref: ArcGIS.Core.Geometry.GeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
       // cref: ArcGIS.Core.Geometry.IGeometryEngine.InterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Int32,System.Int32,System.Int32,System.Int32)
-      #region Generates M values by linear interpolation over a range of points - InterpolateMsBetween
+      #region Generates M-values by linear interpolation over a range of points - InterpolateMsBetween
 
       string json = "{\"hasM\":true,\"paths\":[[[0,0,-1],[1,0,0],[1,1,1],[1,2,2],[3,1,3],[5,3,4],[9,5,5],[7,6,6]]],\"spatialReference\":{\"wkid\":4326}}";
       Polyline polyline = PolylineBuilderEx.FromJson(json);
@@ -2091,11 +2282,169 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void IsMSimple()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.IsMSimple(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.IsMSimple(ArcGIS.Core.Geometry.Geometry)
+      #region Determine if all the M-values are numbers - IsMSimple
+
+      Coordinate2D[] coords = { new Coordinate2D(-2, 2), new Coordinate2D(3, 5), new Coordinate2D(7, 2) };
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords); // polyline.HasM = false
+      bool isMSimple = GeometryEngine.Instance.IsMSimple(polyline); // isMSimple = false
+
+      PolylineBuilderEx polylineBuilder = new PolylineBuilderEx(polyline);
+      polylineBuilder.HasM = true;
+      polyline = polylineBuilder.ToGeometry();
+      isMSimple = GeometryEngine.Instance.IsMSimple(polyline); // isMSimple = false
+
+      MapPoint point1 = MapPointBuilderEx.CreateMapPoint(-2, 2, -1, 1);
+      MapPoint point2 = MapPointBuilderEx.CreateMapPoint(3, 5, -2, 2);
+      MapPoint[] points = { point1, point2 };
+      polyline = PolylineBuilderEx.CreatePolyline(points, AttributeFlags.HasM);
+      isMSimple = GeometryEngine.Instance.IsMSimple(polyline); // isMSimple = true
+
+      #endregion
+    }
+
+    public void MultiplyMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.MultiplyMs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.MultiplyMs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      #region Multiply all M-values by a factor - MultiplyMs
+
+      // Create a multipoint and multiply M-values by 6
+      Coordinate2D[] coords = new Coordinate2D[] { new Coordinate2D(-4, 4), new Coordinate2D(-1, 1), new Coordinate2D(2, 6),
+        new Coordinate2D(-8, 2), new Coordinate2D(5, -3), new Coordinate2D(7, 2), new Coordinate2D(5, 3), new Coordinate2D(3, -1) };
+
+      double[] ms = new double[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+      MultipointBuilderEx builder = new MultipointBuilderEx(coords);
+      builder.Ms = ms;
+      builder.HasM = true;
+      Multipoint multipoint = builder.ToGeometry();
+
+      Multipoint outMultipoint = GeometryEngine.Instance.MultiplyMs(multipoint, 6) as Multipoint;
+      // The xy-values of the points in outMultipoint are the same as the points in the input multipoint.
+      // The M-values in outMultipoint are { 6, 12, 18, 24, 30, 36, 42, 48 }
+
+      #endregion
+    }
+
+    public void OffsetMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.OffsetMs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.OffsetMs(ArcGIS.Core.Geometry.Geometry,System.Double)
+      #region Add an offset value to each of the M-values - OffsetMs
+
+      // Create a polyline and add an offset of 2 to each of the M-values
+      MapPointBuilderEx pointBuilder = new MapPointBuilderEx(0, 0);
+      pointBuilder.M = 1;
+      MapPoint point1 = pointBuilder.ToGeometry();
+
+      pointBuilder.SetValues(2, 2);
+      pointBuilder.M = 3;
+      MapPoint point2 = pointBuilder.ToGeometry();
+
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(new MapPoint[] { point1, point2 }, AttributeFlags.HasM); ;
+      
+      Polyline outPolyline = GeometryEngine.Instance.OffsetMs(polyline, 2) as Polyline;
+      // The xy-values of the points in outPolyline are the same as the points in the input polyline.
+      // The M-values in outPolyline are { 3, 5 }
+
+      // Create an envelope and add an offset of 25 to each of the M-values
+      EnvelopeBuilderEx envelopeBuilder = new EnvelopeBuilderEx(-5, 1, 2, 4);
+      envelopeBuilder.MMin = 10;
+      envelopeBuilder.MMax = 20;
+      Envelope envelope = envelopeBuilder.ToGeometry();
+
+      Envelope outEnvelope = GeometryEngine.Instance.OffsetMs(envelope, 25) as Envelope;
+      // The xy-values of the points in outEnvelope are the same as the points in the input envelope.
+      // outEnvelope.MMin = 35, outEnvelope.MMax = 45
+
+      // Add a negative offset to the M-values of the envelope
+      outEnvelope = GeometryEngine.Instance.OffsetMs(envelope, -10) as Envelope;
+      // The xy-values of the points in outEnvelope are the same as the points in the input envelope.
+      // outEnvelope.MMin = 0, outEnvelope.MMax = 10
+
+      #endregion
+    }
+
+    public void OrientByMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.OrientByMs(ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.OrientByMs(ArcGIS.Core.Geometry.Polyline)
+      #region Reorient a polyine such that all M-values are non-decreasing, if possible - OrientByMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[0,0,1],[0,1,0],[1,1,-1],[1,0,-2]]]}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      Polyline outputPolyline = GeometryEngine.Instance.OrientByMs(polyline);
+      // The points of outputPolyline are (x, y, m): (1, 0, -2), (1, 1, -1), (0, 1, 0), (0, 0, 1)
+
+      // M-values of second part is not monotonic, so it won't change. The first part will change.
+      json = "{\"hasM\":true,\"paths\":[[[0,0,1],[0,1,0],[1,1,-1],[1,0,-2]],[[5,4,6],[6,4,5],[8,6,7]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+      outputPolyline = GeometryEngine.Instance.OrientByMs(polyline);
+      // The points of part 0 of outputPolyline are (x, y, m): (1, 0, -2), (1, 1, -1), (0, 1, 0), (0, 0, 1)
+      // The points of part 1 of outputPolyline are (x, y, m): (5, 4, 6), (6, 4, 5), (8, 6, 7)
+     
+      #endregion
+    }
+
+    public void QueryFirstLastM()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.QueryFirstLastM(ArcGIS.Core.Geometry.Polyline,System.Double@,System.Double@)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.QueryFirstLastM(ArcGIS.Core.Geometry.Polyline,System.Double@,System.Double@)
+      #region Get the first and last defined M-values in a polyline - QueryFirstLastM
+
+      string json = "{\"hasM\":true,\"paths\":[[[5,4,6],[6,4,5],[8,6,7]],[[0,0,1],[0,1,0],[1,1,-1],[1,0,-2]]]}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      double firstM, lastM;
+      GeometryEngine.Instance.QueryFirstLastM(polyline, out firstM, out lastM);
+      // firstM = 6, lastM = -2
+
+      json = "{\"hasM\":true,\"paths\":[[[5,4,null],[6,4,5],[8,6,7]],[[0,0,1],[0,1,0],[1,1,-1],[1,0,null]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+
+      GeometryEngine.Instance.QueryFirstLastM(polyline, out firstM, out lastM);
+      // firstM = 5, lastM = -1
+
+      json = "{\"hasM\":true,\"paths\":[[[5,4,null],[6,4,null],[8,6,null]],[[0,0,null],[0,1,null],[1,1,null],[1,0,null]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+
+      GeometryEngine.Instance.QueryFirstLastM(polyline, out firstM, out lastM);
+      // firstM and lastM are NaN
+
+      json = "{\"hasM\":true,\"paths\":[]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+
+      GeometryEngine.Instance.QueryFirstLastM(polyline, out firstM, out lastM);
+      // firstM and lastM are NaN
+
+      #endregion
+    }
+
+    public void ReverseMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.ReverseMs(ArcGIS.Core.Geometry.Multipart)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.ReverseMs(ArcGIS.Core.Geometry.Multipart)
+      #region Reverse the order of the M-values along a multipart - ReverseMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[5,4,6],[6,4,5],[8,6,7]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Polyline outputPolyline = GeometryEngine.Instance.ReverseMs(polyline) as Polyline;
+      // The xy-coordinates in outputPolyline are not changed. 
+      // The M-values in outputPolyline are: { 7, 5, 6 }
+      
+      #endregion
+    }
+
     public void SetAndInterpolateMsBetween()
     {
       // cref: ArcGIS.Core.Geometry.GeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
       // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetAndInterpolateMsBetween(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double)
-      #region Set Ms at the beginning and end of the geometry and interpolate M values between the two values - SetAndInterpolateMsBetween
+      #region Set Ms at the beginning and end of the geometry and interpolate M-values between the two values - SetAndInterpolateMsBetween
 
       string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000],[-2000,-2000],[-1000,-2000],[0,-2000],[1000,-2000],[2000,-2000],[3000,-2000],[4000,-2000]]],\"spatialReference\":{\"wkid\":3857}}";
       Polyline polyline = PolylineBuilderEx.FromJson(json);
@@ -2103,6 +2452,147 @@ namespace ProSnippetsGeometry
       Polyline outPolyline = GeometryEngine.Instance.SetAndInterpolateMsBetween(polyline, 100, 800) as Polyline;
       ReadOnlyPointCollection outPoints = outPolyline.Points;
       // outPoints M values are { 100, 200, 300, 400, 500, 600, 700, 800 };
+      #endregion
+    }
+
+    public void SetMsAsDistance()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.AsRatioOrLength)
+      #region Set the M-values to the cumulative length of the start of the multipart - SetMsAtDistance
+
+      string json = "{\"hasM\":true,\"paths\":[[[-3000,-2000,1],[-2000,-2000,2],[-1000,-2000,3],[0,-2000,null],[1000,-2000,4],[2000,-2000,5],[3000,-2000,10],[4000,-2000,11],[5000,-2000,12],[6000,-2000,13],[7000,-2000,14]]],\"spatialReference\":{\"wkid\":3857}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      Polyline outPolyline = GeometryEngine.Instance.SetMsAsDistance(polyline, AsRatioOrLength.AsLength) as Polyline;
+      // The xy-coordinates don't change. 
+      // The M-values of the vertices in outPolyline are (x, y, m): 
+      // { 0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000 }
+
+      json = "{\"hasM\":true,\"rings\":[[[0,0],[0,3000],[4000,3000],[4000,0],[0,0]]],\"spatialReference\":{\"wkid\":3857}}";
+      Polygon polygon = PolygonBuilderEx.FromJson(json);
+
+      Polygon outPolygon = GeometryEngine.Instance.SetMsAsDistance(polygon, AsRatioOrLength.AsLength) as Polygon;
+      // The M-values of the vertices in outPolygon are (x, y, m): { 0, 3000, 7000, 10000, 14000 };
+
+      #endregion
+    }
+
+    public void SetMsAsDistance2()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SetMsAsDistance(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Boolean)
+      #region Set the M-values of the vertices as scaled and offset distances measured along a polyline - SetMsAsDistance
+
+      string json = "{\"hasM\":true,\"paths\":[[[0,0,1],[3,0,2],[3,6,3],[7,6,4]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Coordinate2D origin = new Coordinate2D(0, 0);
+      
+      Polyline outputPolyline = GeometryEngine.Instance.SetMsAsDistance(polyline, origin, 0.5, 1, true) as Polyline;
+      // The xy-coordinates of the polyline don't change.
+      // The points of outputPolyline are (x, y, m): 
+      // (0, 0, 1), (3, 0, 2.5), (3, 6, 5.5), (7, 6, 7.5)
+
+      // Measurements will start at the end of the polyline, point (7, 6)
+      origin = new Coordinate2D(4, 6);
+
+      outputPolyline = GeometryEngine.Instance.SetMsAsDistance(polyline, origin, 0.5, 1, true) as Polyline;
+      // The points of outputPolyline are (x, y, m): 
+      // (0, 0, 7.5), (3, 0, 6), (3, 6, 3), (7, 6, 1)
+
+      #endregion
+    }
+
+    public void SnapMsToSpatialReference()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SnapMsToSpatialReference(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SnapMsToSpatialReference(ArcGIS.Core.Geometry.Geometry)
+      #region Snap the M-values to the M-precision of the spatial reference - SnapMsToSpatialReference
+
+      SpatialReference sr = SpatialReferences.WebMercator;  // precision = 1 / MScale = 0.0001
+
+      // MapPoint
+      MapPointBuilderEx pointBuilder = new MapPointBuilderEx(3, 4, sr);
+      pointBuilder.M = 5.00006;
+      MapPoint point = pointBuilder.ToGeometry();
+      MapPoint outputPoint = GeometryEngine.Instance.SnapMsToSpatialReference(point) as MapPoint;
+      // outputPoint.M = 5.0001
+
+      // Multipoint
+      pointBuilder = new MapPointBuilderEx(-3, -4, sr);
+      pointBuilder.M = -5.000007;
+      MapPoint point2 = pointBuilder.ToGeometry();
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(new MapPoint[] { point, point2 }, AttributeFlags.HasM, sr);
+      Multipoint outputMultipoint = GeometryEngine.Instance.SnapMsToSpatialReference(multipoint) as Multipoint;
+      // outputMultipoint.Points[0].M = 5.0001, outputMultipoint.Points[1].M = -5
+
+      // Polyline
+      string json = "{\"hasM\":true,\"paths\":[[[3,2,10.00065],[3,4,15.000325],[5,4,20],[5,2,15.000325],[3,2,10.00065]]],\"spatialReference\":{\"wkid\":3857}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Polyline outputPolyline = GeometryEngine.Instance.SnapMsToSpatialReference(polyline) as Polyline;
+      // The M-values for the vertices in outputPolyline are { 10.0007, 15.0003, 20, 15.0003, 10.0007 }
+
+      #endregion
+    }
+
+    public void UpdateAllMsByMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.UpdateAllMsByMs(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.UpdateAllMsByMs(ArcGIS.Core.Geometry.Polyline,ArcGIS.Core.Geometry.Coordinate2D,System.Double,System.Double,System.Boolean)
+      #region Set the M-values of the vertices as scaled and offset M distances measured along a polyline - UpdateAllMsByMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[-8,2,1],[-8,5,8],[-5,5,0],[-5,7,12]],[[3,2,20],[7,2,30],[7,4,10],[13,4,5]]]}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+      Coordinate2D origin = new Coordinate2D(-5, 6);
+
+      Polyline outputPolyline = GeometryEngine.Instance.UpdateAllMsByMs(polyline, origin, 1, 0, true);
+      // The xy-coordinates don't change. 
+      // The M-values of the vertices in part 0 of outputPolyline are { 27, 20, 12, 0 }
+      // The M-values of the vertices in part 1 of outputPolyline are { 27, 37, 57, 62 }
+
+      outputPolyline = GeometryEngine.Instance.UpdateAllMsByMs(polyline, origin, 2, 4, true);
+      // The M-values of the vertices in part 0 of outputPolyline are { 58, 44, 28, 4 }
+      // The M-values of the vertices in part 1 of outputPolyline are { 58, 78, 118, 128 }
+
+      #endregion
+    }
+
+    public void UpdateMsByDistance()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.UpdateMsByDistance(ArcGIS.Core.Geometry.Polyline,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,ArcGIS.Core.Geometry.UpdateMMethod,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.UpdateMsByDistance(ArcGIS.Core.Geometry.Polyline,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,ArcGIS.Core.Geometry.UpdateMMethod,System.Boolean)
+      #region Update M-values along the shortest path between the specified vertices - UpdateMsByDistance
+
+      string json = "{\"hasM\":true,\"paths\":[[[-8,2,1],[-8,5,8],[-5,5,0],[-5,7,12]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      Polyline outputPolyline = GeometryEngine.Instance.UpdateMsByDistance(polyline, 0, 0, 0, 2, 10, 20, UpdateMMethod.Interpolate, true);
+      // The xy-coordinates don't change.
+      // The M-values of the vertices in outputPolyline are { 10, 15, 20, 12 }
+
+      json = "{\"hasM\":true,\"paths\":[[[-8,2,1],[-8,5,8],[-5,5,0],[-5,7,12]],[[3,2,20],[7,2,30],[7,4,10],[13,4,5]]]}";
+      polyline = PolylineBuilderEx.FromJson(json);
+
+      outputPolyline = GeometryEngine.Instance.UpdateMsByDistance(polyline, 0, 2, 1, 1, 10, 20, UpdateMMethod.ExtrapolateBefore, true);
+      // The M-values of the vertices in part 0 of outputPolyline are { -5, 2.5, 10, 5 }
+      // The M-values of the vertices in part 1 of outputPolyline are { 20, 20, 10, 5 }
+
+      #endregion
+    }
+
+    public void UpdateMsByMs()
+    {
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.UpdateMsByMs(ArcGIS.Core.Geometry.Polyline,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,ArcGIS.Core.Geometry.UpdateMMethod)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.UpdateMsByMs(ArcGIS.Core.Geometry.Polyline,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,ArcGIS.Core.Geometry.UpdateMMethod)
+      #region Update M-values with the interpolation ratio determined by existing M-values and the input M-values - UpdateMsByMs
+
+      string json = "{\"hasM\":true,\"paths\":[[[-8,2,1],[-8,5,8],[-5,5,0],[-5,7,12]]],\"spatialReference\":{\"wkid\":4326}}";
+      Polyline polyline = PolylineBuilderEx.FromJson(json);
+
+      Polyline outputPolyline = GeometryEngine.Instance.UpdateMsByMs(polyline, 0, 1, 0, 3, -2, 14, UpdateMMethod.Interpolate);
+      // The xy-coordinates don't change.
+      // The M-values of the vertices in outputPolyline are (x, y, m): { 1, -2, 30, 14 }
+      
       #endregion
     }
 
@@ -3185,6 +3675,41 @@ namespace ProSnippetsGeometry
       var result2 = GeometryEngine.Instance.Area(GeometryEngine.Instance.SimplifyAsFeature(g1, true));
       // result2 = 100.0  - positive due to correct ring orientation (clockwise)
       #endregion
+
+      // cref: ArcGIS.Core.Geometry.NonSimpleReason
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetNonSimpleReason(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.NonSimpleReason@,System.Boolean)
+      #region Get Non Simple Reason
+
+      SpatialReference sr = SpatialReferences.WGS84;
+      Coordinate2D[] coords = new Coordinate2D[] { new Coordinate2D(5, 10), new Coordinate2D(15, 20), new Coordinate2D(25, 10), new Coordinate2D(5, 20) };
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
+
+      NonSimpleReason nonSimpleReason;
+      bool isSimple = GeometryEngine.Instance.GetNonSimpleReason(polyline, out nonSimpleReason);
+      // isSimple = true;
+      // nonSimpleReason = NonSimpleReason.IsSimple
+
+
+      double resolution = sr.XYResolution;
+      coords = new Coordinate2D[] { new Coordinate2D(0, 0), new Coordinate2D(0, 1.8 * resolution), new Coordinate2D(10, 10), new Coordinate2D(0, 5) };
+      polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
+
+      isSimple = GeometryEngine.Instance.GetNonSimpleReason(polyline, out nonSimpleReason);
+      // isSimple = false
+      // nonSimpleReason = NonSimpleReason.ShortSegments
+
+
+      coords = new Coordinate2D[] { new Coordinate2D(10, 10), new Coordinate2D(10, 20), new Coordinate2D(40, 20),
+      new Coordinate2D(40, 10), new Coordinate2D(60, 10), new Coordinate2D(70, 10)};
+
+      Polygon polygon = PolygonBuilderEx.CreatePolygon(coords, sr);
+
+      isSimple = GeometryEngine.Instance.GetNonSimpleReason(polygon, out nonSimpleReason);
+      //isSimple = false
+      //nonSimpleReason = NonSimpleReason.SelfIntersections
+
+      #endregion
+
     }
 
     public void SimplifyPolyline()
@@ -3233,6 +3758,59 @@ namespace ProSnippetsGeometry
       simpleSegments = simpleParts[0];
       // simpleSegments.Count = 1
       #endregion
+    }
+
+    public void SimplifyOgc()
+    {
+      // cref: ArcGIS.Core.Geometry.NonSimpleReason
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.IsSimpleOgc(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.NonSimpleReason@,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.IsSimpleOgc(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.NonSimpleReason@,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.SimplifyOgc(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.SimplifyOgc(ArcGIS.Core.Geometry.Geometry,System.Boolean)
+      #region SimplifyOgc
+
+
+      SpatialReference sr = SpatialReferences.WGS84;
+
+      Coordinate2D[] coords = new Coordinate2D[] { new Coordinate2D(5, 10), new Coordinate2D(15, 20), new Coordinate2D(25, 10), new Coordinate2D(5, 20) };
+      Polyline polyline = PolylineBuilderEx.CreatePolyline(coords, sr);
+      // polyline.IsKnownSimpleOgc = false
+      // polyline.IsKnownSimple = false
+
+      NonSimpleReason nonSimpleReason;
+      bool isSimple = GeometryEngine.Instance.IsSimpleOgc(polyline, out nonSimpleReason, true);
+      // isSimple = false
+      // nonSimpleReason = NonSimpleReason.SelfIntersections
+
+      Polyline simplePolyline = GeometryEngine.Instance.SimplifyOgc(polyline) as Polyline;
+      // simplePolyline.IsKnownSimpleOgc = true
+      // simplePolyline.IsKnownSimple = true
+
+
+
+      double resolution = sr.XYResolution;
+      Coordinate3D[] coords3D = new Coordinate3D[] { new Coordinate3D(0, 0, 0), new Coordinate3D(0, 1.8 * resolution, 0.8 * sr.ZTolerance), new Coordinate3D(10, 10, 1),
+        new Coordinate3D(0, 5, 1) };
+      polyline = PolylineBuilderEx.CreatePolyline(coords3D, sr);
+
+      isSimple = GeometryEngine.Instance.IsSimpleOgc(polyline, out nonSimpleReason);
+      // isSimple = false
+      // nonSimpleReason = NonSimpleReason.ShortSegments
+
+      simplePolyline = GeometryEngine.Instance.SimplifyOgc(polyline, true) as Polyline;
+      // simplePolyline.IsKnownSimpleOgc = true
+      // simplePolyline.IsKnownSimple = true
+
+
+
+      coords = new Coordinate2D[] { new Coordinate2D(0, 0), new Coordinate2D(0, 0) };
+      Multipoint multipoint = MultipointBuilderEx.CreateMultipoint(coords, sr);
+
+      isSimple = GeometryEngine.Instance.IsSimpleOgc(multipoint, out nonSimpleReason);
+      // isSimple = false
+      // nonSimpleReason = NonSimpleReason.DuplicateVertex
+      #endregion
+
     }
 
     public void SlicePolygonIntoEqualParts()

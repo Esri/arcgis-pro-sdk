@@ -105,6 +105,15 @@
       <component id="esri_editing_ShowEditFeaturesBtn" >
         <content pane="esri_editing_EditFeaturesDockPane"/>
       </component>
+      <component id="esri_editing_DivideCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_AlignParcels" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_MergeParcelPoints" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
       <component id="esri_editing_ShowManageTemplatesBtn" >
         <content pane="esri_editing_ManageTemplatesDockPane"/>
       </component>

@@ -186,13 +186,14 @@ namespace Framework.Snippets
 
     }
 
-    //public class ProWindow1 : Window
-    //{
-    //  public ProWindow1(double x, double y)
-    //  {
-    //  }
-    //  public bool SaveWindowPosition { get; set; }
-    //}
+    //dummy class to allow snippet to compile
+    public class ProWindow1 : Window
+    {
+      public ProWindow1(double x, double y)
+      {
+      }
+      public bool SaveWindowPosition { get; set; }
+    }
 
     public void ShowProWindow()
     {

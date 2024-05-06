@@ -29,6 +29,7 @@ using ArcGIS.Desktop.Workflow;
 using ArcGIS.Desktop.Workflow.Client;
 using ArcGIS.Desktop.Workflow.Client.Exceptions;
 using ArcGIS.Desktop.Workflow.Client.Models;
+using ArcGIS.Desktop.Workflow.Client.Events;
 
 namespace WorkflowManagerProSnippets
 
@@ -284,6 +285,33 @@ namespace WorkflowManagerProSnippets
       var jobManager = WorkflowClientModule.JobsManager;
       stepIds = new List<string> { "step12345", "step67890" };
       jobManager.FinishSteps(jobId, stepIds);
+      #endregion
+    }
+
+    public static async Task SubscribeToAWorkflowConnectionChangedEvent()
+    {
+      // cref: ArcGIS.Desktop.Workflow.Client.Events.WorkflowConnectionChangedEvent
+      #region How to subscribe to a workflow connection changed event.
+      var subscriptionToken = WorkflowConnectionChangedEvent.Subscribe(e =>
+      {
+        // The connection has changed - Get the user's sign in status
+        var isUserSignedIn = e.IsSignedIn;
+        return Task.CompletedTask;
+      });
+      #endregion
+    }
+
+    public static async Task UnsubscribeFromAWorkflowConnectionChangedEvent()
+    {
+      // cref: ArcGIS.Desktop.Workflow.Client.Events.WorkflowConnectionChangedEvent
+      #region How to unsubscribe from a workflow connection changed event.
+      var subscriptionToken = WorkflowConnectionChangedEvent.Subscribe(e =>
+      {
+        var isUserSignedIn = e.IsSignedIn;
+        return Task.CompletedTask;
+      });
+
+      WorkflowConnectionChangedEvent.Unsubscribe(subscriptionToken);
       #endregion
     }
   }

@@ -36,14 +36,14 @@ using ArcGIS.Core.Data;
 namespace ProSnippetsGeoprocessing
 {
 
-    class GeoprocessingCodeExamples
-    {
+  class GeoprocessingCodeExamples
+  {
 
     #region ProSnippet Group: General 
     #endregion
 
     public async void CodeExamples()
-        {
+    {
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
@@ -51,16 +51,16 @@ namespace ProSnippetsGeoprocessing
       #region How to execute a Model tool
       // get the model tool's parameter syntax from the model's help
       string input_roads = @"C:\data\Input.gdb\PlanA_Roads";
-            string buff_dist_field = "Distance";   // use values from a field
-            string input_vegetation = @"C:\data\Input.gdb\vegetation";
-            string output_data = @"C:\data\Output.gdb\ClippedFC2";
+      string buff_dist_field = "Distance";   // use values from a field
+      string input_vegetation = @"C:\data\Input.gdb\vegetation";
+      string output_data = @"C:\data\Output.gdb\ClippedFC2";
 
-            // the model name is ExtractVegetation
-            string tool_path = @"C:\data\MB\Models.tbx\ExtractVegetation";
+      // the model name is ExtractVegetation
+      string tool_path = @"C:\data\MB\Models.tbx\ExtractVegetation";
 
-            var args = Geoprocessing.MakeValueArray(input_roads, buff_dist_field, input_vegetation, output_data);
+      var args = Geoprocessing.MakeValueArray(input_roads, buff_dist_field, input_vegetation, output_data);
 
-            var result = await Geoprocessing.ExecuteToolAsync(tool_path, args);
+      var result = await Geoprocessing.ExecuteToolAsync(tool_path, args);
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MAKEENVIRONMENTARRAY
@@ -71,22 +71,22 @@ namespace ProSnippetsGeoprocessing
       #region Set Geoprocessing extent environment
 
       var parameters = Geoprocessing.MakeValueArray(@"C:\data\data.gdb\HighwaysUTM11", @"C:\data\data.gdb\Highways_extent");
-            var ext = Geoprocessing.MakeEnvironmentArray(extent: "460532 3773964 525111 3827494");
-            var gp_result = await Geoprocessing.ExecuteToolAsync("management.CopyFeatures", parameters, ext);
+      var ext = Geoprocessing.MakeEnvironmentArray(extent: "460532 3773964 525111 3827494");
+      var gp_result = await Geoprocessing.ExecuteToolAsync("management.CopyFeatures", parameters, ext);
       #endregion
 
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.OpenToolDialog(System.String,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Boolean,ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler)
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       #region Open a script tool dialog in Geoprocessing pane
       string input_data = @"C:\data\data.gdb\Population";
-            string out_pdf = @"C:\temp\Reports.pdf";
-            string field_name = "INCOME";
-            // use defaults for other parameters - no need to pass any value
-            var arguments = Geoprocessing.MakeValueArray(input_data, out_pdf, field_name);
+      string out_pdf = @"C:\temp\Reports.pdf";
+      string field_name = "INCOME";
+      // use defaults for other parameters - no need to pass any value
+      var arguments = Geoprocessing.MakeValueArray(input_data, out_pdf, field_name);
 
-            string toolpath = @"C:\data\WorkflowTools.tbx\MakeHistogram";
+      string toolpath = @"C:\data\WorkflowTools.tbx\MakeHistogram";
 
-            Geoprocessing.OpenToolDialog(toolpath, arguments);
+      Geoprocessing.OpenToolDialog(toolpath, arguments);
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
@@ -136,19 +136,19 @@ namespace ProSnippetsGeoprocessing
       #region Get Geoprocessing project items
       var gpItems = CoreModule.CurrentProject.Items.OfType<GeoprocessingProjectItem>();
 
-            // go through all the available toolboxes
-            foreach (var gpItem in gpItems)
-            {
-                var itemsInsideToolBox = gpItem.GetItems();
+      // go through all the available toolboxes
+      foreach (var gpItem in gpItems)
+      {
+        var itemsInsideToolBox = gpItem.GetItems();
 
-                // then for each toolbox list the tools inside
-                foreach (var toolItem in itemsInsideToolBox)
-                {
-                    string newTool = String.Join(";", new string[] { toolItem.Path, toolItem.Name });
-                    // do something with the newTool
-                    // for example, add to a list to track or use them later
-                }
-            }
+        // then for each toolbox list the tools inside
+        foreach (var toolItem in itemsInsideToolBox)
+        {
+          string newTool = String.Join(";", new string[] { toolItem.Path, toolItem.Name });
+          // do something with the newTool
+          // for example, add to a list to track or use them later
+        }
+      }
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GPEXECUTETOOLFLAGS
@@ -161,7 +161,7 @@ namespace ProSnippetsGeoprocessing
       // for example, in Pro App's Options > Geoprocessing dialog, if you check 'Add output datasets to an open map'
       // then the output WILL BE added to history overriding settings in code
       var CopyfeaturesParams = Geoprocessing.MakeValueArray("C:\\data\\Input.gdb\\PlanA_Roads", "C:\\data\\Input.gdb\\Roads_copy");
-            IGPResult gpResult = await Geoprocessing.ExecuteToolAsync("management.CopyFeatures", CopyfeaturesParams, null, null, null, GPExecuteToolFlags.None);
+      IGPResult gpResult = await Geoprocessing.ExecuteToolAsync("management.CopyFeatures", CopyfeaturesParams, null, null, null, GPExecuteToolFlags.None);
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GPEXECUTETOOLFLAGS
@@ -174,7 +174,7 @@ namespace ProSnippetsGeoprocessing
       // for example, if in Options > Geoprocessing dialog, if you uncheck 'Write geoprocessing operations to Geoprocessing History'
       // then the output will not be added to history.
       var args2 = Geoprocessing.MakeValueArray("C:\\data\\Vegetation.shp", "NewField", "TEXT");
-            var result2 = await Geoprocessing.ExecuteToolAsync("management.AddField", args2, null, null, null, GPExecuteToolFlags.AddToHistory);
+      var result2 = await Geoprocessing.ExecuteToolAsync("management.AddField", args2, null, null, null, GPExecuteToolFlags.AddToHistory);
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.IGPRESULT
@@ -189,19 +189,19 @@ namespace ProSnippetsGeoprocessing
       //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
       //https://github.com/Esri/arcgis-pro-sdk-community-samples
       async Task<IGPResult> CreateRings(EditingTemplate currentTemplate)
-            {
-                var paramsArray = Geoprocessing.MakeValueArray(currentTemplate.MapMember.Name,
-                            @"C:\Data\FeatureTest\FeatureTest.gdb\Points_MultipleRingBuffer",
-                            new List<string> { "1000", "2000" }, "Meters", "Distance",
-                            "ALL", "FULL");
+      {
+        var paramsArray = Geoprocessing.MakeValueArray(currentTemplate.MapMember.Name,
+                    @"C:\Data\FeatureTest\FeatureTest.gdb\Points_MultipleRingBuffer",
+                    new List<string> { "1000", "2000" }, "Meters", "Distance",
+                    "ALL", "FULL");
 
-                IGPResult ringsResult = await Geoprocessing.ExecuteToolAsync("Analysis.MultipleRingBuffer", paramsArray);
-                var messages = string.IsNullOrEmpty(gpResult.ReturnValue)
-                        ? $@"Error in gp tool: {gpResult.ErrorMessages}"
-                        : $@"Ok: {gpResult.ReturnValue}";
+        IGPResult ringsResult = await Geoprocessing.ExecuteToolAsync("Analysis.MultipleRingBuffer", paramsArray);
+        var messages = string.IsNullOrEmpty(gpResult.ReturnValue)
+                ? $@"Error in gp tool: {gpResult.ErrorMessages}"
+                : $@"Ok: {gpResult.ReturnValue}";
 
-                return ringsResult;
-            }
+        return ringsResult;
+      }
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.IGPRESULT
@@ -214,15 +214,15 @@ namespace ProSnippetsGeoprocessing
       //The data referenced in this snippet can be downloaded from the arcgis-pro-sdk-community-samples repo
       //https://github.com/Esri/arcgis-pro-sdk-community-samples
       string in_data = @"C:\tools\data.gdb\cities";
-            string cities_buff = @"E:\data\data.gdb\cities_2km";
+      string cities_buff = @"E:\data\data.gdb\cities_2km";
 
-            var valueArray = Geoprocessing.MakeValueArray(in_data, cities_buff, "2000 Meters");
+      var valueArray = Geoprocessing.MakeValueArray(in_data, cities_buff, "2000 Meters");
 
-            // to let the GP tool run asynchronously without blocking the main thread
-            // use the GPThread option of GPExecuteToolFlasgs
-            //
-            GPExecuteToolFlags flags = GPExecuteToolFlags.GPThread;  // instruct the tool run non-blocking GPThread
-            IGPResult bufferResult = await Geoprocessing.ExecuteToolAsync("Analysis.Buffer", valueArray, null, null, null, flags);
+      // to let the GP tool run asynchronously without blocking the main thread
+      // use the GPThread option of GPExecuteToolFlasgs
+      //
+      GPExecuteToolFlags flags = GPExecuteToolFlags.GPThread;  // instruct the tool run non-blocking GPThread
+      IGPResult bufferResult = await Geoprocessing.ExecuteToolAsync("Analysis.Buffer", valueArray, null, null, null, flags);
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.ShowMessageBox
@@ -235,24 +235,24 @@ namespace ProSnippetsGeoprocessing
       #region How to pass parameter with multiple or complex input values
       var environments = Geoprocessing.MakeEnvironmentArray(overwriteoutput: true);
 
-            string toolName = "Snap_edit";  // or use edit.Snap
+      string toolName = "Snap_edit";  // or use edit.Snap
 
-            // Snap tool takes multiple inputs each of which has
-            // Three (3) parts: a feature class or layer, a string value and a distance
-            // Each part is separated by a semicolon - you can get example of sytax from the tool documentation page
-            var snapEnv = @"'C:/SnapProject/fgdb.gdb/line_1' END '2 Meters';'C:/SnapProject/fgdb.gdb/points_1' VERTEX '1 Meters';'C:/SnapProject/fgdb.gdb/otherline_1' END '20 Meters'";
+      // Snap tool takes multiple inputs each of which has
+      // Three (3) parts: a feature class or layer, a string value and a distance
+      // Each part is separated by a semicolon - you can get example of sytax from the tool documentation page
+      var snapEnv = @"'C:/SnapProject/fgdb.gdb/line_1' END '2 Meters';'C:/SnapProject/fgdb.gdb/points_1' VERTEX '1 Meters';'C:/SnapProject/fgdb.gdb/otherline_1' END '20 Meters'";
 
-            var infc = @"C:/SnapProject/fgdb.gdb/poly_1";
+      var infc = @"C:/SnapProject/fgdb.gdb/poly_1";
 
-            var snapParams = Geoprocessing.MakeValueArray(infc, snapEnv);
+      var snapParams = Geoprocessing.MakeValueArray(infc, snapEnv);
 
-            GPExecuteToolFlags tokens = GPExecuteToolFlags.RefreshProjectItems | GPExecuteToolFlags.GPThread | GPExecuteToolFlags.AddToHistory;
+      GPExecuteToolFlags tokens = GPExecuteToolFlags.RefreshProjectItems | GPExecuteToolFlags.GPThread | GPExecuteToolFlags.AddToHistory;
 
-            IGPResult snapResult = await Geoprocessing.ExecuteToolAsync(toolName, parameters, environments, null, null, tokens);
+      IGPResult snapResult = await Geoprocessing.ExecuteToolAsync(toolName, parameters, environments, null, null, tokens);
 
-            //return gpResult;
+      //return gpResult;
 
-            #endregion
+      #endregion
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MAKEENVIRONMENTARRAY
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
@@ -270,13 +270,13 @@ namespace ProSnippetsGeoprocessing
       var spatial_ref = SpatialReferenceBuilder.CreateSpatialReference(3857);
       var args3 = await QueuedTask.Run(() =>
       {
-          return Geoprocessing.MakeValueArray(multiPoint, "memory\\Buffers", "800 meters");
+        return Geoprocessing.MakeValueArray(multiPoint, "memory\\Buffers", "800 meters");
       });
       var env1 = Geoprocessing.MakeEnvironmentArray(outputCoordinateSystem: spatial_ref);
       var messages = new List<string>(); // list to collect all output messages
       var cts = new CancellationTokenSource();
       await Geoprocessing.ExecuteToolAsync(tool2, args3, env1, cts.Token);
-          
+
       #endregion
 
       // cref: ARCGIS.DESKTOP.CORE.PROJECT.OPENASYNC
@@ -291,37 +291,37 @@ namespace ProSnippetsGeoprocessing
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},CANCELABLEPROGRESSOR,GPEXECUTETOOLFLAGS)
       #region How to access Geoprocessing History
       string openProjectPath = @"D\DATA\IGPHistoryItemTestProject\IGPHistoryItemTestProject.aprx";
-      await Project.OpenAsync(openProjectPath); 
-	  MapProjectItem mapProjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map", StringComparison.CurrentCultureIgnoreCase));
+      await Project.OpenAsync(openProjectPath);
+      MapProjectItem mapProjItem = Project.Current.GetItems<MapProjectItem>().FirstOrDefault(item => item.Name.Equals("Map", StringComparison.CurrentCultureIgnoreCase));
 
       var map = await QueuedTask.Run(() => mapProjItem.GetMap());
       var ftrLayer = map.Layers[0] as FeatureLayer;
-      string tool1 = "management.GetCount";     
+      string tool1 = "management.GetCount";
       var args1 = Geoprocessing.MakeValueArray(ftrLayer);
-      var env = Geoprocessing.MakeEnvironmentArray(overwriteoutput: true);          
+      var env = Geoprocessing.MakeEnvironmentArray(overwriteoutput: true);
       GPExecuteToolFlags executeFlags = GPExecuteToolFlags.AddToHistory;
-      var t = await Geoprocessing.ExecuteToolAsync(tool1, args1,env,null,null,executeFlags);
+      var t = await Geoprocessing.ExecuteToolAsync(tool1, args1, env, null, null, executeFlags);
 
-      IEnumerable<IGPHistoryItem> hisItems = Project.Current.GetProjectItemContainer(Geoprocessing.HistoryContainerKey) as IEnumerable<IGPHistoryItem>;        
+      IEnumerable<IGPHistoryItem> hisItems = Project.Current.GetProjectItemContainer(Geoprocessing.HistoryContainerKey) as IEnumerable<IGPHistoryItem>;
 
-      String hitemID="";
-      String hitemToolPath="" ;
-      IGPResult hitemGPResult=null;
+      String hitemID = "";
+      String hitemToolPath = "";
+      IGPResult hitemGPResult = null;
       DateTime hitemTimeStamp;
 
       foreach (var hitem in hisItems)
       {
-          // common IGPHistoryItem and Item properties
-          hitemID = (hitem as Item).ID;
-          hitemToolPath = hitem.ToolPath;
-          hitemGPResult = hitem.GPResult;
-          hitemTimeStamp = hitem.TimeStamp;
+        // common IGPHistoryItem and Item properties
+        hitemID = (hitem as Item).ID;
+        hitemToolPath = hitem.ToolPath;
+        hitemGPResult = hitem.GPResult;
+        hitemTimeStamp = hitem.TimeStamp;
       }
 
 
-      #endregion	
-	  // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.ShowMessageBox	  
-	  // cref: ARCGIS.DESKTOP.CORE.Events.GPExecuteToolEvent	          
+      #endregion
+      // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.ShowMessageBox	  
+      // cref: ARCGIS.DESKTOP.CORE.Events.GPExecuteToolEvent	          
       // cref: ARCGIS.DESKTOP.CORE.GEOPROCESSING.GEOPROCESSING.MakeValueArray
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync
       // cref: ArcGIS.Desktop.Core.Geoprocessing.Geoprocessing.ExecuteToolAsync(STRING,IENUMERABLE{STRING},IENUMERABLE{KEYVALUEPAIR{STRING,STRING}},NULLABLE{CANCELLATIONTOKEN},GPTOOLEXECUTEEVENTHANDLER,GPEXECUTETOOLFLAGS)
@@ -329,15 +329,15 @@ namespace ProSnippetsGeoprocessing
       #region How to use Geoprocessing public event
       ArcGIS.Desktop.Core.Events.GPExecuteToolEvent.Subscribe(e =>
             {
-                string id = e.ID;                   // Same as history ID
-                if (e.IsStarting == false)  // Execute completed
-                    _ = e.GPResult.ReturnValue;
-                System.Windows.MessageBox.Show("event triggered.");
+              string id = e.ID;                   // Same as history ID
+              if (e.IsStarting == false)  // Execute completed
+                _ = e.GPResult.ReturnValue;
+              System.Windows.MessageBox.Show("event triggered.");
             });
       await Geoprocessing.ExecuteToolAsync("management.GetCount", Geoprocessing.MakeValueArray(@"c:\shape_file.shp"));
 
-      #endregion	
-        }
+      #endregion
+    }
 
     #region ProSnippet Group: Parameter Value Array 
     #endregion
@@ -380,7 +380,7 @@ namespace ProSnippetsGeoprocessing
     #endregion
 
     public void GeoprocessingOptions()
-		{
+    {
       // cref: ArcGIS.Desktop.Core.GeoprocessingOptions
       // cref: ArcGIS.Desktop.Core.ApplicationOptions.GeoprocessingOptions
       #region Get GeoprocessingOptions

@@ -44,7 +44,7 @@ namespace MapAuthoring
             #region Create a simple scatter plot
 
             // For more information on the chart CIM specification:
-            // https://github.com/Esri/cim-spec/blob/main/docs/v2/CIMCharts.md
+            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
 
             // Define fields names used in chart parameters.
             const string xField = "minimum_nights";
@@ -61,6 +61,7 @@ namespace MapAuthoring
                 GeneralProperties = new CIMChartGeneralProperties
                 {
                     Title = $"{xField} vs. {yField}",
+                    UseAutomaticTitle = false
                 },
                 Series = new CIMChartSeries[]
                 {
@@ -89,10 +90,11 @@ namespace MapAuthoring
             // cref: ArcGIS.Core.CIM.CIMChartSeries
             // cref: ArcGIS.Core.CIM.CIMChartLineSeries
             // cref: ArcGIS.Core.CIM.CIMChartLineSymbolProperties
+            // cref: ArcGIS.Core.CIM.CIMChartMarkerSymbolProperties
             #region Create a line chart with custom time binning and style
 
             // For more information on the chart CIM specification:
-            // https://github.com/Esri/cim-spec/blob/main/docs/v2/CIMCharts.md
+            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
 
             // Define fields names used in chart parameters.
             const string dateField = "last_review";
@@ -109,6 +111,7 @@ namespace MapAuthoring
                 GeneralProperties = new CIMChartGeneralProperties
                 {
                     Title = $"Line chart for {dateField} summarized by {numericField}",
+                    UseAutomaticTitle = false
                 },
                 Series = new CIMChartSeries[]
                 {
@@ -130,6 +133,10 @@ namespace MapAuthoring
                     LineSymbolProperties = new CIMChartLineSymbolProperties {
                         Style = ChartLineDashStyle.DashDot,
                         Color = new CIMRGBColor { R = 0, G = 150, B = 20 },
+                    },
+                    MarkerSymbolProperties = new CIMChartMarkerSymbolProperties
+                    {
+                        Color = new CIMRGBColor { R = 0, G = 150, B = 20 }
                     }
                 },
                 }
@@ -151,7 +158,7 @@ namespace MapAuthoring
             #region Create a histogram for every field of type Double
 
             // For more information on the chart CIM specification:
-            // https://github.com/Esri/cim-spec/blob/main/docs/v2/CIMCharts.md
+            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
 
             var lyrsHistogram = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
             var lyrHistogram = lyrsHistogram.First();
@@ -173,6 +180,7 @@ namespace MapAuthoring
                     GeneralProperties = new CIMChartGeneralProperties
                     {
                         Title = $"Histogram for {field}",
+                        UseAutomaticTitle = false
                     },
                     Series = new CIMChartSeries[]
                     {
@@ -205,7 +213,7 @@ namespace MapAuthoring
             #region Create a multiseries bar chart
 
             // For more information on the chart CIM specification:
-            // https://github.com/Esri/cim-spec/blob/main/docs/v2/CIMCharts.md
+            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
 
             // Define fields names used in chart parameters.
             const string categoryField = "neighbourhood_group";
@@ -234,6 +242,7 @@ namespace MapAuthoring
                 GeneralProperties = new CIMChartGeneralProperties
                 {
                     Title = $"{categoryField} grouped by {splitByField}",
+                    UseAutomaticTitle = false
                 },
             };
 

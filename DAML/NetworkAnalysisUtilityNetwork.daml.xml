@@ -174,6 +174,7 @@
          <toolPalette id="esri_networkanalysis_utility_ValidateBtnPalette" itemsInRow="1" showItemCaption="true" caption="Validate" extendedCaption="Validate Network Topology" keytip="VT">
            <tool refID="esri_networkanalysis_un_validate_current_BuildTools_Btn"/>
            <tool refID="esri_networkanalysis_un_validate_entire_BuildTools_Btn"/>
+           <tool refID="esri_networkanalysis_utility_RebuildNetworkBtn"/>
          </toolPalette>
          <toolPalette id="esri_networkanalysis_utility_DisplayFilterBtnPalette" itemsInRow="1" showItemCaption="true" caption="Display Content" extendedCaption="Display Content" keytip="DC">
            <tool refID="esri_networkanalysis_ShowContentBtn"/>
@@ -197,6 +198,19 @@
                 keytip="C">
           <tooltip heading="Validate Network Topology">
             Validate the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_RebuildNetworkBtn"
+                className="esri_networkanalysis_utility_module:RebuildCurrentExtent"
+                caption="Rebuild current extent"
+                extendedCaption="Rebuild current map extent"
+                condition="esri_networkanalysis_utility_ValidateTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UtilityNetworkTopologyRepair32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UtilityNetworkTopologyRepair16.png"
+                helpContextID=""
+                keytip="R">
+          <tooltip heading="Rebuild Network Topology">
+            Rebuild the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_un_validate_entire_BuildTools_Btn"

@@ -28,11 +28,10 @@ namespace ArcGIS.Desktop.Catalog.ApiTests.CodeSamples
 {
   class BrowseDialogCodeSamples
   {
-
     /// <summary>
     /// Code Samples for Browse Dialog
     /// </summary>
-    public async Task BrowseDialogCodeSample()
+    public void BrowseDialogCodeSample()
     {
       // Variables not used in samples
       OpenItemDialog selectItemDialog = new OpenItemDialog(); // in #region BrowseDialogItems

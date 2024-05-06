@@ -1462,7 +1462,34 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
+    public void SetElevationMode()
+    {
+      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+      //cref: ArcGIS.Desktop.Mapping.ElevationTypeDefinition
+      //cref: ArcGIS.Desktop.Mapping.Layer.GetElevationTypeDefinition
+      //cref: ArcGIS.Desktop.Mapping.Layer.SetElevationTypeDefinition
+      //cref: ArcGIS.Desktop.Mapping.Layer.CanSetElevationTypeDefinition(ArcGIS.Desktop.Mapping.ElevationTypeDefinition)
+      //cref: ArcGIS.Desktop.Mapping.Layer.SetElevationTypeDefinition(ArcGIS.Desktop.Mapping.ElevationTypeDefinition)
+      //cref: ArcGIS.Desktop.Mapping.LayerElevationType
+      //cref: ArcGIS.Desktop.Mapping.ElevationTypeDefinition.CartographicOffset
+      //cref: ArcGIS.Desktop.Mapping.ElevationTypeDefinition.VerticalExaggeration
 
+      #region Set Elevation Mode for a layer
+      //Note: Use QueuedTask.Run
+      ElevationTypeDefinition elevationTypeDefinition = featureLayer.GetElevationTypeDefinition();
+      elevationTypeDefinition.ElevationType = LayerElevationType.OnGround;
+      //elevationTypeDefinition.ElevationType = LayerElevationType.RelativeToGround;
+      //elevationTypeDefinition.ElevationType = LayerElevationType.RelativeToScene;
+      //elevationTypeDefinition.ElevationType = LayerElevationType.AtAbsoluteHeight;
+      //..so on.
+      //Optional: Specify the cartographic offset
+      elevationTypeDefinition.CartographicOffset = 1000;
+      //Optional: Specify the VerticalExaggeration
+      elevationTypeDefinition.VerticalExaggeration = 2;
+      if (featureLayer.CanSetElevationTypeDefinition(elevationTypeDefinition))
+            featureLayer.SetElevationTypeDefinition(elevationTypeDefinition);
+      #endregion
+    }
     public static void MoveLayerTo3D()
     {
       // cref: ArcGIS.Core.CIM.CIMBasicFeatureLayer.IsFlattened

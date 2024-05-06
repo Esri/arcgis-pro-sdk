@@ -3576,7 +3576,6 @@ namespace ProSnippetsGeometry
 
     // <summary>
     // This method gets the material texture image of a multipatch.
-    // This method must be called on the MCT. Use QueuedTask.Run.
     // </summary>
     // <param name="multipatch">The input multipatch.</param>
     // <param name="patchIndex">The index of the patch (part) for which to get the material texture.</param>
@@ -3631,7 +3630,6 @@ namespace ProSnippetsGeometry
 
     // <summary>
     // This method gets the normal coordinate of a multipatch and does something with it.
-    // This method must be called on the MCT. Use QueuedTask.Run.
     // </summary>
     // <param name="multipatch">The input multipatch.</param>
     public void DoSomethingWithNormalCoordinates(Multipatch multipatch)
@@ -3667,7 +3665,6 @@ namespace ProSnippetsGeometry
 
     /// <summary>
     /// This method gets several properties of a material in a multipatch.
-    /// This method must be called on the MCT. Use QueuedTask.Run.
     /// </summary>
     /// <param name="multipatch">The input multipatch.</param>
     /// <param name="patchIndex">The index of the patch (part) from which to get the material properties.</param>
@@ -3707,13 +3704,11 @@ namespace ProSnippetsGeometry
 
     /// <summary>
     /// This method takes an input multi part geometry and breaks the parts into individual standalone geometries.
-    /// This method must be called on the MCT. Use QueuedTask.Run.
     /// </summary>
     /// <param name="inputGeometry">The geometry to be exploded into the individual parts.</param>
     /// <returns>An enumeration of individual parts as standalone geometries. The type of geometry is maintained, i.e.
     /// if the input geometry is of type Polyline then each geometry in the return is of type Polyline as well.
     /// If the input geometry is of type Unknown then an empty list is returned.</returns>
-    /// <remarks>This method must be called on the MCT. Use QueuedTask.Run.</remarks>
     public IEnumerable<Geometry> MultipartToSinglePart(Geometry inputGeometry)
     {
       // list holding the part(s) of the input geometry

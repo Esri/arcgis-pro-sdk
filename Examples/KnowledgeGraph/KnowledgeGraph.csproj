@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
@@ -10,6 +10,10 @@
 		<Reference Include="ArcGIS.Desktop.Core">
 			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Core\ArcGIS.Desktop.Core.dll</HintPath>
 			<Private>False</Private>
+		</Reference>
+		<Reference Include="ArcGIS.Desktop.KnowledgeGraph">
+		  <HintPath>C:\Program Files\ArcGIS\Pro\bin\\Extensions\KnowledgeGraph\ArcGIS.Desktop.KnowledgeGraph.dll</HintPath>
+		  <Private>False</Private>
 		</Reference>
 		<Reference Include="ArcGIS.Desktop.Mapping">
 			<HintPath>C:\Program Files\ArcGIS\Pro\bin\Extensions\Mapping\ArcGIS.Desktop.Mapping.dll</HintPath>

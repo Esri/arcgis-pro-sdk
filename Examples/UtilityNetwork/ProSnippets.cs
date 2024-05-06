@@ -18,9 +18,8 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ArcGIS.Core.Data;
 using ArcGIS.Core.Data.UtilityNetwork;
 using ArcGIS.Core.Data.UtilityNetwork.Trace;
@@ -31,6 +30,8 @@ using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Core;
 using ArcGIS.Desktop.Editing;
 using ArcGIS.Core.Geometry;
+using TraceConfiguration = ArcGIS.Core.Data.UtilityNetwork.Trace.TraceConfiguration;
+using System.Web;
 
 namespace UtilityNetworkProSnippets
 {
@@ -410,8 +411,27 @@ namespace UtilityNetworkProSnippets
       subnetworkRadial1.Update();
       MapView.Active.Redraw(true);
 
-      // The final step is to notify external systems (if any) using the Export Subnetwork geoprocessing tool
+      // The final step is to notify external systems (if any) by exporting the subnetwork
+      SubnetworkExportOptions subnetworkExportOptions = new SubnetworkExportOptions()
+      {
+        SetAcknowledged = true,
+        IncludeDomainDescriptions = true,
+        IncludeGeometry = true,
+        ServiceSynchronizationType = ServiceSynchronizationType.Asynchronous,
 
+        SubnetworkExportResultTypes = new List<SubnetworkExportResultType>()
+        {
+          SubnetworkExportResultType.Features
+        }
+        
+        // Set networks attributes and attribute fields to export
+        //ResultNetworkAttributes = new List<NetworkAttribute>(networkAttributes),
+
+        //ResultFieldsByNetworkSourceID = new Dictionary<int, List<string>>()
+        //  { { electricDevice.ID, new List<string>() { "AssetID" } } }
+
+      };
+      subnetworkRadial1.Export(new Uri($"{Path.GetTempPath()}SubnetworkExportResult.json"), subnetworkExportOptions);
       #endregion
     }
 
@@ -443,7 +463,27 @@ namespace UtilityNetworkProSnippets
       subnetworkMesh1.Update();
       MapView.Active.Redraw(true);
 
-      // The final step is to notify external systems (if any) using the Export Subnetwork geoprocessing tool
+      // The final step is to notify external systems (if any) by exporting the subnetwork
+      SubnetworkExportOptions subnetworkExportOptions = new SubnetworkExportOptions()
+      {
+        SetAcknowledged = true,
+        IncludeDomainDescriptions = true,
+        IncludeGeometry = true,
+        ServiceSynchronizationType = ServiceSynchronizationType.Asynchronous,
+
+        SubnetworkExportResultTypes = new List<SubnetworkExportResultType>()
+        {
+          SubnetworkExportResultType.Features
+        }
+        
+        // Set networks attributes and attribute fields to export
+        //ResultNetworkAttributes = new List<NetworkAttribute>(networkAttributes),
+
+        //ResultFieldsByNetworkSourceID = new Dictionary<int, List<string>>()
+        //  { { electricDevice.ID, new List<string>() { "AssetID" } } }
+
+      };
+      subnetworkMesh1.Export(new Uri($"{Path.GetTempPath()}SubnetworkExportResult.json"), subnetworkExportOptions);
       #endregion
     }
 
@@ -489,6 +529,8 @@ namespace UtilityNetworkProSnippets
         IReadOnlyList<NetworkAttribute> networkAttributes = utilityNetworkDefinition.GetNetworkAttributes();
         IReadOnlyList<NetworkSource> networkSources = utilityNetworkDefinition.GetNetworkSources();
 
+        NetworkSource electricDevice = networkSources.First(f => f.Name.Contains("ElectricDevice"));
+
         // Export options
         SubnetworkExportOptions subnetworkExportOptions = new SubnetworkExportOptions()
         {
@@ -506,7 +548,7 @@ namespace UtilityNetworkProSnippets
           ResultNetworkAttributes = new List<NetworkAttribute>(networkAttributes),
 
           ResultFieldsByNetworkSourceID = new Dictionary<int, List<string>>()
-            { { networkSources[0].ID, new List<string>() { "OBJECTID" } } }
+            { { electricDevice.ID, new List<string>() { "AssetID" } } }
         };
 
 
@@ -706,7 +748,7 @@ namespace UtilityNetworkProSnippets
     // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceManager.GetNamedTraceConfigurations(ArcGIS.Core.Data.UtilityNetwork.Trace.NamedTraceConfigurationQuery)
     // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.NamedTraceConfiguration
     #region Fetch a named trace configuration by name
-    private void GetNamedTraceConfigurationsByName(UtilityNetwork utilityNetwork, string configurationName)
+    private NamedTraceConfiguration GetNamedTraceConfigurationsByName(UtilityNetwork utilityNetwork, string configurationName = "WaterNetwork")
     {
       // Query to find named trace configurations
       NamedTraceConfigurationQuery namedTraceConfigurationQuery = new NamedTraceConfigurationQuery { Names = new List<string> { configurationName } };
@@ -716,11 +758,9 @@ namespace UtilityNetworkProSnippets
       {
         // A set of named trace configurations specified by the named traced configuration query 
         IReadOnlyList<NamedTraceConfiguration> namedTraceConfigurations = traceManager.GetNamedTraceConfigurations(namedTraceConfigurationQuery);
+        NamedTraceConfiguration waterConfiguration = namedTraceConfigurations.First(f => f.Description.Equals(configurationName));
 
-        foreach (NamedTraceConfiguration namedTraceConfiguration in namedTraceConfigurations)
-        {
-          // Use NamedTraceConfiguration's object
-        }
+        return waterConfiguration;
       }
     }
     #endregion
@@ -728,15 +768,19 @@ namespace UtilityNetworkProSnippets
     // cref: ArcGIS.Desktop.Mapping.UtilityNetworkLayer.GetNamedTraceConfigurations()
     // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.NamedTraceConfiguration
     #region Fetch named trace configurations from a utility network layer
-    private void GetNamedTraceConfigurationsFromUtilityNetworkLayer(UtilityNetworkLayer utilityNetworkLayer)
+    private NamedTraceConfiguration GetNamedTraceConfigurationsFromUtilityNetworkLayer(UtilityNetworkLayer utilityNetworkLayer, string configurationName = "WaterNetwork")
     {
       // Get all named trace configurations in the utility network
       IReadOnlyList<NamedTraceConfiguration> namedTraceConfigurations = utilityNetworkLayer.GetNamedTraceConfigurations();
 
       foreach (NamedTraceConfiguration namedTraceConfiguration in namedTraceConfigurations)
       {
-        // Use NamedTraceConfiguration's object
+        if (namedTraceConfiguration.Name == configurationName)
+        {
+          return namedTraceConfiguration;
+        }
       }
+      return null;
     }
     #endregion
 
@@ -763,6 +807,347 @@ namespace UtilityNetworkProSnippets
     }
     #endregion
 
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument.#ctor(System.Collections.Generic.IEnumerable<ArcGIS.Core.Data.UtilityNetwork.Element>)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceConfiguration
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceConfiguration.#ctor()
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument.Configuration
+    #region Trace a utility network with the digitized direction
+    private void TraceWithDigitizedDirection(UtilityNetwork utilityNetwork, Element startElement)
+    {
+      using TraceManager traceManager = utilityNetwork.GetTraceManager();
+
+      // Trace configuration with digitized direction 
+      TraceConfiguration traceConfiguration = new TraceConfiguration()
+      {
+        IncludeIsolatedFeatures = true,
+        IncludeBarriersWithResults = true,
+        UseDigitizedDirection = true
+      };
+
+      // Trace argument
+      List<Element> startElements = new List<Element> { startElement };
+
+      TraceArgument traceArgument = new TraceArgument(startElements);
+      traceArgument.Configuration = traceConfiguration;
+
+      // Results
+      DownstreamTracer downstreamTracer = traceManager.GetTracer<DownstreamTracer>();
+
+      IReadOnlyList<Result> traceResults = downstreamTracer.Trace(traceArgument);
+      foreach (Result traceResult in traceResults)
+      {
+        // Iterate trace results
+      }
+    }
+    #endregion
+
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Trace(ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Trace(ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument,ArcGIS.Core.Data.ServiceSynchronizationType)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceExportOptions.#ctor
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Export
+    #region Export a utility network trace as a JSON file
+    private void ExportUtilityNetworkTraceAsJSON(UtilityNetwork utilityNetwork)
+    {
+      using (TraceManager traceManager = utilityNetwork.GetTraceManager())
+      using (UtilityNetworkDefinition utilityNetworkDefinition = utilityNetwork.GetDefinition())
+      using (NetworkSource deviceNetworkSource = GetNetworkSource(utilityNetworkDefinition, "GasDevice") as NetworkSource)
+      using (FeatureClass distributionDeviceFeatureClass = utilityNetwork.GetTable(deviceNetworkSource) as FeatureClass)
+      using (FeatureClassDefinition distributionDeviceDefinition = distributionDeviceFeatureClass.GetDefinition())
+      using (AssetGroup deviceAssetGroup = deviceNetworkSource.GetAssetGroup("Regulator"))
+      using (AssetType deviceAssetType = deviceAssetGroup.GetAssetType("Pressure Reducing"))
+      using (NetworkAttribute deviceStatusNetworkAttribute = utilityNetworkDefinition.GetNetworkAttribute("DeviceStatus"))
+      using (NetworkAttribute accessibleNetworkAttribute = utilityNetworkDefinition.GetNetworkAttribute("Accessible"))
+      {
+        // Domain and tier information
+        DomainNetwork domainNetwork = utilityNetworkDefinition.GetDomainNetwork("Gas");
+        Tier pipeDistributionSystemTier = domainNetwork.GetTier("Pipe Distribution");
+
+        // Start elements
+        Element startingPoint1 = utilityNetwork.CreateElement(deviceAssetType, Guid.Parse("{28CF437E-950C-41B7-B839-8BC45570DE40}"));
+        Element startingPoint2 = utilityNetwork.CreateElement(deviceAssetType, Guid.Parse("{63C22828-7BC9-49ED-A14A-A596559B6CB3}"));
+
+        startingPoint1.Terminal = startingPoint1.AssetType.GetTerminalConfiguration().Terminals.First(x => x.IsUpstreamTerminal);
+        startingPoint2.Terminal = startingPoint2.AssetType.GetTerminalConfiguration().Terminals.First(x => x.IsUpstreamTerminal);
+
+        List<Element> startingPoints = new List<Element>() { startingPoint1, startingPoint2 };
+        List<Element> barriers = new List<Element>();
+
+        // Set up trace filter: DeviceStatus = Open (1) AND Accessible = 1
+        NetworkAttributeComparison statusNetworkAttributeComparison = new NetworkAttributeComparison(deviceStatusNetworkAttribute, Operator.Equal, 1);
+        NetworkAttributeComparison networkAttributeComparison = new NetworkAttributeComparison(accessibleNetworkAttribute, Operator.Equal, 1);
+        
+        // Set trace configuration 
+        TraceConfiguration traceConfiguration = new TraceConfiguration
+        {
+          AllowIndeterminateFlow = true,
+          IgnoreBarriersAtStartingPoints = false,
+          IncludeBarriersWithResults = true,
+          IncludeContainers = true,
+          IncludeContent = true,
+          IncludeIsolatedFeatures = false,
+          IncludeUpToFirstSpatialContainer = false
+        };
+
+        traceConfiguration.Filter.Barriers = new And(statusNetworkAttributeComparison, networkAttributeComparison);
+        traceConfiguration.DomainNetwork = domainNetwork;
+        traceConfiguration.SourceTier = pipeDistributionSystemTier;
+
+        // Attribute fields of a network source
+        List<string> deviceFields = distributionDeviceDefinition.GetFields().Select(f => f.Name).ToList();
+
+        // Network attributes 
+        List<string> networkattributeNames = new List<string>();
+
+        IReadOnlyList<NetworkAttribute> networkAttributes = utilityNetworkDefinition.GetNetworkAttributes();
+
+        foreach (NetworkAttribute networkAttribute in networkAttributes)
+        {
+          networkattributeNames.Add(networkAttribute.Name);
+        }
+
+        // Result Types
+        List<ResultType> resultTypeList = new List<ResultType>() { ResultType.Feature };
+
+        // Resutl Options
+        ResultOptions resultOptions = new ResultOptions()
+        {
+          IncludeGeometry = true,
+          NetworkAttributes = networkattributeNames,
+          ResultFields = new Dictionary<NetworkSource, List<string>>() { { deviceNetworkSource, deviceFields } }
+        };
+
+        // Trace Arguments
+        TraceArgument traceArgument = new TraceArgument(startingPoints)
+        {
+          Barriers = barriers,
+          Configuration = traceConfiguration,
+          ResultTypes = resultTypeList,
+          ResultOptions = resultOptions
+        };
+
+        ConnectedTracer connectedTracer = traceManager.GetTracer<ConnectedTracer>();
+
+        // Set export options 
+        TraceExportOptions exportOptions = new TraceExportOptions()
+        {
+          ServiceSynchronizationType = ServiceSynchronizationType.Asynchronous,
+          IncludeDomainDescriptions = true,
+        };
+
+        // Path to export JSON
+        string jsonPath =  $"{Path.GetTempPath()}TraceResults.json";
+        Uri jsonUri = new Uri(jsonPath);
+
+        // Export 
+        connectedTracer.Export(jsonUri, traceArgument, exportOptions);
+
+        string jsonAbsolutePath = HttpUtility.UrlDecode(jsonUri.AbsolutePath);
+        if (jsonUri.IsFile && File.Exists(jsonAbsolutePath))
+        {
+          // Work with the JSON results
+        }
+      }
+      NetworkSource GetNetworkSource(UtilityNetworkDefinition unDefinition, string name)
+      {
+        IReadOnlyList<NetworkSource> allSources = unDefinition.GetNetworkSources();
+        foreach (NetworkSource source in allSources)
+        {
+          if (name.Contains("Partitioned Sink"))
+          {
+            if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()) ||
+                source.Name.Replace(" ", "").ToUpper()
+                  .Contains(name.Replace("Partitioned Sink", "Part_Sink").Replace(" ", "").ToUpper()))
+            {
+              return source;
+            }
+          }
+
+          if (name.Contains("Hierarchical Sink"))
+          {
+            if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()) ||
+                source.Name.Replace(" ", "").ToUpper()
+                  .Contains(name.Replace("Hierarchical Sink", "Hier_Sink").Replace(" ", "").ToUpper()))
+            {
+              return source;
+            }
+          }
+
+          if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()))
+          {
+            return source;
+          }
+        }
+
+        return null;
+      }
+    }
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceExportOptions.#ctor
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Export
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Trace(ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument)
+    // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.Tracer.Trace(ArcGIS.Core.Data.UtilityNetwork.Trace.TraceArgument,ArcGIS.Core.Data.ServiceSynchronizationType)
+    #region Fetch features and network attributes from a utility network during trace
+
+    private void FetchFeaturesAndAttributes(UtilityNetwork utilityNetwork)
+    {
+      using (TraceManager traceManager = utilityNetwork.GetTraceManager())
+      using (UtilityNetworkDefinition utilityNetworkDefinition = utilityNetwork.GetDefinition())
+      using (NetworkSource deviceNetworkSource = GetNetworkSource(utilityNetworkDefinition, "GasDevice") as NetworkSource)
+      using (FeatureClass distributionDeviceFeatureClass = utilityNetwork.GetTable(deviceNetworkSource) as FeatureClass)
+      using (FeatureClassDefinition distributionDeviceDefinition = distributionDeviceFeatureClass.GetDefinition())
+      using (AssetGroup deviceAssetGroup = deviceNetworkSource.GetAssetGroup("Regulator"))
+      using (AssetType deviceAssetType = deviceAssetGroup.GetAssetType("Pressure Reducing"))
+      using (NetworkAttribute deviceStatusNetworkAttribute = utilityNetworkDefinition.GetNetworkAttribute("DeviceStatus"))
+      using (NetworkAttribute accessibleNetworkAttribute = utilityNetworkDefinition.GetNetworkAttribute("Accessible"))
+      {
+        // Domain and tier information
+        DomainNetwork domainNetwork = utilityNetworkDefinition.GetDomainNetwork("Gas");
+        Tier pipeDistributionSystemTier = domainNetwork.GetTier("Pipe Distribution");
+
+        // Start elements
+        Element startingPoint1 = utilityNetwork.CreateElement(deviceAssetType, Guid.Parse("{28CF437E-950C-41B7-B839-8BC45570DE40}"));
+        Element startingPoint2 = utilityNetwork.CreateElement(deviceAssetType, Guid.Parse("{63C22828-7BC9-49ED-A14A-A596559B6CB3}"));
+
+        startingPoint1.Terminal = startingPoint1.AssetType.GetTerminalConfiguration().Terminals.First(x => x.IsUpstreamTerminal);
+        startingPoint2.Terminal = startingPoint2.AssetType.GetTerminalConfiguration().Terminals.First(x => x.IsUpstreamTerminal);
+
+        List<Element> startingPoints = new List<Element>() { startingPoint1, startingPoint2 };
+        List<Element> barriers = new List<Element>();
+
+        // Set up trace filter: DeviceStatus = Open (1) AND Accessible = 1
+        NetworkAttributeComparison statusNetworkAttributeComparison = new NetworkAttributeComparison(deviceStatusNetworkAttribute, Operator.Equal, 1);
+        NetworkAttributeComparison networkAttributeComparison = new NetworkAttributeComparison(accessibleNetworkAttribute, Operator.Equal, 1);
+        
+        // Set trace configuration 
+        TraceConfiguration traceConfiguration = new TraceConfiguration
+        {
+          AllowIndeterminateFlow = true,
+          IgnoreBarriersAtStartingPoints = false,
+          IncludeBarriersWithResults = true,
+          IncludeContainers = true,
+          IncludeContent = true,
+          IncludeIsolatedFeatures = false,
+          IncludeUpToFirstSpatialContainer = false
+        };
+
+        traceConfiguration.Filter.Barriers = new And(statusNetworkAttributeComparison, networkAttributeComparison);
+        traceConfiguration.DomainNetwork = domainNetwork;
+        traceConfiguration.SourceTier = pipeDistributionSystemTier;
+
+        // Attribute fields of a network source
+        List<string> deviceFields = distributionDeviceDefinition.GetFields().Select(f => f.Name).ToList();
+
+        // Network attributes 
+        List<string> networkattributeNames = new List<string>();
+
+        IReadOnlyList<NetworkAttribute> networkAttributes = utilityNetworkDefinition.GetNetworkAttributes();
+
+        foreach (NetworkAttribute networkAttribute in networkAttributes)
+        {
+          networkattributeNames.Add(networkAttribute.Name);
+        }
+
+        // Result Types
+        List<ResultType> resultTypeList = new List<ResultType>() { ResultType.Feature };
+
+        // Resutl Options
+        ResultOptions resultOptions = new ResultOptions()
+        {
+          IncludeGeometry = true,
+          NetworkAttributes = networkattributeNames,
+          ResultFields = new Dictionary<NetworkSource, List<string>>() { { deviceNetworkSource, deviceFields } }
+        };
+
+        // Trace Arguments
+        TraceArgument traceArgument = new TraceArgument(startingPoints)
+        {
+          Barriers = barriers,
+          Configuration = traceConfiguration,
+          ResultTypes = resultTypeList,
+          ResultOptions = resultOptions
+        };
+
+        // Tracer 
+        ConnectedTracer connectedTracer = traceManager.GetTracer<ConnectedTracer>();
+
+        // Async trace result
+        IReadOnlyList<Result> traceResults = connectedTracer.Trace(traceArgument, ServiceSynchronizationType.Asynchronous);
+
+        // Iterate trace results
+        foreach (Result traceResult in traceResults)
+        {
+          if (traceResult is FeatureElementResult featureElementResult)
+          {
+            IReadOnlyList<FeatureElement> featureElements = featureElementResult.FeatureElements;
+          }
+        }
+      }
+      // Helper inline function
+      NetworkSource GetNetworkSource(UtilityNetworkDefinition unDefinition, string name)
+      {
+        IReadOnlyList<NetworkSource> allSources = unDefinition.GetNetworkSources();
+        foreach (NetworkSource source in allSources)
+        {
+          if (name.Contains("Partitioned Sink"))
+          {
+            if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()) ||
+                source.Name.Replace(" ", "").ToUpper()
+                  .Contains(name.Replace("Partitioned Sink", "Part_Sink").Replace(" ", "").ToUpper()))
+            {
+              return source;
+            }
+          }
+
+          if (name.Contains("Hierarchical Sink"))
+          {
+            if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()) ||
+                source.Name.Replace(" ", "").ToUpper()
+                  .Contains(name.Replace("Hierarchical Sink", "Hier_Sink").Replace(" ", "").ToUpper()))
+            {
+              return source;
+            }
+          }
+
+          if (source.Name.Replace(" ", "").ToUpper().Contains(name.Replace(" ", "").ToUpper()))
+          {
+            return source;
+          }
+        }
+
+        return null;
+      }
+    }
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.GetFeaturesForElements
+    #region Get selected features from a list of elements
+    
+    private void FeatureSelectionsFromTrace(UtilityNetwork utilityNetwork, TraceArgument traceArgument)
+    {
+      // Get the trace manager from the utility network
+      using (TraceManager traceManager = utilityNetwork.GetTraceManager())
+      {
+        UpstreamTracer tracer = traceManager.GetTracer<UpstreamTracer>();
+        IReadOnlyList<Result> tracerResults = tracer.Trace(traceArgument);
+
+        foreach (Result traceResult in tracerResults)
+        {
+          if (traceResult is ElementResult elementResult)
+          {
+            IReadOnlyList<Element> elements = elementResult.Elements;
+
+            // Feature selection from a list of elements
+            IReadOnlyList<Selection> selections = utilityNetwork.GetFeaturesForElements(elements);
+          }
+        }
+      }
+    }
+
+    #endregion
 
     #region ProSnippet Group: Network Diagrams
     #endregion

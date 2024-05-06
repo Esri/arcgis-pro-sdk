@@ -45,7 +45,7 @@
       <!-- traditional -->
       <shortcut refID="esri_core_refresh" key="F5"/>
       <shortcut refID="esri_core_rename" key="F2"/>
-      <shortcut refID="esri_core_rename_alias" key="F2" flags="Ctrl"/>
+      <shortcut refID="esri_core_rename_alias" key="F2" flags="Shift"/>
       <shortcut refID="esri_core_SearchCatalog" key="F" flags="Ctrl"/>
       <shortcut refID="esri_editing_externalTable_openTablePaneButton" flags="Ctrl+Shift" key="T" />
 
@@ -62,7 +62,7 @@
       
       <!-- Alt for navigation -->
       <shortcut refID="esri_core_ActivateCatalogPane" key="F3" flags="Alt"/>
-      <shortcut refID="esri_core_FocusTOC" key="F4" flags="Alt"/>
+      <shortcut refID="esri_core_FocusTOC" key="F5" flags="Alt"/>
       <shortcut refID="esri_core_Breadcrumb" key="L" flags="Ctrl"/>
       <shortcut refID="esri_core_ShowSortMenu" key="F6"/>
       <shortcut refID="esri_core_FocusContent" key="F6" flags="Alt"/>
@@ -77,6 +77,7 @@
       <shortcut refID="esri_core_ShowComputer" key="Z" flags="Alt"/>
       <shortcut refID="esri_core_ShowFavorites" key="F" flags="Alt"/>
       <shortcut refID="esri_core_ShowCatalogOptions" key="B" flags="Alt"/>
+      <shortcut refID="esri_core_openFileLocation" key="E" flags="Alt"/>
     </insertShortcutTable>
     
     <insertShortcutTable id="esri_core_catalogPane_shortcuts"
@@ -114,6 +115,7 @@
       <shortcut refID="esri_core_ShowComputer" key="Z" flags="Alt"/>
       <shortcut refID="esri_core_FavoritesDP" key="F" flags="Alt"/>
       <shortcut refID="esri_core_ShowCatalogOptions" key="B" flags="Alt"/>
+      <shortcut refID="esri_core_openFileLocation" key="E" flags="Alt"/>
     </insertShortcutTable>
   </shortcutTables>
   
@@ -181,8 +183,9 @@
     <insertCategory id="esri_customizedCommandsCategory" />
     <insertCategory id="esri_commandSearchCategory" />
     <insertCategory id="esri_customItems" />
-    <insertCategory id="portalTypesFilter">
-      <component id="portal">
+    
+    <insertCategory id="portalTypesFilterEnterprise">
+      <component id="portalEnterprise">
         <content>
           <typeGroup displayName="Maps" type="maps">
             <typeSubGroup displayName="Web Maps" type="webmaps"/>
@@ -195,6 +198,9 @@
             <typeSubGroup displayName="Imagery Layers" type="imagerylayers"/>
             <typeSubGroup displayName="Tiled Imagery Layers" type="tiledimagerylayers"/>
             <typeSubGroup displayName="Scene Layers" type="scenelayers"/>
+            <typeSubGroup displayName="Video Layers" type="videolayers"/>
+            <typeSubGroup displayName="Elevation Layers" type="elevationlayers"/>
+            <typeSubGroup displayName="Group Layers" type="grouplayers"/>
             <typeSubGroup displayName="Tables" type="tables"/>
             <typeSubGroup displayName="Layer Files" type="layerfiles"/>
           </typeGroup>
@@ -203,6 +209,45 @@
             <typeSubGroup displayName="Locators" type="locators"/>
             <typeSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
             <typeSubGroup displayName="Network Analysis" type="networkanalysis"/>
+          </typeGroup>
+          <typeGroup displayName="Styles" type="styles">
+            <typeSubGroup displayName="Web styles" type="webstyles"/>
+            <typeSubGroup displayName="Desktop styles" type="desktopstyles"/>
+          </typeGroup>
+          <typeGroup displayName="Notebooks" type="notebooks"/>
+          <typeGroup displayName="Knowledge graphs" type="knowledgegraphs"/>
+        </content>
+      </component>
+    </insertCategory>
+
+    <insertCategory id="portalTypesFilterAGOL">
+      <component id="portalAGOL">
+        <content>
+          <typeGroup displayName="Maps" type="maps">
+            <typeSubGroup displayName="Web Maps" type="webmaps"/>
+            <typeSubGroup displayName="Map Files" type="mapfiles"/>
+          </typeGroup>
+          <typeGroup displayName="Layers" type="layers">
+            <typeSubGroup displayName="Feature Layers" type="featurelayers"/>
+            <typeSubGroup displayName="Tile Layers" type="tilelayers"/>
+            <typeSubGroup displayName="Map Image Layers" type="mapimagelayers"/>
+            <typeSubGroup displayName="Imagery Layers" type="imagerylayers"/>
+            <typeSubGroup displayName="Tiled Imagery Layers" type="tiledimagerylayers"/>
+            <typeSubGroup displayName="Elevation layers" type="elevationlayers"/>
+            <typeSubGroup displayName="Scene Layers" type="scenelayers"/>
+            <typeSubGroup displayName="Group Layers" type="grouplayers"/>
+            <typeSubGroup displayName="Tables" type="tables"/>
+            <typeSubGroup displayName="Layer Files" type="layerfiles"/>
+          </typeGroup>
+          <typeGroup displayName="Scenes" type="scenes"/>
+          <typeGroup displayName="Tools" type="tools">
+            <typeSubGroup displayName="Locators" type="locators"/>
+            <typeSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
+            <typeSubGroup displayName="Network Analysis" type="networkanalysis"/>
+          </typeGroup>
+          <typeGroup displayName="Styles" type="styles">
+            <typeSubGroup displayName="Web styles" type="webstyles"/>
+            <typeSubGroup displayName="Desktop styles" type="desktopstyles"/>
           </typeGroup>
           <typeGroup displayName="Notebooks" type="notebooks"/>
         </content>
@@ -500,7 +545,8 @@
           <button refID="esri_mapping_newMapPalette" size="large" />
           <gallery refID="esri_layouts_gallery" size="large" />
           
-          <button refID="esri_reports_newReportSplitButton" size="middle" />
+          <button refID="esri_reports_newReportSplitButton" size="Large"/>
+          <button refID="esri_presentations_newPresentationButton" size="middle" />
           <splitButton refID="esri_geodatabase_AddNewOrExistingNotebookSplitButton" size="middle"/>
           <buttonPalette refID="esri_geoprocessing_insertMenu" size="middle"/>
           

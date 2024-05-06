@@ -41,6 +41,7 @@ using ArcGIS.Core.Events;
 using ArcGIS.Core.Data.Topology;
 using System.Xml.Linq;
 using Attribute = ArcGIS.Desktop.Editing.Attributes.Attribute;
+using ArcGIS.Core.Data.UtilityNetwork.Trace;
 
 namespace EditingSDKExamples
 {
@@ -95,8 +96,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.ExecuteAsync
       #region Edit Operation Create Features
 
-      var createFeatures = new EditOperation();
-      createFeatures.Name = "Create Features";
+      var createFeatures = new EditOperation() { Name = "Create Features" };
       //Create a feature with a polygon
       var token = createFeatures.Create(featureLayer, polygon);
       if (createFeatures.IsSucceeded)
@@ -135,8 +135,7 @@ namespace EditingSDKExamples
       var myTemplate = ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current;
 
       //Create edit operation and execute
-      var op = new ArcGIS.Desktop.Editing.EditOperation();
-      op.Name = "Create my feature";
+      var op = new ArcGIS.Desktop.Editing.EditOperation() { Name = "Create my feature" };
       op.Create(myTemplate, geometry);
       if (!op.IsEmpty)
       {
@@ -156,9 +155,9 @@ namespace EditingSDKExamples
         // insp["Field1"] = newValue;
 
         //Create new feature from an existing inspector (copying the feature)
-        var createOp = new ArcGIS.Desktop.Editing.EditOperation();
-        createOp.Name = "Create from insp";
+        var createOp = new EditOperation() { Name = "Create from insp" };
         createOp.Create(insp.MapMember, insp.ToDictionary(a => a.FieldName, a => a.CurrentValue));
+
         if (!createOp.IsEmpty)
         {
           var result = createOp.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
@@ -174,9 +173,7 @@ namespace EditingSDKExamples
       ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask.Run(() =>
       {
         //Create the edit operation
-        var createOperation = new ArcGIS.Desktop.Editing.EditOperation();
-        createOperation.Name = "Generate points";
-        createOperation.SelectNewFeatures = false;
+        var createOperation = new ArcGIS.Desktop.Editing.EditOperation() { Name = "Generate points", SelectNewFeatures = false };
 
         // determine the shape field name - it may not be 'Shape' 
         string shapeField = layer.GetFeatureClass().GetDefinition().GetShapeField();
@@ -212,10 +209,10 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.EditingTemplate)
       #region Edit Operation Create row in a table using a table template
       var tableTemplate = standaloneTable.GetTemplates().FirstOrDefault();
-      var createRow = new EditOperation();
-      createRow.Name = "Create a row in a table";
+      var createRow = new EditOperation() { Name = "Create a row in a table" };
       //Creating a new row in a standalone table using the table template of your choice
       createRow.Create(tableTemplate);
+
       if (!createRow.IsEmpty)
       {
         var result = createRow.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
@@ -226,8 +223,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Clip(ArcGIS.Desktop.Mapping.Layer, System.Int64, ArcGIS.Core.Geometry.Geometry, ArcGIS.Desktop.Editing.ClipMode)
       #region Edit Operation Clip Features
 
-      var clipFeatures = new EditOperation();
-      clipFeatures.Name = "Clip Features";
+      var clipFeatures = new EditOperation() { Name = "Clip Features" };
       clipFeatures.Clip(featureLayer, oid, clipPoly, ClipMode.PreserveArea);
       //Execute to execute the operation
       //Must be called within QueuedTask.Run
@@ -247,8 +243,7 @@ namespace EditingSDKExamples
 
       var select = MapView.Active.SelectFeatures(clipPoly);
 
-      var cutFeatures = new EditOperation();
-      cutFeatures.Name = "Cut Features";
+      var cutFeatures = new EditOperation() { Name = "Cut Features" };
       cutFeatures.Split(featureLayer, oid, cutLine);
 
       //Cut all the selected features in the active view
@@ -275,8 +270,7 @@ namespace EditingSDKExamples
         // cref: ArcGIS.Desktop.Editing.EditOperation.Delete(ArcGIS.Desktop.Mapping.SelectionSet)
         #region Edit Operation Delete Features
 
-        var deleteFeatures = new EditOperation();
-        deleteFeatures.Name = "Delete Features";
+        var deleteFeatures = new EditOperation() { Name = "Delete Features" };
         var table = MapView.Active.Map.StandaloneTables[0];
         //Delete a row in a standalone table
         deleteFeatures.Delete(table, oid);
@@ -306,8 +300,7 @@ namespace EditingSDKExamples
       // cref: ARCGIS.DESKTOP.EDITING.EDITOPERATION.CREATECHAINEDOPERATION
       #region Edit Operation Duplicate Features
       {
-        var duplicateFeatures = new EditOperation();
-        duplicateFeatures.Name = "Duplicate Features";
+        var duplicateFeatures = new EditOperation() { Name = "Duplicate Features" };
 
         //Duplicate with an X and Y offset of 500 map units
         //At 2.x duplicateFeatures.Duplicate(featureLayer, oid, 500.0, 500.0, 0.0);
@@ -338,8 +331,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Explode(Layer,IEnumerable{Int64},Boolean)
       #region Edit Operation Explode Features
 
-      var explodeFeatures = new EditOperation();
-      explodeFeatures.Name = "Explode Features";
+      var explodeFeatures = new EditOperation() { Name = "Explode Features" };
 
       //Take a multipart and convert it into one feature per part
       //Provide a list of ids to convert multiple
@@ -364,8 +356,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(LAYER,IENUMERABLE{INT64},INSPECTOR)
       #region Edit Operation Merge Features
 
-      var mergeFeatures = new EditOperation();
-      mergeFeatures.Name = "Merge Features";
+      var mergeFeatures = new EditOperation() { Name = "Merge Features" };
 
       //Merge three features into a new feature using defaults
       //defined in the current template
@@ -403,8 +394,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Modify(ArcGIS.Desktop.Mapping.Layer, System.Int64, ArcGIS.Core.Geometry.Geometry, Nullable<System.Collections.Generic.Dictionary<System.String, System.object>>)
       #region Edit Operation Modify single feature
 
-      var modifyFeature = new EditOperation();
-      modifyFeature.Name = "Modify a feature";
+      var modifyFeature = new EditOperation() { Name = "Modify a feature" };
 
       //use an inspector
       var modifyInspector = new Inspector();
@@ -437,8 +427,7 @@ namespace EditingSDKExamples
       #region Edit Operation Modify multiple features
 
       //Search by attribute
-      var queryFilter = new QueryFilter();
-      queryFilter.WhereClause = "OBJECTID < 1000000";
+      var queryFilter = new QueryFilter() { WhereClause = "OBJECTID < 1000000" };
       //Create list of oids to update
       var oidSet = new List<long>();
       using (var rc = featureLayer.Search(queryFilter))
@@ -453,8 +442,7 @@ namespace EditingSDKExamples
       }
 
       //create and execute the edit operation
-      var modifyFeatures = new EditOperation();
-      modifyFeatures.Name = "Modify features";
+      var modifyFeatures = new EditOperation() { Name = "Modify features" };
       modifyFeatures.ShowProgressor = true;
 
       var muultipleFeaturesInsp = new Inspector();
@@ -474,8 +462,7 @@ namespace EditingSDKExamples
         var disLayer = ArcGIS.Desktop.Mapping.MapView.Active.Map.FindLayers("Distribution mains").FirstOrDefault() as BasicFeatureLayer;
 
         //Search by attribute
-        var filter = new ArcGIS.Core.Data.QueryFilter();
-        filter.WhereClause = "CONTRACTOR = 'KCGM'";
+        var filter = new ArcGIS.Core.Data.QueryFilter { WhereClause = "CONTRACTOR = 'KCGM'" };
 
         var oids = new List<long>();
         using (var rc = disLayer.Search(filter))
@@ -491,8 +478,7 @@ namespace EditingSDKExamples
         }
 
         //Create edit operation 
-        var modifyOp = new ArcGIS.Desktop.Editing.EditOperation();
-        modifyOp.Name = "Update date";
+        var modifyOp = new EditOperation() { Name = "Update date" };
 
         // load features into inspector and update field
         var dateInsp = new ArcGIS.Desktop.Editing.Attributes.Inspector();
@@ -519,8 +505,7 @@ namespace EditingSDKExamples
       var selectionDictionary = new Dictionary<MapMember, List<long>>();
       selectionDictionary.Add(firstLayer as MapMember, selectionfromMap.GetObjectIDs().ToList());
 
-      var moveFeature = new EditOperation();
-      moveFeature.Name = "Move features";
+      var moveFeature = new EditOperation() { Name = "Move features" };
       //at 2.x - moveFeature.Move(selectionDictionary, 10, 10);  //specify your units along axis to move the geometry
       moveFeature.Move(SelectionSet.FromDictionary(selectionDictionary), 10, 10);  //specify your units along axis to move the geometry
       if (!moveFeature.IsEmpty)
@@ -539,8 +524,7 @@ namespace EditingSDKExamples
 
       var moveToPoint = new MapPointBuilderEx(1.0, 2.0, 3.0, 4.0, MapView.Active.Map.SpatialReference); //can pass in coordinates.
 
-      var modifyFeatureCoord = new EditOperation();
-      modifyFeatureCoord.Name = "Move features";
+      var modifyFeatureCoord = new EditOperation() { Name = "Move features" };
       modifyFeatureCoord.Modify(abLayer, selOid, moveToPoint.ToGeometry());  //Modify the feature to the new geometry 
       if (!modifyFeatureCoord.IsEmpty)
       {
@@ -555,8 +539,7 @@ namespace EditingSDKExamples
       // note - EditOperation.Planarize requires a standard license. 
       //  An exception will be thrown if Pro is running under a basic license. 
 
-      var planarizeFeatures = new EditOperation();
-      planarizeFeatures.Name = "Planarize Features";
+      var planarizeFeatures = new EditOperation() { Name = "Planarize Features" };
 
       //Planarize one or more features
       planarizeFeatures.Planarize(featureLayer, new List<long>() { oid });
@@ -608,8 +591,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Reshape(ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Core.Geometry.Geometry)
       #region Edit Operation Reshape Features
 
-      var reshapeFeatures = new EditOperation();
-      reshapeFeatures.Name = "Reshape Features";
+      var reshapeFeatures = new EditOperation() { Name = "Reshape Features" };
 
       reshapeFeatures.Reshape(featureLayer, oid, modifyLine);
 
@@ -638,8 +620,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Rotate(ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Core.Geometry.MapPoint, System.Double)
       #region Edit Operation Rotate Features
 
-      var rotateFeatures = new EditOperation();
-      rotateFeatures.Name = "Rotate Features";
+      var rotateFeatures = new EditOperation() { Name = "Rotate Features" };
 
       //Rotate works on a selected set of features
       //Get all features that intersect a polygon
@@ -666,8 +647,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Scale(ArcGIS.Desktop.Mapping.SelectionSet, ArcGIS.Core.Geometry.MapPoint, System.Double, System.Double, System.Double)
       #region Edit Operation Scale Features
 
-      var scaleFeatures = new EditOperation();
-      scaleFeatures.Name = "Scale Features";
+      var scaleFeatures = new EditOperation() { Name = "Scale Features" };
 
       //Rotate works on a selected set of features
 
@@ -702,8 +682,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Split(ArcGIS.Desktop.Mapping.Layer, System.Int64, ArcGIS.Desktop.Editing.SplitMethod)
       #region Edit Operation Split Features
 
-      var splitFeatures = new EditOperation();
-      splitFeatures.Name = "Split Features";
+      var splitFeatures = new EditOperation() { Name = "Split Features" };
 
       var splitPoints = new List<MapPoint>() { mp1, mp2, mp3 };
 
@@ -747,8 +726,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.Transform(ArcGIS.Desktop.Mapping.SelectionSet,ArcGIS.Desktop.Editing.TransformMethod)
       #region Edit Operation Transform Features
 
-      var transformFeatures = new EditOperation();
-      transformFeatures.Name = "Transform Features";
+      var transformFeatures = new EditOperation() { Name = "Transform Features" };
 
       //Transform a selected set of features
       //At 2.x - var transformSelection = MapView.Active.GetFeatures(polygon).Select(
@@ -834,8 +812,7 @@ namespace EditingSDKExamples
 
       //Multiple operations can be performed by a single
       //edit operation.
-      var clipCutPlanarizeFeatures = new EditOperation();
-      clipCutPlanarizeFeatures.Name = "Clip, Cut, and Planarize Features";
+      var clipCutPlanarizeFeatures = new EditOperation() { Name = "Clip, Cut, and Planarize Features" };
       clipCutPlanarizeFeatures.Clip(featureLayer, oid, clipPoly);
       clipCutPlanarizeFeatures.Split(featureLayer, oid, cutLine);
       clipCutPlanarizeFeatures.Planarize(featureLayer, oid);
@@ -861,8 +838,7 @@ namespace EditingSDKExamples
 
       //The most common use case for operation chaining is creating a feature with an attachement. 
       //Adding an attachment requires the object id (of a new feature) has already been created. 
-      var editOperation1 = new EditOperation();
-      editOperation1.Name = string.Format("Create point in '{0}'", CurrentTemplate.Layer.Name);
+      var editOperation1 = new EditOperation() { Name = string.Format("Create point in '{0}'", CurrentTemplate.Layer.Name) };
 
       long newFeatureID = -1;
       //The Create operation has to execute so we can get an object_id
@@ -919,13 +895,11 @@ namespace EditingSDKExamples
       // perform an edit and then a split as one operation.
       QueuedTask.Run(() =>
       {
-        var queryFilter = new QueryFilter();
-        queryFilter.WhereClause = "OBJECTID = " + oid.ToString();
+        var queryFilter = new QueryFilter() { WhereClause = "OBJECTID = " + oid.ToString() };
 
         // create an edit operation and name.
-        var op = new EditOperation();
-        op.Name = "modify followed by split";
-        // set the ExecuteMOde
+        var op = new EditOperation() { Name = "modify followed by split" };
+        // set the ExecuteMode
         op.ExecuteMode = ExecuteModeType.Sequential;
 
         using (var rowCursor = fc.Search(queryFilter, false))
@@ -965,8 +939,7 @@ namespace EditingSDKExamples
       testInspector["Name"] = "test";
 
       //create and execute the edit operation
-      var updateTestField = new EditOperation();
-      updateTestField.Name = "Update test field";
+      var updateTestField = new EditOperation() { Name = "Update test field" };
       updateTestField.Modify(insp);
 
       //actions for SetOn...
@@ -993,6 +966,52 @@ namespace EditingSDKExamples
         var result = updateTestField.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
       }
       #endregion
+      
+      var lineLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault();
+
+      var changeVertexIDOperation = new EditOperation();
+      //cref: ArcGIS.Core.Geometry.MapPointBuilderEx.HasID
+      //cref: ArcGIS.Core.Geometry.MapPointBuilderEx.ID
+      #region Convert vertices in a polyline to a Control Point
+      //Control points are special vertices used to apply symbol effects to line or polygon features.
+      //By default, they appear as diamonds when you edit them.
+      //They can also be used to migrate representations from ArcMap to features in ArcGIS Pro.
+      QueuedTask.Run(() =>
+      {
+        //iterate through the points in the polyline.
+        var lineLayerCursor = lineLayer.GetSelection().Search();
+        var lineVertices = new List<MapPoint>();
+        long oid = -1;
+        while (lineLayerCursor.MoveNext())
+        {
+          var lineFeature = lineLayerCursor.Current as Feature;
+          var line = lineFeature.GetShape() as Polyline;
+          int vertexIndex = 1;
+          oid = lineFeature.GetObjectID();
+          //Each point is converted into a MapPoint and gets added to a list. 
+          foreach (var point in line.Points)
+          {
+            MapPointBuilderEx mapPointBuilderEx = new MapPointBuilderEx(point);
+            //Changing the vertex 6 and 7 to control points
+            if (vertexIndex == 6 || vertexIndex == 7)
+            {
+              //These points are made "ID Aware" and the IDs are set to be 1.
+              mapPointBuilderEx.HasID = true;
+              mapPointBuilderEx.ID = 1;
+            }
+            
+            lineVertices.Add(mapPointBuilderEx.ToGeometry() as MapPoint);
+            vertexIndex++;
+          }
+        }
+        //create a new polyline using the point collection.
+        var newLine = PolylineBuilderEx.CreatePolyline(lineVertices);
+        //edit operation to modify the original line with the new line that contains control points.
+        changeVertexIDOperation.Modify(lineLayer, oid, newLine);
+        changeVertexIDOperation.Execute();
+      });
+      #endregion
+
     }
 
     #region ProSnippet Group: Enable Editing
@@ -1308,22 +1327,26 @@ namespace EditingSDKExamples
     // cref: ArcGIS.Desktop.Editing.Events.RowChangedEventArgs.CancelEdit(System.String, System.Boolean)
     // cref: ArcGIS.Desktop.Editing.Events.RowChangedEventArgs.CancelEdit()
     #region Cancel a delete
-    public static void StopADelete()
+    public void StopADelete()
     {
       // subscribe to the RowDeletedEvent for the appropriate table
       Table table = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>().FirstOrDefault().GetTable();
       RowDeletedEvent.Subscribe(OnRowDeletedEvent, table);
     }
 
-    private static void OnRowDeletedEvent(RowChangedEventArgs args)
+    private Guid _currentRowDeletedGuid = Guid.Empty;
+    private void OnRowDeletedEvent(RowChangedEventArgs args)
     {
       // RowEvent callbacks are always called on the QueuedTask so there is no need 
       // to wrap your code within a QueuedTask.Run lambda.
 
       var row = args.Row;
 
-      // cancel the delete if the feature is in Police District 5
+      // check for re-entry 
+      if (_currentRowDeletedGuid == args.Guid)
+        return;
 
+      // cancel the delete if the feature is in Police District 5
       var fldIdx = row.FindField("POLICE_DISTRICT");
       if (fldIdx != -1)
       {
@@ -1338,6 +1361,7 @@ namespace EditingSDKExamples
           // args.CancelEdit();
         }
       }
+      _currentRowDeletedGuid = args.Guid;
     }
     #endregion
 
@@ -1352,13 +1376,13 @@ namespace EditingSDKExamples
     // cref: ArcGIS.Desktop.Editing.Events.EditCompletedEventArgs.Deletes
     #region Subscribe to EditCompletedEvent
 
-    protected void subEditEvents()
+    protected void SubEditEvents()
     {
       //subscribe to editcompleted
-      var eceToken = EditCompletedEvent.Subscribe(onEce);
+      var eceToken = EditCompletedEvent.Subscribe(OnEce);
     }
 
-    protected Task onEce(EditCompletedEventArgs args)
+    protected Task OnEce(EditCompletedEventArgs args)
     {
       //show number of edits
       Console.WriteLine("Creates: " + args.Creates.ToDictionary().Values.Sum(list => list.Count).ToString());
@@ -1565,8 +1589,7 @@ namespace EditingSDKExamples
         }
 
         //put the memory stream in the blob field and save to feature
-        var op = new EditOperation();
-        op.Name = "Blob Inspector";
+        var op = new EditOperation() { Name = "Blob Inspector" };
         insp["Blobfield"] = msr;
         op.Modify(insp);
         if (!op.IsEmpty)
@@ -1585,8 +1608,7 @@ namespace EditingSDKExamples
       #region Read and Write blob fields with a row cursor in a callback
       QueuedTask.Run(() =>
       {
-        var editOp = new EditOperation();
-        editOp.Name = "Blob Cursor";
+        var editOp = new EditOperation() { Name = "Blob Cursor" };
         var featLayer = MapView.Active.Map.FindLayers("Hydrant").First() as FeatureLayer;
 
         editOp.Callback((context) =>
@@ -1662,8 +1684,7 @@ namespace EditingSDKExamples
         insp.Load(sel.ToDictionary().Keys.First(), sel.ToDictionary().Values.First());
         insp["Photo"] = @"e:\temp\Hydrant.jpg";
 
-        var op = new EditOperation();
-        op.Name = "Raster Inspector";
+        var op = new EditOperation() { Name = "Raster Inspector" };
         op.Modify(insp);
         if (!op.IsEmpty)
         {
@@ -1704,8 +1725,7 @@ namespace EditingSDKExamples
           insp.Load(sel.ToDictionary().Keys.First(), sel.ToDictionary().Values.First());
           insp["Photo"] = rv;
 
-          var op = new EditOperation();
-          op.Name = "Raster Inspector";
+          var op = new EditOperation() { Name = "Raster Inspector" };
           op.Modify(insp);
           if (!op.IsEmpty)
           {
@@ -1718,106 +1738,106 @@ namespace EditingSDKExamples
 
     #region ProSnippet Group: Inspector Provider Class
     #endregion
-            
+
     #region How to create a custom Feature inspector provider class
 
     public class MyProvider : InspectorProvider
     {
-        private System.Guid guid = System.Guid.NewGuid();
-        internal MyProvider()
+      private System.Guid guid = System.Guid.NewGuid();
+      internal MyProvider()
+      {
+      }
+      public override System.Guid SharedFieldColumnSizeID()
+      {
+        return guid;
+      }
+
+      public override string CustomName(Attribute attr)
+      {
+        //Giving a custom name to be displayed for the field FeatureID
+        if (attr.FieldName == "FeatureID")
+          return "Feature Identification";
+
+        return attr.FieldName;
+      }
+      public override bool? IsVisible(Attribute attr)
+      {
+        //The field FontStyle will not be visible
+        if (attr.FieldName == "FontStyle")
+          return false;
+
+        return true;
+      }
+      public override bool? IsEditable(Attribute attr)
+      {
+        //The field DateField will not be editable
+        if (attr.FieldName == "DateField")
+          return false;
+
+        return true;
+      }
+      public override bool? IsHighlighted(Attribute attr)
+      {
+        //ZOrder field will be highlighted in the feature inspector grid
+        if (attr.FieldName == "ZOrder")
+          return true;
+
+        return false;
+      }
+
+      public override IEnumerable<Attribute> AttributesOrder(IEnumerable<Attribute> attrs)
+      {
+        //Reverse the order of display
+        var newList = new List<Attribute>();
+        foreach (var attr in attrs)
         {
+          newList.Insert(0, attr);
         }
-        public override System.Guid SharedFieldColumnSizeID()
-        {
-            return guid;
-        }
+        return newList;
+      }
 
-        public override string CustomName(Attribute attr)
-        {
-            //Giving a custom name to be displayed for the field FeatureID
-            if (attr.FieldName == "FeatureID")
-                return "Feature Identification";
+      public override bool? IsDirty(Attribute attr)
+      {
+        //The field will not be marked dirty for FeatureID if you enter the value -1
+        if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
+          return false;
 
-            return attr.FieldName;
-        }
-        public override bool? IsVisible(Attribute attr)
-        {
-            //The field FontStyle will not be visible
-            if (attr.FieldName == "FontStyle")
-                return false;
+        return base.IsDirty(attr);
+      }
 
-            return true;
-        }
-        public override bool? IsEditable(Attribute attr)
-        {
-            //The field DateField will not be editable
-            if (attr.FieldName == "DateField")
-                return false;
+      public override IEnumerable<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError> Validate(Attribute attr)
+      {
+        var errors = new List<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError>();
 
-            return true;
-        }
-        public override bool? IsHighlighted(Attribute attr)
-        {
-            //ZOrder field will be highlighted in the feature inspector grid
-            if (attr.FieldName == "ZOrder")
-                return true;
+        if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "2"))
+          errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Value not allowed", ArcGIS.Desktop.Editing.Attributes.Severity.Low));
 
-            return false;
-        }
+        if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
+          errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Invalid value", ArcGIS.Desktop.Editing.Attributes.Severity.High));
 
-        public override IEnumerable<Attribute> AttributesOrder(IEnumerable<Attribute> attrs)
-        {
-            //Reverse the order of display
-            var newList = new List<Attribute>();
-            foreach (var attr in attrs)
-            {
-                newList.Insert(0, attr);
-            }
-            return newList;
-        }
-
-        public override bool? IsDirty(Attribute attr)
-        {
-            //The field will not be marked dirty for FeatureID if you enter the value -1
-            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
-                return false;
-
-            return base.IsDirty(attr);
-        }
-
-        public override IEnumerable<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError> Validate(Attribute attr)
-        {
-            var errors = new List<ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError>();
-
-            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "2"))
-                errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Value not allowed", ArcGIS.Desktop.Editing.Attributes.Severity.Low));
-
-            if ((attr.FieldName == "FeatureID") && (attr.CurrentValue.ToString() == "-1"))
-                errors.Add(ArcGIS.Desktop.Editing.Attributes.Attribute.ValidationError.Create("Invalid value", ArcGIS.Desktop.Editing.Attributes.Severity.High));
-
-            return errors;
-        }
+        return errors;
+      }
     }
     #endregion
 
     public async void InspectorProviderExample()
     {
-        int oid = 1;
-        #region Using the custom inspector provider class
-        var layer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
+      int oid = 1;
+      #region Using the custom inspector provider class
+      var layer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
 
-        var provider = new MyProvider();
-        Inspector _featureInspector = provider.Create();
-        //Create an embeddable control from the inspector class to display on the pane
-        var icontrol = _featureInspector.CreateEmbeddableControl();
+      var provider = new MyProvider();
+      Inspector _featureInspector = provider.Create();
+      //Create an embeddable control from the inspector class to display on the pane
+      var icontrol = _featureInspector.CreateEmbeddableControl();
 
-        await _featureInspector.LoadAsync(layer, oid);
-        var attribute = _featureInspector.Where(a => a.FieldName == "FontStyle").FirstOrDefault();
-        var visibility = attribute.IsVisible; //Will return false
+      await _featureInspector.LoadAsync(layer, oid);
+      var attribute = _featureInspector.Where(a => a.FieldName == "FontStyle").FirstOrDefault();
+      var visibility = attribute.IsVisible; //Will return false
 
-        attribute = _featureInspector.Where(a => a.FieldName == "ZOrder").FirstOrDefault();
-        var highlighted = attribute.IsHighlighted; //Will return true
-        #endregion
+      attribute = _featureInspector.Where(a => a.FieldName == "ZOrder").FirstOrDefault();
+      var highlighted = attribute.IsHighlighted; //Will return true
+      #endregion
     }
 
     #region ProSnippet Group: Working with the Sketch
@@ -1996,28 +2016,16 @@ namespace EditingSDKExamples
         //Getting the current symbology options of the segment
         var segmentOptions = GetSketchSegmentSymbolOptions();
         //Modifying the primary and secondary color and the width of the segment symbology options
-        var deepPurple = new CIMRGBColor();
-        deepPurple.R = 75;
-        deepPurple.G = 0;
-        deepPurple.B = 110;
+        var deepPurple = new CIMRGBColor() { R = 75, G = 0, B = 110 };
         segmentOptions.PrimaryColor = deepPurple;
         segmentOptions.Width = 4;
         segmentOptions.HasSecondaryColor = true;
-        var pink = new CIMRGBColor();
-        pink.R = 219;
-        pink.G = 48;
-        pink.B = 130;
+        var pink = new CIMRGBColor() { R = 219, G = 48, B = 130 };
         segmentOptions.SecondaryColor = pink;
         //Creating a new vertex symbol options instance with the values you want
         var vertexOptions = new VertexSymbolOptions(VertexSymbolType.RegularUnselected);
-        var yellow = new CIMRGBColor();
-        yellow.R = 255;
-        yellow.G = 215;
-        yellow.B = 0;
-        var purple = new CIMRGBColor();
-        purple.R = 148;
-        purple.G = 0;
-        purple.B = 211;
+        var yellow = new CIMRGBColor() { R = 255, G = 215, B = 0 };
+        var purple = new CIMRGBColor() { R = 148, G = 0, B = 211 };
         vertexOptions.AngleRotation = 45;
         vertexOptions.Color = yellow;
         vertexOptions.MarkerType = VertexMarkerType.Star;
@@ -2144,18 +2152,18 @@ namespace EditingSDKExamples
 
       return base.OnSketchModifiedAsync();
     }
-    
+
   }
   #endregion
 
   public class Snippets
-  { 
+  {
 
-  #region ProSnippet Group: Snapping
-  #endregion
+    #region ProSnippet Group: Snapping
+    #endregion
 
 
-  private async void Snapping()
+    private async void Snapping()
     {
       Map myMap = null;
       FeatureLayer fLayer = null;
@@ -2293,10 +2301,12 @@ namespace EditingSDKExamples
       // configure for a set of layers
 
       // set Vertex, edge, end on for a set of layers, other snapModes false
-      var vee = new LayerSnapModes(false);
-      vee.Vertex = true;
-      vee.Edge = true;
-      vee.End = true;
+      var vee = new LayerSnapModes(false)
+      {
+        Vertex = true,
+        Edge = true,
+        End = true
+      };
       ArcGIS.Desktop.Mapping.Snapping.SetLayerSnapModes(layerList, vee);
 
 
@@ -2344,8 +2354,7 @@ namespace EditingSDKExamples
       });
 
       // set vertex snapping only
-      var vertexOnly = new LayerSnapModes(false);
-      vertexOnly.Vertex = true;
+      var vertexOnly = new LayerSnapModes(false) { Vertex = true };
 
       // set vertex only for the specific layer, clearing all others
       var dict = new Dictionary<Layer, LayerSnapModes>();

@@ -35,6 +35,7 @@ using ArcGIS.Core.Data.DDL;
 using ArcGIS.Core.Data.Mapping;
 using FieldDescription = ArcGIS.Core.Data.DDL.FieldDescription;
 using ArcGIS.Core.Data.Exceptions;
+using SpatialReference = ArcGIS.Core.Geometry.SpatialReference;
 
 namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 {
@@ -1472,6 +1473,212 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     }
     #endregion Get domain string from a field
 
+    // cref: ArcGIS.Core.Data.DatastoreProperties
+    // cref: ArcGIS.Core.Data.DatastoreProperties.SupportsBigInteger
+    // cref: ArcGIS.Core.Data.DatastoreProperties.SupportsQueryPagination
+    // cref: ArcGIS.Core.Data.DatastoreProperties.CanEdit
+    // cref: ArcGIS.Core.Data.DatastoreProperties.SupportsBigObjectID
+    // cref: ArcGIS.Core.Data.DatastoreProperties.SupportsDateOnly
+    // cref: ArcGIS.Core.Data.Datastore.GetDatastoreProperties
+    // cref: ArcGIS.Core.Data.Datastore.AreDatastorePropertiesSupported
+    #region Get datastore or workspace properties
+
+    public void GetDatastoreProperties(Datastore geodatabase)
+    {
+      // Check if a data store supports datastore properties
+      bool areDatastorePropertiesSupported = geodatabase.AreDatastorePropertiesSupported();
+
+      if (areDatastorePropertiesSupported)
+      {
+        DatastoreProperties datastoreProperties = geodatabase.GetDatastoreProperties();
+
+        // Supports 64-bit integer field
+        bool supportsBigInteger = datastoreProperties.SupportsBigInteger;
+
+        // Supports pagination
+        bool supportsQueryPagination = datastoreProperties.SupportsQueryPagination;
+
+        // Supports datastore edit 
+        bool canEdit = datastoreProperties.CanEdit;
+
+        // Supports 64-bit Object ID
+        bool supportsBigObjectId = datastoreProperties.SupportsBigObjectID;
+
+        // Supports DateOnly field
+        bool supportsDateOnly = datastoreProperties.SupportsDateOnly;
+
+        // Supports TimeOnly field
+        bool supportsTimeOnly = datastoreProperties.SupportsTimeOnly;
+
+        // Supports TimestampOffset field
+        bool supportsTimestampOffset = datastoreProperties.SupportsTimestampOffset;
+      }
+    }
+
+    #endregion
+
+    // cref: ARCGIS.CORE.DATA.QUERYFILTER.#CTOR
+    // cref: ArcGIS.Core.Data.QueryFilter.Offset
+    // cref: ArcGIS.Core.Data.QueryFilter.RowCount
+    #region Pagination in QueryFilter
+
+    public void QueryFilterWithPagination(Table table, List<long> objectIDs)
+    {
+      int rowsPerBatch = 100;
+      int offset = 0;
+
+      // Query filter
+      // Some datastores support pagination only through an SQL postfix clause
+      QueryFilter queryFilter = new QueryFilter()
+      {
+        ObjectIDs = objectIDs,
+        PostfixClause = "ORDER BY OBJECTID"
+      };
+
+      // Fetch rows in a batch from a table
+      for (int index = offset; index <= objectIDs.Count; index += rowsPerBatch)
+      {
+        // Set number of rows to return from a table
+        queryFilter.RowCount = rowsPerBatch;
+
+        // Set positional offset to skip number of rows from a table 
+        queryFilter.Offset = index;
+          
+        using (RowCursor cursor = table.Search(queryFilter))
+        {
+          while (cursor.MoveNext())
+          {
+            using (Row row = cursor.Current)
+            {
+              Console.WriteLine(row.GetObjectID());
+            }
+          }
+        }
+      }
+    }
+
+    #endregion
+
+    // cref: ArcGIS.Core.Data.Conflict
+    // cref: ArcGIS.Core.Data.Version.Reconcile(ArcGIS.Core.Data.ReconcileOptions,ArcGIS.Core.Data.PostOptions)
+    // cref: ArcGIS.Core.Data.ConflictResolutionMethod
+    // cref: ArcGIS.Core.Data.ConflictDetectionType
+    // cref: ArcGIS.Core.Data.ConflictResolutionType
+    // cref: ArcGIS.Core.Data.ReconcileResult
+    // cref: ArcGIS.Core.Data.ReconcileResult.HasConflicts
+    // cref: ArcGIS.Core.Data.Version.GetConflicts
+    // cref: ArcGIS.Core.Data.PostOptions.ServiceSynchronizationType
+    // ArcGIS.Core.Data.Version.Reconcile(ArcGIS.Core.Data.ReconcileOptions)
+    // cref: ArcGIS.Core.Data.Version.HasConflicts
+    #region Illustrate version conflict information from a reconcile operation
+
+    public void GetVersionConflictsInfoInUpdateDeleteType(ServiceConnectionProperties featureServiceConnectionProperties, string featureClassName)
+    {
+      // To illustrate the conflict between versions,
+      // the feature is updated in the child version and deleted in the parent version.
+
+      long featureObjectIDForEdit = Int64.MinValue;
+
+      // Get branch versioned service
+      using (Geodatabase fsGeodatabase = new Geodatabase(featureServiceConnectionProperties))
+      using (VersionManager versionManager = fsGeodatabase.GetVersionManager())
+      using (Version defaultVersion = versionManager.GetDefaultVersion())
+      using (Geodatabase defaultGeodatabase = defaultVersion.Connect())
+      using (FeatureClass defaultFeatureClass = defaultGeodatabase.OpenDataset<FeatureClass>(featureClassName))
+      using (FeatureClassDefinition defaultFeatureClassDefinition = defaultFeatureClass.GetDefinition())
+      {
+        // Create a feature in the default version to edit in a branch
+        defaultGeodatabase.ApplyEdits(() =>
+        {
+          using (RowBuffer rowBuffer = defaultFeatureClass.CreateRowBuffer())
+          {
+            rowBuffer["NAME"] = "Loblolly Pine";
+            rowBuffer["TREEAGE"] = 1;
+            rowBuffer[defaultFeatureClassDefinition.GetShapeField()] = new MapPointBuilderEx(new Coordinate2D(1, 1),
+              SpatialReferenceBuilder.CreateSpatialReference(4152, 0)).ToGeometry();
+
+            using (Feature feature = defaultFeatureClass.CreateRow(rowBuffer))
+            {
+              featureObjectIDForEdit = feature.GetObjectID();
+            }
+          }
+        });
+
+        // Add newly created feature in the filter
+        QueryFilter queryFilter = new QueryFilter { ObjectIDs = new List<long> { featureObjectIDForEdit } };
+
+        // Create a branch version
+        VersionDescription versionDescription = new VersionDescription("UpdateDeleteConflictType",
+          "Update-Delete version conflict type", VersionAccessType.Private);
+
+        // Edit the feature in the branch 
+        using (Version editVersion = versionManager.CreateVersion(versionDescription))
+        using (Geodatabase branchGeodatabase = editVersion.Connect())
+        using (FeatureClass featureClass = branchGeodatabase.OpenDataset<FeatureClass>(featureClassName))
+        using (RowCursor rowCursor = featureClass.Search(queryFilter, false))
+        {
+          branchGeodatabase.ApplyEdits(() =>
+          {
+            while (rowCursor.MoveNext())
+            {
+              using (Row row = rowCursor.Current)
+              {
+                row["TREEAGE"] = 100;
+                row["NAME"] = $"{row["Name"]}_EditInBranch";
+                row.Store();
+              }
+            }
+          });
+
+          // Delete the feature from the default version
+          defaultFeatureClass.DeleteRows(queryFilter);
+
+          // Reconcile options
+          ReconcileOptions reconcileOptions = new ReconcileOptions(defaultVersion)
+          {
+            ConflictResolutionType = ConflictResolutionType.FavorEditVersion,
+            ConflictDetectionType = ConflictDetectionType.ByRow,
+            ConflictResolutionMethod = ConflictResolutionMethod.Continue
+          };
+
+          // Reconcile with default
+          ReconcileResult reconcileResult = editVersion.Reconcile(reconcileOptions);
+
+          // Check for conflicts
+          bool hasConflictsReconcileResults = reconcileResult.HasConflicts;
+          bool hasConflictsAfterReconcile = editVersion.HasConflicts();
+
+          // Fetch conflicts
+          IReadOnlyList<Conflict> conflictsAfterReconcile = editVersion.GetConflicts();
+
+          // Iterate conflicts
+          foreach (Conflict conflict in conflictsAfterReconcile)
+          {
+            // Object ID of row where conflict occurs
+            long objectId = conflict.ObjectID;
+
+            ConflictType conflictType = conflict.ConflictType;
+
+            IReadOnlyList<FieldValue> ancestorVersionValues = conflict.AncestorVersionValues;
+            object nameAncestor = ancestorVersionValues.FirstOrDefault(f => f.FieldName.Contains("NAME")).Value;
+            object treeAgeAncestor = ancestorVersionValues.FirstOrDefault(f => f.FieldName.Contains("TREEAGE")).Value;
+
+            IReadOnlyList<FieldValue> childVersionValues = conflict.ChildVersionValues;
+            object nameChild = childVersionValues.FirstOrDefault(f => f.FieldName.Contains("NAME")).Value;
+            object treeAgeChild = childVersionValues.FirstOrDefault(f => f.FieldName.Contains("TREEAGE")).Value;
+
+            IReadOnlyList<FieldValue> parentVersionValues = conflict.ParentVersionValues;
+
+            IReadOnlyList<Field> originalFields = defaultFeatureClassDefinition.GetFields();
+
+            string datasetName = conflict.DatasetName;
+          }
+        }
+      }
+    }
+
+    #endregion
+
     #region ProSnippet Group: Editing
     #endregion
 
@@ -2790,7 +2997,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     {
       Length = 8
     };
-    
+
     // 32-bit
     FieldDescription oidFieldDescription_32 = new FieldDescription("ObjectID_32", FieldType.OID)
     {
@@ -2805,7 +3012,7 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     // cref: ArcGIS.Core.Data.FieldType
     #region DateOnly, TimeOnly, and TimestampOffset  field
     // Earthquake occurrences date and time
-    
+
     // 9/28/2014 (DateOnly)
     FieldDescription earthquakeDateOnlyFieldDescription = new FieldDescription("Earthquake_DateOnly", FieldType.DateOnly);
 
@@ -3972,12 +4179,12 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     {
       // Creates the default memory geodatabase if not exist or connects to an existing one if already exists
       Geodatabase memoryGeodatabase = new Geodatabase(new MemoryConnectionProperties());
-      
+
       // Creates schema
       SchemaBuilder schemaBuilder = new SchemaBuilder(memoryGeodatabase);
       schemaBuilder.Create(new TableDescription("MyTable", new List<FieldDescription>()));
       schemaBuilder.Build();
-      
+
       return memoryGeodatabase;
     }
     #endregion
@@ -4321,10 +4528,10 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
       // Add relationship rules based on subtypes,if available
       // Assuming origin class has subtype with code 1
       attributedRelationshipClassDescription.RelationshipRuleDescriptions.Add(new RelationshipRuleDescription(1, null));
-      
+
       // Enqueue modify operation
       schemaBuilder.Modify(attributedRelationshipClassDescription);
-      
+
       // Execute modify DDL operation
       schemaBuilder.Build();
     }
@@ -4405,10 +4612,10 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
       // Modify annotation feature class 
       AnnotationFeatureClassDescription modifiedAnnotationFeatureClassDescription = new AnnotationFeatureClassDescription(annotationFeatureClassDescription.Name, annotationFeatureClassDescription.FieldDescriptions, annotationFeatureClassDescription.ShapeDescription, annotationFeatureClassDescription.GeneralPlacementProperties, modifiedLabelClasses);
-      
+
       // Enqueue modify
       schemaBuilder.Modify(modifiedAnnotationFeatureClassDescription);
-      
+
       // DDL execute
       schemaBuilder.Build();
 
@@ -4420,10 +4627,10 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
     public void Rename(SchemaBuilder schemaBuilder, AnnotationFeatureClassDefinition annotationFeatureClassDefinition, string featureClassNewName)
     {
       AnnotationFeatureClassDescription annotationFeatureClassDescription = new AnnotationFeatureClassDescription(annotationFeatureClassDefinition);
-      
+
       // Enqueue rename operation
       schemaBuilder.Rename(annotationFeatureClassDescription, featureClassNewName);
-      
+
       // Execute DDL
       schemaBuilder.Build();
     }
@@ -4445,14 +4652,14 @@ namespace GeodatabaseSDK.GeodatabaseSDK.Snippets
 
       // Update the default value
       fieldDescription.SetDefaultValue("123 Main St");
-      
+
       // Enqueue modify operation
       schemaBuilder.Modify(new TableDescription(tableDefinition), field.Name, fieldDescription);
-      
+
       // Execute DDL
       schemaBuilder.Build();
     }
     #endregion
-    
+
   }
 }
