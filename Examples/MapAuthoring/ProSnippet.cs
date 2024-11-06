@@ -31,6 +31,7 @@ using ArcGIS.Desktop.Mapping.Offline;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -787,6 +788,11 @@ namespace MapAuthoring.ProSnippet
     }
     public static FeatureLayer CreateLayerWithOptions()
     {
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams
+      // cref: ArcGIS.Desktop.Mapping.FeatureLayerCreationParams.#ctor(System.Uri)
+      // cref: ArcGIS.Desktop.Mapping.LayerCreationParams.IsVisible
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayer<T>(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+      // cref: ArcGIS.Desktop.Mapping.LayerFactory
       #region Create FeatureLayer and set to not display in Map.
       //The catalog path of the feature layer to add to the map
       var featureClassUriVisibility = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
@@ -821,6 +827,7 @@ namespace MapAuthoring.ProSnippet
       //Create the layer with the feature layer parameters and add it to the active map
       var createdFCWithRenderer = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParams, MapView.Active.Map);
       #endregion
+
       #region Create FeatureLayer with a Query Definition
       //The catalog path of the feature layer to add to the map
       var featureClassUriDefinition = new Uri(@"C:\Data\Admin\AdminData.gdb\USA\cities");
@@ -844,6 +851,80 @@ namespace MapAuthoring.ProSnippet
       var createdFCWithQueryDefn = LayerFactory.Instance.CreateLayer<FeatureLayer>(layerParamsQueryDefn, MapView.Active.Map);
       #endregion
 
+      {
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayers(System.Collections.Generic.IEnumerable{System.Uri},ArcGIS.Desktop.Mapping.ILayerContainerEdit, System.Int32)
+        #region Create multiple layers
+        var uriShp = new Uri(@"c:\data\roads.shp");
+        var uriSde = new Uri(@"c:\MyDataConnections\MySDE.sde\Census");
+        var uri = new Uri(@"http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/FeatureServer/0");
+
+        var uris = new List<Uri>() { uriShp, uriSde, uri };
+
+        var layers = LayerFactory.Instance.CreateLayers(uris, MapView.Active.Map);
+        #endregion
+      }
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.BulkLayerCreationParams
+        // cref: ArcGIS.Desktop.Mapping.BulkLayerCreationParams.#ctor(System.Collections.Generic.IEnumerable{System.Uri})
+        // cref: ArcGIS.Desktop.Mapping.LayerFactory.CreateLayers(ArcGIS.Desktop.Mapping.BulkLayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        #region Create mutliple layers with BulkLayerCreationParams
+
+        var uriShp = new Uri(@"c:\data\roads.shp");
+        var uriSde = new Uri(@"c:\MyDataConnections\MySDE.sde\Census");
+        var uri = new Uri(@"http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/FeatureServer/0");
+
+        var uris = new List<Uri>() { uriShp, uriSde, uri }; ;
+
+        // set the index and visibility
+        var blkParams = new BulkLayerCreationParams(uris);
+        blkParams.MapMemberPosition = MapMemberPosition.Index;
+        blkParams.MapMemberIndex = 2;
+        blkParams.IsVisible = false;
+
+        var layers = LayerFactory.Instance.CreateLayers(blkParams, MapView.Active.Map);
+      }
+
+
+      #endregion
+
+      QueuedTask.Run( () => {
+
+        //cref:ArcGIS.Desktop.Mapping.BulkLayerCreationParams
+        //cref:ArcGIS.Desktop.Mapping.BulkLayerCreationParams.#ctor(System.Collections.Generic.IEnumerable{System.Uri})
+        //cref:ArcGIS.Desktop.Mapping.LayerFactory.CreateLayers(ArcGIS.Desktop.Mapping.BulkLayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
+        #region Add a GeoPackage to the Map
+        string pathToGeoPackage = @"C:\Data\Geopackage\flooding.gpkg";
+        //Create lists to hold the URIs of the layers and tables in the geopackage
+        var layerUris = new List<Uri>();
+        var tableUris = new List<Uri>();
+        //Create an item from the geopackage
+        var item = ItemFactory.Instance.Create(pathToGeoPackage, ItemFactory.ItemType.PathItem);
+        var children = item.GetItems();
+        //Collect the table and spatial data in the geopackage
+        foreach (var child in children)
+        {
+          var childPath = child.Path;
+
+          if (child.TypeID == "sqlite_table")
+            tableUris.Add(new Uri(childPath));
+          else
+            layerUris.Add(new Uri(childPath));
+        }
+        //Add the spatial data in the geopackage using the BulkLayerCreationParams
+        if (layerUris.Count > 0)
+        {
+          BulkLayerCreationParams bulklcp = new BulkLayerCreationParams(layerUris);
+          LayerFactory.Instance.CreateLayers(bulklcp, MapView.Active.Map);
+        }
+        // add the tables separately
+        foreach (var tableUri in tableUris)
+        {
+          StandaloneTableFactory.Instance.CreateStandaloneTable(tableUri, MapView.Active.Map);
+        }
+        #endregion
+
+      });
 
       QueuedTask.Run(() =>
       {
@@ -964,7 +1045,7 @@ namespace MapAuthoring.ProSnippet
             .Where(l => l.ShapeType == esriGeometryType.esriGeometryPoint).FirstOrDefault();
       //This is the renderer to use in the new Layer
       var renderer = lyr.GetRenderer() as CIMSimpleRenderer;
-      //Set the Dataconnection for the new layer
+      //Set the DataConnection for the new layer
       Geodatabase geodatabase = new Geodatabase(
         new FileGeodatabaseConnectionPath(new Uri(@"E:\Data\Admin\AdminData.gdb")));
       FeatureClass featureClass = geodatabase.OpenDataset<FeatureClass>("Cities");
@@ -1186,7 +1267,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
-    public async Task AddQuerylayerAsync()
+    public async Task AddQueryLayerAsync()
     {
       // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection
       // cref: ArcGIS.Core.CIM.CIMSqlQueryDataConnection.WorkspaceConnectionString
@@ -1220,7 +1301,7 @@ namespace MapAuthoring.ProSnippet
       });
       #endregion
     }
-    public async Task AddFeatureLayerClasBreaksAsync()
+    public async Task AddFeatureLayerClassBreaksAsync()
     {
       // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition
       // cref: ArcGIS.Core.CIM.ClassificationMethod
@@ -1241,7 +1322,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    public async Task AddFeatureLayerClasBreaksExAsync()
+    public async Task AddFeatureLayerClassBreaksExAsync()
     {
 
       // cref: ArcGIS.Desktop.Mapping.GraduatedColorsRendererDefinition
@@ -1773,12 +1854,12 @@ namespace MapAuthoring.ProSnippet
     #region Create and apply Abbreviation Dictionary in the Map Definition to a layer
     public static void CreateDictionary()
     {
-      //Get the map's defintion
+      //Get the map's definition
       var mapDefn = MapView.Active.Map.GetDefinition();
       //Get the Map's Maplex labelling engine properties
       var mapDefnPlacementProps = mapDefn.GeneralPlacementProperties as CIMMaplexGeneralPlacementProperties;
 
-      //Define the abbreaviations we need in an array            
+      //Define the abbreviations we need in an array            
       List<CIMMaplexDictionaryEntry> abbreviationDictionary = new List<CIMMaplexDictionaryEntry>
             {
                 new CIMMaplexDictionaryEntry {
@@ -1807,7 +1888,7 @@ namespace MapAuthoring.ProSnippet
             };
       //Set the Maplex Label Engine Dictionary property to the Maplex Dictionary collection created above.
       mapDefnPlacementProps.Dictionaries = maplexDictionary.ToArray();
-      //Set the Map defintion 
+      //Set the Map definition 
       MapView.Active.Map.SetDefinition(mapDefn);
     }
 
@@ -1817,7 +1898,7 @@ namespace MapAuthoring.ProSnippet
 
       QueuedTask.Run(() =>
       {
-        //Creates Abbreviation dictionary and adds to Map Defintion                                
+        //Creates Abbreviation dictionary and adds to Map Definition                                
         CreateDictionary();
         //Get the layer's definition
         var lyrDefn = featureLayer.GetDefinition() as CIMFeatureLayer;
@@ -2149,7 +2230,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    public async void CreateProportionaRenderer()
+    public async void CreateProportionalRenderer()
     {
       // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
       // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition.#ctor(System.String, ArcGIS.Core.CIM.CIMSymbolReference, System.Double, System.Double, System.Boolean)
@@ -2189,7 +2270,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    public async void CreateTrueProportionaRenderer()
+    public async void CreateTrueProportionalRenderer()
     {
 
       // cref: ArcGIS.Desktop.Mapping.ProportionalRendererDefinition
@@ -2305,7 +2386,7 @@ namespace MapAuthoring.ProSnippet
       return QueuedTask.Run(() =>
       {
         // cref: ArcGIS.Core.CIM.CIMLayerElevationSurface
-        // cref: ArcGIS.Core.CIM.CIMBaselayer.LayerElevation
+        // cref: ArcGIS.Core.CIM.CIMBaseLayer.LayerElevation
         #region Set a custom elevation surface to a Z-Aware layer
 
         //Define the custom elevation surface to use
@@ -2339,7 +2420,7 @@ namespace MapAuthoring.ProSnippet
         // cref: ArcGIS.Desktop.Mapping.LayerFactory
         #region Add an elevation source to an existing elevation surface layer
 
-        // wrap in QueuendTask.Run
+        // wrap in QueuedTask.Run
 
         // surfaceLayer could also be the ground layer
 
@@ -2405,21 +2486,171 @@ namespace MapAuthoring.ProSnippet
 
 
 
-    private static async Task<SurfaceZsResult> GetZValue()
+    private static async Task GetZValue()
     {
       // cref: ArcGIS.Desktop.Mapping.Map.GetZsFromSurfaceAsync(ArcGIS.Core.Geometry.Geometry)
       // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult
-      #region Get Z values from a surface
-      var geometry = await QueuedTask.Run<Geometry>(() =>
+      #region Get Z values from the default ground surface
+      var mapPoint = await QueuedTask.Run<MapPoint>(() =>
       {
-        Geometry mapCentergeometry = MapView.Active.Map.CalculateFullExtent().Center;
+        MapPoint mapCentergeometry = MapView.Active.Map.CalculateFullExtent().Center;
         return mapCentergeometry;
       });
       //Pass any Geometry type to GetZsFromSurfaceAsync
-      var surfaceZResult = await MapView.Active.Map.GetZsFromSurfaceAsync(geometry);
-      return surfaceZResult;
+      var surfaceZResult = await MapView.Active.Map.GetZsFromSurfaceAsync(mapPoint);
+      if (surfaceZResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        // cast to a mapPoint
+        var mapPointZ = surfaceZResult.Geometry as MapPoint;
+        var z = mapPointZ.Z;
+      }
+      #endregion
+
+      Polyline polyline = null;
+      // cref: ArcGIS.Desktop.Mapping.Map.GetZsFromSurfaceAsync(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult
+      #region Get Z values from a specific surface
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+      //Pass any Geometry type to GetZsFromSurfaceAsync
+      var zResult = await MapView.Active.Map.GetZsFromSurfaceAsync(polyline, eleLayer);
+      if (zResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = zResult.Geometry as Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.Layer.CanGetZs()
+      // cref: ArcGIS.Desktop.Mapping.Layer.GetZs(ArcGIS.Core.Geometry)
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult
+      #region Get Z values from a layer
+      var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+      await QueuedTask.Run(() =>
+      {
+        if (tinLayer.CanGetZs())
+        {
+          // get z value for a mapPoint
+          var zResult = tinLayer.GetZs(mapPoint);
+          if (zResult.Status == SurfaceZsResultStatus.Ok)
+          {
+            // cast to a mapPoint
+            var mapPointZ = surfaceZResult.Geometry as MapPoint;
+            var z = mapPointZ.Z;
+          }
+
+          // get z values for a polyline
+          zResult = tinLayer.GetZs(polyline);
+          if (zResult.Status == SurfaceZsResultStatus.Ok)
+          {
+            // cast to a mapPoint
+            var polylineZ = surfaceZResult.Geometry as Polyline;
+          }
+        }
+      });
       #endregion
     }
+
+    private async Task GetElevationProfile()
+    {
+      Polyline lineGeom = null;
+      IEnumerable<MapPoint> pts = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Get Elevation profile from the default ground surface
+
+      // find the elevation profile for a polyline / set of polylines
+      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom]);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+
+      // find the elevation profile for a set of points
+      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Get Elevation profile from a specific surface
+
+      // find the elevation profile for a polyline / set of polylines
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+      var zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom], eleLayer);
+      if (zResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = zResult.Polyline;
+
+        // process the polylineZ
+      }
+
+      // find the elevation profile for a set of points
+      zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts, eleLayer);
+      if (zResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = zResult.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+
+
+    }
+
+    private async Task GetElevationProfile2()
+    {
+      MapPoint startPt = null;
+      MapPoint endPt = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Interpolate a line between two points and calculate the elevation profile 
+
+      int numPoints = 20;
+
+      // use the default ground elevation surface
+      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+
+      // use a specific elevation surface
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints, eleLayer);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+    }
+
+
     #region ProSnippet Group: Raster Layers
     #endregion
 
@@ -3133,6 +3364,7 @@ namespace MapAuthoring.ProSnippet
     {
       MapMember us_zips_layer = null;
 
+      // cref: ArcGIS.Desktop.Mapping.SelectionSet.FromDictionary``1(System.Collections.Generic.Dictionary{``0,SYSTEM.COLLECTIONS.GENERIC.LIST{ SYSTEM.INT64} })
       #region Translate From Dictionary to SelectionSet
       //Create a selection set from a list of object ids
       //using FromDictionary
@@ -3141,6 +3373,7 @@ namespace MapAuthoring.ProSnippet
       var selSet =  ArcGIS.Desktop.Mapping.SelectionSet.FromDictionary(addToSelection);
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary``1
       #region Tranlate from SelectionSet to Dictionary
       var selSetDict = selSet.ToDictionary();
 
@@ -3150,6 +3383,8 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
 
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.Contains(ArcIGS.Desktop.Mapping.MapMember)
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.Item(ArcIGS.Desktop.Mapping.MapMember)
       #region Get OIDS from a SelectionSet for a given MapMember
       if (selSet.Contains(us_zips_layer))
       {
@@ -3158,6 +3393,7 @@ namespace MapAuthoring.ProSnippet
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary``1
       #region Get OIDS from a SelectionSet for a given MapMember by Name
       var kvp = selSet.ToDictionary().Where(kvp => kvp.Key.Name == "LayerName").FirstOrDefault();
       var oidList = kvp.Value;
@@ -3165,6 +3401,58 @@ namespace MapAuthoring.ProSnippet
 
     }
 
+    #region ProSnippet Group: Selection Options
+    #endregion
+    public void SelectionOptions()
+    {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.SelectionOptions
+      // cref: ArcGIS.Desktop.Core.SelectionOptions
+      // cref:ArcGIS.Desktop.Mapping.SelectionMethod
+      // cref:ArcGIS.Desktop.Mapping.SelectionCombinationMethod
+      #region Get/Set Selection Options
+      var options = ApplicationOptions.SelectionOptions;
+
+      QueuedTask.Run(() =>
+      {
+        var defaultColor = options.DefaultSelectionColor;
+
+        var color = options.SelectionColor as CIMRGBColor;
+        options.SetSelectionColor(ColorFactory.Instance.CreateRGBColor(255, 0, 0));
+
+
+        var defaultFill = options.DefaultSelectionFillColor;
+        var fill = options.SelectionFillColor;
+        var isHatched = options.IsSelectionFillHatched;
+        options.SetSelectionFillColor(ColorFactory.Instance.CreateRGBColor(100, 100, 0));
+        if (!isHatched)
+          options.SetSelectionFillIsHatched(true);
+
+        var showSelectionChip = options.ShowSelectionChip;
+        options.SetShowSelectionChip(!showSelectionChip);
+
+        var showSelectionGraphic = options.ShowSelectionGraphic;
+        options.SetShowSelectionGraphic(!showSelectionGraphic);
+
+        var saveSelection = options.SaveSelection;
+        options.SetSaveSelection(!saveSelection);
+
+        var defaultTol = options.DefaultSelectionTolerance;
+        var tol = options.SelectionTolerance;
+        options.SetSelectionTolerance(2 * defaultTol);
+
+        // extension methods available 
+        var selMethod = options.SelectionMethod;
+        options.SetSelectionMethod(SelectionMethod.Contains);
+
+        var combMethod = options.CombinationMethod;
+        options.SetCombinationMethod(SelectionCombinationMethod.Add);
+
+        // note that the following SelectionCombinationMethod is not supported
+        //options.SetCombinationMethod(SelectionCombinationMethod.XOR);
+      });
+      #endregion
+
+    }
 
     #region ProSnippet Group: Symbol Layer Drawing (SLD)
     #endregion
@@ -3317,7 +3605,7 @@ namespace MapAuthoring.ProSnippet
         // cref: ArcGIS.Desktop.Core.DeviceLocation.SerialPortDeviceLocationSource.AntennaHeight
         // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.#ctor
         // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties.AccuracyThreshold
-        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.Open()
+        // cref: ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationService.Open(ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationSource,ArcGIS.Desktop.Core.DeviceLocation.DeviceLocationProperties)
         #region Connect to a Device Location Source
 
         var newSrc = new SerialPortDeviceLocationSource();
@@ -3612,8 +3900,8 @@ namespace MapAuthoring.ProSnippet
       }
     }
 
-    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotchangedEvent
-    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotchangedEvent.Subscribe(Action<ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs> action, System.Boolean)
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEvent
+    // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEvent.Subscribe(Action<ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs>, System.Boolean)
     // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs
     // cref: ArcGIS.Desktop.Core.DeviceLocation.Events.SnapshotChangedEventArgs.Snapshot
     // cref: ArcGIS.Desktop.Core.DeviceLocation.NMEASnapshot
@@ -3659,7 +3947,7 @@ namespace MapAuthoring.ProSnippet
 
     public void Masking1()
     {
-      // cref: ArcGIS.Desktop.Mapping.BasicFeaturelayer.GetDrawingOutline(System.Int64, ArcGIs.Desktop.Mapping.MapView, ArcGIS.Desktop.Mapping.DrawingOutlineType)
+      // cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetDrawingOutline(System.Int64, ArcGIs.Desktop.Mapping.MapView, ArcGIS.Desktop.Mapping.DrawingOutlineType)
       // cref: ArcGIS.Desktop.Mapping.DrawingOutlineType
       #region Get the Mask Geometry for a Feature
 

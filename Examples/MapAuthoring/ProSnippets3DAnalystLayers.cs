@@ -17,8 +17,7 @@
 
 */
 using ArcGIS.Core.CIM;
-using ArcGIS.Core.Data;
-using ArcGIS.Core.Data.Realtime;
+using ArcGIS.Core.Data.Analyst3D;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Mapping;
@@ -33,7 +32,7 @@ namespace MapAuthoring
 {
   internal class ProSnippets3DAnalystLayers
   {
-    #region PrSnippet Group: Layer Methods for TIN, Terrain, LasDataset
+    #region ProSnippet Group: Layer Methods for TIN, Terrain, LasDataset
     #endregion
 
     public void GetLayers()
@@ -1135,7 +1134,7 @@ namespace MapAuthoring
         }
       }
 
-      // search within an extent and limited to specific classsification codes
+      // search within an extent and limited to specific classification codes
       pointFilter = new ArcGIS.Core.Data.Analyst3D.LasPointFilter();
       pointFilter.FilterGeometry = envelope;
       pointFilter.ClassCodes = new List<int> { 4, 5 };
@@ -1150,7 +1149,46 @@ namespace MapAuthoring
         }
       }
 
-      #endregion 
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.LasDatasetLayer.SearchPoints(LasPointFilter)
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor.MoveNextArray
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter.#ctor
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter.FilterGeometry
+      #region Search using pre initialized arrays
+
+      // search all points and process with a set size of array retrieving only coordinates
+      using (ArcGIS.Core.Data.Analyst3D.LasPointCursor ptCursor = lasDatasetLayer.SearchPoints(null))
+      {
+        int count;
+        Coordinate3D[] lasPointsRetrieved = new Coordinate3D[10000];
+        while (ptCursor.MoveNextArray(lasPointsRetrieved, null, null, null, out count))
+        {
+          var points = lasPointsRetrieved.ToList();
+
+          // ...
+        }
+      }
+
+      // search within an extent
+      // use MoveNextArray retrieving coordinates, fileIndex and pointIds
+      ArcGIS.Core.Data.Analyst3D.LasPointFilter filter = new ArcGIS.Core.Data.Analyst3D.LasPointFilter();
+      filter.FilterGeometry = envelope;
+      using (ArcGIS.Core.Data.Analyst3D.LasPointCursor ptCursor = lasDatasetLayer.SearchPoints(filter))
+      {
+        int count;
+        Coordinate3D[] lasPointsRetrieved = new Coordinate3D[50000];
+        int[] fileIndexes = new int[50000];
+        double[] pointIds = new double[50000];
+        while (ptCursor.MoveNextArray(lasPointsRetrieved, null, fileIndexes, pointIds, out count))
+        {
+          var points = lasPointsRetrieved.ToList();
+
+        }
+      }
+      #endregion
     }
 
     #region ProSnippet Group: LAS Dataset Layer Eye Dome Lighting
@@ -1208,8 +1246,6 @@ namespace MapAuthoring
       // cref: ArcGIS.Desktop.Mapping.LineOfSightResult.VisibleLine
       // cref: ArcGIS.Desktop.Mapping.LineOfSightResult.InvisibleLine
       // cref: ArcGIS.Desktop.Mapping.LineOfSightResult.ObstructionPoint
-      // cref: ArcGIS.Desktop.Mapping.LineOfSightResult.IsTargetVisibleFromVisibleLine
-      // cref: ArcGIS.Desktop.Mapping.LineOfSightResult.IsTargetVisibleFromInvisibleLine
       #region Get Line of Sight
       var losParams = new LineOfSightParams();
       losParams.ObserverPoint = observerPoint;
@@ -1236,8 +1272,9 @@ namespace MapAuthoring
       if (results != null)
       {
         bool targetIsVisibleFromObserverPoint = results.IsTargetVisibleFromObserverPoint;
-        bool targetVisibleFromVisibleLine = results.IsTargetVisibleFromVisibleLine;
-        bool targetVisibleFromInVisibleLine = results.IsTargetVisibleFromInvisibleLine;
+        //These properties are not used. They will always be false
+        // results.IsTargetVisibleFromVisibleLine;
+        // results.IsTargetVisibleFromInvisibleLine;
 
 
         if (results.VisibleLine != null)
@@ -1249,6 +1286,178 @@ namespace MapAuthoring
       }
       #endregion
 
+    }
+
+
+    #region ProSnippet Group: TIN Layer Functionalities
+    #endregion
+
+    public async Task GetSurfaceValues()
+    {
+      MapPoint mapPoint = null;
+
+      // cref: ArcGIS.Desktop.Mapping.TinLayer.GetSurfaceValues(ArcGIS.Core.Geometry.MapPoint)
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.Elevation
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.Slope
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.SlopeDegrees
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.SlopePercent
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.Aspect
+      // cref: ArcGIS.Desktop.Mapping.SurfaceValues.AspectDegrees
+      #region Get Elevation, Slope, Aspect from TIN layer at a location
+
+      var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+      await QueuedTask.Run(() =>
+      {
+        // get elevation, slope and aspect values
+        SurfaceValues values = tinLayer.GetSurfaceValues(mapPoint);
+        var elev = values.Elevation;
+        var slopeRadians = values.Slope;
+        var slopeDegrees = values.SlopeDegrees;
+        var slopePercent = values.SlopePercent;
+        var aspectRadians = values.Aspect;
+        var aspectDegrees = values.AspectDegrees;
+      });
+      #endregion
+    }
+    public async void GetZValues()
+    {
+      MapPoint mapPoint = null;
+      Polyline polyline = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Layer.CanGetZs()
+      // cref: ArcGIS.Desktop.Mapping.Layer.GetZs(ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult.Status
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResult.Geometry
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Get Z values from a TIN Layer
+      var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+      await QueuedTask.Run(() =>
+      {
+        if (tinLayer.CanGetZs())
+        {
+          // get z value for a mapPoint
+          var zResult = tinLayer.GetZs(mapPoint);
+          if (zResult.Status == SurfaceZsResultStatus.Ok)
+          {
+            // cast to a mapPoint
+            var mapPointZ = zResult.Geometry as MapPoint;
+            var z = mapPointZ.Z;
+          }
+
+          // get z values for a polyline
+          zResult = tinLayer.GetZs(polyline);
+          if (zResult.Status == SurfaceZsResultStatus.Ok)
+          {
+            // cast to a Polyline
+            var polylineZ = zResult.Geometry as Polyline;
+          }
+        }
+      });
+      #endregion
+    }
+
+    public async void Interpolation()
+    {
+      MapPoint pt = null;
+      Polyline polyline = null;
+      Polygon polygon = null;
+      double x = 0;
+      double y = 0;
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.CanInterpolateShape
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.InterpolateShape(ArcGIS.Core.Geometry.Geometry, ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod)
+        // cref: ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod
+        #region Interpolate Shape
+        var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+        await QueuedTask.Run(() =>
+        {
+          Geometry output = null;
+          // interpolate z values for a geometry
+          if (tinLayer.CanInterpolateShape(polyline))
+            output = tinLayer.InterpolateShape(polyline, SurfaceInterpolationMethod.NaturalNeighbor);
+
+          if (output != null)
+          {
+            // process the output
+          }
+
+
+          // densify the shape before interpolating
+          if (tinLayer.CanInterpolateShape(polygon))
+            output = tinLayer.InterpolateShape(polygon, SurfaceInterpolationMethod.Linear, 0.01, 0);
+
+          if (output != null)
+          {
+            // process the output
+          }
+
+        });
+        #endregion
+      }
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.InterpolateShapeVertices(ArcGIS.Core.Geometry.Multipart, ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod)
+        // cref: ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod
+        #region Interpolate Shape Verticies
+
+        var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+        await QueuedTask.Run(() =>
+        {
+          // interpolate z values at the geometry vertices only
+          Geometry output = tinLayer.InterpolateShapeVertices(polyline, SurfaceInterpolationMethod.NaturalNeighbor);
+          if (output != null)
+          {
+            // process the output
+          }
+
+          // or use a different interpolation method
+          output = tinLayer.InterpolateShapeVertices(polyline, SurfaceInterpolationMethod.Linear);
+        });
+        #endregion
+      }
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.InterpolateZ(System.Double, System.Double, ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod)
+        // cref: ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod
+        #region Interpolate Z at an x,y location
+
+        var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+        await QueuedTask.Run(() =>
+        {
+          // interpolate values at the specified x,y location
+          double z = tinLayer.InterpolateZ(x, y, SurfaceInterpolationMethod.NaturalNeighborZNearest);
+
+          // or use a different interpolation method
+          z = tinLayer.InterpolateZ(x, y, SurfaceInterpolationMethod.Linear);
+        });
+        #endregion
+      }
+
+
+      {
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.GetSurfaceLength(ArcGIS.Core.Geometry.Multipart,ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod)
+        // cref: ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod
+        // cref: ArcGIS.Desktop.Mapping.TinLayer.GetSurfaceLength(ArcGIS.Core.Geometry.Multipart,ArcGIS.Desktop.Mapping.SurfaceInterpolationMethod,System.Double,System.Double)
+        #region Get 3D length of multipart by interpolating heights
+
+        var tinLayer = MapView.Active.Map.GetLayersAsFlattenedList().OfType<TinLayer>().FirstOrDefault();
+        await QueuedTask.Run(() =>
+        {
+          // interpolate heights and calculate the sum of 3D distances between the vertices
+          double length3d = tinLayer.GetSurfaceLength(polygon, SurfaceInterpolationMethod.NaturalNeighbor);
+
+          // or use a different interpolation method
+          length3d = tinLayer.GetSurfaceLength(polyline, SurfaceInterpolationMethod.NaturalNeighborZNearest);
+
+
+          // densify the shape before interpolating
+          length3d = tinLayer.GetSurfaceLength(polygon, SurfaceInterpolationMethod.NaturalNeighbor, 0.01, 0);
+        });
+        #endregion
+      }
     }
   }
 }

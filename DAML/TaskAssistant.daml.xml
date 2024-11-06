@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArcGIS defaultAssembly="ArcGIS.Desktop.TaskAssistant.dll" defaultNamespace="ArcGIS.Desktop.TaskAssistant"
         xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
@@ -233,7 +233,7 @@
 
     <insertModule id="esri_taskassistant_TaskAssistantModule" caption="Tasks" className="TaskAssistantModule">
       <dockPanes>
-        <dockPane id="esri_taskassistant_TaskAssistantDockPane" caption="Tasks" 
+        <dockPane id="esri_taskassistant_TaskAssistantDockPane" smallImage="Task16" caption="Tasks" 
                   className="ArcGIS.Desktop.Internal.TaskAssistant.TaskAssistantViewModel" 
                   dock="group" 
                   dockWith="esri_core_contentsDockPane"
@@ -241,7 +241,7 @@
                   initiallyVisible="false">
           <content className="ArcGIS.Desktop.Internal.TaskAssistant.TaskAssistantView"/>
         </dockPane>
-        <dockPane id="esri_taskassistant_TaskDesignerDockPane" caption="Task Designer"
+        <dockPane id="esri_taskassistant_TaskDesignerDockPane" smallImage="EditTaskItemInDesigner16" caption="Task Designer"
                   className="ArcGIS.Desktop.Internal.TaskAssistant.Designer.DesignerViewModel"  
                   dock="group"
                   dockWith="esri_core_projectDockPane"

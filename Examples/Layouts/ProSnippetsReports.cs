@@ -170,8 +170,7 @@ namespace ReportAPITesting
       //Definition query to use for the data source
       var defQuery = "STATE_NAME LIKE 'C%'";
       //Define the Datasource
-      //pass true to use the selection set
-      var reportDataSource = new ReportDataSource(featureLayer, defQuery, false, listFields);
+      var reportDataSource = new ReportDataSource(featureLayer, defQuery, listFields);
       //The CIMPage defintion - page size, units, etc
       var cimReportPage = new CIMPage
       {
@@ -525,6 +524,26 @@ namespace ReportAPITesting
 
       //Create field
       GraphicElement fieldGraphic = ReportElementFactory.Instance.CreateFieldValueTextElement(reportDetailsSection, newFieldEnvelope, newReportField);
+      #endregion
+    }
+
+    #region ProSnippet Group: Raster and Imagery Options
+    #endregion
+
+    internal static void Options()
+    {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.ReportOptions
+      // cref: ArcGIS.Desktop.Core.ReportOptions
+      #region Get/Set Report Options
+
+      //toggle/switch option values
+      var options = ApplicationOptions.ReportOptions;
+
+      options.PreviewAllPages = false;
+      options.NumberOfPreviewPages = 25;
+
+      options.ReportCustomTemplatePath = @"c:\temp";
+
       #endregion
     }
   }

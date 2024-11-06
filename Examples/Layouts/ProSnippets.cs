@@ -287,7 +287,7 @@ namespace ProSnippetsTasks
       var circle_poly = PolygonBuilderEx.CreatePolygon(PolylineBuilderEx.CreatePolyline(circle_seg));
 
       //PolylineBuilderEx.CreatePolyline(cir, AttributeFlags.AllAttributes));
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
         ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Dash);
 
@@ -322,7 +322,7 @@ namespace ProSnippetsTasks
       var poly = PolygonBuilderEx.CreatePolygon(
         PolylineBuilderEx.CreatePolyline(cir, AttributeFlags.AllAttributes));
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
         ColorFactory.Instance.GreenRGB, 10, "Arial", "Regular");
       string text = "Circle, circle, circle";
@@ -353,7 +353,7 @@ namespace ProSnippetsTasks
       var bezSeg = bez.ToSegment();
       Polyline bezPl = PolylineBuilderEx.CreatePolyline(bezSeg, AttributeFlags.AllAttributes);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
             ColorFactory.Instance.BlackRGB, 24, "Comic Sans MS", "Regular");
 
@@ -386,7 +386,7 @@ namespace ProSnippetsTasks
       plyCoords.Add(new Coordinate2D(3, 1));
       Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
                 ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Solid);
       CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -521,7 +521,7 @@ namespace ProSnippetsTasks
                                              ArcOrientation.ArcClockwise);
       var ellipse = eabElp.ToSegment();
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
                                       ColorFactory.Instance.GreenRGB, 2.0,
                               SimpleLineStyle.Dot);
@@ -561,7 +561,7 @@ namespace ProSnippetsTasks
       plCoords.Add(new Coordinate2D(1, 1));
       Polyline linePl = PolylineBuilderEx.CreatePolyline(plCoords);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(
                 ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Solid);
       //var graphic = GraphicFactory.Instance.CreateShapeGraphic(linePl, lineSym);
@@ -597,7 +597,7 @@ namespace ProSnippetsTasks
       plyCoords.Add(new Coordinate2D(3, 1));
       Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
                   ColorFactory.Instance.BlackRGB, 2.0, SimpleLineStyle.Solid);
       CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -636,7 +636,7 @@ namespace ProSnippetsTasks
       CIMLineSymbol lineSym = symStyle.Symbol as CIMLineSymbol;
       lineSym.SetSize(20);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       //CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(ColorFactory.Instance.BlueRGB, 4.0, SimpleLineStyle.Solid);
       ElementFactory.Instance.CreateGraphicElement(
         container, linePl, lineSym, "New Line");
@@ -713,7 +713,7 @@ namespace ProSnippetsTasks
       plyCoords.Add(new Coordinate2D(1, 6.1));
       Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
         ColorFactory.Instance.BlueRGB, 2.0, SimpleLineStyle.DashDotDot);
       CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -744,7 +744,7 @@ namespace ProSnippetsTasks
       Coordinate2D ur = new Coordinate2D(3.0, 5.75);
       Envelope env = EnvelopeBuilderEx.CreateEnvelope(ll, ur);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
         ColorFactory.Instance.BlackRGB, 5.0, SimpleLineStyle.Solid);
       CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -1005,10 +1005,10 @@ namespace ProSnippetsTasks
         CIMPointSymbol pointSym = ptSymStyleItm.Symbol as CIMPointSymbol;
         pointSym.SetSize(50);
 
-        //Set symbolology, create and add element to layout
+        //Set symbology, create and add element to layout
 
         //An alternative simple symbol is also commented out below.
-        //This would elminate the four optional lines of code above that
+        //This would eliminate the four optional lines of code above that
         //reference a style.
 
         //CIMPointSymbol pointSym = SymbolFactory.Instance.ConstructPointSymbol(
@@ -1053,10 +1053,10 @@ namespace ProSnippetsTasks
         CIMLineSymbol lineSym = lnSymStyleItm.Symbol as CIMLineSymbol;
         lineSym.SetSize(20);
 
-        //Set symbolology, create and add element to layout
+        //Set symbology, create and add element to layout
 
         //An alternative simple symbol is also commented out below.
-        //This would elminate the four optional lines of code above that
+        //This would eliminate the four optional lines of code above that
         //reference a style.
         //
         //CIMLineSymbol lineSym = SymbolFactory.Instance.ConstructLineSymbol(
@@ -1097,7 +1097,7 @@ namespace ProSnippetsTasks
         //At 2.x - Envelope rec_env = EnvelopeBuilder.CreateEnvelope(rec_ll, rec_ur);
         Envelope rec_env = EnvelopeBuilderEx.CreateEnvelope(rec_ll, rec_ur);
 
-        //Set symbolology, create and add element to layout
+        //Set symbology, create and add element to layout
         CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
           ColorFactory.Instance.BlackRGB, 5.0, SimpleLineStyle.Solid);
         CIMPolygonSymbol polySym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -1147,7 +1147,7 @@ namespace ProSnippetsTasks
         //Build 2D point geometry
         Coordinate2D coord2D = new Coordinate2D(3.5, 10);
 
-        //Set symbolology, create and add element to layout
+        //Set symbology, create and add element to layout
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
                       ColorFactory.Instance.RedRGB, 32, "Arial", "Regular");
         string textString = "Point text";
@@ -1205,7 +1205,7 @@ namespace ProSnippetsTasks
         //At 2.x - Polygon poly = PolygonBuilder.CreatePolygon(plyCoords);
         Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
-        //Set symbolology, create and add element to layout
+        //Set symbology, create and add element to layout
         //Also notice how formatting tags are using within the text string.
         CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
                           ColorFactory.Instance.GreyRGB, 10, "Arial", "Regular");
@@ -1271,7 +1271,7 @@ namespace ProSnippetsTasks
       //Build geometry
       Coordinate2D coord2D = new Coordinate2D(3.5, 10);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
         ColorFactory.Instance.RedRGB, 32, "Arial", "Regular");
       string textString = "Point text";
@@ -1303,7 +1303,7 @@ namespace ProSnippetsTasks
       plyCoords.Add(new Coordinate2D(3.5, 6.1));
       Polygon poly = PolygonBuilderEx.CreatePolygon(plyCoords);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
            ColorFactory.Instance.GreyRGB, 10, "Arial", "Regular");
       string text = "Some text string that is really long and " +
@@ -1330,7 +1330,7 @@ namespace ProSnippetsTasks
       Coordinate2D ur = new Coordinate2D(5.5, 5.75);
       Envelope env = EnvelopeBuilderEx.CreateEnvelope(ll, ur);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
                  ColorFactory.Instance.WhiteRGB, 10, "Arial", "Regular");
       string text = "Some text string that is really long and " +
@@ -1365,7 +1365,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Layouts.ElementFactory.CreateTextGraphicElement
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructTextSymbol
       // cref: ArcGIS.Desktop.Layouts.TextType
-      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor
+      // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.#ctor(ArcGIS.Core.Geometry.Coordinate2D,System.Double,ArcGIS.Core.Geometry.ArcOrientation,ArcGIS.Core.Geometry.SpatialReference)
       // cref: ArcGIS.Core.Geometry.EllipticArcBuilderEx.ToSegment
       #region Create Circle Text Element
 
@@ -1379,7 +1379,7 @@ namespace ProSnippetsTasks
       var poly = PolygonBuilderEx.CreatePolygon(
         PolylineBuilderEx.CreatePolyline(cir, AttributeFlags.AllAttributes));
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
                       ColorFactory.Instance.GreenRGB, 10, "Arial", "Regular");
       string text = "Circle, circle, circle";
@@ -1410,7 +1410,7 @@ namespace ProSnippetsTasks
       var bezSeg = bez.ToSegment();
       Polyline bezPl = PolylineBuilderEx.CreatePolyline(bezSeg, AttributeFlags.AllAttributes);
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
         ColorFactory.Instance.BlackRGB, 24, "Comic Sans MS", "Regular");
 
@@ -1441,7 +1441,7 @@ namespace ProSnippetsTasks
       var poly = PolygonBuilderEx.CreatePolygon(
         PolylineBuilderEx.CreatePolyline(ellipse, AttributeFlags.AllAttributes));
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMTextSymbol sym = SymbolFactory.Instance.ConstructTextSymbol(
                             ColorFactory.Instance.BlueRGB, 10, "Arial", "Regular");
       string text = "Ellipse, ellipse, ellipse";
@@ -1524,7 +1524,7 @@ namespace ProSnippetsTasks
                                center, 0, 1, 0.45, ArcOrientation.ArcClockwise);
       var ellipse = eabElp.ToSegment();
 
-      //Set symbolology, create and add element to layout
+      //Set symbology, create and add element to layout
       CIMStroke outline = SymbolFactory.Instance.ConstructStroke(
                             ColorFactory.Instance.GreenRGB, 2.0, SimpleLineStyle.Dot);
       CIMPolygonSymbol ellipseSym = SymbolFactory.Instance.ConstructPolygonSymbol(
@@ -2444,7 +2444,7 @@ namespace ProSnippetsTasks
         var polyStroke = SymbolFactory.Instance.ConstructStroke(ColorFactory.Instance.BlackRGB, 0);
         var haloPoly = SymbolFactory.Instance.ConstructPolygonSymbol(polyFill, polyStroke);
         
-        //Set the north arrow defintion of HaloSymbol and HaloSize 
+        //Set the north arrow definition of HaloSymbol and HaloSize 
         ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSymbol = haloPoly;
         ((CIMPointSymbol)cim.PointSymbol.Symbol).HaloSize = 3;//size of the halo
           
@@ -2989,7 +2989,7 @@ namespace ProSnippetsTasks
       //Reference a map frame on a layout
       MapFrame mfrm = layout.FindElement("Map Frame") as MapFrame;
 
-      //Peform on worker thread
+      //Perform on worker thread
       await QueuedTask.Run(() =>
       {
         //Reference map from the project item 
@@ -3292,7 +3292,7 @@ namespace ProSnippetsTasks
       //Perform on the worker thread
       await QueuedTask.Run(() =>
       {
-        SpatialMapSeries SMS = layout.MapSeries as SpatialMapSeries; //cast as spatial map seris for additional members
+        SpatialMapSeries SMS = layout.MapSeries as SpatialMapSeries; //cast as spatial map series for additional members
         SMS.SortField = "State_Name";
         SMS.SortAscending = true;
         SMS.PageNumberField = "PageNum";
@@ -3470,21 +3470,18 @@ namespace ProSnippetsTasks
 
       //Reference the map frame and its map view
       MapFrame mf_bmp = layout.FindElement("Map Frame") as MapFrame;
-      MapView mv_bmp = mf_bmp.GetMapView(lytView);
-
-      if (mv_bmp != null)
-      {
-        //Export on the worker thread
+      //Export on the worker thread
         await QueuedTask.Run(() =>
         {
-
-          //Check to see if the path is valid and export
-          if (BMP.ValidateOutputFilePath())
-          {
-            mv_bmp.Export(BMP);  //Export to BMP
+          MapView mv_bmp = mf_bmp.GetMapView(lytView);
+          if (mv_bmp != null) { 
+            //Check to see if the path is valid and export
+            if (BMP.ValidateOutputFilePath())
+            {
+              mv_bmp.Export(BMP);  //Export to BMP
+            }
           }
         });
-      }
       #endregion
     }
 
@@ -3612,13 +3609,18 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Core.LayoutOptions.KeepLastToolActive
       // cref: ArcGIS.Desktop.Core.LayoutOptions.WarnAboutAssociatedSurrounds
       // cref: ArcGIS.Desktop.Core.LayoutOptions.LayoutTemplatePath
+      // cref: ArcGIS.Desktop.Core.LayoutOptions.DefaultGuideColor
       #region Get LayoutOptions
 
       var lastToolActive = ApplicationOptions.LayoutOptions.KeepLastToolActive;
       var warnOnSurrounds = ApplicationOptions.LayoutOptions.WarnAboutAssociatedSurrounds;
       //eg <Install_Path>\Resources\LayoutTemplates\en-US
       var gallery_path = ApplicationOptions.LayoutOptions.LayoutTemplatePath;
-
+      var defaultGuideColor = ApplicationOptions.LayoutOptions.DefaultGuideColor;
+      QueuedTask.Run(() =>
+      {
+        var guideColor = ApplicationOptions.LayoutOptions.GetGuideColor();
+      });
       #endregion
 
       // cref: ArcGIS.Desktop.Core.ApplicationOptions
@@ -3627,6 +3629,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Desktop.Core.LayoutOptions.KeepLastToolActive
       // cref: ArcGIS.Desktop.Core.LayoutOptions.WarnAboutAssociatedSurrounds
       // cref: ArcGIS.Desktop.Core.LayoutOptions.LayoutTemplatePath
+      // cref: ArcGIS.Desktop.Core.LayoutOptions.SetGuideColor
       #region Set LayoutOptions
 
       //keep graphic element insert tool active
@@ -3636,6 +3639,12 @@ namespace ProSnippetsTasks
       //path to .pagx files used as templates
       ApplicationOptions.LayoutOptions.LayoutTemplatePath = @"D:\data\layout_templates";
 
+      QueuedTask.Run(() =>
+      {
+        var guideColor = ApplicationOptions.LayoutOptions.GetGuideColor();
+        // set guide color
+        ApplicationOptions.LayoutOptions.SetGuideColor(ColorFactory.Instance.RedRGB);
+      });
       #endregion
 
     }
@@ -3811,6 +3820,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Core.CIM.CIMAutoCamera.IntersectLayerPath
       // cref: ArcGIS.Desktop.Mapping.MapView.Camera
       #region SetAutoCameraFixedCenter
+      //Note: run within the QueuedTask
       var layout = LayoutView.Active.Layout;
       var mf = layout.GetElementsAsFlattenedList().OfType<MapFrame>()
         .First(mf => mf.Name == mapFrame);
@@ -3848,12 +3858,12 @@ namespace ProSnippetsTasks
 
     public void SetAutoCameraFixedCenterAndScale(string mapFrame)
     {
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetAutoCamera
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetAutoCamera
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.IsMapSeriesMapFrame
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.ValidateAutoCamera
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetViewCenter
-      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetMapView
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetAutoCamera()
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.SetAutoCamera(ArcGIS.Core.CIM.CIMAutoCamera)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.IsMapSeriesMapFrame()
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.ValidateAutoCamera(ArcGIS.Core.CIM.CIMAutoCamera)
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetViewCenter()
+      // cref: ArcGIS.Desktop.Layouts.MapFrame.GetMapView(ArcGIS.Desktop.Layouts.LayoutView)
       // cref: ArcGIS.Core.CIM.CIMAutoCamera
       // cref: ArcGIS.Core.CIM.CIMAutoCamera.Source
       // cref: ArcGIS.Core.CIM.CIMAutoCamera.AutoCameraType
@@ -3864,6 +3874,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Core.CIM.CIMAutoCamera.IntersectLayerPath
       // cref: ArcGIS.Desktop.Mapping.MapView.Camera
       #region SetAutoCameraFixedCenterAndScale
+      //Note: run within the QueuedTask
       var layout = LayoutView.Active.Layout;
       var mf = layout.GetElementsAsFlattenedList().OfType<MapFrame>()
         .First(mf => mf.Name == mapFrame);
@@ -3918,6 +3929,7 @@ namespace ProSnippetsTasks
       // cref: ArcGIS.Core.CIM.CIMAutoCamera.IntersectLayerPath
       // cref: ArcGIS.Desktop.Mapping.MapView.Camera
       #region SetAutoCameraFixedScale
+      //Note: run within the QueuedTask
       var layout = LayoutView.Active.Layout;
       var mf = layout.GetElementsAsFlattenedList().OfType<MapFrame>()
         .First(mf => mf.Name == mapFrame);

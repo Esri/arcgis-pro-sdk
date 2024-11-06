@@ -26,6 +26,9 @@ using ArcGIS.Desktop.Core;
 using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
 
 
 namespace CartoFeatures.ProSnippet
@@ -305,7 +308,7 @@ namespace CartoFeatures.ProSnippet
     }
 
     //construct line symbol
-    public void ContructLineSymbol_1()
+    public void ConstructLineSymbol_1()
     {
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructLineSymbol(ArcGIS.Core.CIM.CIMColor,System.Double,ArcGIS.Desktop.Mapping.SimpleLineStyle)
       // cref: ArcGIS.Core.CIM.CIMLineSymbol
@@ -316,7 +319,7 @@ namespace CartoFeatures.ProSnippet
       #endregion
     }
 
-    public void ContructLineSymbol_2()
+    public void ConstructLineSymbol_2()
     {
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke(ArcGIS.Core.CIM.CIMColor,System.Double)
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructLineSymbol(ArcGIS.Core.CIM.CIMStroke)
@@ -331,7 +334,7 @@ namespace CartoFeatures.ProSnippet
     }
 
     //multilayer symbols
-    public void ContructMultilayerLineSymbol_1()
+    public void ConstructMultilayerLineSymbol_1()
     {
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructStroke(ArcGIS.Core.CIM.CIMColor,System.Double)
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarker(ArcGIS.Core.CIM.CIMColor,System.Double, ArcGIS.Desktop.Mapping.SimpleMarkerStyle)
@@ -360,7 +363,7 @@ namespace CartoFeatures.ProSnippet
       #endregion
     }
 
-    public void ContructMultilayerLineSymbol_2()
+    public void ConstructMultilayerLineSymbol_2()
     {
       // cref: ArcGIS.Desktop.Mapping.SymbolFactory.ConstructMarker(ArcGIS.Core.CIM.CIMColor,System.Double, ArcGIS.Desktop.Mapping.SimpleMarkerStyle)
       // cref: ArcGIS.Core.CIM.CIMMarker.Rotation
@@ -529,7 +532,104 @@ namespace CartoFeatures.ProSnippet
         });
     }
 
+    private static void CreateImageOfPointSymbol()
+    {
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.GenerateImage(ArcGIS.Core.CIM.CIMPointSymbol,ArcGIS.Desktop.Mapping.OutputImageFormat,System.Double,System.Boolean,System.Double,System.Int64,System.Int64,ArcGIS.Core.CIM.CIMColor)
+      // cref: ArcGIS.Desktop.Mapping.OutputImageFormat
+      // cref: ArcGIS.Desktop.Mapping.OutputImageFormat.SVG
+      // cref: ArcGIS.Desktop.Mapping.OutputImageFormat.PNG
+      #region Convert Point Symbol to SVG
+      //Note: Run within QueuedTask.Run
+      //Create a point symbol
+      var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(
+        ColorFactory.Instance.RedRGB, 24, SimpleMarkerStyle.RoundedSquare);
 
+      //Generate image returns a stream
+      //OutputImageFormat specified the format for the image - in this case
+      //we want SVG (an xml-based format)
+      //
+      //output fmt: SVG, scale factor x2, centerAnchorPoint = true
+      //dpi = 300, wd x ht: 100x100px, background: white
+      var mem_strm = SymbolFactory.Instance.GenerateImage(
+        pointSymbol, OutputImageFormat.SVG, 2.0, true, 300, 100, 100,
+        ColorFactory.Instance.WhiteRGB);
+
+      //Set the memory stream position to the beginning
+      mem_strm.Seek(0, SeekOrigin.Begin);
+
+      //File path and name for saving the SVG file
+      var fileName = "RoundedSquareSymbol.svg";
+      string path_svg = Path.Combine(Path.GetTempPath() + fileName);
+
+      //Write the memory stream to the file
+      System.IO.File.WriteAllBytes(path_svg, mem_strm.ToArray());
+
+      //////////////////////////////////////////////
+      //Note: to convert SVG to image format, use a 3rd party
+      //e.g. Aspose.SVG for .NET, for example convert SVG to PNG
+      //using (var svg_doc = new Aspose.Svg.SVGDocument(path_svg))
+      //{
+      //  string path_png = Path.Combine(Path.GetTempPath() + "RoundedSquareSymbol.png");
+      //  using (var img_png = new Aspose.Svg.Rendering.Image.ImageDevice(
+      //    new ImageRenderingOptions(ImageFormat.Png), path_png))
+      //  {
+      //    svg_doc.RenderTo(img_png);
+      //  }
+      //  //also: https://docs.aspose.com/imaging/net/convert-svg-to-png/
+      //}
+
+      #endregion
+    }
+
+    private static void CreateImageOfPointSymbol2()
+    {
+      // cref: ArcGIS.Desktop.Mapping.SymbolFactory.GenerateImage(ArcGIS.Core.CIM.CIMPointSymbol,ArcGIS.Desktop.Mapping.OutputImageFormat,System.Double,System.Boolean,System.Double,System.Int64,System.Int64,ArcGIS.Core.CIM.CIMColor)
+      // cref: ArcGIS.Desktop.Mapping.OutputImageFormat
+      // cref: ArcGIS.Desktop.Mapping.OutputImageFormat.PNG
+      #region Convert Point Symbol to PNG
+      //Note: Run within QueuedTask.Run
+      //Create a point symbol
+      var pointSymbol = SymbolFactory.Instance.ConstructPointSymbol(
+        ColorFactory.Instance.RedRGB, 24, SimpleMarkerStyle.RoundedSquare);
+
+      //Generate image returns a stream
+      //OutputImageFormat specified the format for the image - in this case
+      //we want PNG
+      //
+      //output fmt: PNG, scale factor x2, centerAnchorPoint = true
+      //dpi = 300, wd x ht: 100x100px, background: white
+      var mem_strm = SymbolFactory.Instance.GenerateImage(
+        pointSymbol, OutputImageFormat.PNG, 2.0, true, 300, 100, 100,
+        ColorFactory.Instance.WhiteRGB);
+
+      //Set the memory stream position to the beginning
+      mem_strm.Seek(0, SeekOrigin.Begin);
+
+      //Write the stream to a bit map
+      var bitmapImage = new System.Windows.Media.Imaging.BitmapImage();
+
+      bitmapImage.BeginInit();
+      bitmapImage.StreamSource = mem_strm;
+      bitmapImage.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad;
+      bitmapImage.EndInit();
+      bitmapImage.Freeze();
+
+      //Write the bit map out to a file
+      //File path and name for saving the PNG file
+      var fileName = "RoundedSquareSymbol.png";
+      string path_png = Path.Combine(Path.GetTempPath() + fileName);
+
+      BitmapEncoder encoder = new PngBitmapEncoder();
+      encoder.Frames.Add(BitmapFrame.Create(bitmapImage));
+
+      using (var fileStream = new System.IO.FileStream(
+        path_png, System.IO.FileMode.Create))
+      {
+        encoder.Save(fileStream);
+      }
+
+      #endregion
+    }
     private static void SymbolLookup(FeatureLayer featureLayer)
     {
       // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CanLookupSymbol()
@@ -755,7 +855,7 @@ namespace CartoFeatures.ProSnippet
     #endregion
 
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer()
-    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer()
+    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.UsesRealWorldSymbolSizes
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer
     #region How to set symbol for a feature layer symbolized with simple renderer
@@ -786,7 +886,7 @@ namespace CartoFeatures.ProSnippet
     #endregion
 
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer()
-    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer()
+    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.UsesRealWorldSymbolSizes
     // cref: ArcGIS.Desktop.Mapping.SymbolStyleItem.Symbol
     // cref: ArcGIS.Core.CIM.CIMSimpleRenderer
@@ -823,7 +923,7 @@ namespace CartoFeatures.ProSnippet
     #endregion
 
     // cref: ArcGIS.Desktop.Mapping.FeatureLayer.GetRenderer()
-    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer()
+    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
     // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.SEARCHSYMBOLS
     // cref: ArcGIS.Desktop.Mapping.SymbolStyleItem.Symbol
     // cref: ArcGIS.Desktop.Mapping.StyleItemType
@@ -865,7 +965,7 @@ namespace CartoFeatures.ProSnippet
         //Apply the symbol to the feature layer's current renderer
         renderer.Symbol = symbol.MakeSymbolReference();
 
-        //Appy the renderer to the feature layer
+        //Apply the renderer to the feature layer
         featureLayer.SetRenderer(renderer);
       });
     }
@@ -873,8 +973,8 @@ namespace CartoFeatures.ProSnippet
 
     // cref: ArcGIS.Desktop.Mapping.StyleHelper.SearchColorRamps(StyleProjectItem, System.String)
     // cref: ArcGIS.Core.CIM.CIMColorRamp
-    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer()
-    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer()
+    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.CreateRenderer(ArcGIS.Desktop.Mapping.RendererDefinition)
+    // cref: ArcGIS.Desktop.Mapping.FeatureLayer.SetRenderer(ArcGIS.Core.CIM.CIMRenderer)
     // cref: ARCGIS.DESKTOP.MAPPING.STYLEHELPER.SearchColorRamps
     // cref: ArcGIS.Desktop.Mapping.UniqueValueRendererDefinition.#ctor
     // cref: ArcGIS.Desktop.Mapping.ColorRampStyleItem.ColorRamp

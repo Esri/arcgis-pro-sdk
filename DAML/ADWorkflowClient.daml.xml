@@ -156,7 +156,7 @@
       </panes>
       
       <dockPanes>
-        <dockPane id="esri_workflow_client_workflowPane" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPaneViewModel"
+        <dockPane id="esri_workflow_client_workflowPane" smallImage="WorkflowManagerLogo16" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPaneViewModel"
           dock="group" dockWith="esri_core_projectDockPane"
           keytip="Workflow" initiallyVisible="false" >
           <content className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPane" />

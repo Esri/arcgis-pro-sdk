@@ -102,7 +102,7 @@ namespace Layout_HelpExamples
       #endregion
 
       #region MapFrame_SetName
-      //See ProSnppets "Zoom map frame to extent of a single layer"
+      //See ProSnippets "Zoom map frame to extent of a single layer"
       #endregion MapFrame_SetName
 
     }

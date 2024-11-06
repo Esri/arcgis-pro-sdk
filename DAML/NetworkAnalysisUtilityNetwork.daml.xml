@@ -52,41 +52,41 @@
        </tabs>
 
       <groups>
-        <group id="esri_networkanalysis_utility_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_UN_Trace_Settings_Btn">
+        <group id="esri_networkanalysis_utility_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_UN_Trace_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png">
           <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
           <gallery refID="esri_networkanalysis_utility_ToolsGallery" inline="true"/>
         </group>
-        <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology">
+        <group id="esri_networkanalysis_utility_Validate_Group" caption="Network Topology" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png">
           <button refID="esri_networkanalysis_utility_ValidateBtnPalette" size="large" />
           <button refID="esri_editing_ShowUNErrorsErrorInspectorBtn" size="large" />
           <button refID="esri_networkanalysis_ShowModifyTerminalPathsBtn" size="large"/>
           <button refID="esri_networkanalysis_ShowModifyConnectionBtn" size="large"/>
         </group>
-        <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn">
+        <group id="esri_networkanalysis_utility_Associations_Group" caption="Associations" launcherButtonID="esri_networkanalysis_utility_View_Associations_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifyAssociations16.png">
           <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" />
           <button refID="esri_networkanalysis_utility_Containment_Btn" size="middle"/>
           <button refID="esri_networkanalysis_utility_Container_EditMode_Btn" size="middle"/>
           <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
           <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
         </group>
-        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork">
+        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png">
           <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ViewSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
         </group>
-        <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection">
+        <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectOnDiagram16.png">
           <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
           <button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>
         </group>
 
-        <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn">
+        <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png">
           <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
           <gallery refID="esri_networkanalysis_trace_ToolsGallery" inline="true"/>
         </group>
-        <group id="esri_networkanalysis_trace_Validate_Group" caption="Network Topology">
+        <group id="esri_networkanalysis_trace_Validate_Group" caption="Network Topology" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png">
           <button refID="esri_networkanalysis_trace_BuildBtnPalette" size="large" />
         </group>
-        <group id="esri_networkanalysis_trace_Selection_Group" caption="Selection">
+        <group id="esri_networkanalysis_trace_Selection_Group" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectOnDiagram16.png">
           <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
           <!--<button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>-->
         </group>
@@ -95,7 +95,7 @@
           <button refID="esri_networkanalysis_ShowModifyAssociationsBtn" size="large" /> 
           <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
         </group>-->
-        <group id="esri_networkanalysis_trace_FlowDirection_Group" caption="Flow Direction" launcherButtonID="esri_networkanalysis_network_View_FlowDirection_Settings_Btn">
+        <group id="esri_networkanalysis_trace_FlowDirection_Group" caption="Flow Direction" launcherButtonID="esri_networkanalysis_network_View_FlowDirection_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DisplayFlowArrow16.png">
           <button refID="esri_networkanalysis_trace_FlowDirectionButton" size="large" />
         </group>
       </groups>
@@ -122,6 +122,7 @@
                  templateID="ToolsItemTemplate"                
                  showItemCaptionBelow="true"
                  resizable="true"
+                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/connected-trace-16.png"
                  keytip="GG">
           <tooltip heading="">
             View a gallery of utility network tools.<disabledText></disabledText>
@@ -140,6 +141,7 @@
                   templateID="ToolsItemTemplate"
                   showItemCaptionBelow="true"
                   resizable="true"
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/connected-trace-16.png"
                   keytip="TG">
            <tooltip heading="">
              View a gallery of trace network tools.<disabledText></disabledText>
@@ -167,6 +169,7 @@
         </buttonPalette>
          <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace" extendedCaption="Set Trace Locations, Select and Run Named Trace Configurations." keytip="TL">
            <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
+           <!-- <tool refID="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"/> -->
            <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
            <tool refID="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"/>
            <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
@@ -575,6 +578,17 @@
             Show the Trace pane. This allows you to access commands and tools to set starting points.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"
+                caption="Stopping Points" extendedCaption="Set Stopping Points"
+                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MilitaryWorkflows32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MilitaryWorkflows16.png"
+                className="esri_networkanalysis_utility_module:ShowModifyStoppingPointsWindow"
+                keytip="STP">
+          <tooltip heading="Set Stopping Points">
+            Show the Trace pane. This allows you to access commands and tools to set stopping points.<disabledText></disabledText>
+          </tooltip>
+        </button>        
         <button id="esri_networkanalysis_trace_ShowSetBarriersBtn"
                 caption="Barriers" extendedCaption="Set Barriers"
                 condition="esri_networkanalysis_utility_TraceTool_Condition"
@@ -619,6 +633,17 @@
             Select starting points from where the trace will be initiated.<disabledText></disabledText>
           </tooltip>
         </tool>
+        <tool id="esri_networkanalysis_trace_SelectStoppingPointsTool"
+              className="Tools.SelectStoppingPointsTool"
+              caption="Select stopping points"
+              condition="esri_networkanalysis_utility_TraceTool_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select stopping points">
+            Select stopping points from where the trace will be initiated.<disabledText></disabledText>
+          </tooltip>
+        </tool>        
         <tool id="esri_networkanalysis_trace_SelectBarriersTool"
               className="Tools.SelectBarriersTool"
               caption="Select barriers"
@@ -682,11 +707,11 @@
         
       </controls>
       <dockPanes>
-        <dockPane id="esri_networkanalysis_utility_ConnectivityInfo_Pane" className="ViewModels.ConnectivityInfoPaneViewModel" caption="Feature Properties"
+        <dockPane id="esri_networkanalysis_utility_ConnectivityInfo_Pane" smallImage="FeatureProperties16" className="ViewModels.ConnectivityInfoPaneViewModel" caption="Feature Properties"
                   dock="group" dockWith="esri_core_projectDockPane" keytip="ConInfo" minwidth="600">
           <content className="Views.ConnectivityInfoPaneView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyAssociationsPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyAssociationsPane" smallImage="ModifyAssociations16"
                   caption="Modify Associations"
                   className="ModifyAssociationsViewModel"
                   dock="group"
@@ -695,16 +720,17 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyAssociationsView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyStartingPointsAndBarriersPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyStartingPointsAndBarriersPane" smallImage="SetStartingPoints16"
                   caption="Trace"
                   className="ModifyStartingPointsAndBarriersViewModel"
                   dock="group"
                   initiallyVisible="false"
                   delayLoadMessage="Open a map to get started."
-                  dockWith="esri_core_projectDockPane">
+                  dockWith="esri_core_projectDockPane"
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints32.png">
           <content className="ModifyStartingPointsAndBarriersView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyControllerPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyControllerPane" smallImage="ModifySource16"
                   caption="Modify Subnetwork Controller"
                   className="ModifyControllerViewModel"
                   dock="group"
@@ -713,7 +739,7 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyControllerView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyTerminalPathsPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyTerminalPathsPane" smallImage="ModifyDevice16"
                   caption="Modify Terminal Paths"
                   className="ModifyTerminalPathsViewModel"
                   dock="group"
@@ -722,7 +748,7 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyTerminalPathsView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionsPane"
+        <dockPane id="esri_networkanalysis_utility_ModifyTerminalConnectionsPane" smallImage="ModifyConnection16"
                  caption="Modify Terminal Connections"
                  className="ModifyTerminalConnectionsViewModel"
                  dock="group"
@@ -731,7 +757,7 @@
                  dockWith="esri_core_projectDockPane">
           <content className="ModifyTerminalConnectionsView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_FindSubnetworkPane"
+        <dockPane id="esri_networkanalysis_utility_FindSubnetworkPane" smallImage="FindSubnetworks16"
           caption="Find Subnetworks"
           className="FindSubnetworkViewModel"
           dock="group"

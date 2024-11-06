@@ -2189,7 +2189,7 @@ namespace Snippets
       // cref: ArcGIS.Desktop.Mapping.MappingExtensions.AddOverlay(ArcGIS.Desktop.Mapping.MapView, ArcGIS.Core.CIM.CIMGraphic, System.Double)
       // cref: ArcGIS.Core.CIM.CIMPictureGraphic
       // cref: ArcGIS.Core.CIM.CIMPictureGraphic.PictureURL
-      // cref: ArcGIS.Core.CIM.CIMPictureGraphic.Box
+      // cref: ArcGIS.Core.CIM.CIMPictureGraphic.Shape
       #region Graphic Overlay with CIMPictureGraphic
 
       // get the current mapview
@@ -2220,7 +2220,7 @@ namespace Snippets
       var pictureGraphic = new CIMPictureGraphic
       {
         PictureURL = @"file:///C:/Images/MyImage.png",
-        Box = envelope
+        Shape = envelope
       };
 
       IDisposable _graphic = mapView.AddOverlay(pictureGraphic);
@@ -2499,5 +2499,102 @@ namespace Snippets
       }
     }
     #endregion
+
+
+    #region ProSnippet Group: Mapping Options
+    #endregion
+    public void SelectionOptions()
+    {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.SelectionOptions
+      // cref: ArcGIS.Desktop.Core.SelectionOptions
+      // cref:ArcGIS.Desktop.Mapping.SelectionMethod
+      // cref:ArcGIS.Desktop.Mapping.SelectionCombinationMethod
+      #region Get/Set Selection Options
+      var options = ApplicationOptions.SelectionOptions;
+
+      QueuedTask.Run(() =>
+      {
+        var defaultColor = options.DefaultSelectionColor;
+
+        var color = options.SelectionColor as CIMRGBColor;
+        options.SetSelectionColor(ColorFactory.Instance.CreateRGBColor(255, 0, 0));
+
+
+        var defaultFill = options.DefaultSelectionFillColor;
+        var fill = options.SelectionFillColor;
+        var isHatched = options.IsSelectionFillHatched;
+        options.SetSelectionFillColor(ColorFactory.Instance.CreateRGBColor(100, 100, 0));
+        if (!isHatched)
+          options.SetSelectionFillIsHatched(true);
+
+        var showSelectionChip = options.ShowSelectionChip;
+        options.SetShowSelectionChip(!showSelectionChip);
+
+        var showSelectionGraphic = options.ShowSelectionGraphic;
+        options.SetShowSelectionGraphic(!showSelectionGraphic);
+
+        var saveSelection = options.SaveSelection;
+        options.SetSaveSelection(!saveSelection);
+
+        var defaultTol = options.DefaultSelectionTolerance;
+        var tol = options.SelectionTolerance;
+        options.SetSelectionTolerance(2 * defaultTol);
+
+        // extension methods available 
+        var selMethod = options.SelectionMethod;
+        options.SetSelectionMethod(SelectionMethod.Contains);
+
+        var combMethod = options.CombinationMethod;
+        options.SetCombinationMethod(SelectionCombinationMethod.Add);
+
+        // note that the following SelectionCombinationMethod is not supported
+        //options.SetCombinationMethod(SelectionCombinationMethod.XOR);
+      });
+      #endregion
+
+    }
+
+    public void TableOptions()
+    {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.TableOptions
+      // cref: ArcGIS.Desktop.Core.TableOptions
+      // cref:ArcGIS.Core.CIM.TableRowHeightType
+      #region Get/Set Table Options
+      var options = ApplicationOptions.TableOptions;
+
+      var hideAddNewRow = options.HideAddNewRow;
+      options.HideAddNewRow = !hideAddNewRow;
+
+      var overrides = options.HonorSelectionColorOverrides;
+      options.HonorSelectionColorOverrides = !overrides;
+
+      var activateMapView = options.ActivateMapViewAfterOperations;
+      options.ActivateMapViewAfterOperations = !activateMapView;
+
+      var defaultFontTName = options.DefaultFontName;
+      var fontName = options.FontName;
+      if (options.IsValidFontName("Arial"))
+        options.FontName = "Arial";
+
+      var defaultFontSize = options.DefaultFontSize;
+      var fontSize = options.FontSize;
+      if (options.IsValidFontSize(10))
+        options.FontSize = 10;
+
+      var heightType = options.ColumnHeaderHeightType;
+      options.ColumnHeaderHeightType = TableRowHeightType.Double;
+
+      var rowHeightType = options.RowHeightType;
+      options.RowHeightType = TableRowHeightType.Single;
+
+      var defaultColor = options.DefaultHighlightColor;
+      var color = options.HighlightColor;
+      QueuedTask.Run(() =>
+      {
+        options.SetHighlightColor(ColorFactory.Instance.CreateRGBColor(0, 0, 255));
+      });
+      #endregion
+
+    }
   }
 }

@@ -2209,7 +2209,7 @@ namespace ProSnippetsGeometry
       // cref: ArcGIS.Core.Geometry.MSubCurveRelation
       // cref: ArcGIS.Core.Geometry.GeometryEngine.GetSubCurveBetweenMsEx(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.MSubCurveRelation@,ArcGIS.Core.Geometry.MSubCurveRelation@)
       // cref: ArcGIS.Core.Geometry.IGeometryEngine.GetSubCurveBetweenMsEx(ArcGIS.Core.Geometry.Multipart,System.Double,System.Double,ArcGIS.Core.Geometry.MSubCurveRelation@,ArcGIS.Core.Geometry.MSubCurveRelation@)
-      #region Get a polyline and other details corresponding to the subcurve(s) between the specified M-values - GetSubCurveBetweenMsEx
+      #region Get a polyline and other details corresponding to the subcurves between the specified M-values GetSubCurveBetweenMsEx
 
       string json = "{\"hasM\":true,\"paths\":[[[-2000,0,1],[-1000,1000,-1],[-1000,0,3],[1000,1000,4],[2000,1000,5],[2000,2000,6],[3000,2000,7],[4000,0,8]]],\"spatialReference\":{\"wkid\":3857}}";
       Polyline polyline = PolylineBuilderEx.FromJson(json);
@@ -2598,8 +2598,8 @@ namespace ProSnippetsGeometry
 
     public void Move()
     {
-      // cref: ArcGIS.Core.Geometry.GeometryEngine.Move (ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
-      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Move (ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Move(ArcGIS.Core.Geometry.Geometry,System.Double,System.Double)
       #region Move a MapPoint
 
       MapPoint pt = MapPointBuilderEx.CreateMapPoint(1.0, 3.0);

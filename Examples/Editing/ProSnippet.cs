@@ -130,7 +130,7 @@ namespace EditingSDKExamples
       #endregion
 
       // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.EditingTemplate, ArcGIS.Core.Geometry.Geometry)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.Templates.EditingTemplate, ArcGIS.Core.Geometry.Geometry)
       #region Create a feature using the current template
       var myTemplate = ArcGIS.Desktop.Editing.Templates.EditingTemplate.Current;
 
@@ -206,7 +206,7 @@ namespace EditingSDKExamples
       });
       #endregion
 
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.EditingTemplate)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.Templates.EditingTemplate)
       #region Edit Operation Create row in a table using a table template
       var tableTemplate = standaloneTable.GetTemplates().FirstOrDefault();
       var createRow = new EditOperation() { Name = "Create a row in a table" };
@@ -296,7 +296,7 @@ namespace EditingSDKExamples
         #endregion
       }
 
-      // cref: ARCGIS.DESKTOP.EDITING.EDITOPERATION.CREATE
+      // cref: ARCGIS.DESKTOP.EDITING.EDITOPERATION.CREATE(ArcGIS.Desktop.Mapping.MapMember,System.Collections.Generic.Dictionary{System.String,System.Object})
       // cref: ARCGIS.DESKTOP.EDITING.EDITOPERATION.CREATECHAINEDOPERATION
       #region Edit Operation Duplicate Features
       {
@@ -328,7 +328,7 @@ namespace EditingSDKExamples
 
       #endregion
 
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Explode(Layer,IEnumerable{Int64},Boolean)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Explode(ARCGIS.DESKTOP.MAPPING.Layer,SYSTEM.COLLECTIONS.GENERIC.IEnumerable{Int64},Boolean)
       #region Edit Operation Explode Features
 
       var explodeFeatures = new EditOperation() { Name = "Explode Features" };
@@ -351,9 +351,9 @@ namespace EditingSDKExamples
 
       var destinationLayer = featureLayer;
 
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(LAYER,LAYER,IENUMERABLE{INT64},INSPECTOR)
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(EditingRowTemplate,Layer,IEnumerable{Int64})
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(LAYER,IENUMERABLE{INT64},INSPECTOR)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(ARCGIS.DESKTOP.MAPPING.LAYER,ARCGIS.DESKTOP.MAPPING.LAYER,IENUMERABLE{INT64},INSPECTOR)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(EditingRowTemplate,ARCGIS.DESKTOP.MAPPING.Layer,IEnumerable{Int64})
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Merge(ARCGIS.DESKTOP.MAPPING.LAYER,IENUMERABLE{INT64},INSPECTOR)
       #region Edit Operation Merge Features
 
       var mergeFeatures = new EditOperation() { Name = "Merge Features" };
@@ -445,10 +445,10 @@ namespace EditingSDKExamples
       var modifyFeatures = new EditOperation() { Name = "Modify features" };
       modifyFeatures.ShowProgressor = true;
 
-      var muultipleFeaturesInsp = new Inspector();
-      muultipleFeaturesInsp.Load(featureLayer, oidSet);
-      muultipleFeaturesInsp["MOMC"] = 24;
-      modifyFeatures.Modify(muultipleFeaturesInsp);
+      var multipleFeaturesInsp = new Inspector();
+      multipleFeaturesInsp.Load(featureLayer, oidSet);
+      multipleFeaturesInsp["MOMC"] = 24;
+      modifyFeatures.Modify(multipleFeaturesInsp);
       if (!modifyFeatures.IsEmpty)
       {
         var result = modifyFeatures.ExecuteAsync(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
@@ -559,12 +559,12 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.ParallelOffset.Builder.#ctor
       // cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.ParallelOffset.Builder)
       #region Edit Operation ParallelOffset
-      //Create parrallel features from the selected features
+      //Create parallel features from the selected features
 
       //find the roads layer
       var roadsLayer = MapView.Active.Map.FindLayers("Roads").FirstOrDefault();
 
-      //instatiate paralleloffset builder and set parameters
+      //instantiate parallelOffset builder and set parameters
       var parOffsetBuilder = new ParallelOffset.Builder()
       {
         Selection = MapView.Active.Map.GetSelection(),
@@ -836,7 +836,7 @@ namespace EditingSDKExamples
       //Chaining operations is a special case. Use "Chained Operations" when you require multiple transactions 
       //to be undo-able with a single "Undo".
 
-      //The most common use case for operation chaining is creating a feature with an attachement. 
+      //The most common use case for operation chaining is creating a feature with an attachment. 
       //Adding an attachment requires the object id (of a new feature) has already been created. 
       var editOperation1 = new EditOperation() { Name = string.Format("Create point in '{0}'", CurrentTemplate.Layer.Name) };
 
@@ -853,7 +853,7 @@ namespace EditingSDKExamples
         //can be undone as part of the "Undo Create" operation. In other words, only one undo operation will show on the 
         //Pro UI and not two.
         var editOperation2 = editOperation1.CreateChainedOperation();
-        //Add the attachement using the new feature id
+        //Add the attachment using the new feature id
         editOperation2.AddAttachment(this.CurrentTemplate.Layer, newFeatureID, @"C:\data\images\Hydrant.jpg");
         //Execute the chained edit operation. editOperation1 and editOperation2 show up as a single Undo operation
         //on the UI even though we had two transactions
@@ -866,7 +866,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.AddAttachment(ArcGIS.Desktop.Editing.RowToken,System.String)
       #region Edit Operation add attachment via RowToken
 
-      //ArcGIS Pro 2.5 extends the EditOperation.AddAttachment method to take a RowToken as a paramter.
+      //ArcGIS Pro 2.5 extends the EditOperation.AddAttachment method to take a RowToken as a parameter.
       //This allows you to create a feature, using EditOperation.CreateEx, and add an attachment in one transaction.
 
       var editOpAttach = new EditOperation();
@@ -928,7 +928,7 @@ namespace EditingSDKExamples
       // cref: ArcGIS.Desktop.Editing.EditOperation.SetOnRedone(System.Action)
       #region SetOnUndone, SetOnRedone, SetOnComitted
 
-      // SetOnUndone, SetOnRedone and SetOnComittedManage can be used to manage 
+      // SetOnUndone, SetOnRedone and SetOnComitted can be used to manage 
       // external actions(such as writing to a log table) that are associated with 
       // each edit operation.
 
@@ -1419,9 +1419,9 @@ namespace EditingSDKExamples
     public async void LoadSelection2Inspector()
     {
       // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.LoadAsync(MAPMEMBER,INT64)
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary``1()
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary()
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary``1()
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary()
       // cref: ArcGIS.Desktop.Mapping.Map.GetSelection
       #region Load map selection into Inspector
 
@@ -1441,9 +1441,9 @@ namespace EditingSDKExamples
     {
       // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.Load(ArcGIS.Desktop.Mapping.MapMember, System.Int64)
       // cref: ArcGIS.Desktop.Editing.Attributes.Inspector.Shape
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary``1()
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.ToDictionary()
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary``1()
+      // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary()
       // cref: ArcGIS.Desktop.Mapping.Map.GetSelection
       #region Get selected feature's attribute value
       QueuedTask.Run(() =>
@@ -1739,6 +1739,7 @@ namespace EditingSDKExamples
     #region ProSnippet Group: Inspector Provider Class
     #endregion
 
+    // cref: ArcGIS.Desktop.Editing.InspectorProvider
     #region How to create a custom Feature inspector provider class
 
     public class MyProvider : InspectorProvider
@@ -1823,6 +1824,8 @@ namespace EditingSDKExamples
     public async void InspectorProviderExample()
     {
       int oid = 1;
+      // cref: ArcGIS.Desktop.Editing.InspectorProvider
+      // cref: ArcGIS.Desktop.Editing.InspectorProvider.Create()
       #region Using the custom inspector provider class
       var layer = ArcGIS.Desktop.Mapping.MapView.Active.Map.GetLayersAsFlattenedList().OfType<ArcGIS.Desktop.Mapping.FeatureLayer>().FirstOrDefault();
 
@@ -1976,6 +1979,8 @@ namespace EditingSDKExamples
     }
     #endregion
 
+    // cref: ArcGIS.Desktop.Mapping.MapTool
+    // cref: ArcGIS.Desktop.Mapping.MapTool.FireSketchEvents
     #region Custom construction tool that fires sketch events
 
     internal class ConstructionTool1 : MapTool

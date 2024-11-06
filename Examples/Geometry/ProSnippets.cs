@@ -734,20 +734,20 @@ namespace ProSnippetsGeometry
 
     public void Builders()
     {
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasZ
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasM
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasID
-      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
-      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint}, ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.CreatePolygon(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint}, ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasZ
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasM
       // cref: ArcGIS.Core.Geometry.MultipartBuilderEx.HasID
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
-      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(ArcGIS.Core.Geometry.Polyline polyline)
-      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(IEnumerable<ArcGIS.Core.Geometry.MapPoint> points, AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference spatialReference = null)
-      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(ArcGIS.Core.Geometry.Polygon polygon)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint}, ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(ArcGIS.Core.Geometry.Polyline)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint}, ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Geometry.PolygonBuilderEx.#ctor(ArcGIS.Core.Geometry.Polygon)
       // cref: ArcGIS.Core.Geometry.AttributeFlags
       #region Builder Properties
 
@@ -1187,7 +1187,7 @@ namespace ProSnippetsGeometry
     {
       {
         // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.CreatePolyline(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.SpatialReference)
-        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},AttributeFlags attributes, ArcGIS.Core.Geometry.SpatialReference)
+        // cref: ArcGIS.Core.Geometry.PolylineBuilderEx.#ctor(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Core.Geometry.AttributeFlags, ArcGIS.Core.Geometry.SpatialReference)
         // cref: ArcGIS.Core.Geometry.SpatialReferences.WGS84
         // cref: ArcGIS.Core.Geometry.AttributeFlags
         #region Construct a Polyline - from an enumeration of MapPoints

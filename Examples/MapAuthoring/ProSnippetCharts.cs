@@ -280,6 +280,58 @@ namespace MapAuthoring
             lyrBar.SetDefinition(lyrDefBar);
 
             #endregion
+               
+            // cref: ArcGIS.Core.CIM.CIMChart
+            // cref: ArcGIS.Core.CIM.CIMChartGeneralProperties
+            // cref: ArcGIS.Core.CIM.CIMChartSeries
+            // cref: ArcGIS.Core.CIM.CIMChartPieSeries
+            #region Create a pie chart with custom legend formatting
+
+            // For more information on the chart CIM specification:
+            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
+
+            // Define fields names used in chart parameters.
+            const string fieldCategory = "neighbourhood_group";
+
+            var lyrs = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
+            var lyr = lyrs.First();
+            var lyrDef = lyr.GetDefinition();
+
+            // Define pie chart CIM properties
+            var pieChart = new CIMChart
+            {
+               Name = "pieChart",
+               GeneralProperties = new CIMChartGeneralProperties
+               {
+                  Title = "Pie chart with custom legend formatting",
+                  UseAutomaticTitle = true
+               },
+               Legend = new CIMChartLegend
+               {
+                  LegendText = new CIMChartTextProperties
+                  {
+                     FontFillColor = new CIMRGBColor { R = 0, G = 250, B = 20 }, // Specify new font color
+                     FontSize = 6.0, // Specify new font size
+                  }
+               },
+               Series = new CIMChartSeries[] {
+                  new CIMChartPieSeries
+                  {
+                     UniqueName = "pieSeries",
+                     Name = "pieSeries",
+                     Fields = new string[] { fieldCategory, string.Empty }
+                  }
+               }
+            };
+
+            // Add new chart to layer's existing list of charts (if any exist)
+            var newCharts = new CIMChart[] { pieChart };
+            var allCharts = (lyrDef?.Charts == null) ? newCharts : lyrDef.Charts.Concat(newCharts);
+            // Add CIM chart to layer defintion 
+            lyrDef.Charts = allCharts.ToArray(); 
+            lyr.SetDefinition(lyrDef);
+               
+            #endregion
         }
     }
 }

@@ -103,7 +103,7 @@ namespace ProSnippetsEditingFeatureSceneLayer
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.HasAssociatedFeatureService
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.IsEditable
       // cref: ArcGIS.Desktop.Mapping.FeatureSceneLayer.GetSelection
-      // cref: ArcGIS.Desktop.Editing.EditOperation.Delete
+      // cref: ArcGIS.Desktop.Editing.EditOperation.Delete(ArcGIS.Desktop.Mapping.MapMember,System.Collections.Generic.IEnumerable{System.Int64)
       #region Delete all the selected features in FeatureSceneLayer
 
       //must support editing!

@@ -917,13 +917,13 @@ namespace MapAuthoring.VoxelLayers
 		public void Example8h()
 		{
 
-			#region Get Selected Slice in TOC
+      // cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSlices()
+      // cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
+      #region Get Selected Slice in TOC
 
-			//Must be on the QueuedTask.Run()
+      //Must be on the QueuedTask.Run()
 
-			// cref: ArcGIS.Desktop.Mapping.MapView.GetSelectedSlices()
-			// cref: ArcGIS.Desktop.Mapping.Voxel.SliceDefinition
-			var slice = MapView.Active?.GetSelectedSlices()?.FirstOrDefault();
+      var slice = MapView.Active?.GetSelectedSlices()?.FirstOrDefault();
 			if (slice != null)
 			{
 

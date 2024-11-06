@@ -18,19 +18,25 @@
 */
 using ArcGIS.Core.CIM;
 using ArcGIS.Core.Data;
+using ArcGIS.Core.Data.DDL.Knowledge;
+using ArcGIS.Core.Data.DDL;
 using ArcGIS.Core.Data.Exceptions;
 using ArcGIS.Core.Data.Knowledge;
 using ArcGIS.Core.Data.Realtime;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Desktop.Core;
+using ArcGIS.Desktop.Editing;
 using ArcGIS.Desktop.Framework;
 using ArcGIS.Desktop.Framework.Contracts;
+using ArcGIS.Desktop.Framework.Dialogs;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.KnowledgeGraph;
 using ArcGIS.Desktop.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,7 +61,7 @@ namespace KnowledgeGraphSnippets
       //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph
       #region Opening a Connection to a KnowledgeGraph
 
-      string url = 
+      string url =
         @"https://acme.server.com/server/rest/services/Hosted/AcmeKnowledgeGraph/KnowledgeGraphServer";
 
       QueuedTask.Run(() =>
@@ -90,12 +96,12 @@ namespace KnowledgeGraphSnippets
       var kgLayer = MapView.Active.Map.GetLayersAsFlattenedList()
               .OfType<KnowledgeGraphLayer>().FirstOrDefault();
 
-      
+
       QueuedTask.Run(() =>
       {
         // use the layer directly
-        var datastore = kgLayer.GetDatastore();
-
+        KnowledgeGraph datastore = kgLayer.GetDatastore();
+        
         // or you can use any of the sub items since
         //KnowledgeGraphLayer is a composite layer - get the first 
         // child feature layer or standalone table
@@ -198,7 +204,7 @@ namespace KnowledgeGraphSnippets
       #endregion
     }
 
-    public void Datastore5() 
+    public void Datastore5()
     {
       KnowledgeGraph kg = null;
 
@@ -222,7 +228,7 @@ namespace KnowledgeGraphSnippets
       string entityName = "";
 
 
-      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.TransformToIDs(System.string, System.IEnumerable<System.Int64>)
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.TransformToIDs(System.string, System. System.Collections.Generic.IEnumerable{System.Int64})
       #region Transform a set of objectIDs to IDs for an entity
       QueuedTask.Run(() =>
       {
@@ -232,11 +238,11 @@ namespace KnowledgeGraphSnippets
       });
       #endregion
 
-      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.TransformToObjectIDs(System.string, System.IEnumerable<System.Object>)
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.TransformToObjectIDs(System.string, System.Collections.Generic.IEnumerable{System.Object})
       #region Transform a set of IDs to objectIDs for an entity
       QueuedTask.Run(() =>
       {
-        var idList = new List<object>() { "{CA2EF786-A10E-4B40-9737-9BDDDEA127B0}", 
+        var idList = new List<object>() { "{CA2EF786-A10E-4B40-9737-9BDDDEA127B0}",
                                           "{14B5AD65-890D-4062-90A7-C42C23B0066E}",
                                           "{A428D1F6-CB00-4559-AAFD-40885A4F2340}"};
         var oidList = kg.TransformToObjectIDs(entityName, idList);
@@ -263,13 +269,13 @@ namespace KnowledgeGraphSnippets
         using (var kg = new KnowledgeGraph(kg_props))
         {
           //Get the KnowledgeGraph Data Model
-          using(var kg_dm = kg.GetDataModel())
+          using (var kg_dm = kg.GetDataModel())
           {
             //TODO use KG data model...
           }
         }
       });
-      
+
       #endregion
     }
 
@@ -391,7 +397,7 @@ namespace KnowledgeGraphSnippets
             foreach (var kvp in dict_types)
             {
               var meta_entity_type = kvp.Value;
-              if (meta_entity_type.GetRole() == 
+              if (meta_entity_type.GetRole() ==
                   KnowledgeGraphNamedObjectTypeRole.Provenance)
               {
                 //TODO - use the provenance entity type
@@ -399,7 +405,7 @@ namespace KnowledgeGraphSnippets
 
               }
             }
-            
+
           }
         }
       });
@@ -429,7 +435,28 @@ namespace KnowledgeGraphSnippets
       //supports provenance
       return !string.IsNullOrEmpty(
         GetProvenanceEntityTypeName(kg.GetDataModel()));
+
+
+      // OR use the KnowledgeGraphPropertyInfo
+      var propInfo = kg.GetPropertyNameInfo();
+      return propInfo.SupportsProvenance;
     }
+    #endregion
+
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.SupportsProvenance
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenanceTypeName
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenancePropertyInfo
+    #region Get Whether KG Supports Provenance using KnowledgeGraphPropertyInfo
+    internal void KnowledgeGraphProvenance(KnowledgeGraph kg)
+    {
+      // use the KnowledgeGraphPropertyInfo
+      var propInfo = kg.GetPropertyNameInfo();
+      var supportsProvenance = propInfo.SupportsProvenance;
+      var provenanceType = propInfo.ProvenanceTypeName;
+      var provenanceInfo = propInfo.ProvenancePropertyInfo;
+    }
+
     #endregion
 
     public void DataModel5()
@@ -744,7 +771,7 @@ namespace KnowledgeGraphSnippets
       Map map = null;
 
       //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphLayerCreationParams
-      //cref: ArcGIS.Desktop.Mapping.LayerFactory.CanCreateLayer<T>
+      //cref: ArcGIS.Desktop.Mapping.LayerFactory.CanCreateLayer<T>(ArcGIS.Desktop.Mapping.LayerCreationParams,ArcGIS.Desktop.Mapping.ILayerContainerEdit)
       #region Using LayerFactory.Instance.CanCreateLayer with KG Create Layer Params
 
       QueuedTask.Run(() =>
@@ -820,8 +847,8 @@ namespace KnowledgeGraphSnippets
         var dict2 = new Dictionary<string, List<long>>();
         dict2.Add("Enity_Or_Relate_Type_Name1", null);//Null means all records
         dict2.Add("Enity_Or_Relate_Type_Name2", new List<long>());//Empty list means all records
-        dict2.Add("Enity_Or_Relate_Type_Name3", 
-          new List<long>() {  3,5,9, 101, 34});//Explicit list of ids
+        dict2.Add("Enity_Or_Relate_Type_Name3",
+          new List<long>() { 3, 5, 9, 101, 34 });//Explicit list of ids
         //dict2.Add("Enity_Or_Relate_Type_Name4",
         // new List<long>() { etc, etc });
 
@@ -846,10 +873,11 @@ namespace KnowledgeGraphSnippets
 
         // is it part of a KnowledgeGraph?
         var isPartOfKG = fc.GetIsKnowledgeGraphDataset();
-        
+
       });
       #endregion
 
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphLayer.GetDatastore
       #region Get KG Datastore
 
       var kgLayer = MapView.Active.Map.GetLayersAsFlattenedList()
@@ -1026,7 +1054,7 @@ namespace KnowledgeGraphSnippets
         if (KnowledgeGraphSupportsProvenance(kg))
         {
           //Only include if the KG has provenance
-          kg_qf.ProvenanceBehavior = 
+          kg_qf.ProvenanceBehavior =
             KnowledgeGraphProvenanceBehavior.Include;//default is exclude
         }
       }
@@ -1255,7 +1283,7 @@ namespace KnowledgeGraphSnippets
       KnowledgeGraph kg = null;
       Polygon poly = null;
 
-      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.KnowledgeGraphQueryFilter.BindParameters
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphQueryFilter.BindParameters
       #region Use Bind Parameters with an Open Cypher Query2
 
       QueuedTask.Run(async () =>
@@ -1923,7 +1951,7 @@ namespace KnowledgeGraphSnippets
 
       //We create an id set to contain the records to be appended
       var dict = new Dictionary<string, List<long>>();
-      dict["Suspects"] = new List<long>(); 
+      dict["Suspects"] = new List<long>();
 
       //In this case, via results from a query...
       var qry2 = "MATCH (s:Suspects) RETURN s";
@@ -1960,7 +1988,7 @@ namespace KnowledgeGraphSnippets
           //Pro application...
           var mapPanes = FrameworkApplication.Panes.OfType<IMapPane>().ToList();
           var mapPane = mapPanes.First(
-            mp => mp.MapView.IsLinkChartView && 
+            mp => mp.MapView.IsLinkChartView &&
             mp.MapView.Map.Name == "Acme Link Chart");
           var linkChartMap = mapPane.MapView.Map;
 
@@ -2038,6 +2066,1474 @@ namespace KnowledgeGraphSnippets
         //   (using MapFactory.Instance.CreateLinkChart)
       });
       #endregion
+    }
+
+    #region ProSnippet Group: Root Nodes
+    #endregion
+
+    public async Task RootNodes1()
+    {
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.GetShowRootNodes(ArcGIS.Desktop.Mapping.MapView)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SetShowRootNodes(ArcGIS.Desktop.Mapping.MapView, System.Boolean)
+      #region Toggle Root Node Display
+      var val = MapView.Active.GetShowRootNodes();
+
+      await QueuedTask.Run(() =>
+      {
+        MapView.Active.SetShowRootNodes(!val);
+      });
+      #endregion
+
+      MapMember mapMember = null;
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.GetRootNodes(ArcGIS.Desktop.Mapping.MapView)
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary
+      #region Get records that are set as Root Nodes 
+      await QueuedTask.Run(() =>
+      {
+        MapMemberIDSet rootNodes = MapView.Active.GetRootNodes();
+        var rootNodeDict = rootNodes.ToDictionary();
+
+        // rootNodeDict is a Dictionary<MapMember, List<long>>
+
+        // access a particular mapMember in the Dictionary
+        if (rootNodeDict.ContainsKey(mapMember))
+        {
+          var oids = rootNodeDict[mapMember];
+        }
+
+        // OR iterate through the dictionary
+        foreach (var (mm, oids) in rootNodeDict)
+        {
+          // do something
+        }
+      });
+
+      #endregion
+
+      Layer entityLayer = null;
+      Layer entityLayer2 = null;
+      List<long> oids = null;
+      List<long> oids2 = null;
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SetRootNodes(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.MapMemberIDSet)
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.FromDictionary``1
+      #region Assign a set of records as Root Nodes
+
+      await QueuedTask.Run(() =>
+      {
+        var dict = new Dictionary<MapMember, List<long>>();
+        dict.Add(entityLayer, oids);
+        MapMemberIDSet mmIDSet = MapMemberIDSet.FromDictionary(dict);
+
+        MapView.Active.SetRootNodes(mmIDSet);
+      });
+      #endregion
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SetRootNodes(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.MapMemberIDSet)
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet
+      #region Assign a selection as Root Nodes 
+
+      await QueuedTask.Run(() =>
+      {
+        var mapSel = MapView.Active.Map.GetSelection();
+
+        MapView.Active.SetRootNodes(mapSel);
+      });
+      #endregion
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SelectAllRootNodes(ArcGIS.Desktop.Mapping.MapView)
+      #region Select the records that are Root Node 
+      await QueuedTask.Run(() =>
+      {
+        var mapSel = MapView.Active.SelectAllRootNodes();
+
+
+        // this is the same as 
+        MapMemberIDSet rootNodes = MapView.Active.GetRootNodes();
+        SelectionSet selSet = SelectionSet.FromMapMemberIDSet(rootNodes);
+        MapView.Active.Map.SetSelection(selSet);
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SelectRootNodes(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.MapMemberIDSet)
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet
+      //cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.FromDictionary``1
+      #region Define and select a set of records as Root Nodes
+
+      await QueuedTask.Run(() =>
+      {
+        var dict = new Dictionary<MapMember, List<long>>();
+        dict.Add(entityLayer, oids);
+        dict.Add(entityLayer2, oids2);
+        MapMemberIDSet mmIDSet = MapMemberIDSet.FromDictionary(dict);
+
+        MapView.Active.SelectRootNodes(mmIDSet);
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.ClearRootNodes(ArcGIS.Desktop.Mapping.MapView)
+      #region Clear Root Nodes
+      await QueuedTask.Run(() =>
+      {
+        MapView.Active.ClearRootNodes();
+      });
+
+      #endregion
+    }
+
+    #region ProSnippet Group: Editing
+    #endregion
+
+    public async void KGEditing_Create()
+    {
+      KnowledgeGraph kg = null;
+      MapPoint org_location = null;
+      MapView mv = null;
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphEntityType
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember,System.Collections.Generic.Dictionary{System.String,System.Object})
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Core.Data.Table,System.Collections.Generic.Dictionary{System.String,System.Object})
+      #region Create a new Entity
+
+      await QueuedTask.Run(() =>
+      {
+
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a new organization",
+          SelectNewFeatures = true
+        };
+
+        //Use datasets or feature layer(s) or standalone table(s)
+        //Get a reference to the KnowledgeGraph
+        //var kg = ... ; 
+
+        //Open the feature class or Table to be edited
+        var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+
+        //Alternatively, use the feature layer for 'Organization' if your context is a map
+        //Get the parent KnowledgeGraphLayer
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+        //From the KG Layer get the relevant child feature layer
+        var org_fl = kg_layer.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+                        .First(child_layer => child_layer.Name == "Organization");
+
+        //Define attributes
+        var attribs = new Dictionary<string, object>();
+        attribs["Name"] = "Acme Ltd.";
+        attribs["Description"] = "Specializes in household items";
+        attribs["SHAPE"] = org_location;
+
+        //Add it to the operation via the dataset...
+        edit_op.Create(org_fc, attribs);
+        //or use the feature layer/stand alone table if preferred and available
+        //edit_op.Create(org_fl, attribs);
+
+        if (edit_op.Execute())
+        {
+          //TODO: Operation succeeded
+        }
+
+      });
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo()
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.OriginIDPropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DestinationIDPropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipValue
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Core.Data.Table,System.Collections.Generic.Dictionary{System.String,System.Object})
+      #region Create a new Relationship from Existing Entities 1
+
+      var create_rel = await QueuedTask.Run(() =>
+      {
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a new relationship record",
+          SelectNewFeatures = true
+        };
+
+        //Use datasets or feature layer(s) or standalone table(s)
+        //Get a reference to the KnowledgeGraph
+        //var kg = ... ; 
+
+        //We will use a relate called 'HasEmployee' to relate an Organization w/ a Person
+        //Use either tables or map members to get the rows to be related...
+        var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+        var person_tbl = kg.OpenDataset<Table>("Person");
+
+        //Get the relationship dataset
+        //We can use either a table or standalone table
+        var emp_tbl = kg.OpenDataset<Table>("HasEmployee");
+
+        //we need the names of the origin and destination relationship properties
+        var kg_prop_info = kg.GetPropertyNameInfo();
+
+        //Arbitrarily use the first record from the two entity datasets "to be" related
+        //Entities are always related by Global ID. Origin to Destination specifies the
+        //direction (of the relate).
+        //
+        //Populate the attributes for the relationship
+        var attribs = new Dictionary<string, object>();
+
+        using (var rc = org_fc.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            attribs[kg_prop_info.OriginIDPropertyName] = rc.Current.GetGlobalID();
+        }
+        using (var rc = person_tbl.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            attribs[kg_prop_info.DestinationIDPropertyName] = rc.Current.GetGlobalID();
+        }
+
+        //Add any extra attribute information for the relation as needed
+        attribs["StartDate"] = new DateTimeOffset(DateTime.Now);
+
+        //Add a create for the relationship to the operation
+        edit_op.Create(emp_tbl, attribs);
+
+        //Do the create
+        return edit_op.Execute();
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription.#ctor(System.Guid,System.Guid,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Core.Data.Table, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      #region Create a new Relationship from Existing Entities 2
+
+      var create_rel2 = await QueuedTask.Run(() =>
+      {
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a new relationship record",
+          SelectNewFeatures = true
+        };
+
+        //Use datasets or feature layer(s) or standalone table(s)
+        //Get a reference to the KnowledgeGraph
+        //var kg = ... ; 
+
+        //We will use a relate called 'HasEmployee' to relate an Organization w/ a Person
+        //Use either tables or map members to get the rows to be related...
+        var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+        var person_tbl = kg.OpenDataset<Table>("Person");
+
+        //Get the relationship dataset
+        //We can use either a table or standalone table
+        var emp_tbl = kg.OpenDataset<Table>("HasEmployee");
+
+        // get the origin, destination records
+        Guid guidOrigin = Guid.Empty;
+        Guid guidDestination = Guid.Empty;
+        using (var rc = org_fc.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            guidOrigin = rc.Current.GetGlobalID();
+        }
+        using (var rc = person_tbl.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            guidDestination = rc.Current.GetGlobalID();
+        }
+
+        //Add any extra attribute information for the relation as needed
+        var attribs = new Dictionary<string, object>();
+        attribs["StartDate"] = new DateTimeOffset(DateTime.Now);
+
+        var rd = new KnowledgeGraphRelationshipDescription(guidOrigin, guidDestination, attribs);
+        //Add a create for the relationship to the operation
+        edit_op.Create(emp_tbl, rd);
+
+        //Do the create
+        return edit_op.Execute();
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.OriginIDPropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DestinationIDPropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphEntityType
+      //cref: ArcGIS.Desktop.Editing.EditOperation.CreateChainedOperation
+      //cref: ArcGIS.Desktop.Editing.RowToken
+      //cref: ArcGIS.Desktop.Editing.RowToken.GlobalID
+      #region Create a new Relationship and New Entities 1
+
+      var create_rel1 = await QueuedTask.Run(() =>
+      {
+        //This example uses a chained edit operation
+        var edit_op = new EditOperation()
+        {
+          Name = "Create entities and a relationship",
+          SelectNewFeatures = true
+        };
+
+        //We are just going to use the GDB objects in this one but
+        //we could equally use feature layers/standalone tables
+
+        //using Feature Class/Tables (works within Investigation or map)
+        var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+        var person_tbl = kg.OpenDataset<Table>("Person");
+        //Relationship table
+        var emp_tbl = kg.OpenDataset<Table>("HasEmployee");
+
+        var attribs = new Dictionary<string, object>();
+
+        //New Organization
+        attribs["Name"] = "Acme Ltd.";
+        attribs["Description"] = "Specializes in household items";
+        attribs["SHAPE"] = org_location;
+
+        //Add it to the operation - we need the rowtoken
+        var rowtoken = edit_op.Create(org_fc, attribs);
+
+        attribs.Clear();//we are going to re-use the dictionary
+
+        //New Person
+        attribs["Name"] = "Bob";
+        attribs["Age"] = "41";
+        attribs["Skills"] = "Plumbing, Framing, Flooring";
+
+        //Add it to the operation
+        var rowtoken2 = edit_op.Create(person_tbl, attribs);
+
+        attribs.Clear();
+
+        //At this point we must execute the create of the entities
+        if (edit_op.Execute())
+        {
+          //if we are here, the create of the entities was successful
+
+          //Next, "chain" a second create for the relationship - this ensures that
+          //Both creates (entities _and_ relation) will be -undone- together if needed
+          //....in other words they will behave as if they are a -single- transaction
+          var edit_op_rel = edit_op.CreateChainedOperation();
+
+          //we need the names of the origin and destination relation properties
+          var kg_prop_info = kg.GetPropertyNameInfo();
+          //use the row tokens we held on to from the entity creates
+          attribs[kg_prop_info.OriginIDPropertyName] = rowtoken.GlobalID;
+          attribs[kg_prop_info.DestinationIDPropertyName] = rowtoken2.GlobalID;
+
+          //Add any extra attribute information for the relation as needed
+          attribs["StartDate"] = new DateTimeOffset(DateTime.Now);
+
+          //Do the create of the relate
+          edit_op_rel.Create(emp_tbl, attribs);
+          return edit_op_rel.Execute();
+        }
+        return false;//Create of entities failed
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphEntityType
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription.#ctor(ArcGIS.Desktop.Editing.RowHandle,ArcGIS.Desktop.Editing.RowHandle,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})
+      //cref: ArcGIS.Desktop.Editing.RowToken
+      //cref: ArcGIS.Desktop.Editing.RowToken.GlobalID
+      //cref: ArcGIS.Desktop.Editing.RowHandle.#ctor(ArcGIS.Desktop.Editing.RowToken)
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Core.Data.Table, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      #region Create a new Relationship and New Entities 2
+
+      var createRel = await QueuedTask.Run(() =>
+      {
+        //This example uses a KnowledgeGraphRelationshipDescription
+        var edit_op = new EditOperation()
+        {
+          Name = "Create entities and a relationship using a KG relate desc",
+          SelectNewFeatures = true
+        };
+
+        //We are just going to use mapmembers in this example
+        //we could equally use feature classes/tables
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+        //From the KG Layer get the relevant child feature layer(s) and/or standalone
+        //table(s)
+        var org_fl = kg_layer.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+                        .First(child_layer => child_layer.Name == "Organization");
+
+        var person_stbl = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "Person");
+
+        var rel_stbl = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "HasEmployee");
+
+        var attribs = new Dictionary<string, object>();
+
+        //New Organization
+        attribs["Name"] = "Acme Ltd.";
+        attribs["Description"] = "Specializes in household items";
+        attribs["SHAPE"] = org_location;
+
+        //Add it to the operation - we need the rowtoken
+        var rowtoken_org = edit_op.Create(org_fl, attribs);
+
+        attribs.Clear();//we are going to re-use the dictionary
+
+        //New Person
+        attribs["Name"] = "Bob";
+        attribs["Age"] = "41";
+        attribs["Skills"] = "Plumbing, Framing, Flooring";
+
+        //Add it to the operation
+        var rowtoken_person = edit_op.Create(person_stbl, attribs);
+
+        attribs.Clear();
+
+        //Create the new relationship using a KnowledgeGraphRelationshipDescription
+        //Row handles act as the placeholders for the TO BE created new entities that will
+        //be related
+        var src_row_handle = new RowHandle(rowtoken_org);
+        var dest_row_handle = new RowHandle(rowtoken_person);
+
+        //Add any extra attribute information for the relation as needed
+        attribs["StartDate"] = new DateTimeOffset(DateTime.Now);
+
+        var rel_desc = new KnowledgeGraphRelationshipDescription(
+                                    src_row_handle, dest_row_handle, attribs);
+
+        //Add the relate description to the edit operation
+        edit_op.Create(rel_stbl, rel_desc);
+
+        //Execute the create of the entities and relationship
+        return edit_op.Execute();
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenancePropertyInfo      
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceTypeNamePropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceFieldNamePropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceSourceNamePropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceSourceTypePropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceSourcePropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceCommentPropertyName
+      //cref: ArcGIS.Core.Data.Knowledge.ProvenancePropertyInfo.ProvenanceInstanceIDPropertyName
+      #region Create a Provenance Record
+
+      await QueuedTask.Run(() =>
+      {
+
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a new provenance record",
+          SelectNewFeatures = true
+        };
+
+        //lets get the provenance table (provenance is not added to the
+        //map TOC)
+        var provenance_tbl = kg.OpenDataset<Table>("Provenance");
+        if (provenance_tbl == null)
+          return;
+        //we will add a row to the provenance for person entity
+        var person_tbl = kg.OpenDataset<Table>("Person");
+
+        //Arbitrarily retrieve the first "person" row
+        var instance_id = Guid.Empty;
+        using (var rc = person_tbl.Search())
+        {
+          if (!rc.MoveNext())
+            return;
+          instance_id = rc.Current.GetGlobalID();//Get the global id
+        }
+
+        //Define the provenance attributes - we need the names
+        //of the provenance properties from the KG ProvenancePropertyInfo
+        var kg_prop_info = kg.GetPropertyNameInfo();
+        var attribs = new Dictionary<string, object>();
+        var ppi = kg_prop_info.ProvenancePropertyInfo;
+
+        attribs[ppi.ProvenanceTypeNamePropertyName] =
+            person_tbl.GetDefinition().GetName();//entity type name
+        attribs[ppi.ProvenanceFieldNamePropertyName] = "name";//Must be a property/field on the entity
+        attribs[ppi.ProvenanceSourceNamePropertyName] = "Annual Review 2024";//can be anything - can be null
+        //note: Source type is controlled by the CodedValueDomain "esri__provenanceSourceType"
+        attribs[ppi.ProvenanceSourceTypePropertyName] = "Document";//one of ["Document", "String", "URL"].
+        attribs[ppi.ProvenanceSourcePropertyName] = "HR records";//can be anything, not null
+        attribs[ppi.ProvenanceCommentPropertyName] = "Rock star";//can be anything - can be null
+
+        //Add in the id of the provenance owner - our "person" in this case
+        attribs[ppi.ProvenanceInstanceIDPropertyName] = instance_id;
+
+        //Specify any additional custom attributes added to the provenance
+        //schema by the user as needed....
+        //attribs["custom_attrib"] = "Foo";
+        //attribs["custom_attrib2"] = "Bar";
+
+        //Create the provenance row
+        edit_op.Create(provenance_tbl, attribs);
+        if (edit_op.Execute())
+        {
+          //TODO: Operation succeeded
+        }
+
+      });
+
+      #endregion
+    }
+
+    internal static KnowledgeGraph GetKnowledgeGraph()
+    {
+      return null;
+    }
+
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.OriginIDPropertyName
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DestinationIDPropertyName
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphEntityType
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphNamedObjectTypeRole
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphNamedObjectTypeRole.Document
+    //cref: ArcGIS.Desktop.Editing.EditOperation.CreateChainedOperation
+    //cref: ArcGIS.Desktop.Editing.RowToken
+    //cref: ArcGIS.Desktop.Editing.RowToken.GlobalID
+    #region Create a Document Record
+
+    internal static string GetDocumentTypeName(KnowledgeGraphDataModel kg_dm)
+    {
+      var entity_types = kg_dm.GetEntityTypes();
+      foreach (var entity_type in entity_types)
+      {
+        var role = entity_type.Value.GetRole();
+        if (role == KnowledgeGraphNamedObjectTypeRole.Document)
+          return entity_type.Value.GetName();
+      }
+      return "";
+    }
+
+    internal static string GetHasDocumentTypeName(KnowledgeGraphDataModel kg_dm)
+    {
+      var rel_types = kg_dm.GetRelationshipTypes();
+      foreach (var rel_type in rel_types)
+      {
+        var role = rel_type.Value.GetRole();
+        if (role == KnowledgeGraphNamedObjectTypeRole.Document)
+          return rel_type.Value.GetName();
+      }
+      return "";
+    }
+
+    internal async void AddDocumentRecord()
+    {
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          var edit_op = new EditOperation()
+          {
+            Name = "Create Document Example",
+            SelectNewFeatures = true
+          };
+
+          var doc_entity_name = GetDocumentTypeName(kg.GetDataModel());
+          if (string.IsNullOrEmpty(doc_entity_name))
+            return false;
+          var hasdoc_rel_name = GetHasDocumentTypeName(kg.GetDataModel());
+          if (string.IsNullOrEmpty(hasdoc_rel_name))
+            return false;
+
+          //Document can also be FeatureClass
+          var doc_tbl = kg.OpenDataset<Table>(doc_entity_name);
+          var doc_rel_tbl = kg.OpenDataset<Table>(hasdoc_rel_name);
+
+          //This is the document to be added...file, image, resource, etc.
+          var url = @"E:\Data\Temp\HelloWorld.txt";
+          var text = System.IO.File.ReadAllText(url);
+
+          //Set document properties
+          var attribs = new Dictionary<string, object>();
+          attribs["contentType"] = @"text/plain";
+          attribs["name"] = System.IO.Path.GetFileName(url);
+          attribs["url"] = url;
+          //Add geometry if relevant
+          //attribs["Shape"] = doc_location;
+
+          //optional
+          attribs["fileExtension"] = System.IO.Path.GetExtension(url);
+          attribs["text"] = System.IO.File.ReadAllText(url);
+
+          //optional and arbitrary - your choice
+          attribs["title"] = System.IO.Path.GetFileNameWithoutExtension(url);
+          attribs["keywords"] = @"text,file,example";
+          attribs["metadata"] = "";
+
+          //Specify any additional custom attributes added to the document
+          //schema by the user as needed....
+          //attribs["custom_attrib"] = "Foo";
+          //attribs["custom_attrib2"] = "Bar";
+
+          //Get the entity whose document this is...
+          var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+          var qf = new QueryFilter()
+          {
+            WhereClause = "name = 'Acme'",
+            SubFields = "*"
+          };
+          var origin_org_id = Guid.Empty;
+          using (var rc = org_fc.Search(qf))
+          {
+            if (!rc.MoveNext())
+              return false;
+            origin_org_id = rc.Current.GetGlobalID();//For the relate
+          }
+
+          //Create the document row/feature
+          var rowtoken = edit_op.Create(doc_tbl, attribs);
+          if (edit_op.Execute())
+          {
+            //Create the relationship row
+            attribs.Clear();
+            //we need the names of the origin and destination relation properties
+            var kg_prop_info = kg.GetPropertyNameInfo();
+            //Specify the origin entity (i.e. the document 'owner') and
+            //the document being related to (i.e. the document 'itself')
+            attribs[kg_prop_info.OriginIDPropertyName] = origin_org_id;//entity
+            attribs[kg_prop_info.DestinationIDPropertyName] = rowtoken.GlobalID;//document
+
+            //Specify any custom attributes added to the has document
+            //schema by the user as needed....
+            //attribs["custom_attrib"] = "Foo";
+            //attribs["custom_attrib2"] = "Bar";
+
+            //"Chain" a second create for the relationship - this ensures that
+            //Both creates (doc _and_ "has doc" relation) will be -undone- together if needed
+            //....in other words they will behave as if they are a -single- transaction
+            var edit_op_rel = edit_op.CreateChainedOperation();
+            edit_op_rel.Create(doc_rel_tbl, attribs);
+            return edit_op_rel.Execute();
+          }
+        }
+        return false;
+      });
+    }
+
+    #endregion
+
+    public async void KGEditing_Modify()
+    {
+      KnowledgeGraph kg = null;
+      MapPoint org_updated_location = null;
+      MapView mv = null;
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.OriginIDPropertyName
+      #region Modify an Entity and Relationship record
+      await QueuedTask.Run(() =>
+      {
+
+        var edit_op = new EditOperation()
+        {
+          Name = "Modify an Entity and Relationship record",
+          SelectModifiedFeatures = true
+        };
+
+        //We are  going to use mapmembers in this example
+        //we could equally use feature classes/tables
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+        //Entity
+        var org_fl = kg_layer.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+                        .First(child_layer => child_layer.Name == "Organization");
+        //and/or Relationship
+        var rel_stbl = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "HasEmployee");
+
+        //Get the entity feature to modify
+        long org_oid = -1;
+        var org_gid = Guid.Empty;
+        var qf = new QueryFilter()
+        {
+          WhereClause = "name = 'Acme'",
+          SubFields = "*"
+        };
+        using (var rc = org_fl.Search(qf))
+        {
+          if (!rc.MoveNext())
+            return;
+          org_oid = rc.Current.GetObjectID();
+          org_gid = rc.Current.GetGlobalID();
+        }
+        if (org_oid == -1)
+          return; //nothing to modify
+
+        var attribs = new Dictionary<string, object>();
+
+        //Specify attributes to be updated
+        attribs["Name"] = "Acme Ltd.";
+        attribs["Description"] = "Specializes in household items";
+        attribs["SHAPE"] = org_updated_location;
+
+        //Add to the edit operation
+        edit_op.Modify(org_fl, org_oid, attribs);
+
+        //Get the relationship record (if a relate is being updated)
+        //we need the name of the origin id property
+        var kg_prop_info = kg.GetPropertyNameInfo();
+        var sql = $"{kg_prop_info.OriginIDPropertyName} = ";
+        sql += "'" + org_gid.ToString("B").ToUpper() + "'";
+
+        qf = new QueryFilter()
+        {
+          WhereClause = sql,
+          SubFields = "*"
+        };
+        long rel_oid = -1;
+        using (var rc = rel_stbl.Search(qf))
+        {
+          if (!rc.MoveNext())
+            return;
+          rel_oid = rc.Current.GetObjectID();
+        }
+        if (rel_oid > -1)
+        {
+          //add the relate row updates to the edit operation
+          attribs.Clear();//we are going to re-use the dictionary
+          attribs["StartDate"] = new DateTimeOffset(DateTime.Now);
+          attribs["custom_attrib"] = "Foo";
+          attribs["custom_attrib2"] = "Bar";
+          //Add to the edit operation
+          edit_op.Modify(rel_stbl, rel_oid, attribs);
+        }
+        //do the update(s)
+        if (edit_op.Execute())
+        {
+          //TODO: Operation succeeded
+        }
+
+      });
+      #endregion
+    }
+
+    public async void KGEditing_Delete()
+    {
+      KnowledgeGraph kg = null;
+      var mv = MapView.Active;
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphEntityType
+      #region Delete an Entity record
+      await QueuedTask.Run(() =>
+      {
+
+        var edit_op = new EditOperation()
+        {
+          Name = "Delete an Entity record"
+        };
+
+        //We are  going to use mapmembers in this example
+        //we could equally use feature classes/tables
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+        //Entity
+        var org_fl = kg_layer.GetLayersAsFlattenedList().OfType<FeatureLayer>()
+                        .First(child_layer => child_layer.Name == "Organization");
+
+        //Get the entity feature(s) to delete
+        long org_oid = -1;
+        var qf = new QueryFilter()
+        {
+          WhereClause = "name = 'Acme'",
+          SubFields = "*"
+        };
+        using (var rc = org_fl.Search(qf))
+        {
+          if (!rc.MoveNext())
+            return;//nothing to delete
+          org_oid = rc.Current.GetObjectID();
+        } 
+
+        edit_op.Delete(org_fl, org_oid);
+        edit_op.Execute();//Do the delete
+      });
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+      #region Delete a Relationship record 1
+      await QueuedTask.Run(() =>
+      {
+
+        var edit_op = new EditOperation()
+        {
+          Name = "Delete a Relationship record"
+        };
+
+        //We are  going to use mapmembers in this example
+        //we could equally use feature classes/tables
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+        //Relationship
+        var rel_stbl = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "HasEmployee");
+
+        //Get the relation row to delete
+        long rel_oid = -1;
+        using (var rc = rel_stbl.Search())
+        {
+          if (!rc.MoveNext())
+            return;
+          //arbitrarily, in this example, get the first row
+          rel_oid = rc.Current.GetObjectID();
+        }
+
+        edit_op.Delete(rel_stbl, rel_oid);
+        edit_op.Execute();//Do the delete
+      });
+      #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipType
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription.#ctor(System.Guid,System.Guid,System.Collections.Generic.IReadOnlyDictionary{System.String,System.Object})
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Delete(ArcGIS.Core.Data.Table, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Delete(ArcGIS.Desktop.Mapping.MapMember, ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      #region Delete a Relationship record 2
+      await QueuedTask.Run(() =>
+      {
+
+        var edit_op = new EditOperation()
+        {
+          Name = "Delete a Relationship record"
+        };
+
+        //We are  going to use mapmembers in this example
+        //we could equally use feature classes/tables
+        var kg_layer = mv.Map.GetLayersAsFlattenedList()?
+                      .OfType<ArcGIS.Desktop.Mapping.KnowledgeGraphLayer>().First();
+
+        //entities
+        var entityOrg = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "Organization");
+        var entityPerson = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "Person");
+
+        //Relationship
+        var rel_stbl = kg_layer.GetStandaloneTablesAsFlattenedList()
+                        .First(child_layer => child_layer.Name == "HasEmployee");
+
+        // get the origin, destination records
+        Guid guidOrigin = Guid.Empty;
+        Guid guidDestination = Guid.Empty;
+        using (var rc = entityOrg.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            guidOrigin = rc.Current.GetGlobalID();
+        }
+        using (var rc = entityPerson.Search())
+        {
+          if (rc.MoveNext())
+            //Use the KnowledgeGraphPropertyInfo to avoid hardcoding...
+            guidDestination = rc.Current.GetGlobalID();
+        }
+
+        var rd = new KnowledgeGraphRelationshipDescription(guidOrigin, guidDestination);
+        edit_op.Delete(rel_stbl, rd);
+        edit_op.Execute();//Do the delete
+      });
+      #endregion
+    }
+
+    #region ProSnippet Group: Schema Edits
+    #endregion
+
+    public async void KG_SchemaBuilder_Create()
+    {
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.#ctor(ArcGIS.Core.Data.Knowledge.KnowledgeGraph)
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.ErrorMessages
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphTypeDescription)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphExtensions.ApplySchemaEdits(ArcGIS.Core.Data.Knowledge.KnowledgeGraph,ArcGIS.Core.Data.DDL.SchemaBuilder)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphEntityTypeDescription
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphEntityTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription})
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphEntityTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphRelationshipTypeDescription
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphRelationshipTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription})
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphRelationshipTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType)
+      #region Create Entity and Relationship Types with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "PhoneCall";
+          var relate_name = "WhoCalledWho";
+
+          //Entity Fields
+          var descs1 =
+              new List<KnowledgeGraphPropertyDescription>();
+          descs1.Add(
+            new KnowledgeGraphPropertyDescription("PhoneOwner", FieldType.String));
+          descs1.Add(
+            new KnowledgeGraphPropertyDescription("PhoneNumber", FieldType.String));
+          descs1.Add(
+            new KnowledgeGraphPropertyDescription("LocationID", FieldType.BigInteger));
+          descs1.Add(
+            new KnowledgeGraphPropertyDescription("DateAndTime", FieldType.Date));
+
+          //Relate Fields
+          var descs2 =
+              new List<KnowledgeGraphPropertyDescription>();
+          descs2.Add(
+            new KnowledgeGraphPropertyDescription("Foo", FieldType.String));
+          descs2.Add(
+            new KnowledgeGraphPropertyDescription("Bar", FieldType.String));
+
+
+          var includeShape = true;//change to false to omit the shape column
+          var hasZ = false;
+          var hasM = false;
+
+          KnowledgeGraphEntityTypeDescription entityDesc = null;
+          KnowledgeGraphRelationshipTypeDescription relateDesc = null;
+          if (includeShape)
+          {
+            var sr = kg.GetSpatialReference();
+            var shp_desc = new ShapeDescription(GeometryType.Point, sr)
+            {
+              HasM = hasM,
+              HasZ = hasZ
+            };
+            entityDesc = new KnowledgeGraphEntityTypeDescription(
+              entity_name, descs1, shp_desc);
+            relateDesc = new KnowledgeGraphRelationshipTypeDescription(
+              relate_name, descs2, shp_desc);
+          }
+          else
+          {
+            entityDesc = new KnowledgeGraphEntityTypeDescription(
+              entity_name, descs1);
+            relateDesc = new KnowledgeGraphRelationshipTypeDescription(
+              relate_name, descs2);
+          }
+          //Run the schema builder
+          try
+          {
+            SchemaBuilder sb = new(kg);
+            sb.Create(entityDesc);
+            sb.Create(relateDesc);
+            //Use the KnowledgeGraph extension method 'ApplySchemaEdits(...)'
+            //to refresh the Pro UI
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Entity/Relate Create error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+    }
+
+    public async void KG_SchemaBuilder_Delete()
+    {
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.#ctor(ArcGIS.Core.Data.Knowledge.KnowledgeGraph)
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete(ArcGIS.Core.Data.DDL.Description)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphExtensions.ApplySchemaEdits(ArcGIS.Core.Data.Knowledge.KnowledgeGraph,ArcGIS.Core.Data.DDL.SchemaBuilder)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphEntityTypeDescription.#ctor(System.String)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphRelationshipTypeDescription.#ctor(System.String)
+      #region Delete Entity and Relationship Types with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "PhoneCall";
+          var relate_name = "WhoCalledWho";
+
+          var entityDesc = new KnowledgeGraphEntityTypeDescription(entity_name);
+          var relateDesc = new KnowledgeGraphRelationshipTypeDescription(relate_name);
+
+          //Run the schema builder
+          try
+          {
+            SchemaBuilder sb = new(kg);
+            sb.Delete(entityDesc);
+            sb.Delete(relateDesc);
+            //Use the KnowledgeGraph extension method 'ApplySchemaEdits(...)'
+            //to refresh the Pro UI
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Entity/Relate Delete error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+    }
+
+    public async void KG_SchemaBuilder_Modify()
+    {
+
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Modify(ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphTypeDescription)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphExtensions.ApplySchemaEdits(ArcGIS.Core.Data.Knowledge.KnowledgeGraph,ArcGIS.Core.Data.DDL.SchemaBuilder)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphEntityTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphRelationshipTypeDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription.#ctor(ArcGIS.Core.Data.Knowledge.KnowledgeGraphProperty)
+      //cref: ArcGIS.Core.Data.DDL.Knowledge.KnowledgeGraphPropertyDescription.CreateStringProperty(System.String,System.Int32)
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphNamedObjectType.GetIsSpatial
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphNamedObjectType.GetShapeDefinition
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphNamedObjectType.GetShapeField
+      #region Modify Entity and Relationship Type Schemas with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "PhoneCall";
+          var relate_name = "WhoCalledWho";
+
+          var kvp_entity = kg.GetDataModel().GetEntityTypes()
+               .First(r => r.Key == entity_name);
+          var kvp_relate = kg.GetDataModel().GetRelationshipTypes()
+                         .First(r => r.Key == relate_name);
+
+          //Let's delete one field and add a new one from each
+          //A field gets deleted implicitly if it is not included in the list of
+          //fields - or "properties" in this case....so we will remove the last
+          //property from the list
+          var entity_props = kvp_entity.Value.GetProperties().Reverse().Skip(1).Reverse();
+          var prop_descs = new List<KnowledgeGraphPropertyDescription>();
+
+          foreach (var prop in entity_props)
+          {
+            if (prop.FieldType == FieldType.Geometry)
+            {
+              continue;//skip shape
+            }
+            var prop_desc = new KnowledgeGraphPropertyDescription(prop);
+            prop_descs.Add(prop_desc);
+          }
+          //deal with shape - we need to keep it
+          //SchemaBuilder deletes any field not included in the "modify" list
+          ShapeDescription shape_desc = null;
+          if (kvp_entity.Value.GetIsSpatial())
+          {
+            var geom_def = kvp_entity.Value.GetShapeDefinition();
+            var shape_name = kvp_entity.Value.GetShapeField();
+            shape_desc = new ShapeDescription(
+              shape_name, geom_def.geometryType, geom_def.sr);
+          }
+          //add the new entity property
+          prop_descs.Add(
+            KnowledgeGraphPropertyDescription.CreateStringProperty("foo", 10));
+          //make a description for the entity type - ok if shape_desc is null
+          var entityDesc = new KnowledgeGraphEntityTypeDescription(
+            entity_name, prop_descs, shape_desc);
+
+          //Add the entity type description to the schema builder using 'Modify'
+          SchemaBuilder sb = new(kg);
+          sb.Modify(entityDesc);
+
+          //Repeat for the relationship - assuming we have at least one custom attribute field
+          //that can be deleted on our relationship schema...
+          var rel_props = kvp_relate.Value.GetProperties().Reverse().Skip(1).Reverse();
+          var rel_prop_descs = new List<KnowledgeGraphPropertyDescription>();
+
+          foreach (var prop in rel_props)
+          {
+            if (prop.FieldType == FieldType.Geometry)
+            {
+              continue;//skip shape
+            }
+            var prop_desc = new KnowledgeGraphPropertyDescription(prop);
+            rel_prop_descs.Add(prop_desc);
+          }
+          //deal with shape - we need to keep it
+          //SchemaBuilder deletes any field not included in the "modify" list
+          ShapeDescription shape_desc_rel = null;
+          if (kvp_relate.Value.GetIsSpatial())
+          {
+            var geom_def = kvp_relate.Value.GetShapeDefinition();
+            var shape_name = kvp_relate.Value.GetShapeField();
+            shape_desc_rel = new ShapeDescription(
+              shape_name, geom_def.geometryType, geom_def.sr);
+          }
+          //add a new relationship property
+          rel_prop_descs.Add(
+            KnowledgeGraphPropertyDescription.CreateStringProperty("bar", 10));
+          //make a description for the relationship type - ok if shape_desc is null
+          var relDesc = new KnowledgeGraphRelationshipTypeDescription(
+            relate_name, rel_prop_descs, shape_desc_rel);
+
+          //Add the relationship type description to the schema builder using 'Modify'
+          sb.Modify(relDesc);
+
+          //Run the schema builder
+          try
+          {
+            //Use the KnowledgeGraph extension method 'ApplySchemaEdits(...)'
+            //to refresh the Pro UI
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Entity/Relate Modify error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+    }
+
+    public async void KG_SchemaBuilder_CreateIndeces()
+    {
+
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.IndexDescription)
+      //cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription
+      //cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(System.String,ArcGIS.Core.Data.DDL.TableDescription,System.Collections.Generic.IEnumerable{System.String})
+      #region Create Attribute Indexes on KG Schemas with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "PhoneCall";
+
+          //indexes are managed on the GDB objects...
+          var entity_table_def = kg.GetDefinition<TableDefinition>(entity_name);
+          var entity_table_desc = new TableDescription(entity_table_def);
+
+
+          var entity_table_flds = entity_table_def.GetFields();
+          AttributeIndexDescription attr_index1 = null;
+          AttributeIndexDescription attr_index2 = null;
+          foreach (var fld in entity_table_flds)
+          {
+            //index the first string field
+            if (fld.FieldType == FieldType.String && attr_index1 == null)
+            {
+              if (fld.Name == "ESRI__ID")//special case
+                continue;
+              //Index _must_ be ascending for KG
+              attr_index1 = new AttributeIndexDescription(
+                "Index1", entity_table_desc, new List<string> { fld.Name })
+              {
+                IsAscending = true
+              };
+            }
+            //index the first numeric field (if there is one)
+            if ((fld.FieldType == FieldType.BigInteger ||
+                 fld.FieldType == FieldType.Integer ||
+                 fld.FieldType == FieldType.Single ||
+                 fld.FieldType == FieldType.SmallInteger ||
+                 fld.FieldType == FieldType.Double) && attr_index2 == null)
+            {
+              attr_index2 = new AttributeIndexDescription(
+                "Index2", entity_table_desc, new List<string> { fld.Name })
+              {
+                IsAscending = true,
+                IsUnique = true //optional - unique if all values are to be unique in the index
+              };
+            }
+            if (attr_index1 != null && attr_index2 != null) break;
+          }
+
+          if (attr_index1 == null && attr_index2 == null)
+            return; //nothing to index
+
+          //Run the schema builder
+          try
+          {
+            SchemaBuilder sb = new(kg);
+            if (attr_index1 != null)
+              sb.Create(attr_index1);
+            if (attr_index2 != null)
+              sb.Create(attr_index2);
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Create index error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+    }
+
+    public async void KG_SchemaBuilder_DeleteIndeces()
+    {
+
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete(ArcGIS.Core.Data.DDL.Description)
+      //cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription
+      //cref: ArcGIS.Core.Data.DDL.AttributeIndexDescription.#ctor(System.String,ArcGIS.Core.Data.DDL.TableDescription,System.Collections.Generic.IEnumerable{System.String})
+      #region Delete Attribute Indexes on KG Schemas with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "PhoneCall";
+
+          //indexes are managed on the GDB objects...
+          var entity_table_def = kg.GetDefinition<TableDefinition>(entity_name);
+          var entity_table_desc = new TableDescription(entity_table_def);
+
+          var indexes = entity_table_def.GetIndexes();
+          foreach (var idx in indexes)
+          {
+            System.Diagnostics.Debug.WriteLine($"Index {idx.GetName()}");
+          }
+          var idx1 = indexes.FirstOrDefault(
+            idx => idx.GetName().ToLower() == "Index1".ToLower());
+          var idx2 = indexes.FirstOrDefault(
+            idx => idx.GetName().ToLower() == "Index2".ToLower());
+
+          if (idx1 == null && idx2 == null)
+            return;
+
+          //Run the schema builder
+          try
+          {
+            SchemaBuilder sb = new(kg);
+
+            if (idx1 != null)
+            {
+              var idx_attr = new AttributeIndexDescription(idx1, entity_table_desc);
+              sb.Delete(idx_attr);
+            }
+            if (idx2 != null)
+            {
+              var idx_attr = new AttributeIndexDescription(idx2, entity_table_desc);
+              sb.Delete(idx_attr);
+            }
+
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Delete index error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+    }
+
+    public async void KG_SchemaBuilder_CreateDomain()
+    {
+
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.CodedValueDomainDescription)
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Create(ArcGIS.Core.Data.DDL.RangeDomainDescription)
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Modify(ArcGIS.Core.Data.DDL.FeatureClassDescription)
+      //cref: ArcGIS.Core.Data.DDL.RangeDomainDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType,System.Object,System.Object)
+      //cref: ArcGIS.Core.Data.DDL.CodedValueDomainDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType,System.Collections.Generic.SortedList{System.Object,System.String})
+      //cref: ArcGIS.Core.Data.DDL.FieldDescription.#ctor(System.String,ArcGIS.Core.Data.FieldType)
+      //cref: ArcGIS.Core.Data.DDL.FieldDescription.SetDomainDescription(ArcGIS.Core.Data.DDL.DomainDescription,System.Nullable{System.Int32})
+      //cref: ArcGIS.Core.Data.DDL.FeatureClassDescription.#ctor(ArcGIS.Core.Data.FeatureClassDefinition)
+      //cref: ArcGIS.Core.Data.DDL.FeatureClassDescription.#ctor(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Core.Data.DDL.FieldDescription},ArcGIS.Core.Data.DDL.ShapeDescription)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphExtensions.ApplySchemaEdits(ArcGIS.Core.Data.Knowledge.KnowledgeGraph,ArcGIS.Core.Data.DDL.SchemaBuilder)
+      #region Create Domain and Field Definition on KG Schemas with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          var entity_name = "Fruit";
+
+          //Domains are managed on the GDB objects...
+          var fruit_fc = kg.OpenDataset<FeatureClass>(entity_name);
+          var fruit_fc_def = fruit_fc.GetDefinition();
+
+          var fieldFruitTypes = fruit_fc_def.GetFields()
+                .FirstOrDefault(f => f.Name == "FruitTypes");
+          var fieldShelfLife = fruit_fc_def.GetFields()
+              .FirstOrDefault(f => f.Name == "ShelfLife");
+
+          //Create a coded value domain and add it to a new field
+          var fruit_cvd_desc = new CodedValueDomainDescription(
+            "FruitTypes", FieldType.String, 
+            new SortedList<object, string> {
+                            { "A", "Apple" },
+                            { "B", "Banana" },
+                            { "C", "Coconut" }
+            })  {
+              SplitPolicy = SplitPolicy.Duplicate,
+              MergePolicy = MergePolicy.DefaultValue
+          };
+
+          //Create a Range Domain and add the domain to a new field description also
+          var shelf_life_rd_desc = new RangeDomainDescription(
+                                        "ShelfLife", FieldType.Integer, 0, 14);
+
+          var sb = new SchemaBuilder(kg);
+          sb.Create(fruit_cvd_desc);
+          sb.Create(shelf_life_rd_desc);
+
+          //Create the new field descriptions that will be associated with the
+          //"new" FruitTypes coded value domain and the ShelfLife range domain
+          var fruit_types_fld = new ArcGIS.Core.Data.DDL.FieldDescription(
+                                        "FruitTypes", FieldType.String);
+          fruit_types_fld.SetDomainDescription(fruit_cvd_desc);
+
+          //ShelfLife will use the range domain
+          var shelf_life_fld = new ArcGIS.Core.Data.DDL.FieldDescription(
+  "ShelfLife", FieldType.Integer);
+          shelf_life_fld.SetDomainDescription(shelf_life_rd_desc);
+
+          //Add the descriptions to the list of field descriptions for the
+          //fruit feature class - Modify schema needs _all_ fields to be included
+          //in the schema, not just the new ones to be added.
+          var fruit_fc_desc = new FeatureClassDescription(fruit_fc_def);
+
+          var modified_fld_descs = new List<ArcGIS.Core.Data.DDL.FieldDescription>(
+            fruit_fc_desc.FieldDescriptions);
+
+          modified_fld_descs.Add(fruit_types_fld);
+          modified_fld_descs.Add(shelf_life_fld);
+
+          //Create a feature class description to modify the fruit entity
+          //with the new fields and their associated domains
+          var updated_fruit_fc =
+            new FeatureClassDescription(entity_name, modified_fld_descs,
+                                        fruit_fc_desc.ShapeDescription);
+
+          //Add the modified fruit fc desc to the schema builder
+          sb.Modify(updated_fruit_fc);
+
+          //Run the schema builder
+          try
+          {
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Create domains error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+
+      //cref: ArcGIS.Core.Data.DDL.RangeDomainDescription.#ctor(ArcGIS.Core.Data.RangeDomain)
+      //cref: ArcGIS.Core.Data.DDL.CodedValueDomainDescription.#ctor(ArcGIS.Core.Data.CodedValueDomain)
+    }
+
+    public async void KG_SchemaBuilder_DeleteDomain()
+    {
+
+      //cref: ArcGIS.Core.Data.DDL.RangeDomainDescription.#ctor(ArcGIS.Core.Data.RangeDomain)
+      //cref: ArcGIS.Core.Data.DDL.CodedValueDomainDescription.#ctor(ArcGIS.Core.Data.CodedValueDomain)
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetDomains
+      //cref: ArcGIS.Core.Data.DDL.SchemaBuilder.Delete(ArcGIS.Core.Data.DDL.Description)
+      #region Delete Domain on KG Schemas with SchemaBuilder
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+          if (kg == null)
+            return;
+
+          //Get all the domains in the KG
+          var domains = kg.GetDomains();
+          var sb = new SchemaBuilder(kg);
+
+          foreach (var domain in domains)
+          {
+            //skip the special provenance domain
+            var name = domain.GetName();
+            if (string.Compare(name, "esri__provenanceSourceType", true) == 0)
+              continue;//skip this one
+
+            //Delete all other domains
+            if (domain is RangeDomain rd)
+              sb.Delete(new RangeDomainDescription(rd));
+            else if (domain is CodedValueDomain cvd)
+              sb.Delete(new CodedValueDomainDescription(cvd));
+          }
+
+          try
+          {
+            //note: will throw an InvalidOperationException if there are no operations
+            //to run. Will also delete associated fields dependent on deleted domain(s)
+            if (!kg.ApplySchemaEdits(sb))
+            {
+              var err_msg = string.Join(",", sb.ErrorMessages.ToArray());
+              System.Diagnostics.Debug.WriteLine($"Delete domains error: {err_msg}");
+            }
+          }
+          catch (Exception ex)
+          {
+            System.Diagnostics.Debug.WriteLine(ex.ToString());
+          }
+        }
+      });
+
+      #endregion
+
+
     }
   }
 }

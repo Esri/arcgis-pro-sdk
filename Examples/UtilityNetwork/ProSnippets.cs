@@ -565,7 +565,7 @@ namespace UtilityNetworkProSnippets
     {
       // cref: ArcGIS.Core.Data.UtilityNetwork.UtilityNetwork.GetTraceManager()
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceManager
-      // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceManager.GetTracer()
+      // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.TraceManager.GetTracer``1
       // cref: ArcGIS.Core.Data.UtilityNetwork.Trace.DownstreamTracer
       #region Create a DownstreamTracer
 

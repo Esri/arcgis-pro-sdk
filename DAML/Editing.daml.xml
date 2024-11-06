@@ -567,18 +567,38 @@
     <insertCondition id="esri_editing_streaming_condition">
       <state id="esri_editing_Streaming_state"/>
     </insertCondition>
+
+    <!-- Deprecated at 3.4. Use esri_mapping_activeVersionableDataSourceValidForReconcile_condition -->
     <insertCondition id="esri_mapping_TOCSelectionValidForReconcile_condition">
       <and>
         <or>
           <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
           <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
         </or>
         <state id="esri_license_hasStandardLicenseState"/>
         <not>
           <or>
             <state id="esri_mapping_dataSourceSelectedIsHistoricalVersionState"/>
             <state id="esri_mapping_dataSourceSelectedIsConnectedAsBranchClientServerState"/>
-            <state id="esri_mapping_TOCItemSelectedIsDefaultVersion"/>
+            <state id="esri_mapping_dataSourceSelectedIsDefaultVersionState"/>
+          </or>
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_mapping_activeVersionableDataSourceValidForReconcile_condition">
+      <and>
+        <or>
+          <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
+        </or>
+        <state id="esri_license_hasStandardLicenseState"/>
+        <not>
+          <or>
+            <state id="esri_mapping_dataSourceSelectedIsHistoricalVersionState"/>
+            <state id="esri_mapping_dataSourceSelectedIsConnectedAsBranchClientServerState"/>
+            <state id="esri_mapping_dataSourceSelectedIsDefaultVersionState"/>
           </or>
         </not>
       </and>
@@ -602,6 +622,8 @@
     <insertCondition id="esri_license_hasStandardLicenseCondition">
       <state id="esri_license_hasStandardLicenseState"/>
     </insertCondition>
+
+    <!-- Deprecated at 3.4. Use esri_editing_activeVersionableDataSourceValidForRefreshCondition -->
     <insertCondition id="esri_editing_TOCSelectionValidForRefreshCondition">
       <and>
         <not>
@@ -610,24 +632,51 @@
         <or>
           <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
           <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
         </or>
       </and>
     </insertCondition>
+    <insertCondition id="esri_editing_activeVersionableDataSourceValidForRefreshCondition">
+      <and>
+        <not>
+          <state id="esri_editing_HasEdits" />
+        </not>
+        <or>
+          <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
+        </or>
+      </and>
+    </insertCondition>
+
+    <!-- Deprecated at 3.4. Use esri_mapping_activeVersionableDataSourceValidForPost_condition -->
     <insertCondition id="esri_mapping_TOCSelectionValidForPost_condition">
       <and>
         <state id="esri_editing_TOCItemSelectedIsValidForPost"/>
         <or>
           <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
           <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
+        </or>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_mapping_activeVersionableDataSourceValidForPost_condition">
+      <and>
+        <state id="esri_editing_activeVersionableDataSourceIsValidForPost"/>
+        <or>
+          <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
         </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_reconcileHasConflicts">
       <and>
-        <state id="esri_editing_TOCItemSelectedHasConflicts"/>
+        <state id="esri_editing_activeVersionableDataSourceHasConflicts"/>
         <or>
           <state id="esri_mapping_dataSourceSelectedIsVersionableState"/>
           <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
+          <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
         </or>
       </and>
     </insertCondition>
@@ -887,6 +936,9 @@
     <insertCondition id="esri_editing_shortcutCondition_GridSetOrigin">
       <state id="esri_editing_shortcutState_GridSetOrigin"/>
     </insertCondition>
+    <insertCondition id="esri_editing_shortcutCondition_AlignParcels">
+      <state id="esri_editing_shortcutState_AlignParcels"/>
+    </insertCondition>
     <insertCondition id="esri_editing_rematchLocalSearchCondition">
       <state id="esri_editing_rematchUseLocalSearchState"/>
     </insertCondition>
@@ -1049,6 +1101,9 @@
       </insertComponent>
       <insertComponent id="esri_editing_parcelLineageEmbedded" className="ParcelLineageEmbeddableControlViewModel">
         <content className="HostDialogEmbeddableControlView" relatedCommand="esri_editing_parcelLineage" runLabel="ParcelLineage"/>
+      </insertComponent>
+      <insertComponent id="esri_editing_reconcileEmbedded" className="ReconcileEmbeddableControlViewModel">
+        <content className="ReconcileEmbeddableControlView" relatedCommand="esri_editor_reconcileVersionButton" runLabel="Reconcile" autoProceedOnly="true"/>
       </insertComponent>
     </updateCategory>
 
@@ -1354,6 +1409,8 @@
       <shortcut refID="esri_editing_errorInspectorPopupButton" key="I" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorZoomToSelectedButton" key="OemPlus" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorZoomToButton" key="OemPlus" flags="Ctrl" onKeyUp="false"/>
+      <shortcut refID="esri_editing_errorInspectorPanToSelectedButton" key="N" flags="Ctrl+Shift" onKeyUp="false"/>
+      <shortcut refID="esri_editing_errorInspectorPanToButton" key="N" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorFlashButton" key="NumPad8" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorFlashButton" key="D8" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorMarkAsExceptions" key="X" flags="None" onKeyUp="false"/>
@@ -1568,6 +1625,11 @@
                          description="Available when setting the Grid's origin.">
       <shortcut refID="esri_editing_AbsoluteXYZContextMenuItem"       key="F6" flags="None" onKeyUp="true" cancelOnMouseMove="true"/>
     </insertShortcutTable>
+
+    <insertShortcutTable id="esri_editing_shortcutList_AlignParcels" targetID="esri_mapping_mapPane"  category="Editing" caption="Align Parcels" condition="esri_editing_shortcutCondition_AlignParcels"
+                     description="Available when in the Align Parcels pane.">
+      <shortcut refID="esri_editing_ToggleCreateLinks" key="L" flags="None" onKeyUp="false"/>
+    </insertShortcutTable>
   </shortcutTables>
 
   <modules>
@@ -1616,6 +1678,9 @@
         </updateGroup>
         <updateGroup refID="esri_mapping_versionMapViewGroup">
           <insertButton refID="esri_editor_versionRefreshMapButton" size="large" />
+        </updateGroup>
+        <updateGroup refID="esri_mapping_versionDataSourceGroup">
+          <insertButton refID="esri_editor_versionRefreshMapButton" size="middle" />
         </updateGroup>
         <updateGroup refID="esri_mapping_linearReferencing_selectionGroup">
           <insertButton refID="esri_editing_ShowAttributes" placeWith="esri_mapping_clearSelectionButton" insert="before" size="middle" />
@@ -1756,15 +1821,18 @@
         </updateMenu>
 
         <updateMenu refID="esri_mapping_standaloneTableContextMenu">
-          <insertButton refID="esri_editing_table_openStandaloneTablePaneButton" separator="true" insert="before" placeWith="esri_mapping_addGDBErrorTablesButton" />
+          <insertButton refID="esri_editing_table_openTablePaneButton" separator="true" insert="before" placeWith="esri_mapping_addGDBErrorTablesButton" />
         </updateMenu>
         <updateMenu refID="esri_mapping_unregisteredStandaloneTableContextMenu">
-          <insertButton refID="esri_editing_table_openStandaloneTablePaneButton" separator="true" insert="before" placeWith="esri_mapping_addGDBErrorTablesButton" />
+          <insertButton refID="esri_editing_table_openTablePaneButton" separator="true" insert="before" placeWith="esri_mapping_addGDBErrorTablesButton" />
         </updateMenu>
         <updateMenu refID="esri_mapping_rasterSelectionSubMenu">
           <insertButton refID="esri_editing_table_openSelectedTablePaneMenuButton" separator="true" insert="before" placeWith="esri_mapping_selectVisibleRastersButton"/>
         </updateMenu>
         <updateMenu refID="esri_mapping_selectionSubMenu">
+          <insertButton refID="esri_editing_table_openSelectedTablePaneMenuButton" separator="true"/>
+        </updateMenu>
+        <updateMenu refID="esri_mapping_layer_selectionSubMenu">
           <insertButton refID="esri_editing_table_openSelectedTablePaneMenuButton" separator="true"/>
         </updateMenu>
         <updateMenu refID="esri_mapping_dataSourceContextMenu">
@@ -1888,7 +1956,7 @@
           <content className="MapToolDockPaneView"/>
         </dockPane>
 
-        <dockPane id="esri_editing_AttributesDockPane"
+        <dockPane id="esri_editing_AttributesDockPane" smallImage="AttributesWindow16"
                   caption="Attributes"
                   className="Attributes.AttributesViewModel"
                   dock="group"
@@ -1901,7 +1969,7 @@
                   keytip="att">
           <content className="Attributes.AttributesView" />
         </dockPane>
-        <dockPane id="esri_editing_rematchAddressesDockPane"
+        <dockPane id="esri_editing_rematchAddressesDockPane" smallImage="GeocodeRematchAddresses16"
                   caption="Rematch Addresses"
                   className="ArcGIS.Desktop.Editing.RematchAddressesDockPaneViewModel"
                   dock="group"
@@ -1914,7 +1982,7 @@
                   hasHelp="true">
           <content className="ArcGIS.Desktop.Editing.RematchAddressesDockPane" />
         </dockPane>
-        <dockPane id="esri_editing_splitAddressReviewDockPane"
+        <dockPane id="esri_editing_splitAddressReviewDockPane" smallImage="GeocodeRematchAddresses16"
                   caption="Split Address Review"
                   className="ArcGIS.Desktop.Editing.SplitAddressReviewViewModel"
                   dock="group"
@@ -1925,7 +1993,7 @@
                   helpContextID="120004143">
           <content className="ArcGIS.Desktop.Editing.SplitAddressReviewDockPane" />
         </dockPane>
-        <dockPane id="esri_editing_CreateFeaturesDockPane"
+        <dockPane id="esri_editing_CreateFeaturesDockPane" smallImage="EditingCreateFeaturesWindowShow16"
                   caption="Create Features"
                   className="CreateFeaturesViewModel"
                   dock="group"
@@ -1938,7 +2006,7 @@
                   keytip="cf">
           <content className="CreateFeaturesView" />
         </dockPane>
-        <dockPane id="esri_editing_EditFeaturesDockPane"
+        <dockPane id="esri_editing_EditFeaturesDockPane" smallImage="EditingToolBarShow16"
                   caption="Modify Features"
                   className="EditFeaturesViewModel"
                   dock="group"
@@ -1951,7 +2019,7 @@
                   keytip="ef">
           <content className="EditFeaturesView" />
         </dockPane>
-        <dockPane id="esri_editing_ManageTemplatesDockPane"
+        <dockPane id="esri_editing_ManageTemplatesDockPane" smallImage="EditingOrganizeTemplates16"
                   caption="Manage Templates"
                   className="Templates.ManageTemplatesViewModel"
                   dock="group"
@@ -1964,7 +2032,7 @@
                   keytip="mt">
           <content className="Templates.ManageTemplatesView" />
         </dockPane>
-        <dockPane id="esri_editing_ErrorInspectorDockPane"
+        <dockPane id="esri_editing_ErrorInspectorDockPane" smallImage="ErrorInspector16"
                   caption="Error Inspector"
                   className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.ErrorInspectorViewModel"
                   dock="bottom"
@@ -1977,7 +2045,7 @@
           <content className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.ErrorInspectorView" />
         </dockPane>
 
-        <dockPane id="esri_editing_ManageRecordsDockPane"
+        <dockPane id="esri_editing_ManageRecordsDockPane" smallImage="ManageRecords16"
                   caption="Manage Records"
                   className="RecordSearchViewModel"
                   dock="group"
@@ -1989,7 +2057,7 @@
           <content className="RecordSearchView" />
         </dockPane>
 
-        <dockPane id="esri_editing_NewRecordDockPane"
+        <dockPane id="esri_editing_NewRecordDockPane" smallImage="ParcelRecord16"
                   caption="Create Record"
                   className="CreateRecordPaneViewModel"
                   dock="group"
@@ -2001,7 +2069,7 @@
           <content className="CreateRecordPaneView" />
         </dockPane>
 
-        <dockPane id="esri_editing_transferParcelWizardDockPane"
+        <dockPane id="esri_editing_transferParcelWizardDockPane" smallImage="TransferParcels16"
                   caption="Transfer Parcel"
                   className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelWizardDockPaneViewModel"
                   dock="group"
@@ -2015,15 +2083,15 @@
           <content className="ArcGIS.Desktop.Internal.Editing.ParcelFabric.TransferParcelWizard.TransferParcelWizardDockPaneView"/>
         </dockPane>
 
-        <dockPane id="esri_editing_parcelLineageDockPane"
-                 caption="Parcel Lineage"
-                 className="ParcelLineagePaneViewModel"
-                 dock="group"
-                 dockWith="esri_core_projectDockPane"
-                 initiallyVisible="false"
-                 condition="esri_mapping_mapPane"
-                 delayLoadMessage="Select a map that contains a parcel fabric."
-                 keytip="pl">
+        <dockPane id="esri_editing_parcelLineageDockPane" smallImage="LinkChart16"
+                  caption="Parcel Lineage"
+                  className="ParcelLineagePaneViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  initiallyVisible="false"
+                  condition="esri_mapping_mapPane"
+                  delayLoadMessage="Select a map that contains a parcel fabric."
+                  keytip="pl">
           <content className="ParcelLineagePaneView" />
         </dockPane>
         
@@ -2122,7 +2190,7 @@
                 caption="Discard"  keytip="DC" extendedCaption="Discard edits."
                 condition="esri_editing_CanDiscardCondition"
                 largeImage="EditingDiscardEdits32"
-                smallImage="EditingDiscardEdits32"
+                smallImage="EditingDiscardEdits16"
                 className="esri_editing_EditingModule:OnClick_DiscardEdits" >
           <tooltip heading="Discard Edits">
             Discard all unsaved edits.<disabledText></disabledText>
@@ -4818,7 +4886,7 @@
           <tooltip heading="Merge Parcel Points">
             Merge selected parcel fabric points to a chosen point. Lines between duplicate points are removed.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric;Mean Points" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+          <content keywords="Parcel;Parcels;Fabric;Mean Points" HelpContextID="120004996" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
         
         <button id="esri_editing_parcelLineageOptions" caption="Options" largeImage="CogWheel32" smallImage="CogWheel16" className="ParcelLineageOptionsCommand">
@@ -6665,7 +6733,8 @@
         </customControl>
 
         <customControl id="esri_editing_ElevationTools" hidden="true" loadOnClick="false" keytip="EL"
-                       className="ArcGIS.Desktop.Internal.Editing.ElevationToolsViewModel" helpContextID="">
+                       className="ArcGIS.Desktop.Internal.Editing.ElevationToolsViewModel" helpContextID=""
+                       smallImage="EditingZTemplates16">
           <content className="ArcGIS.Desktop.Internal.Editing.ElevationToolsView" />
         </customControl>
         <!-- end of Elevation group -->
@@ -7183,7 +7252,7 @@
                 condition="esri_editing_HaveTopologySelectionCondition"
                 extendedCaption="Zoom To Edge">
           <tooltip heading="Zoom To Edge">
-            Zoom to selected topology element(s).<disabledText></disabledText>
+            Zoom to selected edges and nodes.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -7215,7 +7284,7 @@
             Review and split the addresses in this table.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_table_openTablePaneButton" keytip="TA" caption="Attribute Table" extendedCaption="Open Attribute Table for a layer." className="esri_editing_EditingModule:TableManager.OnOpenTablePane" smallImage="TableOpen16" largeImage="TableOpen32" loadOnClick="false">
+        <button id="esri_editing_table_openTablePaneButton" keytip="TA" caption="Attribute Table" extendedCaption="Open Attribute Table for a layer." className="OpenTablePaneButton" smallImage="TableOpen16" largeImage="TableOpen32" loadOnClick="false">
           <tooltip heading="Open Table">
             Open the attribute table for this layer.<disabledText></disabledText>
           </tooltip>
@@ -7706,7 +7775,7 @@
                 className="esri_editing_EditingModule:ShowEditorReconcileDialog"
                 smallImage="VersionReconcile16"
                 largeImage="VersionReconcile32"
-                condition="esri_mapping_TOCSelectionValidForReconcile_condition" disableIfBusy="true" keytip="RC">
+                condition="esri_mapping_activeVersionableDataSourceValidForReconcile_condition" disableIfBusy="true" keytip="RC">
           <tooltip heading="">
             Reconcile the versions.<disabledText>The default version does not support this operation or the data source is not supported.</disabledText>
           </tooltip>
@@ -7716,7 +7785,7 @@
                 className="esri_editing_EditingModule:OnPostVersion"
                 smallImage="VersionPost16"
                 largeImage="VersionPost-32"
-                condition="esri_mapping_TOCSelectionValidForPost_condition" disableIfBusy="true" keytip="P">
+                condition="esri_mapping_activeVersionableDataSourceValidForPost_condition" disableIfBusy="true" keytip="P">
           <tooltip heading="">
             Post the versions.<disabledText>Reconcile operation required.</disabledText>
           </tooltip>
@@ -7735,8 +7804,7 @@
                 smallImage="VersionChanges16"
                 largeImage="VersionChanges32"
                 disableIfBusy="true" keytip="VC"
-                condition="esri_mapping_TOCSelectionValidForReconcile_condition">
-          <!--condition="esri_mapping_TOCSelectionValidForReconcileAndNotFeatureService_condition">-->
+                condition="esri_mapping_activeVersionableDataSourceValidForReconcile_condition">
           <tooltip heading="">
             View changes.<disabledText>The default version does not support this operation or the data source is not supported.</disabledText>
           </tooltip>
@@ -7744,7 +7812,7 @@
         <button id="esri_editor_versionRefreshMapButton" caption="Refresh" extendedCaption="Refresh the version of the selected layer, table or datasource." className="esri_editing_EditingModule:RefreshSelectedVersion"
                 smallImage="VersionRefresh16"
                 largeImage="VersionRefresh32"
-                condition="esri_editing_TOCSelectionValidForRefreshCondition" disableIfBusy="true" keytip="RM">
+                condition="esri_editing_activeVersionableDataSourceValidForRefreshCondition" disableIfBusy="true" keytip="RM">
           <tooltip heading="">
             Refresh the layers in the map for the current selection.<disabledText>Refresh disabled.</disabledText>
           </tooltip>
@@ -7854,6 +7922,40 @@
           <tooltip heading="Flash"> Flash the selected sketch vertices in the map.<disabledText/> </tooltip>
         </button>
 
+        
+        <!-- Geometry View Selection bar buttons -->
+
+        <button id = "esri_editing_geometryViewChooseAllButton" caption= "Show All Vertices" smallImage= "TableShowAllRecords16" loadOnClick= "false" >
+          <tooltip heading= "Show All Vertices" >
+            Show all vertices in the grid. <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewChooseSelectedButton" caption= "Show Selected Vertices" smallImage= "TableShowSelectedRecords16" loadOnClick= "false" >
+          <tooltip heading= "Show Selected Vertices" >
+            Show only selected vertices in the grid. <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewFirstButton" caption= "Move To Beginning" smallImage= "SliderStepBackward16" loadOnClick= "false" >
+          <tooltip heading= "Move To Beginning" >
+            Move to the first vertex in the grid.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewLastButton" caption= "Move To End" smallImage= "SliderStepForward16" loadOnClick= "false" >
+          <tooltip heading= "Move To End" >
+            Move to the last vertex in the grid.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewClearSelectedButton" caption= "Clear Selection" smallImage= "TableClearSelection16" loadOnClick= "true" >
+          <tooltip heading= "Clear Selection" >
+            Clear the selected vertices.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewCopyToClipboardButton" caption= "Copy To Clipboard" smallImage= "EditCopy16" loadOnClick= "true" >
+          <tooltip heading= "Copy" >
+            Copy vertices to clipboard.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
 
         <!--error inspector context menu items-->
         <button id="esri_editing_errorInspectorFlashButton" caption="Flash" extendedCaption="Flash in map the error feature in the current row within table"
@@ -7920,6 +8022,12 @@
                 smallImage="TableZoomtoSelection16" loadOnClick="false" keytip="SZ">
           <tooltip heading="Zoom To Selection">
             Zoom in and center the map on the extent of the errors in the selected rows.<disabledText>Make sure there are error features selected.  If that does not work, try clicking the map to initialize it before zooming.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_errorInspectorPanToSelectedButton" caption="Pan To" extendedCaption="Pan map to selected errors within table." className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.PanToSelectedCommand"
+                smallImage="TablePanToSelection16" loadOnClick="false" keytip="SP">
+          <tooltip heading="Pan To Selection">
+            Center the map around the errors in the selected rows.<disabledText>Make sure there are error features selected.  If that does not work, try clicking the map to initialize it before zooming.</disabledText>
           </tooltip>
         </button>
 
@@ -8490,7 +8598,7 @@
           <tooltip heading="Align Parcels">
             Select and align parcels using alignment links generated in an alignment buffer.<disabledText>Available only when there is a parcel fabric in the map.</disabledText>
           </tooltip>
-          <content keywords="Parcel;Parcels;Fabric;Join"
+          <content keywords="Parcel;Parcels;Fabric;Join"  HelpContextID="120004998"
                    visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
@@ -8507,6 +8615,14 @@
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric;Join"
                    visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+        </button>
+
+        <button id="esri_editing_ToggleCreateLinks" caption="esri_editing_ToggleCreateLinks" hidden="true"
+        className="ToggleCreateLinksCommand"
+        loadOnClick="false">
+          <tooltip heading="Toggle Create Links Method">
+            Toggle Create Links Method<disabledText></disabledText>
+          </tooltip>
         </button>
 
         <tool id="esri_editing_CreateParcelLinksTool" hidden="true"
@@ -9140,10 +9256,10 @@
         <group id="esri_editing_Snapping" caption="Snapping" smallImage="ContentsWindowListBySnapping16">
           <customControl refID="esri_mapping_snappingSplitButton" size="large" />
         </group>
-        <group id="esri_editing_Features" caption="Features" launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="EditingCreateFeaturesWindowShow16">
-          <button refID="esri_editing_ShowCreateFeaturesBtn" size="large" />
-          <button refID="esri_editing_ShowEditFeaturesBtn" size="large" />
-          <button refID="esri_editing_DelSelFeaturesBtn" size="large" />
+        <group id="esri_editing_Features" caption="Features"
+               launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="EditingCreateFeaturesWindowShow16"
+               size="LargeThenMediumWhenMedium">
+          <subgroup refID="esri_editing_FeaturesSubGroup"/>
         </group>
         <group id="esri_editing_Entities" caption="Entities" launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="EditingCreateFeaturesWindowShow16">
           <button refID="esri_editing_ShowCreateFeaturesBtn" size="large" />
@@ -9241,16 +9357,16 @@
         </group>
 
         <!--ParcelFabric-->
-        <group id="esri_editing_parcelManageEditsGroup" caption="Manage Edits">
+        <group id="esri_editing_parcelManageEditsGroup" caption="Manage Edits" smallImage="EditingInfo16">
           <subgroup refID="esri_editing_parcelManageEditsSubGroup"/>
         </group>
 
-        <group id="esri_editing_parcelRecordGroup" caption="Records">
+        <group id="esri_editing_parcelRecordGroup" caption="Records" smallImage="ParcelRecord16">
           <subgroup refID="esri_editing_parcelRecordGroup1"/>
           <subgroup refID="esri_editing_parcelRecordGroup2"/>
         </group>
 
-        <group id="esri_editing_parcelFeaturesGroup" caption="Features" launcherButtonID="esri_editing_ShowManageTemplatesBtn">
+        <group id="esri_editing_parcelFeaturesGroup" caption="Features" launcherButtonID="esri_editing_ShowManageTemplatesBtn" smallImage="EditingCreateFeaturesWindowShow16">
           <subgroup refID="esri_editing_parcelFeaturesSubGroup"/>
         </group>
 
@@ -9271,20 +9387,20 @@
           <subgroup refID="esri_editing_parcelConstructionSubGroup"/>
         </group>
 
-        <group id="esri_editing_parcelAlignment" caption="Alignment">
+        <group id="esri_editing_parcelAlignment" caption="Alignment" smallImage="ParcelAlignSelectedParcels16">
           <subgroup refID="esri_editing_parcelAlignmentSubGroup"/>
         </group>
 
-        <group id="esri_editing_parcelEvaluationGroup" caption="Evaluation">
+        <group id="esri_editing_parcelEvaluationGroup" caption="Evaluation" smallImage="ErrorInspector16">
           <subgroup refID="esri_editing_parcelEvaluationSubGroup1"/>
           <subgroup refID="esri_editing_parcelEvaluationSubGroup2"/>
         </group>
 
-        <group id="esri_editing_parcelLeastSquaresGroup" caption="Least Squares">
+        <group id="esri_editing_parcelLeastSquaresGroup" caption="Least Squares" smallImage="WeightedLeastSquaresAdjustment16">
           <subgroup refID="esri_editing_parcelLeastSquaresSubGroup"/>
         </group>
 
-        <group id="esri_editing_parcelGapsAndOverlapsGroup" caption="Gaps and Overlaps">
+        <group id="esri_editing_parcelGapsAndOverlapsGroup" caption="Gaps and Overlaps" smallImage="HighlightGapsAndOverlaps16">
           <subgroup refID="esri_editing_parcelGapsAndOverlapsSubGroup"/>
         </group>
         <!--ParcelFabric End-->
@@ -9308,8 +9424,14 @@
         
       </groups>
 
-      <!-- Table Pane subgroups -->
       <subgroups>
+        <subgroup id="esri_editing_FeaturesSubGroup" size="LargeThenMediumWhenMedium" verticalAlignment="Center">
+          <button refID="esri_editing_ShowCreateFeaturesBtn"/>
+          <button refID="esri_editing_ShowEditFeaturesBtn"/>
+          <button refID="esri_editing_DelSelFeaturesBtn"/>  
+        </subgroup>
+
+        <!-- Table Pane subgroups -->
         <subgroup id="esri_editing_table_rowSubGroup" size="MediumThenSmallWhenSmall">
           <button refID="esri_editing_tableZoomToButton"/>
           <button refID="esri_editing_tablePanToButton"/>
@@ -9372,7 +9494,7 @@
         </subgroup>
         <subgroup id="esri_editing_parcelRecordGroup1" size="AlwaysMedium">
           <button refID="esri_editing_recordTransparency"/>
-          <toolbar refID="esri_editing_parcelRecordToolbar"/>
+          <customControl refID="esri_editing_parcelParcelEffectsControl" size="middle"/>
         </subgroup>
         <subgroup id="esri_editing_parcelRecordGroup2" size="Default">
           <button refID="esri_editing_parcelShowOnlyActive"/>
@@ -9421,14 +9543,6 @@
       </subgroups>
 
       <toolbars>
-        <!--ParcelFabric-->
-        <toolbar id="esri_editing_parcelRecordToolbar">
-          <group>
-            <customControl refID="esri_editing_parcelParcelEffectsControl" size="middle" />
-          </group>
-        </toolbar>
-        <!--ParcelFabric End-->
-
         <!--Manage Template toolbar-->        
         <toolbar id="esri_editing_MFT_ToolBar" >
           <menu refID="esri_editing_MFT_Menu"  />
@@ -10161,7 +10275,6 @@
           <button refID="esri_editing_reconstructParcelBoundaries"/>
           <button refID="esri_editing_transferParcel"/>
         </menu>
-
         <menu id="esri_editing_toolGroupKnowledgeGraph" caption="Tools" contextMenu="false">
           <button refID="esri_editing_EditVerticesMoveKG"/>
           <button refID="esri_editing_EditVerticesRotateKG"/>
@@ -11421,6 +11534,7 @@
                  showItemCaptionBelow="true"
                  scrollToSelectedItemInRibbon="false"
                  resizable="true"
+                 smallImage="EditingToolBarShow16"
                  largeImage="EditingToolBarShow32">
           <tooltip heading="">
             View a gallery of editing tools.<disabledText></disabledText>
@@ -11536,29 +11650,33 @@
   <propertySheets>
     <insertSheet id ="esri_editing_settingsPropertySheet" caption="Editor Settings"
                  pageHeight="500" pageWidth="640" resizable="true">
-      <page id="esri_editing_SnappingPropertyPage"  caption="Snapping"
+      <page id="esri_editing_SnappingPropertyPage" caption="Snapping"
                         className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsViewModel"
                         assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll">
         <content className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsView"
                  assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll" />
       </page>
-      <page id="esri_editing_GridPropertyPage"  caption="Grid"
+      <page id="esri_editing_GridPropertyPage" caption="Grid"
             className="GridSettingsViewModel">
         <content className="GridSettingsView" />
       </page>
       <page id="esri_editing_AddConstraintsPropertyPage" caption="Constraints"
-      className="ConstraintsSettingsViewModel">
+            className="ConstraintsSettingsViewModel">
         <content className="ConstraintsSettingsView"/>
       </page>
       <page id="esri_editing_FieldMappingsPropertyPage" caption="Field Mapping"
             className="FieldMappingsViewModel">
         <content className="FieldMappingsView"/>
       </page>
+      <page id ="esri_editing_TopologyPropertyPage" caption="Topology"
+            className="TopologySettingsViewModel">
+        <content className="TopologySettingsView"/>
+      </page>
+      <!-- Trace options... etc? -->
       <page id="esri_editing_UserInterfacePropertyPage" caption="User Interface"
             className="UserInterfaceSettingsViewModel">
         <content className="UserInterfaceSettingsView"/>
       </page>
-      <!-- Trace options... etc? -->
     </insertSheet>
 
     <insertSheet id="esri_editing_templatePropertySheet"
@@ -11645,9 +11763,6 @@
                   group="Application">
         <content className="TableOptionsView" />
       </insertPage>
-    </updateSheet>
-
-    <updateSheet refID="esri_core_optionsPropertySheet">
       <insertPage id="esri_editing_versioningPropertyPage"
                   caption="Versioning"
                   className="VersionOptionsViewModel" placeWith="esri_editing_editingPropertyPage" insert="after"

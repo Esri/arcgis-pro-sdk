@@ -41,7 +41,7 @@ namespace Raster.ProSnippet
         // cref: ArcGIS.Core.Data.FileSystemConnectionPath.#ctor(System.Uri, ArcGIS.Core.Data.FileSystemDatastoreType)
         // cref: ArcGIS.Core.Data.FileSystemDatastoreType
         // cref: ArcGIS.Core.Data.FileSystemDatastore.#ctor(ArcGIS.Core.Data.FileSystemConnectionPath)
-        // cref: ArcGIS.Core.Data.FileSystemDatastore.OpenDataset<T>
+        // cref: ArcGIS.Core.Data.FileSystemDatastore.OpenDataset<T>(System.String)
         // cref: ArcGIS.Core.Data.Raster.RasterDataset
         #region Open raster dataset in a folder
         // Create a FileSystemConnectionPath using the folder path.
@@ -54,7 +54,7 @@ namespace Raster.ProSnippet
 
         // cref: ArcGIS.Core.Data.FileGeodatabaseConnectionPath.#ctor(System.Uri)
         // cref: ArcGIS.Core.Data.Geodatabase.#ctor(ArcGIS.Core.Data.FileGeodatabaseConnectionPath)
-        // cref: ArcGIS.Core.Data.Geodatabase.OpenDataset<T>
+        // cref: ArcGIS.Core.Data.Geodatabase.OpenDataset<T>(System.String)
         // cref: ArcGIS.Core.Data.Raster.RasterDataset
         #region Open raster dataset in a geodatabase
         // Create a FileGeodatabaseConnectionPath using the path to the gdb. Note: This can be a path to a .sde file.
@@ -293,5 +293,141 @@ namespace Raster.ProSnippet
       }
     }
 
+    #region ProSnippet Group: Raster and Imagery Options
+    #endregion
+
+    internal void Options()
+    {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.RasterImageryOptions
+      // cref: ArcGIS.Desktop.Core.RasterImageryOptions
+      // cref: ArcGIS.Core.CIM.RasterResamplingType
+      // cref: ArcGIS.Core.CIM.RasterStretchType
+      // cref:ArcGIS.Desktop.Core.BuildPyramidOption
+      // cref:ArcGIS.Desktop.Core.PyramidResamplingMode
+      // cref:ArcGIS.Desktop.Core.PyramidCompressionType
+      // cref:ArcGIS.Desktop.Core.CalculateStatisticOption
+      #region Get/Set Raster and Imagery Options
+
+      var ro = ApplicationOptions.RasterImageryOptions;
+
+      QueuedTask.Run(() =>
+      {
+        var validCategories = ro.GetValidColorRampCategories();
+        var validCategory = validCategories.FirstOrDefault();
+
+        var colorRamps = ColorFactory.Instance.GetColorRampNames(validCategory);
+        var newColorRampName = colorRamps.FirstOrDefault();
+
+        var stretchedColorRamp = ro.GetStretchedColorRamp();
+        var colorRampName = ro.GetStretchedColorRampName();
+        ro.SetStretchedColorRampName(null);
+
+        var classifyColorRamp = ro.GetClassifyColorRamp();
+        colorRampName = ro.GetClassifyColorRampName();
+        ro.SetClassifyColorRampName(newColorRampName);
+
+        var discreteColorRamp = ro.GetDiscreteColorRamp();
+        colorRampName = ro.GetDiscreteColorRampName();
+        ro.SetDiscreteColorRampName(newColorRampName);
+
+        var uniqueValueColorRamp = ro.GetUniqueValueColorRamp();
+        colorRampName = ro.GetUniqueValueColorRampName();
+        ro.SetUniqueValueColorRampName(newColorRampName);
+
+        var customRendering = ro.GetEnableCustomRenderingDefaults();
+        ro.SetEnableCustomRenderingDefaults(!customRendering);
+
+        var sampleType = ro.GetResampleType();
+        ro.SetResampleType(RasterResamplingType.CubicConvolution);
+
+        var stretchType = ro.GetStretchType();
+        ro.SetStretchType(RasterStretchType.PercentMinimumMaximum);
+
+        var val = ro.GetNumberOfStandardDeviation();
+        ro.SetNumberOfStandardDeviation(3);
+
+        var (clipMin, clipMax) = ro.GetClipPercentage();
+        ro.SetClipPercentage(12, 23);
+
+        var red = ro.GetGammaStretchValueRed();
+        var green = ro.GetGammaStretchValueGreen();
+        var blue = ro.GetGammaStretchValueBlue();
+
+        ro.SetGammaStretchValueRed(2);
+        ro.SetGammaStretchValueGreen(20);
+        ro.SetGammaStretchValueBlue(60);
+
+        var displayBackground = ro.GetDisplayBackground();
+        ro.SetDisplayBackground(!displayBackground);
+
+        var (r, g, b) = ro.GetBackgroundValue();
+        ro.SetBackgroundValue(4, 21, 61);
+
+        var backColor = ro.GetBackgroundColor();
+        ro.SetBackgroundColor(CIMColor.CreateRGBColor(255, 0, 0));
+
+        var noData = ro.GetNoDataColor();
+        ro.SetNoDataColor(CIMColor.CreateRGBColor(0, 255, 0));
+
+
+        // cache
+        var useCache = ro.GetUseImageServiceCache();
+        ro.SetUseImageServiceCache(!useCache);
+
+        //dataset
+
+        var opt = ro.GetPyramidOption();
+        ro.SetPyramidOption(ArcGIS.Desktop.Core.BuildPyramidOption.NeverBuild);
+        var sample = ro.GetPyramidResampleMethod();
+        ro.SetPyramidResampleMethod(PyramidResamplingMode.Bilinear);
+        var compression = ro.GetPyramidCompressionMethod();
+        ro.SetPyramidCompressionMethod(PyramidCompressionType.JPEG_YCbCr);
+
+        var quality = ro.GetPyramidCompressionQuality();
+        ro.SetPyramidCompressionQuality(32);
+
+        var stats = ro.GetStatisticsOption();
+        ro.SetStatisticsOption(CalculateStatisticOption.AlwaysCalculate);
+        var x = ro.GetSkipFactorX();
+        ro.SetSkipFactorX(3);
+        var y = ro.GetSkipFactorY();
+        ro.SetSkipFactorY(23);
+
+        var useWorldFile = ro.GetUseWorldFile();
+        ro.SetUseWorldFile(!useWorldFile);
+
+        var createTiledTiff = ro.GetCreateTiledTiff();
+        ro.SetCreateTiledTiff(!createTiledTiff);
+
+        var maxUniqueValues = ro.GetMaximumUniqueValues();
+        ro.SetMaximumUniqueValues(123456);
+
+        var path = ro.GetProxyFileLocation();
+        ro.SetProxyFileLocation("c:\\temp");
+
+        var isExpanded = ro.GetIsMosaicLayerExpanded();
+        ro.SetIsMosaicLayerExpanded(!isExpanded);
+        var isVisible = ro.GetIsMosaicBoundaryVisible();
+        ro.SetIsMosaicBoundaryVisible(!isVisible);
+        isVisible = ro.GetIsMosaicFootprintVisible();
+        ro.SetIsMosaicFootprintVisible(!isVisible);
+        isVisible = ro.GetIsMosaicSeamlinesVisible();
+        ro.SetIsMosaicSeamlinesVisible(!isVisible);
+        isVisible = ro.GetIsMosaicPreviewVisible();
+        ro.SetIsMosaicPreviewVisible(!isVisible);
+
+        var (red_3band, green_3band, blue_3band) = ro.Get3BandColor();
+        ro.Set3BandColor(2, 2, 2);
+        var (ms_red, ms_green, ms_blue) = ro.GetMSColor();
+        ro.SetMSColor(23, 24, 25);
+
+        var enableCustomColorSchemes = ro.GetEnableCustomColorSchemes();
+        ro.SetEnableCustomColorSchemes(!enableCustomColorSchemes);
+
+        var useWavelengthInfo = ro.GetUseWavelengthInformation();
+        ro.SetUseWavelengthInformation(!useWavelengthInfo);
+      });
+      #endregion
+    }
   }
 }

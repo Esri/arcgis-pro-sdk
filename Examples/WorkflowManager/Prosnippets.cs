@@ -18,23 +18,20 @@
 */
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ArcGIS.Core.Data;
-using ArcGIS.Core.Data.UtilityNetwork;
-using ArcGIS.Core.Data.UtilityNetwork.Trace;
-using ArcGIS.Desktop.Mapping;
-using ArcGIS.Desktop.Workflow;
+using System.Windows.Input;
+using ArcGIS.Desktop.Framework;
+using ArcGIS.Desktop.Framework.Threading.Tasks;
 using ArcGIS.Desktop.Workflow.Client;
+using ArcGIS.Desktop.Workflow.Client.Events;
 using ArcGIS.Desktop.Workflow.Client.Exceptions;
 using ArcGIS.Desktop.Workflow.Client.Models;
-using ArcGIS.Desktop.Workflow.Client.Events;
+using ArcGIS.Desktop.Workflow.Client.Steps;
 
 namespace WorkflowManagerProSnippets
 
 {
-  class ProSnippetsWorkflowManager
+    class ProSnippetsWorkflowManager
   {
 
     public static async Task GetIsConnected()
@@ -67,7 +64,7 @@ namespace WorkflowManagerProSnippets
       #endregion
     }
 
-    public static async Task GetJobId()
+    public static void GetJobId()
     {
       // cref: ArcGIS.Desktop.Workflow.Client.WorkflowClientModule.JobsManager
       // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager
@@ -92,6 +89,47 @@ namespace WorkflowManagerProSnippets
       var jobManager = WorkflowClientModule.JobsManager;
       var jobId = jobManager.GetJobId(mapUri);
       #endregion
+    }
+
+    public static async Task GetJobIdFromOpenProItemsStep(string id)
+    {
+        // cref: ArcGIS.Desktop.Workflow.Client.Steps.OpenProProjectItemsStepCommandArgs
+        // cref: ArcGIS.Desktop.Framework.Contracts.Module
+        // cref: ArcGIS.Desktop.Framework.FrameworkApplication
+        // cref: ArcGIS.Desktop.Framework.IPlugInWrapper
+        #region How to get the job Id associated with a running OpenProProjectItems step
+
+        // Get the job Id associated with a running OpenProItems step for a Pro Add-In module
+
+        // In the Add-In Module class, override the ExecuteCommandArgs(string id) method and return a Func<Object[], Task> object like the sample below
+        // Refer to the Workflow Manager ProConcepts Sample Code link for an example
+
+        //protected override Func<Object[], Task> ExecuteCommandArgs(string id)
+        //{
+        //    return func1;
+        //}
+
+        Func<Object[], Task> func1 = (object[] args) => QueuedTask.Run(() =>
+        {
+            try
+            {
+                // Get the jobId property from the OpenProProjectItemsStep arguments and store it.
+                OpenProProjectItemsStepCommandArgs stepArgs = (OpenProProjectItemsStepCommandArgs)args[0];
+                var jobId = stepArgs.JobId;
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show($"Got job id from ProMappingStep args: {jobId}", "Project Info");
+
+                // Run the command specified by the id passed into ExecuteCommandArgs
+                IPlugInWrapper wrapper = FrameworkApplication.GetPlugInWrapper(id);
+                var command = wrapper as ICommand;
+                if (command != null && command.CanExecute(null))
+                    command.Execute(null);
+            }
+            catch (System.Exception e)
+            {
+                ArcGIS.Desktop.Framework.Dialogs.MessageBox.Show($"ERROR: {e}", "Error running command");
+            }
+        });
+        #endregion
     }
 
     public static async Task GetJob(string jobId)
@@ -189,7 +227,7 @@ namespace WorkflowManagerProSnippets
     {
       // cref: ArcGIS.Desktop.Workflow.Client.WorkflowClientModule.JobsManager
       // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager
-      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager.CalculateJobStatistics()
+      // cref: ArcGIS.Desktop.Workflow.Client.Models.IJobsManager.CalculateJobStatistics(ArcGIS.Desktop.Workflow.Client.Models.JobStatisticsQuery)
       // cref: ArcGIS.Desktop.Workflow.Client.Models.JobStatisticsQuery
       // cref: ArcGIS.Desktop.Workflow.Client.Models.JobStatistics
       #region Get statistics for jobs

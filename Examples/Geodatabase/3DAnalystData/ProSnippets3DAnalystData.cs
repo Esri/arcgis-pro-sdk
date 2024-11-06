@@ -29,6 +29,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GeodatabaseSDK._3DAnalystData
 {
@@ -836,7 +837,7 @@ namespace GeodatabaseSDK._3DAnalystData
         }
       }
 
-      // search within an extent and limited to specific classsification codes
+      // search within an extent and limited to specific classification codes
       pointFilter = new ArcGIS.Core.Data.Analyst3D.LasPointFilter();
       pointFilter.FilterGeometry = envelope;
       pointFilter.ClassCodes = new List<int> { 4, 5 };
@@ -850,7 +851,47 @@ namespace GeodatabaseSDK._3DAnalystData
           }
         }
       }
-      // 
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.LasDataset.SearchPoints(ArcGIS.Core.Data.Analyst3D.LasPointFilter, Systen.Double, System.Double)
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor.MoveNextArray
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter.#ctor
+      // cref: ArcGIS.Core.Data.Analyst3D.LasPointFilter.FilterGeometry
+      #region Search using pre initialized arrays
+
+      // search all points
+      using (ArcGIS.Core.Data.Analyst3D.LasPointCursor ptCursor = lasDataset.SearchPoints(null))
+      {
+        int count;
+        Coordinate3D[] lasPointsRetrieved = new Coordinate3D[10000];
+        while (ptCursor.MoveNextArray(lasPointsRetrieved, null, null, null, out count))
+        {
+          var points = lasPointsRetrieved.ToList();
+        
+          // ...
+        }
+      }
+
+      // search within an extent
+      // use MoveNextArray retrieving coordinates, fileIndex and pointIds
+      ArcGIS.Core.Data.Analyst3D.LasPointFilter filter = new ArcGIS.Core.Data.Analyst3D.LasPointFilter();
+      filter.FilterGeometry = envelope;
+      using (ArcGIS.Core.Data.Analyst3D.LasPointCursor ptCursor = lasDataset.SearchPoints(filter))
+      {
+        int count;
+        Coordinate3D[] lasPointsRetrieved = new Coordinate3D[50000];
+        int[] fileIndexes = new int[50000];
+        double[] pointIds = new double[50000];
+        while (ptCursor.MoveNextArray(lasPointsRetrieved, null, fileIndexes, pointIds, out count))
+        {
+          var points = lasPointsRetrieved.ToList();
+
+        }
+      }
+      
       #endregion
     }
   }

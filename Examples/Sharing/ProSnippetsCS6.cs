@@ -172,7 +172,7 @@ namespace Content.Sharing.ProSnippet
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.OrganizationId
       // cref: ArcGIS.Desktop.Core.Portal.PortalQueryParameters.Limit
       // cref: ArcGIS.Desktop.Core.ArcGISPortalExtensions.SearchForContentAsync(ArcGIS.Desktop.Core.ArcGISPortal, ArcGIS.Desktop.Core.Portal.PortalQueryParameters)
-      // cref: ArcGIS.Desktop.Core.Portal.PortalQueryResultSet<T>
+      // cref: ArcGIS.Desktop.Core.Portal.PortalQueryResultSet`1
       #region Portal: Execute a portal search
 
       var portal = ArcGISPortalManager.Current.GetPortal(portalUri);

@@ -46,7 +46,7 @@ namespace Content.Snippets
   #region ProSnippet Group: Project
   #endregion
 
-  internal class ProSinppets1
+  internal class ProSnippets1
   {
     public async void ContentSnippet()
     {
@@ -270,7 +270,7 @@ namespace Content.Snippets
       {
         //Create the folder connection project item
         var item = ItemFactory.Instance.Create(folderPath) as IProjectItem;
-        //If it is succesfully added to the project, return it otherwise null
+        //If it is successfully added to the project, return it otherwise null
         return Project.Current.AddItem(item) ? item as FolderConnectionProjectItem : null;
       });
 
@@ -280,7 +280,7 @@ namespace Content.Snippets
       {
         //Create the File GDB project item
         var item = ItemFactory.Instance.Create(gdbPath) as IProjectItem;
-        //If it is succesfully added to the project, return it otherwise null
+        //If it is successfully added to the project, return it otherwise null
         return Project.Current.AddItem(item) ? item as GDBProjectItem : null;
       });
 
@@ -737,7 +737,7 @@ namespace Content.Snippets
             // datasetType
             var dataType = ItemFactory.Instance.GetDatasetType(selectedItem);
 
-            // get the dataset Defintion
+            // get the dataset Definition
             if (ItemFactory.Instance.CanGetDefinition(selectedItem))
             {
               using (var def = ItemFactory.Instance.GetDefinition(selectedItem))
@@ -807,7 +807,7 @@ namespace Content.Snippets
       {
         // cref: ArcGIS.Desktop.Core.FavoritesManager.GetFavorite
         // cref: ArcGIS.Desktop.Core.FavoritesManager.CanAddAsFavorite
-        // cref: ArcGIS.Desktop.Core.FavoritesManager.AddFavorite(Item)
+        // cref: ArcGIS.Desktop.Core.FavoritesManager.AddFavorite(ArcGIS.Desktop.Core.Item)
         #region Add a Favorite - Folder
 
         var itemFolder = ItemFactory.Instance.Create(@"d:\data");
@@ -829,8 +829,8 @@ namespace Content.Snippets
       {
       // cref: ArcGIS.Desktop.Core.FavoritesManager.GetFavorite
       // cref: ArcGIS.Desktop.Core.FavoritesManager.CanAddAsFavorite
-      // cref: ArcGIS.Desktop.Core.FavoritesManager.InsertFavorite(Item,Int32)
-      // cref: ArcGIS.Desktop.Core.FavoritesManager.InsertFavorite(Item, Int32,Boolean)
+      // cref: ArcGIS.Desktop.Core.FavoritesManager.InsertFavorite(ArcGIS.Desktop.Core.Item,Int32)
+      // cref: ArcGIS.Desktop.Core.FavoritesManager.InsertFavorite(ArcGIS.Desktop.Core.Item,Int32,Boolean)
         #region Insert a Favorite - Geodatabase path
 
         string gdbPath = "@C:\\myDataFolder\\myData.gdb";
@@ -852,7 +852,7 @@ namespace Content.Snippets
       {
         // cref: ArcGIS.Desktop.Core.FavoritesManager.GetFavorite
         // cref: ArcGIS.Desktop.Core.FavoritesManager.CanAddAsFavorite
-        // cref: ArcGIS.Desktop.Core.FavoritesManager.AddFavorite(Item)
+        // cref: ArcGIS.Desktop.Core.FavoritesManager.AddFavorite(ArcGIS.Desktop.Core.Item)
         #region Add a Favorite - Style project item
 
         StyleProjectItem styleItem = Project.Current.GetItems<StyleProjectItem>().
@@ -1489,7 +1489,7 @@ namespace Content.Snippets
       //Options are mutually exclusive.
 
       //Setting ApplicationOptions.DownloadOptions.AskForUnpackPPKXLocation = true
-      //superseeds any value in ApplicationOptions.DownloadOptions.UnpackPPKXLocation
+      //supersedes any value in ApplicationOptions.DownloadOptions.UnpackPPKXLocation
       //and will prompt the user on an unpack. The value of 
       //ApplicationOptions.DownloadOptions.UnpackPPKXLocation will be unaffected
       //and is ignored. This is the same behavior as on the Pro UI.
@@ -1585,6 +1585,33 @@ namespace Content.Snippets
 
       #endregion
 
+    }
+
+    public void PortalProjectOptions()
+    {
+      // cref: ArcGIS.Desktop.Core.GeneralOptions
+      // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomHomeFolder
+      // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomDefaultGeodatabase
+      // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomDefaultToolbox
+      // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectDeleteLocalCopyOnClose
+      // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectDownloadLocation
+      #region Portal Project Options
+
+      // access the current options
+      var def_home = ApplicationOptions.GeneralOptions.PortalProjectCustomHomeFolder;
+      var def_gdb = ApplicationOptions.GeneralOptions.PortalProjectCustomDefaultGeodatabase;
+      var def_tbx = ApplicationOptions.GeneralOptions.PortalProjectCustomDefaultToolbox;
+      var deleteOnClose = ApplicationOptions.GeneralOptions.PortalProjectDeleteLocalCopyOnClose;
+      var def_location = ApplicationOptions.GeneralOptions.PortalProjectDownloadLocation;
+
+
+      // set the options
+      ApplicationOptions.GeneralOptions.PortalProjectCustomHomeFolder = @"E:\data";
+      ApplicationOptions.GeneralOptions.PortalProjectCustomDefaultGeodatabase = @"E:\data\usa.gdb";
+      ApplicationOptions.GeneralOptions.PortalProjectCustomDefaultToolbox = @"E:\data\usa.tbx";
+      ApplicationOptions.GeneralOptions.PortalProjectDeleteLocalCopyOnClose = false;
+      ApplicationOptions.GeneralOptions.PortalProjectDownloadLocation = @"E:\data";
+      #endregion
     }
   }
 }

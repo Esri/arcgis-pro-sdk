@@ -104,7 +104,7 @@
     <insertCondition id="esri_projectItem_DefaultToolboxSelectedCondition">
       <not>
         <state id="esri_projectItem_DefaultToolboxSelected" />
-      </not>
+      </not>      
       <and>
         <state id="esri_mapping_openProjectCondition"/>
       </and>
@@ -712,6 +712,36 @@
     </insertCategory>
     <!-- BIM Gallery Items -->
 
+    <!-- AI Assistants Skills -->
+    <updateCategory refID="esri_core_ai_skills_category">
+      <insertComponent id="esri_geoprocessing_skills" className="ArcGIS.Desktop.Internal.GeoProcessing.GeoProcessingSkills">
+        <content>
+          <skill name="SearchToolAsync" description="Use this function to retrieve relevant methods for the current user query. It will return tool **Id** that can be used in OpenToolAsync"/>
+          <skill name="OpenToolAsync" description="This method will open a tool for the user to help them process their data."/>
+          <skill name="ToolIdToParameters" description="This method will return the tool parameters in xml.  These can be used in OpenToolWithParametersAsync to make a string array"/>
+          <skill name="OpenToolWithParametersAsync" description="This method will open a tool for the user and assign the tool parameters to help them process their data."/>
+        </content>
+      </insertComponent>
+      <insertComponent id="esri_rasteranalysis_skills" className="ArcGIS.Desktop.Internal.GeoProcessing.RasterAnalysisSkills">
+        <content>
+          <skill name="ConditionDEM" description="Create a hydrologically conditioned DEM It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="IdentifySinks" description="Identify sinks in a DEM It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="FlowDirection" description="Determine flow direction It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="FlowAccumulation" description="Determine flow accumulation It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="DrainageBasins" description="Delineate all drainage basins in a raster It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="WatershedsDetermine" description="Delineate watersheds/determine the contributing area of a stream outlets It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="StreamNetwork" description="Delineate a stream network It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="AssignStreamOrder" description="Assign stream order It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="AssignStreamLink" description="Assign stream link It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="CalculateFlowLength" description="Calculate flow length It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="SnapPourPointsToStream" description="Determine pour points on a stream network/snap pour points to the stream network It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="StorageCapacity" description="Calculate storage capacity (volume) and surface area at elevation increments It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+          <skill name="DownslopeDistance" description="Calculate downslope distance from each cell to stream along flow paths It contains the all possible ways to accomplish these tasks. Some of these workflows are unconventional and/or less common. It will return a list of tool **Id** that can be used in GeoProcessingSkills.OpenToolAsync"/>
+        </content>
+      </insertComponent>
+    </updateCategory>
+    <!-- AI Assistants Skills -->
+    
   </categories>
 
   <modules>
@@ -795,9 +825,9 @@
           <splitButton refID="esri_geoprocessing_toolsButton" size="large" />
         </subgroup>
         <subgroup id="esri_gp_WorkflowSubGroup_1" size="LargeThenMediumWhenSmall">
-           <button refID="esri_dataengineering_viewOutlineStatisticsButton" />
-           <button refID="esri_geoprocessing_suitabilityButton"/>
-           <button refID="esri_defense_showVisibilityDockPane"/>
+          <button refID="esri_dataengineering_viewOutlineStatisticsButton" />
+          <button refID="esri_geoprocessing_suitabilityButton"/>
+          <button refID="esri_defense_showVisibilityDockPane"/>
          </subgroup>
          <subgroup id="esri_gp_WorkflowSubGroup_2" size="LargeThenMediumWhenSmall">
            <splitButton refID="esri_mapping_interactiveAnalysisSplitButton"/>
@@ -1134,12 +1164,12 @@
               Choose a font size for the selected elements.<disabledText></disabledText>
             </tooltip>
           </comboBox>
-          <button id="esri_modelbuilder_labelTextIncreaseSizeButton" caption="Grow Font" keytip="GF" extendedCaption="Increase font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeIncrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolIncreaseSize16.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <button id="esri_modelbuilder_labelTextIncreaseSizeButton" caption="Increase Font Size" keytip="IL" extendedCaption="Increase font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeIncrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolIncreaseSize16.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
             <tooltip heading="Increase Font Size">
               Increase the font size of the selected elements.<disabledText></disabledText>
             </tooltip>
           </button>
-          <button id="esri_modelbuilder_labelTextDecreaseSizeButton" caption="Shrink Font" keytip="SF" extendedCaption="Decrease font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeDecrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolDecreaseSize16.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <button id="esri_modelbuilder_labelTextDecreaseSizeButton" caption="Decrease Font Size" keytip="DL" extendedCaption="Decrease font size of the selected layout element." className="esri_geoprocessing_module:Commands.FontSizeDecrementButton" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TextSymbolDecreaseSize16.png" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
             <tooltip heading="Decrease Font Size">
               Decrease the font size of the selected elements.<disabledText></disabledText>
             </tooltip>
@@ -2160,6 +2190,11 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Collects output values of an iterator, or converts a list of multivalues into a single value.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_modelbuilder_customMessageButton" hidden="true" caption="Custom Message" extendedCaption="ModelBuilder" keytip="CU" className="esri_geoprocessing_module:Commands.CustomMessage" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddModelOnlyTools32.png" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Custom Message">
+            Returns a custom message.
+          </tooltip>
+        </button>
         <button id="esri_modelbuilder_mergeBranchButton" hidden="true" caption="Merge Branch" extendedCaption="ModelBuilder" keytip="MB" className="esri_geoprocessing_module:Commands.MergeBranch" helpContextID="" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddMergeBranch16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAddMergeBranch32.png" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Merge Branch">
             Merges two or more logical branches into a single output.<disabledText>Make a model the active view.</disabledText>
@@ -2540,13 +2575,13 @@ You can search for a specific tool, see a list of favorite and recently run tool
       </panes>
 
       <dockPanes>
-        <dockPane id="esri_geoprocessing_toolBoxes" caption="Geoprocessing" className="GPDocPaneViewModel" dock="group" initiallyVisible="false" dockWith="esri_core_projectDockPane">
+        <dockPane id="esri_geoprocessing_toolBoxes" smallImage="GeoprocessingToolbox16" caption="Geoprocessing" className="GPDocPaneViewModel" dock="group" initiallyVisible="false" dockWith="esri_core_projectDockPane">
           <content className="GPDocPaneView" />
         </dockPane>
-        <dockPane id="esri_geoprocessing_pythonWindow" caption="Python" className="PythonWindowDockPaneViewModel" dock="bottom" initiallyVisible="false" minheight="64" height="124" hasHelp="true" helpContextID="120001016">
+        <dockPane id="esri_geoprocessing_pythonWindow" smallImage="GeoprocessingPythonWindowShow16" caption="Python" className="PythonWindowDockPaneViewModel" dock="bottom" initiallyVisible="false" minheight="64" height="124" hasHelp="true" helpContextID="120001016">
           <content className="PythonWindowView" />
         </dockPane>
-        <dockPane id="esri_geoprocessing_dataEngineeringDockPaneFunction" caption="Data Engineering Functions" className="DEDockPaneFunctionViewModel" dock="right" initiallyVisible="false" minheight="64" height="124" hasHelp="true" condition="esri_geoprocessing_anyDataEngineeringPane">
+        <dockPane id="esri_geoprocessing_dataEngineeringDockPaneFunction" smallImage="DataEngineeringGeneral16" caption="Data Engineering Functions" className="DEDockPaneFunctionViewModel" dock="right" initiallyVisible="false" minheight="64" height="124" hasHelp="true" condition="esri_geoprocessing_anyDataEngineeringPane">
           <content className="DEDockPaneFunction" />
         </dockPane>
         <!--<dockPane id="esri_geoprocessing_NewBigDataConnectionDockPane" caption="New Big Data Connection" className="ArcGIS.Desktop.GeoProcessing.BDC.BDCWizardDockPaneViewModel" dock="right" initiallyVisible="false" minheight="64" height="124" hasHelp="true" >
@@ -2610,6 +2645,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <!--<button refID="esri_modelbuilder_parsePathButton" />-->
           <button refID="esri_modelbuilder_parsePathExtButton" />
           <button refID="esri_modelbuilder_selectDataButton"/>
+          <button refID="esri_modelbuilder_customMessageButton"/>
         </menu>
 
         <menu id="esri_modelbuilder_iteratorPalette" caption="Iterators" keytip="IT" dropDown="true" hidden ="false" 
@@ -2919,11 +2955,11 @@ You can search for a specific tool, see a list of favorite and recently run tool
         <menu id="esri_geoprocessing_SystemScriptToolMenu" hidden="true" caption="SystemTools Item" contextMenu="true">
           <button refID="esri_geoprocessing_openTool" />
           <button refID="esri_geoprocessing_editTool" />
+          <button refID="esri_geoprocessing_BatchTool" />
+          <button refID="esri_geoprocessing_addToFavorities" separator="true" />
           <button refID="esri_geoprocessing_addToGallery" />
-          <button refID="esri_geoprocessing_addToFavorities" />
           <button refID="esri_geoprocessing_addToUserFavorities" />
           <button refID="esri_geoprocessing_addToModelBuilder" />
-          <button refID="esri_geoprocessing_BatchTool"/>
           <button refID="esri_core_editCopyButton" separator="true" />
           <button refID="esri_geoprocessing_helpCommand" separator="true"/>
           <button refID="esri_geoprocessing_editToolProperties" separator="true" />
@@ -2968,7 +3004,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_projectItemEditMetadata" separator="false"/>
           <button refID="esri_geoprocessing_editToolProperties" separator="true"/>
         </menu>
-        
+
         <menu id="esri_geoprocessing_ToolModelMenu" hidden="true" caption="Tool Model Item" contextMenu="true">
           <button refID="esri_geoprocessing_openTool" />
           <button refID="esri_geoprocessing_editTool" />
@@ -2988,6 +3024,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
         <menu id="esri_geoprocessing_PythonToolMenu" hidden="true" caption="Python Toolbox Tool" contextMenu="True">
           <button refID="esri_geoprocessing_openTool" />
           <button refID="esri_geoprocessing_editPythonToolbox" />
+          <button refID="esri_geoprocessing_BatchTool"/>
           <button refID="esri_geoprocessing_addToFavorities" separator="true"/>
           <button refID="esri_geoprocessing_addToUserFavorities" />
           <button refID="esri_geoprocessing_addToGallery" />
@@ -3439,7 +3476,8 @@ You can search for a specific tool, see a list of favorite and recently run tool
                    showItemCaptionBelow="true"
           disableIfBusy="false"
           resizable="true"
-          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingTool32.png"
+          largeImage="GeoprocessingTool32"
+          smallImage="GeoprocessingTool16"
           condition="esri_mapping_openProjectCondition"
           helpContextID="">
           <tooltip heading="">A gallery of geoprocessing tools.<disabledText></disabledText></tooltip>

@@ -21,8 +21,7 @@ using System.Collections.Generic;
 
 namespace ConsoleApplication1 {
 
-    // cref: ArcGIS.Core.Hosting.Host.Initialize
-    // cref: ArcGIS.Core.Hosting.Host.Initialize(ArcGIS.Core.Hosting.Host.LicenseProductCode)
+    // cref: ArcGIS.Core.Hosting.Host.Initialize()
     #region Initializing Core Host
     using ArcGIS.Core.Data;
     //There must be a reference to ArcGIS.CoreHost.dll

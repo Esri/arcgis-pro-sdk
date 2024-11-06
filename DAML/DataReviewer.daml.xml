@@ -307,14 +307,11 @@
     <insertCondition id="esri_dataReviewer_FlagMissingFeaturesErrorInspectorCondition" caption="...">
       <and>
         <state id="esri_mapping_mapPane" />
+        <state id="esri_license_hasReviewerExtensionLicenseState" />
         <state id="esri_datareviewer_FlagMissingFeaturesErrorInspectorState" />
       </and>
     </insertCondition>
-
-    <insertCondition id="esri_datareviewer_enableReviewerAdhocCondition" caption="...">
-      <state id="esri_datareviewer_enableReviewerAdhocState" />
-    </insertCondition>
-
+    
   </conditions>
 
   <!-- ****IMPORTANT**** Any menus/buttons added to insert or other ribbons that core provides should ensure the icons are added from core ArcGIS.Desktop.Resources project instead of DataReviewer Project resources. 
@@ -322,6 +319,26 @@
 
   <modules>
     <insertModule id="esri_dataReviewer_dataReviewerModule" className="DataReviewerModule" caption="ArcGIS Data Reviewer" description="Reviewer" autoLoad="false" productID="esri_product_datareviewer">
+
+      <miniToolbars>
+        <miniToolbar id="esri_dataReviewer_SegmentSimpleLineSketchContextToolbar">
+          <row>
+            <button refID="esri_editing_AddDeviceLocationCommand"/>
+            <button refID="esri_editing_LineConstructor" separator="true"/>
+            <buttonPallete refID="esri_editing_LinePalette"/>
+            <!--<buttonPallete refID="esri_editing_ArcConstructorPalette"/>-->
+            <button refID="esri_editing_TraceConstructorPalette"/>
+            <button refID="esri_editing_MidSketchVertexEditing" separator="true" />
+            <button refID="esri_editing_StretchVertices" />
+            <button refID="esri_editing_StretchTopology" separator="true"/>
+            <button refID="esri_editing_UtilityDisconnect"/>
+            <!--<splitButton refID="esri_editing_UtilityDisconnectSplitButton2"/>-->
+            <!--<customControl refID="esri_mapping_snappingOpenTrayButton" />-->
+            <button refID="esri_editing_FinishSketch" separator="true"/>
+            <button refID="esri_editing_ClearSketch" />
+          </row>
+        </miniToolbar>
+      </miniToolbars>
 
       <tabs>
         <!-- Core Tabs for Rules View -->
@@ -337,6 +354,15 @@
 
       </tabs>
 
+      <subgroups>
+
+        <subgroup id="esri_dataReviewer_ResultsSubgroup" size="Default">
+          <button refID="esri_mapping_addGDBErrorTablesButton"/>
+          <button refID="esri_editing_ShowErrorInspectorBtn"/>
+        </subgroup>
+
+      </subgroups>
+
       <groups>
 
         <group id ="esri_dataReviewer_DataReviewerGroup" hidden="true" caption="Data Reviewer" keytip="Q" launcherKeytip="MQ" smallImage="DataReviewerLifecycleVerified16">
@@ -347,30 +373,28 @@
           <button refID="esri_dataReviewer_DeleteReviewerRules" size="large"  />
         </group>
 
-        <group id ="esri_dataReviewer_AutomatedReviewGroup" hidden="true" caption="Automated Review" condition="esri_datareviewer_enableReviewerAdhocCondition">
-          <!--<customControl refID="esri_dataReviewer_RunRules" size="large" />-->
+        <group id ="esri_dataReviewer_AutomatedReviewGroup" hidden="true" caption="Automated Review" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRunRules16.png">
           <gallery refID="esri_dataReviewer_newRulesGallery" size="large" />
           <customControl refID="esri_dataReviewer_ValidationResultsHistory" size="large" />
         </group>
 
-        <group id ="esri_dataReviewer_Results" hidden="true" caption="Results">
-          <button refID="esri_mapping_addGDBErrorTablesButton" size="large"/>
-          <button refID="esri_editing_ShowErrorInspectorBtn" size="large"/>
+        <group id ="esri_dataReviewer_Results" hidden="true" caption="Results" smallImage="ErrorInspector16">
+          <subgroup refID="esri_dataReviewer_ResultsSubgroup"/>
         </group>
 
-        <group id ="esri_dataReviewer_Selection" hidden="true" caption="Selection">
+        <group id ="esri_dataReviewer_Selection" hidden="true" caption="Selection" smallImage="SelectionSelectTool16">
           <toolPalette refID="esri_mapping_selectToolPalette" size="large" />
           <button refID="esri_geoprocessing_selectByAttributeButton" size="large"/>
           <button refID="esri_geoprocessing_selectByLocationButton" size="large"/>
           <button refID="esri_mapping_clearSelectionButton" size="middle" />
         </group>
-        
-        <group id="esri_dataReviewer_VisualReviewGroup" hidden="true" caption="Semi-Automated Review">
+
+        <group id="esri_dataReviewer_VisualReviewGroup" hidden="true" caption="Semi-Automated Review" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BrowseFeatureAttributeRules16.png">
           <button refID="esri_dataReviewer_evalFeaturesErrorInspectorButton" size="large"/>
-          <customControl refID="esri_dataReviewer_FlagMissingFeatures_ErrorInspector" size="large" />
+          <button refID="esri_dataReviewer_FlagMissingFeatures_ErrorInspectorButton" size="large"/>
         </group>
 
-        <group id ="esri_dataReviewer_CloseGroup" hidden="true" caption="Close">
+        <group id ="esri_dataReviewer_CloseGroup" hidden="true" caption="Close" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Close16.png">
           <button refID="esri_dataReviewer_CloseManageQuality" size="large"/>
         </group>
 
@@ -558,13 +582,31 @@ Results are organized by session and stored in feature classes and tables in eit
           </tooltip>
         </button>
        
-        <button id="esri_dataReviewer_evalFeaturesErrorInspectorButton" caption="Browse Features" extendedCaption="Browse features and commit selected features as Validation errors" className="esri_dataReviewer_dataReviewerModule:OpenEvaluateFeaturesErrorInspector" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BrowseFeatureAttributeRules32.png" keytip="VR BF">
+        <button id="esri_dataReviewer_evalFeaturesErrorInspectorButton" caption="Browse Features"
+                extendedCaption="Browse features and commit selected features as Validation errors"
+                className="esri_dataReviewer_dataReviewerModule:OpenEvaluateFeaturesErrorInspector"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BrowseFeatureAttributeRules32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BrowseFeatureAttributeRules16.png"
+                keytip="VR BF">
           <tooltip heading="Browse Features">
             Browse features selected in your map and create error results for features that fail visual review.
             <disabledText>You must have a Data Reviewer extension licensed.</disabledText>
           </tooltip>
         </button>
-        
+
+        <button id="esri_dataReviewer_FlagMissingFeatures_ErrorInspectorButton" caption="Flag Missing Features" extendedCaption = "Flag missing features as Reviewer results"
+                className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorButton"
+                condition="esri_dataReviewer_FlagMissingFeaturesErrorInspectorCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FlagMissingAttributeRules32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FlagMissingAttributeRules16.png"
+                keytip="FM VR"
+                loadOnClick="false">
+          <tooltip heading="Flag Missing">
+            Capture the location of a missing feature in the map.
+            <disabledText>You must have a Data Reviewer extension licensed.</disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_dataReviewer_EvalFeaturesZoomTo" hidden="true" caption="Zoom To" extendedCaption="Zoom to selected features" className="esri_dataReviewer_dataReviewerModule:EvaluateFeatures_ZoomTo" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToSelectedItems16.png">
           <tooltip heading="Zoom To">
             Zoom to selected features
@@ -587,6 +629,7 @@ Results are organized by session and stored in feature classes and tables in eit
         </button>
 
         <tool id="esri_dataReviewer_evalfeaturesmapcoord" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.MapCoordinateTool" hidden="true" loadOnClick="false" />
+        <tool id="esri_dataReviewer_FlagMissingMapTool" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesMapTool" hidden="true" loadOnClick="false" />
 
         <!-- Flag missing features tool-->
         <customControl id="esri_dataReviewer_FlagMissingFeatures" caption="Flag Missing Features" extendedCaption = "Flag missing features as Reviewer results" condition="esri_dataReviewer_FlagMissingFeaturesCondition" keytip="FM"
@@ -594,12 +637,6 @@ Results are organized by session and stored in feature classes and tables in eit
           <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesSplitView" />
         </customControl>
         <!-- End Flag missing features tool-->
-        <!-- Flag missing features tool for error inspector-->
-        <customControl id="esri_dataReviewer_FlagMissingFeatures_ErrorInspector" caption="Flag Missing Features" extendedCaption = "Flag missing features as Validatiion Errors" condition="esri_dataReviewer_FlagMissingFeaturesErrorInspectorCondition" keytip="FM VR"
-                       className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorSplitViewModel" hideTooltip="true">
-          <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorSplitView" />
-        </customControl>
-        <!-- End Flag missing features tool for error inspector-->
       </controls>
 
       <menus>
@@ -688,16 +725,39 @@ Results are organized by session and stored in feature classes and tables in eit
           <content className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerTable.ReviewerResultsPane" />
         </dockPane>
 
-        <dockPane id="esri_dataReviewer_ResultsPaneAttributeEditor" caption="Update Results" className="ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.UpdateResultsViewModel" dock="left" initiallyVisible="false" dockWith="esri_dataReviewer_reviewerResultsDockPane">
+        <dockPane id="esri_dataReviewer_ResultsPaneAttributeEditor" caption="Update Results" className="ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.UpdateResultsViewModel" dock="left" initiallyVisible="false" dockWith="esri_dataReviewer_reviewerResultsDockPane" image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerResultsShow16.png">
           <content className="ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.UpdateResultsView" />
         </dockPane>
 
-        <dockPane id="esri_dataReviewer_evaluateFeaturesPane" caption="Browse Features" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesViewModel" dock="right" keytip="Browse Features" initiallyVisible="false" >
+        <dockPane id="esri_dataReviewer_evaluateFeaturesPane"
+                  caption="Browse Features"
+                  className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  keytip="Browse Features"
+                  initiallyVisible="false" >
           <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesView" />
         </dockPane>
 
-        <dockPane id="esri_dataReviewer_evaluateFeaturesErrorInspectorPane" caption="Browse Features" className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorViewModel" dock="right" keytip="Browse Features" initiallyVisible="false" >
+        <dockPane id="esri_dataReviewer_evaluateFeaturesErrorInspectorPane"
+                  caption="Browse Features"
+                  className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  keytip="Browse Features"
+                  initiallyVisible="false"
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BrowseFeatureAttributeRules16.png">
           <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorView" />
+        </dockPane>
+
+        <dockPane id="esri_dataReviewer_FlagMissingFeaturesPane"
+                  caption="Flag Missing Features"
+                  className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  initiallyVisible="false"
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FlagMissingAttributeRules16.png">
+          <content className="ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorView" />
         </dockPane>
         
         <dockPane id="esri_mapping_exportBatchJobToAttributeRulesDockPane"
@@ -706,7 +766,8 @@ Results are organized by session and stored in feature classes and tables in eit
                   dock="group"
                   dockWith="esri_core_projectDockPane"
                   initiallyVisible="false" showLoadingMessage="true" disableIfBusy="true" width="320" minwidth="108"
-                  delayLoadMessage="Loading...">
+                  delayLoadMessage="Loading..."
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BatchImport16.png">
           <content className="ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesView" />
         </dockPane>
 
@@ -716,7 +777,8 @@ Results are organized by session and stored in feature classes and tables in eit
                   dock="group"
                   dockWith="esri_core_projectDockPane"
                   initiallyVisible="false" showLoadingMessage="true" disableIfBusy="true" width="320" minwidth="108"
-                  delayLoadMessage="Loading...">
+                  delayLoadMessage="Loading..."
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRunRules16.png">
           <content className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckView"  />
         </dockPane>
       </dockPanes>
