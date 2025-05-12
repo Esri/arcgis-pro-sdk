@@ -584,7 +584,7 @@ Package: proapp-sdk-migration.vsix
 ArcGIS Pro SDK for .NET (Migration) provides support to migrate ArcGIS Pro SDK 2.x extensions to ArcGIS Pro SDK 3.X for .NET. **Note:** When you migrate your add-in, the dekstopVersion attribute in your config.daml will be set to the current version of ArcGIS Pro installed.
 
 ### Previous versions
-* [ArcGIS Pro 3.5 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.5.0.57365)
+* [ArcGIS Pro 3.5 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.5.0.57366)
 * [ArcGIS Pro 3.4 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.4.0.55405)
 * [ArcGIS Pro 3.3 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.3.0.52636)
 * [ArcGIS Pro 3.2 SDK for .NET](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.2.0.49743)
