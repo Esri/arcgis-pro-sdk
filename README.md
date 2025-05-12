@@ -1,7 +1,7 @@
 ## ArcGIS Pro 3.5 SDK for .NET
 
 ```
-ArcGIS Pro Version: 3.5.0.57365
+ArcGIS Pro Version: 3.5.0.57366
 ```
 
 Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SDK provides four main extensibility patterns:  add-ins, managed configurations, plugin datasources and CoreHost applications.  You can leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to build integrated 2D and 3D add-ins with the ArcGIS Pro APIs.
