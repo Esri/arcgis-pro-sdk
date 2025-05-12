@@ -40,6 +40,7 @@
            <group refID="esri_networkanalysis_utility_Selection_Group"/>
            <group refID="esri_networkanalysis_utility_Drawing_Group" />
            <group refID="esri_networkanalysis_utility_SubnetworkManagement_Group" />
+           <group refID="esri_networkanalysis_utility_CircuitManagement_Group" />
          </tab>
          <tab id="esri_networkanalysis_trace_network_Tab" caption="Trace Network" tabGroupID="esri_networkanalysis_trace_TabGroup" condition="esri_mapping_traceNetworkCondition" keytip="TN">
            <group refID="esri_networkanalysis_trace_Validate_Group" />
@@ -75,8 +76,13 @@
           <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
         </group>
         <group id="esri_networkanalysis_utility_Selection_Group" caption="Selection" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectOnDiagram16.png">
-          <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" />
+          <splitButton refID="esri_networkdiagrams_propagateNetworkToDiagramSplitButton" size ="large"/>
           <button refID="esri_networkanalysis_utility_ApplySelectionSplitButton" size="large"/>
+        </group>
+        <group id="esri_networkanalysis_utility_CircuitManagement_Group" caption="Telecom Circuits" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindCircuits16.png" condition="esri_networkanalysis_hasTelecomDomainNetwork_condition">
+          <button refID="esri_networkanalysis_utility_FindCircuitsBtn" size="large"/>
+          <button refID="esri_networkanalysis_utility_CreateCircuitsBtn" size="large"/>
+          <button refID="esri_networkanalysis_utility_ShowUnitIDOperationsBtn" size="large" />
         </group>
 
         <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png">
@@ -99,7 +105,7 @@
           <button refID="esri_networkanalysis_trace_FlowDirectionButton" size="large" />
         </group>
       </groups>
-
+      
       <splitButtons>
         
         <splitButton id="esri_networkanalysis_utility_ApplySelectionSplitButton" extendedCaption="Apply the selection to another network map" keytip="AM">
@@ -169,7 +175,7 @@
         </buttonPalette>
          <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace" extendedCaption="Set Trace Locations, Select and Run Named Trace Configurations." keytip="TL">
            <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
-           <!-- <tool refID="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"/> -->
+           <!--<tool refID="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"/>-->
            <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
            <tool refID="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"/>
            <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
@@ -372,6 +378,32 @@
         </tool>
         <!-- End of association pane tools-->
 
+        <!--Unit ID Pane tools-->
+        <button id="esri_networkanalysis_utility_ShowUnitIDOperationsBtn"
+          caption="Manage Unit IDs" extendedCaption="Show the manage unit IDs pane."
+          condition="esri_networkanalysis_utility_not_trace_Unit_Condition"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UnitIdentifiers32.png"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/UnitIdentifiers16.png"
+          className="esri_networkanalysis_utility_module:ShowUnitIDOperationsWindow"
+          keytip="UI">
+          <tooltip heading="Manage Unit IDs">
+            Show the manage unit IDs pane.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+          </tooltip>
+        </button>
+
+        <tool id="esri_networkanalysis_utility_Unit_SelectFeatureTool"
+              className="Tools.UnitSelectFeatureTool"
+              caption="Select a feature"
+              condition="esri_networkanalysis_utility_Unit_Condition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
+              helpContextID="">
+          <tooltip heading="Select features.">
+            Select a network source.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <!--End of Unit ID Pane tools-->
+
         <!-- Select source feature tool-->
         <tool id="esri_networkanalysis_utility_associations_SelectSourceFeatureTool"
                      className="Tools.SelectSourceFeatureTool"
@@ -459,6 +491,28 @@
                 keytip="MC">
           <tooltip heading="Modify Control Device">
             Open the Modify Subnetwork Controller pane to set or remove a feature as a network subnetwork controller.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <!-- esri_networkanalysis_utility_CircuitManagement_Group -->
+        <button id="esri_networkanalysis_utility_FindCircuitsBtn" className="esri_networkanalysis_utility_module:ShowFindCircuitsWindow"
+                caption="Find Circuits" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindCircuits32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindCircuits16.png"
+                helpContextID=""
+                keytip="FC">
+          <tooltip heading="Find Circuits">
+            Find circuits in a utility network.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_networkanalysis_utility_CreateCircuitsBtn" className="esri_networkanalysis_utility_module:ShowCreateCircuitsWindow"
+                caption="Create Circuit" loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit16.png"
+                helpContextID=""
+                keytip="CC">
+          <tooltip heading="Create Circuit">
+            Create a circuit in a utility network.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -581,8 +635,8 @@
         <button id="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"
                 caption="Stopping Points" extendedCaption="Set Stopping Points"
                 condition="esri_networkanalysis_utility_TraceTool_Condition"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MilitaryWorkflows32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MilitaryWorkflows16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStoppingPoints32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStoppingPoints16.png"
                 className="esri_networkanalysis_utility_module:ShowModifyStoppingPointsWindow"
                 keytip="STP">
           <tooltip heading="Set Stopping Points">
@@ -720,6 +774,15 @@
                   dockWith="esri_core_projectDockPane">
           <content className="ModifyAssociationsView" />
         </dockPane>
+        <dockPane id="esri_networkanalysis_utility_UnitIDOperationsPane" smallImage="UnitIdentifiers16"
+          caption="Unit ID Operations"
+          className="UnitIDOperationsPaneViewModel"
+          dock="group"
+          initiallyVisible="false"
+          delayLoadMessage="Open a map to get started."
+          dockWith="esri_core_projectDockPane">
+          <content className="UnitIDOperationsPaneView" />
+        </dockPane>
         <dockPane id="esri_networkanalysis_utility_ModifyStartingPointsAndBarriersPane" smallImage="SetStartingPoints16"
                   caption="Trace"
                   className="ModifyStartingPointsAndBarriersViewModel"
@@ -765,6 +828,37 @@
           delayLoadMessage="Open a map to get started."
           dockWith="esri_core_projectDockPane">
           <content className="FindSubnetworkView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_FindCircuitsPane"
+                  caption="Find Circuits"
+                  className="FindCircuitsViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindCircuits16.png"
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindCircuits32.png"
+                  dockWith="esri_core_projectDockPane">
+          <content className="FindCircuitsView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_CreateCircuitPane"
+                  caption="Create Circuit"
+                  className="CreateCircuitViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit16.png"
+                  image="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit32.png"
+                  dockWith="esri_core_projectDockPane">
+          <content className="CreateCircuitView" />
+        </dockPane>
+        <dockPane id="esri_networkanalysis_utility_ModifyCircuitsPane"
+                  caption="Modify Circuits"
+                  className="ModifyCircuitsViewModel"
+                  dock="group"
+                  initiallyVisible="false"
+                  delayLoadMessage="Open a map to get started."
+                  dockWith="esri_core_projectDockPane">
+          <content className="ModifyCircuitView" />
         </dockPane>
       </dockPanes>
 
@@ -859,6 +953,25 @@
         <state id="esri_map_traceNetworkFGDB"/>
         <state id="esri_map_traceNetworkMGDB" />
         <state id="esri_map_traceNetworkFeatureService" />
+      </or>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_utility_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
+        <state id="esri_map_traceNetworkFGDB"/>
+        <state id="esri_map_traceNetworkMGDB" />
+        <state id="esri_map_traceNetworkFeatureService" />
+      </or>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_utility_not_trace_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
+      <or>
+        <state id="esri_map_utilityNetworkFGDB" />
+        <state id="esri_map_utilityNetworkMGDB" />
+        <state id="esri_map_utilityNetworkFeatureService" />
       </or>
     </insertCondition>
 
@@ -1059,6 +1172,12 @@
           <state id="esri_map_traceNetworkVersion2OrNewState" />
         </and>
       </or>
+    </insertCondition>
+
+    <insertCondition id="esri_networkanalysis_hasTelecomDomainNetwork_condition" caption="A utility network layer has a telecom domain network">
+      <and>
+        <state id="esri_map_utilityNetworkHasTelecomDomainNetwork" />
+      </and>
     </insertCondition>
 
   </conditions>

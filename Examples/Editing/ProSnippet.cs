@@ -718,7 +718,50 @@ namespace EditingSDKExamples
 
       #endregion
 
+      var targetOID = oid;
+
+      // cref: ArcGIS.Desktop.Editing.EditOperation.TransferAttributes(ArcGIS.Desktop.Mapping.MapMember,System.Int64,ArcGIS.Desktop.Mapping.MapMember,System.Int64)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.TransferAttributes(ArcGIS.Desktop.Mapping.MapMember,System.Int64,ArcGIS.Desktop.Mapping.MapMember,System.Int64,System.String)
+      // cref: ArcGIS.Desktop.Editing.EditOperation.TransferAttributes(ArcGIS.Desktop.Mapping.MapMember,System.Int64,ArcGIS.Desktop.Mapping.MapMember,System.Int64,System.Collections.Generic.Dictionary{System.String,System.String})
+      #region Edit Operation: Transfer Attributes
+      var transferAttributes = new EditOperation() { Name = "Transfer Attributes" };
+
+      // transfer attributes using the stored field mapping
+      transferAttributes.TransferAttributes(featureLayer, oid, destinationLayer, targetOID);
+
+      // OR transfer attributes using an auto-match on the attributes
+      transferAttributes.TransferAttributes(featureLayer, oid, destinationLayer, targetOID, "");
+
+      // OR transfer attributes using a specified set of field mappings
+      //  dictionary key is the field name in the destination layer, dictionary value is the field name in the source layer
+      var fldMapping = new Dictionary<string, string>();
+      fldMapping.Add("NAME", "SURNAME");
+      fldMapping.Add("ADDRESS", "ADDRESS");
+      transferAttributes.TransferAttributes(featureLayer, oid, destinationLayer, targetOID, fldMapping);
+
+      // OR transfer attributes using a custom field mapping expression
+      string expression = "return {\r\n  " +
+          "\"ADDRESS\" : $sourceFeature['ADDRESS'],\r\n  " +
+          "\"IMAGE\" : $sourceFeature['IMAGE'],\r\n  + " +
+          "\"PRECINCT\" : $sourceFeature['PRECINCT'],\r\n  " +
+          "\"WEBSITE\" : $sourceFeature['WEBSITE'],\r\n  " +
+          "\"ZIP\" : $sourceFeature['ZIP']\r\n " +
+          "}";
+      transferAttributes.TransferAttributes(featureLayer, oid, destinationLayer, targetOID, expression);
+
+      //Execute to execute the operation
+      //Must be called within QueuedTask.Run
+      if (!transferAttributes.IsEmpty)
+      {
+        var result = transferAttributes.Execute(); //Execute and ExecuteAsync will return true if the operation was successful and false if not
+      }
+
+      //or use async flavor
+      //await transferAttributes.ExecuteAsync();
+      #endregion
+
       var linkLayer = featureLayer;
+
 
       // cref: ArcGIS.Desktop.Editing.TransformByLinkLayer.#ctor
       // cref: ArcGIS.Desktop.Editing.TransformMethodType

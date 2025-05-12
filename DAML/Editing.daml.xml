@@ -217,6 +217,30 @@
         </not>
       </and>
     </insertCondition>
+    <insertCondition id="esri_editing_3DMapOrStereoCondition">
+      <and>
+        <not>
+          <state id="esri_editing_editorDisabled" />
+        </not>
+        <not>
+          <state id="esri_editing_editingNotAvailable"/>
+        </not>
+        <not>
+          <state id="esri_charts_chartsPane" />
+        </not>
+        <state id="esri_mapping_mapPane"/>
+        <or>
+          <not>
+            <state id="esri_editing_2DMap" />
+          </not>
+          <and>
+            <state id="esri_editing_2DMap" />
+            <state id="esri_editing_StereoView"/>
+            <state id="esri_editing_3DMapStereoCondition" />
+          </and>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_editing_ShowEditFeatures">
       <and>
         <or>
@@ -1121,6 +1145,13 @@
                   smallImage="EditingGroundToGridCorrectionTool16"
                   helpContextID="120002793" />
       </insertComponent>
+      <insertComponent id="esri_editing_NodeRendererTrayButton" className="ArcGIS.Desktop.Editing.NodeRendererTrayButton">
+        <content L_name="Vertices and Nodes"
+                 largeImage="VerticesAndNodes32"
+                 smallImage="VerticesAndNodes16"
+                 helpContextID="120005037"
+                 L_tooltip="Display vertices, nodes, pseudonodes, dangles and curves in the map." />
+      </insertComponent>
       <!--
         Examples of using the TrayButton SDK
         
@@ -1249,9 +1280,15 @@
       <component id="esri_editing_gdbGDBValidationErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorGeodatabaseFeatureValidationErrorType" >
         <content L_name="Geodatabase Features"/>
       </component>
+      <component id="esri_editing_gdbGAITValidationErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorGaitFeatureValidationErrorType" >
+        <content L_name="GAIT Features"/>
+      </component>
       <component id="esri_editing_gdbUtilityNetworkErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorUNErrorType" >
         <content L_name="Utility Network"/>
       </component>
+      <!--<component id="esri_editing_unplacedAnnotationErrorType" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.InspectorUnplacedAnnotationErrorType" >
+        <content L_name="Editing Unplaced Annotation"/>
+      </component>-->
     </insertCategory>
 
     <insertCategory id="esri_editing_ErrorInspector_Tabs">
@@ -1337,6 +1374,17 @@
     <!-- DAML category used by Drone2Map extension to show a simplified table UI. -->
     <insertCategory id="esri_editing_tableSimplifiedUI"/>
 
+    <updateCategory refID="esri_core_ai_assistant_extension_category">
+      <insertComponent id="esri_parcelfabric_assistant_extension" className="ArcGIS.Desktop.Internal.Editing.ParcelRecordManagementAssistantExtension">
+        <content condition="esri_mapping_mapPaneActive" searchDescription="This skill class allows users to manage parcel fabric records in Pro. This includes creating parcel fabric records, searching for parcel fabric records, zooming to parcel fabric records, viewing parcel features associated with parcel fabric records and viewing the properties of parcel fabric records.">
+          <aiAssistantFunction name="CreateParcelFabricRecord" searchDescription="Creates a new parcel record in the parcel fabric."/>
+          <aiAssistantFunction name="OpenParcelFabricManageRecordsPane" searchDescription="Manages parcel fabric records by opening the Manage Records pane."/>
+        </content>
+      </insertComponent>
+    </updateCategory>
+
+    <!-- category for cga templates -->
+    <insertCategory id="esri_editing_CGATemplates"/>
   </categories>
 
   <shortcutTables>
@@ -1655,7 +1703,7 @@
       </tabs>
       <groups>
         <updateGroup refID="esri_mapping_selectionGroup">
-          <insertButton refID="esri_editing_ShowAttributes" placeWith="esri_mapping_clearSelectionButton" insert="before" size="middle" />
+          <insertButton refID="esri_editing_ShowAttributes" placeWith="esri_mapping_clearSelectionButton" insert="before" size="neverLarge" />
         </updateGroup>
         <updateGroup refID="esri_mapping_featureLayerAttributeGroup">
           <insertButton refID="esri_editing_table_openTablePaneButton" size="large" />
@@ -1667,14 +1715,11 @@
           <insertButton refID="esri_editing_tableDeleteSelected" size="middle"/>
         </updateGroup>
         <updateGroup refID="esri_mapping_layerVersioningManageEditsGroup">
-          <insertButton refID="esri_editing_SaveEditsBtn" size="large" />
-          <insertButton refID="esri_editing_DiscardEditsBtn" size="large" />
+          <insertSubgroup refID="esri_editing_layerVersioningManageEditsSubgroup"/>
         </updateGroup>
         <updateGroup refID="esri_mapping_layerVersioningGroup">
-          <insertButton refID="esri_editor_reconcileVersionButton" size="large"/>
-          <insertButton refID="esri_editor_PostVersionButton" size="large"/>
-          <insertButton refID="esri_editor_ConflictManagerButton" size="large"/>
-          <insertButton refID="esri_editor_VersionChangesButton" size="large"/>
+          <insertSubgroup refID="esri_editing_layerVersioningSubgroup1"/>
+          <insertSubgroup refID="esri_editing_layerVersioningSubgroup2"/>
         </updateGroup>
         <updateGroup refID="esri_mapping_versionMapViewGroup">
           <insertButton refID="esri_editor_versionRefreshMapButton" size="large" />
@@ -1690,6 +1735,7 @@
         <updateMenu refID="esri_mapping_selection2DContextMenu">
           <insertButton refID="esri_core_editCopyButton"/>
           <insertButton refID="esri_core_editPasteButton"/>
+          <insertButton refID="esri_core_editPasteSpecialButton"/>
           <insertButton refID="esri_core_editDeleteButton" separator="true"/>
           <insertButton refID="esri_mapping_exploreContext" separator="true"/>
           <insertButton refID="esri_mapping_locateReverseGeocode" separator="true"/>
@@ -1709,6 +1755,7 @@
         <updateMenu refID="esri_mapping_selection3DContextMenu">
           <insertButton refID="esri_core_editCopyButton"/>
           <insertButton refID="esri_core_editPasteButton"/>
+          <insertButton refID="esri_core_editPasteSpecialButton"/>
           <insertButton refID="esri_core_editDeleteButton" separator="true"/>
           <insertButton refID="esri_mapping_exploreContext" separator="true"/>
           <insertButton refID="esri_mapping_locateReverseGeocode" separator="true"/>
@@ -1774,7 +1821,7 @@
         </updateMenu>
 
         <updateMenu refID="esri_mapping_subtypeValueLayerContextMenu">
-          <insertButton refID="esri_editing_table_openTablePaneButton" separator="true" insert="after" placeWith="esri_mapping_removeSelectedLayersButton" />
+          <insertButton refID="esri_editing_table_openTablePaneButton" separator="true" insert="after" placeWith="esri_mapping_removeSelectedMapMembersButton" />
           <insertButton refID="esri_editing_subtypevaluelayer_data_menu" separator="true" insert="before" placeWith="esri_mapping_selectedLayerPropertiesButton" />
         </updateMenu>
 
@@ -1923,11 +1970,11 @@
                   className="EditingModule">
 
       <panes>
-        <pane id="esri_editing_versionConflictsPane" caption="Conflicts" className="ArcGIS.Desktop.Editing.VersionConflictManagementViewModel" smallImage="VersionConflictsWindow16" isClosable="true" defaultTab="esri_editing_EditingTab" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll">
+        <pane id="esri_editing_versionConflictsPane" caption="Conflicts" className="ArcGIS.Desktop.Editing.VersionConflictManagementViewModel" smallImage="VersionConflictsWindow16" isClosable="true" defaultTab="esri_mapping_datasourceVersionTab" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll">
           <content className="ArcGIS.Desktop.Editing.VersionConflictManagementView" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll" />
         </pane>
 
-        <pane id="esri_editing_versionDifferencesPane" caption="Differences" className="ArcGIS.Desktop.Editing.VersionConflictManagementViewModel" smallImage="VersionChanges16" isClosable="true" defaultTab="esri_editing_EditingTab" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll">
+        <pane id="esri_editing_versionDifferencesPane" caption="Differences" className="ArcGIS.Desktop.Editing.VersionConflictManagementViewModel" smallImage="VersionChanges16" isClosable="true" defaultTab="esri_mapping_datasourceVersionTab" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll">
           <content className="ArcGIS.Desktop.Editing.VersionConflictManagementView" assembly="Extensions\Editing\ArcGIS.Desktop.Editing.dll" />
         </pane>
 
@@ -2094,8 +2141,19 @@
                   keytip="pl">
           <content className="ParcelLineagePaneView" />
         </dockPane>
-        
-        
+
+        <dockPane id="esri_editing_CogoReaderDockPane" smallImage="COGOReader16" image="COGOReader32"
+                  caption="COGO Reader"
+                  className="ArcGIS.Desktop.Editing.ParcelFabric.CogoReaderPaneViewModel"
+                  dock="float"
+                  initiallyVisible="false"
+                  width="1366" height="768"
+                  condition="esri_mapping_mapPane"
+                  delayLoadMessage="Select a map that contains a parcel fabric."
+                  keytip="gr">
+          <content className="ArcGIS.Desktop.Editing.ParcelFabric.CogoReaderPaneView" />
+        </dockPane>
+
       </dockPanes>
 
       <controls>
@@ -2154,7 +2212,7 @@
         </button>
         <tool id="esri_editing_PushPullTool" keytip="PP"
               caption="Create 3D Geometry" extendedCaption="Create Multipatch Tool"
-              condition="esri_editing_3DMapCondition"
+              condition="esri_editing_3DMapOrStereoCondition"
               largeImage="multipatch-editor-32"
               smallImage="multipatch-editor-16"
               categoryRefID="esri_editing_construction_multipatch"
@@ -2167,7 +2225,7 @@
 
         <button id="esri_editing_PushPullCommand" keytip="PP"
               caption="Create 3D Geometry" extendedCaption="Create Multipatch Tool"
-              condition="esri_editing_3DMapCondition"
+              condition="esri_editing_3DMapOrStereoCondition"
               largeImage="multipatch-editor-32"
               smallImage="multipatch-editor-16"
               className="CreateMultipatchCommand" loadOnClick="false">
@@ -2178,7 +2236,7 @@
 
         <tool id="esri_editing_ModifyPushPullTool" keytip="PP" hidden="true"
               caption="Modify 3D Geometry" extendedCaption="Edit Multipatch Tool"
-              condition="esri_editing_3DMapCondition"
+              condition="esri_editing_3DMapOrStereoCondition"
               largeImage="multipatch-editor-32"
               smallImage="multipatch-editor-16"
               className="ModifyPushPullTool" >
@@ -2436,6 +2494,18 @@
           <tooltip heading="Trace Traverse">
             Trace Traverse.<disabledText></disabledText>
           </tooltip>
+        </tool>
+        <tool id="esri_editing_GetTractStartPointTool" hidden="true"
+              className="GetTractStartPointTool"
+              largeImage="EditingPointTool32"
+              smallImage="EditingPointTool16"
+              caption="Get Tract Start Point Tool"
+              condition="esri_editing_MapCondition"
+              categoryRefID="esri_editing_deed_tract_point">
+          <tooltip heading="Get Point">
+            Get the location of a point feature.<disabledText></disabledText>
+          </tooltip>
+          <content guid="FC9D9825-2C4F-4F44-AF48-48692821B690"/>
         </tool>
         <tool id="esri_editing_SketchPointTool"
               className="SnapChipPointTool"
@@ -2871,7 +2941,7 @@
                 className="CreateCircleMultipatchCommand"
                 largeImage="EditingMultipatchCreateCircle32"
                 smallImage="EditingMultipatchCreateCircle16"
-                caption="Circle Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+                caption="Circle Tool" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Circle">
             Create a finished circular multipatch feature.<disabledText></disabledText>
           </tooltip>
@@ -2880,52 +2950,76 @@
                 className="CreateRectangleMultipatchCommand"
                 largeImage="EditingMultipatchCreateRectangle32"
                 smallImage="EditingMultipatchCreateRectangle16"
-                caption="Rectangle Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+                caption="Rectangle Tool" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Rectangle">
             Create a finished rectangular or square multipatch feature.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_SketchRoofFlat" hidden="true"
-              className="CreateRoofMultipatchCommand"
+        <button id="esri_editing_SketchCGATemplatesButton" hidden="true"
+              className="CGATemplateGalleryCommand"
               largeImage="RoofFlat32"
               smallImage="RoofFlat16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="CGA templates" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
+          <tooltip heading="CGA templates">
+            Create geometry from a CGA template.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchOffsetMultipatch"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              largeImage="EditingMultipatchCreateOffset32"
+              smallImage="EditingMultipatchCreateOffset16"
+              caption="Face" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
+          <tooltip heading="Offset Face">
+            Create a multipatch face offset outline.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_SketchRoofFlat" hidden="true"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              largeImage="RoofFlat32"
+              smallImage="RoofFlat16"
+              caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Flat Roof">
             Create a flat roof.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchRoofGable" hidden="true"
-              className="CreateRoofMultipatchCommand"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
               largeImage="RoofGable32"
               smallImage="RoofGable16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Gable Roof">
             Create a gable roof.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchRoofHip" hidden="true"
-              className="CreateRoofMultipatchCommand"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
               largeImage="RoofHip32"
               smallImage="RoofHip16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Hip Roof">
             Create a hip roof.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchRoofMansard" hidden="true"
-              className="CreateRoofMultipatchCommand"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
               largeImage="RoofMansard32"
               smallImage="RoofMansard16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Mansard Roof">
             Create a mansard roof.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchRoofDome" hidden="true"
-              className="CreateRoofMultipatchCommand"
+              categoryRefID="esri_editing_CGATemplates"
+              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
               largeImage="RoofDome32"
               smallImage="RoofDome16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Dome Roof">
             Create a dome roof.<disabledText></disabledText>
           </tooltip>
@@ -2934,18 +3028,9 @@
               className="ExtrudeRoofMultipatchCommand"
               largeImage="RoofExtrude32"
               smallImage="RoofExtrude16"
-              caption="Roof Tool" condition="esri_editing_3DMapCondition" loadOnClick="false">
+              caption="Roof Tool" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
           <tooltip heading="Extrude Roof">
-            Extrudes a roof to the ground.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_editing_SketchOffsetMultipatch"
-                className="CreateOffsetMultipatchCommand"
-                largeImage="EditingMultipatchCreateOffset32"
-                smallImage="EditingMultipatchCreateOffset16"
-                caption="Offset Face" condition="esri_editing_3DMapCondition" loadOnClick="false">
-          <tooltip heading="Offset Face">
-            Create a multipatch face offset outline.<disabledText></disabledText>
+            Extrudes a roof to the ground or footprint to the roof.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2961,18 +3046,18 @@
         </tool>
         <button id="esri_editing_SnapChipViewHelp"
                 smallImage="GenericUnknownBlack16"
-                caption="View the Snap Chip Help">
-          <tooltip heading="Snap Chip">View Help</tooltip>
+                caption="View the Chip Help">
+          <tooltip>View Help</tooltip>
         </button>
         <button id="esri_editing_SnapChipViewApply"
                 smallImage="GenericCheckMarkBlack16"
-                caption="Apply and close the Snap Chip">
-          <tooltip heading="Snap Chip">Apply</tooltip>
+                caption="Apply and close the Chip">
+          <tooltip>Apply</tooltip>
         </button>
         <button id="esri_editing_SnapChipViewDiscard"
                 smallImage="GenericDeleteBlack16"
-                caption="Discard and close the Snap Chip popup window">
-          <tooltip heading="Snap Chip">Discard</tooltip>
+                caption="Cancel and close the Chip popup window">
+          <tooltip>Cancel</tooltip>
         </button>
 
         <!--anno construction-->
@@ -3619,7 +3704,7 @@
                 largeImage="MultipatchTexturedEditing32"
                 smallImage="MultipatchTexturedEditing16"
                 className="TexturePushPullCommand"
-                condition="esri_editing_3DMapCondition"
+                condition="esri_editing_3DMapOrStereoCondition"
                 categoryRefID="esri_editing_CommandList">
           <tooltip heading="Multipatch Texture">
             Apply colors and textures to multipatch features on the scene.<disabledText>Requires a local scene view.</disabledText>
@@ -4732,7 +4817,7 @@
           <tooltip heading="Copy Lines To Active Record">
             Copy the selected lines to the active record and chosen parcel type. Use the copied lines to build parcels in the active record.<disabledText>Available only when there is an active record in the map and line features are selected.</disabledText>
           </tooltip>
-          <content L_group="Parcel" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric;Construct from parent" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>/>
+          <content L_group="Parcel" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric;Construct from parent" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
         <button id="esri_editing_createParcelSeeds"
@@ -4950,6 +5035,21 @@
                 loadOnClick="false">
           <tooltip heading="Select Parcel Features">
             Select the parcel features of the selected parcel polygons. Parcel lines and points will be added to the selection.<disabledText>Available only when parcel polygons are selected.</disabledText>
+          </tooltip>
+          <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+        </button>
+
+        <button id="esri_editing_openCogoReaderPaneButton"
+                caption="COGO Reader" extendedCaption="Open COGO Reader."
+                className="ArcGIS.Desktop.Editing.ParcelFabric.OpenCogoReaderPaneButton"
+                largeImage="COGOReader32"
+                smallImage="COGOReader16"
+                licenseLevel="standard"
+                condition="esri_editing_EditingParcelFabricMapCondition"
+                categoryRefID="esri_editing_CommandList"
+                loadOnClick="false">
+          <tooltip heading="Open COGO Reader">
+            Extract COGO dimensions from scanned deeds and add them as parcel lines to the map.<disabledText></disabledText>
           </tooltip>
           <content keywords="Parcel;Parcels;Fabric" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
@@ -6286,7 +6386,7 @@
           </tooltip>
         </button>
         <button id="esri_editing_annotationAddLeaderButton" hidden="true" caption="Add Leader" extendedCaption="Add Leader" largeImage="AnnotationAddLeader32" smallImage="AnnotationAddLeader16" className="AnnotationAddLeaderCommand" loadOnClick="false">
-          <tooltip heading="Add Leader">Add a leader or callout to the selected annotation feature. If the annotation has a leader defined in its symbol, it will be applied. Otherwise, the leader defined in the Editing Options dialog box is used.</tooltip>
+          <tooltip heading="Add Leader">Add a leader or callout to the selected annotation feature. If the annotation has a leader defined in its symbol, it will be applied.</tooltip>
         </button>
         <button id="esri_editing_annotationDeleteLeaderButton" hidden="true" caption="Delete Leader" extendedCaption="Delete Leader" largeImage="AnnotationDeleteLeader32" smallImage="AnnotationDeleteLeader16" className="AnnotationDeleteLeaderCommand" loadOnClick="false">
           <tooltip heading="Delete Leader">Remove the leader or callout line from the selected annotation feature.</tooltip>
@@ -6643,6 +6743,17 @@
             Copy Templates from all feature layers.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_StoreProjectTemplatesToSystem"
+                caption="Store Templates"
+                largeImage="EditingTemplateStoreTo32"
+                smallImage="EditingTemplateStoreTo16"
+                className="Templates.ShareProjectTemplatesToSystemCommand"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Store Templates">
+            Store Project Templates from all feature layers to the System.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
         <button id="esri_editing_CreateAllTemplates"
                 caption="Create all templates"
@@ -6657,7 +6768,7 @@
           </tooltip>
         </button>
 
-        <customControl id="esri_editing_TopologySelectionComboBox" hidden="true" caption="Topology Options" extendedCaption="Show Topology Options dialog" loadOnClick="false"  condition="esri_editing_ShowTopologyComboCondition" keytip="TO"
+        <customControl id="esri_editing_TopologySelectionComboBox" hidden="false" caption="Topology Options" extendedCaption="Show Topology Options dialog" loadOnClick="false"  condition="esri_editing_ShowTopologyComboCondition" keytip="TO"
                        className="ArcGIS.Desktop.Editing.TopologySelectionControlViewModel">
           <content className="ArcGIS.Desktop.Editing.TopologySelectionControlView">
           </content>
@@ -7839,6 +7950,16 @@
             Show the Error Inspector. This enables you to find, sort and fix geodatabase validation errors.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_ShowGAITErrorsErrorInspectorBtn" caption="Error Inspector" extendedCaption="GAIT Validation Error Inspector"  className="esri_editing_EditingModule:ShowGaitValidationErrorInspectorWindow"
+                keytip="EI"
+                smallImage="ErrorInspector16"
+                largeImage="ErrorInspector32"
+                condition=""  disableIfBusy="true">
+          <tooltip heading="">
+            Show the Error Inspector. This enables you to find, sort and fix GAIT validation errors.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_editing_ShowUNErrorsErrorInspectorBtn" caption="Error Inspector" extendedCaption="Utility Network Error Inspector"  className="esri_editing_EditingModule:ShowUNErrorInspectorWindow"
                 keytip="EI"
                 smallImage="ErrorInspector16"
@@ -7953,6 +8074,11 @@
         <button id = "esri_editing_geometryViewCopyToClipboardButton" caption= "Copy To Clipboard" smallImage= "EditCopy16" loadOnClick= "true" >
           <tooltip heading= "Copy" >
             Copy vertices to clipboard.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id = "esri_editing_geometryViewHelpButton" caption= "View help" extendedCaption="Help about Geometry Properties" smallImage= "GenericUnknownBlack16" loadOnClick= "true" >
+          <tooltip heading= "Help" >
+            View Help<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -8122,6 +8248,22 @@
                 loadOnClick="true" disableIfBusy="true">
           <tooltip heading="Rule Description">
             View a description and an example graphic of the rule violated by this error.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_errorInspectorMarkAsReviewed" caption="Mark As Reviewed" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.MarkAsReviewedCommand"
+        largeImage="GenericCheckMark32"
+        smallImage="GenericCheckMark16"
+        loadOnClick="false" disableIfBusy="true">
+          <tooltip heading="Mark as Reviewed">
+            Mark the selected errors as Acceptable. <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_errorInspectorMarkAsUnReviewed" caption="Mark As Unreviewed" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.MarkAsUnReviewedCommand"
+                largeImage="GenericError32"
+                smallImage="GenericError16"
+                loadOnClick="false" disableIfBusy="true">
+          <tooltip heading="Mark As Unreviewed">
+            Mark the selected errors as Unreviewed. <disabledText></disabledText>
           </tooltip>
         </button>
         <!--end of error inspector buttons/context menu items-->
@@ -8693,7 +8835,7 @@
           smallImage="HighlightGapsAndOverlaps16"
           condition="esri_editing_HighlightingGapsAndOverlapsSettingsCondition" helpContextID="">
           <tooltip heading="Highlight Gaps and Overlaps">
-            Highlight gaps and overlaps for the chosen parcel layer in the current map extent. Gaps and overlaps that are larger than the provided Maximum Width will be highlighted in the specified colors.<disabledText>This command is currently unavailable. Available only when required settings have been chosen. Click the dropdown arrow to choose what layer to use and whether to highlight gaps, overlaps or both.</disabledText>
+            Highlight gaps and overlaps for the chosen parcel layer in the current map extent. Gaps and overlaps that are smaller than the provided Maximum Width will be highlighted in the specified colors.<disabledText>This command is currently unavailable. Available only when required settings have been chosen. Click the dropdown arrow to choose what layer to use and whether to highlight gaps, overlaps or both.</disabledText>
           </tooltip>
         </button>
 
@@ -9215,9 +9357,9 @@
                condition="esri_editing_EditingDoesntRequireStartCondition">
           <button refID="esri_editing_SaveEditsBtn" size="large" />
           <button refID="esri_editing_DiscardEditsBtn" size="large" />
-          <customControl refID="esri_editing_TopologySelectionComboBox" size="middle" />
-          <button refID="esri_editing_ShowErrorInspectorBtn" size="middle" />
-          <button refID="esri_editing_ShowManageTemplatesBtn" size="middle" />
+          <customControl refID="esri_editing_TopologySelectionComboBox" size="alwaysMiddle" />
+          <button refID="esri_editing_ShowErrorInspectorBtn" size="alwaysMiddle" />
+          <button refID="esri_editing_ShowManageTemplatesBtn" size="alwaysMiddle" />
           <button refID="esri_editing_ShowStatusBtn" size="middle" />
           <button refID="esri_editing_ShowSettingsBtn" size="middle"/>
         </group>
@@ -9431,6 +9573,21 @@
           <button refID="esri_editing_DelSelFeaturesBtn"/>  
         </subgroup>
 
+        <!-- Versioning subgroups -->
+
+        <subgroup id="esri_editing_layerVersioningSubgroup1">
+          <button refID="esri_editor_reconcileVersionButton"/>
+          <button refID="esri_editor_PostVersionButton"/>
+          <button refID="esri_editor_ConflictManagerButton"/>
+        </subgroup>
+        <subgroup id="esri_editing_layerVersioningSubgroup2">
+          <button refID="esri_editor_VersionChangesButton"/>
+        </subgroup>
+        <subgroup id="esri_editing_layerVersioningManageEditsSubgroup">
+          <button refID="esri_editing_SaveEditsBtn"/>
+          <button refID="esri_editing_DiscardEditsBtn"/>          
+        </subgroup>
+        
         <!-- Table Pane subgroups -->
         <subgroup id="esri_editing_table_rowSubGroup" size="MediumThenSmallWhenSmall">
           <button refID="esri_editing_tableZoomToButton"/>
@@ -9940,12 +10097,7 @@
             <button refID="esri_editing_PushPullCommand" />
             <button refID="esri_editing_SketchCircleMultipatch" />
             <button refID="esri_editing_SketchRectangleMultipatch" />
-            <button refID="esri_editing_SketchOffsetMultipatch" />
-            <button refID="esri_editing_SketchRoofFlat" separator="true"/>
-            <button refID="esri_editing_SketchRoofGable" />
-            <button refID="esri_editing_SketchRoofHip" />
-            <button refID="esri_editing_SketchRoofMansard" />
-            <button refID="esri_editing_SketchRoofDome" />
+            <splitButton refID="esri_editing_SketchCGATemplatesSplitButton"/>
             <button refID="esri_editing_SketchRoofExtrude" />
             <button refID="esri_editing_FinishSketch" separator="true" />
             <button refID="esri_editing_ClearSketch" />
@@ -10111,6 +10263,12 @@
           <button refID="esri_editing_LinkChartSelectAndMove" separator="true"/>
           <button refID="esri_editing_LinkChartSelect"/>
         </splitButton>
+
+        <splitButton id="esri_editing_SketchCGATemplatesSplitButton" keytip="RT" caption="CGA template" extendedCaption="Select CGA template" loadOnClick="false">
+          <button refID="esri_editing_SketchCGATemplatesButton" />
+          <gallery refID ="esri_editing_SketchCGATemplatesGallery" inline="false" size="large"/>
+        </splitButton>
+        
       </splitButtons>
 
       <menus>
@@ -10274,6 +10432,7 @@
           <button refID="esri_editing_SimplifyBySLACAButton"/>
           <button refID="esri_editing_reconstructParcelBoundaries"/>
           <button refID="esri_editing_transferParcel"/>
+          <button refID="esri_editing_openCogoReaderPaneButton"/>
         </menu>
         <menu id="esri_editing_toolGroupKnowledgeGraph" caption="Tools" contextMenu="false">
           <button refID="esri_editing_EditVerticesMoveKG"/>
@@ -10650,7 +10809,6 @@
           <button refID="esri_editing_ClearSketch"/>
         </menu>
         <menu id="esri_editing_menu_PushPullTool_Modify" caption="Sketch Context Menu (Multipatch)" contextMenu="true">
-          <button refID="esri_editing_SketchOffsetMultipatch" />
           <button refID="esri_editing_FinishSketch" separator="true" />
           <button refID="esri_editing_ClearSketch" />
         </menu>
@@ -11246,6 +11404,16 @@
           <!--<button refID="esri_editing_errorInspectorGdbFeatureValidationShowRuleButton" separator="true"/>-->
         </menu>
 
+        <menu id="esri_editing_errorInspectorRowContextMenu_gaitFeatureValidationSource" caption="Properties" contextMenu="true">
+          <button refID="esri_editing_errorInspectorFlashButton"/>
+          <button refID="esri_editing_errorInspectorZoomToButton"/>
+          <button refID="esri_editing_errorInspectorPanToButton"/>
+          <button refID="esri_editing_errorInspectorPopupButton"/>
+          <button refID="esri_editing_errorInspectorSelectRowButton" />
+          <button refID="esri_editing_errorInspectorMarkAsReviewed" />
+          <button refID="esri_editing_errorInspectorMarkAsUnReviewed" />
+        </menu>
+
         <menu id="esri_editing_burgerMenu_topologySource_errorInspector" caption="Topology Options" contextMenu="true">
           <button refID="esri_editing_errorInspectorToggleShapeLengthArea"/>
         </menu>
@@ -11610,6 +11778,23 @@
             View a gallery of editing tools.<disabledText></disabledText>
           </tooltip>
         </gallery>
+
+        <gallery id="esri_editing_SketchCGATemplatesGallery" hidden="true"
+                className="CGATemplateGalleryCommandListViewModel"
+                caption="CGA template gallery" keytip="RT"
+                itemsInRow="5"
+                showItemCaption="true"
+                showGroup="true"
+                showItemCaptionBelow="true"
+                scrollToSelectedItemInRibbon="false"
+                resizable="true"
+                smallImage="EditingMultipatchCreateRoof16"
+                largeImage="EditingMultipatchCreateRoof32">
+          <tooltip heading="">
+            CGA templates.<disabledText></disabledText>
+          </tooltip>
+        </gallery>
+        
       </galleries>
 
     </insertModule>
@@ -11663,6 +11848,10 @@
       <page id="esri_editing_AddConstraintsPropertyPage" caption="Constraints"
             className="ConstraintsSettingsViewModel">
         <content className="ConstraintsSettingsView"/>
+      </page>
+      <page id ="esri_editing_NodeRendererPropertyPage" caption="Vertices and Nodes"
+            className="NodeRendererAppSettingsViewModel">
+        <content className="NodeRendererAppSettingsView"/>
       </page>
       <page id="esri_editing_FieldMappingsPropertyPage" caption="Field Mapping"
             className="FieldMappingsViewModel">
@@ -11771,4 +11960,6 @@
       </insertPage>
     </updateSheet>
   </propertySheets>
+
+  
 </ArcGIS>

@@ -98,6 +98,41 @@ namespace EditingSDKExamples
       EditingTemplate template = EditingTemplate.Current;
       #endregion
 
+
+      QueuedTask.Run(() =>
+      {
+        // Get the active map view
+        var mapView = MapView.Active;
+        if (mapView == null)
+          return;
+
+        // Get the first line layer in the map - alternatively get a specific layer
+        var featureLayer = mapView.Map.Layers.OfType<FeatureLayer>().FirstOrDefault(l => l.ShapeType == esriGeometryType.esriGeometryLine || l.ShapeType == esriGeometryType.esriGeometryPolyline);
+        if (featureLayer == null)
+          return;
+
+        // Get the templates for the layer
+        var templates = featureLayer.GetTemplates();
+        if (templates.Count == 0)
+          return;
+
+        // cref: ArcGIS.Desktop.Editing.Templates.EditingTemplate.ActivateToolAsync(System.String)
+        #region Trigger template editing tool
+        // DAML ID of the tool to activate - for example "esri_editing_SketchTwoPointLineTool" Pro Tool or a custom tool
+        string _editToolname = "esri_editing_SketchTwoPointLineTool";
+
+        // Get the first template - alternatively get a specific template
+        var template = templates.First();
+
+        // Confirm the tool is available in the template
+        if (template.ToolIDs.FirstOrDefault(_editToolname) == null)
+          return;
+
+        // Activate the tool
+        template.ActivateToolAsync(_editToolname);
+        #endregion
+      });
+
     }
 
     // cref: ArcGIS.Desktop.Mapping.MappingExtensions.GetTemplate(ArcGIS.Desktop.Mapping.MapMember,System.String)
@@ -790,7 +825,7 @@ namespace EditingSDKExamples
 
       // cref: ArcGIS.Desktop.Mapping.MappingExtensions.CanClearTopology(ArcGIS.Desktop.Mapping.Map)
       // cref: ArcGIS.Desktop.Mapping.MappingExtensions.ClearTopologyAsync(ArcGIS.Desktop.Mapping.Map)
-      #region Set 'No Tpology' as the current topology
+      #region Set 'No Topology' as the current topology
 
       if (map.CanClearTopology())
       {

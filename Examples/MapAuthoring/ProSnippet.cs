@@ -35,6 +35,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ArcGIS.Desktop.Internal.Mapping.Symbology.GlyphPickerViewModel;
 
 namespace MapAuthoring.ProSnippet
 {
@@ -1639,10 +1640,17 @@ namespace MapAuthoring.ProSnippet
 
         VersionManager versionManager = geodatabase.GetVersionManager();
         ArcGIS.Core.Data.Version currentVersion = versionManager.GetCurrentVersion();
+        string currentVersionName = currentVersion.GetName();
 
         //Getting all available versions except the current one
-        IEnumerable<ArcGIS.Core.Data.Version> versions = versionManager.GetVersions()
-          .Where(v => !v.GetName().Equals(currentVersion.GetName(), StringComparison.CurrentCultureIgnoreCase));
+        List<ArcGIS.Core.Data.Version> versions = [];
+        foreach (string versionName in versionManager.GetVersionNames())
+        {
+          if (versionName != currentVersionName)
+            break;
+
+          versions.Add(versionManager.GetVersion(versionName));
+        }
 
         //Assuming there is at least one other version we pick the first one from the list
         ArcGIS.Core.Data.Version toVersion = versions.FirstOrDefault();
@@ -1688,7 +1696,241 @@ namespace MapAuthoring.ProSnippet
 
     }
 
-    public static void GetRotationFieldOfRenderer()
+    public static async void QueryWithSpatialFilter()
+    {
+      if (MapView.Active == null) return;
+      var layers = MapView.Active.Map?.GetLayersAsFlattenedList().OfType<FeatureLayer>();
+      var layerToQuery = layers.FirstOrDefault(f => f.Name == "USNationalParks");
+      if (layerToQuery == null) return;
+
+      string whereClause = "RecreationVisitsTotal > 1000000"; //More than million visitors a year
+
+      var spatialDefnLayer = layers.FirstOrDefault(f => f.Name == "AllUSStates");
+      if (spatialDefnLayer == null) return;
+
+      await QueuedTask.Run(() =>
+      {
+        try
+        {
+          if (MapView.Active == null) return;
+
+					// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.#ctor
+					// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetFeatureOutline(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.FeatureOutlineType)
+					// cref: ArcGIS.Desktop.Mapping.FeatureOutlineType
+					// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.InsertDefinitionQuery(ArcGIS.Desktop.Mapping.DefinitionQuery,System.Boolean)
+					// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SetActiveDefinitionQuery(System.String)
+					// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.CanSetFilterGeometry(ArcGIS.Core.Geometry.Geometry)
+					// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.SetFilterGeometry(ArcGIS.Core.Geometry.Geometry)
+					#region Querying a feature layer with a spatial filter
+					// Note: Run within QueuedTask.Run
+					// Set the spatial filter geometry
+
+					//Get the geometry from the selected features in the feature layer
+					var spatialClauseGeom = spatialDefnLayer.GetFeatureOutline(MapView.Active, FeatureOutlineType.Selected);
+
+          DefinitionQuery definitionQuery = new DefinitionQuery
+          {
+            WhereClause = whereClause,
+            Name = $"{layerToQuery.Name}"
+          };
+          //Setting the spatial filter to the Definition Query
+          if (definitionQuery.CanSetFilterGeometry(spatialClauseGeom))
+          {
+            definitionQuery.SetFilterGeometry(spatialClauseGeom);
+          }
+
+          layerToQuery.InsertDefinitionQuery(definitionQuery);
+          layerToQuery.SetActiveDefinitionQuery(definitionQuery.Name);
+          #endregion
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message);
+        }
+      });
+    }
+
+    public static void DefinitionQueryFilter1()
+    {
+			var map = MapView.Active?.Map;
+			if (map == null) return;
+
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.#ctor
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.InsertDefinitionQuery(ArcGIS.Desktop.Mapping.DefinitionQuery,System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SetActiveDefinitionQuery(System.String)
+			#region Apply A Definition Query Filter to a Feature Layer
+
+			var us_parks = map.GetLayersAsFlattenedList()
+            .OfType<FeatureLayer>().First(l => l.Name == "USNationalParks");
+
+			QueuedTask.Run(() =>
+      {
+        var def_query = new DefinitionQuery("CaliforniaParks",
+                              "STATE_ABBR = 'CA'");
+
+				us_parks.InsertDefinitionQuery(def_query);
+				//Set it active
+				us_parks.SetActiveDefinitionQuery(def_query.Name);
+
+				//or....also - set it active when it is inserted
+				//us_parks.InsertDefinitionQuery(def_query, true);
+			});
+      #endregion
+
+    }
+
+		public static void DefinitionQueryFilter2()
+		{
+			var mv = MapView.Active;
+			var map = mv?.Map;
+			if (map == null) return;
+
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.#ctor
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.InsertDefinitionQuery(ArcGIS.Desktop.Mapping.DefinitionQuery,System.Boolean)
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SetActiveDefinitionQuery(System.String)
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.CanSetFilterGeometry(ArcGIS.Core.Geometry.Geometry)
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.SetFilterGeometry(ArcGIS.Core.Geometry.Geometry)
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetFeatureOutline(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.FeatureOutlineType)
+			// cref: ArcGIS.Desktop.Mapping.FeatureOutlineType
+			#region Apply A Definition Query Filter With a Filter Geometry to a Feature Layer
+
+			var greatLakes = map.GetLayersAsFlattenedList()
+						.OfType<FeatureLayer>().First(l => l.Name == "Great Lakes");
+			var usa_states = map.GetLayersAsFlattenedList()
+			.OfType<FeatureLayer>().First(l => l.Name == "US_States");
+
+			QueuedTask.Run(() =>
+			{
+        //name must be unique
+				var def_query = new DefinitionQuery("GreatLakes",
+															"NAME in ('Huron','Michigan','Erie')");
+
+				//create a filter geometry - in this example we will use the outline geometry
+				//of all visible features from a us states layer...the filter geometry will be
+        //intersected with the layer feature geometry when added to the def query
+				var filter_geom = usa_states.GetFeatureOutline(mv, FeatureOutlineType.Visible);
+				//other options...
+				//var filter_geom = usa_states.GetFeatureOutline(mv, FeatureOutlineType.All);
+				//var filter_geom = usa_states.GetFeatureOutline(mv, FeatureOutlineType.Selected);
+
+				//Geometry must have a valid SR and be point, multi-point, line, or poly
+				if (def_query.CanSetFilterGeometry(filter_geom))
+        {
+          def_query.SetFilterGeometry(filter_geom);
+        }
+
+				//Apply the def query
+				greatLakes.InsertDefinitionQuery(def_query);
+				//Set it active
+				greatLakes.SetActiveDefinitionQuery(def_query.Name);
+
+				//or....also - set it active when it is inserted
+				//greatLakes.InsertDefinitionQuery(def_query, true);
+			});
+			#endregion
+
+		}
+
+		public static void DefinitionQueryFilter3()
+		{
+			var map = MapView.Active?.Map;
+			if (map == null) return;
+
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.SetDefinitionQuery(System.String)
+			#region Apply A Definition Query Filter to a Feature Layer2
+
+			var us_parks = map.GetLayersAsFlattenedList()
+						.OfType<FeatureLayer>().First(l => l.Name == "USNationalParks");
+
+			QueuedTask.Run(() =>
+			{
+				//inserts a new definition query and makes it active
+				//it will be assigned a unique name
+				us_parks.SetDefinitionQuery("STATE_ABBR = 'CA'");
+			});
+			#endregion
+		}
+
+		public static void RetrieveDefinitionQueryFilters1()
+		{
+
+			var map = MapView.Active?.Map;
+			if (map == null) return;
+
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.DefinitionQueries
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.Name
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.WhereClause
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.GeometryUri
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.SpatialReference
+			// cref: ArcGIS.Desktop.Mapping.DefinitionQuery.GetFilterGeometry()
+			#region Retrieve the Definition Query Filters for a Feature Layer
+
+			var us_parks = map.GetLayersAsFlattenedList()
+						.OfType<FeatureLayer>().First(l => l.Name == "USNationalParks");
+
+			QueuedTask.Run(() =>
+			{
+        //enumerate the layer's definition queries - if any
+        var def_queries = us_parks.DefinitionQueries;
+				foreach (var def_qry in def_queries)
+        {
+					var geom_uri = def_qry.GeometryUri ?? "null";
+					var sr_wkid = def_qry.SpatialReference?.Wkid.ToString() ?? "null";
+					var geom = def_qry.GetFilterGeometry();
+					var geom_type = geom?.GeometryType.ToString() ?? "null";
+
+					System.Diagnostics.Debug.WriteLine($" def_qry.Name: {def_qry.Name}");
+					System.Diagnostics.Debug.WriteLine($" def_qry.WhereClause: {def_qry.WhereClause}");
+					System.Diagnostics.Debug.WriteLine($" def_qry.GeometryUri: {geom_uri}");
+					System.Diagnostics.Debug.WriteLine($" def_qry.SpatialReference: {sr_wkid}");
+					System.Diagnostics.Debug.WriteLine($" def_qry.FilterGeometry: {geom_type}");
+          System.Diagnostics.Debug.WriteLine("");
+				}
+			});
+			#endregion
+		}
+
+		public static void GetLayerFeatureOutline()
+		{
+			var mv = MapView.Active;
+			var map = mv?.Map;
+			if (map == null) return;
+
+			// cref: ArcGIS.Desktop.Mapping.BasicFeatureLayer.GetFeatureOutline(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Mapping.FeatureOutlineType)
+			// cref: ArcGIS.Desktop.Mapping.FeatureOutlineType
+			#region Get Feature Outlines from a Feature Layer
+
+			var greatLakes = map.GetLayersAsFlattenedList()
+						.OfType<FeatureLayer>().First(l => l.Name == "Great Lakes");
+      var michigan = map.GetBookmarks().First(b => b.Name == "Michigan");
+
+			QueuedTask.Run(() =>
+			{
+
+				//get all features - multiple feature geometries are always returned as a
+        //single multi-part
+				var all_features_outline = greatLakes.GetFeatureOutline(mv, FeatureOutlineType.All);
+
+        //or get just the outline of selected features
+        var qry = new QueryFilter()
+        {
+          SubFields = "*",
+          WhereClause = "NAME in ('Huron','Michigan','Erie')"
+        };
+        greatLakes.Select(qry);
+				var sel_features_outline = greatLakes.GetFeatureOutline(
+            mv, FeatureOutlineType.Selected);
+        greatLakes.ClearSelection();
+
+				//or just the visible features
+				mv.ZoomTo(michigan);
+				var visible_features_outline = greatLakes.GetFeatureOutline(
+						mv, FeatureOutlineType.Visible);
+			});
+			#endregion
+		}
+
+		public static void GetRotationFieldOfRenderer()
     {
       // cref: ArcGIS.Core.CIM.CIMRotationVisualVariable
       // cref: ArcGIS.Core.CIM.CIMUniqueValueRenderer.VisualVariables
@@ -2551,106 +2793,6 @@ namespace MapAuthoring.ProSnippet
       #endregion
     }
 
-    private async Task GetElevationProfile()
-    {
-      Polyline lineGeom = null;
-      IEnumerable<MapPoint> pts = null;
-
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
-      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
-      #region Get Elevation profile from the default ground surface
-
-      // find the elevation profile for a polyline / set of polylines
-      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom]);
-      if (result.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = result.Polyline;
-
-        // process the polylineZ
-      }
-
-      // find the elevation profile for a set of points
-      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts);
-      if (result.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = result.Polyline;
-
-        // process the polylineZ
-      }
-      #endregion
-
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
-      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
-      #region Get Elevation profile from a specific surface
-
-      // find the elevation profile for a polyline / set of polylines
-      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
-      var zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom], eleLayer);
-      if (zResult.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = zResult.Polyline;
-
-        // process the polylineZ
-      }
-
-      // find the elevation profile for a set of points
-      zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts, eleLayer);
-      if (zResult.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = zResult.Polyline;
-
-        // process the polylineZ
-      }
-      #endregion
-
-
-    }
-
-    private async Task GetElevationProfile2()
-    {
-      MapPoint startPt = null;
-      MapPoint endPt = null;
-
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
-      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
-      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
-      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
-      #region Interpolate a line between two points and calculate the elevation profile 
-
-      int numPoints = 20;
-
-      // use the default ground elevation surface
-      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints);
-      if (result.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = result.Polyline;
-
-        // process the polylineZ
-      }
-
-      // use a specific elevation surface
-      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
-      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints, eleLayer);
-      if (result.Status == SurfaceZsResultStatus.Ok)
-      {
-        var polylineZ = result.Polyline;
-
-        // process the polylineZ
-      }
-      #endregion
-    }
-
-
     #region ProSnippet Group: Raster Layers
     #endregion
 
@@ -3364,7 +3506,7 @@ namespace MapAuthoring.ProSnippet
     {
       MapMember us_zips_layer = null;
 
-      // cref: ArcGIS.Desktop.Mapping.SelectionSet.FromDictionary``1(System.Collections.Generic.Dictionary{``0,SYSTEM.COLLECTIONS.GENERIC.LIST{ SYSTEM.INT64} })
+      // cref: ArcGIS.Desktop.Mapping.SelectionSet.FromDictionary``1(System.Collections.Generic.Dictionary{``0,System.Collections.Generic.List{System.Int64}})
       #region Translate From Dictionary to SelectionSet
       //Create a selection set from a list of object ids
       //using FromDictionary
@@ -3374,7 +3516,7 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
       // cref: ArcGIS.Desktop.Mapping.MapMemberIDSet.ToDictionary``1
-      #region Tranlate from SelectionSet to Dictionary
+      #region Translate from SelectionSet to Dictionary
       var selSetDict = selSet.ToDictionary();
 
       // convert to the dictionary and only include those that are of type FeatureLayer
@@ -3453,6 +3595,358 @@ namespace MapAuthoring.ProSnippet
       #endregion
 
     }
+
+
+    #region ProSnippet Group: Elevation Profile
+
+    public async Task GetElevationProfile()
+    {
+      Polyline lineGeom = null;
+      IEnumerable<MapPoint> pts = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline})
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint})
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Get Elevation profile from the default ground surface
+
+      // get the elevation profile for a polyline / set of polylines
+      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom]);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+
+      // get the elevation profile for a set of points
+      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Get Elevation profile from a specific surface
+
+      // find a specific elevation surface layer
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+
+      // get the elevation profile for a polyline / set of polylines
+      // use the specific elevation surface layer
+      var zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync([lineGeom], eleLayer);
+      if (zResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = zResult.Polyline;
+
+        // process the polylineZ
+      }
+
+      // get the elevation profile for a set of points
+      // use the specific elevation surface layer
+      zResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(pts, eleLayer);
+      if (zResult.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = zResult.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+
+    }
+
+    public async Task GetElevationProfile2()
+    {
+      MapPoint startPt = null;
+      MapPoint endPt = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      #region Interpolate a line between two points and calculate the elevation profile 
+
+      int numPoints = 20;
+
+      // use the default ground elevation surface
+      var result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+
+      // use a specific elevation surface
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+      result = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, numPoints, eleLayer);
+      if (result.Status == SurfaceZsResultStatus.Ok)
+      {
+        var polylineZ = result.Polyline;
+
+        // process the polylineZ
+      }
+      #endregion
+    }
+
+    public void ElevationProfileGraph()
+    {
+      Polyline lineGeom = null;
+      IEnumerable<MapPoint> pts = null;
+
+      // cref: ArcGIS.Desktop.Mapping.MapView.CanShowElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationProfileParameters)
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationProfileParameters)
+      #region Show Elevation profile graph with the default ground surface
+
+      if (!MapView.Active.CanShowElevationProfileGraph())
+        return;
+
+      // show the elevation profile for a polyline 
+      // use the default ground surface layer
+      MapView.Active.ShowElevationProfileGraph([lineGeom]);
+
+      // show the elevation profile for a set of points
+      // use the default ground surface layer
+      MapView.Active.ShowElevationProfileGraph(pts);
+      #endregion
+
+      // cref: ArcGIS.Desktop.Mapping.MapView.CanShowElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.Polyline},ArcGIS.Desktop.Mapping.ElevationProfileParameters)
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(System.Collections.Generic.IEnumerable{ArcGIS.Core.Geometry.MapPoint},ArcGIS.Desktop.Mapping.ElevationProfileParameters)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters.SurfaceLayer
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters.Densify
+      #region Show Elevation profile graph with a specific surface
+
+      if (!MapView.Active.CanShowElevationProfileGraph())
+        return;
+
+      // find a specific elevation surface layer
+      var eleLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+
+      // set up the parameters
+      var profileParams = new ElevationProfileParameters();
+      profileParams.SurfaceLayer = eleLayer;
+      profileParams.Densify = true;
+
+
+      // show the elevation profile for a polyline using the params
+      MapView.Active.ShowElevationProfileGraph([lineGeom], profileParams);
+
+      // show the elevation profile for a set of points using the params
+      MapView.Active.ShowElevationProfileGraph(pts, profileParams);
+
+      #endregion
+
+      MapPoint startPt = null;
+      MapPoint endPt = null;
+
+      // cref: ArcGIS.Desktop.Mapping.MapView.CanShowElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationProfileParameters)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters.SurfaceLayer
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileParameters.Densify
+      #region Show Elevation profile graph between two points 
+
+      int numPoints = 20;
+
+      if (!MapView.Active.CanShowElevationProfileGraph())
+        return;
+
+      // show the elevation profile 
+      // use the default ground elevation surface
+      MapView.Active.ShowElevationProfileGraph(startPt, endPt, numPoints);
+
+      // find a specific elevation surface layer
+      var tinLayer = MapView.Active.Map.GetElevationSurfaceLayers().FirstOrDefault(l => l.Name == "TIN");
+
+      // set up the params
+      var elevProfileParams = new ElevationProfileParameters();
+      elevProfileParams.SurfaceLayer = tinLayer;
+      elevProfileParams.Densify = false;
+
+      // show the elevation profile using the params
+      MapView.Active.ShowElevationProfileGraph(startPt, endPt, numPoints, elevProfileParams);
+
+      #endregion
+    }
+
+    public async Task ElevationProfileGraph2()
+    {
+      MapPoint startPt = null;
+      MapPoint endPt = null;
+
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurfaceAsync(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32)
+      // cref: ArcGIS.Desktop.Mapping.Map.GetElevationProfileFromSurface(ArcGIS.Core.Geometry.MapPoint,ArcGIS.Core.Geometry.MapPoint,System.Int32,ArcGIS.Desktop.Mapping.ElevationSurfaceLayer)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Status
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileResult.Polyline
+      // cref: ArcGIS.Desktop.Mapping.SurfaceZsResultStatus
+      // cref: ArcGIS.Desktop.Mapping.MapView.CanShowElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.MapView.ShowElevationProfileGraph(ArcGIS.Desktop.Mapping.ElevationProfileResult)
+      #region Show Elevation profile graph using an ElevationProfileResult
+
+      var elevProfileResult = await MapView.Active.Map.GetElevationProfileFromSurfaceAsync(startPt, endPt, 10);
+      if (elevProfileResult.Status != SurfaceZsResultStatus.Ok)
+        return;
+
+      if (!MapView.Active.CanShowElevationProfileGraph())
+        return;
+
+      // show the elevation profile using the result
+      MapView.Active.ShowElevationProfileGraph(elevProfileResult);
+
+      #endregion
+    }
+
+    // cref: ArcGIS.Desktop.Mapping.MapView.ElevationProfileGraphAdded
+    // cref: ArcGIS.Desktop.Mapping.MapView.ElevationProfileGraphRemoved
+    // cref: ArcGIS.Desktop.Mapping.MapView.GetElevationProfileGraph
+    // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph
+    // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.ContentLoaded
+    // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.Geometry
+    // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.ElevationProfileStatistics
+    // cref: ArcGIS.Desktop.Mapping.ElevationProfileStatistics
+    #region Access the ElevationProfileGraph when added
+    public void ElevationProfileGraphAdded()
+    {
+
+      var mv = MapView.Active;
+      // subscribe to the Added, Removed events for the elevation profile graph
+      mv.ElevationProfileGraphAdded += Mv_ElevationProfileGraphAdded;
+      mv.ElevationProfileGraphRemoved += Mv_ElevationProfileGraphRemoved;
+
+    }
+
+    private void Mv_ElevationProfileGraphRemoved(object sender, EventArgs e)
+    {
+      ;
+    }
+
+    private void Mv_ElevationProfileGraphAdded(object sender, EventArgs e)
+    {
+      // get the elevation profile graph from the view
+      // this will be non-null since we are in a ElevationProfileGraphAdded handler
+      var mv = MapView.Active;
+      var graph = mv.GetElevationProfileGraph();
+
+      // subscribe to the ContentLoaded event
+      graph.ContentLoaded += Graph_ContentLoaded;
+    }
+
+    private void Graph_ContentLoaded(object sender, EventArgs e)
+    {
+      // get the elevation profile graph
+      var graph = sender as ArcGIS.Desktop.Mapping.ElevationProfileGraph;
+
+      // get the elevation profile geometry
+      var polyline = graph.Geometry;
+      // get the elevation profile statistics
+      var stats = graph.ElevationProfileStatistics;
+    }
+    #endregion
+
+    public void ElevationProfileGraph_()
+    {
+      // cref: ArcGIS.Desktop.Mapping.MapView.GetElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.Geometry
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.ElevationProfileStatistics
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileStatistics
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.IsReversed
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.IsExpanded
+      #region Access the ElevationProfileGraph
+      var elevProfileGraph = MapView.Active.GetElevationProfileGraph();
+      // Elevation profile graph will be null if no profile graph is displayed
+      if (elevProfileGraph == null)
+        return;
+
+      // get the elevation profile geometry and stats
+      var polyline = elevProfileGraph.Geometry;
+      var stats = elevProfileGraph.ElevationProfileStatistics;
+
+      // reverse the graph
+      elevProfileGraph.IsReversed = !elevProfileGraph.IsReversed;
+
+      // collapse the graph
+      elevProfileGraph.IsExpanded = false;
+      #endregion
+    }
+
+    public void ElevationProfileGraph_Export()
+    {
+      // cref: ArcGIS.Desktop.Mapping.MapView.GetElevationProfileGraph
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.CanExport
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.ExportToImage(System.String)
+      // cref: ArcGIS.Desktop.Mapping.ElevationProfileGraph.ExportToCSV(System.String)
+      #region Export Elevation Profile Graph
+      var elevProfileGraph = MapView.Active.GetElevationProfileGraph();
+      // Elevation profile graph will be null if no profile graph is displayed
+      if (elevProfileGraph == null)
+        return;
+
+      if (elevProfileGraph.CanExport)
+      {
+        elevProfileGraph.ExportToImage("c:\\temp\\myprofileImage.png");
+        elevProfileGraph.ExportToCSV("c:\\temp\\myprofile.csv");
+      }
+      #endregion
+
+    }
+
+    public async Task ElevationProfileGraph_Options()
+    {
+      // cref: ArcGIS.Desktop.Core.ElevationProfileOptions
+      // cref: ArcGIS.Desktop.Core.ExploratoryAnalysisOptions.CanSetElevationProfileOptions(ArcGIS.Desktop.Core.ElevationProfileOptions)
+      // cref: ArcGIS.Desktop.Core.ExploratoryAnalysisOptions.SetElevationProfileOptionsAsync(ArcGIS.Desktop.Core.ElevationProfileOptions)
+      // cref: ArcGIS.Desktop.Core.ExploratoryAnalysisOptions.GetDefaultElevationProfileOptions()
+      #region Customize Elevation Profile Graph Display
+
+      // customize the elevation profile graph options
+      var options = new ElevationProfileOptions()
+      {
+        LineColor = ColorFactory.Instance.CreateRGBColor(0, 0, 100),
+        ShowAverageSlope = false, 
+        ShowMaximumSlope = false
+      };
+
+      var eaOptions = ApplicationOptions.ExploratoryAnalysisOptions;
+      if (eaOptions.CanSetElevationProfileOptions(options))
+        await eaOptions.SetElevationProfileOptionsAsync(options);
+
+
+      // or reset to default options
+      var defaultOptions = eaOptions.GetDefaultElevationProfileOptions();
+      if (eaOptions.CanSetElevationProfileOptions(defaultOptions))
+        await eaOptions.SetElevationProfileOptionsAsync(defaultOptions);
+
+      #endregion
+    }
+
+
+    #endregion
+
 
     #region ProSnippet Group: Symbol Layer Drawing (SLD)
     #endregion

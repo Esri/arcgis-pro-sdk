@@ -3846,6 +3846,33 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void Smooth()
+    {
+      Polyline polyline = null;
+      Polygon polygon = null;
+
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Smooth(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Smooth(ArcGIS.Core.Geometry.Multipart,System.Double)
+
+      #region Smooth a multipart
+      // smooth with a maxDeviation of 0
+      Polyline smoothPolyline = GeometryEngine.Instance.Smooth(polyline, 0) as Polyline;
+
+      // smooth with a maxDeviation of 0.5
+      smoothPolyline = GeometryEngine.Instance.Smooth(polyline, 0.5) as Polyline;
+
+      // smooth a polygon with a maxDeviation of 0
+      Polygon smoothPolygon = GeometryEngine.Instance.Smooth(polygon, 0) as Polygon;
+
+      // maxDeviation < 0 behaves as if maxDeviation = 0
+      smoothPolygon = GeometryEngine.Instance.Smooth(polygon, -1) as Polygon;
+
+      // NaN maxDeviation behaves as if maxDeviation = 0
+      smoothPolygon = GeometryEngine.Instance.Smooth(polygon, double.NaN) as Polygon;
+
+      #endregion
+    }
+
     public void SplitAtPoint()
     {
       // cref: ArcGIS.Core.Geometry.GeometryEngine.SplitAtPoint(ArcGIS.Core.Geometry.Multipart,ArcGIS.Core.Geometry.MapPoint,System.Boolean,System.Boolean,System.Boolean@,System.Int32@,System.Int32@)
@@ -4185,6 +4212,24 @@ namespace ProSnippetsGeometry
       #endregion
     }
 
+    public void Weed()
+    {
+      Polyline polyline = null;
+
+      // cref: ArcGIS.Core.Geometry.GeometryEngine.Weed(ArcGIS.Core.Geometry.Multipart,System.Double)
+      // cref: ArcGIS.Core.Geometry.IGeometryEngine.Weed(ArcGIS.Core.Geometry.Multipart,System.Double)
+
+      #region Generalize a multipart - Weed
+      // generalize with a maxDeviation of 0
+      Polyline weedPolyline = GeometryEngine.Instance.Weed(polyline, 0) as Polyline;
+
+      // generalize with a maxDeviation < 0
+      weedPolyline = GeometryEngine.Instance.Weed(polyline, -1000000) as Polyline;
+
+      // generalize with a maxDeviation > 0
+      weedPolyline = GeometryEngine.Instance.Weed(polyline, 1000000) as Polyline;
+      #endregion
+    }
     public void Within()
     {
       // cref: ArcGIS.Core.Geometry.GeometryEngine.Within(ArcGIS.Core.Geometry.Geometry,ArcGIS.Core.Geometry.Geometry)

@@ -3,10 +3,30 @@
         xmlns="http://schemas.esri.com/DADF/Registry"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://schemas.esri.com/DADF/Registry \ArcGIS\ArcGISDesktop\UIFramework\ArcGIS.Desktop.Framework.xsd">
-  
+
   <products>
-    <insertProduct id="esri_product_workflow_client" caption="Workflow Manager Next Generation" description="ArcGIS Workflow Manager Next Generation Extension" code="40,100" />
+    <insertProduct id="esri_product_workflow_client" caption="Workflow Manager" description="Provides an easy-to-use, scalable enterprise workflow management system that automates and simplifies many aspects of performing and managing GIS and non-GIS work in an organization." code="40,100" />
   </products>
+
+  <!-- Workflow Manager (Classic) categories to support warning when old projects are loaded -->
+  <!-- Can be removed in https://devtopia.esri.com/ArcGISPro/ps-workflow-manager/issues/1226 -->
+  <categories>
+    <updateCategory refID="esri_core_projectContainers">
+      <insertComponent id="WorkflowConnectionContainer" className="ArcGIS.Desktop.Internal.Workflow.WorkflowConnectionContainer">
+        <content type="WorkflowConnection" displayName="Workflows" />
+      </insertComponent>
+    </updateCategory>
+    <updateCategory refID="esri_itemInfoType">
+      <insertComponent id="esri_itemInfoType_WorkflowProjectItem" className="ArcGIS.Desktop.Internal.Workflow.WorkflowConnectionItem" containerType="WorkflowConnection">
+        <content>
+          <supportedTypeIDs>
+            <type id="WorkflowConnection"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+    </updateCategory>
+  </categories>
+  <!-- End of Classic section -->
 
   <modules>
     <insertModule id="workflow_client_module" caption="Workflow Manager" className="WorkflowClientModule" autoLoad="false"
@@ -30,7 +50,7 @@
           
         </tab>-->
       </tabs>
-      
+
       <groups>
         <group id="esri_workflow_defineLocationCloseGroup" caption="Finish Step" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericApply16.png">
           <button refID="esri_workflow_defineLocationFinish" size="large" />
@@ -56,7 +76,7 @@
           <button refID="esri_workflow_webAppBack" size="large" />
           <button refID="esri_workflow_webAppForward" size="large" />
           <button refID="esri_workflow_webAppRefresh" size="large" />
-        </group> 
+        </group>
       </groups>
 
       <controls>
@@ -74,12 +94,12 @@
             Clear the Location
           </tooltip>
         </button>
-        
+
         <button id="esri_workflow_client_open_workflow_pane" className="ArcGIS.Desktop.Internal.Workflow.Client.Ribbon.OpenWorkflowPaneButton"
-               caption="Workflow Pane" extendedCaption="Open Workflow Server pane" keytip="WS" helpContextID="120004026" condition="esri_workflow_client_canAddOnlineWorkflowConnectionCondition"
+               caption="Workflow Manager" extendedCaption="Open Workflow Server pane" keytip="WS" helpContextID="120004026" condition="esri_workflow_client_canAddOnlineWorkflowConnectionCondition"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowManagerLogo16.png"
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/WorkflowManagerLogo32.png">
-          <tooltip heading="Workflow Pane">
+          <tooltip heading="Workflow Manager">
             Show the Workflow pane with jobs assigned to you and your groups.
             <!-- TODO Would be nice to have different options, but that currently requires us to have loaded the Module -->
             <disabledText>Not signed in to Portal</disabledText>
@@ -140,12 +160,6 @@
         </menu>
       </menus>
 
-      <palettes>
-        <toolPalette id="esri_workflow_workflowViewPalette" itemsInRow="1" showItemCaption="true" caption="Workflow Manager" extendedCaption="Workflow Manager palette" keytip="WVP">
-          <tool refID="esri_workflow_client_open_workflow_pane"/>
-        </toolPalette>
-      </palettes>
-
       <panes>
         <!-- Open App caption is temp to start off with, but will be populated with the job name when view is loaded-->
         <pane id="esri_workflow_client_openAppPane" caption="Web App" className="ArcGIS.Desktop.Internal.Workflow.Client.Views.OpenAppPaneViewModel"
@@ -154,7 +168,7 @@
           <content className="ArcGIS.Desktop.Internal.Workflow.Client.Views.OpenAppPaneView" />
         </pane>
       </panes>
-      
+
       <dockPanes>
         <dockPane id="esri_workflow_client_workflowPane" smallImage="WorkflowManagerLogo16" caption="Workflow" className="ArcGIS.Desktop.Internal.Workflow.Client.WorkflowPane.WorkflowPaneViewModel"
           dock="group" dockWith="esri_core_projectDockPane"

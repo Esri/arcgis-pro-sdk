@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json.Linq;
 using ArcGIS.Desktop.Core.Portal;
+using System.Threading;
 
 namespace Content.Sharing.ProSnippet
 {
@@ -292,6 +293,30 @@ namespace Content.Sharing.ProSnippet
         currentCount = currentCount + resultItems.num.Value;
       }
 
+      #endregion
+
+      // cref: ArcGIS.Desktop.Core.EsriHttpClient
+      // cref: ArcGIS.Desktop.Core.EsriHttpClient.#ctor
+      // cref: ArcGIS.Desktop.Core.EsriHttpClient.Upload(ArcGIS.Desktop.Core.UploadDefinition)
+      // cref: ArcGIS.Desktop.Core.UploadDefinition.#ctor(System.String,ArcGIS.Desktop.Core.Item,System.String[])
+      // cref: ArcGIS.Desktop.Core.ItemFactory
+      #region EsriHttpClient: Upload CSV file to ArcGIS Online
+      // Create the item to be uploaded, based on a local file
+      var itemToUpload = ItemFactory.Instance.Create(@"C:\Data\AddToMapCustomItem\AlaskaCitiesXY.csv");
+      // Define the tags for the item
+      string[] tags = new string[] { "ArcGIS Pro", "SDK", "Internal Demo" };
+      // Create the upload definition for the above item
+      UploadDefinition uploadDefinition = new UploadDefinition(
+        ArcGISPortalManager.Current.GetActivePortal().PortalUri.ToString(),
+        itemToUpload,
+        tags
+        );
+      // Upload the item to the Portal
+      var result = httpClient.Upload(uploadDefinition);
+
+      // Manage the result of the operation appropriately
+      if (result.Item1 == false)
+        return;
       #endregion
     }
 

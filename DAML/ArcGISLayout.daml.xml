@@ -160,7 +160,7 @@
           </supportedTypeIDs>
         </content>
       </insertComponent>
-      <insertComponent id="esri_itemInfoType_PresentationProjectItem" className="ArcGIS.Desktop.Internal.Presentations.PresentationProjectItem" containerType="Presentation">
+      <insertComponent id="esri_itemInfoType_PresentationProjectItem" className="ArcGIS.Desktop.Presentations.PresentationProjectItem" containerType="Presentation">
         <content>
           <supportedTypeIDs>
             <type id="cim_presentation" contextMenuID="esri_presentations_itemContextMenu"/>
@@ -599,19 +599,8 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png">
           <tool refID="esri_layouts_pageNavigateTool"
                 size="large"/>
-          <button refID="esri_layouts_pageZoomFullButton"
-                  size="small"/>
-          <button refID="esri_layouts_pageZoomToSelected"
-                  size="small"/>
-          <button refID="esri_layouts_pagePrevExtentButton"
-                  size="small"/>
-          <button refID="esri_layouts_pageZoomPageWidthButton"
-                  size="small"/>
-          <button refID="esri_layouts_pageZoom100PercentButton"
-                  size="small"/>
-          <button refID="esri_layouts_pageNextExtentButton"
-                  size="small"/>
-          <!--<button refID="esri_layouts_pageFixedZoomOutButton" size="small"/>
+          <toolbar refID="esri_layouts_navigationToolbar"/>
+            <!--<button refID="esri_layouts_pageFixedZoomOutButton" size="small"/>
           <button refID="esri_layouts_pageFixedZoomInButton" size="small"/>-->
         </group>
 
@@ -706,18 +695,12 @@
                caption="Map Surrounds"
                condition="esri_layouts_layoutPane"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png">
-          <splitButton refID="esri_layouts_newNorthArrowSplitButton"
-                       size="large"/>
-          <splitButton refID="esri_layouts_newScaleBarSplitButton"
-                       size="large"/>
-          <splitButton refID="esri_layouts_newLegendSplitButton"
-                       size="large"/>
-          <splitButton refID="esri_layouts_newChartSplitButton"
-                       size="large"/>
-          <splitButton refID="esri_layouts_newTableFrameSplitButton"
-                       size="large"/>
-          <splitButton refID="esri_layouts_newProductionSplitButton"
-                       size="large"/>
+          <splitButton refID="esri_layouts_newNorthArrowSplitButton"/>
+          <splitButton refID="esri_layouts_newScaleBarSplitButton"/>
+          <splitButton refID="esri_layouts_newLegendSplitButton"/>
+          <splitButton refID="esri_layouts_newChartSplitButton"/>
+          <splitButton refID="esri_layouts_newTableFrameSplitButton"/>
+          <splitButton refID="esri_layouts_newProductionSplitButton"/>
         </group>
 
         <!--Keep the following two in sync.  Only difference is caption.-->
@@ -728,15 +711,9 @@
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Picture16.png"
                launcherButtonID="esri_layouts_textAndGraphicsPropertiesButton"
                launcherKeytip="TG">
-          <gallery refID="esri_layouts_insertElementGalleryLayout"
-                   inline="true"
-                   size="large"/>
-          <gallery refID="esri_layouts_dynamicTextGallery"
-                   inline="false"
-                   size="large"/>
-          <gallery refID="esri_layouts_newPictureGallery"
-                   inline="false"
-                   size="large"/>
+          <gallery refID="esri_layouts_insertElementGalleryLayout" inline="true"/>
+          <gallery refID="esri_layouts_dynamicTextGallery" inline="false"/>
+          <gallery refID="esri_layouts_newPictureGallery" inline="false"/>
         </group>
         <group id="esri_layouts_insertGraphicGroupFormat"
                hidden="true"
@@ -799,10 +776,10 @@
                 size="middle"/>
           <menu refID="esri_layouts_mergeShapesMenu"
                 size="middle"/>
-          <toolPalette refID="esri_layouts_reshapeElementToolPalette"
-                       size="middle"/>
-          <tool refID="esri_layouts_cropPictureTool"
-                  size="middle"/>
+          <!--<toolPalette refID="esri_layouts_reshapeElementToolPalette"
+                       size="middle"/>-->
+          <!--<tool refID="esri_layouts_cropPictureTool"
+                  size="middle"/>-->
         </group>
 
         <group id="esri_presentations_editGraphicGroup"
@@ -1028,7 +1005,7 @@
                launcherButtonID="esri_layouts_showScaleBarStyleDockPaneButton"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SymbolGroup16.png"
                launcherKeytip="SB"
-               condition="esri_layouts_scaleBarCondition">
+               condition="esri_layouts_scaleBarsCondition">
           <gallery refID="esri_layouts_scaleBarStyleGalleryInLine"
                    size="large"/>
           <customControl refID="esri_layouts_fillColorGallery"
@@ -2008,6 +1985,7 @@
                  itemWidth="64"
                  itemHeight="64"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="NorthArrowTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png"
@@ -2029,6 +2007,7 @@
                  itemWidth="64" itemHeight="64"
                  itemsInRow="3"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="NorthArrowTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NorthArrow16.png"
@@ -2048,6 +2027,7 @@
                  itemsInRow="3"
                  itemWidth="150"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="ScaleBarTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar16.png"
@@ -2069,6 +2049,7 @@
                  itemsInRow="3"
                  itemWidth="150"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="ScaleBarTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ScaleBar16.png"
@@ -2131,7 +2112,6 @@
                  templateID="LegendItemTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LegendItemHorizontal16.png"
                  largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LegendItemHorizontal32.png">
-          >
           <tooltip heading="">
             Change the style for the selected legend items.<disabledText></disabledText>
           </tooltip>
@@ -2146,6 +2126,7 @@
                  itemsInRow="3"
                  itemWidth="170"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="TableFrameTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableOpen16.png"
@@ -2165,6 +2146,7 @@
                  itemsInRow="3"
                  itemWidth="170"
                  showGroup="true"
+                 resizable="true"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.Layouts;component/Properties/GalleryTemplates.xaml"
                  templateID="TableFrameTemplate"
                  smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/TableView16.png"
@@ -2693,6 +2675,34 @@
                            size="small"/>
           </group>
         </toolbar>
+        <toolbar id="esri_layouts_navigationToolbar">
+          <group>
+            <button refID="esri_layouts_pageZoomFullButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageZoomPageWidthButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageZoomToSelected"
+                    size="small"/>
+            <button insert="" refID="esri_layouts_pageZoom100PercentButton"
+                    size="small"/>
+          </group>
+          <group>
+            <button refID="esri_layouts_pageZoomDownButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageZoomUpButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageZoomLeftButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageZoomRightButton"
+                    size="small"/>
+          </group>
+          <group>
+            <button refID="esri_layouts_pagePrevExtentButton"
+                    size="small"/>
+            <button refID="esri_layouts_pageNextExtentButton"
+                    size="small"/>
+          </group>
+        </toolbar>
       </toolbars>
 
       <controls>
@@ -2702,7 +2712,7 @@
                 condition="false"/>
 
         <!-- Misc -->
-        <!--<button id="esri_layouts_insertTableText" className="esri_layouts:InsertTableText" caption="Add to layout" keytip="L" loadOnClick="false" extendedCaption="Add a dynamic text element to layout that shows a value from the row." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png" helpContextID="">
+        <!--<button id="esri_layouts_insertTableText" className="esri_layouts:InsertTableText" caption="Add To Layout" keytip="L" loadOnClick="false" extendedCaption="Add a dynamic text element to layout that shows a value from the row." largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png" helpContextID="">
           <tooltip heading="">
             Add a dynamic text element to layout that shows a value from the row.<disabledText></disabledText>
           </tooltip>
@@ -2780,7 +2790,7 @@ C = explore when using another tool
           </tooltip>
         </tool>
         <button id="esri_layouts_pageZoomFullButton"
-                caption="Zoom to Page"
+                caption="Zoom To Page"
                 extendedCaption="Layout"
                 keytip="ZP"
                 className="esri_layouts:ZoomToWholePage"
@@ -2857,6 +2867,54 @@ C = explore when using another tool
             Zoom to the extent of the selected elements.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_layouts_pageZoomLeftButton"
+                caption="Page Left"
+                extendedCaption="Navigate Page"
+                keytip="ZL"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageLeft"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowLeft16.png"
+                helpContextID="">
+          <tooltip heading="Page Left">
+            Page Left: Jump one view size left.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_pageZoomRightButton"
+                caption="Page Right"
+                extendedCaption="Navigate Page"
+                keytip="ZR"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageRight"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowRight16.png"
+                helpContextID="">
+          <tooltip heading="Page Right">
+            Page Right: Jump one view size right.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_pageZoomUpButton"
+                caption="Page Up"
+                extendedCaption="Navigate Page"
+                keytip="ZU"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageUp"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowUpLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Page Up">
+            Page Up: Jump one view size up.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_layouts_pageZoomDownButton"
+                caption="Page Down"
+                extendedCaption="Navigate Page"
+                keytip="ZD"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageDown"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowDownLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Page Down">
+            Page Down: Jump one view size down.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_layouts_zoomToLastMapView"
                 caption="Zoom To Last Active Map"
                 extendedCaption="Selected map frames"
@@ -2866,13 +2924,13 @@ C = explore when using another tool
                 className="esri_layouts:ZoomToLastMapView"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ZoomToMapExtent16.png"
                 helpContextID="">
-          <tooltip heading="Selected Map Frames">
-            Zoom to the extent of last active map pane.<disabledText></disabledText>
+          <tooltip heading="Zoom To Last Active Map">
+            Zoom to the extent of the last active map view.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_pageNavigate"
                 hidden="true"
-                caption="Navigate to page"
+                caption="Navigate To page"
                 keytip="NP"
                 flipImageRTL="false"
                 className="esri_layouts:NavigateToPage"
@@ -2899,7 +2957,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_exportMapSeries"
                 hidden="true"
-                caption="Export to File..."
+                caption="Export To File..."
                 flipImageRTL="false"
                 className="esri_layouts:OnExportMapSeriesTOC"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png"
@@ -2947,7 +3005,7 @@ C = explore when using another tool
 
         <button id="esri_layouts_openWebMapFromFileButton"
                 className="esri_layouts:OpenWebMapFromFileAsync"
-                caption="Import web map or print web map..."
+                caption="Import Web Map Or Print Web Map..."
                 condition="esri_mapping_openProjectCondition">
           <tooltip heading="">
             Imports a new layout or map from a .WebMap file. For internal testing only.<disabledText></disabledText>
@@ -3544,7 +3602,7 @@ C = explore when using another tool
         <button id="esri_layouts_setDefaultSymbol"
                 hidden="true"
                 className="esri_layouts:SetDefaultSymbol"
-                caption="Set as Default"
+                caption="Set As Default"
                 condition="esri_layouts_singleElementSelectedCondition"
                 helpContextID="">
           <tooltip heading="">
@@ -3576,7 +3634,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_ConvertToGraphicsButton"
                 className="esri_layouts:ConvertSelectedElementsToGraphicsAsync"
-                caption="Convert to Graphics"
+                caption="Convert To Graphics"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutConvertToGraphics16.png"
                 helpContextID=""
                 loadOnClick="false">
@@ -3586,7 +3644,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_ConvertToFeaturesButton"
                 className="esri_layouts:ConvertGridToFeaturesAsync"
-                caption="Convert to Features"
+                caption="Convert To Features"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GridToFeatures16.png"
                 helpContextID=""
                 loadOnClick="false">
@@ -3618,7 +3676,7 @@ C = explore when using another tool
         <button id="esri_layouts_addToSelectionButton"
                 hidden="true"
                 className="esri_layouts_layoutPane:AddToSelection"
-                caption="Add to Current Selection"
+                caption="Add To Current Selection"
                 extendedCaption="Add to current selection in the layout."
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SelectionMethodAdd16.png"
                 condition="esri_layouts_layoutPane"
@@ -3872,7 +3930,7 @@ C = explore when using another tool
 
         <!--Elements-->
         <button id="esri_layouts_saveAsStyleButton"
-                caption="Save to Style"
+                caption="Save To Style"
                 extendedCaption="element or graphic symbol"
                 className="esri_layouts:SaveAsStyle"
                 loadOnClick="false"
@@ -3885,7 +3943,7 @@ C = explore when using another tool
         </button>
 
         <button id="esri_layouts_createLegendPatchButton"
-        caption="Save Shape as Legend Patch"
+        caption="Save Shape As Legend Patch"
         className="esri_layouts:CreateLegendPatch"
         loadOnClick="false"
         largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateLegendPath32.png"
@@ -4027,7 +4085,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_layouts_alignToPage"
-                caption="Align to Page"
+                caption="Align To Page"
                 keytip="P"
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AlignToPageCheckBox"
                 condition="esri_layouts_canEditElementsCondition" 
@@ -4222,7 +4280,7 @@ C = explore when using another tool
         </button>
         
         <button id="esri_layouts_toRectangleText"
-                caption="Convert to Rectangle Text"
+                caption="Convert To Rectangle Text"
                 extendedCaption="Layout"
                 keytip="R"
                 className="esri_layouts:ConvertToRectangleText"
@@ -4237,7 +4295,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_layouts_toStraightText"
-                caption="Convert to Straight Text"
+                caption="Convert To Straight Text"
                 extendedCaption="Layout"
                 keytip="S"
                 className="esri_layouts:ConvertToStraightText"
@@ -4868,6 +4926,19 @@ C = explore when using another tool
               helpContextID="">
           <tooltip heading="New Scale Bar">
             Create a new scale bar on the layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+
+        <tool id="esri_layouts_newDualScaleBarTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewDualScaleBarTool"
+              caption="Dual Scale Bar"
+              keytip="NA"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DualScaleBar16"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DualScaleBar32.png"
+              condition="esri_layouts_layoutPaneCondition"
+              helpContextID="">
+          <tooltip heading="New Dual Scale Bar">
+            Create a new dual scale bar on the layout.<disabledText></disabledText>
           </tooltip>
         </tool>
 
@@ -5590,7 +5661,7 @@ C = explore when using another tool
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.NewProductGridStreetIndexButton"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ICMStreetIndex16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ICMStreetIndex32.png"
-                caption="Index to Streets"
+                caption="Index To Streets"
                 extendedCaption="Layout"
                 condition="esri_layouts_layoutPane"
                 helpContextID="">
@@ -6928,7 +6999,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_layouts_projectItem_ExportLayout"
-                caption="Export to File..."
+                caption="Export To File..."
                 extendedCaption="Layout"
                 className="esri_layouts:OnExportLayoutProjectItem"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png"
@@ -7362,6 +7433,14 @@ C = explore when using another tool
                   separator="true"/>
         </menu>
 
+        <menu id="esri_layouts_DualScaleBarPartContextMenu"
+                      caption="Dual Scale Bar Part Menu"
+                      extendedCaption="Perform operations on dual scale bar parts."
+                      contextMenu="true">
+          <button refID="esri_layouts_showElementDockPaneButton"
+                  separator="true"/>
+        </menu>        
+
         <menu id="esri_layouts_tableFrameContextMenu"
               caption="Table Frame Menu"
               extendedCaption="Perform operations on a table frame."
@@ -7514,9 +7593,9 @@ C = explore when using another tool
         <menu id="esri_layouts_nudgeMenu"
               caption="Nudge"
               keytip="N"
-              condition="esri_layouts_selectedElementsNotPartsCondition">
-          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementNudgeDown16.png"
-          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementNudgeDown32.png">
+              condition="esri_layouts_selectedElementsNotPartsCondition"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementNudgeDown16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementNudgeDown32.png">
           <tooltip heading="Nudge">
             Move the selected element(s) by a small amount.<disabledText></disabledText>
           </tooltip>
@@ -7855,39 +7934,39 @@ C = explore when using another tool
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
                condition="esri_reports_reportHeaderFormatCondition">
-          <checkBox refID ="esri_report_coverPageCheck"/>
+          <checkBox refID ="esri_report_coverPageCheck" size="middle"/>
         </group>
         <group id="esri_reports_generalDetailsGroup"
                caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
                condition="esri_reports_detailsFormatCondition">
-          <checkBox refID ="esri_report_startNewPageCheck"/>
-          <checkBox refID ="esri_report_autoGrowCheck"/>
-          <checkBox refID ="esri_report_keepRecordTogetherCheck"/>
+          <checkBox refID ="esri_report_startNewPageCheck" size="middle"/>
+          <checkBox refID ="esri_report_autoGrowCheck" size="middle"/>
+          <checkBox refID ="esri_report_keepRecordTogetherCheck" size="middle"/>
         </group>
         <group id="esri_reports_generalReportFooterGroup"
                caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
                condition="esri_reports_reportFooterFormatCondition">
-          <checkBox refID ="esri_report_startNewPageCheck"/>
-          <checkBox refID ="esri_report_alignToBottomCheck"/>
+          <checkBox refID ="esri_report_startNewPageCheck" size="middle"/>
+          <checkBox refID ="esri_report_alignToBottomCheck" size="middle"/>
         </group>
         <group id="esri_reports_generalGroupHeaderGroup"
                caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
                condition="esri_reports_groupHeaderFormatCondition">
-          <checkBox refID ="esri_report_startNewPageCheck"/>
-          <checkBox refID ="esri_report_repeatEveryPageCheck"/>
+          <checkBox refID ="esri_report_startNewPageCheck" size="middle"/>
+          <checkBox refID ="esri_report_repeatEveryPageCheck" size="middle"/>
         </group>
         <group id="esri_reports_generalGroupFooterGroup"
                caption="General"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="G"
                condition="esri_reports_groupFooterFormatCondition">
-          <checkBox refID ="esri_report_alignToBottomCheck"/>
+          <checkBox refID ="esri_report_alignToBottomCheck" size="middle"/>
         </group>
 
         <group id="esri_reports_sizeGroup"
@@ -7904,7 +7983,7 @@ C = explore when using another tool
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Report16.png"
                keytip="E"
                condition="esri_reports_pageFooterHeaderFormatCondition">
-          <editBox refID="esri_reports_excludeHeaderFromPages"/>
+          <editBox refID="esri_reports_excludeHeaderFromPages" size="middle"/>
         </group>
 
         <group id="esri_reports_colorGroup"
@@ -8210,7 +8289,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_reports_pageZoom100PercentButton"
-                caption="Zoom to 100%"
+                caption="Zoom To 100%"
                 extendedCaption="Report"
                 keytip="Z1"
                 flipImageRTL="false"
@@ -8599,7 +8678,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_reports_pageZoomFullButton"
-                caption="Zoom to Page"
+                caption="Zoom To Page"
                 extendedCaption="Zoom to report page"
                 keytip="ZP"
                 className="esri_layouts:ZoomToWholePage"
@@ -9024,7 +9103,7 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_reports_alignToSection"
-                caption="Align to Subsection"
+                caption="Align To Subsection"
                 keytip="S"
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AlignToPageCheckBox"
                 loadOnClick="false"
@@ -9174,7 +9253,7 @@ C = explore when using another tool
                   hidden="false"
                   helpContextID="">
           <tooltip heading="Keep Together">
-            Prevent a page break for a record.<disabledText></disabledText>
+            Prevent a page break for a record.<disabledText>The subsection height is taller than the printable space on the page.</disabledText>
           </tooltip>
         </checkBox>
         <checkBox id ="esri_report_alignToBottomCheck"
@@ -10242,9 +10321,9 @@ C = explore when using another tool
       <groups>
         <group id="esri_presentations_insertPagesGroup" caption="Page" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/InsertBlankPageType16.png" keytip="IPP" condition="esri_presentations_insertPageCondition">
           <gallery refID="esri_presentations_newMapPageSourceGallery" inline="false" size="large"/>
-          <gallery refID="esri_presentations_newBlankPageGallery" inline="false" size="large"/>
-          <button refID="esri_presentations_insertImagePresentationPageButton" size="large"/>        
-          <button refID="esri_presentations_insertVideoPresentationPageButton" size="large"/>
+          <gallery refID="esri_presentations_newBlankPageGallery" inline="false"/>
+          <button refID="esri_presentations_insertImagePresentationPageButton"/>        
+          <button refID="esri_presentations_insertVideoPresentationPageButton"/>
         </group>
 
         <group id="esri_presentations_mapNavigationGroup" caption="Navigate Map" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/3DNavigationTool16.png" keytip="NM" condition="esri_presentations_isMapPageCondition">
@@ -10265,7 +10344,9 @@ C = explore when using another tool
         </group>
 
         <group id="esri_presentations_playbackGroup" caption="Playback" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFullScreen16.png" keytip="PB">
-          <splitButton refID="esri_presentations_fullScreenSplitButton"/> 
+          <splitButton refID="esri_presentations_fullScreenSplitButton"/>
+          <button refID="esri_presentations_usePresenterMode" size="middle"/>
+          <button refID="esri_presentations_preloadAllMaps" size="middle"/>
         </group>
 
         <group id="esri_presentations_pageSetupGroup" caption="Page Setup"  launcherButtonID="esri_presentations_openPageSetupButton" keytip="PS"> 
@@ -10365,7 +10446,7 @@ C = explore when using another tool
           </tooltip>
         </button>
 
-        <button id="esri_presentations_exportPresentationFromProjectItemButton" className="esri_presentations:ExportPresentationFromProjectItem" caption="Export to File..." extendedCaption="Presentation" keytip="F" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png" loadOnClick="false">
+        <button id="esri_presentations_exportPresentationFromProjectItemButton" className="esri_presentations:ExportPresentationFromProjectItem" caption="Export To File..." extendedCaption="Presentation" keytip="F" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericExport16.png" loadOnClick="false">
           <tooltip heading="Export Presentation">
             Export the presentation to a file on disk.<disabledText></disabledText>
           </tooltip>
@@ -10434,9 +10515,15 @@ C = explore when using another tool
           </tooltip>
         </button>
 
-        <button id="esri_presentations_refreshThumbnail" className="esri_presentations:ZoomToFullPageExtent" caption="Refresh Thumbnail" loadOnClick="false">
+        <button id="esri_presentations_refreshThumbnail" className="esri_presentations:ZoomToFullPageExtent" condition="esri_presentations_canNavigatePageCondition" caption="Refresh Thumbnail" loadOnClick="false">
           <tooltip heading="">
             Zoom to full page extent to refresh the thumbnail.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_presentations_updateAllThumbnails" className="esri_presentations:PreloadAllPages" condition="esri_presentations_canNavigatePageCondition" caption="Refresh All Thumbnails" loadOnClick="false">
+          <tooltip heading="">
+            Refresh all thumbnails for the presentation.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -10487,7 +10574,13 @@ C = explore when using another tool
             Activate the map to navigate and interact with the map.<disabledText></disabledText>
           </tooltip>
         </button>
-        
+
+        <button id="esri_presentations_deactivateMapButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.DeactivateMapButton" caption="Close Activation" extendedCaption="Close the activated map" keytip="DAM" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame32.png" loadOnClick="false">
+          <tooltip heading="">
+            Close activated map and return to the page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_presentations_selectAllButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.PresentationSelectAllButton" caption="Select All" keytip="SA" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectAll32.png" loadOnClick="false">
           <tooltip heading="">
             Select all elements.<disabledText></disabledText>
@@ -10660,6 +10753,13 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <button id="esri_presentations_flyTransitionButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCFlyTransitionButton" caption="Fly" loadOnClick="false"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFlyTransition16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationFlyTransition32.png">
+          <tooltip heading="">
+            Apply fly transition to the page.<disabledText>The map page must have a preceding map page that contains the same map source. The page selection must not contain a non-map page.</disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_presentations_swipeFromRightButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCSwipeFromRightButton" caption="Swipe From Right" loadOnClick="false"
         smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SwipeFromRight16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SwipeFromRight32.png">
           <tooltip heading="Swipe Transition">
@@ -10802,6 +10902,34 @@ C = explore when using another tool
                 condition="esri_presentations_viewPaneCondition" loadOnClick="false">
           <tooltip heading="Page Snapping">
             Snap to page boundaries when using interactive presentation tools.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <checkBox id="esri_presentations_usePresenterMode"
+          hidden="true"
+          caption="Presenter Mode"
+          keytip="PRM"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LinkCursors32.png"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LinkCursors32.png"          
+          className="ArcGIS.Desktop.Internal.Presentations.Ribbon.PresenterModeCheckBox"
+          loadOnClick="false"
+          helpContextID="120005020">
+          <tooltip heading="Use Presenter Mode">
+            Show the audience view on one monitor and the presenter view on another monitor when the presentation is displayed in full screen.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+
+        <button id="esri_presentations_preloadAllMaps"
+          hidden="true"
+          caption="Preload Maps"
+          keytip="PLM"
+          largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PreloadMaps32.png"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PreloadMaps16.png"
+          className="ArcGIS.Desktop.Internal.Presentations.Ribbon.PreloadAllMapPagesCheckBox"
+          loadOnClick="false">
+          <tooltip heading="Preload Maps">
+            Preload all maps before starting full screen.
+            <disabledText>There are no maps to preload.</disabledText>
           </tooltip>
         </button>
 
@@ -11454,8 +11582,9 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_showPagePropsButton" separator="true"/>
         </menu>
 
-        <menu id="esri_presentations_mapNavigaionContextMenu" caption="Selection" extendedCaption="Open pop-up context menu" contextMenu="true">
-          <button refID="esri_presentations_fullMapExtentButton"/>
+        <menu id="esri_presentations_mapNavigaionContextMenu" caption="Selection" extendedCaption="Open Navigation context menu" contextMenu="true">
+          <button refID="esri_presentations_deactivateMapButton"/>
+          <button refID="esri_presentations_fullMapExtentButton" separator="true"/>
           <button refID="esri_presentations_prevMapExtentButton"/>
           <button refID="esri_presentations_nextMapExtentButton"/>
         </menu>
@@ -11531,6 +11660,7 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_noneTransitionButton"/>
           <menu refID="esri_presentations_swipeTransitionContextMenu"/>
           <button refID="esri_presentations_fadeTransitionButton"/>
+          <button refID="esri_presentations_flyTransitionButton"/>
         </menu>
 
         <menu id="esri_presentations_rulerContextMenu"
@@ -11587,7 +11717,7 @@ Ctrl+Alt+C = quick enable
       <panes>
         <pane id="esri_presentations_viewPane" caption="Presentation" className="ArcGIS.Desktop.Internal.Presentations.PresentationViewModel" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationView16.png" isClosable="true"
               defaultTab="esri_presentations_homeTab" defaultTool="esri_presentations_pageNavigaionTool">
-          <content className="ArcGIS.Desktop.Internal.Presentations.PresentationView"/>
+          <content className="ArcGIS.Desktop.Internal.Presentations.PresentationPaneView"/>
           <keyCommands>
             <keyCommand id="esri_presentations_showNextPage" caption="Show Next Page"/>
             <keyCommand id="esri_presentations_showPreviousPage" caption="Show Previous Page"/>
@@ -11604,57 +11734,6 @@ Ctrl+Alt+C = quick enable
 
     </insertModule>
 
-    <updateModule refID="esri_core_module">
-      <tabs>
-        <updateTab refID="esri_core_insertTab">
-          <insertGroup refID="esri_layouts_insertMapFrameGroup"
-                       insert="after"
-                       placeWith="esri_core_projectData"/>
-          <insertGroup refID="esri_layouts_insertMapSurroundGroup"
-                       insert="after"
-                       placeWith="esri_layouts_insertMapFrameGroup"/>
-          <insertGroup refID="esri_layouts_insertGraphicGroup"
-                       insert="before"
-                       placeWith="esri_project_styles"/>
-          <insertGroup refID="esri_reports_reportGroup"
-                       insert="after"
-                       placeWith="esri_core_projectData"/>
-          <insertGroup refID="esri_reportTemplates_reportGroup"
-                       insert="after"
-                       placeWith="esri_core_projectData"/>
-          <insertGroup refID="esri_reports_insertDataGroup"
-                       insert="after"
-                       placeWith="esri_reports_reportGroup"/>
-          <insertGroup refID="esri_reportTemplates_insertDataGroup"
-                       insert="after"
-                       placeWith="esri_reports_reportGroup"/>
-          <insertGroup refID="esri_reports_insertMapFrameGroup"
-                       insert="after"
-                       placeWith="esri_reports_insertDataGroup"/>
-          <insertGroup refID="esri_reportTemplates_insertMapFrameGroup"
-                       insert="after"
-                       placeWith="esri_reports_insertDataGroup"/>
-          <insertGroup refID="esri_reports_insertTextGroup"
-                       insert="after"
-                       placeWith="esri_reports_insertMapFrameGroup"/>
-          <insertGroup refID="esri_reports_insertGraphicGroup"
-                       insert="before"
-                       placeWith="esri_project_styles"/>
-          <insertGroup refID="esri_presentations_insertPagesGroup"
-                       insert="before"
-                       placeWith="esri_project_styles"/>
-          <insertGroup refID="esri_presentations_insertElementsGroup"
-                       insert="after"
-                       placeWith="esri_presentations_insertPagesGroup"/>     
-        </updateTab>
-
-        <updateTab refID="esri_core_viewTab">
-          <insertGroup refID="esri_presentations_effectsGroup"
-                       insert="after"/>
-        </updateTab>
-      </tabs>
-
-    </updateModule>
     <updateModule refID="esri_mapping">
       <menus>
         <updateMenu refID="esri_mapping_layerContextMenu">
@@ -12160,6 +12239,7 @@ Ctrl+Alt+C = quick enable
         <not>
           <state id="esri_mapping_mapPane"/>
           <state id="esri_presentations_graphicsEditingDisabledState"/>
+          <state id="esri_layouts_selectedDualScaleBarPart"/>
         </not>
       </and>
     </insertCondition>
@@ -12412,6 +12492,12 @@ Ctrl+Alt+C = quick enable
         </or>
       </and>
     </insertCondition>
+    <insertCondition id="esri_layouts_scaleBarsCondition">     
+        <or>
+          <state id="esri_layouts_scaleBarCondition"/>
+          <state id="esri_layouts_dualScaleBarCondition"/>
+        </or>
+    </insertCondition>
 
     <!---->
     <!--Triggers for FORMAT Groups-->
@@ -12440,6 +12526,7 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_tableFrameLineCondition"/>
         <state id="esri_layouts_tableFrameFieldLineCondition"/>
         <state id="esri_layouts_scaleBarLineCondition"/>
+         <state id="esri_layouts_dualScaleBarLineCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderLineCondition"/>
         <state id="esri_layouts_mapGridLineCondition"/>
         <state id="esri_layouts_mapGridTextCondition"/>
@@ -12468,12 +12555,16 @@ Ctrl+Alt+C = quick enable
     </insertCondition>
     <insertCondition id="esri_layouts_polygonGroupCondition">
       <or>
+        <not>
+          <state id="esri_layouts_selectedElements"/>
+        </not>
         <state id="esri_layouts_polygonCondition"/>
         <state id="esri_layouts_textCondition"/>
         <state id="esri_layouts_groupPolygonCondition"/>
         <state id="esri_layouts_multiElementCondition"/>
         <state id="esri_layouts_multiFrameCondition"/>
         <state id="esri_layouts_scaleBarPolygonCondition"/>
+        <state id="esri_layouts_dualScaleBarPolygonCondition"/>
         <state id="esri_layouts_extentIndicatorSymbolCondition"/>
         <state id="esri_layouts_extentIndicatorCondition"/>
         <state id="esri_layouts_extentIndicatorLeaderPolygonCondition"/>
@@ -12668,6 +12759,12 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_cruisingAltitudeTextCondition"/>
         <state id="esri_layouts_aviationVerticalScaleBarLineCondition"/>
         <state id="esri_layouts_aviationVerticalScaleBarTextCondition"/>
+        <state id="esri_layouts_dualScaleBarCondition"/>
+        <state id="esri_layouts_dualScaleBarLineCondition"/>
+        <state id="esri_layouts_dualScaleBarPolygonCondition"/>
+        <state id="esri_layouts_dualScaleBarBackgroundCondition"/>
+        <state id="esri_layouts_dualScaleBarBorderCondition"/>
+        <state id="esri_layouts_dualScaleBarShadowCondition"/>
       </or>
     </insertCondition>
     <insertCondition id="esri_layouts_backgroundGroupCondition">
@@ -12684,6 +12781,7 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_meterReferenceBackgroundCondition"/>
         <state id="esri_layouts_elevationGuideBarBackgroundCondition"/>
         <state id="esri_layouts_scaleBarBackgroundCondition"/>
+        <state id="esri_layouts_dualScaleBarBackgroundCondition"/>
         <state id="esri_layouts_legendBackgroundCondition"/>
         <state id="esri_layouts_mapFrameBackgroundCondition"/>
         <state id="esri_layouts_topoNorthArrowBackgroundCondition"/>
@@ -12707,6 +12805,7 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_meterReferenceBorderCondition"/>
         <state id="esri_layouts_elevationGuideBarBorderCondition"/>
         <state id="esri_layouts_scaleBarBorderCondition"/>
+        <state id="esri_layouts_dualScaleBarBorderCondition"/>        
         <state id="esri_layouts_legendBorderCondition"/>
         <state id="esri_layouts_mapFrameBorderCondition"/>
         <state id="esri_layouts_topoNorthArrowBorderCondition"/>
@@ -12730,6 +12829,7 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_meterReferenceShadowCondition"/>
         <state id="esri_layouts_elevationGuideBarShadowCondition"/>
         <state id="esri_layouts_scaleBarShadowCondition"/>
+        <state id="esri_layouts_dualScaleBarShadowCondition"/>
         <state id="esri_layouts_legendShadowCondition"/>
         <state id="esri_layouts_mapFrameShadowCondition"/>
         <state id="esri_layouts_topoNorthArrowShadowCondition"/>
@@ -13064,11 +13164,14 @@ Ctrl+Alt+C = quick enable
       <and>
         <or>
           <state id="esri_mapping_mapPane"/>
-          <state id="esri_presentations_hasPagesCondition"/>
+          <state id="esri_layouts_layoutPane"/>
+          <state id="esri_reports_reportPane"/>
+          <state id="esri_presentations_hasActivePage"/>
         </or>
         <not>
           <state id="esri_layouts_mapFrameActivated"/>
           <state id="esri_presentations_mapFrameActivated"/>
+          <state id="esri_report_mapFrameActivated"/>
         </not>
       </and>
     </insertCondition>
@@ -13133,11 +13236,10 @@ Ctrl+Alt+C = quick enable
     <insertCondition id="esri_presentations_graphicsLayersExistCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
-        <state id="esri_presentations_graphicsEditingEnabledState"/>
-        <state id="esri_mapping_graphicsLayersExistState"/>
-        <state id="esri_mapping_mapViewingMode2DState"/>
+        <state id="esri_presentations_hasActivePage"/>
         <not>
           <state id="esri_presentations_isPageLocked"/>
+          <state id="esri_presentations_mapFrameActivated"/>
         </not>
       </and>
     </insertCondition>

@@ -345,7 +345,8 @@
 
         <!-- Reviewer Manage Quality Tabs -->
         <tab id="esri_dataReviewer_ManageQualityTab" caption="Manage Quality"  condition ="esri_dataReviewer_ManageQualityCondition" insert="before" placeWith="esri_mapping_homeTab" keytip="Q">
-          <group refID="esri_dataReviewer_Selection" />
+          <group refID="esri_dataReviewer_Selection"/>
+          <group refID="esri_dataReviewer_ManageEdits"/>
           <group refID="esri_dataReviewer_AutomatedReviewGroup"/>
           <group refID="esri_dataReviewer_VisualReviewGroup"/>
           <group refID="esri_dataReviewer_Results"/>
@@ -371,6 +372,11 @@
 
         <group id="esri_dataReviewer_RulesClipboardGroup" hidden="true" caption="Clipboard">
           <button refID="esri_dataReviewer_DeleteReviewerRules" size="large"  />
+        </group>
+        
+        <group id ="esri_dataReviewer_ManageEdits" hidden="true" caption="Manage Edits">
+          <button refID="esri_editing_SaveEditsBtn" size="large" />
+          <button refID="esri_editing_DiscardEditsBtn" size="large" />
         </group>
 
         <group id ="esri_dataReviewer_AutomatedReviewGroup" hidden="true" caption="Automated Review" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRunRules16.png">

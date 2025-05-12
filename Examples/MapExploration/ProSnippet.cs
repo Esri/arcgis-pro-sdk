@@ -36,6 +36,8 @@ using System.Windows.Input;
 using System.IO;
 using System.Threading;
 using System.Windows.Media;
+using ArcGIS.Core.Data;
+using ArcGIS.Desktop.Framework.Contracts;
 
 namespace Snippets
 {
@@ -44,6 +46,31 @@ namespace Snippets
 
     #region ProSnippet Group: MapView
     #endregion
+
+    public void MapViewSnippets()
+    {
+      // cref: ArcGIS.Desktop.Framework.Contracts.Pane.Activate
+      // cref: ArcGIS.Desktop.Mapping.IMapPane
+      // cref: ArcGIS.Desktop.Mapping.MapView
+      // cref: ArcGIS.Desktop.Framework.FrameworkApplication.Panes
+      #region Find a MapView by its Caption
+      // find a mapview by its Caption using the FrameworkApplication Panes collection
+      var mapPaneCaption = "USNationalParks";
+      var mapViewPane = FrameworkApplication.Panes.OfType<IMapPane>().FirstOrDefault((p) => p.Caption == mapPaneCaption);
+      if (mapViewPane != null)
+      {
+        // activate the MapPane
+        (mapViewPane as Pane).Activate();
+        var mapView = mapViewPane.MapView;
+        if (mapView != null)
+        {
+          // get the layers selected in the map's TOC
+          var selectedLayers = mapView.GetSelectedLayers();
+        }
+      }
+
+      #endregion Find a MapView by its Caption
+    }
 
     // cref: ArcGIS.Desktop.Mapping.MapView.ViewingMode
     // cref: ArcGIS.Core.CIM.MapViewingMode
@@ -91,6 +118,32 @@ namespace Snippets
 
       //Set the view linking mode to Center and Scale.
       MapView.LinkMode = LinkMode.Center | LinkMode.Scale;
+    }
+    #endregion
+
+    // cref: ArcGIS.Desktop.Mapping.MapView.ExportScene3DObjects
+    // cref: ArcGIS.Desktop.Mapping.ExportSceneContentsFormat
+    // cref: ArcGIS.Desktop.Mapping.STLExportSceneContentsFormat
+    #region Export the contents of a scene to an exchange format such as STL.
+    public void ExportSceneContents()
+    {
+      // Validate the current active view. Only a local scene can be exported.
+      bool CanExportScene3DObjects = MapView.Active?.ViewingMode == MapViewingMode.SceneLocal;
+      if (CanExportScene3DObjects)
+      {
+        //Gets the active map view.
+        MapView mapView = MapView.Active;
+        // Create a scene content export format, export the scene context as a stereolithography format
+        var exportFormat = new STLExportSceneContentsFormat()
+        {
+          Extent = mapView.Extent, // sets Extent property
+          FolderPath = @"C:\Temp", // sets FolderPath property
+          FileName = "my-3d-objects.stl", //sets FileName property
+          IsSingleFileOutput = true // sets whether to export to one single file
+        };
+        // Export the scene content as 3D objects
+        mapView.ExportScene3DObjects(exportFormat);
+      }
     }
     #endregion
 
@@ -272,34 +325,37 @@ namespace Snippets
 
     #endregion
 
-    // cref: ArcGIS.Desktop.Mapping.MapView.ZoomToSelected(System.Nullable{System.TimeSpan},System.Boolean)
-    // cref: ArcGIS.Desktop.Mapping.MapView.ZoomToSelectedAsync(System.Nullable{System.TimeSpan},System.Boolean)
-    #region Zoom To Selected Features
-    public Task<bool> ZoomToSelected()
+
+    public void ZoomToSelected()
     {
-      return QueuedTask.Run(() =>
-      {
+     
         //Get the active map view.
         var mapView = MapView.Active;
         if (mapView == null)
-          return false;
+          return;
+      // cref: ArcGIS.Desktop.Mapping.MapView.ZoomToSelected(System.Nullable{System.TimeSpan},System.Boolean)
+      // cref: ArcGIS.Desktop.Mapping.MapView.ZoomToSelectedAsync(System.Nullable{System.TimeSpan},System.Boolean)
 
-        //Zoom to the map's selected features.
-        return mapView.ZoomToSelected();
-      });
+      #region Zoom To Selected Features with a timespan
+      //Note: Run within QueuedTask
+      //Zoom to the map's selected features.
+      mapView.ZoomToSelected(TimeSpan.FromSeconds(3));
+      #endregion
+
     }
 
-    public Task<bool> ZoomToSelectedAsync()
+    public void ZoomToSelectedAsync()
     {
       //Get the active map view.
       var mapView = MapView.Active;
       if (mapView == null)
-        return Task.FromResult(false);
-
+        return;
+      #region Zoom To Selected Features asynchronously
       //Zoom to the map's selected features.
-      return mapView.ZoomToSelectedAsync(TimeSpan.FromSeconds(2));
+      mapView.ZoomToSelectedAsync(TimeSpan.FromSeconds(2));
+      #endregion
     }
-    #endregion
+
 
     // cref: ArcGIS.Desktop.Mapping.Map.GetBookmarks()
     // cref: ArcGIS.Desktop.Mapping.Bookmark
@@ -376,6 +432,36 @@ namespace Snippets
     }
     #endregion
 
+
+    public void ZoomToObjectIDs(IEnumerable<long> objectIDs, FeatureLayer featureLayer, string whereClause)
+    {
+      // cref: ArcGIS.Desktop.Mapping.MapView.ZoomTo(ArcGIS.Desktop.Mapping.BasicFeatureLayer,System.Collections.Generic.IEnumerable{System.Int64},System.Nullable{System.TimeSpan},System.Boolean)
+      #region Zoom to ObjectIDs
+      //Execute a query on a layer to get a RowCursor.
+      //You can pass in null (to get all the features)
+      //or a "ArcGIS.Core.Data.QueryFilter" to filter the features.
+      //var queryFilter = new QueryFilter
+      //{
+      //  WhereClause = whereClause
+      //};
+      using (var rowCursor = featureLayer.Search())
+      {
+        var objectIds = new List<long>();
+        while (rowCursor.MoveNext())
+        {
+          using (var feature = rowCursor.Current as Feature)
+          {
+            objectIds.Add(feature.GetObjectID());
+          }
+        }
+        if (objectIds.Count > 0)
+        {
+          MapView.Active.ZoomTo(featureLayer, objectIds, TimeSpan.FromSeconds(2));
+        }
+        #endregion
+      }
+    }
+    
     // cref: ArcGIS.Desktop.Mapping.MapView.PanTo(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan})
     // cref: ArcGIS.Desktop.Mapping.MapView.PanToAsync(ArcGIS.Core.Geometry.Geometry,System.Nullable{System.TimeSpan})
     #region Pan To an Extent 
@@ -2197,29 +2283,17 @@ namespace Snippets
       if (mapView == null)
         return;
 
-      //Valid formats for PictureURL are:
-      // e.g. local file URL:
-      // file:///<path>
-      // file:///c:/images/symbol.png
+			// Use SourceURL for the URL to the image content. For
+			// a local file, use a file path. For a web/internet file
+      // location, use its URL
+			//
+			// Supported image types are:
       //
-      // e.g. network file URL:
-      // file://<host>/<path>
-      // file://server/share/symbol.png
-      //
-      // e.g. data URL:
-      // data:<mediatype>;base64,<data>
-      // data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAU ...
-      //
-      // image/bmp
-      // image/gif
-      // image/jpeg
-      // image/png
-      // image/tiff
-      // image/x-esri-bglf
+      // png, jpg, tiff, bmp, gif, svg
 
-      var pictureGraphic = new CIMPictureGraphic
+			var pictureGraphic = new CIMPictureGraphic
       {
-        PictureURL = @"file:///C:/Images/MyImage.png",
+        SourceURL = @"C:\Images\MyImage.png",
         Shape = envelope
       };
 

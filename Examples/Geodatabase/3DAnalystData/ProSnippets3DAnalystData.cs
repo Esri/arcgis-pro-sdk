@@ -30,6 +30,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ArcGIS.Core.Data.Analyst3D;
+using System.IO;
 
 namespace GeodatabaseSDK._3DAnalystData
 {
@@ -190,7 +192,7 @@ namespace GeodatabaseSDK._3DAnalystData
       // cref: ArcGIS.Core.Data.Analyst3D.TinFilterType
       #region Search for TIN Nodes
 
-      // search all nodes
+      // search all nodes that intersect the data extent
       using (ArcGIS.Core.Data.Analyst3D.TinNodeCursor nodeCursor = tinDataset.SearchNodes(null))
       {
         while (nodeCursor.MoveNext())
@@ -260,7 +262,7 @@ namespace GeodatabaseSDK._3DAnalystData
       // cref: ArcGIS.Core.Data.Analyst3D.TinFilterType
       #region Search for TIN Edges
 
-      // search all edges
+      // search all single edges that intersect the data extent
       using (ArcGIS.Core.Data.Analyst3D.TinEdgeCursor edgeCursor = tinDataset.SearchEdges(null))
       {
         while (edgeCursor.MoveNext())
@@ -326,7 +328,7 @@ namespace GeodatabaseSDK._3DAnalystData
       // cref: ArcGIS.Core.Data.Analyst3D.TinFilterType
       #region Search for TIN Triangles
 
-      // search all triangles
+      // search all triangles that intersect the data extent
       using (ArcGIS.Core.Data.Analyst3D.TinTriangleCursor triangleCursor = tinDataset.SearchTriangles(null))
       {
         while (triangleCursor.MoveNext())
@@ -459,7 +461,7 @@ namespace GeodatabaseSDK._3DAnalystData
       var prevEdge = edge.GetPreviousEdgeInTriangle();
 
       // get opposite edge
-      var oppEdge = edge.GeNeighbor();
+      var oppEdge = edge.GetNeighbor();
 
       // get left triangle
       var leftTriangle = edge.LeftTriangle;
@@ -512,6 +514,412 @@ namespace GeodatabaseSDK._3DAnalystData
       double maxZ = 3.0;
       IReadOnlyList<Coordinate3D> coords = triangle.GetPointsBetweenZs(minZ, maxZ);
       #endregion
+    }
+
+    public void CreateTinEditor(TinEditor tinEditor, Envelope envelope, FeatureClass featureClass, TinDataset tinDataset)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.#ctor(ArcGIS.Core.Geometry.Envelope)
+      #region Create TinEditor from envelope
+
+      tinEditor = new TinEditor(envelope);
+      bool isInEditMode = tinEditor.IsInEditMode;  // isInEditMode = true
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.#ctor(ArcGIS.Core.Data.Analyst3D.TinDataset)
+      #region Create TinEditor from TinDataset
+
+      tinEditor = new TinEditor(tinDataset);
+      isInEditMode = tinEditor.IsInEditMode;  // isInEditMode = true
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.CreateFromFeatureClass(ArcGIS.Core.Data.FeatureClass,ArcGIS.Core.Data.QueryFilter,ArcGIS.Core.Data.Field, ArcGIS.Core.Data.Field,ArcGIS.Core.Data.Analyst3D.TinSurfaceType)
+      #region Create TinEditor from feature class
+
+      var fields = featureClass.GetDefinition().GetFields();
+
+      // Use the z-values from the geometries as the height field
+      Field heightField = fields.First(f => f.FieldType == FieldType.Geometry);
+
+      // Set the vertices from the geometries as TIN nodes
+      tinEditor = TinEditor.CreateFromFeatureClass(featureClass, null, heightField, null, TinSurfaceType.MassPoint);
+      isInEditMode = tinEditor.IsInEditMode;  // isInEditMode = true
+
+      // Use the object ids as tag values
+      Field tagField = fields.First(f => f.FieldType == FieldType.OID);
+
+      // Set the lines from the geometries as TIN edges
+      tinEditor = TinEditor.CreateFromFeatureClass(featureClass, null, heightField, tagField, TinSurfaceType.HardLine);
+      isInEditMode = tinEditor.IsInEditMode;  // isInEditMode = true
+
+      // Only use certain geometries in the TIN
+      QueryFilter filter = new QueryFilter()
+      {
+        ObjectIDs = new List<long> { 2, 6, 7, 8, 9, 10, 14, 17, 21, 22 }
+      };
+      tinEditor = TinEditor.CreateFromFeatureClass(featureClass, filter, heightField, tagField, TinSurfaceType.HardLine);
+      isInEditMode = tinEditor.IsInEditMode;  // isInEditMode = true
+
+      #endregion
+    }
+
+    public void AddFromFeatureClass(TinEditor tinEditor, FeatureClass featureClass)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddFromFeatureClass(ArcGIS.Core.Data.FeatureClass,ArcGIS.Core.Data.QueryFilter,ArcGIS.Core.Data.Field, ArcGIS.Core.Data.Field,ArcGIS.Core.Data.Analyst3D.TinSurfaceType)
+      #region Add geometries from feature class
+
+      var fields = featureClass.GetDefinition().GetFields();
+
+      // Use the z-values from the geometries as the height field
+      Field heightField = fields.First(f => f.FieldType == FieldType.Geometry);
+
+      // Set the vertices from the geometries as TIN nodes
+      tinEditor.AddFromFeatureClass(featureClass, null, heightField, null, TinSurfaceType.MassPoint);
+
+      // Use the object ids as tag values
+      Field tagField = fields.First(f => f.FieldType == FieldType.OID);
+
+      // Set the lines from the geometries as TIN edges
+      tinEditor.AddFromFeatureClass(featureClass, null, heightField, tagField, TinSurfaceType.HardLine);
+
+      // Only use certain geometries in the TIN
+      QueryFilter filter = new QueryFilter()
+      {
+        ObjectIDs = new List<long> { 2, 6, 7, 8, 9, 10, 14, 17, 21, 22 }
+      };
+      tinEditor.AddFromFeatureClass(featureClass, filter, heightField, tagField, TinSurfaceType.HardLine);
+
+      #endregion
+    }
+
+    public void AddGeometry(TinEditor tinEditor, MapPoint point, Multipoint multipointZ, Polyline polyline, Polygon polygonZ)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddGeometry(ArcGIS.Core.Geometry.Geometry, ArcGIS.Core.Data.Analyst3D.TinSurfaceType, System.Integer, System.Double)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddGeometryZ(ArcGIS.Core.Geometry.Geometry, ArcGIS.Core.Data.Analyst3D.TinSurfaceType, System.Integer)
+      #region Add a geometry
+
+      // Add a point as a node with no tag value at height = 10. Points and multipoints can only be added as mass points.
+      tinEditor.AddGeometry(point, TinSurfaceType.MassPoint, 0, 10);
+
+      // Add a z-aware multipoint as a nodes with tag value = 12 at height equal to the z-values of the points. Points and multipoints can only be added as mass points.
+      tinEditor.AddGeometryZ(multipointZ, TinSurfaceType.MassPoint, 12);
+
+      // Add a polyline as hard lines with tag value = 42 and height = 17.
+      tinEditor.AddGeometry(polyline, TinSurfaceType.HardLine, 42, 17);
+
+      // Add a z-aware polygon as an erase polygon with no tag value and height equal to the z-values of the vertices.
+      tinEditor.AddGeometryZ(polygonZ, TinSurfaceType.HardErase, 0);
+
+      #endregion
+    }
+
+    public void AddMassPoints(TinEditor tinEditor, MapPoint[] points, Coordinate3D[] coordinate3Ds, MapPoint[] pointsZ)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddMassPoints(IEnumerable<ArcGIS.Core.Geometry.MapPoint>,System.Integer,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddMassPoints(IEnumerable<ArcGIS.Core.Geometry.Coordinate3D>,System.Integer,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddMassPoints(IEnumerable<ArcGIS.Core.Geometry.MapPoint>,System.Integer,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      #region Add mass points
+
+      // Add points with no tag value and height = 17.
+      // The points have the same spatial reference as the tin editor, so there is no need to provide it. 
+      tinEditor.AddMassPoints(points, 0, 17);
+
+      // Add coordinates as nodes with tag value = 42. The height will come from the z-values of the coordinates.
+      tinEditor.AddMassPointsZ(coordinate3Ds, 42);
+
+      // Add z-aware points with tag value = 21. The height will come from the z-values of the points.
+      // The points are in a different spatial reference than the tin editor, so we provide the spatial 
+      // reference of the points. The points will be projected to the spatial reference of the tin editor.
+      tinEditor.AddMassPointsZ(pointsZ, 21, SpatialReferenceBuilder.CreateSpatialReference(54004));
+
+      #endregion
+    }
+
+    public void AddPointZ(TinEditor tinEditor, MapPoint pointZ)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddPointZ(ArcGIS.Core.Geometry.MapPoint,System.Integer)
+      #region Add z-aware point
+
+      // Add a z-aware point with tag value = 56
+      tinEditor.AddPointZ(pointZ, 56);
+
+      #endregion
+    }
+
+    public void AddPolygons(TinEditor tinEditor, Polygon[] polygons, Polygon[] polygonsZ)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddPolygons(IEnumerable(ArcGIS.Core.Geometry.Polygon),ArcGIS.Core.Data.Analyst3D.TinSurfaceType,System.Integer,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddPolygonsZ(IEnumerable(ArcGIS.Core.Geometry.Polygon),ArcGIS.Core.Data.Analyst3D.TinSurfaceType,System.Integer,ArcGIS.Core.Geometry.SpatialReference)
+      #region Add polygons
+
+      // Add polygons with tagValue = 42 and height = 12. 
+      // The polygons are in a different spatial reference than the tin editor, so we provide the spatial 
+      // reference of the polygons. The polygons will be projected to the spatial reference of the tin editor.
+      tinEditor.AddPolygons(polygons, TinSurfaceType.ZLessSoftLine, 42, 12, SpatialReferenceBuilder.CreateSpatialReference(54004));
+
+      // Add z-aware polygons with no tag value. The height comes from the z-values of the vertices. 
+      // The polygons are in the same spatial reference as the tin editor, so there is no need to provide it.
+      tinEditor.AddPolygonsZ(polygonsZ, TinSurfaceType.HardLine, 0);
+
+      #endregion
+    }
+
+    public void AddPolylines(TinEditor tinEditor, Polyline[] polylines, Polyline[] polylinesZ)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddPolylines(IEnumerable(ArcGIS.Core.Geometry.Polyline),ArcGIS.Core.Data.Analyst3D.TinSurfaceType,System.Integer,System.Double,ArcGIS.Core.Geometry.SpatialReference)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.AddPolylinesZ(IEnumerable(ArcGIS.Core.Geometry.Polyline),ArcGIS.Core.Data.Analyst3D.TinSurfaceType,System.Integer,ArcGIS.Core.Geometry.SpatialReference)
+      #region Add polylines
+
+      // Add polylines with tagValue = 42 and height = 12. 
+      // The polylines are in a different spatial reference than the tin editor, so we provide the spatial 
+      // reference of the polylines. The polylines will be projected to the spatial reference of the tin editor.
+      tinEditor.AddPolylines(polylines, TinSurfaceType.ZLessSoftLine, 42, 12, SpatialReferenceBuilder.CreateSpatialReference(54004));
+
+      // Add z-aware polylines with no tag value. The height comes from the z-values of the vertices. 
+      // The polylines are in the same spatial reference as the tin editor, so there is no need to provide it.
+      tinEditor.AddPolylinesZ(polylinesZ, TinSurfaceType.HardLine, 0);
+
+      #endregion
+    }
+
+    public void TinEditorMethods(TinEditor tinEditor)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.DeleteEdgeTagValues();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.DeleteNodeTagValues();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.DeleteTriangleTagValues();
+      #region Delete tag values
+
+      // Delete all edge tags
+      tinEditor.DeleteEdgeTagValues();
+
+      // Delete all node tags
+      tinEditor.DeleteNodeTagValues();
+
+      // Delete all triangle tags
+      tinEditor.DeleteTriangleTagValues();
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetEdgeTagValue(System.Integer,System.Integer);
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetNodeTagValue(System.Integer,System.Integer);
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetTriangleTagValue(System.Integer,System.Integer);
+      #region Set tag values
+
+      // Set the tag value for edge #6
+      tinEditor.SetEdgeTagValue(6, 42);
+
+      // Set the tag value for node #8
+      tinEditor.SetNodeTagValue(8, 93);
+
+      // Set the tag value for triangle #9
+      tinEditor.SetTriangleTagValue(9, 17);
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.DeleteNode(System.Integer)
+      #region Delete node
+
+      // Delete node by index 
+      tinEditor.DeleteNode(7);
+
+      // Node indices start at 1.
+      try
+      {
+        tinEditor.DeleteNode(0);
+      }
+      catch (ArgumentException)
+      {
+        // Handle the exception
+      }
+
+      // Can't delete a super node (indices 1 - 4)
+      try
+      {
+        tinEditor.DeleteNode(2);
+      }
+      catch (TinException)
+      {
+        // Handle the exception
+      }
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.DeleteNodesOutsideDataArea()
+      #region Delete nodes outside of data area
+
+      // Delete all data nodes that are outside the data area. Does not delete super nodes.
+      tinEditor.DeleteNodesOutsideDataArea();
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetEdgeType(System.Integer,ArcGIS.Core.Data.Analyst3D.TinEdgeType)
+      #region Set edge type
+
+      // Set the type of edge #8
+      tinEditor.SetEdgeType(8, TinEdgeType.SoftEdge);
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetNodeZ(System.Integer,System.Double)
+      #region Set z-value of a node
+
+      // Set the z-value of node #10
+      tinEditor.SetNodeZ(10, 12.5);
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetSpatialReference(ArcGIS.Core.Geometry.SpatialReference)
+      #region Set the spatial reference
+
+      // Set the spatial reference
+      tinEditor.SetSpatialReference(SpatialReferenceBuilder.CreateSpatialReference(54004));
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetToConstrainedDelaunay()
+      #region Set to constrained Delaunay
+
+      // Set the triangulation method to constrained Delaunay from this point forward
+      tinEditor.SetToConstrainedDelaunay();
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetTriangleInsideDataArea(System.Integer)
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SetTriangleOutsideDataArea(System.Integer)
+      #region Set triangle in/out of data area
+
+      // Set triangle #7 to be inside the data area
+      tinEditor.SetTriangleInsideDataArea(7);
+
+      // Set triangle #9 to be outside the data area
+      tinEditor.SetTriangleInsideDataArea(9);
+
+      #endregion
+    }
+
+    private static TinDataset OpenTin(string tinPath)
+    {
+      var connection = new FileSystemConnectionPath(new Uri(Path.GetDirectoryName(tinPath)), FileSystemDatastoreType.Tin);
+      using (FileSystemDatastore dataStore = new FileSystemDatastore(connection))
+      {
+        return dataStore.OpenDataset<ArcGIS.Core.Data.Analyst3D.TinDataset>(Path.GetFileName(tinPath));
+      }
+    }
+
+    public void SaveEdits(TinEditor tinEditor, Envelope envelope, MapPoint[] points, MapPoint pointZ, TinDataset tinDataset, string tinPath)
+    {
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SaveEdits();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SaveAs(System.String, System.Boolean);
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.StartEditing();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.StopEditing();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.#ctor(ArcGIS.Core.Geometry.Envelope)
+      #region Create a new TIN and save edits
+
+      // Create a new TIN 
+      tinEditor = new TinEditor(envelope);
+      tinEditor.AddMassPoints(points, 42, 13.7);
+
+      // Since the TIN doesn't exist on disk, you can't call SaveEdits.
+      // You must call SaveAs first.
+      try
+      {
+        tinEditor.SaveEdits();
+      }
+      catch (TinException)
+      {
+        // Handle the exception
+      }
+
+      // Since the TIN doesn't exist on disk, you can't call StopEditing(true).
+      // You must call SaveAs first.
+      try
+      {
+        tinEditor.StopEditing(true);
+      }
+      catch (TinException)
+      {
+        // Handle the exception
+      }
+
+      // Now save the newly created TIN to disk
+      tinEditor.SaveAs("C:\\Tin1", false);
+
+      // Delete a node
+      tinEditor.DeleteNode(7);
+
+      // Since the TIN now exists on disk you can call SaveEdits
+      tinEditor.SaveEdits();
+
+      // Delete another node
+      tinEditor.DeleteNode(11);
+
+      // Since the TIN now exists on disk, you can call StopEditing(true).
+      // The edits will be saved and the tin editor will be taken out of edit mode.
+      tinEditor.StopEditing(true);
+      bool isInEditMode = tinEditor.IsInEditMode; // isInEditMode = false
+
+      // Now if you try to make an edit, an exception is thrown because the editor is not in edit mode.
+      try
+      {
+        tinEditor.AddPointZ(pointZ, 0);
+      }
+      catch (TinException)
+      {
+        // Handle the exception
+      }
+
+      // Put the editor into edit mode.
+      tinEditor.StartEditing();
+      isInEditMode = tinEditor.IsInEditMode; // isInEditMode = true
+
+      // Now you can add the point
+      tinEditor.AddPointZ(pointZ, 0);
+
+      // Oops, you didn't really want to add the point. You want to stop editing and discard the unsaved edits
+      // since the last time the editor was put into edit mode. All previous saved edits remain.
+      tinEditor.StopEditing(false);
+
+      #endregion
+
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SaveEdits();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.SaveAs(System.String, System.Boolean);
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.StartEditing();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.StopEditing();
+      // cref: ArcGIS.Core.Data.Analyst3D.TinEditor.#ctor(ArcGIS.Core.Data.Analyst3D.TinDataset)
+      #region Edit an existing TIN
+
+      // Create an instance of TinEditor from an existing TinDataset
+      tinEditor = new TinEditor(tinDataset);
+      int numNodes = tinDataset.GetNodeCount();  // numNodes = 10
+      tinEditor.AddPointZ(pointZ, 7);
+
+      // Calling SaveEdits modifies the existing TIN
+      tinEditor.SaveEdits();
+      numNodes = tinDataset.GetNodeCount();  // numNodes = 11
+
+      // Adding twenty points
+      tinEditor.AddMassPoints(points, 10, 112.5);
+
+      // Calling SaveAs creates a new TIN on disk, and 
+      // the tin editor points to the new TIN.
+      string tinPath2 = "C:\\Tin2";
+      tinEditor.SaveAs(tinPath2, true);
+
+      tinEditor.StopEditing(true);
+      TinDataset tinDataset2 = OpenTin(tinPath2); // See https://github.com/esri/arcgis-pro-sdk/wiki/ProConcepts-3D-Analyst-Data#working-with-tin-data
+      numNodes = tinDataset2.GetNodeCount(); // numNodes = 31
+
+      // The edits still show up in the original TIN while it is in memory, but if you open it
+      // again you will see that it only has the edits that were saved before SaveAs was called.
+      numNodes = tinDataset.GetNodeCount(); // numNodes = 31
+
+      tinDataset = OpenTin(tinPath);
+      numNodes = tinDataset.GetNodeCount(); // numNodes = 11
+
+      #endregion
+
+
     }
 
     #region ProSnippet Group: Terrain
@@ -800,7 +1208,7 @@ namespace GeodatabaseSDK._3DAnalystData
       var mapPoint = pt.ToMapPoint();
       #endregion
 
-      // cref: ArcGIS.Core.Data.Analyst3D.LasDataset.SearchPoints(ArcGIS.Core.Data.Analyst3D.LasPointFilter, Systen.Double, System.Double)
+      // cref: ArcGIS.Core.Data.Analyst3D.LasDataset.SearchPoints(ArcGIS.Core.Data.Analyst3D.LasPointFilter, System.Double, System.Double)
       // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor
       // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor.MoveNext
       // cref: ArcGIS.Core.Data.Analyst3D.LasPointCursor.Current

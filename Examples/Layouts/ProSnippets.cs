@@ -37,10 +37,44 @@ namespace ProSnippetsTasks
 {
   class Snippets
   {
-        #region ProSnippet Group: Layout Project Items
-        #endregion
-        async public void snippets_ProjectItems()
+    #region ProSnippet Group: Layout Project Items
+    #endregion
+    async public void snippets_ProjectItems()
     {
+      var templateFileName = "VisitorsLayout.pagx";
+      // cref: ArcGIS.Desktop.Core.IProjectItem
+      // cref: ArcGIS.Desktop.Core.ItemFactory
+      // cref: ArcGIS.Desktop.Core.ItemFactory.Create
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
+      #region Create an IProjectItem from a layout template pagx file and add it to the project
+      // Get layout Template Path from the project's home folder and combine it with a file name
+      var projectPath = CoreModule.CurrentProject.HomeFolderPath;
+      var layoutTemplateFilePath = System.IO.Path.Combine(projectPath, templateFileName);
+      // Create a new layout project item with the layout file path
+      await QueuedTask.Run(() =>
+      {
+        // Create an IProjectItem using a layout template pagx file
+        IProjectItem pagx = ItemFactory.Instance.Create(layoutTemplateFilePath) as IProjectItem;
+        // Add the IProjectItem to the current project
+        Project.Current.AddItem(pagx);
+      });
+      #endregion Create an IProjectItem from a layout template pagx file and add it to the project
+
+      {
+        var layoutName = "Visitors";
+        // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
+        // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
+        #region Get a Layout by name from the current project
+
+        Layout foundLayout = await QueuedTask.Run<Layout>(() =>
+        {
+          LayoutProjectItem layoutItem = Project.Current.GetItems<LayoutProjectItem>()
+          .FirstOrDefault((lpi) => lpi.Name == layoutName);
+          return layoutItem.GetLayout();
+        });
+        #endregion Get a Layout by name from the current project
+      }
+
       // cref: ArcGIS.Desktop.Core.Project.GetItems<T>
       // cref: ArcGIS.Desktop.Layouts.LayoutProjectItem
       #region Reference layout project items and their associated layout
@@ -2986,7 +3020,7 @@ namespace ProSnippetsTasks
       #region Change the map associated with a map frame
       //Change the map associated with a map frame
 
-      //Reference a map frame on a layout
+      //Find a map frame element from a layout by the map frame's element name
       MapFrame mfrm = layout.FindElement("Map Frame") as MapFrame;
 
       //Perform on worker thread

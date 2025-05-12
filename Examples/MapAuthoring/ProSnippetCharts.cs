@@ -85,6 +85,8 @@ namespace MapAuthoring
 
             #endregion
 
+
+
             // cref: ArcGIS.Core.CIM.CIMChart
             // cref: ArcGIS.Core.CIM.CIMChartGeneralProperties
             // cref: ArcGIS.Core.CIM.CIMChartSeries
@@ -149,18 +151,59 @@ namespace MapAuthoring
             lyrDefLine.Charts = allChartsLine.ToArray();
             lyrLine.SetDefinition(lyrDefLine);
 
-            #endregion
+      #endregion
+      var featureLayer = MapView.Active.Map.GetLayersAsFlattenedList().FirstOrDefault(l => l.Name == "NationalParks");
 
-            // cref: ArcGIS.Core.CIM.CIMChart
-            // cref: ArcGIS.Core.CIM.CIMChartGeneralProperties
-            // cref: ArcGIS.Core.CIM.CIMChartSeries
-            // cref: ArcGIS.Core.CIM.CIMChartHistogramSeries
-            #region Create a histogram for every field of type Double
+      // cref: ArcGIS.Core.CIM.CIMChart
+      // cref: ArcGIS.Core.CIM.CIMChartGeneralProperties
+      // cref: ArcGIS.Core.CIM.CIMChartSeries
+      // cref: ArcGIS.Core.CIM.CIMChartBarSeries
 
-            // For more information on the chart CIM specification:
-            // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
+      #region Create a bar chart
+      var layerDefinition = featureLayer.GetDefinition();
+      string fieldXAxis = "textField";
+      string fieldYAxis = "NumericField";
 
-            var lyrsHistogram = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
+      var myBarChart = new CIMChart
+      {
+        Name = "Bar chart",
+        GeneralProperties = new CIMChartGeneralProperties
+        {
+          Title = $"{fieldXAxis} vs. {fieldYAxis}",
+          UseAutomaticTitle = false
+        },
+        Series =
+        [
+            new CIMChartBarSeries
+            {
+              Name = "Bar chart",
+              UniqueName = "Bar chart",
+              Fields = new string[] { fieldXAxis, fieldYAxis },
+              //Create green fill symbols
+              FillSymbolProperties = new CIMChartFillSymbolProperties
+                {
+                  Color = CIMColor.CreateRGBColor(38, 115, 0, 70)
+                }
+            }
+        ]
+      };
+      // Add new chart to layer's existing list of charts (if any exist)
+      var newBarCharts = new CIMChart[] { myBarChart };
+      var allChartsBar = (layerDefinition.Charts == null) ? newBarCharts : layerDefinition.Charts.Concat(newBarCharts);
+      // Add CIM chart to layer definition 
+      layerDefinition.Charts = allChartsBar.ToArray();
+      featureLayer.SetDefinition(layerDefinition);
+      #endregion
+      // cref: ArcGIS.Core.CIM.CIMChart
+      // cref: ArcGIS.Core.CIM.CIMChartGeneralProperties
+      // cref: ArcGIS.Core.CIM.CIMChartSeries
+      // cref: ArcGIS.Core.CIM.CIMChartHistogramSeries
+      #region Create a histogram for every field of type Double
+
+      // For more information on the chart CIM specification:
+      // https://github.com/Esri/cim-spec/blob/main/docs/v3/CIMCharts.md
+
+      var lyrsHistogram = MapView.Active.Map.GetLayersAsFlattenedList().OfType<FeatureLayer>();
             var lyrHistogram = lyrsHistogram.First();
             var lyrDefHistogram = lyrHistogram.GetDefinition();
 
@@ -274,9 +317,9 @@ namespace MapAuthoring
 
             // Add new chart to layer's existing list of charts (if any exist)
             var newChartsBar = new CIMChart[] { barChart };
-            var allChartsBar = (lyrDefBar == null) ? newChartsBar : lyrDefBar.Charts.Concat(newChartsBar);
+            var allBarCharts = (lyrDefBar == null) ? newChartsBar : lyrDefBar.Charts.Concat(newChartsBar);
             // Add CIM chart to layer defintion 
-            lyrDefBar.Charts = allChartsBar.ToArray();
+            lyrDefBar.Charts = allBarCharts.ToArray();
             lyrBar.SetDefinition(lyrDefBar);
 
             #endregion

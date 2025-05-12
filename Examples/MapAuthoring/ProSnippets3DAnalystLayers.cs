@@ -1238,6 +1238,7 @@ namespace MapAuthoring
       // cref: ArcGIS.Desktop.Mapping.LineOfSightParams.TargetPoint
       // cref: ArcGIS.Desktop.Mapping.LineOfSightParams.ObserverHeightOffset
       // cref: ArcGIS.Desktop.Mapping.LineOfSightParams.TargetHeightOffset
+      // cref: ArcGIS.Desktop.Mapping.LineOfSightParams.ObstructionsMultipatchFeatureClass
       // cref: ArcGIS.Desktop.Mapping.LineOfSightParams.OutputSpatialReference
       // cref: ArcGIS.Desktop.Mapping.SurfaceLayer.CanGetLineOfSight(ArcGIS.Desktop.Mapping.LineOfSightParams)
       // cref: ArcGIS.Desktop.Mapping.SurfaceLayer.GetLineOfSight(ArcGIS.Desktop.Mapping.LineOfSightParams)
@@ -1254,6 +1255,9 @@ namespace MapAuthoring
       // add offsets if appropriate
       // losParams.ObserverHeightOffset = observerOffset;
       // losParams.TargetHeightOffset = targerOffset;
+
+      // add obstruction feature class if appropriate
+      //losParams.ObstructionsMultipatchFeatureClass = obsFeatureClass;   // multipatch
 
       // set output spatial reference
       losParams.OutputSpatialReference = MapView.Active.Map.SpatialReference;

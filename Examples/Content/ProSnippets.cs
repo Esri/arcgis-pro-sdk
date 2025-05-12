@@ -39,6 +39,8 @@ using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Core.UnitFormats;
 using ArcGIS.Desktop.Core.Events;
 using ArcGIS.Core.Data;
+using ArcGIS.Desktop.Core.Portal;
+using ArcGIS.Desktop.Internal.GeoProcessing.Controls;
 
 namespace Content.Snippets
 {
@@ -147,6 +149,27 @@ namespace Content.Snippets
       var projGDBPath = Project.Current.DefaultGeodatabasePath;
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.Project.SetDefaultGeoDatabasePath(System.String)
+      // cref: ArcGIS.Desktop.Core.Project.RemoveItem(ArcGIS.Desktop.Core.IProjectItem)
+      // cref: ArcGIS.Desktop.Core.Project.AddItem(ArcGIS.Desktop.Core.IProjectItem)
+      #region Change the Project's default gdb path
+      string newGDDItemPath = @"C:\path\ArcGIS\Project\NewLocation.gdb";
+      string oldGDBItemPath = @"C:\Path\Project\OldLocation.gdb";
+
+      //Create a new GDB item and add it to the project
+      var newGDBItem = ItemFactory.Instance.Create(newGDDItemPath) as IProjectItem;
+      if (newGDBItem == null)
+        return;
+      var success = Project.Current.AddItem(newGDBItem);
+      //make the newly added GDB item the default
+      if (success)
+        Project.Current.SetDefaultGeoDatabasePath(newGDDItemPath);
+      //Now remove the old item
+      var oldGDBItem = Project.Current.GetItems<Item>().FirstOrDefault(i => i.Path == oldGDBItemPath) as IProjectItem;
+      if (oldGDBItem == null)
+        return;
+      var removeSuccess = Project.Current.RemoveItem(oldGDBItem);
+      #endregion
       // cref: ArcGIS.Desktop.Core.Project.SaveAsync
       #region Save project
       //Saves the project
@@ -659,6 +682,239 @@ namespace Content.Snippets
 
     }
 
+    #region ProSnippet Group: Portal Projects
+    #endregion
+    public async void WorkflowToOpenPortalProject()
+    {
+      var projectPath = @"https://<userName>.<domain>.com/portal/sharing/rest/content/items/1a434faebbe7424d9982f57d00223baa";
+      string docVer = string.Empty;
+      //cref: ArcGIS.Desktop.Core.Project.CanOpen(System.String,System.String@)
+      //cref: ArcGIS.Desktop.Core.Project.OpenAsync(System.String)
+      //cref: ArcGIS.Desktop.Core.Project
+      //cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      #region Workflow to open an ArcGIS Pro project
+      // A portal project path looks like this:
+      //@"https://<ServerName>.<Domain>.com/portal/sharing/rest/content/items/1a434faebbe7424d9982f57d00223baa";
+      //A local project path looks like this:
+      //@"C:\Users\<UserName>\Documents\ArcGIS\Projects\MyProject\MyProject.aprx";
+
+      //Check if the project can be opened
+      if (Project.CanOpen(projectPath, out docVer))
+      {
+        //Open the project
+        await Project.OpenAsync(projectPath);
+      }
+      else //The project cannot be opened
+      {
+        //One possible reason: If the project is a portal project, the active portal must match the portal of the project
+        //Check if this is a portal project
+        bool isPortalProject = Uri.TryCreate(projectPath, UriKind.Absolute, out Uri uriResult)
+             && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+        if (isPortalProject)
+        {
+          //Parse the project path to get the portal
+          var uri = new Uri(projectPath);
+          var portalUrlOfProjectToOpen = $"{uri.Scheme}://{uri.Host}/portal/";
+
+          //Get the current active portal
+          var activePortal = ArcGIS.Desktop.Core.ArcGISPortalManager.Current.GetActivePortal();
+          //Compare to see if the active Portal is the same as the portal of the project
+          bool isSamePortal = (activePortal != null && activePortal.PortalUri.ToString() == portalUrlOfProjectToOpen);
+          if (!isSamePortal) //not the same. 
+          {
+            //Set new active portal to be the portal of the project
+            //Find the portal to sign in with using its Uri...
+            var projectPortal = ArcGISPortalManager.Current.GetPortal(new Uri(portalUrlOfProjectToOpen, UriKind.Absolute));
+            await QueuedTask.Run(() => {
+              if (!projectPortal.IsSignedOn())
+              {
+                //Calling "SignIn" will trigger the OAuth popup if your credentials are
+                //not cached (eg from a previous sign in in the session)
+                if (projectPortal.SignIn().success)
+                {
+                  //Set this portal as my active portal
+                  ArcGISPortalManager.Current.SetActivePortal(projectPortal);
+                  return;
+                }
+              }
+              //Set this portal as my active portal
+              ArcGISPortalManager.Current.SetActivePortal(projectPortal);
+            });
+            //Now try opening the project again
+            if (Project.CanOpen(projectPath, out docVer))
+            {
+              await Project.OpenAsync(projectPath);
+            }
+            else
+            {
+              System.Diagnostics.Debug.WriteLine("The project cannot be opened.");
+            }
+          }
+          else //The portals are the same. So the problem could be something else - permissions, portal is down?
+          {
+            System.Diagnostics.Debug.WriteLine("The project cannot be opened.");
+          }
+        }
+        else //Project is on disk and cannot be opened. 
+        {
+          System.Diagnostics.Debug.WriteLine("The project cannot be opened.");
+        }
+      }
+      #endregion
+    }
+    public void DetermineIfTheProjectIsAPortalProject()
+    {
+      string projectPath = Project.Current.Url;
+      #region Determine if the project is a portal project from a project's path
+      // A portal project path looks like this:
+      //@"https://<ServerName>.<Domain>.com/portal/sharing/rest/content/items/1a434faebbe7424d9982f57d00223baa";
+      //A local project path looks like this:
+      //@"C:\Users\<UserName>\Documents\ArcGIS\Projects\MyProject\MyProject.aprx";
+      bool isPortalProject = Uri.TryCreate(projectPath, UriKind.Absolute, out Uri uriResult)
+     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+      if (isPortalProject)
+      {
+        System.Diagnostics.Debug.WriteLine("This is a portal project");
+      }
+      else
+      {
+        System.Diagnostics.Debug.WriteLine("This is not a portal project");
+      }
+      #endregion
+      //cref: ArcGIS.Desktop.Core.Project.IsPortalProject
+      //cref: ArcGIS.Desktop.Core.Project.Current
+      //cref: ArcGIS.Desktop.Core.Project
+      #region Determine if the project is a portal project from a project object
+      var isPortalProject2 = Project.Current.IsPortalProject;
+      #endregion
+
+    }
+    public void GetThePortalFromAPortalProjectsPath()
+    {
+      string projectPath = Project.Current.Url;
+      //cref: ArcGIS.Desktop.Core.Project.CanOpen(System.String,System.String@)
+      //cref: ArcGIS.Desktop.Core.Project.OpenAsync(System.String)
+      //cref: ArcGIS.Desktop.Core.Project
+      #region Get the portal from a portal project's path
+      // A portal project path looks like this:
+      //@"https://<ServerName>.<Domain>.com/portal/sharing/rest/content/items/1a434faebbe7424d9982f57d00223baa";
+      //A local project path looks like this:
+      //@"C:\Users\<UserName>\Documents\ArcGIS\Projects\MyProject\MyProject.aprx";
+
+      //Check if the project is a portal project
+      bool isPortalProject = Uri.TryCreate(projectPath, UriKind.Absolute, out Uri uriResult)
+     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+      if (isPortalProject)
+      {
+        //Parse the project path to get the portal
+        var uri = new Uri(projectPath);
+        var fullUri = $"{uri.Scheme}://{uri.Host}/portal/";
+        System.Diagnostics.Debug.WriteLine($"The Url of the project is: {fullUri}");
+        //Now get the ArcGISPortal object from the portal Uri
+        var arcgisPortal = ArcGISPortalManager.Current.GetPortal(new Uri(fullUri, UriKind.Absolute));
+        System.Diagnostics.Debug.WriteLine($"The portal of the project is: {arcgisPortal.PortalUri}");
+        //Note: You can set the active portal to be the portal of the project. Refer to this snippet: [ArcGISPortalManager: Get a portal and Sign In, Set it Active](ProSnippets-sharing#arcgisportalmanager-get-a-portal-and-sign-in-set-it-active)
+      }
+      #endregion
+    }
+
+    public void OpenProjectsUsingOpenItemDlg()
+    {
+      //cref: ArcGIS.Desktop.Catalog.OpenItemDialog
+      //cref: ArcGIS.Desktop.Catalog.OpenItemDialog.ShowDialog
+      //cref: ArcGIS.Desktop.Core.BrowseProjectFilter
+      //cref: ArcGIS.Desktop.Core.BrowseProjectFilter.AddFilter(ArcGIS.Desktop.Core.BrowseProjectFilter)
+      #region Workflow to open an ArcGIS Pro project using the OpenItemDialog
+      BrowseProjectFilter portalAndLocalProjectsFilter = new BrowseProjectFilter();
+      //A filter to pick projects from the portal
+      //This filter will allow selection of ppkx and portal project items on the portal
+      portalAndLocalProjectsFilter.AddFilter(BrowseProjectFilter.GetFilter("esri_browseDialogFilters_projects_online_proprojects"));
+      //A filter to pick projects from the local machine
+      portalAndLocalProjectsFilter.AddFilter(BrowseProjectFilter.GetFilter("esri_browseDialogFilters_projects"));
+      //Create the OpenItemDialog and set the filter to the one we just created
+      var openDlg = new OpenItemDialog()
+      {
+        Title = "Select a Project",
+        MultiSelect = false,
+        BrowseFilter = portalAndLocalProjectsFilter
+      };
+      //Show the dialog
+      var result = openDlg.ShowDialog();
+      //Check if the user clicked OK and selected an item
+      bool? ok = openDlg.ShowDialog();
+      if (!ok.HasValue || openDlg.Items.Count() == 0)
+        return; //nothing selected
+      var selectedItem = openDlg.Items.FirstOrDefault();
+      //Open the project use the OpenAsync method.
+      #endregion
+    }
+
+    public async void RetrieveProjectItemFromPortal()
+    {
+      //cref: ArcGIS.Desktop.Core.Project.CanOpen(System.String,System.String@)
+      //cref: ArcGIS.Desktop.Core.Project.OpenAsync(System.String)
+      //cref: ArcGIS.Desktop.Core.Project
+      //cref: ArcGIS.Desktop.Core.ArcGISPortalManager
+      //cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetPortal(System.Uri)
+      //cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetSignOnUsername
+      //cref: ArcGIS.Desktop.Core.ArcGISPortalManager.GetUserContentAsync(System.String)
+      #region Retrieve a project item from a portal and open it
+      var projectPortal = ArcGISPortalManager.Current.GetPortal(new Uri(@"https://<serverName>.<domain>.com/portal/", UriKind.Absolute));
+      string owner = string.Empty;
+      await QueuedTask.Run(() => {
+        //Get the signed on user name
+        owner = projectPortal.GetSignOnUsername();
+      });
+      //Get the user content from the portal
+      var userContent = await projectPortal.GetUserContentAsync(owner);
+      //Get the first portal project item
+      var firstPortalProject = userContent.PortalItems.FirstOrDefault(pi => pi.PortalItemType == PortalItemType.ProProject);
+      var portalProjectUri = firstPortalProject.ItemUri.ToString();
+      //Check if project can be opened
+      string docVer = string.Empty;
+      if (Project.CanOpen(portalProjectUri, out docVer))
+      {
+        await Project.OpenAsync(portalProjectUri);
+      }
+      //Note: If Project.CanOpen returns false, the project cannot be opened. One reason could be 
+      // the active portal is not the same as the portal of the project. Refer to the snippet: [Workflow to open an ArcGIS Pro project](ProSnippets-sharing#workflow-to-open-an-arcgis-pro-project)
+      #endregion
+    }
+    public void GetRecentProject()
+    {
+      //cref: ArcGIS.Desktop.Core.Project.GetRecentProjectsEx
+      #region Retrieve the list of recently opened projects
+      IReadOnlyList<Tuple<string, string>> result = [];
+      //A list of Tuple instances containing two strings.
+      //The first string: full path to the .aprx. In case of Portal projects, 
+      //this is the cached location of the project on the local machine.
+      //Second string:  url for portal projects
+      result = Project.GetRecentProjectsEx();
+      foreach (var project in result)
+      {
+        string projectPath;
+        string projectName;
+        string projectUrl;
+        if (!string.IsNullOrEmpty(project.Item2))
+        {
+          //this is a portal project
+          //Url
+          projectUrl = project.Item2;
+          //local cached location of the portal project
+          projectPath = project.Item1;
+        }
+        else
+        {
+          //this is a local project
+          //path to local project
+          projectPath = project.Item1;
+        }
+        projectName = new FileInfo(project.Item1).Name;
+      }
+      #endregion
+    }
     #region ProSnippet Group: Geodatabase Content 
     #endregion
 
@@ -1036,6 +1292,7 @@ namespace Content.Snippets
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.MDDeleteContentOption
       // cref: ArcGIS.Desktop.Core.IMetadata.DeleteMetadataContent(ArcGIS.Desktop.Core.MDDeleteContentOption)
       // cref: ArcGIS.Desktop.Core.Item.DeleteMetadataContent(ArcGIS.Desktop.Core.MDDeleteContentOption)
       // cref: ArcGIS.Desktop.Core.Project.DeleteMetadataContent(ArcGIS.Desktop.Core.MDDeleteContentOption)
@@ -1050,6 +1307,7 @@ namespace Content.Snippets
 
       //Item gdbItem = ItemFactory.Instance.Create(@"C:\projectAlpha\GDBs\regionFive.gdb");
 
+      // cref: ArcGIS.Desktop.Core.MDImportExportOption
       // cref: ArcGIS.Desktop.Core.IMetadata.ImportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption)
       // cref: ArcGIS.Desktop.Core.IMetadata.ImportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,System.String)
       // cref: ArcGIS.Desktop.Core.Item.ImportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption)
@@ -1066,6 +1324,7 @@ namespace Content.Snippets
 
       IMetadata metadataItemImport2 = null;
 
+      // cref: ArcGIS.Desktop.Core.MDImportExportOption
       // cref: ArcGIS.Desktop.Core.IMetadata.ImportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,System.String)
       #region Item: Updates metadata with the imported metadata: ImportMetadata
 
@@ -1077,6 +1336,8 @@ namespace Content.Snippets
 
       IMetadata metadataItemExport1 = null;
 
+      // cref: ArcGIS.Desktop.Core.MDImportExportOption
+      // cref: ArcGIS.Desktop.Core.MDExportRemovalOption
       // cref: ArcGIS.Desktop.Core.IMetadata.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption)
       // cref: ArcGIS.Desktop.Core.IMetadata.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption,System.String)
       // cref: ArcGIS.Desktop.Core.Item.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption)
@@ -1091,6 +1352,8 @@ namespace Content.Snippets
 
       IMetadata metadataItemExport2 = null;
 
+      // cref: ArcGIS.Desktop.Core.MDImportExportOption
+      // cref: ArcGIS.Desktop.Core.MDExportRemovalOption
       // cref: ArcGIS.Desktop.Core.IMetadata.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption)
       // cref: ArcGIS.Desktop.Core.IMetadata.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption,System.String)
       // cref: ArcGIS.Desktop.Core.Item.ExportMetadata(System.String,ArcGIS.Desktop.Core.MDImportExportOption,ArcGIS.Desktop.Core.MDExportRemovalOption)
@@ -1105,6 +1368,7 @@ namespace Content.Snippets
 
       IMetadata metadataItemToSaveAsXML = null;
 
+      // cref: ArcGIS.Desktop.Core.MDSaveAsXMLOption
       // cref: ArcGIS.Desktop.Core.IMetadata.SaveMetadataAsXML(System.String,ArcGIS.Desktop.Core.MDSaveAsXMLOption)
       // cref: ArcGIS.Desktop.Core.Item.SaveMetadataAsXML(System.String,ArcGIS.Desktop.Core.MDSaveAsXMLOption)
       // cref: ArcGIS.Desktop.Core.Project.SaveMetadataAsXML(System.String,ArcGIS.Desktop.Core.MDSaveAsXMLOption)
@@ -1116,6 +1380,7 @@ namespace Content.Snippets
 
       IMetadata metadataItemToSaveAsHTML = null;
 
+      // cref: ArcGIS.Desktop.Core.MDSaveAsHTMLOption
       // cref: ArcGIS.Desktop.Core.IMetadata.SaveMetadataAsHTML(System.String,ArcGIS.Desktop.Core.MDSaveAsHTMLOption)
       // cref: ArcGIS.Desktop.Core.Item.SaveMetadataAsHTML(System.String,ArcGIS.Desktop.Core.MDSaveAsHTMLOption)
       // cref: ArcGIS.Desktop.Core.Project.SaveMetadataAsHTML(System.String,ArcGIS.Desktop.Core.MDSaveAsHTMLOption)
@@ -1135,6 +1400,7 @@ namespace Content.Snippets
       await QueuedTask.Run(() => metadataItemToSaveAsUsingCustomXSLT.SaveMetadataAsUsingCustomXSLT(@"E:\Data\Metadata\CustomXSLT.xsl", @"E:\Temp\OutputXMLCustom.xml"));
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.MDUpgradeOption
       // cref: ArcGIS.Desktop.Core.IMetadata.UpgradeMetadata(ArcGIS.Desktop.Core.MDUpgradeOption)
       // cref: ArcGIS.Desktop.Core.Item.UpgradeMetadata(ArcGIS.Desktop.Core.MDUpgradeOption)
       // cref: ArcGIS.Desktop.Core.Project.UpgradeMetadata(ArcGIS.Desktop.Core.MDUpgradeOption)
@@ -1355,6 +1621,7 @@ namespace Content.Snippets
 
     public void GeneralOptions1()
     {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupOption
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupProjectPath
@@ -1383,6 +1650,7 @@ namespace Content.Snippets
 
       #endregion
 
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupOption
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupProjectPath
@@ -1418,6 +1686,7 @@ namespace Content.Snippets
       #endregion
 
 
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupOption
       // cref: ArcGIS.Desktop.Core.GeneralOptions.StartupProjectPath
@@ -1589,13 +1858,14 @@ namespace Content.Snippets
 
     public void PortalProjectOptions()
     {
+      // cref: ArcGIS.Desktop.Core.ApplicationOptions.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions
       // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomHomeFolder
       // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomDefaultGeodatabase
       // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectCustomDefaultToolbox
       // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectDeleteLocalCopyOnClose
       // cref: ArcGIS.Desktop.Core.GeneralOptions.PortalProjectDownloadLocation
-      #region Portal Project Options
+      #region Get/Set Portal Project Options
 
       // access the current options
       var def_home = ApplicationOptions.GeneralOptions.PortalProjectCustomHomeFolder;

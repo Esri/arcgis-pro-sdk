@@ -40,6 +40,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ArcGIS.Desktop.Layouts;
+using ArcGIS.Desktop.Internal.Mapping;
 
 namespace KnowledgeGraphSnippets
 {
@@ -444,6 +446,7 @@ namespace KnowledgeGraphSnippets
     #endregion
 
     //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo
     //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.SupportsProvenance
     //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenanceTypeName
     //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenancePropertyInfo
@@ -526,6 +529,11 @@ namespace KnowledgeGraphSnippets
       //uncommon for there not to be a document type
       return !string.IsNullOrEmpty(
         GetDocumentEntityTypeName(kg.GetDataModel()));
+
+
+      // OR use the KnowledgeGraphPropertyInfo
+      var propInfo = kg.GetPropertyNameInfo();
+      return propInfo.SupportsDocuments;
     }
     #endregion
 
@@ -543,6 +551,24 @@ namespace KnowledgeGraphSnippets
       if (string.IsNullOrEmpty(documentNameType))
         return false;
       return entity.GetTypeName() == documentNameType;
+    }
+
+    #endregion
+
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.SupportsDocuments
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DocumentTypeName
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DocumentPropertyInfo
+    //cref: ArcGIS.Core.Data.Knowledge.DocumentPropertyInfo
+    #region Get Whether KG Supports Documents using KnowledgeGraphPropertyInfo
+    internal void KnowledgeGraphDocuments(KnowledgeGraph kg)
+    {
+      // use the KnowledgeGraphPropertyInfo
+      var propInfo = kg.GetPropertyNameInfo();
+      var supportsDocs = propInfo.SupportsDocuments;
+      var documentType = propInfo.DocumentTypeName;
+      var documentInfo = propInfo.DocumentPropertyInfo;
     }
 
     #endregion
@@ -667,6 +693,232 @@ namespace KnowledgeGraphSnippets
         }
       });
 
+      #endregion
+    }
+
+    #region ProSnippet Group: KnowledgeGraph Investigations
+    #endregion
+
+    public void KGInvestigationCreate()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationFactory.CreateInvestigation(System.String, System.String)
+      //cref: ArcGIS.Desktop.KnowledgeGraph.IKnowledgeGraphInvestigationFactory.CreateInvestigation(System.String, System.String)
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigation
+      #region Create an Investigation
+      var URL = @"https://acme.com/server/rest/services/Hosted/Acme_KG/KnowledgeGraphServer";
+
+      QueuedTask.Run(() =>
+      {
+        var investigation = KnowledgeGraphInvestigationFactory.Instance.CreateInvestigation(URL, "myInvestigation");
+
+        
+      });
+      #endregion
+    }
+
+    public void KGInvestigationCreateAndOpen()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationFactory.CreateInvestigation(System.String, System.String)
+      //cref: ArcGIS.Desktop.KnowledgeGraph.IKnowledgeGraphInvestigationFactory.CreateInvestigation(System.String, System.String)
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigation
+      //cref: ArcGIS.Desktop.Core.KnowledgeGraphFrameworkExtender.CreateInvestigationPaneAsync
+      #region Create and open an investigation pane
+      var URL = @"https://acme.com/server/rest/services/Hosted/Acme_KG/KnowledgeGraphServer";
+
+      QueuedTask.Run(() =>
+      {
+        var investigation = KnowledgeGraphInvestigationFactory.Instance.CreateInvestigation(URL, "myInvestigation");
+
+        ProApp.Panes.CreateInvestigationPaneAsync(investigation);
+      });
+      #endregion
+    }
+
+    public async void KGInvestigationOpenExisting()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationProjectItem
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationProjectItem.GetInvestigation
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigation
+      //cref: ArcGIS.Desktop.Core.KnowledgeGraphFrameworkExtender.CreateInvestigationPaneAsync
+      #region Open an existing investigation
+
+      // open an existing investigation
+      var investigationProjectItems = Project.Current.GetItems<KnowledgeGraphInvestigationProjectItem>();
+      var investigationProjectItem = investigationProjectItems.FirstOrDefault(ipi => ipi.Name.Equals("myInvestigation")); 
+      await QueuedTask.Run(async () =>
+      {
+        KnowledgeGraphInvestigation investigation = investigationProjectItem.GetInvestigation();
+        await ProApp.Panes.CreateInvestigationPaneAsync(investigation);
+      });
+      #endregion
+    }
+
+    public async void KGContainer()
+    {
+      #region Get the Knowlege Graph Investigation container
+      var path = "KnowledgeGraph";
+
+      // find the first container with the correct path (key)
+      var invContainer = Project.Current.ProjectItemContainers.FirstOrDefault(c => c.Path == path);
+
+      // or use the path/key directly
+
+      #endregion
+
+      #region "Select an investigation in the catalog pane
+      var investigationContainer = Project.Current.GetProjectItemContainer("KnowledgeGraph");
+      var item = Project.Current.GetItems<KnowledgeGraphInvestigationProjectItem>().FirstOrDefault();
+
+      //Select the fc
+      if (item != null)
+      {
+        var projectWindow = Project.GetCatalogPane();
+        await projectWindow.SelectItemAsync(item, true, true, investigationContainer);
+      }
+      #endregion
+    }
+
+    #region ProSnippet Group: KnowledgeGraphInvestigationView
+    #endregion
+
+    public void ActiveKnowledgeGraphInvestigationView()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Active
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Investigation
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigation
+      #region Get the active KnowledgeGraphInvestigationView, KnowledgeGraphInvestigation
+
+      // access the currently active knowledge graph investigation view
+      KnowledgeGraphInvestigationView activeView = KnowledgeGraphInvestigationView.Active;
+      KnowledgeGraphInvestigation investigation = activeView?.Investigation;
+      if (investigation != null)
+      {
+        // perform some action
+      }
+      #endregion
+    }
+
+    public async void ActivateInvestigationView()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationProjectItem
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationProjectItem.GetInvestigation
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigation
+      //cref: ArcGIS.Desktop.KnowledgeGraph.IKnowledgeGraphInvestigationPane
+      //cref: ArcGIS.Desktop.KnowledgeGraph.IKnowledgeGraphInvestigationPane.InvestigationView
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView
+      #region Activate an existing investigation view
+
+      //Confirm if investigation exists as a project item
+      KnowledgeGraphInvestigationProjectItem investigationItem = Project.Current.GetItems<KnowledgeGraphInvestigationProjectItem>().FirstOrDefault(
+                                                            item => item.Name.Equals("myInvestigation"));
+      if (investigationItem != null)
+      {
+        KnowledgeGraphInvestigation investigation = await QueuedTask.Run(() => investigationItem.GetInvestigation());
+
+        // see if a view is already open that references the same investigation
+        foreach (var investigationPane in ProApp.Panes.OfType<IKnowledgeGraphInvestigationPane>())
+        {
+          //if there is a match, activate the view
+          if (investigationPane.InvestigationView.Investigation == investigation)
+          {
+            (investigationPane as Pane).Activate();
+            return;
+          }
+        }
+      }
+      #endregion
+    }
+
+    public void InvestigationView_TOCSelection()
+    {
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Active
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.SelectEntities
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.SelectRelationships
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.SelectNamedObjectTypes
+      #region Select entity, relationship types in an investigation view
+
+      // get the active investigation view
+      var iv = KnowledgeGraphInvestigationView.Active;
+
+      // clear any TOC selection
+      iv.ClearTOCSelection();
+
+      // select entities
+      List<string> entities = new List<string>();
+      entities.Add("Person");
+      entities.Add("Org");
+      iv.SelectEntities(entities);
+
+      // or select relationships
+      List<string> relationships = new List<string>();
+      relationships.Add("HasEmployee");
+      iv.SelectRelationships(relationships);
+
+      // or select a combination
+      List<string> namedObjectTypes =  new List<string>();
+      namedObjectTypes.Add("Person");
+      namedObjectTypes.Add("Org");
+      namedObjectTypes.Add("HasEmployee");
+      iv.SelectNamedObjectTypes(namedObjectTypes);
+      #endregion
+    }
+
+    public void InvestigationView_SelectRecords()
+    {
+      string first_entity = "";
+
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Active
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.ServiceUri
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.SetSelectedRecords
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphLayerIDSet
+      #region Select records in an investigation view
+
+      // get the active investigation view 
+      var iv = KnowledgeGraphInvestigationView.Active;
+      var serviceUri = iv.Investigation.ServiceUri;
+
+      // build a dictionary of records
+      var dict = new Dictionary<string, List<long>>();
+      //Each entry consists of the type name and corresponding lists of ids
+      dict.Add(first_entity, new List<long>() { 1, 5, 18, 36, 78 });
+
+      //Create the id set...
+      var idSet = KnowledgeGraphLayerIDSet.FromDictionary(new Uri(serviceUri), dict);
+
+      // select the records on the investigation view
+      iv.SetSelectedRecords(idSet, SelectionCombinationMethod.New);
+      #endregion
+    }
+
+    public void InvestigationView_GetSelectionInLinkChart()
+    {
+
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Active
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.Investigation
+      //cref: ArcGIS.Desktop.KnowledgeGraph.KnowledgeGraphInvestigationView.GetSelectedRecords
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphLayerIDSet
+      //cref: ArcGIS.Desktop.Mapping.MapFactory.CreateLinkChart(System.String,System.Uri,ArcGIS.Desktop.Mapping.KnowledgeGraphLayerIDSet)
+      #region Get Selected records and open in a new link chart
+
+      // get the active investigation view
+      var iv = KnowledgeGraphInvestigationView.Active;
+
+      QueuedTask.Run(() =>
+      {
+        // get the investigation
+        var inv = iv.Investigation;
+
+        // get the set of selected records
+        var idSet = iv.GetSelectedRecords();
+
+        // view these records in a link chart
+        var map = MapFactory.Instance.CreateLinkChart("myLinkChart", new Uri(inv.ServiceUri), idSet);
+        ProApp.Panes.CreateMapPaneAsync(map);
+      });
       #endregion
     }
 
@@ -2186,6 +2438,33 @@ namespace KnowledgeGraphSnippets
       #endregion
     }
 
+    #region PrSnippet Group: Non Spatial Data
+    #endregion
+    public async Task NonSpatialData()
+    {
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.GetShowNonSpatialData(ArcGIS.Desktop.Mapping.MapView)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SetShowNonSpatialData(ArcGIS.Desktop.Mapping.MapView, System.Boolean)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SelectNonSpatialData(ArcGIS.Desktop.Mapping.MapView)
+      //cref: ArcGIS.Desktop.Mapping.KnowledgeGraphMappingExtensions.SelectSpatialData(ArcGIS.Desktop.Mapping.MapView)
+      #region Non spatial data
+      await QueuedTask.Run(() =>
+      {
+        // display non spatial data
+        MapView.Active.SetShowNonSpatialData(true);
+
+        // select the current set of non spatial data
+        var selNonSpatial = MapView.Active.SelectNonSpatialData();
+        
+        // perform some action
+
+        // select the current set of spatial data
+        var selSpatial = MapView.Active.SelectSpatialData();
+        
+        // perform some other action
+      });
+      #endregion
+    }
+
     #region ProSnippet Group: Editing
     #endregion
 
@@ -2595,6 +2874,106 @@ namespace KnowledgeGraphSnippets
       });
 
       #endregion
+
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.SupportsProvenance
+      //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.ProvenanceTypeName
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphProvenanceDescription
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphSourceType
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.KnowledgeGraphProvenanceDescription)
+      #region Create a Provenance Record 2
+
+      await QueuedTask.Run(() =>
+      {
+
+        // check if provenance supported
+        var propInfo = kg.GetPropertyNameInfo();
+        if (!propInfo.SupportsProvenance)
+          return;
+
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a new provenance record",
+          SelectNewFeatures = true
+        };
+
+        var provName = propInfo.ProvenanceTypeName;
+
+        //we will add a row to the provenance for person entity
+        var person_tbl = kg.OpenDataset<Table>("Person");
+
+        //Arbitrarily retrieve the first "person" row
+        var instance_id = Guid.Empty;
+        using (var rc = person_tbl.Search())
+        {
+          if (!rc.MoveNext())
+            return;
+          instance_id = rc.Current.GetGlobalID();//Get the global id
+        }
+
+        var originHandle = new RowHandle(person_tbl, instance_id);
+        var pd = new KnowledgeGraphProvenanceDescription(originHandle, "name", KnowledgeGraphSourceType.Document, "Annual Review 2024", "HR records", "Rock star");
+
+        //Create the provenance row
+        edit_op.Create(pd);
+        if (edit_op.Execute())
+        {
+          //TODO: Operation succeeded
+        }
+
+      });
+
+      #endregion
+
+      Layer docLayer = null;
+      Layer personLayer = null;
+      Layer hasDocLayer = null;
+      Dictionary<string, object> personAtts = null;
+
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphDocumentDescription
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.Desktop.Editing.KnowledgeGraphDocumentDescription)
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember,ArcGIS.Desktop.Editing.KnowledgeGraphRelationshipDescription)
+      //cref: ArcGIS.Desktop.Editing.KnowledgeGraphProvenanceDescription
+      //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Editing.KnowledgeGraphProvenanceDescription)
+      #region Create an Entity, a Document, a HasDocument and a Provenance record
+
+      await QueuedTask.Run(() =>
+      {
+        //Instantiate an operation for the Create
+        var edit_op = new EditOperation()
+        {
+          Name = "Create a records",
+          SelectNewFeatures = true
+        };
+
+        // create the entity
+        var personToken = edit_op.Create(personLayer, personAtts);
+
+        // create the document
+        var kgDocDesc = new KnowledgeGraphDocumentDescription(@"D:\Data\BirthCertificate.jpg");
+        var docToken = edit_op.Create(docLayer, kgDocDesc);
+
+        // create RowHandles from the returned RowTokens
+        var personHandle = new RowHandle(personToken);
+        var docHandle = new RowHandle(docToken);
+
+        // create the "hasDocument" relationship
+        var rd = new KnowledgeGraphRelationshipDescription(personHandle, docHandle);
+        edit_op.Create(hasDocLayer, rd);
+
+        // create the provenance record for the person entity using the document entity
+        // provenance record is on the "name" field 
+        var pd = new KnowledgeGraphProvenanceDescription(personHandle, "name", docHandle, "", "comments");
+        edit_op.Create(pd);
+
+        // execute - create all the entities and relationship rows _together_
+        edit_op.Execute();
+      });
+
+      #endregion
     }
 
     internal static KnowledgeGraph GetKnowledgeGraph()
@@ -2612,7 +2991,7 @@ namespace KnowledgeGraphSnippets
     //cref: ArcGIS.Desktop.Editing.EditOperation.CreateChainedOperation
     //cref: ArcGIS.Desktop.Editing.RowToken
     //cref: ArcGIS.Desktop.Editing.RowToken.GlobalID
-    #region Create a Document Record
+    #region Create a Document Record 1
 
     internal static string GetDocumentTypeName(KnowledgeGraphDataModel kg_dm)
     {
@@ -2733,6 +3112,103 @@ namespace KnowledgeGraphSnippets
       });
     }
 
+    #endregion
+
+
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraph.GetPropertyNameInfo
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.SupportsDocuments
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphPropertyInfo.DocumentTypeName
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphDocumentDescription
+    //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Core.Data.Table, ArcGIS.Core.Data.Knowledge.KnowledgeGraphDocumentDescription)
+    //cref: ArcGIS.Desktop.Editing.EditOperation.Create(ArcGIS.Desktop.Mapping.MapMember, ArcGIS.Core.Data.Knowledge.KnowledgeGraphDocumentDescription)
+    //cref: ArcGIS.Core.Data.Knowledge.KnowledgeGraphRelationshipDescription
+    //cref: ArcGIS.Desktop.Editing.EditOperation.Create(KnowledgeGraphRelationshipDescription)
+    #region Create a Document Record 2
+
+    internal async void AddDocumentRecord2()
+    {
+
+      await QueuedTask.Run(() =>
+      {
+        using (var kg = GetKnowledgeGraph())
+        {
+
+          var propInfo = kg.GetPropertyNameInfo();
+          if (!propInfo.SupportsDocuments)
+            return false;
+
+          var edit_op = new EditOperation()
+          {
+            Name = "Create Document Example",
+            SelectNewFeatures = true
+          };
+
+          var doc_entity_name = propInfo.DocumentTypeName;
+          var hasdoc_rel_name = GetHasDocumentTypeName(kg.GetDataModel());
+
+          //Document can also be FeatureClass
+          var doc_tbl = kg.OpenDataset<Table>(doc_entity_name);
+          var doc_rel_tbl = kg.OpenDataset<Table>(hasdoc_rel_name);
+
+          //This is the document to be added...file, image, resource, etc.
+          var url = @"E:\Data\Temp\HelloWorld.txt";
+
+          // create the KnowledgeGraphDocumentDescription
+          var kgDocDesc = new KnowledgeGraphDocumentDescription(url);
+
+          // if there is a geometry use the following ctor
+          // var kgDocDesc = new KnowledgeGraphDocumentDescription(url, doc_location);
+
+          // if you have additional custom attributes 
+          //var customDocAtts = new Dictionary<string, object>();
+          //customDocAtts.Add("custom_attrib", "Foo");
+          //customDocAtts.Add("custom_attrib2", "Bar");
+          //var kgDocDesc = new KnowledgeGraphDocumentDescription(url, null, customDocAtts);
+
+          // add additional properties if required
+          kgDocDesc.Keywords = @"text,file,example";
+          
+          /// The Create method will auto-populate the Url, Name, FileExtension and contentType fields of the document row
+          /// from the path supplied.  
+          var rowToken = edit_op.Create(doc_tbl, kgDocDesc);
+
+          //Get the entity whose document this is...
+          var org_fc = kg.OpenDataset<FeatureClass>("Organization");
+          var qf = new QueryFilter()
+          {
+            WhereClause = "name = 'Acme'",
+            SubFields = "*"
+          };
+          var origin_org_id = Guid.Empty;
+          using (var rc = org_fc.Search(qf))
+          {
+            if (!rc.MoveNext())
+              return false;
+            origin_org_id = rc.Current.GetGlobalID();//For the relate
+          }
+
+          // set up the row handles
+          var originHandle = new RowHandle(org_fc, origin_org_id);    // entity
+          var destinationHandle = new RowHandle(rowToken);            // document
+
+          // create the KnowledgeGraphRelationshipDescription
+          var rd = new KnowledgeGraphRelationshipDescription(originHandle, destinationHandle);
+
+          // if you have additional custom attributes for the "HasDocument" relationship
+          //var customHasDocAtts = new Dictionary<string, object>();
+          //customHasDocAtts.Add("custom_attrib", "Foo");
+          //customHasDocAtts.Add("custom_attrib2", "Bar");
+          //var rd = new KnowledgeGraphRelationshipDescription(originHandle, destinationHandle, customHasDocAtts);
+
+          // create the relate record using the same edit operation
+          edit_op.Create(doc_rel_tbl, rd);
+
+          //Call execute to create all the entities and relationship rows _together_
+          return edit_op.Execute();
+        }
+        return false;
+      });
+    }
     #endregion
 
     public async void KGEditing_Modify()
