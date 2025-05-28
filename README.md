@@ -460,6 +460,7 @@ At 3.5 you can take advantage of API enhancements for: <br/>
 * Create elevation profile graphs.
 * Add and update map view overlay performance improvements.
 * TINEditor class for creating and modifying TINs.
+* Export the scene contents to a stereolithography format (STL)
 
 **Content:**
 * Open and retrieve recently opened project list to include Portal Projects (uploaded to an enterprise portal).
