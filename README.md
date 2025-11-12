@@ -1,7 +1,7 @@
-## ArcGIS Pro 3.5 SDK for .NET
+## ArcGIS Pro 3.6 SDK for .NET
 
 ```
-ArcGIS Pro Version: 3.5.0.57366
+ArcGIS Pro Version: 3.6.0.59527
 ```
 
 Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SDK provides four main extensibility patterns:  add-ins, managed configurations, plugin datasources and CoreHost applications.  You can leverage modern .NET features and patterns such as Task Asynchronous Programming (TAP), LINQ, WPF Binding, and MVVM to build integrated 2D and 3D add-ins with the ArcGIS Pro APIs.
@@ -13,13 +13,13 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 #### Developing with ArcGIS Pro
 
 * [Overview of the ArcGIS Pro SDK](#overview-of-the-arcgis-pro-sdk)
-* [What's New for Developers at 3.5](#whats-new-for-developers-at-35)
+* [What's New for Developers at 3.6](#whats-new-for-developers-at-36)
    * [ArcGIS Pro 3.3.3 and 3.4.1 Patches](#arcgis-pro-333-and-341-patches)
 * [Installing ArcGIS Pro SDK for .NET](#installing-arcgis-pro-sdk-for-net)
 * [Release notes](#release-notes)
 * [Resources](#resources)
 * [Pro SDK Videos](https://mediaspace.esri.com/channel/ArcGIS+Pro+SDK+for+.NET/256320933)
-* [ProSnippets](../../wiki/ProSnippets)  
+* [ProSnippets](https://github.com/Esri/arcgis-pro-sdk-snippets/)
 * [ArcGIS Pro API](#arcgis-pro-api) 
 * [ProGuide: ArcGIS Pro Extensions NuGet](../../wiki/ProGuide-ArcGIS-Pro-Extensions-NuGet)
 
@@ -33,6 +33,7 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 * [ProConcepts: Framework](../../wiki/ProConcepts-Framework)
 * [ProConcepts: Asynchronous Programming in ArcGIS Pro](../../wiki/ProConcepts-Asynchronous-Programming-in-ArcGIS-Pro)
 * [ProConcepts: Advanced topics](../../wiki/ProConcepts-Advanced-Topics)
+* [ProGuide: How to Increment Addin Version Number](../../wiki/ProGuide-How-to-increment-addin-version-number)
 * [ProGuide: Custom settings](../../wiki/ProGuide-Custom-settings)
 * [ProGuide: Command line switches for ArcGISPro.exe](../../wiki/ProGuide-Command-line-switches-for-ArcGISPro.exe)
 * [ProGuide: Reusing ArcGIS Pro Commands](../../wiki/ProGuide-Reusing-Pro-Commands)
@@ -60,6 +61,10 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 * [ProConcepts: Configurations](../../wiki/ProConcepts-Configurations)
 * [ProGuide: Configurations](../../wiki/ProGuide-Configurations)
 
+&nbsp;&nbsp;&nbsp;&nbsp;**Copilot**
+* [ProConcepts: Develop Add-ins with Copilot](../../wiki/ProConcepts-develop-addins-with-copilot)
+* [ProGuide: Writing an Add-in with Copilot](../../wiki/ProGuide-writing-an-addin-with-copilot)
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Customization**
 
@@ -74,6 +79,7 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 * [ProGuide: Galleries](../../wiki/ProGuide-Galleries)
 * [ProGuide: Dockpanes](../../wiki/ProGuide-Dockpanes)
 * [ProGuide: Code your own states and conditions](../../wiki/ProGuide-Code-Your-Own-States-and-Conditions)
+* [ProGuide: Command Filter](../../wiki/ProGuide-Command-Filter)
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Styling**
 
@@ -319,12 +325,11 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 
 #### ArcGIS Pro
 
-* ArcGIS Pro 3.5
+* ArcGIS Pro 3.6
 
 #### Supported platforms
 
-* Windows 11 (Home, Pro, Enterprise)
-* Windows 10 (Home, Pro, Enterprise) (64 bit)
+* Windows 11 Home, Pro, Enterprise (64 bit)
 
 #### Supported .NET
 
@@ -332,19 +337,17 @@ Extend ArcGIS Pro with the ArcGIS Pro SDK for Microsoft .NET.  The ArcGIS Pro SD
 
 #### Supported IDEs
 
-* Visual Studio 2022 (v17.8 or higher)  
+* Visual Studio 2022 (v17.13 or higher)  
    * Community Edition  
    * Professional Edition  
    * Enterprise Edition  
 
-Released alongside .NET 8, the [Visual Studio 2022 17.8 release](https://devblogs.microsoft.com/visualstudio/visual-studio-17-8-now-available/) brings support for .NET 8.
-
 #### Third party assemblies
 _**Newtonsoft Json**_  
-* At 3.5, ArcGIS Pro is using version 13.0.3.27908 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
+* At 3.6, ArcGIS Pro is using version 13.0.3.27908 of the Newtonsoft Json NuGet. If you require Newtonsoft NuGet in your add-ins it is recommended to use the same version.  
 
 _**WebView2**_  
-* Add-in developers can use the new WebViewBrowser control based on Microsoft Edge WebView2. Consult the WebView2 manifest in the Pro bin\WebView folder for the current WebView2 fixed version runtime in use by ArcGIS Pro.
+* Add-in developers can use the new WebViewBrowser control based on Microsoft Edge WebView2. Microsoft Edge WebView2 Runtime version 132 or later is required.
 
 [ArcGIS Pro system requirements](https://pro.arcgis.com/en/pro-app/get-started/arcgis-pro-system-requirements.htm) 
 
@@ -377,7 +380,7 @@ Assembly           | Description
 ------------------------| -------------
 ArcGIS.Desktop.Catalog.dll   | Provides access to project content items (map items, layout items, style items, folder items, and so on).
 ArcGIS.Desktop.Core.dll    | Provides functionality to create and manage projects, access to events associated with the current project, and the ability to execute geoprocessing tools.
-ArcGIS.Desktop.DataReviewer.dll | Provides functionality to establish and manage Reviewer results, sessions, and batch jobs in a project.
+ArcGIS.Desktop.DataReviewer.dll | Provides functionality to establish and manage Reviewer results, sessions, and batch jobs in a project. **(Deprecated)**
 ArcGIS.Desktop.Editing.dll        | Provides access to the editing environment and core editing functionality required for custom edit tool implementations.
 ArcGIS.Desktop.Extensions.dll        | Provides extension methods for other ArcGIS Pro classes. Provides a base class for custom map tools.
 ArcGIS.Desktop.Geoprocessing.dll        | Provides access to geoprocessing history items stored in the project. (Note: Adds a reference to ArcGIS.Desktop.Core.dll to execute geoprocessing tools.)
@@ -436,7 +439,7 @@ To use the ArcGIS Pro Extensions NuGet, set the NuGet Package Management format 
 
 [ProGuide: ArcGIS Pro Extensions NuGet](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-ArcGIS-Pro-Extensions-NuGet)
 
-## What's New for Developers at 3.5
+## What's New for Developers at 3.6
 
 #### ArcGIS Pro 3.3.3 and 3.4.1 Patches
 
@@ -447,48 +450,55 @@ For users installing both the ArcGIS Pro and AllSource patches (whether 3.3.3 an
 If you are using ArcGIS Pro Extensions NuGet with ArcGIS Pro 3.3 or 3.4, and you install the ArcGIS Pro 3.3.3 or 3.4.1 patch you may encounter an issue where the addin or configuration is no longer registered to the default well-known folder during compilation. This will affect your ability to debug your addins and configurations. To fix this issue, please upgrade your Esri.ArcGISPro.Extensions30 NuGet to either of Esri.ArcGISPro.Extensions30 3.3.3 or 3.4.1 depending on your ArcGIS Pro release.
 
 #### 1. API enhancements
-At 3.5 you can take advantage of API enhancements for: <br/>
+At 3.6 you can take advantage of API enhancements for: <br/>
+At 3.6 you can take advantage of API enhancements for: <br/>
 
 **Knowledge Graph:**
-* Knowledge Graph Investigation Project Item for integration into the Pro Catalog view.
-	   * Open, Add to map, Add to project.
-* New knowledge graph document description class for creating new document rows.
-* New knowledge graph document provenance class for creating new provenance rows.
+* Knowledge Graph analytical functions to include Centrality and Filtered Find Paths, FFP, computations.
+* Editing enhancements for adding relationships and provenance.
 
-**Map Exploration and 3D Analyst:**
-* Line of sight enhancements to allow use of multi-patches as obstructions.
-* Create elevation profile graphs.
-* Add and update map view overlay performance improvements.
-* TINEditor class for creating and modifying TINs.
-* Export the scene contents to a stereolithography format (STL)
+**3D Analyst:**
+* Selection of LAS points via a spatial filter.
 
-**Content:**
-* Open and retrieve recently opened project list to include Portal Projects (uploaded to an enterprise portal).
+**Editing:**
+* Activation of default template without changing the current active tool.
+* Add Z vertex changes to sketch update/modified events.
+* Activate single workspace editing mode.
 
-**Layout:**
-* Layout (and map view) printing enhancements.
-* Ability to create presentations.
+**Framework:**
+* Support Side-by-Side loading of addins to support isolation.
+* Support addin sign-in using an Azure key vault.
+
+**Geometry:**
+* ProjectEx performance improvements.
+* Use of .gsb's (grid based files) for specifying geographic transformations.
 
 **Map Authoring:**
-* Add spatial filters to layer definition queries.
-* Generate feature outline geometries from feature layers.
+* Add finer-grained control of layer properties with Bulk Layer Create via use of LayerCreationParams derived classes to set additional properties.
+* Addition of Feature drawing order functionality to the api.
+* Use of arcade expressions with class break renderers.
+* Use of non-recycling cursors for search.
+* Export map scene contents to glTF.
 
-* **Geodatabase:**
-* DDL Enhancements for creating dimension feature classes.
+**Layout and Reports:**
+* Configure custom report templates.
+
+**Data Reviewer:**
+* Data quality workflows and related tools based on the Reviewer Workspace are deprecated. As a result, the Data Reviewer Assembly and Namespaces will be removed at an ArcGIS Pro 4.0, the next major release. Starting at 3.6, it is recommended that users migrate to ArcGIS Data Reviewer attribute rules-based workflows. [Learn more about migrating to attribute rules](https://www.esri.com/arcgis-blog/products/data-reviewer/data-management/migrating-to-attributes-rules-using-arcgis-data-reviewer/)
 
 A complete list of the API enhancements is provided in the [API Changes section of the API Reference](https://pro.arcgis.com/en/pro-app/latest/sdk/api-reference/topic15120.html).
 
 #### 2. SDK Resources
 There are many ProConcepts, ProGuide, ProSnippets, and samples to help you get up and running with the new SDK features. Updates to the SDK Resources include, but are not limited to: 
-* [ProConcepts: Presentations](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Presentations)
-* [ProSnippets: Presentations](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-Presentations)
-* [ProConcepts: Content and Items](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Content-and-Items)
-* [ProSnippets: Content](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-content)
-* [ProGuide: Command Filter](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Command-Filter)
-* [ProGuide: How to Increment Addin Version Number](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-How-to-Increment-Addin-Version-Number)
+* [ProConcepts: Develop Add-ins with Copilot](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-develop-addins-with-copilot)
+* [ProGuide: Writing an Add-in with Copilot](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-writing-an-addin-with-copilot)
+* [ProConcepts: Editing](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Editing)
+* [ProConcepts Geodatabase](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Geodatabase)
+* [ProConcepts: Map Authoring](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Map-Authoring)
+* [ProConcepts: 3D-Analyst Layers](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-3D-Analyst-Layers)
 * [ProConcepts: Knowledge Graph](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-Knowledge-Graph)
 * [ProSnippets: Knowledge Graph](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets-KnowledgeGraph)
-* The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets)
+* The [Pro Community Samples](https://github.com/Esri/arcgis-pro-sdk-community-samples) and [Snippets](https://github.com/Esri/arcgis-pro-sdk)
 
 ## Installing ArcGIS Pro SDK for .NET
 
@@ -497,9 +507,9 @@ ArcGIS Pro SDK for .NET can be downloaded and installed from within Visual Studi
 * ArcGIS Pro SDK for .NET (Utilities) 
 
 **Notes:**
-Moving to ArcGIS Pro 3.5 SDK (or 3.0 SDK) from 2.x is not an upgrade. To install,
-1. Consult [Migrating from 2.x](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Installation-and-Upgrade#migrating-from-2x) if you want to install ArcGIS Pro 3.5 SDK and you are on 2.x, **_not_** 3.x.
-2. If you are migrating a 2.x add-in to 3.5 you can install the migration tool to help automate the conversion process. Moving from 2.x to 3.x is a **_breaking change_**. Refer to the migration guide [ProConcepts: 3.0 Migration Guide](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-3.0-Migration-Guide) and  [ProGuide:.NET 8 Upgrade](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-NET-8-Upgrade) for more details.
+Moving to ArcGIS Pro 3.6 SDK (or 3.0 SDK) from 2.x is not an upgrade. To install,
+1. Consult [Migrating from 2.x](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Installation-and-Upgrade#migrating-from-2x) if you want to install ArcGIS Pro 3.6 SDK and you are on 2.x, **_not_** 3.x.
+2. If you are migrating a 2.x add-in to 3.6 you can install the migration tool to help automate the conversion process. Moving from 2.x to 3.x is a **_breaking change_**. Refer to the migration guide [ProConcepts: 3.0 Migration Guide](https://github.com/Esri/arcgis-pro-sdk/wiki/ProConcepts-3.0-Migration-Guide) and  [ProGuide:.NET 8 Upgrade](https://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-NET-8-Upgrade) for more details.
 
 Read the [ProGuide: Installation and Upgrade](http://github.com/Esri/arcgis-pro-sdk/wiki/ProGuide-Installation-and-Upgrade) for detailed installation instructions.
 
@@ -610,12 +620,12 @@ ArcGIS Pro SDK for .NET (Migration) provides support to migrate ArcGIS Pro SDK 2
 ## Resources
 
 * [API Reference online](https://pro.arcgis.com/en/pro-app/latest/sdk/api-reference)
-* [ProSnippets: ready-made snippets of code for your ArcGIS Pro add-ins.](https://github.com/Esri/arcgis-pro-sdk/wiki/ProSnippets).
+* [ProSnippets: ready-made snippets of code for your ArcGIS Pro add-ins.](https://github.com/Esri/arcgis-pro-sdk-snippets)
 * <a href="https://pro.arcgis.com/en/pro-app/sdk/" target="_blank">ArcGIS Pro SDK for .NET (pro.arcgis.com)</a>
 * [arcgis-pro-sdk-community-samples](http://github.com/Esri/arcgis-pro-sdk-community-samples)
 * [ArcGIS Pro DAML ID Reference](http://github.com/Esri/arcgis-pro-sdk/wiki/ArcGIS-Pro-DAML-ID-Reference)
 * [FAQ](http://github.com/Esri/arcgis-pro-sdk/wiki/FAQ)
-* [ArcGIS Pro SDK icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.5.0.57366)
+* [ArcGIS Pro SDK icons](https://github.com/Esri/arcgis-pro-sdk/releases/tag/3.6.0.59527)
 
 ## Contributing
 
@@ -643,10 +653,9 @@ limitations under the License.
 A copy of the license is available in the repository's [license.txt](./License.txt) file.
 
 
-<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 3.5 SDK for Microsoft .NET Framework</b></p>
+<p align = center><img src="http://esri.github.io/arcgis-pro-sdk/images/ArcGISPro.png"  alt="pre-req" align = "top" height = "20" width = "20" ><b> ArcGIS Pro 3.6 SDK for Microsoft .NET Framework</b></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#installing-arcgis-pro-sdk-for-net) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a>
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Home](https://github.com/Esri/arcgis-pro-sdk/wiki) | <a href="http://pro.arcgis.com/en/pro-app/sdk/api-reference/index.html" target="_blank">API Reference</a> | [Requirements](#requirements) | [Download](#installing-arcgis-pro-sdk-for-net) |  <a href="http://github.com/esri/arcgis-pro-sdk-community-samples" target="_blank">Samples</a> |  <a href="http://github.com/esri/arcgis-pro-sdk-snippets" target="_blank">Snippets</a>
 
 
 

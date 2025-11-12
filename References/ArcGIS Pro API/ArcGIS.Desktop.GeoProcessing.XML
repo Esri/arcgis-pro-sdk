@@ -1,0 +1,2041 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.GeoProcessing</name>
+  </assembly>
+  <members>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.AssistantExtensionUtilities">
+      <summary>
+            Common methods used by the different extensions.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.AssistantExtensionUtilities.ManageJsonSchema.output_no_memory_AttributeAdjustment(System.String[],System.Xml.Linq.XElement,System.Xml.Linq.XElement)">
+      <summary>
+            tool attribute: output_no_memory tool does not support memory for output.
+            </summary>
+      <param name="attrs"></param>
+      <param name="typeXml"></param>
+      <param name="valueXml"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.AssistantExtensionUtilities.FunctionResultToParameters(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            Transform the Function Result by the LLM into a collection of string parameters
+            </summary>
+      <param name="toolPath">e.g. analysis.Buffer</param>
+      <param name="values"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.AssistantExtensionUtilities.AlwaysTryTwice(System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+      <summary>
+            Add tool validation and ask LLM to review once more with valueXML to help.
+            </summary>
+      <param name="toolPath">e.g. analysis.Buffer</param>
+      <param name="values">toolParameterName and usually a string value</param>
+      <param name="lastAsk">last user ask</param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.AssistantExtensionUtilities.GetTool(System.String,ArcGIS.Desktop.Internal.DesktopService.IGPToolProcessor,System.String)">
+      <summary>
+            Get the tool from the tool id
+            </summary>
+      <param name="toolPath">e.g. analysis.buffer</param>
+      <param name="tool_processor">Tool processor</param>
+      <param name="xml">tool xml</param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.GeoProcessingAssistantExtension">
+      <summary>
+            Represents the Pro Help Skill.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilderAssistantExtension">
+      <summary>
+            Represents the Pro Help Skill.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.RasterAnalysisAssistantExtension">
+      <summary>
+            Represents the Pro Help Skill.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Controls.CustomSlider">
+      <summary>
+            Interaction logic for CustomSlider.xaml
+            </summary>
+      <summary>
+            CustomSlider
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.CustomSlider.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Controls.GridRouterSettingsControl">
+      <summary>
+            Interaction logic for GridRouterSettingsControl.xaml
+            </summary>
+      <summary>
+            GridRouterSettingsControl
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.GridRouterSettingsControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.EventHandlerHelper.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeViewItemEventHandlerHelper">
+      <summary>
+            TreeViewItemEventHandlerHelper
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeViewItemEventHandlerHelper.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.control_helper.OnPlacementPropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+                Chooses the behavior of where the Popup should be placed on screen.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Controls.rtbEditor">
+      <summary>
+            Interaction logic for rtbEditor.xaml
+            </summary>
+      <summary>
+            rtbEditor
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.rtbEditor.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeListView.Columns">
+      <summary> GridViewColumn List</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeListViewItem.Level">
+      <summary>
+            Item's hierarchy in the tree
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeListViewItem.MakeVisible">
+      <summary>
+            CLR wrapper for the 'IsInput' dependency property.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TreeListViewItem.MakeVisiblePropertyChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+            Callback called when 'MakeVisible' property has changed.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl.Name">
+      <summary>
+            display name
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl.Value">
+      <summary>
+            get/set Value as Text
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl.isParameter">
+      <summary>
+            Parameter or Environment
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl.OnClose">
+      <summary>
+            to free internal resources
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.gpControlAttribute">
+      <summary>
+            GP value control xaml resource dictionary attribute
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase._typeXml">
+      <summary>
+            parameter's definition (datatype, default domain and etc),
+            stays constant over the life of the control
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase._valueXml">
+      <summary>
+            GPValue definition (value as text, domain, filter and etc), updated after Validate, next call setValueRaw()
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase._host">
+      <summary>
+            host can be ToolDialogPageViewModel, EnvironmentsViewModel,
+            composite control(multivalue, valuetable and etc) or any custom implementation
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.order">
+      <summary>
+            parameter display order, -1 sequential in the general list
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.paramName">
+      <summary>
+            unique identifier
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.Name">
+      <summary>
+            display name (title)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.Value">
+      <summary>
+            GPValue as string, usually bind to the xaml control
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.getValueRaw">
+      <summary>
+            this string is used to update GPValue. override if different string needed than 'Value'
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.update_value">
+      <summary>
+            get new value from 'host' and invalidate UI properties
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.setValueRaw(System.String)">
+      <summary>
+            assign new string Value without notifying host
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.ResolveType(System.String)">
+      <summary>
+            net50 port of Type.GetType()
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase._canHandleMDElement">
+      <summary>
+            set false to ignore update and disable control when value reference MD element
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase.get_last_host(ArcGIS.Desktop.Internal.GeoProcessing.Controls.ValueControlBase)">
+      <summary>
+            returns last level host
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl._indentationChars">
+      <summary> ' ', \t</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl._trimChars">
+      <summary> \r, \n, ' ', \t</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl._parengroups">
+      <summary>(), [], {}, \'\', \"\"</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl._tabReplacement">
+      <summary>indentation 4 spaces</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl._CRLF">
+      <summary>new line</summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.get_text_raw">
+      <summary>
+            Text-based representation of the contents of the RichTextBox
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.get_indentation(System.String)">
+      <summary>
+             Returns all the leading whitespace of the line of the text.
+             Lines that are all whitespace are considered empty.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.ControlHash">
+      <summary>
+            compute 64bit Hash of the control's Text and current cirsor position gives us what we need to
+            uniquely identify an autocomplete request against Python
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.IsValidPositonForCanditates(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate})">
+      <summary>
+            return true if position is sutable for popup
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.InsertCompletion(ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate)">
+      <summary>
+            insert candidate from popup autocomplete listbox
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.try_dedent">
+      <summary>
+            return true if removed some spaces
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.handle_home_key">
+      <summary>
+            keybord navigation with Home key
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.update_positions(System.String)">
+      <summary>
+            compute and highlite mtching brackets
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.replControl.highlights(System.Windows.Documents.TextRange)">
+      <summary>
+            return status
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TextPointerEx.char_offset(System.Windows.Documents.TextPointer)">
+      <summary>
+            Zero-based index for where the cursor is in the *plain text* (not rich text) of the document
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TextPointerEx.caret_move(System.Windows.Documents.TextPointer,System.Int32)">
+      <summary>
+            move caret by characters
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TextPointerEx.get_next_char(System.Windows.Documents.TextPointer)">
+      <summary>
+            return left charected
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Controls.TextPointerEx.get_current_text_run(System.Windows.Documents.TextPointer)">
+      <summary>
+            return current line and cursor position in it
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Environments.Item(System.String)">
+      <summary>
+            returns null if the name does not match
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.IsSynchronizeWithEngineAttribute">
+      <summary>
+            this property pushed to GPService
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.SettingsNameAttribute">
+      <summary>
+            set matching property name for GeoProcessing.Properties.Settings
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.AdminSettingsNameAttribute">
+      <summary>
+            set matching property name for Framework.GeoprocessingSettings
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.get_adminsetting_value(System.String,System.Boolean@)">
+      <summary>
+            returns Desktop.Internal.Framework.AdministratorSetting property value or NULL
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.ide_programs">
+      <summary>
+            List of programs which may close new window processes and their arguments to invoke standalone windows
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.always_single">
+      <summary>
+            List of programs which must always be used in a standalone window
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.GetScriptEditorAny(System.String,System.Boolean)">
+      <summary>
+            return string[0] - program path, string[1] - program arguments
+            </summary>
+      <param name="full_path"></param>
+      <param name="temporary_resource"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.GPOptions.SaveOptionToProfile``1(System.String,``0@)">
+      <summary>
+            return true indicates whether the setting needs to be pushed to the service as well
+            not all settings are pushed to the service.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.IsSynchronizeWithEngine">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.SaveToProfile">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LoadFromProfile">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LayerDistance">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.NodeDistance">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LinkPadding">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LinksCompactFactor">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.TimeLimit">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.SwapPairIterations">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.Margins">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.Orientation">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.Direction">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.IgnoreNodeSize">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.SplitLayers">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.StableSort">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.StraightenLongLinks">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.EnforceLinkFlow">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.GrowToFit">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.KeepGroupLayout">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.KeepRootPosition">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LinkType">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.ReverseDirection">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.FlipOrientation">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.MultiGraphsPlacementOrder">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.GroupMultiGraphsPlacementOrder">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.UseGridRouter">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LengthCost">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.TurnCost">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.CrossingCost">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.NodeVicinityCost">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.NodeVicinitySize">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.GridSize">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.RTLFlowDirection">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.AllowSplitLinks">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LinkShape">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.DynamicLinks">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LayoutSettings">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.RoutingSettings">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.DiagramSettings">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.Settings">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.LastModifiedWithSoftware">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.AddDisplayWithinModelBuilderGroupLayer">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.VersionCreated">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.MBOptions.VersionLastModified">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.Properties.Resources.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Properties.Resources.NewToolboxTitle">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.Properties.Resources.NewToolboxCount">
+      <summary>
+            e.g. New Toolbox (1).tbx
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.LocalResources.GpResources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.LocalResources.GpResources.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.LocalResources.GpResources.button_Back">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.LocalResources.GpResources.tool_search_ignore">
+      <summary>
+            translate carefully
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.math">
+      <summary>
+            conver two bindig values to double and apply operation ('eq','plus','minus','less', 'less_eq', 'more', 'more_eq', 'div', 'mul')<br /></summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.plus_const">
+      <summary>
+            return (double)value + (double)parameter
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.mul_const">
+      <summary>
+            return (double)value * (double)parameter
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.eq_const">
+      <summary>
+            return (double)value == (double)parameter
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.more_const">
+      <summary>
+            return (double)value &gt; (double)parameter
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.is_type">
+      <summary>
+            return true if the type name of the binding value is the same as the parameter text
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.get_type">
+      <summary>
+            return binding value type as string
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.ParametersConverter">
+      <summary>
+            join multi-binding values to an array (object[])
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Brush2ColorConverter">
+      <summary>
+            return Color type from SolidColorBrush<br />
+            if binding type not SolidColorBrush return Red 
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.ImageSourceConverter">
+      <summary>
+            convert URI path (string) to BitmapImage
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.embeddings.is_initialized">
+      <summary>
+            returns true if system tools embeddings loaded
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.embeddings.initialize_embeddings(System.String)">
+      <summary>
+            load or rebuild system tools embeddings for 'lng_name'
+            for unit-test - use lng_name != "CurrentUICulture" to fully re-load
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.embeddings.make_source(ArcGIS.Desktop.Core.Geoprocessing.IGPItemInfo@)">
+      <summary>
+            returns a specially formatted string for embeddings
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.SearchTools.cache_item.tool_name">
+      <summary>
+            normalized tool title
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.SearchTools.getToolInfo(System.String)">
+      <summary>
+            get TooInfo from system and project items
+            </summary>
+      <param name="tool_name">= @path\tool | tool_alias | alias.tool </param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.SearchTools.hungarian">
+      <summary>
+            Assignment problem : https://en.wikipedia.org/wiki/Assignment_problem
+            solution https://en.wikipedia.org/wiki/Hungarian_algorithm
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.Tokenizers.JA">
+      <summary>
+            base on this script http://chasen.org/~taku/software/TinySegmenter/tiny_segmenter-0.2.js
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.LoadingAnimationControl">
+      <summary>
+            Interaction logic for BarAnimationControl.xaml
+            </summary>
+      <summary>
+            LoadingAnimationControl
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.LoadingAnimationControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MBNode.#ctor(System.String,System.String,System.Object,ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MdElementTypeEnum,ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MdNodeTypeEnum,System.String,System.Windows.Point,MindFusion.Diagramming.Wpf.Diagram,System.Boolean)">
+      <summary>
+            Called from Add element
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MBNode.FromTemplateNode(MindFusion.Diagramming.Wpf.ShapeNode,ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MdElementTypeEnum,ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MdNodeTypeEnum,System.String,System.Windows.Point,System.Windows.Size,MindFusion.Diagramming.Wpf.Diagram,System.Boolean)">
+      <summary>
+            Called from Tom Sawyer upgrade
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MBNode.FromXElement(MindFusion.Diagramming.Wpf.Diagram,System.Xml.Linq.XElement,System.Boolean)">
+      <summary>
+            Called from UpdateBatchUI_Batch. 
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.MBMixedOperationBase.#ctor(ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel,ArcGIS.Desktop.GeoProcessing.ModelBuilderReportViewModel.RefreshReason)">
+      <summary>
+            This class can be used for edit operations that do not have an inverse action.(eg: Auto Layout)
+            </summary>
+      <param name="p"></param>
+      <param name="enumReasonArg"></param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.CanNextExtent">
+      <summary>
+            Gets or sets the HasDuplicates property.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.OnCanNextExtentChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+            Raised when the HasDuplicatesProperty dependency property changes.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.CanPreviousExtent">
+      <summary>
+            Gets or sets the HasDuplicates property.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.OnCanPreviousExtentChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+            Raised when the HasDuplicatesProperty dependency property changes.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.ViewModel">
+      <summary>
+            Gets or sets the ViewModel property.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.OnViewModelChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+            Raised when the ViewModelProperty dependency property changes.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.MBPane">
+      <summary>
+            Gets or sets the ViewModel property.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBar.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderStatusBarViewModel.#ctor">
+      <summary>
+            Gets or sets the DiagramZoomFactor property.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderToolBar">
+      <summary>
+            Interaction logic for ModelBuilderToolBarView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.ModelBuilderToolBar.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.HistoryContainer.#ctor">
+      <summary>
+            return true when total amount of history more the 5MB
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.c2t">
+      <summary>
+            convert string to property
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Function">
+      <summary>'f'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Object">
+      <summary>'o'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Method">
+      <summary>'m'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Module">
+      <summary>'p'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Keyword">
+      <summary>'k'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Tool">
+      <summary>'t'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.More">
+      <summary>'r' ??? </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Layer">
+      <summary>'l'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Table">
+      <summary>'b'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Field">
+      <summary>'d'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.eType.Error">
+      <summary>'e'</summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate.CursorOffset">
+      <summary>
+            when inserted move caret back from the end
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteViewModel.SetCandidates(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.GeoProcessing.AutocompleteCandidate},System.Windows.Rect,System.Int32,System.Int32)">
+      <summary>
+            Show ListBox with candidates, return false if nothing to pop
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.FunctionSingnatureToolTipViewModel.SizeMeText">
+      <summary>
+            return first line of tool siganature:  for example print(args...)
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.ReSnQtStr">
+      <summary> should cover all python strings </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.matching_brackets(System.String)">
+      <summary>
+            return's list of all matching brackats ()[]{},
+            note: not aware of strings and comments
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.formatText(System.String)">
+      <summary>
+            return [0] - eTagName, [1] - idx
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.FormatText(System.String,System.Boolean)">
+      <summary>
+            return colorized Paragraph, if add_names == true then set run.Name as eTagName.*
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.string_and_comment">
+      <summary>
+            helper to parse python strings and comments
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.string_and_comment.adjust_prefix_pos(System.Int32,System.String)">
+      <summary>
+            check backward for prefix: r|u|f|b|fr|rf|br|rb
+            ref: https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.string_and_comment.is_tripple(System.Int32,System.String)">
+      <summary>
+            return true if next 3 char the same
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.string_and_comment.matches(System.String)">
+      <summary>
+            multi-line string parser,
+            return tuple(s) of [begin, len, type]. type = (comment, string, incomplete)
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonHighlighter.string_and_comment.normalize(System.String,System.Boolean)">
+      <summary>
+            replace comments and strings with ' '
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.try_default_home">
+      <returns>unvalidated R_HOME path</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.eval_r_expression(System.String,System.String,System.Action{System.String},System.Threading.CancellationTokenSource)">
+      <summary>
+            return pair of [output, error]
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.get_package_info(System.String,System.String)">
+      <summary>
+            return pair of[Version, Path]
+            </summary>
+      <param name="r_home"></param>
+      <param name="package_name"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.GetDirectoryFiles(System.String,System.String,System.IO.SearchOption)">
+      <summary>
+             Safely gather all files, skipping those we don't have access to
+            </summary>
+      <param name="rootPath">Root directory to start search</param>
+      <param name="patternMatch">Pattern to match files against</param>
+      <param name="searchOption">search option to pass to Directory methods</param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.get_R_engines(System.String@)">
+      <summary>
+            return all valid R installations
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.make_r_engine_pair(System.Diagnostics.FileVersionInfo)">
+      <summary>
+            make pair of [R_HOME, R_VERSION]
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.R.support.find_existing_package">
+      <summary>
+            return [ver, path]
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.geocoding_QueryCredits.EstimateCredits(System.String,ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl[])">
+      <summary>
+             returns double [etimate, available] credits<br />
+             etimate &lt; 0 - show Credits Unavailable warning<br />
+             available == double.NegativeInfinity - hide and ignore UserCredits check<br />
+             throw new System.Exception("Aaaaaa boom!") - show Error banner with error text
+             </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.na_QueryCredits.SolveCreditsEstimator.EstimateCredits(System.String,ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl[])">
+      <summary>
+            returns (double credits_estimate, double credits_available, bool canShow_credits_available) tuple<br />
+            credits_estimate &lt; 0 =&gt; show credits unavailable warning<br />
+            credits_available is double.NegativeInfinity =&gt; ignore available credits<br />
+            canShow_credits_available is false =&gt; do not show available credits value
+            but still use in comparison with estimate if estimate is non-negative and available is finite<br />
+            canShow_credits_available is true =&gt; show available credits value to user if finite (and has non-negative estimate)<br />
+            if an exception is thrown the banner will show error status message with exception string.<br /></summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.na_QueryCredits.TransitCreditsEstimator.EstimateCredits(System.String,ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl[])">
+      <summary>
+            returns (double credits_estimate, double credits_available, bool canShow_credits_available) tuple<br />
+            credits_estimate &lt; 0 =&gt; show credits unavailable warning<br />
+            credits_available is double.NegativeInfinity =&gt; ignore available credits<br />
+            canShow_credits_available is false =&gt; do not show available credits value
+            but still use in comparison with estimate if estimate is non-negative and available is finite<br />
+            canShow_credits_available is true =&gt; show available credits value to user if finite (and has non-negative estimate)<br />
+            if an exception is thrown the banner will show error status message with exception string.<br /></summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.na_QueryCredits.SpatialStatsSWMEstimator.EstimateCredits(System.String,ArcGIS.Desktop.Internal.GeoProcessing.Controls.IValueControl[])">
+      <summary>
+            returns (double credits_estimate, double credits_available, bool canShow_credits_available) tuple<br />
+            credits_estimate &lt; 0 =&gt; show credits unavailable warning<br />
+            credits_available is double.NegativeInfinity =&gt; ignore available credits<br />
+            canShow_credits_available is false =&gt; do not show available credits value
+            but still use in comparison with estimate if estimate is non-negative and available is finite<br />
+            canShow_credits_available is true =&gt; show available credits value to user if finite (and has non-negative estimate)<br />
+            if an exception is thrown the banner will show error status message with exception string.<br /></summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.custom_validate_addin">
+      <summary>
+            Interaction logic for custom_validate_addin.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.custom_validate_addin.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.GeoProcessing.PortalCreditUtil.credits_flags.user_has_credits_budget">
+      <summary>
+            if 'user_has_credits_budget' and available creadits are not enough then block workflow
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.PortalCreditUtil.credits_info.subscription_state">
+      <summary>
+            active = allows all functionality<br />
+            expired = functionality disabled<br />
+            suspended = could be out of credits or for other reasons<br />
+            cancelled = most likely org didn't pay or doesn't want to continue use<br />
+            deleted = if org was not deleted properly
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.GeoProcessing.PortalCreditUtil.credits_info.is_user_has_credits_budget">
+      <summary>
+            if user_has_credits_budget and available creadits are not enough then block workflow
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PortalCreditUtil.credits_info.check_workflow_warning(System.Double)">
+      <summary>
+            return true if is_user_has_credits_budget == false and available creadits are not enough
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PortalCreditUtil.QueryCredits(System.String)">
+      <summary>
+            returns available credits and allow show it<br />
+            if portal_url is null then ArcGISPortalManager.Current.GetActivePortal().PortalUri.AbsoluteUri
+            recent based on https://confluencewikidev.esri.com/display/AGO/Restricted+State+for+Organizations
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.GPToolExecuteEventHandlerAttribute">
+      <summary>
+            forward additional messages to callback method<br />
+            only for Geoprocessing.OpenToolDialog*() API<br />
+            available options: "ShareCancel"
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.GeoProcessing.PythonToolboxErrorsView">
+      <summary>
+            Interaction logic for PythonToolboxErrorsView.xaml
+            </summary>
+      <summary>
+            PythonToolboxErrorsView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.GeoProcessing.PythonToolboxErrorsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.Commands.NewToolbox(System.Xml.Linq.XElement)">
+      <summary>
+            this is .daml command with custom arguments. Show browser pick a new name, create toolbox
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.FontAlignemt">
+      <summary>
+            Font alignment
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.FontAlignemt.Left">
+      <summary>
+            Left
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.FontAlignemt.Center">
+      <summary>
+            Center
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.FontAlignemt.Right">
+      <summary>
+            Right
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ETLToolPropertyView">
+      <summary>
+            Interaction logic for ETLToolPropertyPage.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ETLToolPropertyView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ETLToolWorkspacePreviewView">
+      <summary>
+            Interaction logic for ETLToolWorkspacePreviewView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ETLToolWorkspacePreviewView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.EnvironmentsView">
+      <summary>
+            Interaction logic for EnvironmentsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.EnvironmentsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GalleryCustomizeView">
+      <summary>
+            Interaction logic for GalleryCustomizeView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GalleryCustomizeView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.PortalContent">
+      <summary>
+            Interaction logic for PortalContent.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.PortalContent.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule">
+      <summary>
+            Geoprocessing module
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.Current">
+      <summary>
+            singleton instance
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.Initialize">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.Uninitialize">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.Dispose">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.GetOptions">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.TryCloudDriveCheckOut(System.String)">
+      <summary>
+            try CheckOut file and keep track of it, auto release on project closed<br />
+            returns (refcount, error) <br />
+            refcount == 0 means error,<br />
+            -1 means not a OneDrive file,<br />
+            &gt; 0 refcount of checked out
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.TryCloudDriveCheckIn(System.String)">
+      <summary>
+            release file lock.<br />
+            if full_path == "*" then checkin all files<br />
+            returns refcount: -1 - not checkedout, 0 - checked in , &gt;0 - remaining
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.DatatypeInfo">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingModule.DatatypeInfo.#ctor(System.String,System.String,System.String)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GPServiceSync.check_pyt_access(System.String)">
+      <summary>
+            return null to ask
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BatchToolInputView">
+      <summary>
+            Interaction logic for BatchToolInput.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BatchToolInputView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GPDocPaneViewModel.IsAIModelPresent">
+      <summary>
+            True when tools prediction model is running
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GPDocPaneViewModel.try_close_progress">
+      <summary>
+            close progressor if not busy
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GPDocPaneView">
+      <summary>
+            Interaction logic for SystemToolsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GPDocPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.MainPageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.SearchToolsView">
+      <summary>
+            Interaction logic for SearchToolsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.SearchToolsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GpScheduler.GetScheduleFromMSTask(System.String)">
+      <summary>
+            Base combined xml is missing : get Schedule values from MSTask xml,
+            and set parent (toolHistoryDataXml) as empty.
+            UI: The Child nodes will show all empty info/parameters.
+            </summary>
+      <param name="name"></param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.SchedulerView">
+      <summary>
+            Interaction logic for SchedulerView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.SchedulerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.TaskPropertyItem">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.TaskPropertyItem.Text">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.TaskPropertyItem.Label">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.TaskPropertyItem.IsItemChecked">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.TaskPropertyItem.ToString">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ScheduleWebtoolView">
+      <summary>
+            Interaction logic for SchedulerView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ScheduleWebtoolView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.WebtoolTaskPropertyItem">
+      <summary>
+            WebtoolTaskPropertyItem
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.WebtoolTaskPropertyItem.IsItemEnabled">
+      <summary>
+            Gets and sets IsItemEnabled 
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.LengthCost">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.TurnCost">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.CrossingCost">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.NodeVicinityCost">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.NodeVicinitySize">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.GridSize">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.DontOptimizeLongRoutes">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.RoutingOptionsStruct.UseGridRouter">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.LayerDistance">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.NodeDistance">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.LinkPadding">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.LinksCompactFactor">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.Margins">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.TimeLimit">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.SwapPairIterations">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.SplitLayers">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.IgnoreNodeSize">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.EnableCustomLayers">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.StraightenLongLinks">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.EnforceLinkFlow">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.StableSort">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.GrowToFit">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.KeepGroupLayout">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.KeepRootPosition">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.LinkType">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.Anchoring">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.Direction">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.MultipleGraphsPlacement">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.GroupMultipleGraphsPlacement">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.LayoutOptionsStruct.Orientation">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct.AutoResize">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct.FlowDirection">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct.LinkShape">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct.AllowSplitLinks">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.DiagramOptionsStruct.DynamicLinks">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.MBOptionSettings">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.#ctor">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.#ctor(ArcGIS.Desktop.GeoProcessing.MBOptionSettings)">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.RoutingOptions">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.LayoutOptions">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.DiagramOptions">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.VersionCreated">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.VersionLastModified">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.MBOptionSettings.LastModifiedWithSoftware">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.set_true_and_focus">
+      <summary>
+            trick.<br />
+            default listboxitem control's IsHitTestVisible is False.<br />
+            when item get selected enable IsHitTestVisible and set control to focus<br /></summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.execute_helper.eval(ArcGIS.Desktop.Internal.DesktopService.IGPToolProcessor,System.Action{ArcGIS.Desktop.Internal.DesktopService.IGPToolProcessor},System.Threading.CancellationToken,ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler,ArcGIS.Desktop.GeoProcessing.execute_helper.ExecuteFlags,System.Func{System.String,System.Int32},System.Int32[])">
+            ToolDialog version
+        </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.execute_helper.GetRunningNames">
+      <summary>
+            any running tools exclude remote
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.execute_helper.InterruptLocalTasks">
+      <summary>
+            interrupt all running tools execpt remote
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.gpResultImpl.prune_messages(System.Xml.Linq.XElement)">
+      <summary>
+            discard internal messages, make lazy loading and parsing
+            </summary>
+      <param name="root"></param>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ObjectToValueConverter">
+      <summary>
+            convert .Net object to GP parameter string
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.StringDistance.DLD(System.String,System.String,System.Int32)">
+      <summary>
+            Computes the Damerau-Levenshtein Distance between two strings, represented as arrays of
+            integers, where each integer represents the code point of a character in the source string.
+            Includes an optional threshhold which can be used to indicate the maximum allowable distance.
+            </summary>
+      <param name="source">An array of the code points of the first string</param>
+      <param name="target">An array of the code points of the second string</param>
+      <param name="threshold">Maximum allowable distance</param>
+      <returns>Int.MaxValue if threshhold exceeded; otherwise the Damerau-Leveshteim distance between the strings</returns>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.SysToolsUtil.lng">
+      <summary>
+            check and return CurrentUICulture.TwoLetterISOLanguageName or CurrentUICulture.Name
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.SysToolsUtil._image_file_exists">
+      <summary>
+            to reduce System.IO.File.Exists()
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.SysToolsUtil.utbx.read_utf8(System.String,System.IO.Compression.ZipArchive)">
+      <summary>
+            read all bytes from a file or internal zip file, skip UTF-8 BOM
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.SysToolsUtil.utbx.read_content_rc_file(System.IO.Compression.ZipArchive@,System.String)">
+      <summary>
+            returns map of key to string (localized + based)
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.SysToolsUtil.utbx.read_tool_keywords(System.IO.Compression.ZipArchive@,System.String@)">
+      <summary>
+            returns unique array of searching keywords (localized + based)
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.toolInfoExt.getFullPath(System.Xml.Linq.XElement@)">
+      <summary>
+            "toolbox\\toolset\\tool"
+            or
+             "toolbox\\tool" execute path
+            or 
+             "toolboxalias.tool" short execute path
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.toolInfoExt.getExecutePathShort(ArcGIS.Desktop.Core.Geoprocessing.IGPItemInfo,System.Boolean)">
+      <summary>
+            use .ItemID
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.toolInfoExt.getCategory(ArcGIS.Desktop.GeoProcessing.ToolInfo)">
+      <summary>
+            returns toolset name
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.Name">
+      <summary>
+            Display Name
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.ToolType">
+      <summary>
+            return ["function", "model", "script", "custom", "server", "pythonscript", "task","toolbox", "toolset"]
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.TypeIcon">
+      <summary>
+            override default tool icon (16x16). default - null
+             </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.ToolBoxName">
+      <summary>
+            toolbox display name
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.executable">
+      <summary>
+            true if tool, false - toolbox, toolset
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolInfo.toolName">
+      <summary>
+            real name, the same as .ItemName
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolboxUtil.LoadToolboxAsync(System.String)">
+      <summary>
+            return sorted by name hierarchical collection of ToolInfoViewModel items
+            </summary>
+      <param name="toolbox_path"></param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.toolHistoryData">
+      <summary>
+            toolHistoryData - share the same XML as GPResult
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.toolHistoryData.id">
+      <summary>
+            return unique identifier
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ExtentManager.AdjustBounds">
+      <summary>
+             AdjustBounds will make sure that Diagram's Bounds is at least as big as the ScrollViewer's clientArea.
+             This is needed to avoid dead clicks on the scrollviewer.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.AttachedProps.CloseOnEscapeProperty">
+      <summary>
+            Dependency property to Focus on searchTextBox | Key Escape down will close teh window.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderProgressWindow.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ModelBuilderToolDialog">
+      <summary>
+            Interaction logic for ModelBuilderToolDialog.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderToolDialog.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ModelBuilderToolSearchDialog">
+      <summary>
+            Interaction logic for ModelBuilderToolSearchDialog.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderToolSearchDialog.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelProgressor.OnPropertyChanged(System.String)">
+      <summary>
+            Notifies objects registered to receive this event that a property value has changed.
+            </summary>
+      <param name="propertyName">The name of the property that was changed.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.ConvertDiagramToPro2_2(System.Xml.XmlDocument)">
+      <summary>
+            This function replaces MBNode, MB**Link ( introduced at Pro2.3 ) with their base classes defined in Mindfusion such as ShapeNode and DiagramLink.
+            This is done so that the model can be opened in Pro 2.2
+            </summary>
+      <param name="doc"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.GetViewSettingsAsync">
+      <summary>
+            GetViewSettings() function retrieves View settings for the diagram such as Bounds, ZoomFactor (scale) from the backend.
+            This function doesnot modify the diagram. SetViewSettings() function can be used to apply the view settings to the diagram.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.RefreshCatalogAsync(System.String,System.Boolean)">
+      <summary>
+            refresh toolbox in catalog view. path - full path to the tool or toolbox
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.PostRefreshCatalog(System.String,System.Boolean)">
+      <summary>
+            no wait - refresh toolbox in catalog view. path - full path to the tool or toolbox
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.CutOrDeleteElementsAsync(MindFusion.Diagramming.Wpf.DiagramNodeCollection,MindFusion.Diagramming.Wpf.DiagramLinkCollection,System.Boolean,System.Boolean)">
+      <summary>
+             Private function that can Cut or Delete specified Nodes or Links.
+             Can optionaly put it to clipborad  
+             Can Optionaly put it to undo stack.
+            </summary>
+      <param name="Nodes">Nodes to be removed</param>
+      <param name="Links">Links to be removed</param>
+      <param name="CopyToClipBoard">if true, the elements will be copied to clipboard </param>
+      <param name="UndoEnabled"> if true, the entire operation gois to the undo stack </param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.RedrawDiagramAsync">
+      <summary>
+            RedrawDiagram() tries to redraw the entire diagram 
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.RemoveConnections(MindFusion.Diagramming.Wpf.DiagramNode,ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.LinkTypeEnum,System.String)">
+      <summary>
+            Removes all incoming connections to the same parameter.
+            </summary>
+      <param name="toNode"></param>
+      <param name="connectionType"></param>
+      <param name="ParamName"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.UpdateConnections(System.Xml.Linq.XElement,MindFusion.Diagramming.Wpf.DiagramNode,System.String,System.Int32)">
+      <summary></summary>
+      <param name="rootElement"> Contains all the input OR output elements for the SourceNode  </param>
+      <param name="sourceNode"></param>
+      <param name="sourceElementType"></param>
+      <param name="direction">Indicates whether Input   </param>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.AddLinks(MindFusion.Diagramming.Wpf.DiagramNode,System.Int32,System.Collections.Generic.ISet{ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.LinkInfo})">
+      <summary>
+            This function will add new connections.
+            </summary>
+      <param name="sourceNode"></param>
+      <param name="direction"></param>
+      <param name="AddLinklist"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneViewModel.PredictNextTool(System.String,System.Collections.Generic.HashSet{System.String})">
+      <summary>
+            Predict the next tool given the last tool added
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneView">
+      <summary>
+            Interaction logic for SystemToolsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ModelBuilderReportView">
+      <summary>
+            Interaction logic for ModelBuilderReportView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ModelBuilderReportView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.eHighliteStatus">
+      <exclude />
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.None">
+      <exclude></exclude>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.Active">
+      <exclude></exclude>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.Hilit">
+      <exclude></exclude>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.ActiveHilit">
+      <exclude></exclude>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.Replaced">
+      <exclude></exclude>
+    </member>
+    <member name="F:ArcGIS.Desktop.GeoProcessing.eHighliteStatus.ActiveReplaced">
+      <exclude></exclude>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolSearcherView">
+      <summary>
+            Interaction logic for ToolSearcher.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolSearcherView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolSearcherViewModel.IsAIModelPresent">
+      <summary>
+            True when tools prediction model is running
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolSearcherViewModel.OnPropertyChanged(System.String)">
+      <summary>
+            Notifies objects registered to receive this event that a property value has changed.
+            </summary>
+      <param name="propertyName">The name of the property that was changed.</param>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolSuggestRibbonView">
+      <summary>
+            Interaction logic for ToolSuggestView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolSuggestRibbonView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolSuggestView">
+      <summary>
+            Interaction logic for ToolSuggestView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolSuggestView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem">
+      <summary>
+            Represents a GeoProcessing project item.
+            </summary>
+      <example>
+        <code region="Get a specific GeoprocessingProjectItem" lang="CS" title="Get a specific GeoprocessingProjectItem" description="Get a specific GeoprocessingProjectItem">GeoprocessingProjectItem GPProjItem = Project.Current.GetItems&lt;GeoprocessingProjectItem&gt;().FirstOrDefault(item =&gt; item.Name.Equals("myToolbox"));</code>
+      </example>
+      <example>
+        <code region="Get all GeoprocessingProjectItems in a project" lang="CS" title="Get all GeoprocessingProjectItems in a project" description="Get all GeoprocessingProjectItems in a project">//Gets all the GeoprocessingProjectItem in the current project
+var GPItems = Project.Current.GetItems&lt;GeoprocessingProjectItem&gt;();
+foreach (var tbx in GPItems)
+{
+  //Do Something with the toolbox
+}</code>
+      </example>
+      <example>
+        <code region="Get Geoprocessing project items" lang="CS" title="Get Geoprocessing project items" description="Get Geoprocessing project items">var gpItems = CoreModule.CurrentProject.Items.OfType&lt;GeoprocessingProjectItem&gt;();
+
+// go through all the available toolboxes
+foreach (var gpItem in gpItems)
+{
+  var itemsInsideToolBox = gpItem.GetItems();
+
+  // then for each toolbox list the tools inside
+  foreach (var toolItem in itemsInsideToolBox)
+  {
+    string newTool = String.Join(";", new string[] { toolItem.Path, toolItem.Name });
+    // do something with the newTool
+    // for example, add to a list to track or use them later
+  }
+}</code>
+      </example>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.#ctor(ESRI.ArcGIS.ItemIndex.ItemInfoValue)">
+      <summary>
+            Represents a GeoProcessing project item.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.CanOpenView">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.OnOpenView">
+      <exclude></exclude>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.IsSearchable">
+      <summary>
+            Gets whether the item is searchable. Default is true.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.GPItemInfo">
+      <summary>
+            Gets the underlying GP Item info
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.Fetch(ArcGIS.Desktop.Internal.Core.BrowseConcerns)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.OnFolderRename(System.String,System.String)">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.HasLimit(System.String)">
+      <summary>
+            Determines if the item has a specific limit.
+            </summary>
+      <param name="name"></param>
+      <returns>
+        <see cref="T:System.Boolean" />
+      </returns>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.ContextMenuID">
+      <exclude></exclude>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.ContextMenuID_ProjectItem">
+      <exclude></exclude>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.DisplayType">
+      <summary>
+            Gets the display type of the geoprocessing item.  This is a localized string. 
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.RequiresMainThread">
+      <summary>
+            Gets whether the Item must be refreshed on the MCT within the lambda of a QueuedTask.Run.  Always returns false. 
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.MessageType">
+      <exclude></exclude>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.Text">
+      <summary>
+            Gets the item text
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.HelpID">
+      <summary>
+            Gets the associated help id or null if there is no help id
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.GetRepairPath">
+      <summary>
+            Gets the repair path
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GeoprocessingProjectItem.Search(System.String)">
+      <summary>
+            Searches the item for the specified string.
+            </summary>
+      <param name="searchString">the search string.</param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.HistoryProjectItem">
+      <summary>
+            Represents a GeoProcessing history project item.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.HistoryProjectItem.ArcGIS#Desktop#Internal#Core#History#IHistoryItem#IsFavorite">
+      <summary>
+            Gets if the item is a favorite.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ProNotebookPaneView">
+      <summary>
+            Interaction logic for ProNotebookPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ProNotebookPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.DataTypesView">
+      <summary>
+            Interaction logic for DataTypesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.DataTypesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.DomainView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolParameter.setDomainList">
+            returns true if _domain changed
+        </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ParameterDescriptionView">
+      <summary>
+            Interaction logic for ParameterDescriptionView.xaml
+            </summary>
+      <summary>
+            ParameterDescriptionView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ParameterDescriptionView.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ParameterDescriptionView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ScriptToolExecutionView">
+      <summary>
+            Interaction logic for ScriptTooExecutionView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ScriptToolExecutionView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.EditPythonScriptBaseViewModel.ReadUserTemplateScript(System.String)">
+      <summary>
+            read all text from Document\ArcGIS\Geoprocessing\'template_file_name' <br />
+            returns 'null' if failed
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.EditPythonScriptBaseViewModel.GetTempScriptFileName">
+      <summary>
+            creates and return an empty .py file. if failed throw
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ScriptToolValidationView">
+      <summary>
+            Interaction logic for ScriptToolValidationView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ScriptToolValidationView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolboxPropertiesView">
+      <summary>
+            Interaction logic for GenericPropertiesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolboxPropertiesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolEnvironmentsView">
+      <summary>
+            Interaction logic for ToolEnviroments.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolEnvironmentsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolGeneralView">
+      <summary>
+            Interaction logic for ToolGeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolGeneralView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolParametersView">
+      <summary>
+            Interaction logic for ToolParametersView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolParametersView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolPasswordView">
+      <summary>
+            Interaction logic for ToolPasswordView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolPasswordView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolPasswordHelper.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.PythonWindowDockPaneViewModel.change_font(System.Windows.Documents.FlowDocument,System.Double)">
+      <summary>
+            increase or decrese font
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.PythonWindowDockPaneViewModel.ClearAutocompleteCache">
+      <summary>
+            close tooltip and autocomplete controls, clean caches
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.PythonWindowView">
+      <summary>
+            Interaction logic for PythonWindowView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.PythonWindowView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.FloatingProgressView">
+      <summary>
+            Interaction logic for FloatingProgressView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.FloatingProgressView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolDialogFloatingView">
+      <summary>
+            Interaction logic for ToolDialogFloatingView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolDialogFloatingView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolDialogPage">
+      <summary>
+            Interaction logic for ToolPage.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolDialogPage.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.ToolDialogPageViewModel">
+      <summary>
+            /////////////
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.ToolDialogPageViewModel.IsValid">
+      <summary>
+            return true when all parameter is valid
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.ToolDialogPageViewModel.QueryNoRunMessage">
+      <returns>no run description</returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GPMessageBoxView">
+      <summary>
+            Interaction logic for GPMessageBoxView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GPMessageBoxView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.GPOptionsView">
+      <summary>
+            Interaction logic for GPOptionsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.GPOptionsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.MBOptionsView">
+      <summary>
+            Interaction logic for MBOptionsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.MBOptionsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.PytEncryptionView">
+      <summary>
+            Interaction logic for PytEncryptionView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.PytEncryptionView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+      <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+      <summary>
+            CreateInstance
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            GetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            SetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+      <summary>
+            CreateDelegate
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+      <summary>
+            AddEventHandler
+            </summary>
+    </member>
+  </members>
+</doc>

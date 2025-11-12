@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.Geostatistics</name>
+  </assembly>
+  <members>
+    <member name="T:ArcGIS.Desktop.Geostatistics.GALayerChangedEventArgs">
+      <summary>
+            GALayer changed event and arguments
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.GALayer">
+      <summary>
+            GALayer class wrapper
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.LocalResources.Local">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.BrowseDataSource">
+      <summary>
+              Looks up a localized string similar to Change data source.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ClipboardFormatExtent">
+      <summary>
+              Looks up a localized string similar to {0}	{1}	{2}\n.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ClipboardFormatNameValuePair">
+      <summary>
+              Looks up a localized string similar to {0}	{1}.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ColorRampAnalytical">
+      <summary>
+              Looks up a localized string similar to Analytical.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ColorRampMultihue">
+      <summary>
+              Looks up a localized string similar to Multi-hue.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ColorRampQualitative">
+      <summary>
+              Looks up a localized string similar to Qualitative.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ColorRampSequential">
+      <summary>
+              Looks up a localized string similar to Sequential.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Count">
+      <summary>
+              Looks up a localized string similar to Count.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DataField">
+      <summary>
+              Looks up a localized string similar to Data Field.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DatasetName">
+      <summary>
+              Looks up a localized string similar to Dataset Name.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DataSource">
+      <summary>
+              Looks up a localized string similar to Data Source.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DataSourceUnavailable">
+      <summary>
+              Looks up a localized string similar to Data source information unavailable.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DataType">
+      <summary>
+              Looks up a localized string similar to Data Type.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Extent">
+      <summary>
+              Looks up a localized string similar to Extent.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.LayerChangingDatasourceError">
+      <summary>
+              Looks up a localized string similar to Layer's data source could not be changed.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Loading">
+      <summary>
+              Looks up a localized string similar to Loading....
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.NoGALicense">
+      <summary>
+              Looks up a localized string similar to There is no Geostatistical Analyst license currently available..
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.NumberOfClassesError">
+      <summary>
+              Looks up a localized string similar to The number of classes must be an integer between 2 and 32..
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.SpatialReference">
+      <summary>
+              Looks up a localized string similar to Spatial Reference.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Symbology">
+      <summary>
+              Looks up a localized string similar to Symbology.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.SymbologyHypen">
+      <summary>
+              Looks up a localized string similar to Symbology - {0}.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.UnknownCoordSys">
+      <summary>
+              Looks up a localized string similar to Unknown Coordinate System.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Contours">
+      <summary>
+              Looks up a localized string similar to Contours.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.FilledContours">
+      <summary>
+              Looks up a localized string similar to Filled Contours.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.GeometricalIntervals">
+      <summary>
+              Looks up a localized string similar to Geometrical Intervals.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.EqualIntervals">
+      <summary>
+              Looks up a localized string similar to Equal Intervals.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Quantile">
+      <summary>
+              Looks up a localized string similar to Quantile.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Manual">
+      <summary>
+              Looks up a localized string similar to Manual.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DisplayType">
+      <summary>
+              Looks up a localized string similar to Display type.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ContourType">
+      <summary>
+              Looks up a localized string similar to Contour type.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Method">
+      <summary>
+              Looks up a localized string similar to Method.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Classes">
+      <summary>
+              Looks up a localized string similar to Classes.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ColorScheme">
+      <summary>
+              Looks up a localized string similar to Color scheme.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.DisplayNoDataAs">
+      <summary>
+              Looks up a localized string similar to Display NoData as.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.ClassBreaks">
+      <summary>
+              Looks up a localized string similar to Class Breaks.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.FlipSymbols">
+      <summary>
+              Looks up a localized string similar to Flip Symbols.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Symbol">
+      <summary>
+              Looks up a localized string similar to Symbol.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.UpperValue">
+      <summary>
+              Looks up a localized string similar to Upper value.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Label">
+      <summary>
+              Looks up a localized string similar to Label.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.UpperBoundEmpty">
+      <summary>
+              Looks up a localized string similar to Upper bound cannot be empty. Enter a number..
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Max_">
+      <summary>
+              Looks up a localized string similar to Max:.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Min_">
+      <summary>
+              Looks up a localized string similar to Min:.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.LocalResources.Local.Classify_">
+      <summary>
+              Looks up a localized string similar to Classify:.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.Properties.Resources">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_ConditionNumber">
+      <summary>
+              Looks up a localized string similar to Condition Number.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_Prediction">
+      <summary>
+              Looks up a localized string similar to Prediction.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_Probability">
+      <summary>
+              Looks up a localized string similar to Probability.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_Quantile">
+      <summary>
+              Looks up a localized string similar to Quantile.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_StandardError">
+      <summary>
+              Looks up a localized string similar to Standard Error.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.DisplayType_StandardErrorOfIndicators">
+      <summary>
+              Looks up a localized string similar to Standard Error of Indicators.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Geostatistics.Properties.Resources.Symbology_Import">
+      <summary>
+              Looks up a localized string similar to Import....
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.PropertyPages.ReportView">
+      <summary>
+            Interaction logic for ReportView.xaml
+            </summary>
+      <summary>
+            ReportView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.PropertyPages.ReportView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.PropertyPages.SourceView">
+      <summary>
+            Interaction logic for SourceView.xaml
+            </summary>
+      <summary>
+            SourceView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.PropertyPages.SourceView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.PropertyPages.BrushColorConverter">
+      <summary>
+            Bool to Brush converter for error/warning background
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.Ribbon.SliderZValueView">
+      <summary>
+            Interaction logic for SliderZValueView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.Ribbon.SliderZValueView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.Symbology.TContourType">
+      <summary></summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.Symbology.ContourRendererViewModel">
+      <summary></summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.Symbology.ContourRendererViewModel.#ctor(ArcGIS.Desktop.Mapping.Layer)">
+      <summary>
+            Constructors
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.Symbology.ContourRendererViewModel.UpdateClassBreaks(ArcGIS.Core.CIM.CIMGALayer)">
+      <summary></summary>
+      <param name="cim">use cim = null to pull CIM from layer</param>
+    </member>
+    <member name="T:ArcGIS.Desktop.Geostatistics.Symbology.GASymbologyUtil">
+      <summary>
+            Utils
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Geostatistics.Symbology.GASymbologyUtil.getFistColorLayer(ArcGIS.Core.CIM.CIMSymbol@)">
+      <summary>
+            returns the first symbol color layer
+            </summary>
+    </member>
+  </members>
+</doc>

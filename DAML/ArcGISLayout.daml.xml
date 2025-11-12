@@ -99,14 +99,20 @@
       <shortcut refID="esri_presentations_pasteItemsButton" flags="Ctrl" key="V"/>
       <shortcut refID="esri_presentations_deleteItemsButton" flags="Ctrl" key="D"/>
       <shortcut refID="esri_presentations_cutItemsButton" flags="Ctrl" key="X"/>
+      <shortcut refID="esri_layouts_nudgeLeft" flags="Shift" key="Left"/>
+      <shortcut refID="esri_layouts_nudgeDown" flags="Shift" key="Down"/>
+      <shortcut refID="esri_layouts_nudgeRight" flags="Shift" key="Right"/>
+      <shortcut refID="esri_layouts_nudgeUp" flags="Shift" key="Up"/>
     </insertShortcutTable>
 
-    <insertShortcutTable id="esri_presentations_FullScreenNavigation" category="Presentations" caption="Full Screen Navigation" targetID="esri_presentations_viewPane" condition="esri_presentations_isFullScreenModeCondition">
+    <insertShortcutTable id="esri_presentations_FullScreenNavigation" category="Presentations" caption="Full Screen Navigation" targetID="esri_presentations_viewPane">
       <shortcut refID="esri_presentations_showNextPage" flags="None" key="Right"/>
       <shortcut refID="esri_presentations_showPreviousPage" flags="None" key="Left"/>
       <shortcut refID="esri_presentations_togglePlayPause" flags="None" key="Space"/>
       <shortcut refID="esri_presentations_exitFullScreen" flags="None" key="Escape"/>
       <shortcut refID="esri_presentations_exitPopup" flags="Shift" key="Escape"/>
+      <shortcut refID="esri_presentations_showTiledView" flags="Ctrl" key="T"/>
+      <shortcut refID="esri_presentations_toggleMute" flags="Shift" key="M"/>
     </insertShortcutTable>
   </shortcutTables>
   
@@ -264,6 +270,295 @@
     <!-- "Indicator" DAML category used by Drone2Map to hide color management in map export. -->
     <insertCategory id="esri_mapping_disableColorManagementExportMap"/>
 
+    <!---->
+    <!--AI Assistant-->
+    <!---->
+    <!--Layout Factory - no condition-->
+    <updateCategory refID="esri_core_ai_assistant_extension_category">
+      <insertComponent id="esri_layoutFactory_assistant_extension" className="ArcGIS.Internal.Desktop.Layouts.AIAssistant.LayoutFactoryAssistantExtension">
+        <content extensionCategoryRefID="ai_cartography_map_production_category">
+          <searchDescriptions>
+            <searchDescription>Manage page layouts"</searchDescription>
+            <searchDescription>List the page layouts"</searchDescription>
+            <searchDescription>List the page layout templates"</searchDescription>
+            <searchDescription>Create, add, or draw a new page layout"</searchDescription>
+            <searchDescription>Create, add, or draw a new page layout based on a template"</searchDescription>
+            <searchDescription>Use a layout template to create a layout. Example template names: Title Bar Letter, Minimal A3, Minimal Tabloid, Summary A4, Summary Letter, Title Bar Letter, Title Bar A4"</searchDescription>
+            <searchDescription>Remove or delete a page layout"</searchDescription>
+            <searchDescription>Rename a page layout</searchDescription>
+            <searchDescription>Open a page layout (view)"</searchDescription>
+            <searchDescription>Close a page layout (view)"</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="ListLayouts">
+            <searchDescriptions>
+              <searchDescription>List the layouts in the project.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="ListLayoutTemplates">
+            <searchDescriptions>
+              <searchDescription>List the templates that can be used to create a page layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="CreateLayoutFromTemplate">
+            <searchDescriptions>
+              <searchDescription>Creates a new layout based on a layout template.</searchDescription>
+              <searchDescription>Use "named" layout template.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="CreateLayout">
+            <searchDescriptions>
+              <searchDescription>Creates a new layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="DeleteLayout" searchDescription="Deletes (removes) a layout from project.">
+            <searchDescriptions>
+              <searchDescription>Creates a new layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="RenameLayout">
+            <searchDescriptions>
+              <searchDescription>Renames a layout.</searchDescription>
+              <searchDescription>Sets the name of a layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="OpenView">
+            <searchDescriptions>
+              <searchDescription>Open a layout.</searchDescription>
+              <searchDescription>Open a layout view (window).</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layoutFactory_assistant_extension|ListLayouts"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="CloseView">
+            <searchDescriptions>
+              <searchDescription>Close a layout.</searchDescription>
+              <searchDescription>Close a layout view (window).</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+        </content>
+      </insertComponent>
+    </updateCategory>
+
+    <!--Layout-->
+    <updateCategory refID="esri_core_ai_assistant_extension_category">
+      <insertComponent id="esri_layout_assistant_extension" className ="ArcGIS.Internal.Desktop.Layouts.AIAssistant.LayoutAssistantExtension">
+        <content condition="esri_layouts_layoutPaneCondition" extensionCategoryRefID="ai_cartography_map_production_category">
+          <searchDescriptions>
+            <searchDescription>Get page layout properties</searchDescription>
+            <searchDescription>Set (modify, update) page layout properties</searchDescription>
+            <searchDescription>Get layout page properties</searchDescription>
+            <searchDescription>Set (modify, update) layout page properties</searchDescription>
+            <searchDescription>Export the page layout.</searchDescription>
+            <searchDescription>Refering to paper or page is typically refering to a layout</searchDescription>
+            <searchDescription>List layout elements.</searchDescription>
+            <searchDescription>Create, add, or draw graphic point (shape, marker) to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw graphic line (spline) to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw graphic polygon (rectangle, envelope, square, circle, ellipse, triangle, right triangle, cross, x, rounded rectangle, semi circle, cloud) to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw text (paragraph, title, label) to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw picture (image, photo) to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw north arrow to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw scale bar to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw dual scale bar to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw legend to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw key to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw table frame to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw chart frame to layout (page, paper).</searchDescription>
+            <searchDescription>Create, add, or draw map frame to layout (page, paper).</searchDescription>
+            <searchDescription>Delete (erase, remove) elements from layout (page, paper).</searchDescription>
+            <searchDescription>Set the size or position (extent) of elements on layout (page, paper).</searchDescription>
+            <searchDescription>Set the symbol of elements on layout (page, paper).</searchDescription>
+            <searchDescription>Arrange (align, stack) the elements on layout (page, paper).</searchDescription>
+          </searchDescriptions>
+          <overrides>
+            <override refID="esri_shapeFactory_assistant_extension"/>
+            <override refID="esri_geoprocessing_server_GetLayoutTemplatesInfo"/>
+            <override refID="esri_geoprocessing_server_ExportWebMap"/>
+            <override refID="esri_geoprocessing_conversion_PDFToTIFF"/>
+            <override refID="esri_geoprocessing_management_ExportReportToPDF"/>
+            <override refID="esri_geoprocessing_conversion_MapToKML"/>
+          </overrides>
+          <aiAssistantFunction name="GetPageSize">
+            <searchDescriptions>
+              <searchDescription>Gets the width and height of a layout page.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetPageSize">
+            <searchDescriptions>
+              <searchDescription>Sets the size of a layout from a width, height, and units.</searchDescription>
+              <searchDescription>Sets the size of the layout page from a width, height, and units.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="GetPageUnits">
+            <searchDescriptions>
+              <searchDescription>Gets the page units of a layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetPageUnits">
+            <searchDescriptions>
+              <searchDescription>Sets the page units used by a layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetPageOrientation">
+            <searchDescriptions>
+              <searchDescription>Sets the orientation of a layout.</searchDescription>
+              <searchDescription>Sets the orientation of a layout page.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="GetName">
+            <searchDescriptions>
+              <searchDescription>Gets the name of the layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetName">
+            <searchDescriptions>
+              <searchDescription>Sets the name of the layout.</searchDescription>
+              <searchDescription>Rename the layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="Export">
+            <searchDescriptions>
+              <searchDescription>Export a layout to a specified format. If no format is provided, PDF will be used by default.</searchDescription>
+              <searchDescription>Export a layout with an optional output path. This can be a full file path or just a folder path. If the file name or extension is missing or incorrect, the function will automatically fix it based on the format.</searchDescription>
+              <searchDescription>Export a layout using a preset file to an optional output path. This should be a valid preset file name or full path (not an output path). The file extension is optional and defaults to ".xprt"</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="Print">
+            <searchDescriptions>
+              <searchDescription>Prints a page layout.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="CreateElement">
+            <searchDescriptions>
+              <searchDescription>Add an element to a page layout.</searchDescription>
+              <searchDescription>Create a new element on a page layout.</searchDescription>
+              <searchDescription>Add or create a graphic (shape) (Rectangle/Envelope, Circle, Ellipse, Triangle, RightTriangle, Cross, X, RoundedRectangle, Semi circle, Cloud) on a page layout.</searchDescription>
+              <searchDescription>Add or create text (paragraph, title) on a page layout.</searchDescription>
+              <searchDescription>Add or create a picture (image, photo) on a page layout.</searchDescription>
+              <searchDescription>Add or create a map surround (north arrow, scale bar, dual scale bar, legend (key), table frame, chart frame) to a page layout.</searchDescription>
+              <searchDescription>Add or create a map frame to a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_shapeFactory_assistant_extension"/>
+              <dependency refID="esri_mapping_styles_assistant_extension|SearchProjectStyles"/>
+              <dependency refID="esri_layout_assistant_extension|GetPageSize"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="ListElements">
+            <searchDescriptions>
+              <searchDescription>List all the elements on a page layout.</searchDescription>
+              <searchDescription>List the elements of a certain type.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SelectElements">
+            <searchDescriptions>
+              <searchDescription>Select element within a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="DeleteElements">
+            <searchDescriptions>
+              <searchDescription>Deletes elements on a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="GetElementExtents">
+            <searchDescriptions>
+              <searchDescription>Get the size: width or height of elements on a page layout.</searchDescription>
+              <searchDescription>Get the position: left, right, top, or bottom of elements on a page layout.</searchDescription>
+              <searchDescription>Get the extents of elements on a page layout.</searchDescription>
+              <searchDescription>Get the bounding box of elements on a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetElementExtents">
+            <searchDescriptions>
+              <searchDescription>Move elements on a page layout.</searchDescription>
+              <searchDescription>Resize elements on a page layout.</searchDescription>
+              <searchDescription>Set the size of elements on a page layout.</searchDescription>
+              <searchDescription>Set the position of elements on a page layout.</searchDescription>
+              <searchDescription>Set the extent of elements on a page layout.</searchDescription>
+              <searchDescription>Set the bounding box of elements on a page layout.</searchDescription>
+              <searchDescription>Arrange, align, stack, flow elements on a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+              <dependency refID="esri_layout_assistant_extension|GetElementExtents"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetElementSymbol">
+            <searchDescriptions>
+              <searchDescription>Set the color</searchDescription>
+              <searchDescription>Set the color</searchDescription>
+              <searchDescription>Set the font</searchDescription>
+              <searchDescription>Set the fill</searchDescription>
+              <searchDescription>Set the background</searchDescription>
+              <searchDescription>Set the stroke</searchDescription>
+              <searchDescription>Set the fill</searchDescription>
+              <searchDescription>Set the outline</searchDescription>
+              <searchDescription>Set the opacity</searchDescription>
+              <searchDescription>Set the transparency</searchDescription>
+              <searchDescription>Set the rgb</searchDescription>
+              <searchDescription>Set the cmyk</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="SetElementProperty">
+            <searchDescriptions>
+              <searchDescription>Set a property of an element on a page layout.</searchDescription>
+              <searchDescription>Update elements on a page layout.</searchDescription>
+              <searchDescription>Modify elements on a page layout.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="ArrangeElementsIntoGrid">
+            <searchDescriptions>
+              <searchDescription>Arrange multiple elements into a grid.</searchDescription>
+              <searchDescription>Arrange multiple elements into a table.</searchDescription>
+              <searchDescription>Arrange multiple elements into rows and columns.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_layout_assistant_extension|ListElements"/>
+            </dependencies>
+          </aiAssistantFunction>
+        </content>
+      </insertComponent>
+    </updateCategory>
   </categories>
 
   <modules>
@@ -409,7 +704,6 @@
           <group refID="esri_layouts_editGraphicGroup"/>
           <group refID="esri_layouts_editPictureGraphicGroup"/>
           <group refID="esri_layouts_editTextGraphicGroup"/>
-          <group refID="esri_presentations_editGraphicGroup"/>
           <group refID="esri_layouts_pointFormatGroup"/>
           <group refID="esri_layouts_arrowheadFormatGroup"/>
           <group refID="esri_layouts_lineFormatGroup"/>
@@ -538,7 +832,8 @@
       <groups>
         <group id="esri_project_layout"
                hidden="true"
-               caption="Project">
+               caption="Project"
+               smallImage="ArcGISProject16">
           <button refID="esri_layouts_projectContainer_NewLayout"/>
           <button refID="esri_layouts_importLayout"/>
         </group>
@@ -571,7 +866,11 @@
                    inline="false"
                    size="middle"/>
           <button refID="esri_layouts_customPageSizeFromPrinter"                  
-                  size="middle"/>          
+                  size="middle"/>
+          <button refID="esri_layouts_addGuides"
+                  size="middle"/>
+          <button refID="esri_layouts_showRulerProperties"
+                  size="middle"/>
         </group>
         <group id="esri_layouts_pageShowGroup"
                hidden="true"
@@ -780,20 +1079,6 @@
                        size="middle"/>-->
           <!--<tool refID="esri_layouts_cropPictureTool"
                   size="middle"/>-->
-        </group>
-
-        <group id="esri_presentations_editGraphicGroup"
-               hidden="true"
-               caption="Edit"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericCheckMarkBlueCircleOn32.png"
-                condition="esri_presentations_selectedElementsNotPartsCondition">
-          <tool refID="esri_layouts_editVerticesTool"
-                size="middle"/>
-          <menu refID="esri_layouts_rotateOrFlipMenu"
-                size="middle"/>
-          <menu refID="esri_layouts_mergeShapesMenu"
-                size="middle"/>
-          <button refID="esri_layouts_hyperlinkButton" size="middle"/>    
         </group>
 
         <!--FORMAT groups-->
@@ -2458,7 +2743,7 @@
                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ZoomToMapViewGallery"
                  caption="Zoom To Map View"
                  extendedCaption="Gallery"
-                 keytip="MG"
+                 keytip="MV"
                  itemsInRow="3"
                  itemWidth="140"
                  itemHeight="115"
@@ -2873,10 +3158,11 @@ C = explore when using another tool
                 keytip="ZL"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageLeft"
+                condition="esri_layouts_layoutPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowLeft16.png"
                 helpContextID="">
-          <tooltip heading="Page Left">
-            Page Left: Jump one view size left.<disabledText></disabledText>
+          <tooltip heading="Layout Page Left">
+            Jump one layout view size left.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_pageZoomRightButton"
@@ -2885,10 +3171,11 @@ C = explore when using another tool
                 keytip="ZR"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageRight"
+                condition="esri_layouts_layoutPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowRight16.png"
                 helpContextID="">
-          <tooltip heading="Page Right">
-            Page Right: Jump one view size right.<disabledText></disabledText>
+          <tooltip heading="Layout Page Right">
+            Jump one layout view size right.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_pageZoomUpButton"
@@ -2897,10 +3184,11 @@ C = explore when using another tool
                 keytip="ZU"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageUp"
+                condition="esri_layouts_layoutPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowUpLongTail16.png"
                 helpContextID="">
-          <tooltip heading="Page Up">
-            Page Up: Jump one view size up.<disabledText></disabledText>
+          <tooltip heading="Layout Page Up">
+            Jump one layout view size up.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_pageZoomDownButton"
@@ -2909,10 +3197,11 @@ C = explore when using another tool
                 keytip="ZD"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageDown"
+                condition="esri_layouts_layoutPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowDownLongTail16.png"
                 helpContextID="">
-          <tooltip heading="Page Down">
-            Page Down: Jump one view size down.<disabledText></disabledText>
+          <tooltip heading="Layout Page Down">
+           Jump one layout view size down.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_layouts_zoomToLastMapView"
@@ -3138,8 +3427,11 @@ C = explore when using another tool
 
         <button id="esri_layouts_showRulerProperties"
                 caption="Ruler Properties"
+                keytip="RP"
                 extendedCaption="Layout"
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.RulerPropertiesButton"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers16.png"
                 helpContextID="">
           <tooltip heading="Show Ruler Properties">
             Change the ruler settings.<disabledText></disabledText>
@@ -3213,9 +3505,9 @@ C = explore when using another tool
         </checkBox>
 
         <button id="esri_layouts_addGuide"
-                caption="Add Guide"
+                caption="Add Guide"                
                 extendedCaption="Layout"
-                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddGuideButton"
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddGuideButton"                
                 helpContextID="">
           <tooltip heading="Add Snapping Guide">
             Add a snapping guide to your layout at the location you clicked.<disabledText></disabledText>
@@ -3224,8 +3516,11 @@ C = explore when using another tool
 
         <button id="esri_layouts_addGuides"
                 caption="Add Multiple Guides"
+                keytip="MG"
                 extendedCaption="Layout"
                 className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AddGuidesButton"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddGuides32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AddGuides16.png"
                 helpContextID="">
           <tooltip heading="Add Snapping Guides">
             Add multiple snapping guides to your layout.<disabledText></disabledText>
@@ -3766,6 +4061,17 @@ C = explore when using another tool
             Remove the legend item from the legend.<disabledText></disabledText>
           </tooltip>
         </button>
+        <dynamicMenu id="esri_layouts_addItemToLegendMenu"
+                     className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LegendItemMenu"
+                     loadOnClick="false"
+                     caption="Add Layer"
+                     extendedCaption="Legend Layers"
+                     condition="esri_layouts_layoutPane"
+                     helpContextID="">
+          <tooltip heading="Add Layer">
+            Add a new layer to the legend.<disabledText></disabledText>
+          </tooltip>
+        </dynamicMenu>
 
         <!--Table-->
         <button id="esri_layouts_removeTableFrameFieldButton"
@@ -6647,6 +6953,7 @@ C = explore when using another tool
                 className="esri_layouts:ShowElementStyleDockPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png"
+                loadOnClick="false"
                 helpContextID="">
           <tooltip heading="Format Symbol">
             Format the polygon symbol using the advanced formatting controls available on the Element pane.<disabledText></disabledText>
@@ -6789,6 +7096,7 @@ C = explore when using another tool
                 className="esri_layouts:ShowElementTextDockPane"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericProperties32.png"
+                loadOnClick="false"
                 helpContextID="">
           <tooltip heading="Format Text Symbol">
             Format the text symbol using the advanced formatting controls available on the Element pane.<disabledText></disabledText>
@@ -7277,9 +7585,9 @@ C = explore when using another tool
           <button refID="esri_layouts_selectAllButton"
                   separator="true"/>
           <button refID="esri_layouts_clearSelectionButton"/>
-          <button refID="esri_layouts_groupSelectedElementsButton"
+          <button refID="esri_core_groupContext"
                   separator="true"/>
-          <button refID="esri_layouts_ungroupSelectedElementsButton"/>
+          <button refID="esri_core_ungroupContext"/>
           <submenu refID="esri_layouts_orderMenu"
                    separator="true"/>
           <submenu refID="esri_layouts_nudgeMenu"/>
@@ -7304,9 +7612,9 @@ C = explore when using another tool
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editPasteButton"/>
           <button refID="esri_core_editDeleteButton"/>
-          <button refID="esri_layouts_groupSelectedElementsButton"
+          <button refID="esri_core_groupContext"
                   separator="true"/>
-          <button refID="esri_layouts_ungroupSelectedElementsButton"/>
+          <button refID="esri_core_ungroupContext"/>
           <submenu refID="esri_layouts_orderMenu"
                    separator="true"/>
           <submenu refID="esri_layouts_nudgeMenu"/>
@@ -7411,11 +7719,9 @@ C = explore when using another tool
               caption="Legend Menu"
               extendedCaption="Perform operations on a legend."
               contextMenu="true">
-          <menu refID="esri_layouts_layoutElementPreCommonMenu"
-                inline="true"/>
-          <menu refID="esri_layouts_elementPostCommonMenu"
-                inline="true"
-                separator="true"/>
+          <dynamicMenu refID="esri_layouts_addItemToLegendMenu"/>
+          <menu refID="esri_layouts_layoutElementPreCommonMenu" inline="true" separator="true"/>
+          <menu refID="esri_layouts_elementPostCommonMenu" inline="true" separator="true"/>
         </menu>
 
         <menu id="esri_layouts_legendItemContextMenu"
@@ -7761,6 +8067,8 @@ C = explore when using another tool
           <group refID="esri_reports_generalGroupHeaderGroup"/>
           <!--<group refID="esri_reports_generalGroupFooterGroup"/>-->
           <group refID="esri_reports_groupGroup"/>
+          <group refID="esri_reports_columnsDetailsGroup"/>
+          <group refID="esri_reports_columnsGroupGroup"/>
         </tab>
 
         <!--<tab id="esri_reports_pageHeaderFormatTab" caption="Format" extendedCaption="Page Header" condition="esri_reports_pageHeaderFormatCondition" tabGroupID="esri_reports_selectedSectionTabGroup" keytip="D">
@@ -8005,6 +8313,26 @@ C = explore when using another tool
           <comboBox refID="esri_reports_groupFieldSortComboBox" size="middle"/>
         </group>
 
+        <group id="esri_reports_columnsDetailsGroup"
+               caption="Columns"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Details16.png"
+               keytip="N"
+               condition="esri_reports_detailsFormatCondition">
+          <spinner refID="esri_reports_numColumns" size="middle"/>
+          <customControl refID="esri_reports_columnSpaceControl" size="middle"/>
+          <comboBox refID="esri_reports_columnDirectionComboBox" size="middle"/>
+          <checkBox refID="esri_reports_showColumnGuidesCheck" size="middle"/>
+          <button refID="esri_reports_updateColumnGuidesButton" size="middle"/>
+        </group>
+
+        <group id="esri_reports_columnsGroupGroup"
+               caption="Columns"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Grouping16.png"
+               keytip="C"
+               condition="esri_reports_groupHeaderFormatCondition">
+          <checkBox refID="esri_reports_applyGroupColumnCheck" size="middle"/>
+        </group>
+
         <group id="esri_reports_insertTextGroup"
                caption="Text"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementText16.png"
@@ -8056,7 +8384,8 @@ C = explore when using another tool
 
         <!--Catalog Groups-->
         <group id="esri_project_report"
-               caption="Project">
+               caption="Project"
+               smallImage="ArcGISProject16">
           <button refID="esri_reports_projectContainer_NewReport"/>
           <button refID="esri_reports_importReportFile"/>
         </group>
@@ -9160,6 +9489,72 @@ C = explore when using another tool
             Open the Expressions options for the report or related report.<disabledText>Select a Report or Related Report section.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_reports_pageZoomLeftButton"
+                caption="Page Left"
+                extendedCaption="Navigate Report"
+                keytip="ZL"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageLeft"
+                condition="esri_reports_reportPane"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowLeft16.png"
+                helpContextID="">
+          <tooltip heading="Report Page Left">
+            Jump one report view size left.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoomRightButton"
+                caption="Page Right"
+                extendedCaption="Navigate Report"
+                keytip="ZR"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageRight"
+                condition="esri_reports_reportPane"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowRight16.png"
+                helpContextID="">
+          <tooltip heading="Report Page Right">
+            Jump one report view size right.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoomUpButton"
+                caption="Page Up"
+                extendedCaption="Navigate Report"
+                keytip="ZU"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageUp"
+                condition="esri_reports_reportPane"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowUpLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Report Page Up">
+            Jump one report view size up.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_pageZoomDownButton"
+                caption="Page Down"
+                extendedCaption="Navigate Report"
+                keytip="ZD"
+                flipImageRTL="false"
+                className="esri_layouts:ZoomPageDown"
+                condition="esri_reports_reportPane"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowDownLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Report Page Down">
+            Jump one report view size down.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_updateColumnGuidesButton"
+                className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportUpdateColumnGuidesButton"
+                caption="Update guides"
+                keytip="UG"
+                extendedCaption="Update column guides"
+                loadOnClick="false"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Vertical_Guides32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Vertical_Guides16.png"
+                condition="esri_reports_detailsSectionActiveCondition"
+                helpContextID="">
+          <tooltip heading="Update Guides">
+            Update column and spacing guides.<disabledText></disabledText>
+          </tooltip>
+        </button>
 
         <!-- Custom Controls -->
         <customControl id="esri_reports_sizeControl"
@@ -9185,6 +9580,14 @@ C = explore when using another tool
                        loadOnClick="false"
                        hideTooltip="true">
           <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportFormatGroup" />
+        </customControl>
+        <customControl id="esri_reports_columnSpaceControl"
+                       caption="Column space"
+                       className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportColumnSpaceViewModel"
+                       disableIfBusy="false"
+                       loadOnClick="false"
+                       hideTooltip="true">
+          <content className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportColumnSpace" />
         </customControl>
 
         <checkBox id ="esri_report_showSectionCheck"
@@ -9268,6 +9671,30 @@ C = explore when using another tool
             Force the subsection to export at the bottom of the page.<disabledText></disabledText>
           </tooltip>
         </checkBox>
+        <checkBox id="esri_reports_showColumnGuidesCheck"
+                  caption="Show guides"
+                  extendedCaption="Show column guides"
+                  keytip="SG"
+                  className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportShowGuidesCheckBox"
+                  loadOnClick="false"
+                  hidden="false"
+                  helpContextID="">
+          <tooltip heading="Show Guides">
+            Show column and spacing guides.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+        <checkBox id="esri_reports_applyGroupColumnCheck"
+                  caption="Apply column settings"
+                  extendedCaption="Apply column settings to group header."
+                  keytip="GC"
+                  className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportApplyGroupColumnCheckBox"
+                  loadOnClick="false"
+                  hidden="false"
+                  helpContextID="">
+          <tooltip heading="Apply column settings">
+            Apply the Details subsection column settings to the Group Header.<disabledText>Column settings can only be extended to neighboring group headers. To apply column settings to the current subsection, enable the option on all group headers between the active subsection and the Details subsection.</disabledText>
+          </tooltip>
+        </checkBox>
 
         <editBox id="esri_reports_excludeHeaderFromPages"
                  caption="Exclude header from page(s)"
@@ -9297,6 +9724,38 @@ C = explore when using another tool
           </tooltip>
         </comboBox>
 
+        <spinner id="esri_reports_numColumns"
+                 hidden="true"
+                 format="F0"
+                 caption="Columns:"
+                 keytip="NC"
+                 className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportColumnsSpinner"
+                 minimum="1"
+                 defaultValue=""
+                 helpContextID="">
+          <tooltip heading="Columns">
+            Divide the subsection into two or more columns.<disabledText></disabledText>
+          </tooltip>
+        </spinner>
+
+        <comboBox id="esri_reports_columnDirectionComboBox"
+                  caption="Record direction:"
+                  hidden="true"
+                  keytip="CD"
+                  className="ArcGIS.Desktop.Internal.Reports.Ribbon.ReportColumnDirectionComboBox"
+                  extendedCaption="Choose the direction the records are displayed in the report."
+                  loadOnClick="false"
+                  itemWidth="30"
+                  rows="2"
+                  textSearchEnabled="false"
+                  isEditable="false"
+                  resizable="false"
+                  helpContextID="">
+          <tooltip heading="Column Direction">
+            Choose the direction the records are displayed in the report.<disabledText></disabledText>
+          </tooltip>
+        </comboBox>
+        
         <!-- Checkboxes-->
         <checkBox id="esri_reports_showHideRulersCheck"
                   caption="Rulers"
@@ -9955,6 +10414,7 @@ C = explore when using another tool
           <button refID="esri_reports_navigateContext"
                   separator="true"/>
           <button refID="esri_layouts_selectContext"/>
+          <button refID="esri_layouts_editVerticesContext"/>
           <!--<button refID="esri_layouts_setDefaultSymbol" separator="true"/>-->
         </menu>
 
@@ -10400,6 +10860,7 @@ C = explore when using another tool
           hidden="true"
           caption="Show"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers16.png">
+          <button refID="esri_presentations_showSpeakerNotes" size="large"/>
           <checkBox refID="esri_presentations_showHideRulersCheck"
                     size="small"/>
           <checkBox refID="esri_presentations_showHideGuidesCheck"
@@ -10933,6 +11394,73 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <button id="esri_presentations_pageZoomLeftButton"
+                caption="Page Left"
+                extendedCaption="Navigate Presentation"
+                keytip="ZL"
+                flipImageRTL="false"
+                className="esri_mapping:ZoomPageLeft"
+                condition="esri_presentations_canNavigatePageCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowLeft16.png"
+                helpContextID="">
+          <tooltip heading="Presentation Page Left">
+            Jump one presentation view size left.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_pageZoomRightButton"
+                caption="Page Right"
+                extendedCaption="Navigate Presentation"
+                keytip="ZR"
+                flipImageRTL="false"
+                className="esri_mapping:ZoomPageRight"
+                condition="esri_presentations_canNavigatePageCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowRight16.png"
+                helpContextID="">
+          <tooltip heading="Presentation Page Right">
+            Jump one presentation view size right.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_pageZoomUpButton"
+                caption="Page Up"
+                extendedCaption="Navigate Presentation"
+                keytip="ZU"
+                flipImageRTL="false"
+                className="esri_mapping:ZoomPageUp"
+                condition="esri_presentations_canNavigatePageCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowUpLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Presentation Page Up">
+            Jump one presentation view size up.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_pageZoomDownButton"
+                caption="Page Down"
+                extendedCaption="Navigate Presentation"
+                keytip="ZD"
+                flipImageRTL="false"
+                className="esri_mapping:ZoomPageDown"
+                condition="esri_presentations_canNavigatePageCondition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowDownLongTail16.png"
+                helpContextID="">
+          <tooltip heading="Presentation Page Down">
+            Jump one presentation view size down.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_presentations_showSpeakerNotes"
+                hidden="true"
+                caption="Notes"
+                keytip="SSN"
+                condition="esri_presentations_hasActivePageCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpeakerNotes32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpeakerNotes16.png"
+                className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ShowSpeakerNotesToggleButton"
+                loadOnClick="false">
+          <tooltip heading="Show Speaker Notes">
+            Show the Speaker Notes panel. Speaker notes are only visible to the presenter when using Presenter Mode.
+          </tooltip>
+        </button>
+        
         <tool id="esri_presentations_pageNavigaionTool"
              className="ArcGIS.Desktop.Internal.Presentations.PresentationPageNavTool"
              keytip="R"
@@ -11545,7 +12073,7 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_exportPresentationFromProjectItemButton" separator="true"/>
           <button refID="esri_sharing_SaveAsPresentationFile"/>
           <button refID="esri_presentations_editCopyButton" separator="true"/>
-          <button refID="esri_presentations_duplicateButton"/>
+          <button refID="esri_core_duplicateButton"/>
           <button refID="esri_presentations_deletePresentationsButton" separator="true" />
           <button refID="esri_core_rename"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
@@ -11582,13 +12110,19 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_showPagePropsButton" separator="true"/>
         </menu>
 
-        <menu id="esri_presentations_mapNavigaionContextMenu" caption="Selection" extendedCaption="Open Navigation context menu" contextMenu="true">
+        <menu id="esri_presentations_mapNavigaionContextMenu" caption="Map Navigation" extendedCaption="Open Navigation context menu" contextMenu="true">
           <button refID="esri_presentations_deactivateMapButton"/>
           <button refID="esri_presentations_fullMapExtentButton" separator="true"/>
           <button refID="esri_presentations_prevMapExtentButton"/>
           <button refID="esri_presentations_nextMapExtentButton"/>
         </menu>
-        
+
+        <menu id="esri_presentations_mapNavigaionFullScreenContextMenu" caption="Map Navigation" extendedCaption="Open Navigation context menu" contextMenu="true">
+          <button refID="esri_presentations_fullMapExtentButton"/>
+          <button refID="esri_presentations_prevMapExtentButton"/>
+          <button refID="esri_presentations_nextMapExtentButton"/>
+        </menu>
+
         <!--Common items at start of map graphics context menu.-->
         <menu id="esri_presentations_elementPreCommonMenu"
               caption="Element Menu"
@@ -11719,11 +12253,13 @@ Ctrl+Alt+C = quick enable
               defaultTab="esri_presentations_homeTab" defaultTool="esri_presentations_pageNavigaionTool">
           <content className="ArcGIS.Desktop.Internal.Presentations.PresentationPaneView"/>
           <keyCommands>
-            <keyCommand id="esri_presentations_showNextPage" caption="Show Next Page"/>
-            <keyCommand id="esri_presentations_showPreviousPage" caption="Show Previous Page"/>
-            <keyCommand id="esri_presentations_togglePlayPause" caption="Toggle Video Page Playback"/>
-            <keyCommand id="esri_presentations_exitFullScreen" caption="Exit Full Screen"/>
-            <keyCommand id="esri_presentations_exitPopup" caption="Close Popup"/>
+            <keyCommand id="esri_presentations_showNextPage" caption="Next Page" tooltip="Display the next page in the presentation."/>
+            <keyCommand id="esri_presentations_showPreviousPage" caption="Previous Page"  tooltip="Display the previous page in the presentation."/>
+            <keyCommand id="esri_presentations_togglePlayPause" caption="Play" tooltip="Play or pause the playback of a video page."/>
+            <keyCommand id="esri_presentations_exitFullScreen" caption="Exit Full Screen"  tooltip="Exit presenting in full screen mode."/>
+            <keyCommand id="esri_presentations_exitPopup" caption="Close Pop-up" tooltip="Close the pop-up."/>
+            <keyCommand id="esri_presentations_showTiledView" caption="Tiled View" tooltip="Show a thumbnail preview of all pages in the presentation when using presenter mode."/>
+            <keyCommand id="esri_presentations_toggleMute" caption="Mute" tooltip="Mute or unmute the media player."/>
           </keyCommands>
         </pane>
       </panes>
@@ -11865,10 +12401,22 @@ Ctrl+Alt+C = quick enable
         <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardSourcePage"/>
         <toolTip>Set a name and select the data source for your report.</toolTip>
       </page>
+      <page id ="esri_reports_reportsWizardCustomSourcePage"
+            caption="Set the data sources"
+            className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomSourcePageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomSourcePage"/>
+        <toolTip>Select data sources for your report.</toolTip>
+      </page>
       <page id ="esri_reports_reportsWizardDataPage"
             caption="Filter the data"
             className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDataPageVM">
         <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDataPage"/>
+        <toolTip>Decide which rows to include and specify the fields in your report.</toolTip>
+      </page>
+      <page id ="esri_reports_reportsWizardCustomDataPage"
+            caption="Filter the data"
+            className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomDataPageVM">
+        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomDataPage"/>
         <toolTip>Decide which rows to include and specify the fields in your report.</toolTip>
       </page>
       <page id ="esri_reports_reportsWizardOrganizePage"
@@ -11882,20 +12430,6 @@ Ctrl+Alt+C = quick enable
             className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDesignPageVM">
         <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardDesignPage"/>
         <toolTip>Choose the report template, style, and page setup.</toolTip>
-      </page>
-
-      <!-- Custom template wizard pages -->
-      <page id ="esri_reports_reportsWizardCustomSourcePage"
-            caption="Set the data sources"
-            className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomSourcePageVM">
-        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomSourcePage"/>
-        <toolTip>Select data sources for your report.</toolTip>
-      </page>
-      <page id ="esri_reports_reportsWizardCustomDataPage"
-            caption="Filter the data"
-            className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomDataPageVM">
-        <content className="ArcGIS.Desktop.Internal.Reports.Wizard.ReportsWizardCustomDataPage"/>
-        <toolTip>Decide which rows to include and specify the fields in your report.</toolTip>
       </page>
       <page id ="esri_reports_reportsWizardCustomDynamicPage"
             caption="Connect dynamic elements"
@@ -12288,9 +12822,6 @@ Ctrl+Alt+C = quick enable
           <state id="esri_layouts_textCondition"/>
           <state id="esri_layouts_paragraphCondition"/>
         </or>
-        <not>
-            <state id="esri_presentations_viewPane"/>
-        </not>
       </and>
     </insertCondition>
     
@@ -13274,19 +13805,6 @@ Ctrl+Alt+C = quick enable
       </and>
     </insertCondition>
 
-    <insertCondition id="esri_presentations_selectedElementsNotPartsCondition"
-                     caption="Elements are selected in the active layout view and FORMAT selection is set to the whole element not a part.">
-      <and>
-        <state id="esri_presentations_viewPane"/>
-        <state id="esri_layouts_selectedElements"/>
-        <state id="esri_layouts_subElementWhole"/>
-        <not>
-          <state id="esri_layouts_inlineEditing"/>
-          <state id="esri_presentations_isPageLocked"/>
-        </not>
-      </and>
-    </insertCondition>
-
     <insertCondition id="esri_presentations_canEditElementsCondition">
       <and>
         <state id="esri_presentations_viewPane"/>
@@ -13302,7 +13820,8 @@ Ctrl+Alt+C = quick enable
       <or>
         <state id="esri_layouts_layoutPane"/>
         <state id="esri_reports_reportPane"/>
-        <state id="esri_mapping_mapPane"/>        
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_reportTemplates_reportTemplatePane"/>
         <and>
           <state id="esri_presentations_viewPane"/>
           <state id="esri_presentations_hasActivePage"/>

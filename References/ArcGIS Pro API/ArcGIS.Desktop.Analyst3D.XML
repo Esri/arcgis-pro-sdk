@@ -1,0 +1,1887 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.Analyst3D</name>
+  </assembly>
+  <members>
+    <member name="F:ArcGIS.Desktop.Analyst3D.ServiceErrorCodes.E_ABORT">
+      <summary>
+            Indicates that cancelation was acknowledged by the service method.
+            This error code should be translated to an OperationCanceledException.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Analyst3D.ServiceErrorCodes.E_FAIL">
+      <summary>
+            Indicates a critical failure that should not be handled.
+            Application should terminate in response to this error.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Analyst3D.ServiceErrorCodes.E_GENERAL_FAILURE">
+      <summary>
+            Indicates a general failure that can safely be ignored.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Analyst3D.ServiceErrorCodes.E_EDITOR_INVALID_INPUT">
+      <summary>
+             An invalid input value is supplied.")
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Analyst3D.ServiceErrorCodes.E_EDITOR_INVALID_GEOMETRY_TYPE">
+      <summary>
+             An invalid input geometry type is supplied.")
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.GetSuggestedCMDIDs(System.String)">
+      <summary>
+            Gets the set of Search Suggestion IDs for 3D Analyst ribbon tabs. 
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.ArcGIS#Desktop#Internal#Mapping#IInternalAnalyst3DModule#AddOrUpdateRendererByTargetType(ArcGIS.Desktop.Mapping.SurfaceLayer,ArcGIS.Core.CIM.CIMTinRenderer,System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.UpdateSurfaceLayerRenderers(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.DesktopService.ICIMPayload},System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint,System.Nullable{System.Int32})">
+      <summary>
+            Sets the renderers on the CIM definition of the surface layer. For 3D LAS dataset layers, it also updates the
+            IsFlattened and ElevationSurfaceLayerURI properties of the layer to the propert 2D/3D section of the TOC.
+            After the CIM changes are made, it also notifies the TOC and SurfaceLayer object that changes have occurred.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.UpdateSurfaceLayerRenderersAsync(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.DesktopService.ICIMPayload},System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint,System.Nullable{System.Int32})">
+      <summary>
+            Sets the renderers on the CIM definition of the surface layer. For 3D LAS dataset layers, it also updates the
+            IsFlattened and ElevationSurfaceLayerURI properties of the layer to the proper 2D/3D section of the TOC.
+            After the CIM changes are made, it also notifies the TOC and SurfaceLayer object that changes have occurred.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.UpdateSurfaceLayerRenderers(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Collections.Generic.IEnumerable{ArcGIS.Core.CIM.CIMTinRenderer},System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint,System.Nullable{System.Int32})">
+      <summary>
+            Sets the renderers on the CIM definition of the surface layer. For 3D LAS dataset layers, it also updates the
+            IsFlattened and ElevationSurfaceLayerURI properties of the layer to the proper 2D/3D section of the TOC.
+            After the CIM changes are made, it also notifies the TOC and SurfaceLayer object that changes have occurred.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.Analyst3DModule.UpdateSurfaceLayerRenderersAsync(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Collections.Generic.IEnumerable{ArcGIS.Core.CIM.CIMTinRenderer},System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint,System.Nullable{System.Int32})">
+      <summary>
+            Sets the renderers on the CIM definition of the surface layer. For 3D LAS dataset layers, it also updates the
+            IsFlattened and ElevationSurfaceLayerURI properties of the layer to the proper 2D/3D section of the TOC.
+            After the CIM changes are made, it also notifies the TOC and SurfaceLayer object that changes have occurred.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerExtensions.GetAssumedZUnit(ArcGIS.Core.Geometry.SpatialReference)">
+      <summary>
+            Returns the LinearUnit that the system uses for Z.
+            If the spatial reference has a linear unit defined for Z, it will be returned.
+            Otherwise, the XY unit will be returned if it is linear. Otherwise, meters will be returned.
+            
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerExtensions.GetAssumedZUnit(ArcGIS.Desktop.Mapping.Layer)">
+      <summary>
+            Returns the LinearUnit that the system uses for Z.
+            If the layer's spatial reference has a linear unit defined for Z, it will be returned.
+            Otherwise, the XY unit will be returned if it is linear. Otherwise, meters will be returned.
+            
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerExtensions.GetLayerPropertiesDefinedZUnit(ArcGIS.Desktop.Mapping.Layer)">
+      <summary>
+            Returns the LinearUnit defined on the <see cref="P:ArcGIS.Core.CIM.CIMBaseLayer.Layer3DProperties" /> of the layer, or the assumed
+            unit if not defined.
+            
+            If the layer's Layer3DProperties has a linear vertical unit defined, it will be returned.
+            Otherwise, the result of <see cref="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerExtensions.GetAssumedZUnit(ArcGIS.Desktop.Mapping.Layer)" /> will be returned:
+                If the layer's spatial reference has a linear unit defined for Z, this will be returned.
+                Otherwise, the XY unit will be returned if it is linear. Otherwise, meters will be returned.
+            
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerUtils.GetRendererTypeStringFromRenderer(ArcGIS.Core.CIM.CIMTinRenderer)">
+      <summary>
+            Returns a corresponding string identifier for the passed in renderer.
+            The renderer string identifiers are defined in SurfaceLayerUtils.RendererType.
+            Returns null if the type is unknown.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerUtils.GetRendererTypeFromRendererTypeString(System.String)">
+      <summary>
+            Maps the renderer type string identifier to a corresponding .NET Type.
+            The renderer identifiers are defined in SurfaceLayerUtils.RendererType.
+            Returns null if the string is unknown.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerUtils.GetRendererFirstLegendGroupIndex(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Int32)">
+      <summary>
+            NOTE : Legend group order for the layer
+            (0) -      'resolution', if the layer is LasDatasetLayer and if ShowResolution is true for LasDatasetLayer
+            ...
+            In reverse order of renderers : 
+            Rendererer(i), if it's unique value renderer
+               (i-0) - 'all other values', if UseDefaultSymbol is true
+               (i-1) - 'unique values'
+            ...
+            Rendererer(j), if it's not unique value renderer
+               (j-0) - 'values for this renderer', if UseDefaultSymbol is true
+            ...
+            </summary>
+      <param name="selectedSurfaceLayer"></param>
+      <param name="rendererIndex"></param>
+      <returns>Index of the first legend group of the render, or -1 if not found. Index is within all renderers' legend groups in the selectedLayer.</returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Analyst3D.Properties.Resources">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Analyst3D.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Analyst3D.Properties.Resources.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.PropertyPages.Layer.TinDisplayView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Analyst3D.PropertyPages.Layer.TinFieldName">
+      <summary>
+            Identifies a field of the TIN dataset.
+            To persist to the CIM, use .ToString(), and to read, use Enum.Parse() with case ignored.
+            
+            DO NOT rename these enum values, as their string values are used for persistence.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Analyst3D.SurfaceLayerSymbologyGalleryViewModel.SetRendererToFaceElevation(ArcGIS.Desktop.Mapping.SurfaceLayer,System.Boolean)">
+      <summary>
+            Sets up the layer for the TinFaceClassBreaksRenderer_Elevation renderer, and also sets up a breakline
+            renderer (TinBreaklineRenderer) if needed. If the layer is already configured with these, it won't do anything.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Analyst3DDatasetHelper.RemoveFilesFromLasDatasetAsync(ArcGIS.Desktop.Internal.Analyst3DDataset.ILasDatasetInterop,System.String[],ArcGIS.Desktop.Framework.Threading.Tasks.Progressor)">
+      <summary></summary>
+      <param name="lasInterop"></param>
+      <param name="fileFolders">string array of file paths or folder paths</param>
+      <param name="progressor"></param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.UnitNames">
+      <summary>
+            A set of translated displayable names for a given Unit.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.UnitNames.#ctor(ArcGIS.Core.Geometry.Unit,System.String,System.String,System.String)">
+      <summary>
+            A set of translated displayable names for a given Unit.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.GetUnitNames(ArcGIS.Core.Geometry.LinearUnit)">
+      <summary>
+            Looks up display names for the provided unit. The unit must have a valid WKID/FactoryCode.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.GetUnitNames(ArcGIS.Core.Geometry.AngularUnit)">
+      <summary>
+            Looks up display names for the provided unit. The unit must have a valid WKID/FactoryCode.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.GetUnitNames(ArcGIS.Core.Geometry.AreaUnit)">
+      <summary>
+            Looks up display names for the provided unit. The unit must have a valid WKID/FactoryCode.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.GetUnitNames(ArcGIS.Core.Geometry.Unit)">
+      <summary>
+            Looks up display names for the provided unit. The unit must be a linear, angular, or area unit and have a
+            valid WKID/FactoryCode.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.UnitUtils.FindExistingLinearUnit(System.Int32,ArcGIS.Desktop.Internal.Core.DisplayUnitEnvironment)">
+      <summary>
+            Finds an existing LinearDisplayUnit for the PECode. First, the project settings are checked for a match, and then
+            the app defaults, both of which live on DisplayUnitEnvironment.GetEnvironment.
+            </summary>
+      <remarks>
+            The collections on the DisplayUnitEnvironment are searched in the following order:
+            MapLinearUnits, PageUnits, Symbol2DUnits, Symbol3DUnits,
+            AppDefaultLinearUnits, AppDefaultPageUnits, AppDefaultSymbol2DUnits, AppDefaultSymbol3DUnits.</remarks>
+      <param name="peCode">The code of unit being looked for.</param>
+      <param name="displayUnitEnv">The environment being searched. If null, DisplayUnitEnvironment.GetEnvironment will be used.</param>
+      <returns>Null if a match is not found</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LasUtils.GetStatsStatus(ArcGIS.Desktop.Internal.DesktopService.INativePropertySet)">
+      <summary>
+            Tries to retrieve the properties "HAS_STATS" and "NEED_UPDATE" from the propertySet.
+            If the values are not present, the return value defaults to false.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningView">
+      <summary>
+            Interaction logic for RibbonThinningView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningView.OnDisplayLimitTBKeyUp(System.Object,System.Windows.Input.KeyEventArgs)">
+      <summary>
+            This method causes the text to be selected after the user presses Enter,
+            providing visual feedback that the entry was received.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningViewModel.CurrentValues">
+      <summary>
+            CurrentValues holds the currently set property values that this control allows the user to edit.
+            When an update is made, this property is updated, and the new values are pushed out to the properties
+            that are bound from the UI. When the UI-bound properties are updated, they kick off an operation to
+            update the CIM via StartUpdateOperation(), which then updates CurrentValues when completed.
+            CurrentValues may also be updated when the selected layer changes, or with an undo/redo operation.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningViewModel.AutoThresholdScale">
+      <summary>
+            Custom Scale use to provide the &lt;Auto&gt; item in the scale control.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningViewModel.MapView">
+      <summary>
+            The active MapView. Required by the scale control.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Appearance.RibbonThinningViewModel.ApplySliderValue">
+      <summary>
+            Update the CIM and layer with the value in PointDensity, which is bound to the UI slider.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Appearance.PropertyValues">
+      <summary>
+            This immutable record holds a set of values for Point Thinning settings.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Appearance.PropertyValues.#ctor(System.Double,System.Int32,System.Int32,System.Boolean)">
+      <summary>
+            This immutable record holds a set of values for Point Thinning settings.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Appearance.TerrainRibbonThinningView">
+      <summary>
+            Interaction logic for TerrainRibbonThinningView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Appearance.TerrainRibbonThinningView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.TinEditor.TargetTinLayerOverlay">
+      <summary>
+            Interaction logic for TargetTinLayerOverlay.xaml
+            </summary>
+      <summary>
+            TargetTinLayerOverlay
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.TinEditor.TargetTinLayerOverlay.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.TinEditor.TinEditorOverlay">
+      <summary>
+            Interaction logic for TinAddPointOverlay.xaml
+            </summary>
+      <summary>
+            TinEditorOverlay
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.TinEditor.TinEditorOverlay.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.LineOfSight.LineOfSightGraphView">
+      <summary>
+            Interaction logic for LineOfSightGraphView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LineOfSight.LineOfSightGraphView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.LineOfSight.LineOfSightSettingsView">
+      <summary>
+            Interaction logic for LineOfSightSettingsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LineOfSight.LineOfSightSettingsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.Analyst3DRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.Analyst3DRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.Analyst3DRes.Error_CannotConnectToDatabase">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.GpToolNameDesc.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.GpToolNameDesc.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.GpToolNameDesc.AddSurfaceInformation_3d_Description">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAppearance.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAppearance.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAppearance.AutoThreshhold">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAttributeRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAttributeRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASAttributeRes.Classification">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Reserved">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+      <summary>
+            Reserved for ASPRS Definition
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.NeverClassified">
+      <summary>
+            Code 000 Created, never classified
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Unclassified">
+      <summary>
+            Code 001 Unclassified
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Ground">
+      <summary>
+            Code 002 Ground
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.LowVegetation">
+      <summary>
+            Code 003 Low Vegetation
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.MediumVegetation">
+      <summary>
+            Code 004 Medium Vegetation
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.HighVegetation">
+      <summary>
+            Code 005 High Vegetation
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Building">
+      <summary>
+            Code 006 Building
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.LowPointNoise">
+      <summary>
+            Code 007 Low Point (noise)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.ModelKeyPoint">
+      <summary>
+            Code 008 Model Key-point (mass point)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Water">
+      <summary>
+            Code 009 Water
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Rail">
+      <summary>
+            Code 010 Rail
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.RoadSurface">
+      <summary>
+            Code 011 Road Surface
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.OverlapPoints">
+      <summary>
+            Code 012 Overlap Points
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.WireGuardShield">
+      <summary>
+            Code 013 Wire - Guard
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.WireConductorPhase">
+      <summary>
+            Code 014 Wire - Conductor
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.TransmissionTower">
+      <summary>
+            Code 015 Transmission Tower
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.WireStructureConnector">
+      <summary>
+            Code 016 Wire-structure Connector (e.g. Insulator)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.BridgeDeck">
+      <summary>
+            Code 017 Bridge Deck
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.HighNoise">
+      <summary>
+            Code 018 High Noise
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.UserDefined">
+      <summary>
+            User definable
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.IgnoredGround">
+      <summary>
+            Code 020 Ignored Ground
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.OverheadStructure">
+      <summary>
+            Code 019 Overhead Structure
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.Snow">
+      <summary>
+            Code 021 Snow
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassCodeRes.TemporalExclusion">
+      <summary>
+            Code 022 Temporal Exclusion
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.KeyPoint">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+      <summary>
+            Classification bit field 6
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.Overlap">
+      <summary>
+            Classification bit field
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.Synthetic">
+      <summary>
+            Classification bit field 5
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASClassFlagRes.Withheld">
+      <summary>
+            Classification bit field 7
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASFilterPredefined.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASFilterPredefined.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASFilterPredefined.AllPoints">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.All">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+      <summary>
+            LAS Filter property page checkbox
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.ClassificationCodes">
+      <summary>
+            LAS Filter property page
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.ClassificationFlags">
+      <summary>
+            LAS Filter property page
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.NotFlagged">
+      <summary>
+            LAS Filter property page checkbox
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.ReturnValues">
+      <summary>
+            LAS Filter property page
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.SelectableLASPoints">
+      <summary>
+            LAS Selection property page
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.SelectLASPointProps">
+      <summary>
+            LAS Filter property page
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.Source">
+      <summary>
+            Surface Constraints property page column heading
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.TinDisplayView_DisplayField">
+      <summary>
+            Label for Display field combobox
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.Type">
+      <summary>
+            Surface Constraints property page column heading
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASLayerPropertiesRes.ZField">
+      <summary>
+            Surface Constraints property page column heading
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASPropertyPagesRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASPropertyPagesRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASPropertyPagesRes.Attributes">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASReturnRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASReturnRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASReturnRes.Fifth">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASStretchAttributeRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASStretchAttributeRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LASStretchAttributeRes.Blue">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LasZRangeFilterRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LasZRangeFilterRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.LasZRangeFilterRes.MaxZValueTooltipHeader">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.OperationsRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.OperationsRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.OperationsRes.CategoryAnalyst3D">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.SurfaceLayerRendererRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.SurfaceLayerRendererRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.SurfaceLayerRendererRes.AspectSurfaceSymbolizerDescription">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.SurfaceLayerRendererRes.PointSizeControl_RealWorldNameFormat">
+      <summary>
+            Examples: Meters (m) | Feet (ft)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainAppearance.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainAppearance.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainAppearance.AutoResolution">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainDatasetRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainDatasetRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainDatasetRes.DataSourceCount_Label">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizard.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizard.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizard.NotSet">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TinDatasetRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TinDatasetRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TinDatasetRes.Edges_Label">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TinDatasetRes.CopyToClipboard">
+      <summary>
+            Context menu option to Copy to clipboard
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinContour">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+      <summary>
+            00 esriTinContour
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinHardClip">
+      <summary>
+            02 esriTinHardClip
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinHardErase">
+      <summary>
+            03 esriTinHardErase
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinHardLine">
+      <summary>
+            01 esriTinHardLine
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinHardReplace">
+      <summary>
+            04 esriTinHardReplace
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinHardValueFill">
+      <summary>
+            05 esriTinHardValueFill
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinMassPoint">
+      <summary>
+            18 esriTinMassPoint
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinSoftClip">
+      <summary>
+            10 esriTinSoftClip
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinSoftErase">
+      <summary>
+            11 esriTinSoftErase
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinSoftLine">
+      <summary>
+            09 esriTinSoftLine
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinSoftReplace">
+      <summary>
+            12 esriTinSoftReplace
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinSoftValueFill">
+      <summary>
+            13 esriTinSoftValueFill
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessContour">
+      <summary>
+            15 esriTinZLessContour
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessHardClip">
+      <summary>
+            07 esriTinZLessHardClip
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessHardErase">
+      <summary>
+            08 esriTinZLessHardErase
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessHardLine">
+      <summary>
+            06 esriTinZLessHardLine
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessSoftClip">
+      <summary>
+            16 esriTinZLessSoftClip
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessSoftErase">
+      <summary>
+            17 esriTinZLessSoftErase
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.esriTinZLessSoftLine">
+      <summary>
+            14 esriTinZLessSoftLine
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TINSurfaceTypeRes.UnknownSurfaceType">
+      <summary>
+            Unknown surface type
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_HardClip">
+      <summary>
+              Looks up a localized string similar to Hard Clip.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_HardErase">
+      <summary>
+              Looks up a localized string similar to Hard Erase.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_HardLine">
+      <summary>
+              Looks up a localized string similar to Hard Line.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_HardReplace">
+      <summary>
+              Looks up a localized string similar to Hard Replace.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_HardValueFill">
+      <summary>
+              Looks up a localized string similar to Hard Value Fill.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_MassPoints">
+      <summary>
+              Looks up a localized string similar to Mass Points.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_SoftClip">
+      <summary>
+              Looks up a localized string similar to Soft Clip.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_SoftErase">
+      <summary>
+              Looks up a localized string similar to Soft Erase.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_SoftLine">
+      <summary>
+              Looks up a localized string similar to Soft Line.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_SoftReplace">
+      <summary>
+              Looks up a localized string similar to Soft Replace.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TerrainSurfaceFeatureType_SoftValueFill">
+      <summary>
+              Looks up a localized string similar to Soft Value Fill.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TriangulationMethod_ConstrainedDelaunay">
+      <summary>
+              Looks up a localized string similar to Constrained Delaunay.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.LocalResources.TerrainWizardDisplayNames.TriangulationMethod_Delaunay">
+      <summary>
+              Looks up a localized string similar to Delaunay.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.ProfileGraph.ProfileGraphView">
+      <summary>
+            Interaction logic for ProfileGraphView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.ProfileGraph.ProfileGraphView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetExtentView">
+      <summary>
+            Interaction logic for Analyst3DExtentView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetExtentView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetGeneralView">
+      <summary>
+            Interaction logic for TinDatasetGeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetGeneralView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetMultiColumnView">
+      <summary>
+            Interaction logic for TinDatasetGeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetMultiColumnView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetSpatialReferenceView">
+      <summary>
+            Interaction logic for DatasetSpatialReferenceView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetSpatialReferenceView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.EnableRowDetailsDataGridScrolling">
+      <summary>
+            Attached behavior for a DataGrid being used as the RowDetails in a parent DataGrid. It fixes the scroll
+            behavior so that the child RowDetails DataGrid doesn't block scrolling.
+            </summary>
+      <remarks>
+            Based on the fix here: https://stackoverflow.com/a/63376366
+            </remarks>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.ConstraintsView">
+      <summary>
+            Interaction logic for ConstraintsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.ConstraintsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.ConstraintsViewModel.DataGridSelectedItemsCmd">
+      <summary>
+            Command binding to get the selected items from the data grid to support multi-select
+            DataGrid.SelectedItems is read-only and hence cannot be data bound to.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetStatisticsView">
+      <summary>
+            Interaction logic for DatasetStatisticsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.DatasetStatisticsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.GeneralView">
+      <summary>
+            Interaction logic for GeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.GeneralView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.ExtentItem.LongFormat">
+      <summary>
+            Formats numbers using 15 significant digits.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.ExtentItem.ValueToString(System.Double)">
+      <summary>
+            Attempts to format that string using the Linear Unit's project settings, or defaults
+            to 15 significant digits if not possible.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasDatasetPropertySheetDataViewModel">
+      <summary>
+            Help manage one property sheet open session
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasDatasetSpatialReferenceView">
+      <summary>
+            Interaction logic for LasDatasetSpatialReferenceView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasDatasetSpatialReferenceView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasFilesView">
+      <summary>
+            Interaction logic for LasFilesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasFilesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasFilesViewModel.DataGridSelectedItemsCmd">
+      <summary>
+            Command binding to get the selected items from the data grid to support multi-select
+            DataGrid.SelectedItems is read-only and hence cannot be data bound to.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.PyramidView">
+      <summary>
+            Interaction logic for PyramidView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.PyramidView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LASFilterView">
+      <summary>
+            Interaction logic for LASFilterView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LASFilterView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LasLayer.LasDisplayView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LASSelectionView">
+      <summary>
+            Interaction logic for LASCodesSelectionView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.LASSelectionView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.SurfaceConstraintsView">
+      <summary>
+            Interaction logic for SurfaceConstraintsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.SurfaceConstraintsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.TerrainDatasetDataSourcesView">
+      <summary>
+            Interaction logic for TinDatasetGeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.PropertyPages.TerrainDatasetDataSourcesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel._canAutoEnableAfterOpening">
+      <summary>
+            Flag to limit auto-enabling the filter to once per dropdown open.
+            If the user turns off the filter but continues to edit values, the filter will not annoyingly re-enable.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.ZMin">
+      <summary>In meters</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.ZMax">
+      <summary>In meters</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.IsZMinFilterActive">
+      <summary>True if the ZMinInMeters setting is somewhere within the extent.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.IsZMaxFilterActive">
+      <summary>True if the ZMaxInMeters setting is somewhere within the extent.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.IsFilterEnabled">
+      <summary>Represents the LasFilter.CheckZRange setting.</summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.Refresh(System.Boolean)">
+      <summary>
+            Use force to refresh even if the SelectedLayer hasn't changed. This allows the code to respond when the layer definition is updated.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Ribbon.LasZRangeFilterViewModel.IsFilterEnabledOnSelectedLayer">
+      <summary>
+            Gets the CheckZRange value from the currently selected LasDatasetLayer.
+            Returns null if a LasDatasetLayer is not selected.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SymbolizerVMExtensions.ReportException(ArcGIS.Desktop.Internal.Mapping.Symbology.SymbolizerViewModelBase,System.Exception,System.String,System.String)">
+      <summary>
+            Reports the exception to Trace.WriteLine(). If dockPaneErrorInfo is provided, the view-model's
+            DockPaneError state and DockPaneErrorInfo will be set.
+            </summary>
+      <param name="symbolizerVM"></param>
+      <param name="ex"></param>
+      <param name="dockPaneErrorInfo">The error string reported by DockPaneErrorInfo.</param>
+      <param name="callerMemberName"></param>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper">
+      <summary>
+            Helper methods for dealing with Surface Layers and Symbology.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.ShowSymbolPickerForSurfaceLayerAsync(ArcGIS.Desktop.Internal.Mapping.Symbology.SymbolizerViewModelBase,ArcGIS.Desktop.Mapping.LegendClass)">
+      <summary>
+            Shows the symbol picker for the selected layer and symbol type.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.QueryTinRendererFromType``1(System.Collections.Generic.IReadOnlyList{ArcGIS.Core.CIM.CIMTinRenderer},System.Int32@)">
+      <summary>
+            Find and return the first renderer which is of type T. rendererIndex will be set to its index.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.QueryTinRendererFromType``1(System.Collections.Generic.IReadOnlyList{ArcGIS.Core.CIM.CIMTinRenderer})">
+      <summary>
+            Find and return the first renderer which is of type T.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.QueryTinRendererFromType(System.Collections.Generic.IReadOnlyList{ArcGIS.Core.CIM.CIMTinRenderer},System.Type)">
+      <summary>
+            Find and return the first renderer which is of the given type.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.GetFirstRendererAndIndexOfType``1(ArcGIS.Desktop.Mapping.SurfaceLayer)">
+      <summary>
+            Find and return the first renderer which is of type T on the surfaceLayer. rendererIndex will be set to its index.
+            </summary>
+      <remarks>
+            This calls SurfaceLayer.GetRenderersAsync() to retrieve the list of layers to search over for a layer of type T.
+            The internals of GetRenderersAsync() performs XML serialization/deserialization, native interop, and also updates
+            internal state on the SurfaceLayer (SurfaceLayer._rendererXMLs) so be warned that this is not a lightweight method call.
+            </remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbolizerHelper.GetFirstRendererOfType``1(ArcGIS.Desktop.Mapping.SurfaceLayer)">
+      <summary>
+            Find and return the first renderer which is of type T on the surfaceLayer.
+            </summary>
+      <remarks>
+            This calls SurfaceLayer.GetRenderersAsync() to retrieve the list of layers to search over for a layer of type T.
+            The internals of GetRenderersAsync() performs XML serialization/deserialization, native interop, and also updates
+            internal state on the SurfaceLayer (SurfaceLayer._rendererXMLs) so be warned that this is not a lightweight method call.
+            </remarks>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbologyView">
+      <summary>
+            Interaction logic for SurfaceLayerSymbologyView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbologyView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.RendererItem.Renderer">
+      <summary>
+            Should only be null if NeedToCreateRenderer is true.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.RendererItemsManager.AddRendererItem(ArcGIS.Desktop.Internal.Analyst3D.Symbology.RendererMode,System.String,ArcGIS.Core.CIM.CIMTinRenderer,System.Boolean,ArcGIS.Desktop.Internal.Mapping.Symbology.SymbolizerViewModelBase,System.Boolean)">
+      <summary>
+             Add or adjust the active renderer item. If added, will be the active renderer. 
+             If the renderer is already cached, will be moved to the first in the renderers list and become the active renderer
+            </summary>
+      <param name="rendererMode"></param>
+      <param name="rendererType"></param>
+      <param name="renderer"></param>
+      <param name="updateRenderer"></param>
+      <param name="symbolizerBase"></param>
+      <param name="updateSymbolizerBase"></param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbologyContentProvider.LasPointSizeControlVM">
+      <summary>
+            The same view model for the point size control is used across all the renderer VMs.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbologyContentProvider.SelectedRendererGroupViewName">
+      <summary>
+            Renderer groups : Points/Contours/Edges/Surface
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerSymbologyContentProvider.SetCurrentPointSettingsOnRenderer(ArcGIS.Core.CIM.CIMTinRenderer)">
+      <summary>
+            If the renderer is a LAS renderer, it will apply the point size settings from the LasPointSizeControlVM to its
+            PointSplatter property. This maintains the same point size settings across different renderers as the user
+            switches to them on the symbology pane.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControl">
+      <summary>
+            LasPointSizeControl
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.PointSizingOption">
+      <summary>Holds details about methods available for setting LAS point sizes.</summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.PointSizingOption.#ctor(System.String,System.String,System.String,ArcGIS.Core.CIM.LASPointSizingMethod,ArcGIS.Desktop.Internal.Core.LinearDisplayUnit,System.Double,System.Double,System.Double)">
+      <summary>Holds details about methods available for setting LAS point sizes.</summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.#ctor(ArcGIS.Core.CIM.CIMLASPointSplatter,System.Boolean,ArcGIS.Core.Geometry.LinearUnit,System.Action)">
+      <summary>
+            Instantiates the viewmodel.
+            </summary>
+      <param name="pointSizeSettings">The starting settings. If null, the default point sizing settings will be used.</param>
+      <param name="is3D">True if the layer is for a 3D scene.</param>
+      <param name="defaultRealWorldUnit"></param>
+      <param name="onSettingsEdited">A callback to notify the parent that the user has made changes to the settings.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.Is3D">
+      <summary>
+            For 2D Maps, we only hide the combobox and only use the Autoscale option.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.OptionsCollectionView">
+      <summary>
+            Used for group binding on the ComboBox.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.SetSelectedOptionFromBackend(ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.PointSizingOption)">
+      <summary>This is the same as setting SelectedOption, except it does not invoke _onSettingsEdited.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.RealWorldSize">
+      <summary>In meters</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.EditedValue">
+      <summary>
+            This property allows a single edit box to be used to edit different size values depending on the selected
+            sizing method.
+            When editing real world size, the property handles converting to/from the selected unit.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.UpdateRendererPointSettings(ArcGIS.Core.CIM.CIMLASPointSplatter)">
+      <summary>
+            Updates the renderer's point sizing settings based on the current view model properties.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.Symbolizers.LasPointSizeControlViewModel.GetDefaultLinearUnit(ArcGIS.Desktop.Mapping.Layer)">
+      <summary>
+            Calculates the default unit PECode to be used in the case that point settings specify real-world based units.
+            </summary>
+      <remarks>
+            Attempts to pull a linear unit option in the order of the Map's display location unit, display elevation unit,
+            map's SR Z unit, map's SR unit, layer's SR Z unit, and layer's SR unit.
+            </remarks>
+      <returns>Defaults to meters if no suitable unit type is found.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.LASStretchSymbolizerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.LASStretchSymbolizerViewModel.LasPointSizeControlVM">
+      <summary>Provides the LasPointSizeControlViewModel that lives on the SurfaceLayerSymbologyContentProvider.</summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.IsClassBreaksOrderReversed">
+      <summary>
+            If true, the displayed ordered of the class breaks is descending; otherwise ascending.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.SelectedRenderer">
+      <summary>
+            Caches the current renderer for this viewmodel from SelectedSurfaceLayer.Renderers[],
+            if there is a renderer existing for this viewmodel.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.SelectedRendererIndex">
+      <summary>
+            Caches the current renderer's index for this viewmodel from SelectedSurfaceLayer.Renderers[],
+            if there is a renderer existing for this viewmodel.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.RefreshSelectedRenderer">
+      <summary>
+            Updates the SelectedRenderer and SelectedRendererIndex properties, using the renderer type T
+            to find the appropriate renderer on the SelectedLayer property.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.LasPointSizeControlVM">
+      <summary>Provides the LasPointSizeControlViewModel that lives on the SurfaceLayerSymbologyContentProvider.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.DataGridSelectedItemsCmd">
+      <summary>
+            Command binding to get the selected items from the data grid to support multi-select
+            DataGrid.SelectedItems is read-only and hence cannot be data bound to.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.GroupValuesCmd">
+      <summary>
+            Group selected value(s) into one value
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerClassBreaksSymbolizerViewModel`1.ReverseClassBreaksOrder">
+      <summary>
+            Reverses the order of the class breaks. It also flips the symbols so that in the UI it appears
+            that only the bounds and labels values have changed. This matches Features behavior.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.ShowDescription">
+      <summary>
+            Flag that indicates it the description should be visible for each unique value. False by default
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.UseDefaultSymbol">
+      <summary>
+            Flag that indicates if all other values should be drawn using the default symbol. True by default
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.UniqueValuesFiltered">
+      <summary>
+            This is the collection view that the DataGrid binds to. It is an alternate view of the UniqueValuesCollection.
+            It doesn't have grouping, and filters out the "all other values" option based on the UseDefaultSymbol property. 
+            </summary>
+      <remarks>
+            The default ICollectionView for the UniqueValuesCollection uses grouping, which the logic of this
+            ViewModel strongly relies upon. To avoid a large refactoring effort, we currently are using this alternate view
+            for the UI, but keeping the default view for the grouping logic.
+            </remarks>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.SelectedUniqueValue">
+      <summary>
+            Selected unique value item from the collection of unique values displayed
+            in the data grid.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.HeadingsForMove">
+      <summary>
+            Collection of headings the selected unique value(s) can be moved to.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.SymbolColumnFlipped">
+      <summary>
+            Flag indicating if the symbols are flipped
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.LabelColumnSortAscending">
+      <summary>
+            Flag indicating if the labels are sorted in ascending order
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.ValuesColumnSortAscending">
+      <summary>
+            Flag indicating if the values are sorted in ascending order
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.LasPointSizeControlVM">
+      <summary>Provides the LasPointSizeControlViewModel that lives on the SurfaceLayerSymbologyContentProvider.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.DataGridSelectedItemsCmd">
+      <summary>
+            Command binding to get the selected items from the data grid to support multi-select
+            DataGrid.SelectedItems is read-only and hence cannot be data bound to.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.GroupValuesCmd">
+      <summary>
+            Group selected value(s) into one value
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.UnGroupValuesCmd">
+      <summary>
+            Ungroup selected value(s) into separate values
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.RemoveUniqueValueCmd">
+      <summary>
+            Removes selected value(s)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerViewModel`1.RemoveAllUniqueValuesCmd">
+      <summary>
+            Removes all values
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SymbologyUtils.ToSurfaceRendererTarget(ArcGIS.Desktop.Internal.Analyst3D.Symbology.RendererMode)">
+      <summary>
+            Converts a RendererMode to its corresponding SurfaceRendererTarget.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SymbologyUtils.RemoveRendererAndUpdateSymbologyPane(ArcGIS.Desktop.Mapping.SurfaceLayer,ArcGIS.Desktop.Mapping.SurfaceRendererTarget)">
+      <summary>
+            Calls RemoveRenderer() and then updates the symbology pane to reflect the change.
+            Run on the MCT.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SymbologyUtils.RemoveRenderer(ArcGIS.Desktop.Mapping.SurfaceLayer,ArcGIS.Desktop.Mapping.SurfaceRendererTarget,System.Boolean)">
+      <summary>
+            Removes the renderer of the specified target type from the SurfaceLayer.
+            Run on the MCT.
+            </summary>
+      <returns>True if a renderer was removed and the surfaceLayer's CIM definition was updated; otherwise, false.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SymbologyUtils.AddOrUpdateRendererByTargetType(ArcGIS.Desktop.Mapping.SurfaceLayer,ArcGIS.Core.CIM.CIMTinRenderer,System.Boolean,ArcGIS.Desktop.Internal.Mapping.eLayerUpdateHint)">
+      <summary>
+            Adds or replaces a renderer on the SurfaceLayer, based on the renderer's target type.
+            The target type is determined by the CIMTinRenderer.GetSurfaceRendererTarget() method. 
+            Run on the MCT.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Symbology.SurfaceLayerUniqueValueSymbolizerAddUnlistedValuesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.EnumToDisplayAttributeConverter">
+      <summary>
+            Converts an Enum value to its DisplayAttribute value.
+            The DisplayAttribute provides an easy way to attach a resource string description
+            to enum values.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.Page1TerrainPropertiesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.Page2DefineParticipantsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.Page3PyramidPropertiesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.Page4PyramidLevelsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.Page5SummaryView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.Pages.TerrainWizardPage.ReportPageChange(System.Object,System.ComponentModel.PropertyChangedEventArgs)">
+      <summary>
+            Add a EUEI log when the wizard page is activated.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidLevelDefinition">
+      <summary>
+            Defines a pyramid level. The z-tolerance or window size and its associated reference scale for each pyramid level being added to the terrain.
+            </summary>
+      <param name="PyramidLevelResolution">Z-Tolerance or Window Size, depending on the Terrain's pyramid type.</param>
+      <param name="ReferenceScale">The reference scale represents the largest map scale at which the pyramid level is enforced. When the terrain is displayed at a scale larger than this value, the next highest pyramid level is displayed. The value is actually the denominator of the reference scale, eg, 1:ReferenceScale.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidLevelDefinition.#ctor(System.Double,System.UInt64)">
+      <summary>
+            Defines a pyramid level. The z-tolerance or window size and its associated reference scale for each pyramid level being added to the terrain.
+            </summary>
+      <param name="PyramidLevelResolution">Z-Tolerance or Window Size, depending on the Terrain's pyramid type.</param>
+      <param name="ReferenceScale">The reference scale represents the largest map scale at which the pyramid level is enforced. When the terrain is displayed at a scale larger than this value, the next highest pyramid level is displayed. The value is actually the denominator of the reference scale, eg, 1:ReferenceScale.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidLevelDefinition.PyramidLevelResolution">
+      <summary>Z-Tolerance or Window Size, depending on the Terrain's pyramid type.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidLevelDefinition.ReferenceScale">
+      <summary>The reference scale represents the largest map scale at which the pyramid level is enforced. When the terrain is displayed at a scale larger than this value, the next highest pyramid level is displayed. The value is actually the denominator of the reference scale, eg, 1:ReferenceScale.</summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow">
+      <summary>
+            Defines how to add a feature class to a terrain dataset. This is passed to the GP tool as a row in a value table.
+            </summary>
+      <param name="InFeature">Input Features—Name of the feature class being added to the terrain.</param>
+      <param name="HeightField">Field containing the feature's height information. Any numeric field can be specified, and z-enabled features can also choose the geometry field. If the /<none /> option is chosen, z-values are interpolated from the surface.</param>
+      <param name="SfType">Surface feature type that defines how the features contributes to the terrain.</param>
+      <param name="Group">Defines the group of each contributing feature.</param>
+      <param name="MinResolution">Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</param>
+      <param name="MaxResolution">Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</param>
+      <param name="IsOverview">Indicates whether the feature is enforced at the coarsest representation of the terrain dataset. To maximize display performance, make sure that feature classes represented in the overview contain simplified geometry. Only valid for feature types other than mass points.</param>
+      <param name="ShouldEmbed">Setting this option to TRUE indicates the source features will be copied to a hidden feature class that will be referenced by and only available to the terrain. Embedded features will not be directly viewable, as they can only be accessed through terrain tools. Only valid for multipoint features.</param>
+      <param name="EmbedName">Name of the embedded feature class. Only applies if the feature is being embedded. Use '/<None />' for nothing.</param>
+      <param name="EmbedFields">Specifies BLOB field attributes to be retained in the embedded feature class. These attributes can be used to symbolize the terrain. LAS attribution can be stored in BLOB fields of multipoint features through the LAS To Multipoint tool. Use '/<None />' for nothing.</param>
+      <param name="IsAnchor">Specifies whether the point feature class will be anchored through all terrain pyramid levels. Anchor points are never filtered or thinned away to ensure they persist in the terrain surface. This option only applies to single-point feature classes.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.#ctor(System.String,System.String,ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainSurfaceFeatureType,System.Int32,System.Double,System.Double,System.Boolean,System.Boolean,System.String,System.String,System.Boolean)">
+      <summary>
+            Defines how to add a feature class to a terrain dataset. This is passed to the GP tool as a row in a value table.
+            </summary>
+      <param name="InFeature">Input Features—Name of the feature class being added to the terrain.</param>
+      <param name="HeightField">Field containing the feature's height information. Any numeric field can be specified, and z-enabled features can also choose the geometry field. If the /<none /> option is chosen, z-values are interpolated from the surface.</param>
+      <param name="SfType">Surface feature type that defines how the features contributes to the terrain.</param>
+      <param name="Group">Defines the group of each contributing feature.</param>
+      <param name="MinResolution">Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</param>
+      <param name="MaxResolution">Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</param>
+      <param name="IsOverview">Indicates whether the feature is enforced at the coarsest representation of the terrain dataset. To maximize display performance, make sure that feature classes represented in the overview contain simplified geometry. Only valid for feature types other than mass points.</param>
+      <param name="ShouldEmbed">Setting this option to TRUE indicates the source features will be copied to a hidden feature class that will be referenced by and only available to the terrain. Embedded features will not be directly viewable, as they can only be accessed through terrain tools. Only valid for multipoint features.</param>
+      <param name="EmbedName">Name of the embedded feature class. Only applies if the feature is being embedded. Use '/<None />' for nothing.</param>
+      <param name="EmbedFields">Specifies BLOB field attributes to be retained in the embedded feature class. These attributes can be used to symbolize the terrain. LAS attribution can be stored in BLOB fields of multipoint features through the LAS To Multipoint tool. Use '/<None />' for nothing.</param>
+      <param name="IsAnchor">Specifies whether the point feature class will be anchored through all terrain pyramid levels. Anchor points are never filtered or thinned away to ensure they persist in the terrain surface. This option only applies to single-point feature classes.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.InFeature">
+      <summary>Input Features—Name of the feature class being added to the terrain.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.HeightField">
+      <summary>Field containing the feature's height information. Any numeric field can be specified, and z-enabled features can also choose the geometry field. If the /<none /> option is chosen, z-values are interpolated from the surface.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.SfType">
+      <summary>Surface feature type that defines how the features contributes to the terrain.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.Group">
+      <summary>Defines the group of each contributing feature.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.MinResolution">
+      <summary>Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.MaxResolution">
+      <summary>Defines the range of pyramid resolutions at which the feature is enforced in the terrain. Mass points must use the smallest and largest range of values.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.IsOverview">
+      <summary>Indicates whether the feature is enforced at the coarsest representation of the terrain dataset. To maximize display performance, make sure that feature classes represented in the overview contain simplified geometry. Only valid for feature types other than mass points.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.ShouldEmbed">
+      <summary>Setting this option to TRUE indicates the source features will be copied to a hidden feature class that will be referenced by and only available to the terrain. Embedded features will not be directly viewable, as they can only be accessed through terrain tools. Only valid for multipoint features.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.EmbedName">
+      <summary>Name of the embedded feature class. Only applies if the feature is being embedded. Use '/<None />' for nothing.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.EmbedFields">
+      <summary>Specifies BLOB field attributes to be retained in the embedded feature class. These attributes can be used to symbolize the terrain. LAS attribution can be stored in BLOB fields of multipoint features through the LAS To Multipoint tool. Use '/<None />' for nothing.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow.IsAnchor">
+      <summary>Specifies whether the point feature class will be anchored through all terrain pyramid levels. Anchor points are never filtered or thinned away to ensure they persist in the terrain surface. This option only applies to single-point feature classes.</summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils">
+      <summary>
+            Utility methods and types for calling the GP Tools concerning terrain datasets.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.NullableStringToGPParam(System.String)">
+      <summary>
+            If the string is null or empty, this returns "/<None />", otherwise it returns the string.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.GPParameters">
+      <summary>
+            Wraps the generic GP Tool parameters into a single type.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.GPParameters.#ctor(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},ArcGIS.Desktop.Core.Geoprocessing.GPToolExecuteEventHandler,ArcGIS.Desktop.Core.Geoprocessing.GPExecuteToolFlags,System.Threading.CancellationToken)">
+      <summary>
+            Wraps the generic GP Tool parameters into a single type.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.RunCreateTerrain(System.String,System.String,System.Double,System.Nullable{System.Int64},ArcGIS.Core.Data.Analyst3D.TerrainPyramidType,ArcGIS.Core.Data.Analyst3D.TerrainWindowSizeMethod,System.Nullable{ArcGIS.Core.Data.Analyst3D.TerrainZThresholdStrategy},System.Nullable{System.Double},ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TriangulationMethod,ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.GPParameters)">
+      <summary>
+            Runs the 3d.CreateTerrain GP Tool.
+            </summary>
+      <remarks>See https://pro.arcgis.com/en/pro-app/latest/tool-reference/3d-analyst/create-terrain.htm</remarks>
+      <param name="inFeatureDataset">The feature dataset that will contain the terrain dataset.</param>
+      <param name="outputTerrainName">The name of the terrain dataset.</param>
+      <param name="averagePointSpacing">The average horizontal distance between the data points that will be used in modeling the terrain.</param>
+      <param name="maxOverviewSize">The terrain overview is similar to the image thumbnail concept. It is the coarsest representation of the terrain dataset, and the maximum size represents the upper limit of the number of measurement points that can be sampled to create the overview.</param>
+      <param name="pyramidType">Specifies the point thinning method that will be used to construct the terrain pyramids.</param>
+      <param name="windowSizeMethod">Specifies how points in the area defined by the window size will be selected. This parameter is only applicable when WINDOWSIZE is specified for the pyramid_type parameter.</param>
+      <param name="secondaryThinningMethod">Specifies additional thinning that will be performed to reduce the number of points used over flat areas when window size pyramids are used.</param>
+      <param name="secondaryThinningThreshold">The vertical threshold that will be used to activate secondary thinning when the pyramid_type parameter is set to WINDOWSIZE. Set the value equal to or larger than the vertical accuracy of the data.</param>
+      <param name="triangulationMethod">Specifies whether breakline features will be incorporated into the terrain surface by densifying their segments to conform to Delaunay triangulation rules for constructing a TIN surface.</param>
+      <param name="gpParameters"></param>
+      <exception cref="T:System.ArgumentOutOfRangeException">Thrown if an undefined enum value is passed in.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.RunAddTerrainPyramidLevel(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidLevelDefinition},ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.GPParameters)">
+      <summary>
+            /// Runs the 3d.AddFeatureClassToTerrain GP Tool.
+            </summary>
+            /// <remarks>See https://pro.arcgis.com/en/pro-app/latest/tool-reference/3d-analyst/add-terrain-pyramid-level.htm</remarks><param name="inTerrain">The terrain dataset that will be processed.</param><param name="pyramidLevelDefinitions">The z-tolerance or window size and its associated reference scale for each pyramid level being added to the terrain.</param><param name="gpParameters"></param></member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.RunAddFeatureClassToTerrain(System.String,System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureRow},ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.GPParameters)">
+      <summary>
+            Runs the 3d.AddFeatureClassToTerrain GP Tool.
+            </summary>
+      <remarks>See https://pro.arcgis.com/en/pro-app/latest/tool-reference/3d-analyst/add-feature-class-to-terrain.htm</remarks>
+      <param name="inTerrain"></param>
+      <param name="inFeatures"></param>
+      <param name="gpParameters"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainGPUtils.IsFeatureDatasetAndCompatibleWithTerrainWizard(ArcGIS.Desktop.Core.Item)">
+      <summary>
+            Checks an item to see if it is a valid feature dataset which can contain a terrain dataset.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidCalculator.CalculateTileSize(System.Double)">
+      <summary>
+            Returns the TileSize in the XY unit of the feature dataset.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainPyramidCalculator.GetScreenSize">
+      <summary> 
+            Returns the length and width, in millimeters, of the physical screen of a 24" 1080p monitor.
+            </summary>
+      <remarks>
+            The original wizard code returned the length and width of the user's physical screen, in mm.
+            We have since decided it would be better to fix this value to a 24" monitor so that we have consistent results.
+            </remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelsDefinitionVM">
+      <summary>
+            This ViewModel is used to define the Pyramid Levels of a terrain dataset.
+            </summary>
+      <remarks>
+            This view model uses the PyramidLevels property as the source of truth for how the pyramid levels are defined.
+            This property is also a near exact representation of what needs to be passed to the corresponding GP tool call.
+            The PyramidLevelsVMs wrap a PyramidLevel and provide functionality to the UI to edit the levels. PyramidLevelVMs
+            also contains two extra items, for the Full Resolution and Overview levels. When PyramidLevels is updated, the
+            PyramidLevelVMs need to also be updated to match.
+            </remarks>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelsDefinitionVM.MinTolerance">
+      <summary>For Window Size, the min tolerance is twice the average point spacing, otherwise return 0.001.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelsDefinitionVM.MaxTolerance">
+      <summary>For Window Size, the max tolerance is half of the tile size, otherwise return double.MaxValue.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelVM.EditableWindowSizeOrZTolerance">
+      <summary>
+            This property can be used for two-way binding/editing on the UI.
+            The "set" should only be used when edited from the UI.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelVM.EditableScaleDenominator">
+      <summary>
+            This property can be used for two-way binding/editing on the UI.
+            The "set" should only be used when edited from the UI.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelVM.IsGeneratedLevel">
+      <summary>
+            True if this instance represents either the Full Resolution or Overview level.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM.HasGroupError">
+      <summary>
+            Checks if the group that this instance belongs to is valid.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM.GroupErrorDescription">
+      <summary>
+            Returns an error description if the group that this instance belongs to is invalid.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM.NotifySelectedLevelsChanged">
+      <summary>
+            This is used to force IDataErrorInfo based validation to refresh. This validation needs to refresh
+            because with grouped classes, the pyramid levels can't overlap.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM.TryToFindUpdatedLevel(ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelVM)">
+      <summary>
+            Called when the PyramidLevelVMs are updated and we want to match an existing level selection
+            to a PyramidLevelVM that may have been re-created.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM.OnPyramidLevelVMsRemoved(System.Collections.Generic.IList{ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.PyramidLevelVM})">
+      <summary>
+            Called when one or more or all PyramidLevelVM items in PyramidLevelVMs were removed, and possibly recreated
+            with a new instance.
+            </summary>
+      <param name="removedItems">If removedItems is null, it means that all previously levels were removed.</param>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardViewModel">
+      <summary>
+            This is the top level view-model for controlling the Terrain Wizard.
+            It uses and contains several sub view-models for specific items like settings for feature classes and pyramid
+            levels. This includes classes found in TerrainFeatureClassVM.cs and PyramidLevelsDefinitionVM.cs. These classes
+            all have a fair bit of interaction in between them.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardViewModel.SetSelectedClasses(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainFeatureClassVM})">
+      <summary>
+            This method complete resets the items in the SelectedClasses ObservableCollection without
+            creating a new one.
+            </summary>
+      <remarks>
+            I'd prefer to simply create a new collection, but DataGrid and CollectionViewSource are unable to deal with this.
+            This at least gives us the opportunity to sort the items.
+            </remarks>
+      <param name="selectedClasses">The contents of SelectedClasses will be replaced with these items.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardViewModel.UngroupSoloClasses">
+      <summary>
+            Checks SelectedClasses for defined groups with only one item and unassigns the GroupNumber.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardViewModel.HasOverlappingGroups">
+      <summary>
+            Checks if any grouped classes have overlapping bounds.
+            This method also forces all grouped classes to refresh their validation.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Analyst3D.Wizards.TerrainWizard.TerrainWizardViewModel.HasUnsetBounds">
+      <summary>
+            Checks if any of the feature classes do not have a min or max bound set.
+            </summary>
+    </member>
+    <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+      <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+      <summary>
+            CreateInstance
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            GetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            SetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+      <summary>
+            CreateDelegate
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+      <summary>
+            AddEventHandler
+            </summary>
+    </member>
+  </members>
+</doc>

@@ -209,7 +209,263 @@
         </content>
       </insertComponent>
     </updateCategory>
+    <updateCategory refID="esri_core_ai_assistant_extension_category">
+      <insertComponent id="esri_data_validation_assistant_extension" className="ArcGIS.Desktop.Internal.DataReviewer.DataValidationAssistantExtension">
+        <content condition="esri_datareviewer_UseDataValidationAssistantExtensionCondition">
+          <searchDescriptions>
+            <!-- AI/ML Assistance -->
+            <searchDescription>Predict data validation rules</searchDescription>
+            <searchDescription>Recommend quality checks</searchDescription>
+            <searchDescription>Identify data validation needs</searchDescription>
+            <searchDescription>Guide validation rules</searchDescription>
 
+            <!-- Core Data Quality -->
+            <searchDescription>Assess data quality</searchDescription>
+            <searchDescription>Validate datasets</searchDescription>
+            <searchDescription>Identify data errors</searchDescription>
+            <searchDescription>Resolve data issues</searchDescription>
+
+            <!-- Process and Workflow -->
+            <searchDescription>Run automated validations</searchDescription>
+            <searchDescription>Review quality results</searchDescription>
+            <searchDescription>Monitor data integrity</searchDescription>
+            <searchDescription>Track detected errors</searchDescription>
+
+            <!-- Analysis and Management -->
+            <searchDescription>Analyze quality metrics</searchDescription>
+            <searchDescription>Manage quality processes</searchDescription>
+            <searchDescription>Enhance data reliability</searchDescription>
+            <searchDescription>Optimize validation workflows</searchDescription>   
+
+            <!-- Attribute checks -->
+            <searchDescription>Find records by attributes</searchDescription>
+            <searchDescription>Find attributes outside valid values</searchDescription>
+            <searchDescription>Find text not matching pattern</searchDescription>
+            <searchDescription>Find rows breaking relationship rules</searchDescription>
+            <searchDescription>Find subtype features with bad or missing attributes</searchDescription>
+            <searchDescription>Find attributes matching rules across tables</searchDescription>
+            <searchDescription>Find duplicate field values</searchDescription>
+
+            <!-- Feature integrity checks -->
+            <searchDescription>Find features with invalid geometry</searchDescription>
+            <searchDescription>Find segments with small angles</searchDescription>
+            <searchDescription>Find collocated vertices</searchDescription>
+            <searchDescription>Find features by part count</searchDescription>
+            <searchDescription>Find features by vertex count</searchDescription>
+            <searchDescription>Find features with curves</searchDescription>
+
+            <!-- Polygon checks -->
+            <searchDescription>Find polygons by area or perimeter</searchDescription>
+            <searchDescription>Find polygons with holes</searchDescription>
+            <searchDescription>Find small gaps between polygons</searchDescription>
+            <searchDescription>Find small overlaps between polygons</searchDescription>
+            <searchDescription>Find thin polygons</searchDescription>
+            <searchDescription>Find polygons with unclosed rings</searchDescription>
+            <searchDescription>Find polygons sharing boundaries and attributes</searchDescription>
+
+            <!-- Polyline checks -->
+            <searchDescription>Find polylines by length</searchDescription>
+            <searchDescription>Find polylines with dangles</searchDescription>
+            <searchDescription>Find disconnected polylines</searchDescription>
+            <searchDescription>Find polylines breaking monotonic trends</searchDescription>
+            <searchDescription>Find polylines closing on themselves</searchDescription>
+            <searchDescription>Find polylines sharing a node and attributes</searchDescription>
+
+            <!-- Spatial relationship checks -->
+            <searchDescription>Find results from multiple checks</searchDescription>
+            <searchDescription>Find duplicate features</searchDescription>
+            <searchDescription>Find polylines intersecting features</searchDescription>
+            <searchDescription>Find features with set spatial relationships</searchDescription>
+            <searchDescription>Validate polyline connectivity</searchDescription>
+
+            <!-- Z-Value checks -->
+            <searchDescription>Find large Z changes</searchDescription>
+            <searchDescription>Find Z differences at intersections</searchDescription>
+            <searchDescription>Find features by Z values</searchDescription>
+            
+            <!-- Linear Referencing checks -->
+            <searchDescription>Find events overlaying other events</searchDescription>
+            <searchDescription>Find events without a route</searchDescription>
+            <searchDescription>Find gaps between events</searchDescription>
+            <searchDescription>Find overlapping events</searchDescription>
+            <searchDescription>Find events with invalid measures</searchDescription>
+
+          </searchDescriptions>
+          
+          <aiAssistantFunction name="PredictDataValidationRules">
+            <searchDescriptions>
+              <searchDescription>Predict validation rules</searchDescription>
+              <searchDescription>Recommend quality checks</searchDescription>
+              <searchDescription>Suggest rules from schema</searchDescription>
+              <searchDescription>Identify validation rules</searchDescription>
+              <searchDescription>Select automated validation rules</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+            </dependencies>
+          </aiAssistantFunction>
+          
+          <aiAssistantFunction name="GetPropertiesForDataValidationFromLayer">
+            <searchDescriptions>
+              <searchDescription>Returns the properties for data validation based on the layer specified by the user.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>          
+          <aiAssistantFunction name="CutbacksRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find sharp turns</searchDescription>
+              <searchDescription>Find high-angle bends</searchDescription>
+              <searchDescription>Detect direction reversals</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+              <dependency refID="esri_data_validation_assistant_extension|GetPropertiesForDataValidationFromLayer"/>
+            </dependencies>
+          </aiAssistantFunction>
+          
+          <aiAssistantFunction name="PolygonGapIsSliverRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find sliver gaps</searchDescription>
+              <searchDescription>Detect thin gaps in polygons</searchDescription>
+              <searchDescription>Identify narrow gaps</searchDescription>
+              <searchDescription>Check polygon gap thinness</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+            </dependencies>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="MonotonicityRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find non-monotonic features</searchDescription>
+              <searchDescription>Detect irregular z-values</searchDescription>
+              <searchDescription>Detect irregular m-values</searchDescription>
+              <searchDescription>Check value trends</searchDescription>
+              <searchDescription>Identify trend breaks</searchDescription>
+              <searchDescription>Evaluate LRS route monotonicity</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+            </dependencies>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="FeatureOnFeatureRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find spatially related features</searchDescription>
+              <searchDescription>Detect spatial relationships</searchDescription>
+              <searchDescription>Check spatial relationship types</searchDescription>
+              <searchDescription>Validate spatial relationships</searchDescription>
+              <searchDescription>Identify DE-9IM matches</searchDescription>              
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+            </dependencies>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="QueryAttributesRuleAI">
+            <searchDescriptions>
+              <searchDescription>Finds features based on a query of its attribute values.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|CreateLayerWhereClause"/>
+            </dependencies>
+          </aiAssistantFunction>
+          
+          <aiAssistantFunction name="DuplicateFeatureRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find duplicate features</searchDescription>
+              <searchDescription>Detect redundant records</searchDescription>
+              <searchDescription>Identify identical geometries</searchDescription>
+              <searchDescription>Check overlapping features</searchDescription>
+              <searchDescription>Match duplicate attributes</searchDescription>
+              <searchDescription>Compare shapes and values</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+              <dependency refID="esri_data_validation_assistant_extension|GetPropertiesForDataValidationFromLayer"/>
+            </dependencies>
+          </aiAssistantFunction>
+          
+          <aiAssistantFunction name="SubtypeRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find invalid subtype values</searchDescription>
+              <searchDescription>Detect null subtype values</searchDescription>
+              <searchDescription>Identify improper subtype assignments</searchDescription>
+              <searchDescription>Validate subtype rules</searchDescription>
+              <searchDescription>Check subtype data integrity</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          
+          <aiAssistantFunction name="DomainRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find domain violations</searchDescription>
+              <searchDescription>Detect invalid attribute values</searchDescription>
+              <searchDescription>Identify out-of-range values</searchDescription>
+              <searchDescription>Check coded value compliance</searchDescription>
+              <searchDescription>Validate range domain rules</searchDescription>
+          </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="InvalidGeometryRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find invalid geometry</searchDescription>
+              <searchDescription>Detect corrupt geometry</searchDescription>
+              <searchDescription>Identify null or empty geometry</searchDescription>
+              <searchDescription>Check self-intersections</searchDescription>
+              <searchDescription>Validate ring orientation</searchDescription>
+              <searchDescription>Flag coordinates outside domain</searchDescription>
+  </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="EvaluatePartCountRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find features by part count</searchDescription>
+              <searchDescription>Identify polygons with part range</searchDescription>
+              <searchDescription>Detect features exceeding part limits</searchDescription>
+              <searchDescription>Check part count thresholds</searchDescription>
+              <searchDescription>Locate roads with extra parts</searchDescription>
+              <searchDescription>Find parcels outside part range</searchDescription>
+              <searchDescription>Identify multi-part river segments</searchDescription>
+              <searchDescription>Check geological faults part count</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="PolylineOrPathClosesOnSelfRuleAI">
+            <searchDescriptions>
+              <searchDescription>Find closed polylines</searchDescription>
+              <searchDescription>Identify coincident start-end points</searchDescription>
+              <searchDescription>Detect multi-path closures</searchDescription>
+              <searchDescription>Locate open polylines</searchDescription>
+              <searchDescription>Search self-touching polylines</searchDescription>
+              <searchDescription>Find looping polyline geometries</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="FindDanglesRuleAI">
+            <searchDescriptions>
+              <searchDescription>Identify unconnected nodes</searchDescription>
+              <searchDescription>Find undershoots in networks</searchDescription>
+              <searchDescription>Detect unconnected street centerlines</searchDescription>
+              <searchDescription>Validate feature connectivity</searchDescription>
+              <searchDescription>Locate dangling line ends</searchDescription>
+              <searchDescription>Check polylines not connecting within tolerance</searchDescription>
+              <searchDescription>Find dangling nodes from data shifts</searchDescription>
+              <searchDescription>Quality check for disconnected features</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="FindDisconnectedPolylinesRuleAI">
+            <searchDescriptions>
+              <searchDescription>Identify unconnected polylines</searchDescription>
+              <searchDescription>Find disconnected lines</searchDescription>
+              <searchDescription>Detect unconnected features</searchDescription>
+              <searchDescription>Validate feature connectivity</searchDescription>
+              <searchDescription>Check hydro lines not in networks</searchDescription>
+              <searchDescription>Find unconnected street centerlines</searchDescription>
+              <searchDescription>Locate fault lines not touching boundaries</searchDescription>
+              <searchDescription>Identify isolated road segments</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+        </content>
+      </insertComponent>
+    </updateCategory>
   </categories>
 
   <!-- Conditions for Reviewer sub system -->
@@ -309,6 +565,14 @@
         <state id="esri_mapping_mapPane" />
         <state id="esri_license_hasReviewerExtensionLicenseState" />
         <state id="esri_datareviewer_FlagMissingFeaturesErrorInspectorState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_datareviewer_UseDataValidationAssistantExtensionCondition" caption="...">
+      <and>
+        <state id="esri_mapping_mapPane"/>
+        <state id="esri_license_hasReviewerExtensionLicenseState"/>
+        <state id="esri_datareviewer_UseDataValidationAssistantExtensionState"/>
       </and>
     </insertCondition>
     
@@ -790,16 +1054,15 @@ Results are organized by session and stored in feature classes and tables in eit
       </dockPanes>
 
       <galleries>
-        <!-- Gallery for Reviewer Checks-->
+        <!--Gallery for Reviewer Checks-->
         <gallery id="esri_dataReviewer_newRulesGallery" hidden="true"
                  className="ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckGallery"
                  caption="Run Data Checks" keytip ="RC"
                  extendedCaption="Run Reviewer Validation Rules for the Active Map"
                  dataTemplateFile="pack://application:,,,/ArcGIS.Desktop.DataReviewer;component/ReviewerResources.xaml"
-                 templateID="GalleryItemTwoLine" showItemCaption="true" showGroup="false" resizable="false"
-                 itemsInRow="4" itemWidth="110" itemHeight="110"
-                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRunRules32.png"
-                 >
+                 templateID="GalleryItemHorizontal" showItemCaption="true" showGroup="true" resizable="false"
+                 itemsInRow="3" itemWidth="160" itemHeight="100" dropDownHeight="600" menuStyle="0"
+                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/DataReviewerReviewerRunRules32.png">
           <tooltip heading="Automated Check Gallery">
             Data Reviewer checks are a series of data validation methods that enable you to automate the detection of features which do not comply with established data quality requirements defined by your organization.
             <disabledText></disabledText>

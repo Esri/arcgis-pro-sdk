@@ -1,0 +1,2390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.Intelligence.Configuration</name>
+  </assembly>
+  <members>
+    <member name="P:ArcGIS.Desktop.Intelligence.IntelligenceApp.LayoutFile">
+      <exclude></exclude>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.IntelligenceApp.LicenseGuardMutexId">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.IntelligenceApp.ApplicationHasMonetizedExtensions">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.ProjectFileDisplayVersionFromCIMDocumentVersion(System.String)">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnConfigure(ArcGIS.Desktop.Framework.Contracts.IConfigureCustomizations)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.ValidateConfigurationManager">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnShowSplashScreen(System.Boolean)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnShowStartPage">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnExit(System.Windows.ExitEventArgs)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.InternalOnExit">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnPrepareForShutdownAsync">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.OnActivated(System.EventArgs)">
+      <exclude></exclude>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.DDEIsTopicSupported(System.String)">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.IntelligenceApp.DDEExecuteCommand(System.String,System.String)">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.Behaviors.EventToCommandBehavior">
+      <summary>
+            Behavior that will connect a UI event to a viewmodel Command,
+            allowing the event arguments to be passed as the CommandParameter.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Behaviors.EventToCommandBehavior.AttachHandler(System.String)">
+      <summary>
+            Attaches the handler to the event
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Behaviors.EventToCommandBehavior.ExecuteCommand(System.Object,System.EventArgs)">
+      <summary>
+            Executes the Command
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.Controls.EditableLabel">
+      <summary>
+            Interaction logic for EditableLabel.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Controls.EditableLabel.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule">
+      <summary>
+            Represents the Feature Creation Module
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ModuleId">
+      <summary>
+            Module Id
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.GetFeatureCreationName(ArcGIS.Core.Data.Geodatabase,ArcGIS.Core.Geometry.GeometryType)">
+      <summary>
+            Gets a unique name for the feature creation feature class.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#IsEditSessionActive">
+      <summary>
+            Is the FeatureCreationModule Edit Mode Session active.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#CreateInMemoryFeatureClass(ArcGIS.Core.Geometry.GeometryType,ArcGIS.Core.Geometry.SpatialReference,System.Collections.Generic.List{ArcGIS.Core.Data.DDL.FieldDescription},System.String,System.Boolean,System.Boolean)">
+      <summary>
+            Creates a new feature class.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <param name="geometryType"> The geometryType of the new features</param>
+      <param name="spatialReference">The spatial reference to assign to the shape description feature class</param>
+      <param name="additionalFieldDescriptions">Additional FieldDescriptions to add additional fields to the newly created feature class</param>
+      <param name="featureClassName">The name of the new feature class</param>
+      <param name="hasMValues">If the new features will contain M values</param>
+      <param name="hasZValues">If the new features will contain Z values</param>
+      <returns> Returns data path to the newly created feature class</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#AddMemoryFeatureClassToMap(ArcGIS.Desktop.Mapping.Map,System.String,System.String)">
+      <summary>
+            Creates a feature layer given the data path of the geodatabase
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <param name="map">The map to add the feature layer to</param>
+      <param name="geodatabasePath">The data path of the geodatabase</param>
+      <param name="featureClassName">The name of the feature class used to make the feature layer</param>
+      <returns>The newly created feature layer</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#CreateInMemoryFeatureClassAndFeatureLayerWithActivatedLabelFieldAsync(ArcGIS.Desktop.Mapping.Map,ArcGIS.Core.Geometry.GeometryType)">
+      <summary>
+            Creates a new Feature Class, adds any additional fields to the feature class, creates a new feature layer, update's the feature class's label visibility and label's expression value
+            </summary>
+      <param name="map">The map which one is adding the feature layer</param>
+      <param name="geometryType">The geometry type of the new features</param>
+      <returns>the newly created feature layer</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#UpdateFeatureClassLayerLabelValueAndStatus(ArcGIS.Desktop.Mapping.FeatureLayer,System.String,System.String)">
+      <summary>
+            A feature layer's label setting is updated to display on the map with the desired passed in label class expression's value
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <param name="featureLayer">The feature layer which we are updating the label settings on </param>
+      <param name="expressionTitle">The name of the label setting which we are updating</param>
+      <param name="labelClassExpression">The value which will be displayed in the label</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#SaveInMemoryMapMemberToGeodatabaseAsync(ArcGIS.Desktop.Mapping.MapMember,System.String,System.Boolean)">
+      <summary>
+            Save in-memory map member to geodatabase.
+            </summary>
+      <param name="mapMember"></param>
+      <param name="geoDatabasePath"></param>
+      <param name="useProjectDefaultAsFallback"></param>
+      <returns></returns>
+      <exception cref="T:System.ArgumentNullException"></exception>
+      <exception cref="T:System.Exception"></exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#SaveInMemoryMapMembersToGeodatabasesAsync(ArcGIS.Desktop.Mapping.MapMember[],System.String[],System.Boolean)">
+      <summary>
+            Save in-memory map members to geodatabases.
+            </summary>
+      <param name="mapMembers"></param>
+      <param name="geoDatabasePaths"></param>
+      <param name="useProjectDefaultAsFallback"></param>
+      <returns></returns>
+      <exception cref="T:System.ArgumentNullException"></exception>
+      <exception cref="T:System.Exception"></exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#GetMapViewSelectionSet(ArcGIS.Desktop.Mapping.MapView)">
+      <summary>
+            Get the MapView SelectionSet.
+            Must be called on the MCT.
+            </summary>
+      <param name="mapView"></param>
+      <returns>MapView.Map SelectionSet.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#GetActiveMapViewSelectionSetAsync">
+      <summary>
+            Get the Active MapView SelectionSet.
+            </summary>
+      <returns>Active MapView.Map SelectionSet.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#DeleteMapMemberFeatures(ArcGIS.Desktop.Mapping.MapMember,System.Collections.Generic.IReadOnlyList{System.Int64})">
+      <summary>
+            Delete features from a map member by ObjectID.
+            </summary>
+      <param name="mapMember"></param>
+      <param name="objectIDs"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.FeatureCreationModule.ArcGIS#Desktop#Internal#Intelligence#Configuration#FeatureCreation#IInternalFeatureCreationModule#DeleteSelectedFeatures">
+      <summary>
+            Deletes the selected features.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.InspectorView">
+      <summary>
+            Property for the inspector UI.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.InspectorViewModel">
+      <summary>
+            Access to the view model of the inspector
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.DeleteFeatureCommand">
+      <summary>
+            Delete feature command used in DAML.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.ApplyAttributeUpdatesCommand">
+      <summary>
+            Apply attribute updates command used in DAML.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.OpenFieldsViewCommand">
+      <summary>
+            Opens the fields pane and adds the fieldsCollection to the fields pane.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneAttributeAndGeometryViewModel.ApplyAttributeUpdatesAsync">
+      <summary>
+            Apply attribute updates.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneChildViewModelBase.DisconnectRelayCommands">
+      <summary>
+            Disconnect relay commands here. Will be called on <see cref="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneChildViewModelBase.SubscribeToEvents(System.Boolean)" /> false.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneChildViewModelBase.NotifyPropertyChangedForInspector">
+      <summary>
+            Fire off <see cref="M:ArcGIS.Desktop.Framework.Contracts.PropertyChangedBase.NotifyPropertyChanged``1(System.Linq.Expressions.Expression{System.Func{``0}})" /> when <see cref="P:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditFeatureDockPaneChildViewModelBase.CurrentInspector" /> is updated.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.ViewModels.EditToolbarViewModel.DoesSelectionContainMultipartFeature(ArcGIS.Desktop.Mapping.SelectionSet)">
+      <summary>
+            Returns if the selection set provided contains any multi-part features. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditFeatureDockPaneAttributeAndGeometryView">
+      <summary>
+            Interaction logic for EditFeatureDockPaneAttributeAndGeometryView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditFeatureDockPaneAttributeAndGeometryView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditFeatureDockPaneView">
+      <summary>
+            Interaction logic for EditFeatureDockPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditFeatureDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditToolbar">
+      <summary>
+            Interaction logic for EditToolbar.xaml
+            </summary>
+      <summary>
+            EditToolbar
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.EditToolbar.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.ExportInMemoryMapMemberDialogView">
+      <summary>
+            Interaction logic for ExportInMemoryMapMemberDialogView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.FeatureCreation.Views.ExportInMemoryMapMemberDialogView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.ApplicationName">
+      <summary>
+            Replaces the default ArcGIS Pro application name
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.OnShowStartPage">
+      <summary>
+            Called before ArcGIS Pro starts up. Replaces the default Pro start-up page (Optional)
+            </summary>
+      <returns> Implemented UserControl with start-up page functionality. 
+            Return null if a custom start-up page is not needed. Default ArcGIS Pro start-up page will be displayed.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.OnApplicationInitializing(System.ComponentModel.CancelEventArgs)">
+      <summary>
+            During the start up this method is called after it is safe to access Portal and use ArcGIS.Desktop.Core. 
+            ArcGIS Pro Theme has already been set. 
+            </summary>
+      <param name="cancelEventArgs">
+            To cancel initialization, set the cancelEventArgs.Cancel property to true.
+            </param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.OnApplicationReady">
+      <summary>
+            During the start up this method is called after the Application Window Start page is ready. From here on calls to ArcGIS.Desktop.Framework.Threading.Tasks.QueuedTask are safe.
+            ArcGIS Pro Extension modules can now be accessed. 
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.OnShowSplashScreen">
+      <summary>
+            Called while ArcGIS Pro starts up. Replaces the default Pro splash screen. (Optional)
+            </summary>
+      <returns>Implemented Window with splash screen functionality. 
+            Return null if a custom splash screen is not needed. Default ArcGIS Pro splash screen will be displayed.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationManager.OnShowAboutPage">
+      <summary>
+            Customized UserControl is displayed in ArcGIS Pro About property page. Allows to add information about this specific managed configuration.
+            </summary>
+      <returns>Implemented UserControl with about box information. 
+            Return null if a custom about box is not needed. Default ArcGIS Pro About box will be displayed.</returns>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.Instance">
+      <summary>
+            Retrieve the singleton instance to this module here
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.CanUnload">
+      <summary>
+            Called by Framework when ArcGIS Pro is closing
+            </summary>
+      <returns>False to prevent Pro from closing, otherwise True</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.GetAliasName(System.String,System.String)">
+      <summary>
+            Get alias name for field, includes layer field description alias name, must be called on the MCT.
+            </summary>
+      <param name="layerUri"></param>
+      <param name="fieldName"></param>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.UpdateSceneMapViewState">
+      <summary>
+            Determines if a scene's viewing mode is present in an open project
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.SetMapMemberIsTimeEnabledState(ArcGIS.Desktop.Mapping.MapView)">
+      <summary>
+            Update the State for "Time Enabled Map Member Selected"
+            </summary>
+      <param name="mapView">MapView to trigger state for</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.IntelConfigurationModule.OpenImageObservationWizard">
+      <summary>
+            Open the Image Observation Wizard as a floating dock pane
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineViewNextGen.#ctor">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineViewNextGen.#ctor(ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineNextGenViewModel)">
+      <exclude />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineViewNextGen.Uninitialize">
+      <exclude />
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineViewNextGen.TimelineViewModel">
+      <exclude />
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineNextGenPaneView">
+      <summary>
+            Interaction logic for TimelineView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Timelines.TimelineNextGenPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.Licensing.LicensingBackstage">
+      <summary>
+            Interaction logic for LicensingBackstage.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Licensing.LicensingBackstage.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Converters.CollectionLengthToVisibilityConverter">
+      <summary>
+            If the integer supplied to this converter is greater than 0 return Visible else return Collapsed.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Converters.IntToBooleanConverter">
+      <summary>
+            This converts an integer: 0 = false, 1 = true. This also supports ConvertBack.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Converters.PreviewLabelConverter">
+      <summary>
+            This converter appends the selected feature layer and object ID to the Preview text.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Converters.SearchImageMarginConverter">
+      <summary>
+            Polygon images are larger than other geometry types so this returns a Thickness to be applied to the margin.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Converters.StandardToSidcLengthConverter">
+      <summary>
+            Converts a value that is of type SymbologyStandard to the max length of the sidc in that standard
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleCodedValue">
+      <summary>
+            This is pulled from the style file coded domains
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonManager.GetStyleForStandard(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard)">
+      <summary>
+            returns NULL when style fails to load
+            </summary>
+      <param name="standard"></param>
+      <returns></returns>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.Version">
+      <summary>
+            Version of json file being read
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.Fields">
+      <summary>
+            Fields is a list of attributes imported from the ui json file that defines a symbol and how it appears.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.Domains">
+      <summary>
+            Some fields have dynamic data that changes based on what other fields are set to. Domains are where all permutations of those dynamic
+            pieces of data are set. This is imported from the ui json file.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.SearchableFields">
+      <summary>
+            These searchable fields is a flattened list of the Fields property above. This will make it easier for the search functionality and
+            prevent recursive calls in the future. 
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.InheritedFields">
+      <summary>
+            Inherit fields are fields that rely on other fields to determine which options are available.
+            For example, in MIL2525-D the 'Modifier 1' field will have different lists of available coded values depending on what the 'Symbol Entity' field is set to.
+            
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.LabelFields">
+      <summary>
+            Label fields are fields that don't affect the symbol's SIDC, but are still data associated with a specific symbol.
+            We want to aggregate a dictionary of those labels here so that we can use it later to create a feature layer that contains all possible
+            label for a specific standard.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleJsonObject.PropertyFields">
+      <summary>
+            Similar to label fields, property fields don't affect the symbol's SIDC, but does affect how the symbol is rendered.
+            For the same reason as labels, we create a dictionary of all properties here to create a valid feature layer with all possible
+            properties for a specific standard.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.MilitaryOverlayModule.ApplyUserSettings">
+      <summary>
+            Set Favorites and Standard using the user settings, and set the gdb path.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.MilitaryOverlayModule.SetGeodatabase(System.String)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.MilitaryOverlayModule.OnReadSettingsAsync(ArcGIS.Desktop.Framework.Contracts.ModuleSettingsReader)">
+      <summary>
+            Called everytime a military overlay is opened in an existing project OR when an existing project is opened through the backstage with military overlay open
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.AttributeInfo">
+      <summary>
+            This holds the necessary info to create a field in the attributes table.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.AttributeInfo.#ctor(System.String,System.String,System.String,System.String)">
+      <summary>
+            This holds the necessary info to create a field in the attributes table.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.MilitaryOverlaySelectionManager.SetSelection(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel,System.String,ArcGIS.Desktop.Mapping.BasicFeatureLayer,System.Int64)">
+      <summary>
+            Obtains and sets the currently selected feature's layer, object ID, symbol attributes, and label attributes.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.MilitaryOverlaySelectionManager.Validate">
+      <summary>
+            Validates whether or not the military symbol currently in-work has pending edits
+            that can be successfully applied to the selected feature.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.MilitaryOverlaySelectionManager.SetSelectionWithSelectedSymbol(ArcGIS.Desktop.Mapping.SelectionSet)">
+      <summary>
+            Finds the first valid Military Overlay symbol from the provided selection set and sets the state of the objects we're tracking
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.MilitaryOverlaySelectionManager.CreateSymbolModelFromDictionaryValues(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.MilitaryOverlaySelectionManager.UpdateSelectedFeatureWithSymbolData(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel)">
+      <summary>
+            Updates the currently selected feature on the map with the properties of the preview symbol.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.DefaultAllFieldsThatAreHiddenFromUser">
+      <summary>
+            Default all fields that aren't showing
+            We want to do this so labels/properties that were set for a different symbol, go back to default when the symbol is changed and the label no longer shows up. We want the label added to the attribute table to be default
+            Also, we want to do this for attributes like Special Entity Subtype, which shares bits with Symbol Entity. Once the symbol changes, and the Special Entity Subtype field no longer shows up, we want to clear it
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.GetFields(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.FieldTypes,System.Collections.Generic.List{ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleField})">
+      <summary>
+            Returns field models being shown fields of a certain type (Attribute, Label, or Property)
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.GetFieldsBeingShown(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.FieldTypes,System.Collections.Generic.List{ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Json.StyleField})">
+      <summary>
+            Gets the fields that are viable for the symbol. These will be shown to the user.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.SetSymbolIdCode(System.String)">
+      <summary>
+            Set the symbol fields given a symbol id code
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.GetSymbolIdCode">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel.GetSidcFromDictionary(System.Collections.Generic.IReadOnlyDictionary{System.String,System.String})">
+      <summary>
+            Given a dictionary of FieldName to FieldValue, return the symbol id code
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayConstants.StyleNames">
+      <summary>
+            The names of the dictionary style folders located at ArcGIS\Resources\Dictionaries\
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.AddGeodatabaseToProjectFromPath(System.String)">
+      <summary>
+            Attempts to obtain an the specified database and if it doesn't exist will create a new project item for it.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.TryGetFeatureClass(System.String,System.String)">
+      <summary>
+            Attempts to obtain an existing Feature Class using the given parameters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.CreateFeatureClass(System.String,ArcGIS.Core.Geometry.SpatialReference,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Core.Geometry.GeometryType,System.Collections.Generic.List{ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.AttributeInfo})">
+      <summary>
+            Creates a new feature class using the given parameters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.TryGetFeatureLayer(System.String,ArcGIS.Desktop.Mapping.Map,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Core.Geometry.GeometryType)">
+      <summary>
+            Attempts to obtain an existing Feature Layer using the given paramters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.CreateFeatureLayer(System.String,ArcGIS.Desktop.Mapping.Map,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Core.Geometry.GeometryType,System.Collections.Generic.List{ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.AttributeInfo})">
+      <summary>
+            Creates a new Feature Layer using the given parameters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.TryGetTemplate(System.String,ArcGIS.Desktop.Mapping.Map,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Core.Geometry.GeometryType)">
+      <summary>
+            Attempts to obtain an existing Editing Template using the given parameters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.CreateTemplate(System.String,ArcGIS.Desktop.Mapping.Map,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Core.Geometry.GeometryType,System.Collections.Generic.List{ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.AttributeInfo},System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            Creates a new Editing Template using the given parameters. This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.UpdateFeatureTemplateForSymbolAsync(ArcGIS.Desktop.Mapping.Map,System.String,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel)">
+      <summary>
+            Updates the feature template for the preview symbol so that the feature preview on the map is updated with the correct attributes.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.ActivateSketchToolForSymbolAsync(ArcGIS.Desktop.Mapping.Map,System.String,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel)">
+      <summary>
+            Obtains and updates the EditingTemplate for the specified symbol and will activate the sketch tool for it.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.SetEditingModuleTemplateDefinition(ArcGIS.Desktop.Editing.Templates.EditingTemplate,System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            Set the Editing Template Manager to have the given template and attributes
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.LoadStyleForStandard(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.GetGeometryTypeFromAttributes(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.GetCimSymbolFromAttributes(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,System.Collections.Generic.Dictionary{System.String,System.Object})">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+      <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.BitmapSourceToBitmap(System.Windows.Media.Imaging.BitmapSource)">
+      <summary>
+            Convert BitmapSource to Bitmap
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Utilities.MilitaryOverlayUtilities.GetStandardAndGeometryTypesOfInvalidLayers(System.String)">
+      <summary>
+            This code lops over all maps to find military overlay layers, and detect if it was made with 1.3.
+            All schemas made with 1.3 contained a "IsMETOC" field
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.ViewModels.MilitaryOverlayFavoritesViewModel.Initialize">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.ViewModels.MilitaryOverlaySettingsViewModel.IsApplyChangesButtonEnabled">
+      <summary>
+            Enabled when a valid gdb path is in the textbox AND the textbox path is different from the currently saved path
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.CreateAndLoadSymbolWithSidc(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolType,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,System.String,System.Boolean)">
+      <summary>
+            This creates a symbol without calling any non-awaits
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.Initialize(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel)">
+      <summary>
+            This creates a symbol without calling any non-awaits
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.CreateFavoriteViewModel(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.FavoriteModel)">
+      <summary>
+            Create a favorite symbol view model from a FavoriteModel.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.CreatePreviewViewModelAsync(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel)">
+      <summary>
+            Create a preview symbol view model from a SymbolViewModel
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.SetStandardAsync(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel)">
+      <summary>
+            Set the standard of the SymbolViewModel.
+            If you want a non-default symbol to be in the create/edit pane, provide the model for it
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.SetStandard(ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Enums.SymbologyStandard,ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Models.Symbol.SymbolModel)">
+      <summary>
+            Set the standard of the SymbolViewModel.
+            If you want a non-default symbol to be in the create/edit pane, provide the model for it
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.UpdateFields">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.ReloadFieldsAndSymbol">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.ReloadSymbol">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Symbol.ViewModels.SymbolViewModel.GetSchemaForFeatureLayer">
+      <summary>
+            This gets all the fields in the standard that need to be in the schema,
+            which is the sidc, all the properties, and all the labels
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayAdvancedSettingsView">
+      <summary>
+            Interaction logic for MilitaryOverlayAdvancedSettingsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayAdvancedSettingsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayAttributeSearchView">
+      <summary>
+            Interaction logic for MilitaryOverlayAttributeSearchView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayAttributeSearchView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayDockpaneView">
+      <summary>
+            Interaction logic for MilitaryOverlayDockpaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayDockpaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayFavoriteSymbolsView">
+      <summary>
+            Interaction logic for MilitaryOverlayFavoriteSymbolsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlayFavoriteSymbolsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolCreationView">
+      <summary>
+            Interaction logic for MilitaryOverlaySymbolCreationView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolCreationView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolFieldsView">
+      <summary>
+            Interaction logic for MilitaryOverlaySymbolFieldsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolFieldsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolPreviewView">
+      <summary>
+            Interaction logic for MilitaryOverlaySymbolPreviewView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.MilitaryOverlay.Views.MilitaryOverlaySymbolPreviewView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.Properties.Resources.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.Properties.Resources.LabelBrowse">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.Properties.Resources.Exception_Error">
+      <summary>
+            Used when displaying errors the contain exceptions
+            0 - Message to display
+            1 - Exception message
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.Properties.Resources.ProjectErrorOnOpen">
+      <summary>
+            Used when failing to open a project. 
+            0 - is the path to project file
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.AddDataRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.AddDataRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.AddDataRes.AddressLayer">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.StartOptions">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.Personalize">
+      <summary>
+            header in options dialog
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.Regions">
+      <summary>
+            Euei regions
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.BackstageOptionsRes.Theme">
+      <summary>
+            the application skin (default or dark)
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.FeatureCreationRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.FeatureCreationRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.FeatureCreationRes.DontShowAgain">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.ImageObservationRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.ImageObservationRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.ImageObservationRes.Add">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.JournalRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.JournalRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.JournalRes.Add">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.LicensingRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.LicensingRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.LicensingRes.AliasTooltip">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.MilitaryOverlayRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.MilitaryOverlayRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.MilitaryOverlayRes.Enumapp6b">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineMapPaneViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineMapPaneViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineMapPaneViewRes.AverageBinCount">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineRes.AddNewLayerToTimeline">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineTimespanSymbologyDockPaneViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineTimespanSymbologyDockPaneViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineTimespanSymbologyDockPaneViewRes.AlternatingColor">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineTimespanSymbologyDockPaneViewRes.TimelineLayers_Long">
+      <summary>
+            Plural
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.LocalResources.TimelineTimespanSymbologyDockPaneViewRes.TimelineLayers_Short">
+      <summary>
+            Plural
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.TimelineModule.Instance">
+      <summary>
+            Retrieve the singleton instance to this module here
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.TimelineModule.AddTimelineToMapAsync(ArcGIS.Desktop.Mapping.Map,ArcGIS.Core.CIM.CIMTimeline)">
+      <summary>
+            Adds the timeline to the map and returns the inserted timeline.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.TimelineModule.AddTimelineToMap(ArcGIS.Desktop.Mapping.Map,ArcGIS.Core.CIM.CIMTimeline)">
+      <summary>
+            Adds the timeline to the map and returns the inserted timeline.
+            Must be called on MCT.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.AboutPage">
+      <summary>
+            Interaction logic for AboutPage.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.AboutPage.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceBackstageTabGeneralView">
+      <summary>
+            Interaction logic for AllSourceBackstageTabGeneralView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceBackstageTabGeneralView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceBackstageTabStartView">
+      <summary>
+            Interaction logic for AllSourceBackstageTabStartView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceBackstageTabStartView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.Configuration.UI.StartProjectMode.ShowStartPage">
+      <summary>
+            Show the start page (this is the default)
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.Configuration.UI.StartProjectMode.WithoutProjectTemplate">
+      <summary>
+            Bypass the start page and begin working without a template
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.Configuration.UI.StartProjectMode.WithDefaultProject">
+      <summary>
+            Open the default project specified in
+            <see cref="P:ArcGIS.Desktop.Core.GeneralOptions.StartupProjectPath" /></summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceSplashScreen">
+      <summary>
+            Interaction logic for SplashScreen.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.AllSourceSplashScreen.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.CustomProjectItemToolTipView">
+      <summary>
+            Interaction logic for CustomProjectItemToolTipView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.CustomProjectItemToolTipView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelBackstageTabNewView">
+      <summary>
+            Interaction logic for IntelBackstageTabNewView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelBackstageTabNewView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelProjectResourcesView">
+      <summary>
+            Interaction logic for IntelProjectResourcesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelProjectResourcesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelProjectTemplatesView">
+      <summary>
+            Interaction logic for IntelProjectTemplatesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelProjectTemplatesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelRecentProjectsView">
+      <summary>
+            Interaction logic for IntelRecentProjectsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelRecentProjectsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelStartPage">
+      <summary>
+            Interaction logic for IntelStartPage.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.IntelStartPage.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Configuration.UI.StartPageViewModel">
+      <summary>
+              Business logic for the StartPage
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.UI.StartPageViewModel.OpenProjectCommand">
+      <summary>
+              Command opens the ArcGIS Pro OpenItemDialog API method to browse to a specific project file.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Configuration.UI.StartPageViewModel.AboutArcGISProCommand">
+      <summary>
+              Command opens the ArcGIS Pro backstage
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.StartPageViewModel.OnOpenAnotherProjectCommand(System.Object)">
+      <summary>
+            Browse dialog for picking another project or ppkx
+            if user selects a ppkx, it is unpacked and cloned as .asrx then opened
+            code is mostly copied from esri_core_openProjectButton 
+            </summary>
+      <param name="sender"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Configuration.UI.StartPageViewModel.PromptForProjectPath(System.String,ArcGIS.Desktop.Core.BrowseTarget,System.Boolean,System.String)">
+      <summary>
+            Copied CoreModule.InternalPromptForProjectPath
+            </summary>
+      <param name="dialogTitle"></param>
+      <param name="browseType"></param>
+      <param name="ppkxOnly"></param>
+      <param name="initialDirectory"></param>
+      <returns></returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.FeatureCreation.IInternalFeatureCreationModule">
+      <summary>
+            This interface is not for public use and is used internally by the system to 
+            implement support for other ArcGIS Pro modules
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Controls.BannerMessageControl">
+      <summary>
+            Interaction logic for BannerMessageControl.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Controls.BannerMessageControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.Instance">
+      <summary>
+            Retrieve the singleton instance to <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule" />.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.OpenImageObservationWizard">
+      <summary>
+            Open the Image Observation Wizard as a floating dock pane
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.GetMissingObservationLayerSchemaFields(ArcGIS.Core.Data.FeatureClass)">
+      <summary>
+            Get FieldDescriptions of observation layer schema fields that are missing from the given feature class <br />
+            Verifies fields with field name and type <br />
+            This method must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.CreateAndModifySelectedObservationLayers(System.Collections.Generic.IReadOnlyCollection{ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Models.ISelectedObservationLayer},ArcGIS.Core.Data.Geodatabase,ArcGIS.Core.Geometry.SpatialReference)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.AddObservationLayersToMap(System.Collections.Generic.IEnumerable{ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Models.ISelectedObservationLayer},ArcGIS.Desktop.Mapping.Map,System.String)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.GetRasterFunctionProxies(System.String)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.RunRasterFunction(ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Models.ImageObservationWizardResult,System.String,ArcGIS.Desktop.Mapping.Map)">
+      <summary>
+            This method must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.ShouldEnableCapability(ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModuleCapability,System.String)">
+      <summary>
+            Check registry for developer value to enable ImageryWorkspaceModule preview capability.
+            Don't use to check if this capability is enabled, use <see cref="M:ArcGIS.Desktop.Internal.Intelligence.Common.ICapabilityCheckModule`1.IsCapabilityEnabled(`0)" />.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.IsCapabilityEnabled(ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModuleCapability)">
+      <summary>
+            Check if capability of the ImageryWorkspaceModule is enabled.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.EnableCapability(ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModuleCapability)">
+      <summary>
+            Enable a capability of the ImageryWorkspaceModule.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModule.DisableCapability(ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ImageryWorkspaceModuleCapability)">
+      <summary>
+            Disable a capability of the ImageryWorkspaceModule.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.ViewModels.ImageObservationWizard.Pages.SelectObservationLayersPageViewModel.InitializeInternal">
+      <summary>
+            Call OnInitialize when created from outside a wizard.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.AddObservationLayerDockPaneView">
+      <summary>
+            Interaction logic for AddObservationLayerDockPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.AddObservationLayerDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.ImageObservationWizardDockPaneView">
+      <summary>
+            Interaction logic for ImageObservationWizardDockPaneView.xaml
+            </summary>
+      <summary>
+            ImageObservationWizardDockPaneView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.ImageObservationWizardDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectElevationPageView">
+      <summary>
+            Interaction logic for SelectElevationPageView.xaml
+            </summary>
+      <summary>
+            SelectElevationPageView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectElevationPageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectImagePageView">
+      <summary>
+            Interaction logic for SelectImagePageView.xaml
+            </summary>
+      <summary>
+            SelectImagePageView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectImagePageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectObjectStorePageView">
+      <summary>
+            Interaction logic for SelectObjectStorePageView.xaml
+            </summary>
+      <summary>
+            SelectObjectStorePageView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectObjectStorePageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectObservationLayersPageView">
+      <summary>
+            Interaction logic for SelectObservationLayersPageView.xaml
+            </summary>
+      <summary>
+            SelectObservationLayersPageView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SelectObservationLayersPageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SummaryPageView">
+      <summary>
+            Interaction logic for SummaryPageView.xaml
+            </summary>
+      <summary>
+            SummaryPageView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.ImageObservation.Views.ImageObservationWizard.Pages.SummaryPageView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Controls.MarkdownEditor">
+      <summary>
+            Interaction logic for MarkdownEditor.xaml
+            </summary>
+      <summary>
+            MarkdownEditor
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Controls.MarkdownEditor.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Enums.JournalConnectionType">
+      <summary>
+            Journal Connection Type
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.Resources.FlexGridResourcesBase.TableResourceDictionary">
+      <summary>
+             Gets the table resource dictionary
+             </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.Resources.FlexGridResourcesBase.LoadResourceDictionary(System.String)">
+      <summary>
+            Load a resource dictionary from a resource stream by path.
+            </summary>
+      <param name="templateFile">The pack path to the resource dictionary.</param>
+      <returns>The load resource dictionary.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.Resources.FlexGridResourcesBase.GetResource``1(System.Object)">
+      <summary>
+            Loads a resource from the table resource dictionary.
+            </summary>
+      <typeparam name="T">The type of resource to return.</typeparam>
+      <param name="key">The name or the resource key for the resource.</param>
+      <returns>The found resource or null.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.Resources.FlexGridResourcesBase.GetDataTemplate(System.Object)">
+      <summary>
+            Gets the data template.
+            </summary>
+      <param name="templateKey">The key for the template resource</param>
+      <returns></returns>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridBehaviorBase`1.FlexGridViewModel">
+      <summary>
+            Gets the view model. This can be null.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridBehaviorBase`1.FlexGridBehaviorProperty">
+      <summary>
+            Main attached property. Used so the property can be nested for the control.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridBehaviorBase`1.ConnectToFlexGrid(C1.WPF.Grid.FlexGrid,System.Boolean)">
+      <summary>
+            Connect and disconnect to DataGrid.
+            </summary>
+      <param name="dataGrid">The DataGrid being connected to or disconnected from.</param>
+      <param name="connect">Connect or disconnect flag.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridBehaviorBase`1.OnFlexGrid_DataContextChanged(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">
+      <summary>
+            Handle event to hook up to the current view model
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridBehaviorBase`1.GenerateDataGridColumnsAndRowsAsync">
+      <summary>
+            Generates columns and rows from view model fields
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridViewModelBase`1.LoadColumns">
+      <summary>
+            Fill the Columns List with GridColumns
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.FlexGridBase.ViewModels.FlexGridViewModelBase`1.LoadRowsAsync">
+      <summary>
+            Create the RowsVirtualCollection with rows
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Helpers.AttachmentHelpers.ShowInaccessibleFileMessage(System.Collections.Generic.List{System.String})">
+      <summary>
+            Display to the user which the files that weren't opened
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Controls.JournalButtonCellControl">
+      <summary>
+            Interaction logic for JournalButtonCellControl.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Controls.JournalButtonCellControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Controls.JournalCellControl">
+      <summary>
+            Base control of the journal flex grid cells.
+            All cells support IsStriked dependency property.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Controls.JournalStringCellControl">
+      <summary>
+            Interaction logic for JournalStringCellControl.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Controls.JournalStringCellControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.JournalVirtualCollection.GetPageAsync(System.Int32,System.Int32,System.Int32,System.Collections.Generic.IReadOnlyList{C1.DataCollection.SortDescription},C1.DataCollection.FilterExpression,System.Threading.CancellationToken)">
+      <summary>
+            We have to override this method. This returns the rows given a page.
+            When we call RefreshAsync, this eventually gets called
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.JournalVirtualCollection.SetFilterExpressionAsync(C1.DataCollection.FilterExpression)">
+      <summary>
+            Set the filter expression then call RefreshAsync, which calls GetPageAsync and does the filtering
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.JournalVirtualCollection.InsertAsyncOverride(System.Int32,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Models.JournalRowViewModel,System.Threading.CancellationToken)">
+      <summary>
+            Called from the InsertAsync Method.
+            We have already inserted the row into our list so don't do anything, but we still need to override this method
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridButtonColumn.BindCellContent(System.Windows.FrameworkElement,C1.WPF.Grid.GridCellType,C1.WPF.Grid.GridRow)">
+      <summary>
+            Binds the content of the cell with the data item.
+            </summary>
+      <param name="cellContent">Content of the cell.</param>
+      <param name="cellType">The type of cell.</param>
+      <param name="row">The row.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridColumn.BindCellContent(System.Windows.FrameworkElement,C1.WPF.Grid.GridCellType,C1.WPF.Grid.GridRow)">
+      <summary>
+            Binds the content of the cell with the data item.
+            </summary>
+      <param name="cellContent">Content of the cell.</param>
+      <param name="cellType">The type of cell.</param>
+      <param name="row">The row.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridDateTimeColumn.BindCellContent(System.Windows.FrameworkElement,C1.WPF.Grid.GridCellType,C1.WPF.Grid.GridRow)">
+      <summary>
+            Binds the content of the cell with the data item.
+            </summary>
+      <param name="cellContent">Content of the cell.</param>
+      <param name="cellType">The type of cell.</param>
+      <param name="row">The row.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridBehavior.JournalGridViewModel">
+      <summary>
+            Gets the view model. This can be null.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridViewModel.OnJournalEntryCreatedEventAsync(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Events.JournalEntryCreatedEventArgs)">
+      <summary>
+            Appends the newly added entry as a row to the flex grid
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.ViewModels.JournalFlexGridViewModel.OnJournalEntryUpdatedEventAsync(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Events.JournalEntryUpdatedEventArgs)">
+      <summary>
+            Gets the correct journal entry row and updates its values with the contents of the journalEntryUpdatedEventArgs.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Views.JournalFlexGridView">
+      <summary>
+            Interaction logic for FlexGridView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalFlexGrid.Views.JournalFlexGridView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntryAttachments(System.String,System.Guid,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentUpdates,ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Update a set of added and removed attachments for a single journal entry.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddAttachmentsToRow(ArcGIS.Core.Data.Row,System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentInfo})">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            Returns a list of attachmentIds that have been added
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.RemoveAttachmentsFromRow(ArcGIS.Core.Data.Row,System.Collections.Generic.List{System.Int64})">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            Returns the dictionary of attachments that failed to be removed
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GetAttachmentInfosOfJournalEntry(System.String,System.Guid)">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GetMemoryStreamFromAttachmentId(System.String,System.Guid,System.Int64)">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GetAttachmentsOfJournalEntry(System.String,System.Guid)">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddJournalEntryAttachmentsHistory(System.String,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryAttachmentHistory},ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Add many <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateRowBufferJournalEntryAttachmentHistory(ArcGIS.Core.Data.RowBuffer,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryAttachmentHistory)">
+      <summary>
+            Sets the field values of a <see cref="T:ArcGIS.Core.Data.Row" /> using the values in the <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryAttachmentHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateJournalEntry(System.String,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentUpdates,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.LocationUpdates)">
+      <summary>
+            Add the given JournalEntry to the 
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateJournalEntryFields(System.String,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry,ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Adds a new row containing all fields from the given JournalEntry object to the journal entries table.
+            Returns null if unsuccessful. 
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntry(System.String,System.Guid,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalFieldValueUpdate},ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentUpdates,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.LocationUpdates)">
+      <summary>
+            Update the journal entry based on the given set of changes to fields, attachments, and locations.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntryFields(System.String,System.Guid,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalFieldValueUpdate},ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Update a set of fields for a single journal entry.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntriesFields(System.String,System.Collections.Generic.Dictionary{System.Guid,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalFieldValueUpdate}},ArcGIS.Core.Data.Geodatabase,System.Boolean)">
+      <summary>
+            Update a set of fields for multiple journal entries.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntryRowFields(ArcGIS.Core.Data.Row,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalFieldValueUpdate})">
+      <summary>
+            Update a single row with a set of field value updates.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.DuplicateJournalEntries(System.String,System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry})">
+      <summary>
+            Duplicates a list of journal entries, including their locations and attachments.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddJournalEntryHistory(System.String,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory})">
+      <summary>
+            Add many <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateRowBufferJournalEntry(ArcGIS.Core.Data.RowBuffer,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry)">
+      <summary>
+            Sets the field values of a <see cref="T:ArcGIS.Core.Data.Row" /> using the values in the <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+      <param name="rowBuffer"></param>
+      <param name="journalEntry"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateRowBufferJournalEntryHistory(ArcGIS.Core.Data.RowBuffer,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory)">
+      <summary>
+            Sets the field values of a <see cref="T:ArcGIS.Core.Data.Row" /> using the values in the <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ReadJournalEntries(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails,System.Collections.Generic.List{System.Guid})">
+      <summary>
+            Retrieve a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry" /> from the Journal Mobile Geodatabase using a <see cref="T:System.Collections.Generic.List`1" /> of EntryId(<see cref="T:System.Guid" />). Must be called on the MCT. Use queuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ReadJournalEntries(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails,ArcGIS.Core.Data.QueryFilter)">
+      <summary>
+            Retrieve a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry" /> from the Journal Mobile Geodatabase using a <see cref="T:ArcGIS.Core.Data.QueryFilter" />. If no <see cref="T:ArcGIS.Core.Data.QueryFilter" /> is supplied the return row count will be capped at 50.
+            <br />
+            Must be called on the MCT. Use queuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ReadJournalEntryHistory(System.String,System.Collections.Generic.List{System.Guid})">
+      <summary>
+            Retrieve a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" /> from the Journal Mobile Geodatabase using a <see cref="T:System.Collections.Generic.List`1" /> of ParentEntryId(<see cref="T:System.Guid" />).
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ReadJournalEntryHistory(System.String,ArcGIS.Core.Data.QueryFilter)">
+      <summary>
+            Retrieve a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" /> from the Journal Mobile Geodatabase using a <see cref="T:ArcGIS.Core.Data.QueryFilter" />. If no <see cref="T:ArcGIS.Core.Data.QueryFilter" /> is supplied the return row count will be capped at 50.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GenerateJournalEntryFromRow(System.String,ArcGIS.Core.Data.Row,System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalField},System.Collections.Generic.Dictionary{System.Guid,System.Int32},System.Collections.Generic.Dictionary{System.Guid,System.Int32})">
+      <summary>
+            Builds a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry" /> from a <see cref="T:ArcGIS.Core.Data.Row" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GenerateJournalEntryHistoryFromRow(ArcGIS.Core.Data.Row)">
+      <summary>
+            Builds a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntryHistory" /> from a <see cref="T:ArcGIS.Core.Data.Row" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateFieldHistories(System.Guid,ArcGIS.Core.Data.Row,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalFieldValueUpdate})">
+      <summary>
+            Create JournalEntryHistory objects with the string values of old and new field value objects,
+            and other necessary values from the given row for the entry.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ProcessCustomFieldValueToString(System.Object,ArcGIS.Core.Data.FieldType)">
+      <summary>
+            Returns a formatted string of the given object depending on the given fieldType
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UsingGeodatabaseWrapper``1(System.Func{ArcGIS.Core.Data.Geodatabase,``0},System.String,ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Takes a function, gdbPath, and optional Geodatabase value. If a Geodatabase is given, the function is called and the
+            geodatabase is not disposed. Otherwise, a geodatabase at gdbPath is opened and disposed of after the function is called.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateJournalEntryLocations(System.String,System.Guid,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.LocationUpdates,ArcGIS.Core.Data.Geodatabase)">
+      <summary>
+            Update a set of added and removed locations for a single journal entry.
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddJournalEntryLocationsImpl(ArcGIS.Core.Data.Geodatabase,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation},System.String)">
+      <summary>
+            Add list of <see cref="!:JournalEntryLocation" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateRowBufferJournalLocation(ArcGIS.Core.Data.RowBuffer,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation,System.Boolean)">
+      <summary>
+            Sets the field values of a <see cref="T:ArcGIS.Core.Data.Row" /> using the values in the <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddJournalEntryLocationHistory(ArcGIS.Core.Data.Geodatabase,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.LocationHistoriesByTable)">
+      <summary>
+            Add many <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocationHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            Should be called from inside of ApplyEdits.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.AddJournalEntryLocationHistoryImpl(ArcGIS.Core.Data.Geodatabase,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocationHistory},System.String)">
+      <summary>
+            Add many <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocationHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.UpdateRowBufferJournalLocationHistory(ArcGIS.Core.Data.RowBuffer,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocationHistory)">
+      <summary>
+            Sets the field values of a <see cref="T:ArcGIS.Core.Data.Row" /> using the values in the <see cref="!:journalLocationHistory" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ReadLocationsOfJournalEntry(System.String,System.Collections.Generic.List{System.Guid},ArcGIS.Core.Data.FeatureClass,ArcGIS.Core.Data.FeatureClass,ArcGIS.Core.Data.FeatureClass)">
+      <summary>
+            Retrieve a <see cref="T:System.Collections.Generic.IReadOnlyList`1" /> of <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation" /> from the Journal Mobile Geodatabase using a <see cref="T:System.Collections.Generic.List`1" /> of EntryId(<see cref="T:System.Guid" />). Must be called on the MCT. Use queuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GenerateJournalLocationFromRow(ArcGIS.Core.Data.Row)">
+      <summary>
+            Builds a <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation" /> from a <see cref="T:ArcGIS.Core.Data.Row" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.RemoveJournalEntryLocationsImpl(ArcGIS.Core.Data.Geodatabase,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalLocation},System.String)">
+      <summary>
+            Remove list of <see cref="!:JournalEntryLocation" />. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.Instance">
+      <summary>
+            Retrieve the singleton instance to <see cref="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule" />.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.OpenJournal">
+      <summary>
+            Used in daml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.RemoveJournal">
+      <summary>
+            Used in daml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ExportJournal">
+      <summary>
+            Used in daml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.NewEntry">
+      <summary>
+            Used in daml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.GetJournalName">
+      <summary>
+            Get a basic journal name.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateNewJournalGeodatabase(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails,System.Boolean)">
+      <summary>
+            Create a Journal Mobile Geodatabase. Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateNewJournalGeodatabaseAsync(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails,ArcGIS.Desktop.Framework.Threading.Tasks.Progressor,System.Boolean,System.Boolean)">
+      <summary>
+            Create a Journal Mobile Geodatabase using a QueuedTask.Run().<br />
+            A synchronous version is available <seealso cref="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.CreateNewJournalGeodatabase(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails,System.Boolean)" />.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.MobileGeodatabaseSQLKeywords">
+      <summary>
+            List of reserved SQLite keywords used with Mobile Geodatabases.
+            Source: https://www3.sqlite.org/lang_keywords.html
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ShouldEnableBasicJournalCapability">
+      <summary>
+            Check registry for developer value to enable JournalModule preview capability.
+            Don't use to check if this capability is enabled, use <see cref="M:ArcGIS.Desktop.Internal.Intelligence.Common.ICapabilityCheckModule`1.IsCapabilityEnabled(`0)" />.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ShouldEnablePortalCapability">
+      <summary>
+            Check registry for developer value to enable JournalModule preview capability : portal.
+            Don't use to check if this capability is enabled, use <see cref="M:ArcGIS.Desktop.Internal.Intelligence.Common.ICapabilityCheckModule`1.IsCapabilityEnabled(`0)" />.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.EnabledCapabilities">
+      <summary>
+            Get currently enabled capabilities.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.IsCapabilityEnabled(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModuleCapability)">
+      <summary>
+            Check if capability of the JournalModule is enabled.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.EnableCapability(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModuleCapability)">
+      <summary>
+            Enable a capability of the JournalModule.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.DisableCapability(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModuleCapability)">
+      <summary>
+            Disable a capability of the JournalModule.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.JournalModule.ShouldEnableJournalEditPane">
+      <summary>
+            Check registry for developer value to enable JournalModule preview capability Edit Feature Pane.
+            Don't use to check if this capability is enabled, use <see cref="M:ArcGIS.Desktop.Internal.Intelligence.Common.ICapabilityCheckModule`1.IsCapabilityEnabled(`0)" />.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalDetails.GetRandomJournalUri(System.Boolean)">
+      <summary>
+            For now, we need to get a unique uri
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalEntry.GetModifiedInfoFieldValueUpdates(System.String,System.Nullable{System.DateTime},System.Boolean)">
+      <summary>
+            Returns a list of field value updates to be done by the system on each journal entry update.
+            This does not modify JournalEntry field values.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachedFileViewModel.SaveToAsync(System.String)">
+      <summary>
+            Save the attachment with its default name to the specified folder path
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachedFileViewModel.SaveAttachmentToPathAsync(System.String)">
+      <summary>
+            Save attachment to file path
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentInfo">
+      <summary>
+            Keeps track of what we need to display for an attachment, without passing around the actual data of an attachment.
+            If an attachment is already inserted into the database, we will have an AttachmentId for it.
+            If it hasn't been inserted into the database, we will keep track of the filepath, so we can make an attachment when we need to.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentInfo.#ctor(System.Nullable{System.Int64},System.String,System.String,System.Int64)">
+      <summary>
+            Keeps track of what we need to display for an attachment, without passing around the actual data of an attachment.
+            If an attachment is already inserted into the database, we will have an AttachmentId for it.
+            If it hasn't been inserted into the database, we will keep track of the filepath, so we can make an attachment when we need to.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.EntryDetailsAttachmentsViewModel.OnRemove">
+      <summary>
+            Remove selected files
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.EntryDetailsAttachmentsViewModel.OnSaveAsAsync">
+      <summary>
+            Save as dialog if one attachment is selected
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.EntryDetailsAttachmentsViewModel._saveToCommand">
+      <summary>
+            Save to dialog if multiple attachments are selected
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.EntryDetailsAttachmentsViewModel.UpdateAttachments(System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentInfo},System.Collections.Generic.IReadOnlyList{ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.EntryDetails.AttachmentInfo})">
+      <summary>
+            Add/remove attachments and clear the unsaved changes
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._fieldName">
+      <summary>
+            Label text displayed above the field value text box or text block.
+            Initialized in constructor to the given JournalField's FieldName.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel.DataType">
+      <summary>
+            Intended FieldType of the field value.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._isFieldEditable">
+      <summary>
+            Determines if this particular field can be edited.
+            If false, no editable text box will be available when IsInEditMode is true
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._isRequired">
+      <summary>
+            Determines whether a value for the field must be entered.
+            Field will be considered invalid if no value is entered.
+            Revalidate Field when setting.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._maxLength">
+      <summary>
+            Max Length of text for string type entries enforced in FieldEntryDetails.Validate.
+            Set here because value must be obtained from given JournalField before SetStartingValue is called.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel.InitializeValues(ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.JournalField,System.Object)">
+      <summary>
+            Gets starting value from the journal field's Default value if one is not provided, and calls SetStartingValue
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._isInEditMode">
+      <summary>
+            Determines whether editable text boxes or static text blocks are displayed to the user.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._nullDataValue">
+      <summary>
+            Value to be shown to the user when not IsInEditMode and no value was entered for the field.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel._showNullDataValue">
+      <summary>
+            Bool determining whether the NullDataValue is visible to the user in place of the text block. 
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel.SetStartingValue(System.Object)">
+      <summary>
+            Sets the value object to the FieldValue property, and sets the subclass's value typed property bound the view,
+            as well as the subclasses Original Value property used in checking IsDirty.
+            </summary>
+      <param name="value">Starting value to be set</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.FieldEntry.FieldEntryBaseViewModel.OnValueChanged">
+      <summary>
+            Called when the editable value bound to the View is changed.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.History.JournalHistoryVirtualCollection.InsertAsyncOverride(System.Int32,ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Models.History.JournalHistoryChangelogRowViewModel,System.Threading.CancellationToken)">
+      <summary>
+            Called from the InsertAsync Method.
+            Update our own collection of rows to stay up to date with changes
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.ViewModels.ProjectActivityJournal.ProjectActivityJournalViewModel.SetSplitterToDefaultIfCollapsed">
+      <summary>
+            If the entry pane is fully collapsed, set it back to the default percentages
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EmptyJournalPaneView">
+      <summary>
+            Interaction logic for EmptyJournalPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EmptyJournalPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsAttachmentsView">
+      <summary>
+            Interaction logic for EntryDetailsAttachmentsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsAttachmentsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsFieldsView">
+      <summary>
+            Interaction logic for EntryDetailsFieldsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsFieldsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsLocationView">
+      <summary>
+            Interaction logic for EntryDetailsLocationView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsLocationView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsView">
+      <summary>
+            Interaction logic for EntryDetailsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.EntryDetails.EntryDetailsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.Filter.ActiveFiltersToolbar">
+      <summary>
+            Interaction logic for ActiveFiltersItemsControl.xaml
+            </summary>
+      <summary>
+            ActiveFiltersToolbar
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.Filter.ActiveFiltersToolbar.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.Filter.FilterCreationItemsControl">
+      <summary>
+            Interaction logic for FilterSelectionItemsControl.xaml
+            </summary>
+      <summary>
+            FilterCreationItemsControl
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.Filter.FilterCreationItemsControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.History.JournalHistoryPaneView">
+      <summary>
+            Interaction logic for JournalHistoryPaneView.xaml
+            </summary>
+      <summary>
+            JournalHistoryPaneView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.History.JournalHistoryPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsBaseDockPaneView">
+      <summary>
+            Interaction logic for ViewAllLogsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsBaseDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsLocalDockPaneView">
+      <summary>
+            Interaction logic for ViewAllLogsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsLocalDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsPortalDockPaneView">
+      <summary>
+            Interaction logic for ViewAllLogsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalContents.JournalContentsPortalDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalDetailsView">
+      <summary>
+            Interaction logic for CreateNewJournalDetailsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalDetailsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalEditFieldsView">
+      <summary>
+            Interaction logic for CreateNewJournalEditFieldsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalEditFieldsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalSavingView">
+      <summary>
+            Interaction logic for CreateNewJournalSavingView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalSavingView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalView">
+      <summary>
+            Interaction logic for CreateNewJournalView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.CreateNewJournalView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.JournalFieldDetailsPaneView">
+      <summary>
+            Interaction logic for JournalFieldDetailsPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalCreation.JournalFieldDetailsPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalPaneView">
+      <summary>
+            Interaction logic for JournalPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.JournalPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.ProjectActivityJournal.ProjectActivityJournalToolBarView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Journal.Views.ProjectActivityJournal.ProjectActivityJournalView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineMapPaneView_OpenButton">
+      <summary>
+            Button implementation to create a new instance of the pane and activate it.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineTickBar.DrawLabels(System.Windows.Media.DrawingContext,System.Double,System.Double,System.Windows.Media.FormattedText,System.Windows.Media.FormattedText)">
+      <summary>
+            Draw the labels to the right of the tick marks..
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineTickBar.DrawLabelWithFlowDirection(System.Windows.Media.DrawingContext,System.Windows.Media.FormattedText,System.Windows.Point)">
+      <summary>
+            When Flow Direction is RTL it will flip all labels so that they are not mirrored
+            </summary>
+      <param name="drawingContext"></param>
+      <param name="ft"></param>
+      <param name="origin"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineTickBar.DrawLabelsWithoutXOffset(System.Windows.Media.DrawingContext,System.Double,System.Double,System.Windows.Media.FormattedText,System.Windows.Media.FormattedText)">
+      <summary>
+            Call the draw labels method but removing the x offset applied to push the label to the right of the tick marks.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineTickBar.BufferStartDateTime(System.DateTime,System.TimeSpan)">
+      <summary>
+            Start Dates need to be buffered to render labels so they don't disappear when scrolling to the left.
+            We need to make sure the buffered start date isn't less than 0
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Controls.TimelineTickBarBase.Width">
+      <summary>
+            Width Property
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Converters.TimelineThumbAddHeightConverter">
+      <summary>
+            This converter adds length to the height of the thumb inside the Timeline TreeListView so that it covers the whole row
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Events.TimelineSelectionChangedEventArgs.GetDictionaryWithMapMemberObjectAsKey">
+      <summary>
+            Get the dictionary with MapMembers as the key.
+            Must run on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Models.TimeRange.GetBufferInTicksForLastTimestamp(System.Double,System.Int32)">
+      <summary>
+            Gets the buffer in ticks
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Services.TimelineService.CalculateTicksForTheCurrentAdjustment(System.Int32,ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Enums.TimelineScaleType,System.Int64)">
+      <summary>
+            Calculate the ticks needed for each zoom factor. We need to do some special processing when zooming in to ensure a smooth experience.
+            </summary>
+      <param name="mouseWheelDelta"></param>
+      <param name="currentTimelineScaleType"></param>
+      <param name="currentTimeSpanInTicks"></param>
+      <returns>Ticks to adjust timescale by</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Services.TimelineService.BuildTemporalItemCreationPropertiesInternal(ArcGIS.Desktop.Internal.Mapping.Timeline,ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Enums.TimelineLoadMode,System.Collections.Generic.IList{System.String},System.Int32,System.ValueTuple{System.Int32,System.Int32},ArcGIS.Desktop.Framework.Threading.Tasks.CancelableProgressor)">
+      <summary>
+            Must be run on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Services.TimelineService.GetTimelineTemporalDataInternal(ArcGIS.Desktop.Internal.Mapping.Timeline,ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Enums.TimelineLoadMode,System.Collections.Generic.IList{System.String},System.Int32,System.ValueTuple{System.Int32,System.Int32},ArcGIS.Desktop.Framework.Threading.Tasks.CancelableProgressor)">
+      <summary>
+            Get the temporal data from the Intel Service.<br />
+            Must be run on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Services.TimelineService.GetProcessingCollections(ArcGIS.Desktop.Internal.Mapping.Timeline)">
+      <summary>
+            Must be called on the MCT. Use QueuedTask.Run().
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineMapPaneViewModel.TimelineHasSelection">
+      <summary>
+            Does the current timeline have any temporal item selections?
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineMapPaneViewModel.#ctor(ArcGIS.Core.CIM.CIMView)">
+      <summary>
+            Consume the passed in CIMView. Call the base constructor to wire up the CIMView.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineMapPaneViewModel.ViewState">
+      <summary>
+            Must be overridden in child classes used to persist the state of the view to the CIM.
+            </summary>
+      <remarks>View state is called on each project save</remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineMapPaneViewModel.InitializeAsync">
+      <summary>
+            Called when the pane is initialized.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineMapPaneViewModel.OnClearSelectionCommand">
+      <summary>
+            Clear the diagram selection. Only used for the button right now.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.ViewModels.TimelineViewModelBaseNonGeneric.TemporalItemsSnapshotOfType``1">
+      <summary>
+            Cast the temporal item collection to another temporal item type.<br />
+            This uses TemporalItemsSnapshot so it is threadsafe. <br />
+            This also uses .OfType so no cast exceptions are thrown.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.DualDateTemporalItemView">
+      <summary>
+            Interaction logic for DualDateTemporalItemView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.DualDateTemporalItemView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.LaneOfTemporalItemsView">
+      <summary>
+            Interaction logic for TimelineView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.LaneOfTemporalItemsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SingleDateTemporalItemView">
+      <summary>
+            Interaction logic for SingleDateTemporalItemView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SingleDateTemporalItemView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SummaryTemporalItemToolTipView">
+      <summary>
+            Interaction logic for SummaryTemporalItemToolTipView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SummaryTemporalItemToolTipView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SummaryTemporalItemView">
+      <summary>
+            Interaction logic for SummaryTemporalItemView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.SummaryTemporalItemView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TemporalItemToolTipView">
+      <summary>
+            Interaction logic for TemporalItemToolTipView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TemporalItemToolTipView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineAddLayerView">
+      <summary>
+            Interaction logic for TimelineAddLayerView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineAddLayerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineDefaultView">
+      <summary>
+            Interaction logic for TimelineView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineDefaultView.Thumb_DragDelta(System.Object,System.Windows.Controls.Primitives.DragDeltaEventArgs)">
+      <summary>
+            This adjusts the timeline tree list view column size when the user uses the thumb to resize
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineDefaultView.TreeListView_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+      <summary>
+            When the TreeListView is loaded, make sure the length of column 0 is within our bounds
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineDefaultView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneBlankView">
+      <summary>
+            Interaction logic for TimelineMapPaneBlankView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneBlankView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneLoadedView">
+      <summary>
+            Interaction logic for TimelineMapPaneLoadedView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneLoadedView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneLoadingView">
+      <summary>
+            Interaction logic for TimelineMapPaneLoadingView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneLoadingView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneNoLayersView">
+      <summary>
+            Interaction logic for TimelineMapPaneNoLayersView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneNoLayersView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneView">
+      <summary>
+            Interaction logic for ImpersonateMapPane.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineMapPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineSummaryView">
+      <summary>
+            Interaction logic for TimelineSummaryView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Configuration.Timelines.Views.TimelineSummaryView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+      <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+      <summary>
+            CreateInstance
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            GetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            SetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+      <summary>
+            CreateDelegate
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+      <summary>
+            AddEventHandler
+            </summary>
+    </member>
+  </members>
+</doc>

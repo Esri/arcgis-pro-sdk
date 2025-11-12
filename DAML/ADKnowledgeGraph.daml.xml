@@ -290,6 +290,14 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_knowledgeGraph_CanUndoDeleteDataModelItemsCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canUndoDeleteDataModelItemsState"/>
+        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+      </and>
+    </insertCondition>
+    
     <insertCondition id="esri_knowledgeGraph_CanAddRelationshipToEntityCondition">
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
@@ -604,34 +612,89 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_knowledgeGraph_canExportDataModelDesignCondition">
+      <state id ="esri_knowledgeGraph_canExportDataModelDesign"/>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_canAddDataModelDesignFileToInvestigationCondition">
+      <state id ="esri_knowledgeGraph_canAddDataModelDesignFileToInvestigation"/>
+    </insertCondition>
+
   </conditions>
 
   <categories>
 	  <updateCategory refID="esri_core_ai_assistant_extension_category">
-		  <insertComponent id="esri_knowledgeGraph_investigation_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.InvestigationAssistantExtension">
-			  <content searchDescription="This skill class allows users to query and select data in Investigation view of a knowledge graph services."
-                       condition="esri_knowledgeGraph_canUseInvestigationSkills">
-				  <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewMap" searchDescription="Add the selected knowledge graph items to a new map." />
-				  <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToExistingMap" searchDescription="Add the selected knowledge graph items to an existing map."/>
-          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewLinkChart" searchDescription="Add the selected knowledge graph items to a new link chart."/>
-				  <aiAssistantFunction name="ExecuteSavedKnowledgeGraphQuery" searchDescription="Execute a saved query on the active investigation."/>
-				  <aiAssistantFunction name="SaveKnowledgeGraphQuery" searchDescription="Save the cypher query as a new saved query."/>
-				  <aiAssistantFunction name="SelectAllKnowledgeGraphItemInvestigationView" searchDescription="Select all the knowledge graph items from the active investigation view."/>
-				  <aiAssistantFunction name="SearchInvestigation" searchDescription="Search for an item using the user provided search string in the investigation view."/>
-          <aiAssistantFunction name="CreateItemForKnowledgeGraphType" searchDescription="Create a new item of knowledge graph type specified."/>
-			  </content>        
+      <insertComponent id="esri_knowledgeGraph_investigation_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.InvestigationAssistantExtension">
+        <content condition="esri_knowledgeGraph_canUseInvestigationSkills">
+          <searchDescriptions>
+            <searchDescription>This skill class allows users to query and select data in Investigation view of a knowledge graph services.</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewMap">
+            <searchDescriptions>
+              <searchDescription>Add the selected knowledge graph items to a new map.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToExistingMap">
+            <searchDescriptions>
+              <searchDescription>Add the selected knowledge graph items to an existing map.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewLinkChart">
+            <searchDescriptions>
+              <searchDescription>Add the selected knowledge graph items to a new link chart.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ExecuteSavedKnowledgeGraphQuery">
+            <searchDescriptions>
+              <searchDescription>Execute a saved query on the active investigation.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SaveKnowledgeGraphQuery">
+            <searchDescriptions>
+              <searchDescription>Save the cypher query as a new saved query.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SelectAllKnowledgeGraphItemInvestigationView">
+            <searchDescriptions>
+              <searchDescription>Select all the knowledge graph items from the active investigation view.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SearchInvestigation">
+            <searchDescriptions>
+              <searchDescription>Search for an item using the user provided search string in the investigation view.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="CreateItemForKnowledgeGraphType">
+            <searchDescriptions>
+              <searchDescription>Create a new item of knowledge graph type specified.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+        </content>
       </insertComponent>
 
       <insertComponent id="esri_knowledgeGraph_linkChart_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.LinkChartAssistantExtension">
-        <content searchDescription="This skill class allows users to perform actions in link chart of a knowledge graph services."
-                       condition="esri_knowledgeGraph_canUseLinkChartSkills">
-          <aiAssistantFunction name="ConnectLinkChart" searchDescription="Connect the related instances in the link chart."/>
+        <content condition="esri_knowledgeGraph_canUseLinkChartSkills">
+          <searchDescriptions>
+            <searchDescription>This skill class allows users to perform actions in link chart of a knowledge graph services.</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="ConnectLinkChart">
+            <searchDescriptions>
+              <searchDescription>Connect the related instances in the link chart.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
 
       <insertComponent id="esri_knowledgeGraph_knowledgeGraph_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphAssistantExtension">
-        <content searchDescription="This skill class allows users to perform knowledge graph actions.">
-          <aiAssistantFunction name="CreateNewInvestigation" searchDescription="Create a new investigation."/>
+        <content>
+          <searchDescriptions>
+            <searchDescription>This skill class allows users to perform knowledge graph actions.</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="CreateNewInvestigation">
+            <searchDescriptions>
+              <searchDescription>Create a new investigation.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
     </updateCategory>
@@ -664,7 +727,7 @@ You must have an investigation open to add the resulting queries to that investi
           <promptHint>Ask a question or type / for commands.
 Use Ctrl + Up or Down arrows to scroll previous questions.
           </promptHint>
-          <tooltip header="Graph Query">Help me create a graph query</tooltip>
+          <tooltip header="Graph Query">Generate Graph Queries using natural language</tooltip>
         </content>                 
       </insertComponent>
     </updateCategory>
@@ -737,7 +800,16 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             <type id="file_ffpcfg" contextMenuID="esri_knowledgeGraph_filteredfindpaths_configuration_file_menu"/>
           </supportedTypeIDs>
         </content>
-      </insertComponent>      
+      </insertComponent>
+
+      <insertComponent id="esri_itemInfoType_KnowledgeGraphDataModelDesign" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphDataModelVisualizationConfigurationProjectItem">
+        <content>
+          <supportedTypeIDs>
+            <type id="portal_knowledge_graph_datamodelvisualization_configuration"/>
+            <type id="file_dmdesign" contextMenuID="esri_knowledgeGraph_datamodelvisualization_configuration_file_menu"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
     
     </updateCategory>
 
@@ -833,6 +905,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
              insert="before" placeWith="esri_core_insertTab">
           <group refID="esri_knowledgeGraph_dataModel_modeGroup"/>
           <group refID="esri_knowledgeGraph_dataModel_editingGroup"/>
+          <group refID="esri_knowledgeGraph_dataModel_viewGroup"/>
           <group refID="esri_knowledgeGraph_dataModel_toolsGroup"/>
         </tab>
       </tabs>
@@ -843,7 +916,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <borderColor A="0" R="211" G="234" B="249" />
         </tabGroup>
       </tabGroups>
-
+      
       <groups>
         <group id="esri_knowledgeGraph_insertKnowledgeGraphGroup" caption="Knowledge Graph" sizePriorities="25,125,225"
                smallImage="InvestigationNew16">
@@ -865,8 +938,9 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <button refID="esri_knowledgeGraph_OpenSearchAndFilterPaneButton" size="large"/>
         </group>
 
-        <group id="esri_knowledgeGraph_displayColumnsGroup" caption="Display Columns" sizePriorities="25,125,225" smallImage="DisplayColumn16" keytip="s">
+        <group id="esri_knowledgeGraph_displayColumnsGroup" caption="Display" sizePriorities="25,125,225" smallImage="DisplayColumn16" keytip="s">
           <button refID="esri_knowledgeGraph_OpenDisplayColumnsPaneButton" size="large"/>
+          <checkBox refID="esri_knowledgeGraph_toggleShowDomainCodeDescription" size="small"/>
         </group>
 
         <group id="esri_knowledgeGraph_Map_selectionGroup" caption="Selection" sizePriorities="25,125,225" smallImage="LinkChart16" keytip="LCG">
@@ -1012,15 +1086,23 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <button refID="esri_knowledgeGraph_dataModel_toggleSelectionButton" separator="False"/>
           <button refID="esri_knowledgeGraph_dataModel_togglePanButton"/>
         </group>
-        <group id="esri_knowledgeGraph_dataModel_editingGroup" caption="Editing" sizePriorities="25,125,225"
+        <group id="esri_knowledgeGraph_dataModel_editingGroup" caption="Edit Types" sizePriorities="25,125,225"
                smallImage="KnowledgeGraphDataModel16">
           <menu refID="esri_knowledgeGraph_dataModel_addNewTypeSubMenu" size="large"/>
-          <button refID="esri_knowledgeGraph_dataModel_deleteDataModelItemButton"/>
+          <button refID="esri_knowledgeGraph_dataModel_deleteDataModelItemButton" size="large"/>
+          <button refID="esri_knowledgeGraph_dataModel_undoDeleteDataModelItemButton" size="large"/>
         </group>
-        <group id="esri_knowledgeGraph_dataModel_toolsGroup" caption="Tools" sizePriorities="25,125,225"
+        <group id="esri_knowledgeGraph_dataModel_viewGroup" caption="View" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphDataModel16">
+          <menu refID="esri_knowledgeGraph_dataModel_groupingRelationshipTypesSubMenu" size="large"/>
+          <button refID="esri_knowledgeGraph_dataModel_toggleDetailsButton" size="large"/>
+          <button refID="esri_knowledgeGraph_dataModel_increaseZoomButton" size="small" />
+          <button refID="esri_knowledgeGraph_dataModel_decreaseZoomButton" size="small" />
+          <button refID="esri_knowledgeGraph_dataModel_fitToWindowButton" size="small" />
+        </group>
+        <group id="esri_knowledgeGraph_dataModel_toolsGroup" caption="Manage" sizePriorities="25,125,225"
                smallImage="KnowledgeGraphDataModel16">
           <button refID="esri_knowledgeGraph_dataModel_refreshDataModelDesignerButton" separator="False"/>
-          <button refID="esri_knowledgeGraph_dataModel_toggleDetailsButton"/>
           <button refID="esri_knowledgeGraph_dataModel_applyDesignButton"/>
         </group>
         <group id="esri_knowledgeGraph_linkChart_toolGroup" caption="Tools" sizePriorities="25,125,225"
@@ -1057,6 +1139,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <button refID="esri_knowledgeGraph_uncollapseRelationships" size="middle"/>
           <checkBox refID="esri_knowledgeGraph_collapseRelationshipsMode" size="middle"/>
         </subgroup>
+
       </subgroups>
 
       <controls>
@@ -1314,7 +1397,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         </button>
 
         <button id="esri_knowledgeGraph_RefreshAllButton" className="esri_knowledgeGraph_module:OnRefreshAllIgnoreErrors"
-                caption="Refresh All" extendedCaption="Refresh All"
+                caption="Refresh Data Model" extendedCaption="Refresh Data Model"
                 largeImage="GenericRefresh32"
                 smallImage="GenericRefresh16"
                 keytip="RA"
@@ -1332,8 +1415,11 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 keytip="SL"
                 loadOnClick="false"
                 condition="esri_knowledgeGraph_signedInAndServerCompatible">
-          <tooltip heading="">
-            Save default properties<disabledText></disabledText>
+          <tooltip heading="Save Default Properties">
+            Save the display properties of selected entity types and relationship types to the knowledge graph.
+
+Default display properties for symbology, display names, and labels can be applied to investigations, maps, and link charts, and will be used when creating new ones. Default display properties are not shared between investigations, maps, or link charts.
+            <disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1344,8 +1430,11 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 keytip="SL"
                 loadOnClick="false"
                 condition="esri_knowledgeGraph_CanSaveDefaultPropertiesInvestigation">
-          <tooltip heading="">
-            Save default properties<disabledText></disabledText>
+          <tooltip heading="Save Default Properties">
+            Save the display properties of selected entity types and relationship types to the knowledge graph.
+
+Default display properties for symbology, display names, and labels can be applied to investigations, maps, and link charts, and will be used when creating new ones. Default display properties are not shared between investigations, maps, or link charts.
+            <disabledText></disabledText>
           </tooltip>
         </button>
        
@@ -1356,8 +1445,11 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 keytip="ML"
                 loadOnClick="false"
                 condition="esri_knowledgeGraph_signedInAndServerCompatible">
-          <tooltip heading="">
-            Manage default properties<disabledText></disabledText>
+          <tooltip heading="Manage Default Properties">
+            Visualize and manage default display properties currently saved in the Knowledge Graph.
+
+Default display properties for symbology, display names, and labels can be applied to investigations, maps, and link charts, and will be used when creating new ones. Default display properties are not shared between investigations, maps, or link charts.
+            <disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1535,7 +1627,39 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             Open Data Model Design.<disabledText></disabledText>
           </tooltip>
         </button>
-        
+
+        <button id="esri_knowledgeGraph_importDatamodelDesign" className="esri_knowledgeGraph_module:ImportDatamodelDesign"
+                caption="Import" extendedCaption="Import data model design from a file; on context menu"
+                largeImage="KnowledgeGraphImport32"
+                smallImage="KnowledgeGraphImport16"
+                helpContextID="" loadOnClick="false" keytip="I">
+          <tooltip heading="">
+            Import data model design from a file.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_exportDatamodelDesign" className="esri_knowledgeGraph_module:ExportDatamodelDesign"
+                condition="esri_knowledgeGraph_canExportDataModelDesignCondition"
+                caption="Export" extendedCaption="Export selected data model design to a file; on context menu"
+                largeImage="KnowledgeGraphExport32"
+                smallImage="KnowledgeGraphExport16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Export selected data model design to a file.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_addDatamodelDesignFileToInvestigation" className="esri_knowledgeGraph_module:AddDataModelDesignFileToInvestigation"
+                condition="esri_knowledgeGraph_canAddDataModelDesignFileToInvestigationCondition"
+                caption="Add to Investigation" extendedCaption="Add selected data model design to an investigation; on context menu"
+                largeImage="VersionCreate32"
+                smallImage="VersionCreate16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Add selected data model design to an investigation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_knowledgeGraph_CreateQueryDefinition" className="esri_knowledgeGraph_module:CreateQueryDefinition"
                 caption="New Query" extendedCaption="Create New Query; on context menu"
                 largeImage="NewQuery32"
@@ -1885,6 +2009,16 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             Automatically group relationships that are added to the Link Chart.<disabledText></disabledText>
           </tooltip>
         </checkBox>
+
+        <checkBox id="esri_knowledgeGraph_toggleShowDomainCodeDescription" className="Ribbon.ToggleShowDomainCodeDescriptionCheckBox"
+                  caption="Show domain descriptions" extendedCaption="Show domain descriptions"
+                  loadOnClick="false"
+                  keytip="SD" isChecked="true">
+          <tooltip heading="">
+            Show domain descriptions.
+          </tooltip>
+        </checkBox>
+                  
         
         <button id="esri_knowledgeGraph_collapseRelationshipsModeToggleButton" className="Ribbon.CollapseRelationshipsToggleButton"
                 largeImage="EnableGroupRelationshipMode32"
@@ -2296,24 +2430,6 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             Open Data Model Designer View.<disabledText>Requires Portal connection</disabledText>
           </tooltip>
         </button>
-        <button id="esri_knowledgeGraph_dataModel_importDataModelButton" className="esri_knowledgeGraph_module:ImportDataModel"
-                caption="Import" extendedCaption="Import; on context menu"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphImport32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphImport16.png"
-                helpContextID="">
-          <tooltip heading="">
-            Import Data Model.<disabledText></disabledText>
-          </tooltip>
-        </button>
-        <button id="esri_knowledgeGraph_dataModel_exportDataModelButton" className="esri_knowledgeGraph_module:ExportDataModel"
-                caption="Export" extendedCaption="Export; on context menu"
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphExport32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphExport16.png"
-                helpContextID="">
-          <tooltip heading="">
-            Export Data Model.<disabledText></disabledText>
-          </tooltip>
-        </button>
         <button id="esri_knowledgeGraph_dataModel_discardDataModelButton" className="esri_knowledgeGraph_module:DiscardDataModelChanges"
                 caption="Discard" extendedCaption="Discard; on context menu"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDiscard32.png"
@@ -2462,7 +2578,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             Open the Data Model Designer radial menu.<disabledText></disabledText>
           </tooltip>
         </button>
-
+        
         <button id="esri_knowledgeGraph_InvestigationPropertyButton"
                 className="esri_knowledgeGraph_module:OpenInvestigationProperty"
                 caption="Properties" extendedCaption="Investigation properties"
@@ -2497,11 +2613,20 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         </button>
         <button id="esri_knowledgeGraph_dataModel_deleteDataModelItemButton" className="esri_knowledgeGraph_module:DeleteSelectedDataModelItems"
                 caption="Delete" extendedCaption="Delete" 
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
+                largeImage="GenericDeleteRed32"
+                smallImage="GenericDeleteRed16"
                 condition="esri_knowledgeGraph_CanDeleteDataModelItemsCondition">
           <tooltip heading="">
             Delete<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dataModel_undoDeleteDataModelItemButton" className="esri_knowledgeGraph_module:UndoDeleteSelectedDataModelItems"
+                caption="Undo Delete" extendedCaption="Undo Delete"
+                largeImage="UndoDelete32"
+                smallImage="UndoDelete16"
+                condition="esri_knowledgeGraph_CanUndoDeleteDataModelItemsCondition">
+          <tooltip heading="">
+            Undo Delete<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_knowledgeGraph_dataModel_addNewEntityTypeButton" className="esri_knowledgeGraph_module:AddNewEntityTypeToDataModel"
@@ -2570,7 +2695,56 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             Update data model with current design.<disabledText></disabledText>
           </tooltip>
         </button>
-       
+        <button id="esri_knowledgeGraph_dataModel_groupRelationshipTypesButton" className="esri_knowledgeGraph_module:CollapseGroupedRelationships"
+                caption="Group Relationships" extendedCaption="Group Relationships"
+                largeImage="CollapseRelationships32"
+                smallImage="CollapseRelationships16"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_CanCollapseGroupedRelationshipsCondition">
+          <tooltip heading="">
+            Group Relationships.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dataModel_ungroupRelationshipTypesButton" className="esri_knowledgeGraph_module:ExpandGroupedRelationships"
+                caption="Ungroup Relationships" extendedCaption="Ungroup Relationships"
+                largeImage="UncollapseRelationships32"
+                smallImage="UncollapseRelationships16"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_CanExpandGroupedRelationshipsCondition">
+          <tooltip heading="">
+            Ungroup Relationships.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dataModel_increaseZoomButton" className="esri_knowledgeGraph_module:IncreaseZoom"
+                caption="Increase Zoom" extendedCaption="Increase Zoom"
+                largeImage="ZoomIn32"
+                smallImage="ZoomIn16"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+          <tooltip heading="">
+            Zoom In.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dataModel_decreaseZoomButton" className="esri_knowledgeGraph_module:DecreaseZoom"
+                caption="Decrease Zoom" extendedCaption="Decrease Zoom"
+                largeImage="ZoomOut32"
+                smallImage="ZoomOut16"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+          <tooltip heading="">
+            Zoom Out.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dataModel_fitToWindowButton" className="esri_knowledgeGraph_module:FitToWindow"
+                caption="Fit To Window" extendedCaption="Fit To Window"
+                largeImage="ModelBuilderFullExtent32"
+                smallImage="ModelBuilderFullExtent16"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+          <tooltip heading="">
+            Fit To Window.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_knowledgeGraph_linkChartLayoutSettings" className="esri_knowledgeGraph_module:OpenLinkChartLayoutSettingsPane"
                 caption="Layout Settings" extendedCaption="Allows editing of settings of the current layout algorithm."
                 largeImage="PopupSettings32"
@@ -3125,6 +3299,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         <menu id="esri_knowledgeGraph_datamodelvisualization_configurationFolderMenu" caption="Data Model Designs"
               extendedCaption="Context menu for Data Model Designs">
           <button refID="esri_knowledgeGraph_CreateDataModelDesign" separator="true"/>
+          <button refID="esri_knowledgeGraph_importDatamodelDesign" separator="true"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
         </menu>
 
@@ -3132,12 +3307,24 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         <menu id="esri_knowledgeGraph_datamodelvisualization_configurationMenu" caption="Data Model Design"
               extendedCaption="Context menu for Data Model Design">
           <button refID="esri_knowledgeGraph_OpenDataModelVisualizationFromConfiguration" separator="true"/>
+          <button refID="esri_knowledgeGraph_exportDatamodelDesign" separator="true"/>
           <button refID="esri_core_editCopyButton" separator="true"/>
           <button refID="esri_knowledgeGraph_DeleteDataModelDesign" separator="true"/>
           <button refID="esri_core_rename" separator="false"/>
         </menu>
-        
-          <menu id="esri_knowledgeGraph_queryDefinition_folderMenu" caption="Queries"
+
+        <menu id="esri_knowledgeGraph_datamodelvisualization_configuration_file_menu" caption="Data Model Design"
+              extendedCaption="Context menu for Data Model Design">
+          <button refID="esri_knowledgeGraph_addDatamodelDesignFileToInvestigation" separator="true"/>
+          <button refID="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="false"/>
+          <button refID="esri_core_editCopyPaths" separator="false"/>
+          <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename" separator="false"/>
+          <button refID="esri_core_openFileLocation" separator="false"/>
+        </menu>
+
+        <menu id="esri_knowledgeGraph_queryDefinition_folderMenu" caption="Queries"
               extendedCaption="Context menu for Queries">
           <button refID="esri_knowledgeGraph_CreateQueryDefinition"/>
           <button refID="esri_core_editPasteButton" separator="true"/>
@@ -3186,6 +3373,16 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           </tooltip>
           <button refID="esri_knowledgeGraph_dataModel_addNewEntityTypeButton"/>
           <button refID="esri_knowledgeGraph_dataModel_addNewRelationshipTypeButton"/>
+        </menu>
+        <menu id="esri_knowledgeGraph_dataModel_groupingRelationshipTypesSubMenu" caption="Grouping" extendedCaption="Grouping Relationship Types"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CollapseRelationships16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CollapseRelationships32.png"
+              keytip="GR">
+          <tooltip heading="Grouping Relationship Types">
+            Choose relationship types to group/ungroup
+          </tooltip>
+          <button refID="esri_knowledgeGraph_dataModel_groupRelationshipTypesButton"/>
+          <button refID="esri_knowledgeGraph_dataModel_ungroupRelationshipTypesButton"/>
         </menu>
         <menu id="esri_knowledgeGraph_ProjectItemMenu" caption="Knowledge Graph Item" extendedCaption="Context menu for Knowledge Graph Item">
           <button refID="esri_knowledgeGraph_OpenKnowledgeGraphViewItem" separator="false"/>

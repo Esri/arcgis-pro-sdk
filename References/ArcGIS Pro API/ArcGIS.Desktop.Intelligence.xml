@@ -1,0 +1,898 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.Intelligence</name>
+  </assembly>
+  <members>
+    <member name="T:ArcGIS.Desktop.Intelligence.Controls.LinkChartFilterByLinksView">
+      <summary>
+            Interaction logic for LinkChartFilterByLinksView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Controls.LinkChartFilterByLinksView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Controls.LinkChartMapPane_OpenButton">
+      <summary>
+            Button implementation to create a new instance of the pane and activate it.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Controls.LinkChart.LinkSetComboBox.RefreshItems">
+      <summary>
+            Refreshed the combobox item list
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Controls.LinkChart.LinkChartEntitySourceMapSymbolPicker">
+      <summary>
+            Interaction logic for LinkChartEntitySourceMapSymbolPicker.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Controls.LinkChart.LinkChartEntitySourceMapSymbolPicker.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Controls.MultiFieldsPickerView">
+      <summary>
+            Interaction logic for MultiFieldsPickerView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Controls.MultiFieldsPickerView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisResultsViewModel.ResultItemClickedCommand">
+      <summary>
+            On Result Item Clicked used in DAML
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisResultsViewModel.ZoomToResultItemContextMenuCommand">
+      <summary>
+            On Context menu zoom to, used in DAML
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisResultsViewModel.AddToSelectionContextMenuCommand">
+      <summary>
+            On Context menu add to selection, used in DAML
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisWindowViewModel.CloseCommand">
+      <summary>
+            Close command used in DAML
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisWindowViewModel.SelectSourceNodeCommand">
+      <summary>
+            Select Source Node Command used in DAML
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartAnalysisWindowViewModel.SelectTargetNodeCommand">
+      <summary>
+            Select Target Node Command used in DAML
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.CreateLinkSetViewModel.ResetViewModel">
+      <summary>
+            Reset the backing controls and trigger UI to update
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.CreateNodeSetViewModel.MapURI">
+            Used in XAML
+        </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.CreateNodeSetViewModel.ResetViewModel">
+      <summary>
+            Reset the backing controls and trigger UI to update
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.LinkChartNodesReadout">
+      <summary>
+            Graph Statistics - [Visible Nodes Count] of [Total Node Count]
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.LinkChartLinksReadout">
+      <summary>
+            Graph Statistics - [Visible Links Count] of [Total Links Count]
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.#ctor(ArcGIS.Core.CIM.CIMView)">
+      <summary>
+            Consume the passed in CIMView. Call the base constructor to wire up the CIMView.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.ViewState">
+      <summary>
+            Must be overridden in child classes used to persist the state of the view to the CIM.
+            </summary>
+      <remarks>View state is called on each project save</remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.InitializeAsync">
+      <inheritdoc />
+      <summary>
+            Called when the pane is initialized.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.UpdateShowLinksOnMapAsync">
+      <summary>
+            Update show links on map.
+            This calls StartOnUIThread.
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.GraphHasSelection">
+      <summary>
+            Does the current diagram have any link or node selections?
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartMapPaneViewModel.GetIntelNodeData(System.Int32,System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+      <summary>
+            Gets the node data from the intel service.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            Pass in null for entityIds to get node data for all entities.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartNodeViewModel.PreviewImageHeightScaled">
+      <summary>
+            Scaled image height.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartNodeViewModel.PreviewImageWidthScaled">
+      <summary>
+            Scaled image width.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.ViewModels.LinkChartNodeViewModel.SetProperties(System.Collections.Generic.Dictionary{ArcGIS.Desktop.Internal.DesktopService.LinkChartEntityProperty,System.Object},ArcGIS.Desktop.Intelligence.Common.Models.ImageSourceCacheItem)">
+      <summary>
+            Run on MCT to prevent serialization on GUI Thread.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.LinkChartModule._isLinkChartBusyDictionary">
+      <summary>
+            Concurrent dictionary for caching the link chart busy state
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LinkChartModule.Instance">
+      <summary>
+            Retrieve the singleton instance to this module here
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LinkChartModule.CanUnload">
+      <summary>
+            Called by Framework when ArcGIS Pro is closing
+            </summary>
+      <returns>False to prevent Pro from closing, otherwise True</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LinkChartModule.OpenSelectedLinkChartButton">
+      <summary>
+            Used in daml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LinkChartModule.GetRandomLinkChartUri(ArcGIS.Desktop.Mapping.Map)">
+      <summary>
+            For now we need to get a unique uri
+            </summary>
+      <returns></returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LinkChartModule.ArcGIS#Desktop#Internal#Core#IInternalIntelModule#CreateLinkChartAsync(System.String)">
+      <summary>
+            Creates a Link Chart with default properties and adds it to the Map.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LinkChartModule.ArcGIS#Desktop#Internal#Core#IInternalIntelModule#CreateLinkChart(System.String)">
+      <summary>
+            Create a link chart with default properties and insert it into the specified map.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Properties.Resource.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Properties.Resource.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.Properties.Resource.TipHeaderToggleFieldAlias">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.CreateLinkSetViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.CreateLinkSetViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.CreateLinkSetViewRes.DefaultLabelCreation">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.CreateNodeSetViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.CreateNodeSetViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.CreateNodeSetViewRes.Cancel">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.GeoprocessingRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.GeoprocessingRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.GeoprocessingRes.SelectByDateAndTime">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisResultsViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisResultsViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisResultsViewRes.AddToSelectionHeader">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisWindowViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisWindowViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartAnalysisWindowViewRes.AnalysisDirection">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartMapPaneViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartMapPaneViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartMapPaneViewRes.DataCurrentAsOf">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntityRelationMapSymbologyViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntityRelationMapSymbologyViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntityRelationMapSymbologyViewRes.Color">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntitySourceMapSymbologyViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntitySourceMapSymbologyViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesEditEntitySourceMapSymbologyViewRes.DisplayNodeFrame">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesViewRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesViewRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartPropertiesViewRes.CreateNewLinkSet">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartRes.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartRes.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.LocalResources.LinkChartRes.LinkChart">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Services.IntelService.GetFeatureGeometry(ArcGIS.Desktop.Mapping.MapView,ArcGIS.Desktop.Intelligence.Interfaces.IFeatureLayer,System.Collections.Generic.Dictionary{System.Int64,ArcGIS.Core.Geometry.Geometry})">
+      <summary>
+            Must be called on MCT.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Services.IntelService.CreateOverlayGraphicsForLinks(ArcGIS.Desktop.Mapping.MapView,System.Collections.Concurrent.ConcurrentDictionary{System.String,System.Collections.Concurrent.ConcurrentDictionary{System.IDisposable,System.Byte}},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.Int64,ArcGIS.Core.Geometry.Geometry}},System.Collections.Generic.List{System.ValueTuple{System.String,System.String,System.Int64,System.String,System.Int64,System.Boolean,ArcGIS.Desktop.Internal.Mapping.LinkChartLinkDrawingInfo}})">
+      <summary>
+            Must be called on MCT.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Services.LinkChartService.yFilesService.UpdateEntitySourceMapSelectedItems(System.Collections.Generic.IList{ArcGIS.Desktop.Internal.Mapping.LinkChartEntity},yWorks.Graph.IGraph,yWorks.Controls.IGraphSelection,yWorks.Graph.IMapper{yWorks.Graph.INode,ArcGIS.Desktop.Intelligence.Models.LinkChartNode},System.Collections.Generic.IList{System.Int64})">
+      <summary>
+            Goes through each entity source map that matches the map member uri and sets items selection that is contained in the OID list
+            </summary>
+      <param name="entities"></param>
+      <param name="graph"></param>
+      <param name="graphSelection"></param>
+      <param name="linkChartNodeMapper"></param>
+      <param name="oidsToSelect"></param>
+      <returns>boolean if there were any selection changes made</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Services.LinkChartService.yFilesService.UpdateEdgeLabels(yWorks.Graph.IGraph,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Mapping.LinkChartRelationship},System.Collections.Generic.Dictionary{System.String,System.ValueTuple{yWorks.Graph.Styles.IEdgeStyle,yWorks.Graph.Styles.IEdgeStyle,yWorks.Graph.Styles.IEdgeStyle,yWorks.Graph.Styles.ILabelStyle,yWorks.Graph.LabelModels.ILabelModelParameter}})">
+      <summary>
+            This updates edge's labels to either be the default text, correct default text, or ensure it is set as DefaultTextIsOverridden.
+            </summary>
+      <param name="graph">The graph to update.</param>
+      <param name="relationships">Partial or complete list of relationships to update.</param>
+      <param name="edgeStyles">Style cache for edges and labels.</param>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.CreateLinkSetView">
+      <summary>
+            Interaction logic for CreateLinkSetView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.CreateLinkSetView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.CreateNodeSetView">
+      <summary>
+            Interaction logic for CreateNodeSetView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.CreateNodeSetView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.LinkChartAnalysisWindowView">
+      <summary>
+            Interaction logic for LinkChartAnalysis.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.LinkChartAnalysisWindowView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.LinkChartMapPaneView">
+      <summary>
+            Interaction logic for ImpersonateMapPane.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.LinkChartMapPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesEditEntityRelationMapSymbologyView">
+      <summary>
+            Interaction logic for LinkChartPropertiesEditEntityRelationMapSymbologyView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesEditEntityRelationMapSymbologyView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesEditEntitySourceMapSymbologyView">
+      <summary>
+            Interaction logic for LinkChartPropertiesEditEntitySourceMapSymbologyView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesEditEntitySourceMapSymbologyView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesView">
+      <summary>
+            Interaction logic for LinkChartPropertiesView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.Views.LinkChartPropertiesView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.InputModes.IntelGraphEditorInputModeBase.HandleClickInputModeOnClicked(System.Object,yWorks.Controls.Input.ClickEventArgs)">
+      <summary>
+            Handles the click event for yworks, we need to suppress the right mouse button click.
+            </summary>
+      <param name="sender"></param>
+      <param name="e"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.InputModes.IntelGraphViewerInputModeBase.HandleClickInputModeOnClicked(System.Object,yWorks.Controls.Input.ClickEventArgs)">
+      <summary>
+            Handles the click event for yworks, we need to suppress the right mouse button click.
+            </summary>
+      <param name="sender"></param>
+      <param name="e"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.InputModes.ZoomInputMode.ZoomInOnClickInputModeOnLeftClicked(System.Object,yWorks.Controls.Input.ClickEventArgs)">
+      <summary>
+            Handles the zoom in when left clicking for yworks.
+            </summary>
+      <param name="sender"></param>
+      <param name="e"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.InputModes.ZoomInputMode.ZoomInOnMarqueeSelectionInputModeOnDragFinished(System.Object,yWorks.Controls.Input.MarqueeSelectionEventArgs)">
+      <summary>
+            Handles the zoom in when performing a drag selection for yworks.
+            </summary>
+      <param name="sender"></param>
+      <param name="e"></param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.#ctor">
+      <summary>
+              Initializes a new instance of the <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle" /> class with default settings.
+            </summary>
+      <remarks>By default bends are not drawn below a zoom level of 50 % and edges shorter than 10 pixels are hidden.</remarks>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.DrawBendsThreshold">
+      <summary>
+              Gets or sets the minimum zoom level at which bends are drawn.
+            </summary>
+      <remarks>Below this zoom level the edge is only drawn as a single line between its source and target ports.</remarks>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.MinimumEdgeLength">
+      <summary>
+              Gets or sets the minimum length (in pixels on screen) where edges will still be drawn.
+            </summary>
+      <remarks>All edges where the distance between source and target port is shorter than this will not be displayed.</remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.CreateVisual(yWorks.Controls.IRenderContext,yWorks.Graph.IEdge)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.UpdateVisual(yWorks.Controls.IRenderContext,System.Windows.Media.Visual,yWorks.Graph.IEdge)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.GetBounds(yWorks.Controls.ICanvasContext,yWorks.Graph.IEdge)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.ShouldDrawEdge(yWorks.Geometry.PointD,yWorks.Geometry.PointD,System.Double)">
+      <summary>
+              Determines whether the edge should be drawn at all, taking into account the value of the
+              <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.MinimumEdgeLength" /> property.
+            </summary>
+      <param name="source">The source port location.</param>
+      <param name="target">The target port location.</param>
+      <param name="zoom">The current zoom level.</param>
+      <returns>
+        <see langword="true" />, if the edge should be drawn, <see langword="false" /> if not.
+            </returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.ShouldDrawBends(System.Double)">
+      <summary>
+              Determines whether bends should be drawn, according to the value of the <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.DrawBendsThreshold" /> property.
+            </summary>
+      <param name="zoom">The current zoom level.</param>
+      <returns>
+        <see langword="true" />, if bends should be drawn, <see langword="false" /> if not.
+            </returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.GetPoints(yWorks.Graph.IEdge,yWorks.Geometry.PointD@,yWorks.Geometry.PointD@)">
+      <summary>
+              Gets the locations of the source and target port as <see cref="T:yWorks.Geometry.PointD" />s.
+            </summary>
+      <param name="edge">The edge.</param>
+      <param name="source">A variable to store the source port's location.</param>
+      <param name="target">A variable to store the target port's location.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.GetLocation(yWorks.Graph.IPort)">
+      <summary>
+              Gets the location of a port.
+            </summary>
+      <param name="port">The port.</param>
+      <returns>The port's location.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.CreateGeometry(yWorks.Geometry.PointD,yWorks.Geometry.PointD,yWorks.Graph.IEdge,System.Boolean)">
+      <summary>
+              Creates the edge path's geometry.
+            </summary>
+      <param name="source">The source port location.</param>
+      <param name="target">The target port location.</param>
+      <param name="edge">The edge.</param>
+      <param name="drawBends">Flag to set whether bends are included in the path or not.</param>
+      <returns>The edge path's geometry.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.GetBendLocations(yWorks.Graph.IEdge)">
+      <summary>
+              Gets a list of bend locations from an edge.
+            </summary>
+      <param name="edge">The edge.</param>
+      <returns>A list of the edge's bend locations, or an empty list if there are no bends.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.ArrayEqual``1(``0[],``0[])">
+      <summary>
+              Compares two arrays for equality.
+            </summary>
+      <typeparam name="T">The type of the arrays.</typeparam>
+      <param name="a">The first array.</param>
+      <param name="b">The second array.</param>
+      <returns>
+        <see langword="true" /> if both arrays have the same length and all elements of one array compare equal to the
+              respective element in the other array, <see langword="false" /> otherwise.
+            </returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo">
+      <summary>
+              Helper structure to keep information about the edge.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo.bendLocations">
+      <summary>
+              A list of bend locations in the edge.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo.drawBends">
+      <summary>
+              A flag determining whether bends should be drawn or not.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo.source">
+      <summary>
+              The source port location.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo.target">
+      <summary>
+              The target port location.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo.#ctor(yWorks.Geometry.PointD,yWorks.Geometry.PointD,System.Boolean,yWorks.Geometry.PointD[])">
+      <summary>
+              Initializes a new instance of the <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastEdgeStyle.EdgeInfo" /> structure, using the given source and target port
+              locations, whether to draw bends or not and the given list of bend locations.
+            </summary>
+      <param name="source">The source port location.</param>
+      <param name="target">The target port location.</param>
+      <param name="drawBends">A flag determining whether bends should be drawn or not.</param>
+      <param name="bendLocations">A list of bend locations.</param>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.#ctor(ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.AutoFlipMode)">
+      <summary>
+              Initializes a new instance of the <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle" /> class with the given auto-flip setting.
+            </summary>
+      <param name="autoFlip">Whether to flip the label automatically depending on its orientation.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.AutoFlip">
+      <summary>
+              Gets or sets a value indicating whether the label automatically flips depending on the orientation so that it stays
+              upright even when rotated upside-down.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.BackgroundBrush">
+      <summary>
+              Gets or sets the brush to paint the label's background with.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.Stroke">
+      <summary>
+              Gets or sets the foreground brush.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.CreateVisual(yWorks.Controls.IRenderContext,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.UpdateVisual(yWorks.Controls.IRenderContext,System.Windows.Shapes.Path,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.GetPreferredSize(yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.CreateGeometry(yWorks.Geometry.IOrientedRectangle,System.String)">
+      <summary>
+              Creates the geometry for the label's path.
+            </summary>
+      <param name="layout">The label's layout.</param>
+      <param name="text">The label text.</param>
+      <returns>The label path's geometry.</returns>
+      <remarks>
+              The label's visualization is an approximation of its text where each word is represented by a line with a length
+              proportional to the word's length. In the vast majority of cases this approximates the position of spaces in the line
+              accurately enough that the switch from a text label to a fast label is almost imperceptible.
+            </remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastLabelStyle.AreEqual(yWorks.Geometry.IOrientedRectangle,yWorks.Geometry.IOrientedRectangle)">
+      <summary>
+              Helper method to determine whether two <see cref="T:yWorks.Geometry.IOrientedRectangle" />s are equal.
+            </summary>
+      <param name="rect1">The first rectangle to compare.</param>
+      <param name="rect2">The second rectangle to compare.</param>
+      <returns>
+        <see langword="true" /> if both rectangles are equal, <see langword="false" /> otherwise.</returns>
+      <remarks>
+              Two oriented rectangles are considered equal if their anchor location, up vector, width, and height are equal.
+            </remarks>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.AutoFlipMode">
+      <summary>
+              Enumeration for the auto-flip setting in label styles.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.AutoFlipMode.DontFlip">
+      <summary>
+              Don't flip the label depending on its orientation.
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.AutoFlipMode.AutoFlip">
+      <summary>
+              Automatically flip the label depending on its orientation so that text is not upside-down.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.UpdateVisual(yWorks.Controls.IRenderContext,yWorks.Controls.VisualGroup,yWorks.Graph.INode)">
+      <summary>
+            Re-renders the node using the old visual for performance reasons.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.CreateRenderDataCache(yWorks.Controls.IRenderContext,yWorks.Graph.INode)">
+      <summary>
+            Creates an object containing all necessary data to create a visual for the node
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.NodeColor">
+      <summary>
+            Gets or sets the fill color of the node.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.GetNodeColor(yWorks.Graph.INode)">
+      <summary>
+            Determines the color to use for filling the node.
+            </summary>
+      <remarks>
+            This implementation uses the <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.NodeColor" /> property unless
+            the <see cref="P:yWorks.Graph.ITagOwner.Tag" /> of the <see cref="T:yWorks.Graph.INode" /> is of type <see cref="T:System.Windows.Media.Color" />,
+            in which case that color overrides this style's setting.
+            </remarks>
+      <param name="node">The node to determine the color for.</param>
+      <returns>The color for filling the node.</returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.CreateVisual(yWorks.Controls.IRenderContext,yWorks.Graph.INode)">
+      <summary>
+            Creates the visual for a node.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.Render(yWorks.Controls.IRenderContext,yWorks.Graph.INode,yWorks.Controls.VisualGroup,ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.RenderDataCache)">
+      <summary>
+            Actually creates the visual appearance of a node given the values provided by <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.RenderDataCache" />.
+            </summary>
+      <remarks>
+            This renders the node and the edges to the labels and adds the visuals to the <paramref name="container" />.
+            All items are arranged as if the node was located at (0,0). <see cref="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.CreateVisual(yWorks.Controls.IRenderContext,yWorks.Graph.INode)" /> and <see cref="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.UpdateVisual(yWorks.Controls.IRenderContext,yWorks.Controls.VisualGroup,yWorks.Graph.INode)" />
+            finally arrange the container so that the drawing is translated into the final position.
+            </remarks>
+    </member>
+    <member name="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Fast.FastNodeStyle.RenderDataCache">
+      <summary>
+            Saves the data which is necessary for the creation of a node
+            </summary>
+    </member>
+    <member name="F:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.styles">
+      <summary>The style container.</summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.Styles">
+      <summary>
+              Gets the style container.
+            </summary>
+      <remarks>
+              Styles have to be added in ascending order of zoom level. This can be initialized with a collection
+              initializer.
+            </remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.CreateVisual(yWorks.Controls.IRenderContext,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.UpdateVisual(yWorks.Controls.IRenderContext,yWorks.Controls.VisualGroup,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.IsVisible(yWorks.Controls.ICanvasContext,yWorks.Geometry.RectD,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.GetBounds(yWorks.Controls.ICanvasContext,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.GetPreferredSize(yWorks.Graph.ILabel)">
+      <summary>
+              Returns the preferred <see cref="T:yWorks.Geometry.SizeD">size</see> of the label.
+            </summary>
+      <param name="label">The label to which this style instance is assigned.</param>
+      <returns>The preferred size.</returns>
+      <remarks>
+              This level-of-detail style assumes that the most-detailed style has the most correct preferred size. In most
+              cases that would simply be a <see cref="T:yWorks.Graph.Styles.DefaultLabelStyle" /> instance.
+            </remarks>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.IsHit(yWorks.Controls.Input.IInputModeContext,yWorks.Geometry.PointD,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.LevelOfDetail.LevelOfDetailLabelStyle.IsInBox(yWorks.Controls.Input.IInputModeContext,yWorks.Geometry.RectD,yWorks.Graph.ILabel)">
+      <inheritdoc />
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.#ctor(System.Double,yWorks.Graph.Styles.IEdgeStyle)">
+      <summary>
+              Initializes a new instance of the <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator" /> class with the given virtualization
+              threshold and wrapped style.
+            </summary>
+      <param name="threshold">The zoom level below which virtualization is turned off.</param>
+      <param name="style">The wrapped style.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.Style">
+      <summary>
+              Gets or sets the wrapped style.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.Threshold">
+      <summary>
+              Gets or sets the zoom level below which virtualization should be turned off.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.IsVisible(yWorks.Controls.ICanvasContext,yWorks.Geometry.RectD,yWorks.Graph.IEdge)">
+      <summary>
+              Determines whether the visualization for the specified edge is visible in the context.
+            </summary>
+      <remarks>
+        <para>
+                This method is called in response to a <see cref="M:yWorks.Controls.IVisibilityTestable.IsVisible(yWorks.Controls.ICanvasContext,yWorks.Geometry.RectD)" />
+                call to the instance that has been queried from the <see cref="!:Renderer" />.
+              </para>
+        <para>
+                This implementation returns <see langword="true" /> if the zoom level is below <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.Threshold" /> and
+                otherwise delegates to the wrapped style.
+              </para>
+      </remarks>
+      <param name="context">The canvas context.</param>
+      <param name="rectangle">The clipping rectangle.</param>
+      <param name="edge">The edge to which this style instance is assigned.</param>
+      <returns>
+        <see langword="true" /> if either the zoom level is below <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationEdgeStyleDecorator.Threshold" /> or the edge is visible in the
+              clipping rectangle; <see langword="false" /> otherwise.
+            </returns>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.#ctor(System.Double,yWorks.Graph.Styles.INodeStyle)">
+      <summary>
+              Initializes a new instance of the <see cref="T:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator" /> class with the given virtualization
+              threshold and wrapped style.
+            </summary>
+      <param name="threshold">The zoom level below which virtualization is turned off.</param>
+      <param name="style">The wrapped style.</param>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.Style">
+      <summary>
+              Gets or sets the wrapped style.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.Threshold">
+      <summary>
+              Gets or sets the zoom level below which virtualization should be turned off.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.IsVisible(yWorks.Controls.ICanvasContext,yWorks.Geometry.RectD,yWorks.Graph.INode)">
+      <summary>
+              Determines whether the visualization for the specified node is visible in the context.
+            </summary>
+      <remarks>
+        <para>
+                This method is called in response to a <see cref="M:yWorks.Controls.IVisibilityTestable.IsVisible(yWorks.Controls.ICanvasContext,yWorks.Geometry.RectD)" />
+                call to the instance that has been queried from the <see cref="!:Renderer" />.
+              </para>
+        <para>
+                This implementation returns <see langword="true" /> if the zoom level is below <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.Threshold" /> and
+                otherwise delegates to the wrapped style.
+              </para>
+      </remarks>
+      <param name="context">The canvas context.</param>
+      <param name="rectangle">The clipping rectangle.</param>
+      <param name="node">The node to which this style instance is assigned.</param>
+      <returns>
+        <see langword="true" /> if either the zoom level is below <see cref="P:ArcGIS.Desktop.Intelligence.yFiles.Styles.Virtualization.VirtualizationNodeStyleDecorator.Threshold" /> or the node is visible in the
+              clipping rectangle; <see langword="false" /> otherwise.
+            </returns>
+    </member>
+    <member name="T:ArcGIS.Desktop.Internal.Intelligence.Models.LinkChart.LinkChartDocumentInfo">
+      <summary>
+            Basic information for the link chart.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.Internal.Intelligence.Models.LinkChart.LinkChartDocumentInfo.#ctor">
+      <summary>
+            Constructor for link chart document info.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Models.LinkChart.LinkChartDocumentInfo.LinkChartUri">
+      <summary>
+            The Uri for the link chart.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.Internal.Intelligence.Models.LinkChart.LinkChartDocumentInfo.BuildNumber">
+      <summary>
+            Build number this link chart was created on.
+            </summary>
+    </member>
+    <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+      <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+      <summary>
+            CreateInstance
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            GetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            SetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+      <summary>
+            CreateDelegate
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+      <summary>
+            AddEventHandler
+            </summary>
+    </member>
+  </members>
+</doc>

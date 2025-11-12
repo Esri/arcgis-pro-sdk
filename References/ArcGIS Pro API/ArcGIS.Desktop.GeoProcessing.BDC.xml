@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>ArcGIS.Desktop.GeoProcessing.BDC</name>
+  </assembly>
+  <members>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.BDCDataGrid.MouseWheelHandlerCmd">
+      <summary>
+            Gets or sets the ZoomUpCmd property.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ConfigureBDCView">
+      <summary>
+            Interaction logic for ConfigureBDCView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ConfigureBDCView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ConnectBDCView">
+      <summary>
+            Interaction logic for ConnectBDeView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ConnectBDCView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ReviewBigDataConnectionView">
+      <summary>
+            Interaction logic for ReviewBigDataConnectionView.xaml
+            </summary>
+      <summary>
+            ReviewBigDataConnectionView
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Pages.ReviewBigDataConnectionView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.BDCModule.Current">
+      <summary>
+            singleton instance
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.BDCWizardDockPaneView">
+      <summary>
+            Interaction logic for BDCWizardDockPaneView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.BDCWizardDockPaneView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFieldsView">
+      <summary>
+            Interaction logic for BDCFieldsView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFieldsView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFileView">
+      <summary>
+            Interaction logic for BDCFileView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFileView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFilterView">
+      <summary>
+            Interaction logic for BDCFilterView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCFilterView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCGeometryView">
+      <summary>
+            Interaction logic for BDCGeometryView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCGeometryView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCTimeView">
+      <summary>
+            Interaction logic for BDCTimeView.xaml
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.Editor.BDCTimeView.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.LocalResources.BDCResources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.LocalResources.BDCResources.GetResourceString(System.String,System.String[])">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.LocalResources.BDCResources.BDC_AddField">
+      <summary>
+              Returns the formatted resource string.
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.MetroWindows.DuplicateDatasetPopup">
+      <summary>
+            Interaction logic for DuplicateDataset.xaml
+            </summary>
+      <summary>
+            DuplicateDatasetPopup
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.MetroWindows.DuplicateDatasetPopup.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.MetroWindows.PreviewDatasetPopup">
+      <summary>
+             Interaction logic for PreviewBDCFloatingView.xaml
+             </summary>
+      <summary>
+            PreviewDatasetPopup
+            </summary>
+    </member>
+    <member name="M:ArcGIS.Desktop.GeoProcessing.BDC.MetroWindows.PreviewDatasetPopup.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:ArcGIS.Desktop.GeoProcessing.BDC.Properties.Resources">
+      <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.Properties.Resources.ResourceManager">
+      <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.Properties.Resources.Culture">
+      <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+    </member>
+    <member name="P:ArcGIS.Desktop.GeoProcessing.BDC.Properties.Resources.String1">
+      <summary>
+              Looks up a localized string similar to .
+            </summary>
+    </member>
+    <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+      <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+      <summary>
+            CreateInstance
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            GetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+      <summary>
+            SetPropertyValue
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+      <summary>
+            CreateDelegate
+            </summary>
+    </member>
+    <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+      <summary>
+            AddEventHandler
+            </summary>
+    </member>
+  </members>
+</doc>

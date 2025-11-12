@@ -851,15 +851,6 @@
                   dockWith="esri_core_projectDockPane">
           <content className="CreateCircuitView" />
         </dockPane>
-        <dockPane id="esri_networkanalysis_utility_ModifyCircuitsPane"
-                  caption="Modify Circuits"
-                  className="ModifyCircuitsViewModel"
-                  dock="group"
-                  initiallyVisible="false"
-                  delayLoadMessage="Open a map to get started."
-                  dockWith="esri_core_projectDockPane">
-          <content className="ModifyCircuitView" />
-        </dockPane>
       </dockPanes>
 
       <panes>

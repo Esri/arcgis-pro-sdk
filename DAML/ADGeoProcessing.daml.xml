@@ -43,8 +43,6 @@
 
       <shortcut refID="esri_modelbuilder_autoLayoutDiagramButton" flags="Ctrl+Shift" key="A" />
       <shortcut refID="esri_modelbuilder_fitToWindowButton" flags="Ctrl+Shift" key="F" />
-      <shortcut refID="esri_modelbuilder_ZoomStepUp" flags="Ctrl" key="OemPlus"/>
-      <shortcut refID="esri_modelbuilder_ZoomStepDown" flags="Ctrl" key="OemMinus" />
 
       <shortcut refID="esri_modelbuilder_selectAllButton" flags="Ctrl" key="A" />
       <shortcut refID="esri_modelbuilder_selectAllGroupButton" flags="Ctrl+Alt" key="A" />
@@ -619,6 +617,9 @@
           </filter>
         </content>
       </component>
+      <component id="GPKnowledgeGraphLayer">
+        <content filter="esri_browseDialogFilters_gp_all" />
+      </component>
     </insertCategory>
 
     <!--default project tools -->
@@ -687,6 +688,108 @@
         </content>
       </component>
     </insertCategory>
+    <!--
+      Portal Gallery
+      component@id - matching suffix <customControl refID=esri_geoprocessingAnalysisButton_@id>
+      component.content - gallery tab definition
+      component.content@portal - portal matching
+      component.content.tool@group - toolset name, this name is localizable!
+      component.content.tool@name - <alias>.<tool> fully qualified system tool name
+    -->
+    <insertCategory id="esri_gpPortalGalleryTools">
+      <!--GeoAnalytics Tools -->
+      <component id="feature" >
+        <content portal="geoanalytics">
+          <tool group="Data Enrichment" name="geoanalytics.CalculateMotionStatistics"/>
+          <tool group="Manage Data" name="geoanalytics.ClipLayer"/>
+          <tool group="Manage Data" name="geoanalytics.DissolveBoundaries"/>
+          <tool group="Manage Data" name="geoanalytics.MergeLayers"/>
+          <tool group="Manage Data" name="geoanalytics.CalculateField"/>
+          <tool group="Manage Data" name="geoanalytics.AppendData"/>
+          <tool group="Manage Data" name="geoanalytics.CopyToDataStore"/>
+          <tool group="Manage Data" name="geoanalytics.OverlayLayers"/>
+
+          <tool group="Use Proximity" name="geoanalytics.SnapTracks"/>
+          <tool group="Use Proximity" name="geoanalytics.GroupByProximity"/>
+          <tool group="Use Proximity" name="geoanalytics.CreateBuffers"/>
+          <tool group="Use Proximity" name="geoanalytics.TraceProximityEvents"/>
+
+          <tool group="Find Locations" name="geoanalytics.FindSimilarLocations"/>
+          <tool group="Find Locations" name="geoanalytics.FindDwellLocations"/>
+          <tool group="Find Locations" name="geoanalytics.DetectIncidents"/>
+
+          <tool group="Analyze Patterns" name="geoanalytics.GWR"/>
+          <tool group="Analyze Patterns" name="geoanalytics.Forest"/>
+          <tool group="Analyze Patterns" name="geoanalytics.CreateSpaceTimeCube"/>
+          <tool group="Analyze Patterns" name="geoanalytics.CalculateDensity"/>
+          <tool group="Analyze Patterns" name="geoanalytics.FindPointClusters"/>
+          <tool group="Analyze Patterns" name="geoanalytics.GeneralizedLinearRegression"/>
+          <tool group="Analyze Patterns" name="geoanalytics.FindHotSpots"/>
+
+          <tool group="Summarize Data" name="geoanalytics.ReconstructTracks"/>
+          <tool group="Summarize Data" name="geoanalytics.DescribeDataset"/>
+          <tool group="Summarize Data" name="geoanalytics.SummarizeCenterAndDispersion"/>
+          <tool group="Summarize Data" name="geoanalytics.SummarizeAttributes"/>
+          <tool group="Summarize Data" name="geoanalytics.AggregatePoints"/>
+          <tool group="Summarize Data" name="geoanalytics.SummarizeWithin"/>
+          <tool group="Summarize Data" name="geoanalytics.JoinFeatures"/>
+
+          <tool group="Manage Data" portal="analysis" name="sfa.OverlayLayers"/>
+          <tool group="Manage Data" portal="analysis" name="sfa.DissolveBoundaries"/>
+          <tool group="Manage Data" portal="analysis" name="sfa.MergeLayers"/>
+          <tool group="Use Proximity" portal="analysis" name="sfa.CreateBuffers"/>
+          <tool group="Analyze Patterns" portal="analysis" name="sfa.InterpolatePoints"/>
+          <tool group="Analyze Patterns" portal="analysis" name="sfa.FindHotSpots"/>
+          <tool group="Analyze Patterns" portal="analysis" name="sfa.CalculateDensity"/>
+          <tool group="Summarize Data" portal="analysis" name="sfa.AggregatePoints"/>
+          <tool group="Summarize Data" portal="analysis" name="sfa.SummarizeWithin"/>
+          <tool group="Summarize Data" portal="analysis" name="sfa.SummarizeNearby"/>
+        </content>
+      </component>
+      <!--Raster Analysis Tools -->
+      <component id="raster" >
+        <content portal="rasterAnalytics" >
+          <tool group="Analyze Terrain" name="ra.SurfaceParameters"/>
+          <tool group="Analyze Terrain" name="ra.CreateViewshed"/>
+          <tool group="Use Proximity (Legacy)" name="ra.DetermineTravelCostPathsToDestinations"/>
+          <tool group="Use Proximity (Legacy)" name="ra.DetermineOptimumTravelCostNetwork"/>
+          <tool group="Use Proximity (Legacy)" name="ra.DetermineTravelCostPathAsPolyline"/>
+          <tool group="Use Proximity (Legacy)" name="ra.CalculateDistance"/>
+          <tool group="Use Proximity (Legacy)" name="ra.CalculateTravelCost"/>
+          <tool group="Hydrology" name="ra.StreamLink"/>
+          <tool group="Hydrology" name="ra.Fill"/>
+          <tool group="Hydrology" name="ra.FlowDirection"/>
+          <tool group="Hydrology" name="ra.Watershed"/>
+          <tool group="Hydrology" name="ra.FlowAccumulation"/>
+          <tool group="Hydrology" name="ra.FlowDistance"/>
+          <tool group="Deep Learning" name="ra.DetectObjectsUsingDeepLearning"/>
+          <tool group="Deep Learning" name="ra.ClassifyPixelsUsingDeepLearning"/>
+          <tool group="Deep Learning" name="ra.ClassifyObjectsUsingDeepLearning"/>
+          <tool group="Manage Data" name="ra.ConvertFeatureToRaster"/>
+          <tool group="Manage Data" name="ra.ConvertRasterToFeature"/>
+          <tool group="Use Proximity" name="ra.OptimalPathAsLine"/>
+          <tool group="Use Proximity" name="ra.OptimalPathAsRaster"/>
+          <tool group="Use Proximity" name="ra.DistanceAccumulation"/>
+          <tool group="Use Proximity" name="ra.DistanceAllocation"/>
+          <tool group="Use Proximity" name="ra.OptimalRegionConnections"/>
+          <tool group="Generalize" name="ra.Nibble"/>
+          <tool group="Analyze Patterns" name="ra.InterpolatePoints"/>
+          <tool group="Analyze Patterns" name="ra.CalculateDensity"/>
+          <tool group="Summarize Data" name="ra.ZonalStatisticsAsTable"/>
+          <tool group="Summarize Data" name="ra.SummarizeRasterWithin"/>
+        </content>
+      </component>
+      <!-- Ready To Use Tools -->
+      <component id="readytouse">
+        <content portal="agolservices" >
+          <tool group="Hydrology" name="agolservices.Watershed"/>
+          <tool group="Hydrology" name="agolservices.TraceDownstream"/>
+          <tool group="Elevation" name="agolservices.Profile"/>
+          <tool group="Elevation" name="agolservices.Viewshed"/>
+          <tool group="Elevation" name="agolservices.SummarizeElevation"/>
+        </content>
+      </component>
+    </insertCategory>
 
     <!-- Cad Gallery Items -->
     <insertCategory id="esri_gpDefaultCadGalleryTools">
@@ -723,39 +826,340 @@
     <!-- AI Assistants Extensions -->
     <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_geoprocessing_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.GeoProcessingAssistantExtension">
-        <content searchDescription="This skill class helps users create, retrieve, and open tools for data processing">
-          <aiAssistantFunction name="SearchTool" searchDescription="Search through geoprocessing tools."/>
-          <aiAssistantFunction name="PredictTool" searchDescription="Predict the next geoprocessing tools."/>
-          <aiAssistantFunction name="OpenTool" searchDescription="Open a geoprocessing tool for the user to help them process their data."/>
-          <aiAssistantFunction name="ToolIdToParameters" searchDescription="Get geoprocessing tool parameters."/>
-          <aiAssistantFunction name="CreateToolBox" searchDescription="create a toolbox. A toolbox is used to store geoprocessing script and model tools for later use.  Scripts and model tools are automated processes."/>
+        <content extensionCategoryRefID="ai_geoprocessing_category">
+          <searchDescriptions>
+            <searchDescription>create a toolbox data processing</searchDescription>
+            <searchDescription>open tools for data processing</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="SuggestNextTool">
+            <searchDescriptions>
+              <searchDescription>Suggest the next relevant geoprocessing tools.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="CreateToolBox">
+            <searchDescriptions>
+              <searchDescription>Create a toolbox. A toolbox is used to store geoprocessing script and model tools for later use. Scripts and model tools are automated processes.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
       <insertComponent id="esri_modelbuilder_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilderAssistantExtension">
-        <content searchDescription="Create, retrieve and open model tools. A model can automating data processing">
-          <aiAssistantFunction name="CreateNewModel" searchDescription="create a model within a toolbox.  Model tools are no code automated workflows used for storing tasks."/>
+        <content extensionCategoryRefID="ai_geoprocessing_category">
+          <searchDescriptions>
+            <searchDescription>Open, edit, or create a new ModelBuilder model.</searchDescription>
+            <searchDescription>Save a ModelBuilder model.</searchDescription>
+            <!--<searchDescription>Run a ModelBuilder model.</searchDescription>-->
+            <searchDescription>Add geoprocessing tools to a model.</searchDescription>
+            <searchDescription>Add map layers to a model.</searchDescription>
+            <searchDescription>Add data to a model.</searchDescription>
+            <searchDescription>Set geoprocessing tool parameters.</searchDescription>
+            <searchDescription>Validate a ModelBuilder model.</searchDescription>
+            <searchDescription>Add a ModelBuilder tool to a model.</searchDescription>
+            <searchDescription>Add a ModelBuilder iterator tool to a model.</searchDescription>
+            <searchDescription>Add a ModelBuilder utility tool to a model.</searchDescription>
+            <searchDescription>Add a ModelBuilder logical tool to a model.</searchDescription>
+          </searchDescriptions>
+          <dependencies>
+            <dependency refID="esri_search_assistant_extension|SearchOrBrowseChildren"/>
+          </dependencies>
+          <aiAssistantFunction name="OpenEditCreateModel">
+            <searchDescriptions>
+              <searchDescription>Open a model.</searchDescription>
+              <searchDescription>Edit a model.</searchDescription>
+              <searchDescription>Create a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SaveModel" condition="">
+            <searchDescriptions>
+              <searchDescription>Save a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <!--<aiAssistantFunction name="RunModel" condition="">
+            <searchDescriptions>
+              <searchDescription>Run a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>-->
+          <aiAssistantFunction name="AddLayerOrTablesToModel" condition="">
+            <searchDescriptions>
+              <searchDescription>Add map layers to a model.</searchDescription>
+              <searchDescription>Add map tables to a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AddDataToModel" condition="">
+            <searchDescriptions>
+              <searchDescription>Add data to a ModelBuilder model.</searchDescription>
+              <searchDescription>Add data to a model.</searchDescription>
+              <searchDescription>Add feature classes to a model.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_search_assistant_extension|SearchOrBrowseChildren"/>
+            </dependencies>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ValidateModel" condition="">
+            <searchDescriptions>
+              <searchDescription>Validate a ModelBuilder model.</searchDescription>
+              <searchDescription>Validate a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
       <insertComponent id="esri_rasteranalysis_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.RasterAnalysisAssistantExtension">
-        <content searchDescription="This skill class focuses on hydrological tasks, such as creating conditioned DEMs and analyzing flow direction and accumulation, returning relevant tool Id for each task">
-          <aiAssistantFunction name="ConditionDEM" searchDescription="serendipity serendipity"/>
-          <!-- <aiAssistantFunction name="IdentifySinks" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="FlowDirection" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="FlowAccumulation" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="DrainageBasins" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="WatershedsDetermine" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="StreamNetwork" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="AssignStreamOrder" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="AssignStreamLink" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="CalculateFlowLength" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="SnapPourPointsToStream" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="StorageCapacity" searchDescription="serendipity serendipity"/>
-          <aiAssistantFunction name="DownslopeDistance" searchDescription="serendipity serendipity"/> -->
+        <content extensionCategoryRefID="ai_raster_analysis_category">
+          <searchDescriptions>
+            <searchDescription>This skill class focuses on hydrological tasks, such as creating conditioned DEMs and analyzing flow direction and accumulation, returning relevant tool Id for each task</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="ConditionDEM">
+            <searchDescriptions>
+              <searchDescription>serendipity serendipity</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <!-- <aiAssistantFunction name="IdentifySinks">
+            <searchDescriptions>
+              <searchDescription>Identify sinks in a raster dataset.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="FlowDirection">
+            <searchDescriptions>
+              <searchDescription>Calculate the flow direction of water across a surface.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="FlowAccumulation">
+            <searchDescriptions>
+              <searchDescription>Calculate the accumulation of flow into each cell.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="DrainageBasins">
+            <searchDescriptions>
+              <searchDescription>Determine drainage basins from flow direction.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="WatershedsDetermine">
+            <searchDescriptions>
+              <searchDescription>Determine watersheds based on flow accumulation.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="StreamNetwork">
+            <searchDescriptions>
+              <searchDescription>Create a stream network from flow direction.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AssignStreamOrder">
+            <searchDescriptions>
+              <searchDescription>Assign stream order to the stream network.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AssignStreamLink">
+            <searchDescriptions>
+              <searchDescription>Assign unique identifiers to stream segments.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="CalculateFlowLength">
+            <searchDescriptions>
+              <searchDescription>Calculate the length of flow paths.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SnapPourPointsToStream">
+            <searchDescriptions>
+              <searchDescription>Snap pour points to the nearest stream.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="StorageCapacity">
+            <searchDescriptions>
+              <searchDescription>Calculate the storage capacity of a reservoir.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="DownslopeDistance">
+            <searchDescriptions>
+              <searchDescription>Calculate the distance downslope to the nearest stream.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction> -->
         </content>
       </insertComponent>
-    </updateCategory>
-    <!-- AI Assistants Extensions -->
 
+    </updateCategory>
+    <!-- AI Assistants Code Extensions -->
+    <updateCategory refID="esri_ai_assistant_code_category">
+      <insertComponent id="esri_geoprocessing_code_arcpy" className="ArcGIS.Desktop.Internal.GeoProcessing.CodeAssistantExtension">
+        <content skill="Python" name="arcpy" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript16">
+          <description>Generate Python code snippets using arcpy module</description>
+          <description>Write a Python function</description>
+          <description>Write Python scripts for geoprocessing tools</description>
+          <description>Assist with Python scripting and arcpy</description>
+          <description>arcpy module API</description>
+          <description>Python script</description>
+        </content>
+        </insertComponent>
+      </updateCategory>
+
+
+        <!-- List of DataType visible in ToolboxPropertiesViewModel->DataTypesViewModel-->
+    <insertCategory id="esri_ParameterDataTypes">
+      <component id="analysis_cell_size"/>
+      <component id="DEAddressLocator"/>
+      <!--component id="DEArcInfoTable"/-->
+      <component id="DEBimFileWorkspace"/>
+      <component id="DECadastralFabric"/>
+      <component id="DECadDrawingDataset"/>
+      <component id="DECatalogRoot"/>
+      <!--component id="DECoverage"/-->
+      <component id="DECoverageFeatureClass"/>
+      <component id="DEDatasetType"/>
+      <component id="DEDbaseTable"/>
+      <component id="DEDiskConnection"/>
+      <component id="DEFeatureClass"/>
+      <component id="DEFeatureDataset"/>
+      <component id="DEFile"/>
+      <component id="DEFolder"/>
+      <component id="DEGeoDataServer"/>
+      <component id="DEGeoDatasetType"/>
+      <component id="DEGeometricNetwork"/>
+      <component id="DEGlobeServer"/>
+      <component id="DEGPServer"/>
+      <component id="DEImageServer"/>
+      <component id="DELasDataset"/>
+      <component id="DELayer"/>
+      <component id="DEMapDocument"/>
+      <component id="DEMapServer"/>
+      <component id="DEMosaicDataset"/>
+      <component id="DENetworkDataset"/>
+      <component id="DEParcelDataset"/>
+      <component id="DEPrjFile"/>
+      <component id="DERasterBand"/>
+      <component id="DERasterCatalog"/>
+      <component id="DERasterDataset"/>
+      <component id="DERelationshipClass"/>
+      <component id="DERemoteDatabaseFolder"/>
+      <component id="DEServerConnection"/>
+      <component id="DEShapeFile"/>
+      <component id="DESpatialReferencesFolder"/>
+      <component id="DETable"/>
+      <component id="DETextFile"/>
+      <component id="DETin"/>
+      <component id="DETool"/>
+      <component id="DEToolbox"/>
+      <component id="DETopology"/>
+      <component id="DETraceNetwork"/>
+      <component id="DEType"/>
+      <component id="DEUtilityNetwork"/>
+      <component id="DEVPFCoverage"/>
+      <component id="DEVPFTable"/>
+      <component id="DEWCSCoverage"/>
+      <component id="DEWMSMap"/>
+      <!--component id="DEWMTS"/-->
+      <component id="DEWorkspace"/>
+      <component id="Field"/>
+      <component id="GP3DADecimate"/>
+      <component id="GP3DObjectFeatureLayer"/>
+      <component id="GP3DTilesLayer"/>
+      <component id="GPAnnotationLayer"/>
+      <component id="GPArcInfoItem"/>
+      <component id="GPArealUnit"/>
+      <component id="GPBoolean"/>
+      <component id="GPBuildingDisciplineLayer"/>
+      <component id="GPBuildingLayer"/>
+      <component id="GPBuildingSceneDisciplineLayer"/>
+      <component id="GPBuildingSceneLayer"/>
+      <component id="GPCadastralFabricLayer"/>
+      <component id="GPCalculatorExpression"/>
+      <component id="GPCatalogLayer"/>
+      <component id="GPCellSizeXY"/>
+      <component id="GPCompositeLayer"/>
+      <component id="GPCoordinateSystem"/>
+      <component id="GPDataFile"/>
+      <component id="GPDate"/>
+      <component id="GPDiagramLayer"/>
+      <component id="GPDimensionLayer"/>
+      <component id="GPDouble"/>
+      <component id="GPElevationSurfaceLayer"/>
+      <component id="GPEncryptedString"/>
+      <component id="GPEnvelope"/>
+      <component id="GPEvaluationScale"/>
+      <component id="GPExtent"/>
+      <component id="GPFeatureLayer"/>
+      <component id="GPFeatureRecordSetLayer"/>
+      <component id="GPFieldInfo"/>
+      <component id="GPFieldMapping"/>
+      <component id="GPGALayer"/>
+      <component id="GPGASearchNeighborhood"/>
+      <component id="GPGAValueTable"/>
+      <component id="GPGraph"/>
+      <component id="GPGraphDataTable"/>
+      <component id="GPGraphicsLayer"/>
+      <component id="GPGroupLayer"/>
+      <component id="GPINFOExpression"/>
+      <component id="GPInternetTiledLayer"/>
+      <component id="GPKMLLayer"/>
+      <component id="GPKnowledgeGraphLayer"/>
+      <component id="GPLasDatasetLayer"/>
+      <component id="GPLayer"/>
+      <component id="GPLayout"/>
+      <component id="GPLine"/>
+      <component id="GPLinearUnit"/>
+      <component id="GPLong"/>
+      <component id="GPMap"/>
+      <component id="GPMapServerLayer"/>
+      <component id="GPMDomain"/>
+      <component id="GPMosaicLayer"/>
+      <component id="GPNAHierarchySettings"/>
+      <component id="GPNALayer"/>
+      <component id="GPNetworkDatasetLayer"/>
+      <component id="GPNetworkDataSource"/>
+      <component id="GPOrientedImageryLayer"/>
+      <component id="GPPairwiseWeightsTable"/>
+      <component id="GPParcelLayer"/>
+      <component id="GPPoint"/>
+      <component id="GPPolygon"/>
+      <component id="GPRandomNumberGenerator"/>
+      <component id="GPRasterBuilder"/>
+      <component id="GPRasterCalculatorExpression"/>
+      <component id="GPRasterCatalogLayer"/>
+      <component id="GPRasterDataLayer"/>
+      <component id="GPRasterFormulated"/>
+      <component id="GPRasterLayer"/>
+      <component id="GPRecordSet"/>
+      <component id="GPReport"/>
+      <component id="GPRouteMeasureEventProperties"/>
+      <component id="GPSACellSize"/>
+      <component id="GPSAExtractValues"/>
+      <component id="GPSAFuzzyFunction"/>
+      <component id="GPSAGDBEnvCompression"/>
+      <component id="GPSAGDBEnvPyramid"/>
+      <component id="GPSAGDBEnvStatistics"/>
+      <component id="GPSAGDBEnvTileSize"/>
+      <component id="GPSAHorizontalFactor"/>
+      <component id="GPSANeighborhood"/>
+      <component id="GPSARadius"/>
+      <component id="GPSARemap"/>
+      <component id="GPSASemiVariogram"/>
+      <component id="GPSATimeConfiguration"/>
+      <component id="GPSATopoFeatures"/>
+      <component id="GPSATransformationFunction"/>
+      <component id="GPSAVerticalFactor"/>
+      <component id="GPSAWeightedOverlayTable"/>
+      <component id="GPSAWeightedSum"/>
+      <component id="GPSceneServiceLayer"/>
+      <component id="GPSpatialReference"/>
+      <component id="GPSQLExpression"/>
+      <component id="GPString"/>
+      <component id="GPStringHidden"/>
+      <component id="GPTableView"/>
+      <component id="GPTerrainLayer"/>
+      <component id="GPTimeUnit"/>
+      <component id="GPTinLayer"/>
+      <component id="GPTopologyLayer"/>
+      <component id="GPTraceNetworkLayer"/>
+      <component id="GPTrajectoryLayer"/>
+      <component id="GPType"/>
+      <component id="GPUtilityNetworkLayer"/>
+      <component id="GPVariant"/>
+      <component id="GPVectorLayer"/>
+      <component id="GPVoxelLayer"/>
+      <component id="GPXYDomain"/>
+      <component id="GPZDomain"/>
+      <component id="Index"/>
+      <component id="NAClassFieldMap"/>
+      <component id="NetworkTravelMode"/>
+    </insertCategory>
   </categories>
 
   <modules>
@@ -778,9 +1182,7 @@
           <group refID="esri_modelbuilder_linkGroup" />
           <group refID="esri_modelbuilder_orientationGroup"/>
           <group refID="esri_modelbuilder_layoutGroup"/>
-          <group refID="esri_modelbuilder_routingGroup"/>
           <group refID="esri_modelbuilder_labelTextFormatGroup"/>
-          <!--<group refID="esri_modelbuilder_templateGroup"/>-->
         </tab>
 
         <tab id="esri_geoprocessing_MBHomeTab" caption="ModelBuilder" insert="before" placeWith="esri_core_insertTab" condition="esri_geoprocessing_anyMBPane" keytip="MB">
@@ -812,19 +1214,19 @@
         </tab>-->
 
       </tabs>
-      
+
       <tabGroups>
         <tabGroup id="esri_geoprocessing_GPTabGroup" caption="Manage"/>
         <tabGroup caption="ModelBuilder" id="esri_geoprocessing_MBTabGroup" />
       </tabGroups>
 
       <groups>
-        <group id="esri_geoprocessing_container_ProjectGroup" caption="Project">
+        <group id="esri_geoprocessing_container_ProjectGroup" caption="Project" smallImage="ArcGISProject16">
           <button refID="esri_geoprocessing_Toolbox_MakeDefaultButton" size="large"/>
           <menu refID="esri_geoprocessing_insertMenu" size="large"/>
         </group>
 
-        <group id="esri_geoprocessing_container_CreateGroup" caption="Create">
+        <group id="esri_geoprocessing_container_CreateGroup" caption="Create" smallImage="GenericNewSparkleLarge16">
           <button refID="esri_geoprocessing_Add_ModelTool" size="large" />
           <button refID="esri_geoprocessing_Add_ScriptTool" size="large" />
           <button refID="esri_geoprocessing_Add_Toolset" size="large"/>
@@ -849,9 +1251,8 @@
           <customControl refID="esri_geoprocessingAnalysisButton_raster" size="neverMiddle"/>
         </group>
         <group id="esri_geoprocessing_analysis2" caption="Workflows" smallImage="GeoprocessingTool16">
-          <button refID="esri_dataengineering_viewOutlineStatisticsButton" size="neverSmall"/>
-          <!--<splitButton refID="esri_geoprocessing_suitabilityModelSplitButton" size="neverSmall"/>-->
-          <button refID="esri_geoprocessing_suitabilityButton" size="neverSmall"/>
+          <button refID="esri_dataengineering_viewOutlineStatisticsButton_Analysis" size="neverSmall"/>
+          <splitButton refID="esri_geoprocessing_suitabilityModelSplitButton" size="neverSmall"/>
           <button refID="esri_defense_showVisibilityDockPane" size="neverSmall"/>
           <splitButton refID="esri_mapping_interactiveAnalysisSplitButton" size="neverSmall"/>
           <gallery refID="esri_mapping_addSimulationGallery" size="neverSmall"/>
@@ -925,7 +1326,7 @@
           <customControl refID="esri_modelbuilder_levelSlider" size="small"/>
           <customControl refID="esri_modelbuilder_subGraphSlider"  size="small"/>
         </group>
-        
+
         <group id="esri_modelbuilder_linkGroup" caption="Links" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane">
           <toolPalette refID="esri_modelbuilder_linkShapeToolPalette" size="large"/>
           <toolbar refID="esri_modelbuilder_links"/>
@@ -938,17 +1339,12 @@
         </group>
 
         <group id="esri_modelbuilder_layoutGroup" caption="Layout" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane">
-          <button refID="esri_modelbuilder_autoLayoutDiagramButton" separator="true"/>
+          <button refID="esri_modelbuilder_autoLayoutDiagramButton"/>
 
           <comboBox refID="esri_modelbuilder_subGraphPlacement" size="large"/>
           <comboBox refID="esri_modelbuilder_groupGraphPlacement" size="large"/>
         </group>
 
-        <group id="esri_modelbuilder_routingGroup" caption="Routing" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane">
-          <button refID="esri_modelbuilder_useGridRouter" size="small" />
-          <button refID="esri_modelbuilder_showGridCheckbox" size="small" />
-          <menu refID="esri_modelbuilder_gridSettingsPallette" size="large"/>
-        </group>
 
         <group id="esri_python_savegroup" caption="Notebook" condition="esri_geoprocessing_proNotebookPane">
           <button refID="esri_pnotebook_New" size="large"/>
@@ -966,7 +1362,7 @@
         <group id="esri_geoprocessing_bimToolsGroup" caption="Tools" extendedCaption="Geoprocessing tools for BIM files" smallImage="GeoprocessingTool16" condition="esri_mapping_onlyBimCategoryLayerSelectedCondition">
           <gallery refID="esri_bimToolsGallery" inline="true"/>
         </group>
-        
+
         <!-- Linear Referencing Group -->
         <group id="esri_geoprocessing_linearReferencingGroup" caption="Analysis" launcherButtonID="esri_geoprocessing_openGPOptionsButton" launcherKeytip="GO"
                smallImage="GeoprocessingTool16">
@@ -981,7 +1377,7 @@
 
       <subgroups>
         <!-- Linear Referencing Subgroups -->
-        
+
         <subgroup id="esri_geoprocessing_linearReferencingSubgroup">
           <button refID="esri_linearReferencing_toolsSplitButton"/>
         </subgroup>
@@ -1005,7 +1401,7 @@
             <button refID="esri_modelbuilder_labelTextDecreaseSizeButton" size="small" />
           </group>
         </toolbar>
-        
+
         <toolbar id="esri_modelbuilder_links">
           <group>
             <button refID="esri_modelbuilder_enforceLinkFlow" />
@@ -1040,27 +1436,6 @@
             <disabledText></disabledText>
           </tooltip>
         </checkBox>
-        <checkBox id="esri_modelbuilder_showGridCheckbox" className="MBShowGrid" keytip="SG" caption="Show Grid" loadOnClick="false" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Show Grid">
-            Checked - The Layout shows reference grid.
-            <disabledText></disabledText>
-          </tooltip>
-        </checkBox>
-        <checkBox id="esri_modelbuilder_useGridRouter" className="MBUseGridRouter" keytip="GR" caption="Use Grid Router" loadOnClick="false"  condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Use Grid Router">
-            Checked - The layout uses a grid router to arrange model elements. This may slow layout performance depending on the number of nodes, connectors and the size of the model.
-            Unchecked - The layout uses the default Quick Router. This is good for most of the cases and layout performance is faster. This is the recommended setting.
-            <disabledText></disabledText>
-          </tooltip>
-        </checkBox>
-
-        <customControl id="esri_modelbuilder_gridRouterSettings" caption="Grid Size" keytip="GS" className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilder.Ribbon.GridRouterSettingsViewModel" extendedCaption="Set the value is used to set the size of the routing grid." loadOnClick="false" disableIfBusy="false"  condition="esri_geoprocessing_modelBuilderPane">
-          <content className="ArcGIS.Desktop.Internal.GeoProcessing.Controls.GridRouterSettingsControl"/>
-          <tooltip heading="Grid Size">
-            The value is used to set the size of the routing grid. A smaller grid size will generate better results, but might slow layout performance depending on the number of nodes, connectors and the size of the model.<disabledText></disabledText>
-          </tooltip>
-        </customControl>
-
 
         <labelControl id="esri_modelbuilder_elementLabel" caption="Element" hasTwoLines="false" smallImage="ModelBuilderLinkBezier16" largeImage="ModelBuilderLinkBezier32" />
         <customControl id="esri_modelbuilder_elementSlider" caption="Element" keytip="ES" extendedCaption="Set distance between tools, variables, connectors and groups."
@@ -1822,8 +2197,8 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Create a new empty group or add selected elements to a new group.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_ungroupButton" caption="UnGroup" extendedCaption="ModelBuilder" keytip="UG" className="esri_geoprocessing_module:Commands.UnGroup" smallImage="ModelBuilderUngroup16" largeImage="ModelBuilderUngroup32" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="UnGroup">
+        <button id="esri_modelbuilder_ungroupButton" caption="Ungroup" extendedCaption="ModelBuilder" keytip="UG" className="esri_geoprocessing_module:Commands.UnGroup" smallImage="ModelBuilderUngroup16" largeImage="ModelBuilderUngroup32" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Ungroup">
             Dissolve group around elements.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
@@ -2147,9 +2522,14 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Rename.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_createVariableButton" caption="Variable" extendedCaption="ModelBuilder" keytip="AV" className="esri_geoprocessing_module:Commands.CreateModelVariable" helpContextID="" smallImage="ModelBuilderVariable16" largeImage="ModelBuilderVariable32" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_createVariableButton" caption="Create Variable" extendedCaption="ModelBuilder" keytip="AV" className="esri_geoprocessing_module:Commands.CreateModelVariable" helpContextID="" smallImage="ModelBuilderVariable16" largeImage="ModelBuilderVariable32" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Create Variable">
             Variables are names that store values which can be changed. These values can be layers, dataset paths, numbers, strings, or many other things.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_addToolsButton" hidden="true" caption="Add Tools" extendedCaption="ModelBuilder" keytip="AT" className="esri_geoprocessing_module:Commands.ShowAddToolsToModel" helpContextID="" smallImage="GeoprocessingTool16" largeImage="GeoprocessingTool32" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Add Tools">
+            Add tools to model.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_createVariableButton" hidden="true" caption="Create Variable..." extendedCaption="ModelBuilder" keytip="AV" className="esri_geoprocessing_module:Commands.CreateVariableElement" helpContextID="" smallImage="ModelBuilderVariable16" largeImage="ModelBuilderVariable32" condition="esri_geoprocessing_modelBuilderPane">
@@ -2417,8 +2797,8 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Takes the Group and all dependent elments and creates a submodel out of the group.
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_dissolveGroup" hidden="true" className="esri_geoprocessing_module:Commands.UnGroup" caption="UnGroup" extendedCaption="ModelBuilder" helpContextID="" smallImage="ModelBuilderUngroup16" largeImage="ModelBuilderUngroup32" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="UnGroup">
+        <button id="esri_modelbuilder_dissolveGroup" hidden="true" className="esri_geoprocessing_module:Commands.UnGroup" caption="Ungroup" extendedCaption="ModelBuilder" helpContextID="" smallImage="ModelBuilderUngroup16" largeImage="ModelBuilderUngroup32" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Ungroup">
             Dissolve group around elements.
           </tooltip>
         </button>
@@ -2707,15 +3087,6 @@ You can search for a specific tool, see a list of favorite and recently run tool
       </palettes>
 
       <menus>
-        <menu id="esri_modelbuilder_gridSettingsPallette" caption="Grid Setting" keytip="GS" dropDown="true" hidden="false" showItemCaption="true" menuStyle="true" itemsInRow="3" condition="esri_geoprocessing_mb_usegridrouter"
-                smallImage="ModelBuilderGridSize16"
-                largeImage="ModelBuilderGridSize32">
-          <tooltip heading="Grid Setting">
-            Grid settings used to route the links.<disabledText></disabledText>
-          </tooltip>
-          <customControl refID="esri_modelbuilder_gridRouterSettings" />
-
-        </menu>
 
         <menu id="esri_modelbuilder_utilitiesPalette" caption="Utilities" keytip="UT" dropDown="true" hidden ="false"
                 showItemCaption="true" itemsInRow="1" menuStyle="true"
@@ -3357,13 +3728,14 @@ You can search for a specific tool, see a list of favorite and recently run tool
           </tooltip>
           <customControl refID="esri_modelbuilder_toolsSuggestion" />
         </menu>
-        
+
         <!--Model Menu-->
         <menu id="esri_modelbuilder_modelMenu" hidden="true" caption="Model">
           <tooltip heading="Model">
             Edit model properties.<disabledText></disabledText>
           </tooltip>
-          <button refID="esri_modelbuilder_createVariableButton"  separator="true"/>
+          <button refID="esri_modelbuilder_addToolsButton"/>
+          <button refID="esri_modelbuilder_createVariableButton" />
           <button refID="esri_modelbuilder_createLabelButton"/>
           <button refID="esri_modelbuilder_validateButton" separator="true" />
           <button refID="esri_modelbuilder_runModelButton" />
@@ -3519,7 +3891,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_modelbuilder_toolSuggestionButton" />
           <customControl refID="esri_modelbuilder_toolsRibbonSuggestion" />
         </splitButton>
-        
+
         <splitButton id="esri_modelbuilder_exportSplitButton" caption="Export A Model" extendedCaption="ModelBuilder" keytip="EX">
           <button refID="esri_modelbuilder_exportFromModelButton" />
           <button refID="esri_modelbuilder_exportScriptButton" />
@@ -3715,11 +4087,11 @@ You can search for a specific tool, see a list of favorite and recently run tool
 
         <!--Cad Define Projection Button -->
         <updateGroup refID="esri_mapping_georeference_GeoreferenceGroup">
-          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_mapping_georeferenceing_StartSessionButton"/>
+          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_mapping_georeferenceing_ModifyModelToWorldButton"/>
         </updateGroup>
         <!--Define Projection 2D Button -->
         <updateGroup refID="esri_mapping_georeference_RasterGeoreferenceGroup">
-          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_datasourcesraster_georefBimCadStartButton"/>
+          <insertButton refID="esri_geoprocessing_cadDefineProjectionButton" size ="large" insert="before" placeWith="esri_mapping_georeferenceing_ModifyModelToWorldButton"/>
         </updateGroup>
         <updateGroup refID="esri_mapping_buildingLayerConversionGroup">
           <insertButton refID="esri_mapping_CreateBuildingSceneLayerPackageButton" size ="large" insert="before"/>

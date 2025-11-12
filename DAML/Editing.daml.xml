@@ -236,7 +236,6 @@
           <and>
             <state id="esri_editing_2DMap" />
             <state id="esri_editing_StereoView"/>
-            <state id="esri_editing_3DMapStereoCondition" />
           </and>
         </or>
       </and>
@@ -566,10 +565,10 @@
     </insertCondition>
     <insertCondition id="esri_editing_streamConstructor_condition">
       <and>
-        <state id="esri_editing_2DMap" />
-        <not>
+        <or>
+          <state id="esri_editing_2DMap" />
           <state id="esri_editing_StereoView"/>
-        </not>
+        </or>
         <or>
           <state id="esri_editing_LineSketch"/>
           <state id="esri_editing_SplitToolActive_state"/>
@@ -803,6 +802,22 @@
     <insertCondition id="esri_editing_tablesTablePane_isNumericFieldCondition" caption="The table has an active numeric field (column.)">
       <state id="esri_editing_tables_isNumericFieldState" />
     </insertCondition>
+
+    <insertCondition id="esri_editing_tablesTablePane_standaloneTableCondition" caption="The table is showing all records">
+      <state id="esri_editing_tables_standaloneTableState" />
+    </insertCondition>
+
+    <insertCondition id="esri_editing_tablesTablePane_SelectedRecordsModeCondition" caption="The table is showing selected records">
+      <state id="esri_editing_tables_selectedRecordsModeState" />
+    </insertCondition>
+
+    <insertCondition id="esri_editing_tablesTablePane_hasHiddenFieldsCondition" caption="The table has hidden fields">
+      <state id="esri_editing_tables_hasHiddenFieldsState" />
+    </insertCondition>
+    <insertCondition id="esri_editing_tablesTablePane_hasReorderedFieldsCondition" caption="The table has hidden fields">
+      <state id="esri_editing_tables_hasReorderedFieldsState" />
+    </insertCondition>
+    <!-- Table - Conditions End -->
     <insertCondition id="esri_mapping_FeatureLayerRematchAddressesCondition">
       <state id="esri_mapping_FeatureLayerRematchAddressesState"/>
     </insertCondition>
@@ -1376,9 +1391,288 @@
 
     <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_parcelfabric_assistant_extension" className="ArcGIS.Desktop.Internal.Editing.ParcelRecordManagementAssistantExtension">
-        <content condition="esri_mapping_mapPaneActive" searchDescription="This skill class allows users to manage parcel fabric records in Pro. This includes creating parcel fabric records, searching for parcel fabric records, zooming to parcel fabric records, viewing parcel features associated with parcel fabric records and viewing the properties of parcel fabric records.">
-          <aiAssistantFunction name="CreateParcelFabricRecord" searchDescription="Creates a new parcel record in the parcel fabric."/>
-          <aiAssistantFunction name="OpenParcelFabricManageRecordsPane" searchDescription="Manages parcel fabric records by opening the Manage Records pane."/>
+        <content condition="esri_mapping_mapPaneActive" extensionCategoryRefID="ai_editing_category">
+          <searchDescriptions>
+            <searchDescription>This skill class allows users to manage parcel fabric records in Pro. This includes creating parcel fabric records, searching for parcel fabric records, zooming to parcel fabric records, viewing parcel features associated with parcel fabric records and viewing the properties of parcel fabric records.</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="CreateParcelFabricRecord">
+            <searchDescriptions>
+              <searchDescription>Creates a new parcel record in the parcel fabric.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+          <aiAssistantFunction name="OpenParcelFabricManageRecordsPane">
+            <searchDescriptions>
+              <searchDescription>Manages parcel fabric records by opening the Manage Records pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_editing_tables_assistant_extension" className="ArcGIS.Desktop.Internal.Editing.TableAssistantExtension">
+        <content extensionCategoryRefID="ai_data_management_category">
+          <searchDescriptions>
+            <searchDescription>Get all Standalone Tables in the active Map.</searchDescription>
+            <searchDescription>Open the Table Pane for a specified Layer.</searchDescription>
+            <searchDescription>Open Layer attribute table.</searchDescription>
+            <searchDescription>Open the Table Pane for a specified Standalone Table.</searchDescription>
+            <searchDescription>Close the specified Table Pane.</searchDescription>
+            <searchDescription>Get all open Table Panes.</searchDescription>
+            <searchDescription>Get the active Table Pane.</searchDescription>
+            <searchDescription>Toggle the Table Pane's view mode between all records and selected records.</searchDescription>
+            <searchDescription>Switch the active Table Pane to all records.</searchDescription>
+            <searchDescription>Switch the active Table Pane to selected records.</searchDescription>
+            <searchDescription>Refresh the active Table Pane.</searchDescription>
+            <searchDescription>Toggle subtype and domain descriptions in the active Table Pane.</searchDescription>
+            <searchDescription>Show subtype and domain descriptions in the active Table Pane.</searchDescription>
+            <searchDescription>Show subtype and domain codes in the active Table Pane.</searchDescription>
+            <searchDescription>Turn on subtype and domain descriptions.</searchDescription>
+            <searchDescription>Turn off subtype and domain descriptions.</searchDescription>
+            <searchDescription>Get a list of all fields in the active Table Pane.</searchDescription>
+            <searchDescription>Get the field name for a specified field index in the active Table Pane.</searchDescription>
+            <searchDescription>Get the field index for a specified field name in the active Table Pane.</searchDescription>
+            <searchDescription>Get the active field in the active Table Pane.</searchDescription>
+            <searchDescription>Set the active field in the active Table Pane.</searchDescription>
+            <searchDescription>Activate a field in the Table.</searchDescription>
+            <searchDescription>Toggle between field name and field alias in the active Table Pane.</searchDescription>
+            <searchDescription>Show the field name in the Table.</searchDescription>
+            <searchDescription>Show the field alias in the Table.</searchDescription>
+            <searchDescription>Open the custom field sort dialog.</searchDescription>
+            <searchDescription>Sort the active field in ascending order.</searchDescription>
+            <searchDescription>Sort the active field in descending order.</searchDescription>
+            <searchDescription>Sort fields in the active Table Pane based on provided sort information.</searchDescription>
+            <searchDescription>Get the list of hidden fields in the active Table Pane.</searchDescription>
+            <searchDescription>Show all fields in the active Table Pane.</searchDescription>
+            <searchDescription>Toggle the visibility of fields in the active Table Pane.</searchDescription>
+            <searchDescription>Set the visibility of specified fields in the active Table Pane.</searchDescription>
+            <searchDescription>Hide a specific field in the Table.</searchDescription>
+            <searchDescription>Unhide a specific field in the Table.</searchDescription>
+            <searchDescription>Show a hidden field in the Table.</searchDescription>
+            <searchDescription>Get the active row index in the active Table Pane.</searchDescription>
+            <searchDescription>Get the ObjectID of the active row in the active Table Pane.</searchDescription>
+            <searchDescription>Get the row index of a given Object ID in the active Table Pane.</searchDescription>
+            <searchDescription>Get the row indexes of selected rows in the active Table Pane.</searchDescription>
+            <searchDescription>Get the selected Object IDs in the active Table Pane.</searchDescription>
+            <searchDescription>Scroll the active Table Pane to a specific row and field.</searchDescription>
+            <searchDescription>Go to a row in the active Table Pane.</searchDescription>
+            <searchDescription>Go to a field in the active Table Pane.</searchDescription>
+            <searchDescription>Bring a row into view.</searchDescription>
+            <searchDescription>Activate a row in the active Table Pane.</searchDescription>
+            <searchDescription>Clear the highlight in the active Table Pane.</searchDescription>
+            <searchDescription>Toggle the highlight of the active row in the active Table Pane.</searchDescription>
+            <searchDescription>Switch the current highlight in the active Table Pane.</searchDescription>
+            <searchDescription>Highlight specific rows in the active Table Pane.</searchDescription>
+            <searchDescription>Clear the selection in the active Table Pane.</searchDescription>
+            <searchDescription>Toggle the selection of the active row in the active Table Pane.</searchDescription>
+            <searchDescription>Deselect the specified row.</searchDescription>
+            <searchDescription>Switch the current selection in the active Table Pane.</searchDescription>
+            <searchDescription>Select specific rows in the active Table Pane.</searchDescription>
+            <searchDescription>Select a field in the active Table Pane.</searchDescription>
+          </searchDescriptions>
+          <dependencies>
+            <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+            <dependency refID="esri_mapping_layer_assistant_extension|FindLayerFromLayerIndex"/>
+          </dependencies>
+          <aiAssistantFunction name="GetAllStandaloneTables">
+            <searchDescriptions>
+              <searchDescription>Returns a list of all Standalone Tables in the active map.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenAttributeTable">
+            <searchDescriptions>
+              <searchDescription>Open the Table Pane for a specified Layer.</searchDescription>
+              <searchDescription>Open the Table for the Layer.</searchDescription>
+              <searchDescription>Opens the attribute table for a specified Layer.</searchDescription>
+            </searchDescriptions>
+            <dependencies>
+              <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
+              <dependency refID="esri_mapping_layer_assistant_extension|FindLayerFromLayerIndex"/>
+            </dependencies>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenTablePane">
+            <searchDescriptions>
+              <searchDescription>Opens the Table Pane for a specified Standalone Table.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="CloseTablePane" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Closes the Table Pane for a specified layer or standalone table.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetAllTablePanes" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets all open Table Panes in the project.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetActiveTablePane" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SetTableViewMode" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Switches the active table's view mode to a different view mode.</searchDescription>
+              <searchDescription>Switches the table between showing all records and showing selected records.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="RefreshTablePane" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Refreshes the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SetShowSubtypeDomainDescriptions" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sets the table to show subtype and domain descriptions or to show subtype and domain code.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets a list of all of the fields in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetFieldName" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the field name for a specified field index in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetFieldIndex" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the field index for a specified field name in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetActiveField" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the active field in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SetActiveField" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sets the active field in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SetShowFieldAlias" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sets the table to show the field alias or field name in the column headers.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenCustomSortDialog" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Opens the custom field sort dialog.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SortActiveFieldAscending" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sorts the active field in ascending order.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SortActiveFieldDescending" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sorts the active field in descending order.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SortFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Sorts the fields in the active Table Pane based on the provided sort information.</searchDescription>
+              <searchDescription>Can be used to clear all field sorting.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetHiddenFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the list of hidden fields in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ShowAllFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Shows all fields in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="HideFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Hides the specified fields in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetActiveRowIndex" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the active row index in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetActiveObjectId" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the ObjectID of the active row in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetRowIndexOfObjectID" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the row index of a give Object ID in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetSelectedRowIndexes" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the row indexes of the selected rows in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetSelectedObjectIDs" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Gets the selected Object IDs in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GoToRowAndField" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Scrolls the active Table Pane to bring a specific row and field into view.</searchDescription>
+              <searchDescription>Activates the specified row in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ClearHighlight" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Clears the highlight in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ToggleRowHighlight" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Toggles the highlight of the active row in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SwitchHighlight" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Switches the current highlight of the active Table Pane.</searchDescription>
+              <searchDescription>Highlight the inverse of the current highlight.</searchDescription>
+              <searchDescription>Highlight the opposite of the current highlight.</searchDescription>
+              <searchDescription>Reverse the current highlight.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="HighlightRows" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Highlights the given rows in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ClearSelection" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Clears the selection in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ToggleRowSelection" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Toggles the selection of the active row in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SwitchSelection" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Switches the current selection of the active Table Pane.</searchDescription>
+              <searchDescription>Select the inverse of the current selection.</searchDescription>
+              <searchDescription>Select the opposite of the current selection.</searchDescription>
+              <searchDescription>Reverse the current selection.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SelectRows" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Selects the given rows in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SelectFields" condition="esri_editing_anyTablePaneOpenCondition">
+            <searchDescriptions>
+              <searchDescription>Selects the specified field in the active Table Pane.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
     </updateCategory>
@@ -1420,6 +1714,7 @@
       <shortcut refID="esri_editing_table_loadAllButton" key="L" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableReselectHighlightedButton" key="R" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindAndReplace" key="F" flags="Ctrl" onKeyUp="false"/>
+      <shortcut refID="esri_editing_tableCalculateFieldToolbarButton" key="F" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindNext" key="F3" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindPrevious" key="F3" flags="Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableGoTo" key="G" flags="Ctrl" onKeyUp="false"/>
@@ -1444,6 +1739,7 @@
       <shortcut refID="esri_editing_table_loadAllButton" key="L" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableReselectHighlightedButton" key="R" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindAndReplace" key="F" flags="Ctrl" onKeyUp="false"/>
+      <shortcut refID="esri_editing_tableCalculateFieldToolbarButton" key="F" flags="Ctrl+Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindNext" key="F3" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableFindPrevious" key="F3" flags="Shift" onKeyUp="false"/>
       <shortcut refID="esri_editing_tableGoTo" key="G" flags="Ctrl" onKeyUp="false"/>
@@ -1465,6 +1761,8 @@
       <shortcut refID="esri_editing_errorInspectorMarkAsErrors" key="E" flags="None" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorValidateExtent" key="V" flags="None" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorSelectErrorFeatures" key="F" flags="None" onKeyUp="false"/>
+      <shortcut refID="esri_editing_errorInspectorCopySelectedErrors" key="C" flags="Ctrl+Shift" onKeyUp="false"/>
+      <shortcut refID="esri_editing_errorInspectorCopyCellValue" key="C" flags="Ctrl" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorMapExtentFilter" key="M" flags="None" onKeyUp="false"/>
       <shortcut refID="esri_editing_errorInspectorTopologyRuleFilter" key="R" flags="None" onKeyUp="false"/>
     </insertShortcutTable>
@@ -1572,6 +1870,10 @@
       <shortcut refID="esri_editing_SquareAndFinishCommand" key="F3" flags="None"/>
       <shortcut refID="esri_editing_FinishSketchPart" key="F4" flags="None"/>
       <shortcut refID="esri_editing_ClearSketch" key="Delete" flags="Ctrl"/>
+      <shortcut refID="esri_editing_NudgeLeftCommand" key="Left" flags="Alt"/>
+      <shortcut refID="esri_editing_NudgeRightCommand" key="Right" flags="Alt"/>
+      <shortcut refID="esri_editing_NudgeUpCommand" key="Up" flags="Alt"/>
+      <shortcut refID="esri_editing_NudgeDownCommand" key="Down" flags="Alt"/>
     </insertShortcutTable>
     <insertShortcutTable id="esri_editing_shortcutList_ConstantZPlane" targetID="esri_mapping_mapPane"  category="Editing" caption="Elevation Surface Sketch Plane" condition="esri_editing_shortcutCondition_ConstantZPlane"
                          description="Available in scene views when using constant-z elevation mode.">
@@ -1982,12 +2284,18 @@
               smallImage="TableOpen16"
               defaultTab="esri_editing_tableHomeTab" hasCloseAllButThisCommand="false" isDropTarget="false">
           <content className="TableCorePaneView" />
+          <toolbars>
+            <toolbar refID="esri_editing_tableToolbar"/>
+          </toolbars>
         </pane>
 
         <pane id="esri_editing_externalTable_Pane" caption="Table" className="TableExternalPaneViewModel"
               smallImage="TableFromSource16"
               defaultTab="esri_editing_externalTable_homeTab" hasCloseAllButThisCommand="true" isDropTarget="false">
           <content className="TableExternalPaneView" />
+          <toolbars>
+            <toolbar refID="esri_editing_externalTableToolbar"/>
+          </toolbars>
         </pane>
       </panes>
 
@@ -2716,7 +3024,7 @@
               condition="esri_editing_EditingMapCondition"
               loadOnClick="false"
               categoryRefID="esri_editing_construction_polyline">
-          <tooltip heading="Stream">
+          <tooltip heading="Streaming">
             Create segments by streaming. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
           <content guid="E00209DD-05C5-4424-BE62-51581F9F811D" placeWith="esri_editing_SketchTraceLineTool"/>
@@ -2742,7 +3050,7 @@
               condition="esri_editing_EditingMapCondition"
               categoryRefID="esri_editing_construction_polygon"
               loadOnClick="false">
-          <tooltip heading="Stream">
+          <tooltip heading="Streaming">
             Create a polygon by streaming. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
           <content guid="6C6970A7-5CA9-448C-9C7D-0D716CD2AC64" placeWith="esri_editing_SketchTracePolygonTool" toolOptionsID="esri_editing_polygon_tool_options" />
@@ -2959,14 +3267,14 @@
               className="CGATemplateGalleryCommand"
               largeImage="RoofFlat32"
               smallImage="RoofFlat16"
-              caption="CGA templates" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
-          <tooltip heading="CGA templates">
-            Create geometry from a CGA template.<disabledText></disabledText>
+              caption="Geometry Templates" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
+          <tooltip heading="Geometry Templates">
+            Create geometry using templates.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_SketchOffsetMultipatch"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="EditingMultipatchCreateOffset32"
               smallImage="EditingMultipatchCreateOffset16"
               caption="Face" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -2976,7 +3284,7 @@
         </button>
         <button id="esri_editing_SketchRoofFlat" hidden="true"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="RoofFlat32"
               smallImage="RoofFlat16"
               caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -2986,7 +3294,7 @@
         </button>
         <button id="esri_editing_SketchRoofGable" hidden="true"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="RoofGable32"
               smallImage="RoofGable16"
               caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -2996,7 +3304,7 @@
         </button>
         <button id="esri_editing_SketchRoofHip" hidden="true"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="RoofHip32"
               smallImage="RoofHip16"
               caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -3006,7 +3314,7 @@
         </button>
         <button id="esri_editing_SketchRoofMansard" hidden="true"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="RoofMansard32"
               smallImage="RoofMansard16"
               caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -3016,7 +3324,7 @@
         </button>
         <button id="esri_editing_SketchRoofDome" hidden="true"
               categoryRefID="esri_editing_CGATemplates"
-              className="ArcGIS.Desktop.Internal.Editing.Editor3D.CGATemplateCommand"
+              className="ArcGIS.Desktop.Internal.Editing.CGATemplateCommand"
               largeImage="RoofDome32"
               smallImage="RoofDome16"
               caption="Roof" condition="esri_editing_3DMapOrStereoCondition" loadOnClick="false">
@@ -3341,7 +3649,7 @@
           <tooltip heading="Move">
             Move the selected features.<disabledText></disabledText>
           </tooltip>
-          <content keywords="Topology;Snap;node;edge;multipatch;annotation" HelpContextID="120000849"/>
+          <content keywords="Topology;Snap;node;edge;multipatch;annotation;nudge" HelpContextID="120000849"/>
         </button>
 
         <button id="esri_editing_EditVerticesMoveKG"
@@ -3563,7 +3871,7 @@
           <tooltip heading="Annotation">
             Edit Annotation features.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
-          <content keywords="edit annotation tool;edit annotation;text" HelpContextID="120001880"/>
+          <content keywords="edit annotation tool;edit annotation;text;nudge" HelpContextID="120001880"/>
         </button>
         <!--<button id="esri_editing_EditVerticesDimension"
                 caption="Dimension" extendedCaption="Edit Dimension features"
@@ -4006,6 +4314,32 @@
             <disabledText></disabledText>
           </tooltip>
           <content keywords="cut polygons tool;cut polygons;cut polygon;cut;divide;split line;split polygon;hole;donut" HelpContextID="120001770"/>
+        </button>
+
+        <tool id="esri_editing_ReverseDirectionTool" hidden="true"
+              caption="Reverse Direction"
+              largeImage="EditingFlipLine32"
+              smallImage="EditingFlipLine16"
+              className="ReverseDirectionTool"
+              condition="esri_editing_EditingMapCondition">
+          <tooltip heading="Reverse Direction">
+            Reverse direciton of lines with one click.
+            <disabledText></disabledText>
+          </tooltip>
+        </tool>
+        <button id="esri_editing_ReverseDirectionToolCommand"
+                caption="Reverse Direction" extendedCaption="Reverse direction with one click."
+                largeImage="EditingFlipLine32"
+                smallImage="EditingFlipLine16"
+                className="ReverseDirectionToolCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_CommandList"
+                loadOnClick="false">
+          <tooltip heading="Reverse Direction">
+            Flip the direction of line features. The first vertex becomes the last vertex. For multi-part line features, flip all the part or component parts.
+            <disabledText></disabledText>
+          </tooltip>
+          <content keywords="reverse;reverse direction;flip;digitized direction;line;polyline;orientation" HelpContextID="120004675"/>
         </button>
 
         <tool id="esri_editing_SliceMultipatchTool" hidden="true"
@@ -4518,7 +4852,7 @@
           <tooltip heading="Explode">
             Separate selected multipart features into individual features. These parts become independent features and are assigned identical attributes.<disabledText></disabledText>
           </tooltip>
-          <content keywords="explode multipart feature;explode multipart;explode multipatch;explode parts;separate;separate parts;single" HelpContextID="120001897"/>
+          <content keywords="explode multipart feature;explode multipart;explode multipatch;explode parts;separate;separate parts;single" HelpContextID="120002565"/>
         </button>
         <!-- Interactive explode -->
         <tool id="esri_editing_InteractiveExplodeTool" hidden="true"
@@ -5254,7 +5588,7 @@
                 checkedCondition="esri_editing_streaming_condition"
                 loadOnClick="false">
           <tooltip heading="Streaming">
-            Turn on stream mode editing so vertices are placed at an interval as you move around the map. Click the map to stop streaming temporarily, then click again to start creating vertices. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
+            Turn on streaming mode editing so vertices are placed at an interval as you move around the map. Click the map to stop streaming temporarily, then click again to start creating vertices. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_ToggleStreaming" hidden="true"
@@ -5266,7 +5600,7 @@
                 checkedCondition="esri_editing_streaming_condition"
                 loadOnClick="false">
           <tooltip heading="Streaming">
-            Turn on stream mode editing so vertices are placed at an interval as you move around the map. Click the map to stop streaming temporarily, then click again to start creating vertices. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
+            Turn on streaming mode editing so vertices are placed at an interval as you move around the map. Click the map to stop streaming temporarily, then click again to start creating vertices. Press O to access options.<disabledText>This tool is not available in 3D views.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_ToggleShowVertices" hidden="true"
@@ -5670,7 +6004,7 @@
           </tooltip>
         </button>
         <button id="esri_editing_StreamingOptions" caption="Streaming Options" largeImage="GenericOptions32" smallImage="GenericOptions16" className="StreamingOptionsCommand">
-          <tooltip heading="Stream">
+          <tooltip heading="Streaming">
             Set streaming options.<disabledText></disabledText>
           </tooltip>
         </button>
@@ -5906,7 +6240,7 @@
 
             Trim: A positive value less than the line length measures the new length from the first vertex. A negative value less than the line length trims the specified length from the last vertex.
 
-            Extend: A positive value greater than the line length measures the new length from the first vertex. A negative value greater than than the line length measures the new length from the last vertex
+            Extend: A positive value greater than the line length measures the new length from the first vertex. A negative value greater than the line length measures the new length from the last vertex
             <disabledText></disabledText>
           </tooltip>
         </button>
@@ -5917,7 +6251,7 @@
         </button>
         <button id="esri_editing_ReplaceSketchContextMenuItem" caption="Replace Sketch" largeImage="EditingReplaceSketch32" smallImage="EditingReplaceSketch16" className="ReplaceSketchCommand" loadOnClick="false">
           <tooltip heading="Replace Sketch">
-            Replace the shape of the sketch with the geometry of the topmost visible feature where you right-click<disabledText></disabledText>
+            Right-click the existing feature that is to provide the shape for the new sketch geometry. Use the chip drop-down list to select an overlapping feature.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -6748,10 +7082,9 @@
                 largeImage="EditingTemplateStoreTo32"
                 smallImage="EditingTemplateStoreTo16"
                 className="Templates.ShareProjectTemplatesToSystemCommand"
-                loadOnClick="false"
                 helpContextID="">
           <tooltip heading="Store Templates">
-            Store Project Templates from all feature layers to the System.<disabledText></disabledText>
+            Store Project Templates from all feature layers to the Data Store.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -6856,12 +7189,15 @@
                 loadOnClick="false" helpContextID="120003946" hideTooltip="true"
                 className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitToggleButton"
                 largeImage="EditingGroundToGridCorrectionTool32"
-                smallImage="EditingGroundToGridCorrectionTool16"/>
+                smallImage="EditingGroundToGridCorrectionTool16">
+          <tooltip heading="Ground To Grid">
+            Turn ground to grid corrections on or off for the active map. When using tools that need directions and distances entered, the corrections are applied when creating each feature's geometry.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <customControl id="esri_editing_GroundToGridSplitOpenTrayButton" hidden="true"
                 loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
                 className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitOpenTrayButton">
           <content className="ArcGIS.Desktop.Internal.Editing.GroundToGridSplitView" />
-          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
         </customControl>
         <button id="esri_editing_GroundToGrid_DigitizeGroundAndGrid"
               largeImage="EditingGroundToGridGroundTool32"
@@ -7441,7 +7777,19 @@
             Show field aliases instead of (database) field names for this table.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_table_fieldsShowAliasBurgerButton" caption="Show Field Aliases" extendedCaption="Show field aliases for this table." className="ToggleFieldAliasButton"
+                loadOnClick="false" keytip="FA" hidden="true">
+          <tooltip heading="Show Field Aliases">
+            Show field aliases instead of (database) field names for this table.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_editing_table_fieldsViewButton" caption="Fields" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120003951">
+          <tooltip heading="Fields View">
+            Show the fields view for the current table.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_fieldsViewBurgerButton" caption="Fields View" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120003951"
+                hidden="true">
           <tooltip heading="Fields View">
             Show the fields view for the current table.<disabledText></disabledText>
           </tooltip>
@@ -7451,6 +7799,48 @@
             Add a new field in this table.<disabledText>The project has unsaved edits or the table or its schema is read only.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_table_tableShowAllFieldsButton" caption="Show All Fields" extendedCaption="Show all fields in this table." className="esri_editing_EditingModule:TableManager.OnShowAllFields"
+                smallImage="" largeImage="" condition="esri_editing_tablesTablePane_hasHiddenFieldsCondition">
+          <tooltip heading="Show All Fields">
+            Shows all fields so that they are available in the table window and in other dialogs.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_tableResetFieldOrderButton" caption="Reset Field Order" extendedCaption="Reset field order in this table." className="esri_editing_EditingModule:TableManager.OnResetFieldOrder"
+                smallImage="" largeImage="" condition="esri_editing_tablesTablePane_hasReorderedFieldsCondition">
+          <tooltip heading="Reset Field Order">
+            Reset to database field order.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_tableShowContingentValueFieldsButton" caption="Contingent value fields" extendedCaption="Contingent Value Fields in this table" className="ToggleShowCAVFieldsButton"
+                smallImage="" largeImage="" loadOnClick="false">
+          <tooltip heading="Contingent Value Fields">
+            Only show fields that have contingent values defined.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_tableHighlightContingentValueFieldsButton" caption="Highlight invalid values" extendedCaption="Highlight Invalid Values in this table" className="ToggleHighlightCAVFieldsButton"
+                smallImage="" largeImage="" loadOnClick="false">
+          <tooltip heading="Highlight invalid values">
+            Highlight fields that have invalid contingent values.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_contingentValuesAutoPopulateButton" caption="Auto-update other fields" extendedCaption="Auto-update other fields in this table" className="ToggleCAVAutoPopulateButton"
+                smallImage="" largeImage="" loadOnClick="false">
+          <tooltip heading="Auto-update other fields">
+            When a value is changed, automatically set values for other fields when only one match is valid.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_selectRelatedDataButton" caption="Select related records" extendedCaption="Select related records in this table" className="ToggleSelectRelatedDataButton"
+                smallImage="" largeImage="" loadOnClick="false">
+          <tooltip heading="Select Related Records">
+            When selecting features/rows automatically select the related data.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <dynamicMenu id="esri_editing_table_selectRelatedDataDynamicMenu" caption="Related Data" className="TableRelatedDataDynamicMenu"
+          largeImage="TableRelatedData32" smallImage="TableRelatedData16" loadOnClick="false">
+          <tooltip heading="Related Data">
+            Select from the list of relationships to view data related to the layer or table's selection.<disabledText>Enabled when the active layer or table has relationships and selected features or records.</disabledText>
+          </tooltip>
+        </dynamicMenu>
         <button id="esri_editing_table_tableCopySelectedRowsButton" caption="Copy" extendedCaption="" className="esri_editing_EditingModule:TableManager.CopySelectedRows" smallImage="CopySelectedRows16" largeImage="CopySelectedRows32"
                 loadOnClick="false">
           <tooltip heading="Copy Selection">
@@ -7467,6 +7857,30 @@
                 loadOnClick="false">
           <tooltip heading="Load All">
             <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_tableShowSubtypeDescription" caption="Show Domain and Subtype Descriptions" extendedCaption="Show domain and subtype descriptions in this table." className="ToggleShowSubtypeDescriptionButton"
+                smallImage="TableSubtypesView16" largeImage="TableSubtypesView32" loadOnClick="false">
+          <tooltip heading="Show Domain and Subtype Descriptions">
+            Switch display between domain and subtype descriptions or codes.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_table_tableShowSubtypeDescriptionBurgerButton" caption="Show domain and subtype descriptions" extendedCaption="Show domain and subtype descriptions in this table." className="ToggleShowSubtypeDescriptionButton"
+                loadOnClick="false" hidden="true">
+          <tooltip heading="Show Domain and Subtype Descriptions">
+            Switch display between domain and subtype descriptions or codes.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <dynamicMenu id="esri_editing_tableAssociatedDynamicMenu" caption="Associated Data" className="TableAssociatedDynamicMenu"
+          largeImage="TableRelatedData32" smallImage="TableRelatedData16" loadOnClick="false">
+          <tooltip heading="Associated Data">
+            Select all associated features or objects and open their views.<disabledText></disabledText>
+          </tooltip>
+        </dynamicMenu>
+        <button id="esri_editing_table_openDataEngineering" caption="Open Data Engineering" extendedCaption="Open Data Engineering for this table" className="esri_editing_EditingModule:TableManager.OnOpenDataEngineering"
+                smallImage="DataEngineeringGeneral16" largeImage="DataEngineeringGeneral32" loadOnClick="false">
+          <tooltip heading="Open Data Engineering">
+            Open the Data Engineering view with the field statistics calculated for all visible fields in the layer.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -7521,6 +7935,16 @@
         <button id="esri_editing_tableCalculateFieldButton" caption="Calculate Field" extendedCaption="Calculate field values within a table." className="esri_editing_EditingModule:TableManager.CalculateField" smallImage="TableCalculateField16" largeImage="TableCalculateField32" helpContextID="" loadOnClick="false" keytip="TC">
           <tooltip heading="">
             Set the values of this field by specifying a calculation expression. If any of the rows in the table are currently selected, only the values of the selected rows will be calculated.<disabledText>The project has unsaved edits, there is no field selected, or the table is read only.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableCalculateFieldToolbarButton" caption="Calculate Field Toolbar" extendedCaption="Calculate field values within a table." className="esri_editing_EditingModule:TableManager.CalculateFieldToolbar" smallImage="CalculateFieldToolbar16" largeImage="CalculateFieldToolbar32" helpContextID="120005524" loadOnClick="false" keytip="TB">
+          <tooltip heading="">
+            Open the Calculate Field toolbar to set the values of a field with an expression. If the table has a selection, highlight, or filter only those records will be calculated.<disabledText>The project has unsaved edits, there is no field selected, or the table is read only.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableCalculateFieldToolbarTBButton" caption="Calculate" extendedCaption="Calculate field values within a table." className="esri_editing_EditingModule:TableManager.CalculateFieldToolbar" smallImage="CalculateFieldToolbar16" largeImage="CalculateFieldToolbar32" helpContextID="120005524" loadOnClick="false" keytip="TB" hidden="true">
+          <tooltip heading="">
+            Open the Calculate Field toolbar to set the values of a field with an expression. If the table has a selection, highlight, or filter only those records will be calculated.<disabledText>The project has unsaved edits, there is no field selected, or the table is read only.</disabledText>
           </tooltip>
         </button>
         <button id="esri_editing_tableCalculateGeometryButton" caption="Calculate Geometry" extendedCaption="Calculate geometry values within a table." className="esri_editing_EditingModule:TableManager.CalculateGeometry" smallImage="CalculateGeometry16" largeImage="CalculateGeometry32" helpContextID="" loadOnClick="false" keytip="TG">
@@ -7666,11 +8090,55 @@
             Toggle highlight of the current row.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_tableReselectHighlightedButton" caption="Reselect Highlighted" extendedCaption="" className="esri_editing_EditingModule:TableManager.ReselectHighlighted" loadOnClick="false">
+        <button id="esri_editing_tableReselectHighlightedButton" caption="Reselect" extendedCaption="Reselect Highlighted" className="esri_editing_EditingModule:TableManager.ReselectHighlighted" loadOnClick="false"
+                smallImage="TableReselectHighlighted16" largeImage="TableReselectHighlighted32">
           <tooltip heading="Reselect Highlighted">
             <disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_tableUnselectHighlighted" caption="Unselect" extendedCaption="Unselect Highlighted" className="esri_editing_EditingModule:TableManager.OnUnselectHighlighted" loadOnClick="false"
+                smallImage="TableUnselectHighlighted16" largeImage="TableUnselectHighlighted32">
+          <tooltip heading="Unselect Highlighted">
+            Remove the highlighted rows from the current selection set.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableZoomToHighlighted" caption="Zoom To" extendedCaption="Zoom To Highlighted" className="esri_editing_EditingModule:TableManager.OnZoomToHighlighted" loadOnClick="false"
+                smallImage="TableZoomtoHighlighted16" largeImage="TableZoomtoHighlighted32">
+          <tooltip heading="Zoom To Highlighted">
+            Center the map around the features in the highlighted rows.
+            <disabledText>Make sure there are features highlighted.  If that does not work, try clicking the map to initialize it before zooming.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableSwitchHighlighted" caption="Switch" extendedCaption="Switch Highlighted" className="esri_editing_EditingModule:TableManager.OnSwitchHighlighted" loadOnClick="false"
+                smallImage="TableSwitchHighlight16" largeImage="TableSwitchHighlight32">
+          <tooltip heading="Switch Highlighted">
+            Switch highlighted rows.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableClearHighlighted" caption="Clear" extendedCaption="Clear Highlighted" className="esri_editing_EditingModule:TableManager.OnClearHighlighted" loadOnClick="false"
+                smallImage="TableSelectAll16" largeImage="TableSelectAll32">
+          <tooltip heading="Clear Highlighted">
+            Clear highlighting from all rows.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableDeleteHighlighted" caption="Delete" extendedCaption="Delete Highlighted" className="esri_editing_EditingModule:TableManager.OnDeleteHighlighted" loadOnClick="false"
+                smallImage="TableDeleteHighlighted16" largeImage="TableDeleteHighlighted32">
+          <tooltip heading="Delete Highlighted">
+            Delete highlighted rows from the table.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_editing_tableCopyHighlighted" caption="Copy" extendedCaption="Copy Highlighted" className="esri_editing_EditingModule:TableManager.OnCopyHighlighted" loadOnClick="false"
+                smallImage="CopyHighlightedRows16" largeImage="CopyHighlightedRows32">
+          <tooltip heading="Copy Highlighted">
+            Copy highlighted rows to the clipboard.
+            <disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_editing_tablePopupButton" caption="Pop-up" extendedCaption="Show pop-up for this row in the table." className="esri_editing_EditingModule:TableManager.PopupRow" largeImage="PopupPane32" smallImage="HTMLPopUpTool16" loadOnClick="false">
           <tooltip heading="Pop-up">
             View focused information about the contents of layers within a configurable pop-up window.<disabledText></disabledText>
@@ -7804,6 +8272,19 @@
             Export current table to new table.<disabledText>This layer or standalone table item does not support the export data capability.</disabledText>
           </tooltip>
         </button>
+
+        <button id="esri_editing_tableExportExcelButton" caption="Export to Excel" extendedCaption="Active table view" className="esri_editing_EditingModule:TableManager.OnTableExportToExcel" loadOnClick="false" smallImage="ExportTableToExcel16" largeImage="ExportTableToExcel32" helpContextID="">
+          <tooltip heading="">
+            Export current table to Excel file.<disabledText>This layer or standalone table item does not support the export data capability.</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_editing_tables_ExportToExcelButton" caption="Export to Excel" extendedCaption="Active table view" className="esri_editing_EditingModule:TableManager.TableExportExcel" smallImage="ExportTableToExcel16" largeImage="ExportTableToExcel32">
+          <tooltip heading="">
+            Export current table to Excel file.<disabledText>This layer or standalone table item does not support the export data capability.</disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_editing_tablePrintTableButton" caption="Print" extendedCaption="Active table view" className="esri_editing_EditingModule:TableManager.TablePrintTable" smallImage="GenericPrint16" largeImage="GenericPrint32" helpContextID="" keytip="P">
           <tooltip heading="Print Table">
             Print the table.<disabledText></disabledText>
@@ -7858,6 +8339,13 @@
             Navigate to a specific row number in this table.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_tableGoToBurgerButton" caption="Go to row number" extendedCaption="Go To Row Number" className="esri_editing_EditingModule:TableManager.GoTo" loadOnClick="false"
+                smallImage="Replace16"
+                largeImage="Replace32" hidden="true">
+          <tooltip heading="Go To Row Number">
+            Navigate to a specific row number in this table.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_editing_tableDeactivateTool" caption="Deactivate Tool" extendedCaption="Deactivate Tool" className="esri_editing_EditingModule:TableManager.DeactivateTool" loadOnClick="false"
                 smallImage="" largeImage="" />
 
@@ -7877,6 +8365,24 @@
             Open the application options for the table.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <!-- Table Toolbar Labels -->
+        <labelControl id="esri_editing_tableTBFieldGroupLabel" caption="Field:"/>
+        <labelControl id="esri_editing_tableTBSelectionGroupLabel" caption="Selection:"/>
+        <labelControl id="esri_editing_tableTBHighlightGroupLabel" caption="Highlighted:"/>
+        <labelControl id="esri_editing_tableTBRowsGroupLabel" caption="Rows:"/>
+
+        <!-- Table Toolbar Controls -->
+        <customControl id="esri_editing_table_insertRowsControl" caption="Insert Rows" extendedCaption="Insert rows into a teable"
+                       disableIfBusy="false" hidden="true" loadOnClick="false" keytip="TA"
+                       isDropDown="true" smallImage="AddNewRows16" largeImage="AddNewRows32"
+                       className="ArcGIS.Desktop.Editing.TableInsertRowsControlViewModel">
+          <content className="ArcGIS.Desktop.Editing.TableInsertRowsControl"/>
+          <tooltip heading="Insert Rows">
+            Insert one or more rows into the table.<disabledText>Enabled only for standalone tables that are editable.</disabledText>
+          </tooltip>
+        </customControl>
+
 
         <!-- Table Buttons - End -->
 
@@ -8208,6 +8714,13 @@
             Select the features that created the errors in the selected rows. <disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_errorInspectorCopySelectedErrors" caption="Copy" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.CopySelectedErrorsCommand"
+                smallImage="CopySelectedRows16"
+                loadOnClick="false">
+          <tooltip heading="Copy Selection">
+            Copy selected errors to the clipboard.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_editing_errorInspectorMapExtentFilter" caption="Map Extent" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.MapExtentFilterCommand"
                 smallImage="FilterMapExtent16"
                 loadOnClick="true" disableIfBusy="true">
@@ -8264,6 +8777,14 @@
                 loadOnClick="false" disableIfBusy="true">
           <tooltip heading="Mark As Unreviewed">
             Mark the selected errors as Unreviewed. <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_editing_errorInspectorCopyCellValue" caption="Copy" extendedCaption="Copy Cell" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.CopyCellValueCommand" loadOnClick="false"
+                smallImage="EditCopy16"
+                largeImage="EditCopy32">
+          <tooltip heading="Copy">
+            Copy the selected cell's value to the clipboard.<disabledText></disabledText>
           </tooltip>
         </button>
         <!--end of error inspector buttons/context menu items-->
@@ -8490,8 +9011,44 @@
                 condition="esri_editing_EditingMapCondition"
                 className="SetReferencePointCommand">
           <tooltip heading="Set Reference">
-            Set reference point at the right-clicked location.
+            Right-click a location and select this command to set the reference point where the alignment tools align the selected features.
           </tooltip>
+        </button>
+        <button id="esri_editing_NudgeLeftCommand" caption="Nudge Left" extendedCaption="Editing"
+                largeImage="ElementNudgeLeft32"
+                smallImage="ElementNudgeLeft16"
+                className="NudgeLeftCommand"
+                loadOnClick="false">
+           <tooltip heading="Nudge Left">
+              Move the selected features a small amount to the left.
+           </tooltip>
+        </button>
+        <button id="esri_editing_NudgeRightCommand" caption="Nudge Right" extendedCaption="Editing"
+                largeImage="ElementNudgeRight32"
+                smallImage="ElementNudgeRight16"
+                className="NudgeRightCommand"
+                loadOnClick="false">
+           <tooltip heading="Nudge Right">
+              Move the selected features a small amount to the right.
+           </tooltip>
+        </button>
+        <button id="esri_editing_NudgeUpCommand" caption="Nudge Up" extendedCaption="Editing"
+              largeImage="ElementNudgeUp32"
+              smallImage="ElementNudgeUp16"
+              className="NudgeUpCommand"
+              loadOnClick="false">
+           <tooltip heading="Nudge Up">
+              Move the selected features a small amount toward the top.
+           </tooltip>
+        </button>
+        <button id="esri_editing_NudgeDownCommand" caption="Nudge Down" extendedCaption="Editing"
+              largeImage="ElementNudgeDown32"
+              smallImage="ElementNudgeDown16"
+              className="NudgeDownCommand"
+              loadOnClick="false">
+           <tooltip heading="Nudge Down">
+              Move the selected features a small amount toward the bottom.
+           </tooltip>
         </button>
         <button id="esri_editing_AlignLeftCommand" caption="Align Left" extendedCaption="Align Left"
                 largeImage="ElementAlignLeft32"
@@ -9618,6 +10175,7 @@
         </subgroup>
         <subgroup id="esri_editing_table_toolsSubGroup" size="Default">
           <button refID="esri_editing_tableCalculateFieldButton"/>
+          <button refID="esri_editing_tableCalculateFieldToolbarButton"/>
           <button refID="esri_editing_tableCalculateGeometryButton"/>
           <button refID="esri_editing_tableSummarizeButton"/>
         </subgroup>
@@ -9629,6 +10187,7 @@
         <subgroup id="esri_editing_table_exportSubGroup" size="Default">
           <insertButton refID="esri_editing_tableExportFeaturesButton"/>
           <insertButton refID="esri_editing_tableExportTableButton"/>
+          <insertButton refID="esri_editing_tables_ExportToExcelButton"/>
         </subgroup>
         <subgroup id="esri_editing_table_outputSubGroup" size="Default">
           <insertButton refID="esri_editing_tablePrintTableButton"/>
@@ -10170,6 +10729,79 @@
         </miniToolbar>
       </miniToolbars>
 
+      <customToolbars>
+        <toolbar id="esri_editing_tableToolbar" caption="Attribute Table Toolbar" extendedMenu="esri_editing_tableBurgerMenu">
+          <group>
+            <!--Fields Group-->
+            <labelControl refID="esri_editing_tableTBFieldGroupLabel" />
+            <button refID="esri_editing_table_tableAddFieldButton" size="middle"/>
+            <button refID="esri_editing_tableCalculateFieldToolbarTBButton" size="middle"/>
+
+            <!--Selection Group-->
+            <labelControl refID="esri_editing_tableTBSelectionGroupLabel" separator="true"/>
+            <button refID="esri_editing_tableselectByAttributeButton" size="middle"/>
+            <button refID="esri_editing_tableZoomToSelectedButton" size="middle"/>
+            <button refID="esri_editing_tableSwitchSelButton" size="middle"/>
+            <button refID="esri_editing_tableClearSelectionButton" size="middle"/>
+            <button refID="esri_editing_tableDeleteSelected" size="middle"/>
+            <button refID="esri_editing_table_tableCopySelectedRowsButton" size="middle"/>
+          </group>
+
+          <group condition="esri_editing_tablesTablePane_SelectedRecordsModeCondition">
+            <!--Highlighted Group-->
+            <labelControl refID="esri_editing_tableTBHighlightGroupLabel" separator="true"/>
+            <button refID="esri_editing_tableUnselectHighlighted" size="middle"/>
+            <button refID="esri_editing_tableReselectHighlightedButton" size="middle"/>
+            <button refID="esri_editing_tableZoomToHighlighted" size="middle"/>
+            <button refID="esri_editing_tableSwitchHighlighted" size="middle"/>
+            <button refID="esri_editing_tableClearHighlighted" size="middle"/>
+            <button refID="esri_editing_tableDeleteHighlighted" size="middle"/>
+            <button refID="esri_editing_tableCopyHighlighted" size="middle"/>
+          </group>
+
+          <group condition="esri_editing_tablesTablePane_standaloneTableCondition">
+            <!--Rows Group-->
+            <labelControl refID="esri_editing_tableTBRowsGroupLabel" separator="true"/>
+            <customControl refID="esri_editing_table_insertRowsControl" size="middle"/>
+          </group>
+        </toolbar>
+
+        <toolbar id="esri_editing_externalTableToolbar" caption="Attribute Standalone Table Toolbar" extendedMenu="esri_editing_externalTableBurgerMenu">
+          <group>
+            <!--Fields Group-->
+            <labelControl refID="esri_editing_tableTBFieldGroupLabel" />
+            <button refID="esri_editing_table_tableAddFieldButton" size="middle"/>
+            <button refID="esri_editing_tableCalculateFieldButton"  size="middle"/>
+
+            <!--Selection Group-->
+            <labelControl refID="esri_editing_tableTBSelectionGroupLabel" separator="true"/>
+            <button refID="esri_editing_tableselectByAttributeButton" size="middle"/>
+            <button refID="esri_editing_tableSwitchSelButton" size="middle"/>
+            <button refID="esri_editing_tableClearSelectionButton" size="middle"/>
+            <button refID="esri_editing_tableDeleteSelected" size="middle"/>
+            <button refID="esri_editing_table_tableCopySelectedRowsButton" size="middle"/>
+          </group>
+
+          <group condition="esri_editing_tablesTablePane_SelectedRecordsModeCondition">
+            <!--Highlighted Group-->
+            <labelControl refID="esri_editing_tableTBHighlightGroupLabel" separator="true"/>
+            <button refID="esri_editing_tableUnselectHighlighted" size="middle"/>
+            <button refID="esri_editing_tableReselectHighlightedButton" size="middle"/>
+            <button refID="esri_editing_tableSwitchHighlighted" size="middle"/>
+            <button refID="esri_editing_tableClearHighlighted" size="middle"/>
+            <button refID="esri_editing_tableDeleteHighlighted" size="middle"/>
+            <button refID="esri_editing_tableCopyHighlighted" size="middle"/>
+          </group>
+
+          <!--Rows Group-->
+          <group condition="esri_editing_tablesTablePane_standaloneTableCondition">
+            <labelControl refID="esri_editing_tableTBRowsGroupLabel" separator="true"/>
+            <customControl refID="esri_editing_table_insertRowsControl" size="middle"/>
+          </group>
+        </toolbar>
+
+      </customToolbars>
+      
       <splitButtons>
         <splitButton id="esri_editing_UtilityDisconnectSplitButton"
                      caption="Disconnect"
@@ -10363,8 +10995,9 @@
           <button refID="esri_editing_ContinueFeature"/>
           <button refID="esri_editing_ExtendTrimFeatures"/>
           <button refID="esri_editing_Fillet"/>
-          <button refID="esri_editing_GeneralizeCommand"/>
+          <button refID="esri_editing_GeneralizeCommand"/>          
           <button refID="esri_editing_LineIntersection"/>
+          <button refID="esri_editing_ReverseDirectionToolCommand"/>
         </menu>
         <!--divide group-->
         <menu id="esri_editing_toolGroupDivide" caption="Divide" contextMenu="false">
@@ -10857,6 +11490,10 @@
 
         <menu id="esri_editing_ArrangeContextMenu" caption="Arrange" contextMenu="true">
           <button refID="esri_editing_SetReferencePointCommand"/>
+          <button refID="esri_editing_NudgeLeftCommand" separator="true"/>
+          <button refID="esri_editing_NudgeRightCommand"/>
+          <button refID="esri_editing_NudgeUpCommand"/>
+          <button refID="esri_editing_NudgeDownCommand"/>
           <button refID="esri_editing_AlignLeftCommand" separator="true"/>
           <button refID="esri_editing_AlignCenterCommand"/>
           <button refID="esri_editing_AlignRightCommand"/>
@@ -10940,11 +11577,22 @@
           <tooltip heading="Curvature">Change the curvature type of the annotation.</tooltip>
         </menu>
 
+        <menu id="esri_editing_NudgeMenu" caption="Nudge" extendedCaption="Editing"
+              largeImage="ElementNudgeDown32"
+              smallImage="ElementNudgeDown16">
+          <button refID="esri_editing_NudgeLeftCommand"/>
+          <button refID="esri_editing_NudgeRightCommand"/>
+          <button refID="esri_editing_NudgeUpCommand"/>
+          <button refID="esri_editing_NudgeDownCommand"/>
+          <tooltip heading="Nudge">Move the selected features a small amount</tooltip>
+        </menu>
+        
         <menu id="esri_editing_AnnotationEditContextMenu" caption="Annotation Edit tool Context Menu" contextMenu="true">
           <button   refID="esri_editing_annotationFollowFeatureModeButton"/>
           <button   refID="esri_editing_annotationFollowThisFeatureButton"/>
           <menu     refID="esri_editing_FollowFeatureMenu" caption="Follow"/>
-          <menu     refID="esri_editing_annotationCurvatureMenu" caption="Curvature" separator="true"/>
+          <menu     refID="esri_editing_annotationCurvatureMenu" caption="Curvature" separator="true" />
+          <menu     refID="esri_editing_NudgeMenu" caption="Nudge" />
           <button   refID="esri_editing_annotationAddLeaderButton" separator="true"/>
           <button   refID="esri_editing_annotationDeleteLeaderButton" />
           <!--< <button   refID="esri_editing_annotationEditLeaderButton" /> />-->
@@ -11175,6 +11823,7 @@
           <button refID="esri_editing_CreateAllTemplates" />
           <button refID="esri_editing_DeleteAllTemplates" />
           <button refID="esri_editing_CopyTemplatesToOtherMap" separator="true"/>
+          <button refID="esri_editing_StoreProjectTemplatesToSystem" />
         </menu>
         <menu id="esri_editing_MFT_LayerContainerContextMenu" caption="Group Layer" contextMenu="true">
           <button refID="esri_editing_CreateAllTemplates" />
@@ -11225,8 +11874,9 @@
           <button refID="esri_editing_tableSortCustomButton" />
           <button refID="esri_editing_table_fieldsViewButton"  separator="true"/>
           <button refID="esri_editing_tableHideFieldButton"/>
-          <button refID="esri_editing_tableFreezeFieldButton"/>
+          <button refID="esri_editing_tableFreezeFieldButton" />
           <button refID="esri_editing_tableCalculateFieldButton" separator="true" />
+          <button refID="esri_editing_tableCalculateFieldToolbarButton" />
           <button refID="esri_editing_tableCalculateGeometryButton" />
           <button refID="esri_editing_tableExploreStatisticsButton" separator="true" />
           <button refID="esri_editing_tableSummarizeButton" />
@@ -11296,7 +11946,53 @@
           <menu refID="esri_editing_tableColumnContextMenu" separator="true" />
           <menu refID="esri_editing_externalTableAllRowContextMenu" />
         </menu>
+        <menu id="esri_editing_errorInspectorCellContextMenu" caption="Cell" contextMenu="true">
+          <button refID="esri_editing_errorInspectorCopyCellValue" />
+        </menu>
 
+        <menu id="esri_editing_tableContingentValuesMenu" caption="Contingent Values">
+          <checkBox refID="esri_editing_table_tableShowContingentValueFieldsButton"/>
+          <checkBox refID="esri_editing_table_tableHighlightContingentValueFieldsButton"/>
+          <checkBox refID="esri_editing_table_contingentValuesAutoPopulateButton"/>
+        </menu>
+
+        <menu id="esri_editing_tableJoinsRelatesMenu" caption="Joins and Relates">
+          <menu refID="esri_editing_tableJoinsMenu" inline="true"/>
+          <menu refID="esri_editing_tableRelatesMenu" inline="true" separator="true"/>
+        </menu>
+
+        <menu id="esri_editing_tableBurgerMenu" caption="Table Burger Menu">
+          <checkBox refID="esri_editing_table_fieldsShowAliasBurgerButton"/>
+          <button refID="esri_editing_table_tableShowAllFieldsButton"/>
+          <button refID="esri_editing_table_tableResetFieldOrderButton"/>
+          <button refID="esri_editing_table_fieldsViewBurgerButton"/>
+          <checkBox refID="esri_editing_table_tableShowSubtypeDescriptionBurgerButton" separator="true"/>
+          <menu refID="esri_editing_tableContingentValuesMenu" separator="true"/>
+          <menu refID="esri_editing_tableJoinsRelatesMenu" separator="true"/>
+          <dynamicMenu refID="esri_editing_table_selectRelatedDataDynamicMenu" />
+          <checkBox refID="esri_editing_table_selectRelatedDataButton"/>
+          <dynamicMenu refID="esri_editing_tableAssociatedDynamicMenu" />
+          <button refID="esri_editing_tableFindAndReplace" separator="true"/>
+          <button refID="esri_editing_tableGoToBurgerButton"/>
+          <button refID="esri_editing_table_openDataEngineering"/>
+          <button refID="esri_editing_tablePrintTableButton" separator="true"/>
+          <button refID="esri_editing_tableExportTableButton"/>
+          <button refID="esri_editing_tables_ExportToExcelButton"/>
+        </menu>
+
+        <menu id="esri_editing_externalTableBurgerMenu" caption="Table Menu">
+          <checkBox refID="esri_editing_table_fieldsShowAliasBurgerButton"/>
+          <button refID="esri_editing_table_tableShowAllFieldsButton"/>
+          <button refID="esri_editing_table_tableResetFieldOrderButton"/>
+          <button refID="esri_editing_table_fieldsViewBurgerButton"/>
+          <checkBox refID="esri_editing_table_tableShowSubtypeDescriptionBurgerButton" separator="true"/>
+          <menu refID="esri_editing_tableContingentValuesMenu" separator="true"/>
+          <button refID="esri_editing_tableFindAndReplace" separator="true"/>
+          <button refID="esri_editing_tableGoToBurgerButton"/>
+          <button refID="esri_editing_tablePrintTableButton" separator="true"/>
+          <button refID="esri_editing_tableExportTableButton"/>
+          <button refID="esri_editing_tables_ExportToExcelButton"/>
+        </menu>        
         <!-- Table Menus - End -->
 
         <menu id="esri_editing_rematchAddressContextMenu" caption="RematchAddress" contextMenu="true">
@@ -11325,11 +12021,13 @@
         <menu id="esri_editing_data_subtypeGroupLayer" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_exportDataButton"/>
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
         </menu>
 
         <menu id="esri_editing_data" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_exportDataButton"/>
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
           <button refID="esri_mapping_OpenRematchTableContextMenuItem" separator="true"/>
           <button refID="esri_mapping_OpenSplitAddressReviewButton"/>
           <button refID="esri_mapping_SetDataSourceContextMenuItem" separator="true" />
@@ -11337,18 +12035,22 @@
         <menu id="esri_editing_subtypevaluelayer_data_menu" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_exportDataButton"/>
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
           <button refID="esri_mapping_OpenRematchTableContextMenuItem" separator="true"/>
           <button refID="esri_mapping_OpenSplitAddressReviewButton"/>
         </menu>
         <menu id="esri_editing_subtypegrouptable_data_menu" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
         </menu>
         <menu id="esri_editing_subtypevaluetable_data_menu" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
           <button refID="esri_mapping_OpenSplitAddressReviewButton" separator="true"/>
         </menu>
         <menu id="esri_editing_standalonetable_data_menu" caption="Data" contextMenu="true">
           <button refID="esri_geoprocessing_tableExportTableButton"/>
+          <button refID="esri_editing_tableExportExcelButton"/>
           <button refID="esri_mapping_SetDataSourceContextMenuItem" separator="true" />
           <button refID="esri_mapping_OpenSplitAddressReviewButton" separator="true"/>
         </menu>
@@ -11791,7 +12493,7 @@
                 smallImage="EditingMultipatchCreateRoof16"
                 largeImage="EditingMultipatchCreateRoof32">
           <tooltip heading="">
-            CGA templates.<disabledText></disabledText>
+            Geometry templates.<disabledText></disabledText>
           </tooltip>
         </gallery>
         

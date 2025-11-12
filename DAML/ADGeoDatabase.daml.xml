@@ -1032,6 +1032,7 @@
         <content contextMenuID="ENCItemMenu">
           <supportedTypeIDs>
             <type id="file_000" />
+            <type id="file_S101" />
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -1603,6 +1604,7 @@
             <type id="portal_url_indoorpositioningservice" contextMenuID="onlineItemMenu" />
             <type id="portal_url_3dtilesservice_3dobject" contextMenuID="onlineItemMenu" />
             <type id="portal_url_3dtilesservice_integratedmesh" contextMenuID="onlineItemMenu" />
+            <type id="portal_url_3dtilesservice_gaussianSplat" contextMenuID="onlineItemMenu" />
             <type id="portal_3dtilepackage" contextMenuID="onlineItemMenu" />
             <type id="portal_url_ogcwms" contextMenuID="onlineItemMenu" />
             <type id="portal_url_ogcwmts" contextMenuID="onlineItemMenu" />
@@ -1839,15 +1841,68 @@
     <!-- AI Assistants Skills -->
     <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_data_management_assistant_extension" className="ArcGIS.Desktop.Internal.Catalog.DataManagementAssistantExtension">
-        <content searchDescription="This skill class allows users to manage data in ArcGIS Pro, including modifying data in database and geodatabase workspaces.">
-          <aiAssistantFunction name="GetAllWorkspaces" searchDescription="Returns a list of all database and geodatabase (gdb) workspaces in the current project."/>
-          <aiAssistantFunction name="GetAllDatasets" searchDescription="Returns a list of all the datasets in the database or geodatabase (gdb) workspace."/>
-          <aiAssistantFunction name="OpenDatabaseWorkspaceProperties" searchDescription="Open properties for a geodatabase (gdb) platform or database workspace."/>
-          <aiAssistantFunction name="OpenFieldsView" searchDescription="Opens fields view for the specified dataset to show or discover what fields and columns it has."/>
-          <aiAssistantFunction name="CreateNewFeatureClass" searchDescription="Opens new feature class wizard to allow creation of a new feature class (fc) in the specified database or geodatabase (gdb) workspace."/>
-          <aiAssistantFunction name="OpenDatasetProperties" searchDescription="Opens properties for the specified dataset."/>
-          <aiAssistantFunction name="EnableBranchVersioningOnDatasetInGdb" searchDescription="Opens manage properties page to enable branch versioning on the specified dataset in a geodatabase (gdb) workspace."/>
-          <aiAssistantFunction name="ManageGdbDataset" searchDescription="Opens manage properties page for the specified dataset in a geodatabase (gdb) workspace."/>
+        <content extensionCategoryRefID="ai_data_management_category">
+          <searchDescriptions>
+            <searchDescription>Manage database</searchDescription>
+            <searchDescription>Manage .gdb</searchDescription>
+            <searchDescription>Manage .sde</searchDescription>
+            <searchDescription>Manage .geodatabase</searchDescription>
+            <searchDescription>Manage .sqlite</searchDescription>
+            <searchDescription>Manage .dbconn</searchDescription>
+            <searchDescription>Database properties</searchDescription>
+            <searchDescription>Create feature class</searchDescription>
+            <searchDescription>Enable branch versioning</searchDescription>
+            <searchDescription>Disable branch versioning</searchDescription>
+          </searchDescriptions>
+          <overrides>
+            <override refID="esri_geoprocessing_management_UpdateGeodatabaseConnectionPropertiesToBranch"/>
+            <override refID="esri_geoprocessing_management_RegisterAsVersioned"/>
+          </overrides>
+          <aiAssistantFunction name="GetAllWorkspaces">
+            <searchDescriptions>
+              <searchDescription>Returns a list of all database and geodatabase (gdb) workspaces in the current project.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="GetAllDatasets">
+            <searchDescriptions>
+              <searchDescription>Returns a list of all the datasets in the database or geodatabase (gdb) workspace.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenDatabaseWorkspaceProperties">
+            <searchDescriptions>
+              <searchDescription>Open properties for a geodatabase (gdb) platform or database workspace.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenFieldsView">
+            <searchDescriptions>
+              <searchDescription>Opens fields view for the specified dataset to show or discover what fields and columns it has.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="CreateNewFeatureClass">
+            <searchDescriptions>
+              <searchDescription>Opens new feature class wizard to allow creation of a new feature class (fc) in the specified database or geodatabase (gdb) workspace.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenDatasetProperties">
+            <searchDescriptions>
+              <searchDescription>Opens properties for the specified dataset.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="EnableBranchVersioningOnDatasetInGdb">
+            <searchDescriptions>
+              <searchDescription>Opens manage properties page to enable branch versioning on the specified dataset in a geodatabase (gdb) workspace.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ManageGdbDataset">
+            <searchDescriptions>
+              <searchDescription>Opens manage properties page for the specified dataset in a geodatabase (gdb) workspace.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AddDatasetItemToMap">
+            <searchDescriptions>
+              <searchDescription>Adds the specified dataset from a geodatabase to the map.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
         </content>
       </insertComponent>
     </updateCategory>
@@ -2156,7 +2211,7 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <gallery refID="esri_layerTemplateGallery" inline="true" />
         </group>
 
-        <group id="esri_core_Folders_Project" caption="Project" smallImage="StylesFolder16">
+        <group id="esri_core_Folders_Project" caption="Project" smallImage="ArcGISProject16">
           <button refID="esri_folderConnectionMakeDefaultButton" size="middle"/>
           <button refID="esri_folderConnectionAddButton" size="middle"/>
         </group>
@@ -2169,19 +2224,21 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_geodatabase_newDatabaseConnectionInFolder" size="neverLarge" />
           <button refID="esri_GDBCreateNewToolboxAtbxButtonInFolder" size="neverLarge"/>
           <button refID="esri_GDBCreateNewPythonToolboxButtonInFolder" size="neverLarge"/>
-          <button refID="esri_CreateSAModelButton" size="neverLarge"/>
+          <menu refID="esri_SASuitabilityModelsMenu" size="neverLarge"/>
+          <!--<button refID="esri_CreateSAModelButton" size="neverLarge"/>
+          <button refID="esri_CreateSAComparisonModelButton" size="neverLarge"/>-->
           <button refID="esri_GDBCreateNewPythonNotebookButtonInFolder" size="neverLarge"/>
           <button refID="esri_GDBCreateNewLasDatasetButton" size="neverLarge"/>
           <button refID="esri_GDBShapeFileButton" size="neverLarge"/>
           <button refID="esri_CreateNewLocatorButton" size="neverLarge"/>
         </group>
 
-        <group id="esri_database_New" caption="Project">
+        <group id="esri_database_New" caption="Project" smallImage="ArcGISProject16">
           <button refID="esri_GDBMakeDefaultButton" size="large"/>
           <subgroup refID="esri_database_NewSubgroup"/>
         </group>
 
-        <group id="esri_database_Create_Group" caption="Create">
+        <group id="esri_database_Create_Group" caption="Create" smallImage="GenericNewSparkleLarge16">
           <subgroup refID="esri_database_subgroup1"/>
           <subgroup refID="esri_database_subgroup3"/>
           <subgroup refID="esri_database_subgroup4"/>
@@ -2280,7 +2337,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
 
         <menu id="folderConnectionItemMenu" caption="Folder Connection" extendedCaption="Context menu for folder connections">
           <button refID="FolderConnectionProjectNewItemMenu" separator="true"/>
-          <menu refID="esri_makeDefaultFolderConnectionSubMenu" inline="true" separator="true"/>
+          <button refID="esri_folderConnectionMakeDefaultButton" separator="true"/>
+          <button refID="esri_folderConnectionRemoveButton"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true" />
@@ -3848,7 +3906,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <!-- file geodatabases from the project -->
         <menu id="GDBProjectItemMenu" caption="File Geodatabase Connection" extendedCaption="Context menu for file geodatabases added to a project">
           <menu refID="GDBProjectNewItemMenu"/>
-          <menu refID="esri_makeDefaultGDBSubMenu" inline="true" separator="true"/>
+          <button refID="esri_GDBMakeDefaultButton" separator="true"/>
+          <button refID="esri_GDBRemoveButton"/>          
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
@@ -3870,7 +3929,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <!-- Database connections default menu from the project (dynamically changed in GDBProjectItem) -->
         <menu id="EGDBProjectItemDefaultMenu" caption="Enterprise Geodatabase Connection" extendedCaption="Context menu for enterprise databases added to a project">
           <menu refID="GDBProjectNewItemMenu" separator="true"/>
-          <menu refID="esri_makeDefaultGDBSubMenu" inline="true" separator="true"/>
+          <button refID="esri_GDBMakeDefaultButton" separator="true"/>
+          <button refID="esri_GDBRemoveButton"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
@@ -3955,7 +4015,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <!-- Sqlite databases added to the project -->
         <menu id="SqliteProjectItemMenu" caption="SQLite Database Connection" extendedCaption="Context menu for SQLite databases added to a project">
           <menu refID="SQLiteProjectNewItemMenu" separator="true"/>
-          <menu refID="esri_makeDefaultGDBSubMenu" inline="true" separator="true"/>
+          <button refID="esri_GDBMakeDefaultButton" separator="true"/>
+          <button refID="esri_GDBRemoveButton"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
@@ -3973,7 +4034,8 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         <!-- mobile geodatabases added to the project -->
         <menu id="MGDBProjectItemMenu" caption="Mobile Geodatabase Connection" extendedCaption="Context menu for mobile geodatabases added to a project">
           <menu refID="MGDBProjectNewItemMenu" separator="true"/>
-          <menu refID="esri_makeDefaultGDBSubMenu" inline="true" separator="true"/>
+          <button refID="esri_GDBMakeDefaultButton" separator="true"/>
+          <button refID="esri_GDBRemoveButton"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="GDBWorkspaceImportItemMenu" separator="true"/>
@@ -4394,7 +4456,6 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
         </menu>
 
         <menu id="FileGDBAndEGDBCatalogDatasetExportItemMenu" caption="Export" contextMenu="true" extendedCaption="Context menu submenu for exporting data in a geodatabase">
-          <button refID="esri_GDBCatalogDatasetsExportToCADButton" />
           <button refID="esri_GDBCatalogDatasetExportToCatalogDatasetButton" />
           <button refID="esri_GDBCatalogDatasetsExportToGeodatabaseButton" />
           <!--With multi-select limitations-->
@@ -4473,6 +4534,11 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_GDBFeatureClassAndTableLoadDataButton" />
         </menu>-->
 
+        <menu id="esri_SASuitabilityModelsMenu" caption="Suitability Models" contextMenu="true" extendedCaption="Use and compare suitability models" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer16.png">
+          <button refID="esri_CreateSAModelButton"/>
+          <button refID="esri_CreateSAComparisonModelButton"/>
+        </menu>
+
         <menu id="FolderConnectionProjectNewItemMenu" caption="New" contextMenu="true" extendedCaption="Context menu submenu for creating new items in a geodatabase" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png">
           <button refID="esri_core_newFolderButton"/>
           <button refID="esri_GDBCreateNewFileGeodatabaseButton" />
@@ -4484,7 +4550,9 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_GDBCreateNewLasDatasetButton"/>
           <button refID="esri_GDBCreateNewGeoPackageButton" />
           <button refID="esri_GDBShapeFileButton"/>
-          <button refID="esri_CreateSAModelButton"/>
+          <menu refID="esri_SASuitabilityModelsMenu"/>
+          <!--<button refID="esri_CreateSAModelButton"/>
+          <button refID="esri_CreateSAComparisonModelButton"/>-->
           <button refID="esri_CreateNewLocatorButton" />
         </menu>
         <menu id="FolderConnectionProjectNewItemMenu2" caption="New" contextMenu="true" extendedCaption="Context menu submenu for creating new items in a geodatabase">
@@ -4596,7 +4664,6 @@ A new BIM Cloud Connection file is created in the project's home folder and is r
           <button refID="esri_projectItemAddNewBIMConnection"/>
           <button refID="esri_workflow_workflowConnectionButton"/>
           <menu refID="esri_geodatabase_insertStats" separator="true"/>
-          <menu refID="esri_datareviewer_connections" separator="true"/>
           <button refID="esri_geodatabase_addLocatorButton" separator="true" insert="after"/>
         </menu>
 
@@ -5487,17 +5554,28 @@ The project saves a reference to the statistical data collection file.
           </tooltip>
         </button>
         <button id="esri_CreateSAModelButton"
-                className="esri_samodels_module:Commands.NewSAModelsInFolder" loadOnClick="false"
-                caption="Suitability Models"
-                extendedCaption="Create new spatial analyst models."
-                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer32.png"
-                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer16.png"
+                className="esri_samodels_module:Commands.NewSAModelsInFolder" 
+                caption="Suitability Model"
+                extendedCaption="Create a spatial analyst suitability model."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerCatalogSuit32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerCatalogSuit16.png"
                 helpContextID="" keytip="b">
           <tooltip heading="">
-            Create new spatial analyst models.<disabledText></disabledText>
+            Use to create a suitability model.<disabledText></disabledText>
           </tooltip>
         </button>
-         <button id="esri_CreateSAModelButton_onContextMenu"
+        <button id="esri_CreateSAComparisonModelButton"
+                className="esri_samodels_module:Commands.NewSAComparisonModelsInFolder"
+                caption="Comparison Model"
+                extendedCaption="Compare multiple suitability models."
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityComparisonComparisonModel32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityComparisonComparisonModel16.png"
+                helpContextID="" keytip="b">
+          <tooltip heading="">
+            Compare multiple suitability models.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_CreateSAModelButton_onContextMenu"
                 className="esri_samodels_module:Commands.NewSAModelsOnContextMenu"
                 caption="New Suitability Models"
                 extendedCaption="Create new spatial analyst models."
@@ -5510,7 +5588,7 @@ The project saves a reference to the statistical data collection file.
         </button>
         <button id="esri_CreateSACompareButton_onContextMenu"
                className="esri_samodels_module:Commands.NewSACompareOnContextMenu"
-               caption="New Suitability Compare"
+               caption="New Comparison Models"
                extendedCaption="Create new spatial analyst comparison models."
                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer32.png"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SuitabilityModelerSuitContainer16.png"
