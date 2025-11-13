@@ -451,7 +451,6 @@ If you are using ArcGIS Pro Extensions NuGet with ArcGIS Pro 3.3 or 3.4, and you
 
 #### 1. API enhancements
 At 3.6 you can take advantage of API enhancements for: <br/>
-At 3.6 you can take advantage of API enhancements for: <br/>
 
 **Knowledge Graph:**
 * Knowledge Graph analytical functions to include Centrality and Filtered Find Paths, FFP, computations.
