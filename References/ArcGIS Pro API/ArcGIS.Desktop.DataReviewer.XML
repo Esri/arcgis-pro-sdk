@@ -1,0 +1,1582 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArcGIS.Desktop.DataReviewer</name>
+    </assembly>
+    <members>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.GetWorkspaceFactory(ArcGIS.Core.CIM.CIMDataConnection)">
+            <summary>
+            Returns the workspace factory type for the given data connection, or null if unknown.
+            </summary>
+            <param name="dataConnection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.OpenReviewerRule(ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckGalleryItem,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Helper to validate parameters and open a reviewer rule from the UI thread.
+            Schedules the actual call to DataReviewerModule.OpenReviewerRule on the Dispatcher.
+            </summary>
+            <param name="item">Gallery item describing the reviewer rule.</param>
+            <param name="checkParameters">Parameters used to configure the rule.</param>
+            <param name="targetLayerUri">URI of the layer to run the rule on.</param>
+            <param name="secondaryLayers">Optional secondary layers to pass to RunDataCheckRule.</param>
+            <param name="checkName">Optional check name.</param>
+            <returns>AIFunctionResult indicating success/failure.</returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.GetLayerSchemaInfo(ArcGIS.Desktop.Internal.Mapping.AILayerInformation)">
+            <summary>
+            Retrieves schema details (geometry, fields, subtypes, domains) for the specified map layer.
+            </summary>
+            <param name="layerInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.EnsureNumberedList(System.Collections.Generic.List{System.String})">
+            <summary>
+            Converts a list of strings into a numbered list, skipping empty lines and preserving title lines.
+            </summary>
+            <param name="aiOutput"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.BuildPredictRulesOutput(System.String,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Core.Assistant.EnterpriseClient.APIResponse.SuggestedReviewerRuleInfo})">
+            <summary>
+            Render the JSON output using Markdown formatting in order to display it properly in the ArcGIS Pro AI Assistant panel.
+            </summary>
+            <param name="layerName"></param>
+            <param name="rules"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.MakeOverviewReadable(System.String)">
+            <summary>
+            Converts an overview sentence into a natural phrase for "Use option X to ..." output.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.EscapeMarkdownListNumbers(System.String)">
+            <summary>
+            Escapes number-dot patterns (e.g., "3.") to prevent Markdown list breaks.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.QuickDataValidationAssistantExtension.GenerateFunctionName(System.String)">
+            <summary>
+            Generate the AI function name from the rule name.
+            </summary>
+            <param name="reviewerRuleName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.GetLayerSchemaInfo(ArcGIS.Desktop.Internal.Mapping.AILayerInformation)">
+            <summary>
+            Retrieves schema details (geometry, fields, subtypes, domains) for the specified map layer.
+            </summary>
+            <param name="layerInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.GetLayerDataJson(ArcGIS.Desktop.Internal.Mapping.AILayerInformation)">
+            <summary>
+            Retrieves a typed representation (object) of a layer's data and metadata.
+            NOTE: The return value is a List containing a single LayerDataForDataQuality object.
+            This replaces the previous behavior that returned a List of serialized JSON strings.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.EnsureNumberedList(System.Collections.Generic.List{System.String})">
+            <summary>
+            Converts a list of strings into a numbered list, skipping empty lines and preserving title lines.
+            </summary>
+            <param name="aiOutput"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.BuildPredictRulesOutput_allRules(System.String,System.Collections.Generic.List{ArcGIS.Desktop.Internal.Core.Assistant.EnterpriseClient.APIResponse.SuggestedReviewerRuleInfo})">
+            <summary>
+            Render the JSON output using Markdown formatting in order to display it properly in the ArcGIS Pro AI Assistant panel.
+            </summary>
+            <param name="layerName"></param>
+            <param name="rules"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.MakeOverviewReadable(System.String)">
+            <summary>
+            Converts an overview sentence into a natural phrase for "Use option X to ..." output.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.EscapeMarkdownListNumbers(System.String)">
+            <summary>
+            Escapes number-dot patterns (e.g., "3.") to prevent Markdown list breaks.
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.RulePredictionAssistantExtension.GenerateFunctionName(System.String)">
+            <summary>
+            Generate the AI function name from the rule name.
+            </summary>
+            <param name="reviewerRuleName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ValencyAssistantExtension.OpenReviewerRule(ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckGalleryItem,System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Helper to validate parameters and open a reviewer rule from the UI thread.
+            Schedules the actual call to DataReviewerModule.OpenReviewerRule on the Dispatcher.
+            </summary>
+            <param name="item">Gallery item describing the reviewer rule.</param>
+            <param name="checkParameters">Parameters used to configure the rule.</param>
+            <param name="targetLayerUri">URI of the layer to run the rule on.</param>
+            <param name="secondaryLayers">Optional secondary layers to pass to RunDataCheckRule.</param>
+            <param name="checkName">Optional check name.</param>
+            <returns>AIFunctionResult indicating success/failure.</returns>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Common.DataPiping">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+            <remarks>
+            Used to transfer data from one class to another.
+            Useful for binding to Readonly properties.
+            </remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Common.DataPipeCollection">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Common.DataPipe">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Common.SerializableDictionary`2">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Common.SerializableDictionary`2.GetSchema">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Common.SerializableDictionary`2.ReadXml(System.Xml.XmlReader)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Common.SerializableDictionary`2.WriteXml(System.Xml.XmlWriter)">
+            <exclude></exclude>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Common.SerializableStringDictionary">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Constants">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.ComboboxWithToggle.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Controls.CommonFields">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.CommonFields.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView">
+            <summary>
+            Interaction logic for MultiSelectCommonFieldView.xaml
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.ControlDataContextProperty">
+            <summary>
+            Gets or sets the ControlDataContext Dependency property.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.ControlDataContext">
+            <summary>
+            Gets or sets the ControlDataContext property.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.CommonFieldsProp">
+            <summary>
+            Gets or sets the Properties property.
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.CommonFieldsPropProperty">
+            <summary>
+            Dependency Properties property.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.OnPropertiesChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Raised when the SelectedFieldName dependency property changes.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.CheckBox_Changed(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Raised when the checkbox is checked or unchecked. This method supports select/deselect all.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Controls.CommonFieldItem">
+            <summary>
+            Class for the items appearing in the multi select common field control
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM">
+            <summary>
+            View model for the multi select common field control
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM.SelectedCommonFields">
+            <summary>
+            Selected common field property
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM.FieldsCollection">
+            <summary>
+            Common fields collection
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM.CommonFieldsProperties">
+            <summary>
+            Common fields property
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM.InitializeAsync(ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties)">
+            <summary>
+            Initialize the common field control
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.MultiSelectCommonFieldVM.UpdateUIProperties(System.Collections.ObjectModel.ObservableCollection{ArcGIS.Desktop.Internal.DataReviewer.Controls.CommonFieldItem})">
+            <summary>
+            Updtae the UI and popluate the fieldscollection property
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultItemsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Controls.ValidationResultItemCollectionViewModel">
+            <summary>
+            View model for the Results History Ribbon Control
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.DataReviewerRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.DataReviewerRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.DataReviewerRes.ApplyViewErrorTitle">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.EvaluateFeaturesViewRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.EvaluateFeaturesViewRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.EvaluateFeaturesViewRes.AttributesLabel">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.FlagMissingFeaturesRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.FlagMissingFeaturesRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.FlagMissingFeaturesRes.EnterDescription">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ImportRulesRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ImportRulesRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ImportRulesRes.BatchJobContents">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+            <summary>
+            {0} is a placeholder.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.RevBatchJobsRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.RevBatchJobsRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.RevBatchJobsRes.BatchJobFileLabel">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ReviewerRulesRes.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ReviewerRulesRes.GetResourceString(System.String,System.String[])">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.LocalResources.ReviewerRulesRes.CheckParameters">
+            <summary>
+              Returns the formatted resource string.
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.BatchJobValidationResult">
+            <summary>
+            This struct is not for public use and is used internally by the system.
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerBatchJobManager">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.AdjacentVertexElevationChangeCheckView">
+            <summary>
+            Interaction logic for AdjacentVertexElevationChangeCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.AdjacentVertexElevationChangeCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.BaseCheckViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CompositeCheckView">
+            <summary>
+            Interaction logic for DifferentZCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CompositeCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CutbacksCheckView">
+            <summary>
+            Interaction logic for CutbacksCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CutbacksCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DifferentZIntersectionCheckView">
+            <summary>
+            Interaction logic for DifferentZCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DifferentZIntersectionCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DomainCheckView">
+            <summary>
+            Interaction logic for DomainCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DomainCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateFeaturesCheckView">
+            <summary>
+            Interaction logic for DuplicateFeaturesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateFeaturesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateRowCheckView">
+            <summary>
+            Interaction logic for DuplicateRowCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateRowCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateVertexCheckView">
+            <summary>
+            Interaction logic for DuplicateVertexCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DuplicateVertexCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateCheckParametersView">
+            <summary>
+            Interaction logic for EvaluateCheckParameterView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateCheckParametersView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateIntersectionCountCheckView">
+            <summary>
+            Interaction logic for EvaluateIntersectionCountCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateIntersectionCountCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePartCountCheckView">
+            <summary>
+            Interaction logic for EvaluatePartCountCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePartCountCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePolygonPerimeterAreaCheckView">
+            <summary>
+            Interaction logic for EvaluatePolygonPerimeterAreaCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePolygonPerimeterAreaCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePolylineLengthCheckView">
+            <summary>
+            Interaction logic for EvaluatePolylineLengthCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluatePolylineLengthCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateVertexCountCheckView">
+            <summary>
+            Interaction logic for EvaluateVertexCountCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateVertexCountCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateZValuesCheckView">
+            <summary>
+            Interaction logic for EvaluateZValuesCheckView.xaml
+            </summary>
+            <summary>
+            EvaluateZValuesCheckView
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.EvaluateZValuesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FeatureOnFeatureCheckView">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FeatureOnFeatureCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FeatureOnFeatureCheckViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindDanglesCheckView">
+            <summary>
+            Interaction logic for FindDanglesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindDanglesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindDisconnectedPolylinesCheckView">
+            <summary>
+            Interaction logic for FindDisconnectedPolylinesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindDisconnectedPolylinesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindEventGapsCheckView">
+            <summary>
+            Interaction logic for FindEventGapsCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindEventGapsCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindInvalidEventCheckView">
+            <summary>
+            Interaction logic for FindInvalidEventCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.FindInvalidEventCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.MonotonicityCheckView">
+            <summary>
+            Interaction logic for MonotonicityCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.MonotonicityCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonGapOrOverlapIsSliverCheckView">
+            <summary>
+            Interaction logic for PolygonGapIsSliverCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonGapOrOverlapIsSliverCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonSliverCheckView">
+            <summary>
+            Interaction logic for PolygonSliverCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonSliverCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonSliverParametersView">
+            <summary>
+            Interaction logic for PolygonSliverParametersView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonSliverParametersView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolylineOrPathClosesOnSelfCheckView">
+            <summary>
+            Interaction logic for PolylineOrPathClosesOnSelfCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolylineOrPathClosesOnSelfCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.QueryAttributesCheckView">
+            <summary>
+            Interaction logic for QueryAttributesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.QueryAttributesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RegularExpressionCheckView">
+            <summary>
+            Interaction logic for PolygonGapIsSliverCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RegularExpressionCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RegularExpressionFieldsViewModel.JoinFieldExpressions">
+            <summary>
+            Join field names and regular expressions in a string.
+            String format is as follows:
+            &lt;FieldName&gt; &lt;Expression length&gt; &lt;Expression&gt; ...
+            E.g. Field1 14 [_\w^\d][_\w]*Field2 3 \d+
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RelationshipCheckView">
+            <summary>
+            Interaction logic for RelationshipCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RelationshipCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RevRuleType">
+            <summary>
+            This enumeration is not for public use and is used internally by the system to 
+            implement support for other esri modules.
+            </summary>
+            <remarks>
+            Enumeration to represent the Reviewer Validation Rule Type
+            </remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.LayerAwareType">
+            <summary>
+            This enumeration is not for public use and is used internally by the system to 
+            implement support for other esri modules.
+            </summary>
+            <remarks>
+            Enumeration to represent is a layer is M aware, Z aware, both M and Z aware or none.
+            </remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSource">
+            <summary>
+            This enumeration is not for public use and is used internally by the system to 
+            implement support for other esri modules.
+            </summary>
+            <remarks>
+            Enumeration to represent the source type of a Reviewer Validation rule.
+            </remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerCommonFieldsView">
+            <summary>
+            Interaction logic for ReviewerCommonFieldsView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerCommonFieldsView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecuted.Subscribe(System.Action{ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecutedEventArgs},System.Boolean)">
+            <summary>
+            Subscribe to the ReviewerRulesRunExecuted.
+            </summary>
+            <param name="action">The delegate that gets executed when the event is published.</param>
+            <param name="keepSubscriberAlive">When false the <see cref="T:ArcGIS.Core.Events.CompositePresentationEvent`1"/> will maintain a weak delegate reference to the subscriber.
+            Using a weak delegate reference relieves the subscriber from the need to unsubscribe to enable proper garbage collection.</param>
+            <returns>A <see cref="T:ArcGIS.Core.Events.SubscriptionToken"/> that uniquely identifies the added subscription.</returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecuted.Unsubscribe(System.Action{ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecutedEventArgs})">
+            <summary>
+            Removes the first subscriber matching the provided delegate from the subscribers' list.
+            </summary>
+            <param name="action">The delegate used when subscribing to the event.</param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecuted.Unsubscribe(ArcGIS.Core.Events.SubscriptionToken)">
+            <summary>
+            Removes the subscriber matching the <see cref="T:ArcGIS.Core.Events.SubscriptionToken"/>.
+            </summary>
+            <param name="token">The <see cref="T:ArcGIS.Core.Events.SubscriptionToken"/> returned when subscribing to the event.</param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecuted.Publish(ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecutedEventArgs)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.Events.ReviewerRulesRunExecutedEventArgs.#ctor(System.String,ArcGIS.Desktop.Mapping.Map)">
+            <summary>
+            Constructs a new ReviewerRulesRunTaskEventArgs.
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceImageConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceImageConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceImageConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceDescriptionConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceDescriptionConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RuleSourceDescriptionConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeDescriptionConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeDescriptionConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeDescriptionConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeCaptionConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeCaptionConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CheckTypeCaptionConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+            <exclude></exclude>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.BoolToNotBoolConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.NullToVisibiltyConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.CountToVisibiltyConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DoubleTextBoxValidationRule">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.DoubleConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.NullOrEmptyStringToBoolConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.KeyValueConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerRulesUtilities">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.IReviewerRuleResourceFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ReviewerRuleResourceFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.AllTrueRuleFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.AllTrueRuleFilter.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.AllTrueRuleFilter.CanAddImpl(System.Object)">
+            <summary>
+            Method to check if the object can be added
+            </summary>
+            <param name="objResource"></param>
+            <returns>bool</returns>
+            Disable async await warning since this method is an overriden method to match  function signature
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PointFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.LineFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.PolygonFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ZAwareFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.MAwareFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ExcludeFeatureServiceFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.HasVCSFilter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckGallery">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            This is the ViewModel of the Gallery View
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckView">
+            <summary>
+            Interaction logic for RunDataCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.RunDataCheckViewModel.#ctor">
+            <summary>
+            Creates new instance of RunDataCheckViewModel.
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.SubtypeCheckView">
+            <summary>
+            Interaction logic for SubtypeCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.SubtypeCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.TableToTableCheckView">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.TableToTableCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.TableToTableCheckViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UniqueFieldValueCheckView">
+            <summary>
+            Interaction logic for UniqueFieldValueCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UniqueFieldValueCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UnnecessaryNodesCheckView">
+            <summary>
+            Interaction logic for UnnecessaryNodesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UnnecessaryNodesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UnnecessaryPolygonBoundariesCheckView">
+            <summary>
+            Interaction logic for UnnecessaryPolygonBoundariesCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.UnnecessaryPolygonBoundariesCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ValencyCheckView">
+            <summary>
+            Interaction logic for DifferentZCheckView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.ValencyCheckView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.WorkspaceViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerRules.WorkspaceViewManager">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.ReviewerTable.DatasourceInfo.Properties">
+            <summary>
+            Get a Readonly list of
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.ReviewerTable.DatasourceInfo.ConnectionProperties">
+            <summary>
+            Get the ConnectionProperties used to connect to the datasource.
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.BoolToVisibleConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.BoolToHiddenConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.NotBoolToVisibleConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.SpaceToEmptyStringConverter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.#cctor">
+            <summary>
+             default static contructor.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.OnApplyTemplate">
+            <summary>
+            called while applying templates.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.MeasureOverride(System.Windows.Size)">
+            <summary>
+            called to set width and height of buttons.
+            </summary>
+            <param name="availableSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.OnLeftEvent(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            invokes up click event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.OnRightEvent(System.Object,System.Windows.RoutedEventArgs)">
+             <summary>
+            
+             </summary>
+             <param name="sender"></param>
+             <param name="e"></param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.OnVerticalToggleButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            invokes switch horizontal button click event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.OnHorizontalToggleButtonClick(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            invokes switch horizontal button click event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.SetTargetComponents(System.Int32,System.Int32,System.Double,System.Double,System.Boolean)">
+            <summary>
+            sets the indices of two components within a containing Grid,
+            that are to be managed by the actions of this GridSplitter.
+            The container Grid is assumed to (directly) contain this GridSplitter as well as the indicated components
+            </summary>
+            <param name="index1">index within the Grid of one of the components</param>
+            <param name="index2">index within the Grid of the other component</param>
+            <param name="defaultSize1">default size of the first component </param>
+            <param name="defaultSize2"> default size of the second component</param>
+            <param name="toggle"> flag to set the orientation of the splitter  </param>
+            <returns>0 == all ok, 1 == indices are bad, 2 == there's no appropriate Grid container, 3 == default sizes are bad</returns>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.UseHorizontallyProperty">
+            <summary>
+            UseHorizontally Dependency Property
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.UseHorizontally">
+            <summary>
+            Gets or sets the UseHorizontally property. This dependency property
+            indicates ....
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.SplitterPercentageProperty">
+            <summary>
+            SplitterPercentage Dependency Property
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.SplitterPercentage">
+            <summary>
+            Gets or sets the SplitterPercentage property. This dependency property
+            indicates ....
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.IsNotLeftCollapsedProperty">
+            <summary>
+            IsNotLeftCollapsed Dependency Property
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.IsNotLeftCollapsed">
+            <summary>
+            Gets or sets the IsNotLeftCollapsed property. This dependency property
+            indicates ....
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.IsNotRightCollapsedProperty">
+            <summary>
+            IsNotLeftCollapsed Dependency Property
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.UpdateResults.TransposingGridSplitter.IsNotRightCollapsed">
+            <summary>
+            Gets or sets the IsNotRightCollapsed property. This dependency property
+            indicates ....
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Utilities.CollectionBinding">
+            <summary>
+            Class to help with binding to collections in WPF
+            </summary>
+            <remarks>
+            Core has a CollectionBindingHelper class which this class is modeled after however
+            I found it cumbersome to use their class with complex UI's as you have to declare
+            3 or 4 objects for each collection you want to bind to in the UI:
+            (collection instance, CollectionBindingHelper instance, lock instance, and possibly readonly wrapper instance).
+            This class tries to make it simple to have many bindable collections within a viewmodel.
+            </remarks>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Utilities.CollectionBinding.EnableSynchronization``2(``0@,System.Boolean)">
+            <summary>
+            Enables a generic collection C of type T <![CDATA[ (e.g. ObservableCollection<String>) ]]> that is used in WPF binding
+            to be accessible/modifiable from threads other than the UI thread.
+            </summary>
+            <typeparam name="C"></typeparam>
+            <typeparam name="T"></typeparam>
+            <param name="collection"></param>
+            <param name="bindReadOnly"></param>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Utilities.CollectionItem`1">
+            <summary>
+            A class to encapsulate an item in a collection you want to bind to.
+            </summary>
+            <remarks>
+            Many times you want to bind to a collection of objects (layers, subtypes, etc) but those objects 
+            do not display correctly when you bind to a collection of them.  This class will allow you to
+            correctly display the collection of objects and get a reference to the object when it is selected.
+            If Equals function is supplied it will be used for equality comparison, otherwise if T implements
+            IEquatable it will be used, otherwise reference equality on underlying T item is used.  You must know which equals function
+            to use when setting SelectedValue on UI elements bound to <![CDATA[ CollectionItem<T> ]]>.
+            </remarks>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Utilities.ErrorHandlingUtilities">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.Utilities.MapUtilities">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Utilities.MapUtilities.GetFeatureLayer(System.String,System.String)">
+            <summary>
+            Get 1st Layer in a map that is associated with specified feature class. 
+            </summary>
+            <param name="strFCName">Feature Class name or Layer Name for Feature service layers</param>
+            <param name="strMapURI">Map to search, if empty active map is used</param>
+            <returns></returns>
+            <remarks>
+            We can have multiple layers associated with same feature class, this function
+            will return first layer found matching the feature class.
+            </remarks>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.Utilities.MapUtilities.GetDataWorkspacesFromMap(System.String)">
+            <summary>
+            Gets the data workspaces from active map view. This method will consider only data workspaces with operational layers.
+            </summary>
+            <param name="strMapPath">The path of the map</param>
+            <returns>List of data workspace paths</returns>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.reviewerResultsWorkspaceType">
+            <summary>
+            This is used for determining if the Reviewer Results ProjectItem workspace connection is FileGDB or SDE
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.ReviewerUtils">
+            <summary>
+            This class provides general utility methods
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerUtils.GetTable(System.String)">
+            <summary>
+            Returns the underlying Table.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+            <returns><see cref="T:ArcGIS.Core.Data.Table">A table</see>.</returns>
+            <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.ReviewerUtils.GetFeatureClass(System.String)">
+            <summary>
+            Returns the underlying feature class.
+            This method must be called on the MCT. Use QueuedTask.Run.
+            </summary>
+            <returns><see cref="T:ArcGIS.Core.Data.Table">A table</see>.</returns>
+            <exception cref="T:ArcGIS.Core.CalledOnWrongThreadException">This method or property must be called within the lambda passed to QueuedTask.Run.</exception>
+            <remarks>You may want to cast it to <see cref="T:ArcGIS.Core.Data.FeatureClass">FeatureClass</see>.</remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorView">
+            <summary>
+            Interaction logic for EvaluateFeaturesErrorInspectorView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.SelectionLocation">
+            <summary>
+            Represents a location within the set of selected features being navigated.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.SelectionLocation.Layer">
+            <summary>
+            The Layer the selected feature belongs to
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.SelectionLocation.FeatureID">
+            <summary>
+            ObjectID of the selected feature
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.SelectionLocation.Index">
+            <summary>
+            The index, of the selected feature, in the list of object id's returned by map selection
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.SelectionLocation.TreeViewItem">
+            <summary>
+            Get/Set associated TreeViewItem
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorViewModel">
+            <summary>
+            Class representing Evaluate Features for Error Inspector dock pane.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorViewModel.OnExecuteNavigation(ArcGIS.Desktop.Internal.DataReviewer.VisualReview.NavigationType)">
+            <summary>
+            Navigate to selected feature in map based on which navigation button user clicked.
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesErrorInspectorViewModel.TreeItemsSelected">
+            <summary>
+            Called when user selects item in tree
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesTreeViewModel">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesTreeViewModel.Items">
+            <summary>
+            Gets/Sets the items to display in the tree
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesTreeViewRootNode">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesLayerTreeViewItem">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.EvaluateFeaturesFeatureTreeViewItem">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorView">
+            <summary>
+            Interaction logic for FlagMissingFeaturesErrorInspectorView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesErrorInspectorView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesHelper">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+            <remarks>
+            Contains utility methods used for Flag missing features
+            </remarks>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesHelper.LastPointClicked">
+            <summary>
+            The last point clicked on the map
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesHelper.FlagMissingErrorInspectorButton" -->
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesHelper.FlagMissingErrorInspectorDockPane">
+            <summary>
+            This property is a reference to the current FlagMissingFeaturesErrorInspectorViewModel instance
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.FlagMissingFeaturesHelper.IsFlagMissingFeaturesErrorInspectorActive">
+            <summary>
+            This property is a flag, referenced to the current active FlagMissingFeaturesError tool instance
+            If true, the FlagMissingFeaturesError tool for Error Inspector active
+            else, the FlagMissingFeaturesError tool for DataReviewer session is active
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.VisualReviewErrorInspectorResultPropertiesView">
+            <summary>
+            Interaction logic for VisualReviewErrorInspectorResultPropertiesView.xaml
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.VisualReviewErrorInspectorResultPropertiesView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.TreeViewNavigationBehavior">
+            <summary>
+            Allows First/Last item navigation on TreeView when it is virtualized
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Desktop.Internal.DataReviewer.VisualReview.AcceptKeyBinding">
+            <summary>
+            Allows keyboard bindings to bubble up to an element that would normally not be notified.
+            </summary>
+            <remarks>E.g child control handles key input binding and prevents parent user control from receiving it.</remarks>
+        </member>
+        <member name="T:ArcGIS.Desktop.DataReviewer.DataReviewerModule">
+            <summary>
+            Represents Data Reviewer module from which you can access functionality related to the Data Reviewer extension.
+            </summary>
+            <summary>
+            Represents Data Reviewer module from which you can access functionality related to the Data Reviewer extension.
+            This partial class contains module functions that are relevant to Reviewer Rules functionality
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.DataReviewerModule.#ctor">
+            <summary>
+            Creates Data Reviewer module
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.DataReviewerModule.Uninitialize">
+            <summary>
+            Method to Unsubscribe events and Uninitialize the class
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.DataReviewerModule.OnClick_ExportToAttributeRules">
+            <summary>
+            This method is called when Export Batch Job File To Reviewer Rules is clicked
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.DataReviewerModule.CurrentModule">
+            <summary>
+            This property is used to get the DataReviewerModule
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.DataReviewerModule.ManageQuality">
+            <summary>
+            This method is called when Manage Quality command is clicked
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement support for other esri modules
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.BatchJobFileName">
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.BatchJobFile">
+            <summary>
+            Path of source .RBJ file
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.ReadOnly">
+            <summary>
+            Whether BatchJobFile can be edited
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.OutputCSVLocationName">
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.OutputCSVLocation">
+            <summary>
+            Location of generated .CSV files 
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.DestinationWorkspace">
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="F:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane._destinationWorkspacePath">
+            <summary>
+            Workspace error
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.DestinationWorkspacePath">
+            <summary>
+            Validation workspace used while converting
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.DestinationWorkspaceName">
+            <summary>
+            Validation workspace name
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.ChooseBatchJobFileCommand">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.ChooseOutputCSVLocationCommand">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.ChooseDestinationWorkspaceCommand">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.ExportCommand">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.IsFinished">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.IsRunning">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.IsReady">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.SummaryFilePath">
+            <summary>
+            UI binding
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="P:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesDockPane.Summary">
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="T:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesView">
+            <summary>
+            Interaction logic for ExportBatchJobToAttributeRulesView.xaml
+            </summary>
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+            <summary>
+            ExportBatchJobToAttributeRulesView
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesView.#ctor">
+            <inheritdoc cref="!:ArcGIS.Desktop.DataReviewer.Models.ReviewerDataset" path="/remarks"/>
+        </member>
+        <member name="M:ArcGIS.Desktop.DataReviewer.ReviewerBatchJobs.ExportBatchJobToAttributeRulesView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties">
+            <summary>This class is not for public use and is used internally by the system to 
+            implement view model for Multi select common field control
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties.SourceTables">
+            <summary>
+            SourceTables properties from where common fields will be derived
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties.SelectedFieldNames">
+            <summary>
+            selected fields property. populated when a saved rule is opened from cim
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties.FieldTypesToDisplay">
+            <summary>
+            apply filters for the field types to display
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Internal.Desktop.DataReviewer.Controls.FieldsProperties.ShapeFieldNames">
+            <summary>
+            shape field names to restrict from control
+            </summary>
+        </member>
+        <member name="T:ServiceContracts.runRulesMode">
+            <summary>
+            Enumeration to represent Run Rules Mode 
+            </summary>
+        </member>
+        <member name="F:ServiceContracts.runRulesMode.FullDatabase">
+            <summary>Run Reviewer Rules against all data</summary>
+        </member>
+        <member name="F:ServiceContracts.runRulesMode.SelectionSet">
+            <summary>Run Reviewer Rules against a selection set</summary>
+        </member>
+        <member name="F:ServiceContracts.runRulesMode.CurrentExtent">
+            <summary>Run Reviewer Rules against a current Extent</summary>
+        </member>
+        <member name="F:ServiceContracts.runRulesMode.ChangedFeatures">
+            <summary>Run Reviewer Rules against Changed Features</summary>
+        </member>
+        <member name="F:ServiceContracts.runRulesMode.VisibleLayers">
+            <summary>Run Reviewer Rules against Visible layers</summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:ServiceContracts.LRSEventTableInfo" -->
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

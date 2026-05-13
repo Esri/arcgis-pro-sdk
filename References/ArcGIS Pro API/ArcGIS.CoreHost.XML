@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArcGIS.CoreHost</name>
+    </assembly>
+    <members>
+        <member name="T:ArcGIS.Core.Hosting.Host">
+            <summary>
+            Represents the Static Core Objects Host class. An instance of this class must be run before calling any classes in ArcGIS.Core.dll in an
+            external program (i.e. &quot;standalone&quot;)
+            </summary>
+            <remarks>ArcGIS.Core.dll can be referenced in stand-alone projects that are <b>not</b> ArcGISPro Add-ins.</remarks>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Host.Initialize">
+            <summary>
+            Call to initialize a Core Objects host process.  The method must be called
+            before constructing any objects from ArcGIS.CoreObjects library.
+            </summary>
+            <remarks>The following conditions must <b>all</b> be met to successfully Initialize CoreHost:
+            <list type="bullet">
+            <item>The process must be 64 bit (i.e. Build Settings of <b>x64</b></item>
+            <item>The process COM threading model must be single threaded apartment. [STAThread] must be present on the entry point of the application</item>
+            <item>ArcGIS Pro must be <b>installed</b> on the host machine</item>
+            <item>An ArcGIS Pro license must be available</item>
+            </list>
+            If Initialization fails, a System.Exception will be thrown. The message property will contain the reason<para/>
+            Note: An ArcGIS Pro license can either be checked out (i.e. disconnected) or the 'sign me in automatically' check box is checked on the ArcGIS Pro login popup.
+            To disconnect your license, run ArcGIS Pro, go to the Backstage, Licensing Tab.
+            </remarks>
+            <exception cref="T:System.Exception">Thrown when initialization fails.</exception>
+        </member>
+        <member name="T:ArcGIS.Core.Hosting.Host.LicenseProductCode">
+            <summary>
+            The license product codes.
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Core.Hosting.Host.LicenseProductCode.ArcGISPro">
+            <summary>
+            The License Product Code for ArGIS Professional.
+            </summary>
+        </member>
+        <member name="F:ArcGIS.Core.Hosting.Host.LicenseProductCode.ArcGISServer">
+            <summary>
+            The License Product Code for ArGIS Server.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Host.Initialize(ArcGIS.Core.Hosting.Host.LicenseProductCode)">
+            <summary>
+            Call to initialize a Core Objects host process.  The method must be called
+            before constructing any objects from ArcGIS.CoreObjects library.
+            </summary>
+            <remarks>The following conditions must <b>all</b> be met to successfully Initialize CoreHost:
+            <list type="bullet">
+            <item>The process must be 64 bit (i.e. Build Settings of <b>x64</b></item>
+            <item>The process COM threading model should be single threaded apartment. [STAThread] should be present on the entry point of the application</item>
+            <item>ArcGIS Pro must be <b>installed</b> on the host machine</item>
+            <item>An ArcGIS Pro license must be available</item>
+            <param name="licenseProdCode">the license product code.</param>
+            </list>
+            If Initialization fails, a System.Exception will be thrown. The message property will contain the reason<para/>
+            Note: An ArcGIS Pro license can either be checked out (i.e. disconnected) or the 'sign me in automatically' check box is checked on the ArcGIS Pro login popup.
+            To disconnect your license, run ArcGIS Pro, go to the Backstage, Licensing Tab.
+            </remarks>
+            <exception cref="T:System.Exception">Thrown when initialization fails.</exception>
+        </member>
+        <member name="T:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker">
+            <summary>
+            Class provides a Task based execution model around a Core.Objects compatible worker thread.
+            </summary>
+        </member>
+        <member name="P:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Busy">
+            <summary>
+            Returns True if the worker thread is busy.
+            </summary>    
+        </member>
+        <member name="P:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.OnWorker">
+            <summary>
+            Returns True if called from the worker thread.
+            </summary>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Shutdown(System.Int32)">
+            <summary>
+            Method should be called when the host application is shutting down.
+            </summary>    
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Run(System.Action)">
+            <summary> Queues a task to the queued worker thread.</summary>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Run(System.Action,System.Threading.CancellationToken)">
+            <summary> Queues a task to the queued worker thread.</summary>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Run``1(System.Func{``0})">
+            <summary> Queues a task to the queued worker thread.</summary>
+        </member>
+        <member name="M:ArcGIS.Core.Hosting.Threading.Tasks.QueuedWorker.Run``1(System.Func{``0},System.Threading.CancellationToken)">
+            <summary> Queues a task to the queued worker thread.</summary>
+        </member>
+    </members>
+</doc>
