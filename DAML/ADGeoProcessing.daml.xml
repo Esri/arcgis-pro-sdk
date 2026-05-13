@@ -80,8 +80,8 @@
       <shortcut refID="esri_modelbuilder_pasteElementButton" flags="Ctrl" key="V" isReadOnly="true"/>
       <shortcut refID="esri_modelbuilder_AddSubGroup" flags="Ctrl" key="J"/>
       <!--<shortcut refID="esri_modelbuilder_renameGroup" flags="Ctrl" key="R"/>-->
-      <shortcut refID="esri_modelbuilder_findAndReplace" flags="Ctrl" key="F" isReadOnly="true"/>
-      <shortcut refID="esri_modelbuilder_reportViewButton" flags="Shift" key="R" isReadOnly="true"/>
+      <shortcut refID="esri_modelbuilder_findAndReplace" flags="Ctrl" key="F" />
+      <shortcut refID="esri_modelbuilder_reportViewButton" flags="Shift" key="R" />
     </insertShortcutTable>
 
     <insertShortcutTable id="esri_modelbuilder_View" category="ModelBuilder" caption="Report" description="Use the ModelBuilder Report view shortcuts to navigate the model report and interact with report elements."
@@ -155,12 +155,6 @@
     </insertCondition>
     <insertCondition id="esri_geoprocessing_container">
       <state id="esri_geoprocessing_container"/>
-    </insertCondition>
-    <insertCondition  id="esri_geoprocessing_mb_autosaveEnabledState" >
-      <or>
-        <state id="esri_geoprocessing_anyMBPane"/>
-        <state id="esri_geoprocessing_mb_HasValidBuildState"/>
-      </or>
     </insertCondition>
     <insertCondition id="esri_geoprocessing_EnviromentsToolPropsCondition">
       <state id="esri_geoprocessing_ExtToolProps" />
@@ -827,6 +821,10 @@
     <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_geoprocessing_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.GeoProcessingAssistantExtension">
         <content extensionCategoryRefID="ai_geoprocessing_category">
+          <uiText>
+            <title>Geoprocessing Tools</title>
+            <shortDescription>Opens geoprocessing tools, suggests next tools, and creates toolboxes.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>create a toolbox data processing</searchDescription>
             <searchDescription>open tools for data processing</searchDescription>
@@ -845,6 +843,10 @@
       </insertComponent>
       <insertComponent id="esri_modelbuilder_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.ModelBuilderAssistantExtension">
         <content extensionCategoryRefID="ai_geoprocessing_category">
+          <uiText>
+            <title>ModelBuilder Automation</title>
+            <shortDescription>Creates, opens, validates, and populates ModelBuilder workflows.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>Open, edit, or create a new ModelBuilder model.</searchDescription>
             <searchDescription>Save a ModelBuilder model.</searchDescription>
@@ -905,6 +907,10 @@
       </insertComponent>
       <insertComponent id="esri_rasteranalysis_assistant_extension" className="ArcGIS.Desktop.Internal.GeoProcessing.RasterAnalysisAssistantExtension">
         <content extensionCategoryRefID="ai_raster_analysis_category">
+          <uiText>
+            <title>Hydrology Tool Guidance</title>
+            <shortDescription>Suggests tool IDs for conditioned DEM, flow direction, and flow accumulation workflows.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>This skill class focuses on hydrological tasks, such as creating conditioned DEMs and analyzing flow direction and accumulation, returning relevant tool Id for each task</searchDescription>
           </searchDescriptions>
@@ -977,22 +983,8 @@
       </insertComponent>
 
     </updateCategory>
-    <!-- AI Assistants Code Extensions -->
-    <updateCategory refID="esri_ai_assistant_code_category">
-      <insertComponent id="esri_geoprocessing_code_arcpy" className="ArcGIS.Desktop.Internal.GeoProcessing.CodeAssistantExtension">
-        <content skill="Python" name="arcpy" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GeoprocessingScript16">
-          <description>Generate Python code snippets using arcpy module</description>
-          <description>Write a Python function</description>
-          <description>Write Python scripts for geoprocessing tools</description>
-          <description>Assist with Python scripting and arcpy</description>
-          <description>arcpy module API</description>
-          <description>Python script</description>
-        </content>
-        </insertComponent>
-      </updateCategory>
 
-
-        <!-- List of DataType visible in ToolboxPropertiesViewModel->DataTypesViewModel-->
+    <!-- List of DataType visible in ToolboxPropertiesViewModel->DataTypesViewModel-->
     <insertCategory id="esri_ParameterDataTypes">
       <component id="analysis_cell_size"/>
       <component id="DEAddressLocator"/>
@@ -1137,6 +1129,7 @@
       <component id="GPSAVerticalFactor"/>
       <component id="GPSAWeightedOverlayTable"/>
       <component id="GPSAWeightedSum"/>
+      <component id="GPSAMulticriteriaOverlay"/>
       <component id="GPSceneServiceLayer"/>
       <component id="GPSpatialReference"/>
       <component id="GPSQLExpression"/>
@@ -1261,6 +1254,7 @@
           <button refID="esri_neighborhoodexplorer_mainButton" size="neverSmall"/>
           <button refID="esri_geostatistics_WizardButton" size="neverSmall"/>
           <customControl refID="esri_businessAnalystButton_baToolsDropdown" size="neverSmall"/>
+          <customControl refID="esri_geoai_workflowsDropdown" size="neverSmall"/>
           <toolPalette refID="esri_dataInterop_FMEToolPalette" size="neverSmall"/>
         </group>
         <group id="esri_modelbuilder_editGroup" caption="Clipboard" smallImage="EditPaste16" largeImage="EditPaste32">
@@ -1335,12 +1329,10 @@
 
         <group id="esri_modelbuilder_orientationGroup" caption="Orientation" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane" >
           <comboBox refID="esri_modelbuilder_LayoutType" size="large" />
-          <button refID="esri_modelbuilder_FlipTextDirection" size="large"/>
         </group>
 
         <group id="esri_modelbuilder_layoutGroup" caption="Layout" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane">
           <button refID="esri_modelbuilder_autoLayoutDiagramButton"/>
-
           <comboBox refID="esri_modelbuilder_subGraphPlacement" size="large"/>
           <comboBox refID="esri_modelbuilder_groupGraphPlacement" size="large"/>
         </group>
@@ -1496,13 +1488,6 @@
             Layout Orientation<disabledText></disabledText>
           </tooltip>
         </comboBox>
-
-        <checkBox id="esri_modelbuilder_FlipTextDirection" hidden="true" caption="Flip Flow Direction" extendedCaption="Flip Flow Direction" keytip="FD" className="MBOrientationFlipTextDirection" loadOnClick="false" helpContextID="" smallImage="ModelBuilderFlipText16" largeImage="ModelBuilderFlipText32" condition="esri_geoprocessing_modelBuilderPane">
-          <tooltip heading="Flip Flow Direction" >
-            Checked - The layout's flow and text direction will be set in a Right to Left reading pattern.
-            <disabledText></disabledText>
-          </tooltip>
-        </checkBox>
 
         <labelControl id="esri_modelbuilder_subGraphPlacementLabel" caption="Sub-Graph" hasTwoLines="false" />
         <comboBox id="esri_modelbuilder_subGraphPlacement" caption="Sub-Graph" keytip="SL" className="ArcGIS.Desktop.GeoProcessing.MBSubGraph" condition="esri_geoprocessing_modelBuilderPane" noEdit="false" resizable="true" itemWidth="160" rows="20" loadOnClick="false">
@@ -1778,6 +1763,12 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Remove from the project Geoprocessing History.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <button id="esri_geoprocessing_edit_description" hidden="true" caption="Edit Description" extendedCaption="Edit history description" className="esri_geoprocessing_module:Commands.OnEditHistoryDescription" smallImage="GenericPencil16" helpContextID="">
+          <tooltip heading="">
+            Edit the history item description.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_geoprocessing_removeErrorsFromToolHistory" hidden="true" caption="Remove Items With Errors" extendedCaption="Geoprocessing History" className="esri_geoprocessing_module:Commands.OnRemoveErrorsFromToolHistory" smallImage="GenericDeleteRed16" helpContextID="">
           <tooltip heading="">
             Remove entries from the project Geoprocessing History which did not complete successfully.<disabledText></disabledText>
@@ -2005,7 +1996,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Convert a shapefile or geodatabase feature class to a shapefile or geodatabase feature class.<disabledText>The selected item is not a feature layer or this layer item does not support the export data capability.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_geoprocessing_selectByAttributeButton" className="esri_geoprocessing_module:Commands.SelectLayerByAttribute" caption="Select By Attributes" extendedCaption="Active map view" keytip="SBA" smallImage="SelectionSelectByAttributes16" largeImage="SelectionSelectByAttributes32" condition="esri_mapping_mapPane" helpContextID="120003957">
+        <button id="esri_geoprocessing_selectByAttributeButton" className="esri_geoprocessing_module:Commands.SelectLayerByAttribute" caption="Select By Attributes" extendedCaption="Active map view" keytip="SBA" smallImage="SelectionSelectByAttributes16" largeImage="SelectionSelectByAttributes32" condition="esri_mapping_mapPane" helpContextID="120003954">
           <tooltip heading="">
             Select features by their attribute values.<disabledText></disabledText>
           </tooltip>
@@ -2146,6 +2137,11 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Save the model edits or save the model as a new model in a new location.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_modelbuilder_saveModelButtonToolbar" hidden="true" caption="Save" loadOnClick="false" extendedCaption="ModelBuilder" keytip="SM" className="esri_geoprocessing_module:Commands.SaveModel" smallImage="GenericSave16" largeImage="GenericSave32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Save">
+            Save the model edits or save the model as a new model in a new location.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>
         <button id="esri_modelbuilder_saveButton" hidden="false" caption="Save" loadOnClick="false" extendedCaption="ModelBuilder" keytip="SM" className="esri_geoprocessing_module:Commands.SaveModel" smallImage="GenericSave16" largeImage="GenericSave32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Save">
             Save the model.<disabledText>Make a model the active view.</disabledText>
@@ -2259,6 +2255,11 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Zoom out from the model.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
+        <button id="esri_modelbuilder_RedrawDiagramButton" caption="Redraw" extendenCaption="Redraw Diagram" keytip="RDW"  className="esri_geoprocessing_module:Commands.Redraw" condition="esri_geoprocessing_modelBuilderPane">
+          <tooltip heading="Redraw">
+            Redraw Elements from underlying Model.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>  
         <button id="esri_modelbuilder_autoLayoutDiagramButton" caption="Auto Layout" extendedCaption="ModelBuilder" keytip="AL" className="esri_geoprocessing_module:Commands.AutoLayout" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModelBuilderAutoLayout32.png" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Auto Layout">
             Automatically arrange the elements in a model.<disabledText>Make a model the active view.</disabledText>
@@ -2285,7 +2286,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_autoSaveButton" caption="Auto Save" keytip="AS" className="MBAutoSave" isChecked="{Binding AutoSave}" loadOnClick="false"   condition="esri_geoprocessing_mb_autosaveEnabledState"
+        <button id="esri_modelbuilder_autoSaveButton" caption="Auto Save" keytip="AS" className="MBAutoSave" isChecked="{Binding AutoSave}" loadOnClick="false"   condition="esri_geoprocessing_anyMBPane"
                 largeImage="GenericAutoSave32"
                 smallImage="GenericAutoSave16" >
           <tooltip heading="Auto Save">
@@ -2302,18 +2303,59 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_reportViewButton" caption="Report" extendedCaption="ModelBuilder" keytip="RE" className="esri_geoprocessing_module:Commands.ShowModelReportView" smallImage="Open_report16" largeImage="Open_report32" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_reportViewButton" caption="Report" extendedCaption="ModelBuilder" keytip="RE" className="esri_geoprocessing_module:Commands.ShowModelReportView" smallImage="Open_report16" largeImage="Open_report32" helpContextID="b183807ec2" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Report">
             Show ModelBuilder Report.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_OpenToolInGPPane" caption="Open Tool" extendedCaption="ModelBuilder" keytip="OT" className="esri_geoprocessing_module:Commands.OpenModelInGPPane" smallImage="GeoprocessingModel16" largeImage="GeoprocessingModel32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_OpenToolInGPPane" caption="Open Tool" extendedCaption="ModelBuilder" keytip="OT" className="esri_geoprocessing_module:Commands.OpenModelInGPPane" smallImage="GeoprocessingTool16" largeImage="GeoprocessingTool32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Open Tool">
             Open model tool in geoprocessing pane.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_findAndReplace" caption="Find and Replace" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.ShowFindAndReplace" smallImage="FindReplaceMenu16" largeImage="FindReplaceMenu32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+        <!-- The button below is the same as the button above, but I believe the image for the button above is incorrect. Should be GeoprocessingTool16 (not GeoprocessingModel16) -->
+        <button id="esri_modelbuilder_OpenToolInGPPane2" caption="Open Tool" extendedCaption="ModelBuilder" keytip="OT" className="esri_geoprocessing_module:Commands.OpenModelInGPPane" smallImage="GeoprocessingTool16" largeImage="GeoprocessingTool32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Open Tool">
+            Open model tool in geoprocessing pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_ExportModel" caption="Export" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.ExportModelReportCmd" smallImage="Export_report16" largeImage="Export_report32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Export Model">
+            Export model to xml file.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_ReportViewAll" caption="All" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.ResetFilters" smallImage="Show_all_elements16" largeImage="Show_all_elements32" condition="esri_geoprocessing_MBReportPane" helpContextID="">
+          <tooltip heading="Show All">
+            Show all elements in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_FilterInputs" caption="Inputs" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.FilterInputs" smallImage="Show_only_inputs16" largeImage="Show_only_inputs32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Show Inputs">
+            Show input variables in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_FilterOutputs" caption="Outputs" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.FilterOutputs" smallImage="Show_only_outputs16" largeImage="Show_only_outputs32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Show Outputs">
+            Show output variables in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_FilterTools" caption="Tools" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.FilterTools" smallImage="Show_only_tools16" largeImage="Show_only_tools32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Show Tools">
+            Show  tools in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_FilterParameters" caption="Parameters" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.FilterParameter" smallImage="Show_model_parameters16" largeImage="Show_model_parameters32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Show Model Parameters">
+            Show  model parameters in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_FilterErrors" caption="Errors" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.FilterErrors" smallImage="Show_all_errors16" largeImage="Show_all_errors32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Show Errors">
+            Show errors in the model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_findAndReplace" caption="Find and Replace" hidden="false" extendedCaption="ModelBuilder" keytip="FR" className="esri_geoprocessing_module:Commands.MBFindReplace" smallImage="FindReplaceMenu16" largeImage="FindReplaceMenu32" condition="esri_geoprocessing_anyMBPane" helpContextID="b183807ec2#174">
           <tooltip heading="Find and Replace">
             Find and Replace.<disabledText></disabledText>
           </tooltip>
@@ -2359,17 +2401,17 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Remove selected connections.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_validateButton" caption="Validate" extendedCaption="ModelBuilder" keytip="MV" className="esri_geoprocessing_module:Commands.ValidateModel" smallImage="GenericCheckMark16" largeImage="GenericCheckMark32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_validateButton" caption="Validate" extendedCaption="ModelBuilder" keytip="MV" className="esri_geoprocessing_module:Commands.ValidateModel" smallImage="GenericCheckMark16" largeImage="GenericCheckMark32" helpContextID="2b067b95f7" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Validate">
             Verify all data elements and parameter values are valid.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_runModelButton" caption="Run" extendedCaption="ModelBuilder" keytip="RM" className="esri_geoprocessing_module:Commands.RunModel" smallImage="GenericRun16" largeImage="GenericRun32" helpContextID="" condition="esri_geoprocessing_anyMBPane">
+        <button id="esri_modelbuilder_runModelButton" caption="Run" extendedCaption="ModelBuilder" keytip="RM" className="esri_geoprocessing_module:Commands.RunModel" smallImage="GenericRun16" largeImage="GenericRun32" helpContextID="b1b5087446" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Run">
             Run all ready-to-run processes in the model.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_deleteIntermediateDataActualButton" caption="Intermediate" extendedCaption="ModelBuilder" keytip="DI" className="esri_geoprocessing_module:Commands.DeleteIntermediateDataActual" smallImage="GenericDeleteRed16" largeImage="GenericDeleteRed32" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
+        <button id="esri_modelbuilder_deleteIntermediateDataActualButton" caption="Intermediate" extendedCaption="ModelBuilder" keytip="DI" className="esri_geoprocessing_module:Commands.DeleteIntermediateDataActual" smallImage="GenericDeleteRed16" largeImage="GenericDeleteRed32" helpContextID="2585f1cb22" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Delete Intermediate Data">
             Delete intermediate data from workspace.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
@@ -2730,7 +2772,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Evaluates if the inputs are spatially related based on a specified spatial relationship.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
-        <button id="esri_modelbuilder_NewModelButton" className="esri_geoprocessing_module:Commands.NewModel" caption="New" extendedCaption="ModelBuilder" keytip="NM" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" helpContextID="">
+        <button id="esri_modelbuilder_NewModelButton" className="esri_geoprocessing_module:Commands.NewModel" caption="New" extendedCaption="ModelBuilder" keytip="NM" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" helpContextID="120002797">
           <tooltip heading="New Model">
             Create a new blank geoprocessing model.
 
@@ -2858,7 +2900,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
 
         <customControl id="esri_geoprocessingAnalysisButton_feature" keytip="PC" caption="Feature Analysis" className="PortalGalleryCtrl" isDropDown="true" staysOpenOnClick="false" loadOnClick="true" disableIfBusy="false"
           largeImage="PortalAnalysisFeature32"
-          condition="esri_geoprocessing_PortalCondition" helpContextID="120003892"
+          condition="esri_geoprocessing_PortalCondition" helpContextID="d1e4055e29"
           loadingMessage="Loading ...">
           <content className="PortalContent"/>
           <tooltip heading="Feature Analysis">
@@ -2867,7 +2909,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
         </customControl>
         <customControl id="esri_geoprocessingAnalysisButton_raster" keytip="RC" caption="Raster Analysis" className="RAPortalGalleryCtrl" isDropDown="true" staysOpenOnClick="false" loadOnClick="true" disableIfBusy="false"
           largeImage="PortalAnalysisRaster32"
-          condition="esri_geoprocessing_PortalCondition" helpContextID="120003893"
+          condition="esri_geoprocessing_PortalCondition" helpContextID="d1e4055e29"
           loadingMessage="Loading ...">
           <content className="PortalContent"/>
           <tooltip heading="Raster Analysis">
@@ -3025,14 +3067,78 @@ You can search for a specific tool, see a list of favorite and recently run tool
           </tooltip>
         </button>
 
+        <labelControl id="esri_modelbuilder_modelLabel" caption="Model: " hasTwoLines="false"/>
+        <labelControl id="esri_modelbuilder_runLabel" caption="Run: " hasTwoLines="false"/>
+        <labelControl id="esri_modelbuilder_insertLabel" caption="Insert: " hasTwoLines="false"/>
+        <labelControl id="esri_modelbuilder_groupLabel" caption="Group: " hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_findAndReplaceLabel"  caption="Find and Replace" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_ParameterLabel"  caption="Parameters" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_ErrorLabel"  caption="Errors" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_InputLabel"  caption="Inputs" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_OutputLabel"  caption="Outputs" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_AllLabel"  caption="All" hasTwoLines="false"/>
+        <labelControl refID="esri_modelbuilder_ExportLabel"  caption="Export: " hasTwoLines="false"/>
       </controls>
+
+      <!-- Temporarily commented this out because not quite ready for 3.7 release -->
+      <!--<customToolbars>
+        <toolbar id="esri_modelbuilder_toolbar" caption="ModelBuilder" >
+          <labelControl refID="esri_modelbuilder_modelLabel"  size="small"/>
+          <splitButton refID="esri_modelbuilder_saveSplitButtonToolbar" size="small"/>
+          <button refID="esri_modelbuilder_autoSaveButton" size="small"/>
+          <button refID="esri_modelbuilder_environmentsButton" size="small"/>
+          <button refID="esri_modelBuilder_editToolProperties" size="small"/>
+          <button refID="esri_modelbuilder_OpenToolInGPPane2" size="small"/>
+          <button refID="esri_modelbuilder_findAndReplace" size="small"/>
+          <labelControl refID="esri_modelbuilder_runLabel"  size="small" separator="true"/>
+          <button refID="esri_modelbuilder_validateButton" size="small"/>
+          <button refID="esri_modelbuilder_runModelButton" size="small"/>
+          <button refID="esri_modelbuilder_deleteIntermediateDataActualButton" size="middle"/>
+          <labelControl refID="esri_modelbuilder_insertLabel"  size="small" separator="true"/>
+          <splitButton refID="esri_geoprocessing_toolsSplitButton" size="middle"/>
+          <button refID="esri_modelbuilder_createVariableButton" size="middle"/>
+          <button refID="esri_modelbuilder_toolSuggestionSplitButton" size="middle"/>
+          <button refID="esri_modelbuilder_iteratorPalette" size="middle"/>
+          <button refID="esri_modelbuilder_utilitiesPalette" size="middle"/>
+          <button refID="esri_modelbuilder_conditionalPalette" size="middle"/>
+          <labelControl refID="esri_modelbuilder_groupLabel"  size="small" separator="true"/>
+          <button refID="esri_modelbuilder_groupButton" size="small"/>
+          <button refID="esri_modelbuilder_ungroupButton" size="small"/>
+        </toolbar>
+      </customToolbars>
+      <customToolbars>
+        <toolbar id="esri_modelbuilder_Reporttoolbar" caption="ModelBuilderReport" >
+        <button refID="esri_modelbuilder_ExportModel" size="middle"/>
+        <labelControl refID="esri_modelbuilder_ExportLabel"  size="small" separator="true"/>
+        <button refID="esri_modelbuilder_ReportViewAll" size="middle"/>
+        <labelControl refID="esri_modelbuilder_AllLabel"  size="small" separator="true"/>
+        <button refID="esri_modelbuilder_FilterInputs" size="middle"/>
+        <labelControl refID="esri_modelbuilder_InputLabel"  size="small"/>
+        <button refID="esri_modelbuilder_FilterOutputs" size="middle"/>
+        <labelControl refID="esri_modelbuilder_OutputLabel"  size="small" />
+        <button refID="esri_modelbuilder_FilterParameters" size="middle"/>
+        <labelControl refID="esri_modelbuilder_ParameterLabel"  size="small" />
+        <button refID="esri_modelbuilder_FilterTools" size="middle"/>
+        <labelControl refID="esri_modelbuilder_ParameterLabel"  size="small" />
+        <button refID="esri_modelbuilder_FilterErrors" size="middle"/>
+        <labelControl refID="esri_modelbuilder_ErrorLabel"  size="small" separator="true"/>
+        <button refID="esri_modelbuilder_findAndReplace" size="middle"/>
+        <labelControl refID="esri_modelbuilder_findAndReplaceLabel"  size="small" separator="true"/>
+        </toolbar>
+      </customToolbars>-->
 
       <panes>
         <pane id="esri_geoprocessing_modelBuilderPane" caption="ModelBuilder" className="ModelBuilderPaneViewModel" smallImage="GeoprocessingModel16" isClosable="true" defaultTab="esri_geoprocessing_MBHomeTab">
           <content className="ModelBuilderPaneView" />
+          <toolbars>
+            <toolbar refID="esri_modelbuilder_toolbar"/>
+          </toolbars>
         </pane>
         <pane id="esri_geoprocessing_MBReportPane" caption="ModelReport" className="ModelBuilderReportViewModel" smallImage="GeoprocessingModel16" isClosable="true" defaultTab="esri_geoprocessing_MBHomeTab">
           <content className="ModelBuilderReportView" />
+          <toolbars>
+            <toolbar refID="esri_modelbuilder_Reporttoolbar"/>
+          </toolbars>
         </pane>
         <pane id="esri_geoprocessing_proNotebookPane" caption="ProNotebook" className="ProNotebookPaneViewModel" smallImage="PythonNotebook16" isClosable="true">
           <content className="ProNotebookPaneView" />
@@ -3104,7 +3210,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_modelbuilder_customMessageButton"/>
         </menu>
 
-        <menu id="esri_modelbuilder_iteratorPalette" caption="Iterators" keytip="IT" dropDown="true" hidden ="false"
+        <menu id="esri_modelbuilder_iteratorPalette" caption="Iterators" keytip="IT" dropDown="true" hidden ="false" helpContextID="249e168385"
               smallImage="ModelBuilderIterator16"
               largeImage="ModelBuilderIterator32"
               showItemCaption="true" itemsInRow="1" menuStyle="true">
@@ -3352,6 +3458,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_geoprocessing_addToModelBuilder" seperator="true"/>
           <button refID="esri_geoprocessing_addToHistoryFavorities" seperator="true"/>
           <button refID="esri_geoprocessing_showResult"/>
+          <button refID="esri_geoprocessing_edit_description"/>
           <button refID="esri_geoprocessing_copy_snippetHistory" separator="true"/>
           <button refID="esri_geoprocessing_sendToPythonWindow"/>
           <button refID="esri_geoprocessing_sendToNotebook"/>
@@ -3366,6 +3473,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_geoprocessing_addToModelBuilder" seperator="true"/>
           <button refID="esri_geoprocessing_removefromHistoryFavorities" seperator="true"/>
           <button refID="esri_geoprocessing_showResult"/>
+          <button refID="esri_geoprocessing_edit_description"/>
           <button refID="esri_geoprocessing_copy_snippetHistory" separator="true"/>
           <button refID="esri_geoprocessing_sendToPythonWindow"/>
           <button refID="esri_geoprocessing_sendToNotebook"/>
@@ -3572,7 +3680,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_geoprocessing_addToGallery" />
         </menu>
 
-        <menu id="esri_geoprocessing_tableJoinsMenu" caption="Joins" largeImage="TableJoins32" smallImage="TableJoins16" keytip="RJ" helpContextID="120003959">
+        <menu id="esri_geoprocessing_tableJoinsMenu" caption="Joins" largeImage="TableJoins32" smallImage="TableJoins16" keytip="RJ" helpContextID="120003952">
           <tooltip heading="Joins">
             Menu to create, remove, or remove all joins.<disabledText></disabledText>
           </tooltip>
@@ -3581,7 +3689,7 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_geoprocessing_tableRemoveAllJoinsButton" />
         </menu>
 
-        <menu id="esri_geoprocessing_tableRelatesMenu" caption="Relates" largeImage="TableRelates32" smallImage="TableRelates16" keytip="RR" helpContextID="120003960">
+        <menu id="esri_geoprocessing_tableRelatesMenu" caption="Relates" largeImage="TableRelates32" smallImage="TableRelates16" keytip="RR" helpContextID="120003952">
           <tooltip heading="Relates">
             Menu to create, remove, or remove all relates.<disabledText></disabledText>
           </tooltip>
@@ -3900,6 +4008,11 @@ You can search for a specific tool, see a list of favorite and recently run tool
         </splitButton>
         <splitButton id="esri_modelbuilder_saveSplitButton" hidden ="false" caption="Save A Model" extendedCaption="ModelBuilder" keytip="SM">
           <button refID="esri_modelbuilder_saveModelButton" />
+          <button refID="esri_modelbuilder_saveButton" />
+          <button refID="esri_modelbuilder_saveAsButton" />
+        </splitButton>
+        <splitButton id="esri_modelbuilder_saveSplitButtonToolbar" hidden ="false" caption="Save A Model" extendedCaption="ModelBuilder" keytip="SM">
+          <button refID="esri_modelbuilder_saveModelButtonToolbar" />
           <button refID="esri_modelbuilder_saveButton" />
           <button refID="esri_modelbuilder_saveAsButton" />
         </splitButton>

@@ -47,10 +47,12 @@
 			<xs:element name="Company" minOccurs="0"/>
 			<xs:element name="Date" minOccurs="0"/>
 			<xs:element name="Subject" minOccurs="0"/>
+      <xs:element name="AssemblyLoadContextID" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="id" type="xs:string" use="required"/>
 		<xs:attribute name="version" type="xs:string" use="required"/>
 		<xs:attribute name="desktopVersion" type="xs:string" use="required"/>
+    <xs:attribute name="product" type="ST_AddInProducts" use="optional"/>
 	</xs:complexType>
 	<!--
 	 Dependencies 
@@ -2122,6 +2124,12 @@
   <xs:simpleType name="ST_Product">
     <xs:restriction base="ST_String">
       <xs:enumeration value="ArcGISPro"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ST_AddInProducts">
+    <xs:restriction base="ST_String">
+      <xs:enumeration value="ArcGISPro"/>
+      <xs:enumeration value="ArcGISAllSource"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="CT_AddIn">

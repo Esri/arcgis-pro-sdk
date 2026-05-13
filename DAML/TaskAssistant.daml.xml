@@ -96,6 +96,129 @@
       <component id="esri_mapping_selectedLayerSubtypesViewButton" >         view not dockpane
         <content pane="esri_mapping_subtypesPane"/>
       </component>-->
+      <component id="esri_datasourcesraster_mensurationResultsButton" >
+        <content pane="esri_datasourcesraster_measurementResults"/>
+      </component>
+      <component id="esri_datasourcesraster_showRasterProcessDockPaneButton" >
+        <content pane="esri_datasourcesraster_rasterProcessDockPane"/>
+      </component>
+      <component id="esri_defense_showCoordinateConversionDockPane" >
+        <content pane="esri_defense_coordinateConversionDockPane"/>
+      </component>
+      <component id="esri_defensemapping_geonametofeature" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_defensemapping_populateangle" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_AlignFeaturesCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_AlignParcels" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ArrayCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_AttributeTransfer" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_BufferFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ChangeLineLengthCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ClipCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ConstructGeodeticCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ConstructPolygons" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_CopyParallel" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_createNewRecord" >
+        <content pane="esri_mapping_MapToolDockPane"/>
+      </component>
+      <component id="esri_editing_culDeSac" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_defineLinePortion" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_DivideCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_DuplicateVerticalCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_EditVerticesModifyFeature" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_EditVerticesMove" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_EditVerticesRotate" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_EditVerticesScale" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_EditVerticesText" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ExplodeFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ExtendTrimFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_Fillet" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_GeneralizeCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_LineIntersection" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_MergeFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_MergeParcelPoints" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_MirrorFeaturesCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_MoveToFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_OffsetCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ParcelAlignFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_PlanarizeLineFeatures" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ReplaceGeometry" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ReshapeCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_ReverseDirectionToolCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_SeqNum" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
       <component id="esri_editing_ShowAttributes" >
         <content pane="esri_editing_AttributesDockPane"/>
       </component>
@@ -105,25 +228,52 @@
       <component id="esri_editing_ShowEditFeaturesBtn" >
         <content pane="esri_editing_EditFeaturesDockPane"/>
       </component>
-      <component id="esri_editing_DivideCommand" >
-        <content pane="esri_editing_EditFeaturesDockPane"/>
-      </component>
-      <component id="esri_editing_AlignParcels" >
-        <content pane="esri_editing_EditFeaturesDockPane"/>
-      </component>
-      <component id="esri_editing_MergeParcelPoints" >
-        <content pane="esri_editing_EditFeaturesDockPane"/>
-      </component>
       <component id="esri_editing_ShowManageTemplatesBtn" >
         <content pane="esri_editing_ManageTemplatesDockPane"/>
       </component>
-      <component id="esri_mapping_showLocateDockPane" >
-        <content pane="esri_mapping_locateDockPane"/>
+      <component id="esri_editing_ShowParcelLineage" >
+        <content pane="esri_editing_parcelLineageDockPane"/>
       </component>
-      <component id="esri_mapping_showRasterProcessDockPaneButton" >
-        <content pane="esri_mapping_rasterProcessDockPane"/>
+      <component id="esri_editing_splitIntoCOGOLines" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
       </component>
-      <component id="esri_mapping_showLayerSymbologyDockPane" >
+      <component id="esri_editing_SplitCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_TraverseCommand" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_Transform" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_UpdateCogoAttributes" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_editing_calibrateRoute" >
+        <content pane="esri_editing_EditFeaturesDockPane"/>
+      </component>
+      <component id="esri_ExportRasterData" >
+        <content pane="esri_datasourcesraster_exportRasterData"/>
+      </component>
+      <component id="esri_geoprocessing_showToolHistory" >
+        <content pane="esri_core_projectHistoryDockPane"/>
+      </component>
+      <component id="esri_indoors_configureAppLaunchActions" >
+        <content pane="esri_indoors_LaunchActionDockPane"/>
+      </component>
+      <component id="esri_indoors_configureCategoryButton" >
+        <content pane="esri_indoors_configureCategoryDockPane"/>
+      </component>
+      <component id="esri_knowledgeGraph_newKnowledgeGraphInvestigation" >
+        <content pane="esri_knowledgeGraph_createKnowledgeGraphWizardDockPane"/>
+      </component>
+      <component id="esri_mapping_designPopupsButton" >
+        <content pane="esri_mapping_popupsDockPane"/>
+      </component>
+      <component id="esri_mapping_labelClassExpressionButton" >
+        <content pane="esri_mapping_labelClassDockPane"/>
+      </component>
+      <component id="esri_mapping_rasterLayerSymbology" >
         <content pane="esri_mapping_symbologyDockPane"/>
       </component>
       <component id="esri_mapping_selectedLayerSymbologyButton" >
@@ -132,26 +282,44 @@
       <component id="esri_mapping_showBookmarksWindow" >
         <content pane="esri_mapping_bookmarksManagerDockPane"/>
       </component>
-      <component id="esri_mapping_labelClassExpressionButton" >
-        <content pane="esri_mapping_labelClassDockPane"/>
+      <component id="esri_mapping_showLayerSymbologyDockPane" >
+        <content pane="esri_mapping_symbologyDockPane"/>
       </component>
-      <component id="esri_mapping_designPopupsButton" >
-        <content pane="esri_mapping_popupsDockPane"/>
+      <component id="esri_mapping_showLocateDockPane" >
+        <content pane="esri_mapping_locateDockPane"/>
       </component>
-      <component id="esri_sharing_PackagingProjectPaneBtn" >
+      <component id="esri_mapping_showRasterProcessDockPaneButton" >
+        <content pane="esri_mapping_rasterProcessDockPane"/>
+      </component>
+      <component id="esri_motionimagery_videoSearchButton" >
+        <content pane="esri_motionimagery_videoSearchDockPane"/>
+      </component>
+      <component id="esri_sharing_ExportMap" >
+        <content pane="esri_layouts_exportDockPane"/>
+      </component>
+      <component id="esri_sharing_PackagingLayersPaneBtn" >
         <content pane="esri_sharing_sharingPane"/>
       </component>
       <component id="esri_sharing_PackagingMapPaneBtn" >
         <content pane="esri_sharing_sharingPane"/>
       </component>
-      <component id="esri_sharing_PackagingLayersPaneBtn" >
+      <component id="esri_sharing_PackagingProjectPaneBtn" >
+        <content pane="esri_sharing_sharingPane"/>
+      </component>
+      <component id="esri_sharing_PrintMap" >
+        <content pane="esri_layouts_printDockPane"/>
+      </component>
+      <component id="esri_sharing_SaveAsMapFileBtn" >
         <content pane="esri_sharing_sharingPane"/>
       </component>
       <component id="esri_sharing_SharingAsWebMapPaneBtn" >
         <content pane="esri_sharing_sharingPane"/>
       </component>
-      <component id="esri_sharing_SaveAsMapFileBtn" >
-        <content pane="esri_sharing_sharingPane"/>
+      <component id="esri_sharing_manageDataStores" >
+        <content pane="esri_sharing_manageDataStoresPane"/>
+      </component>
+      <component id="esri_workflow_client_open_workflow_pane" >
+        <content pane="esri_workflow_client_workflowPane"/>
       </component>
       <component id="esri_workflow_workflowConnectionContextMenu" >
         <content pane="esri_workflow_workflowPane"/>

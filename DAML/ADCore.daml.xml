@@ -15,6 +15,7 @@
     <insertAccelerator refID="esri_core_editPasteSpecialButton" flags="Ctrl+Alt" key="V" />
     <insertAccelerator refID="esri_core_editCutButton" flags="Ctrl" key="X" />
     <insertAccelerator refID="esri_core_redoButton" flags="Ctrl" key="Y" />
+    <insertAccelerator refID="esri_core_redoButtonAlt" flags="Ctrl+Shift" key="Z" />
     <insertAccelerator refID="esri_core_undoButton" flags="Ctrl" key="Z" />
     <insertAccelerator refID="esri_core_CommandSearchControl" flags="Alt" key="Q" />
     <insertAccelerator refID="esri_core_groupContext" flags="Ctrl" key="G" />
@@ -25,7 +26,7 @@
     <insertAccelerator refID="esri_core_SignOnRootCommand" flags="Alt" key="L"/>
     <insertAccelerator refID="esri_core_notificationButton" flags="Alt" key="W"/>
     <insertAccelerator refID="esri_core_Shortcuts" key="F12"/>
-    <insertAccelerator refID="esri_core_monitorBtn" key="M" flags="Ctrl+Alt" isReadOnly="true"/>
+    <insertAccelerator refID="esri_core_monitorBtn_shortcut" key="M" flags="Ctrl+Alt" isReadOnly="true"/>
 
     <insertAccelerator refID="esri_core_paneOptions" key="OemMinus" flags="Alt" isReadOnly="true"/>
     <insertAccelerator refID="esri_core_changeView" key="Tab" flags="Ctrl" isReadOnly="true"/>
@@ -442,6 +443,10 @@
       <!---->
       <component id="esri_shapeFactory_assistant_extension" className="ArcGIS.Desktop.Internal.Core.ShapeFactoryAssistantExtension">
         <content extensionCategoryRefID="ai_cartography_map_production_category">
+          <uiText>
+            <title>Simple Shape Creation</title>
+            <shortDescription>Creates points, lines, rectangles, and polygons from coordinates.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>Create a new geometric shape."</searchDescription>
           </searchDescriptions>
@@ -475,6 +480,10 @@
 
       <component id="esri_search_assistant_extension" className="ArcGIS.Desktop.Internal.Search.SearchAssistantExtension">
         <content extensionCategoryRefID="ai_data_management_category">
+          <uiText>
+            <title>Project and Portal Search</title>
+            <shortDescription>Finds project or portal items by name, type, metadata, or location.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>Return a list of items in the project.</searchDescription>
             <searchDescription>Find items in the project.</searchDescription>
@@ -512,11 +521,19 @@
             <searchDescription>Search for connection items in the project.</searchDescription>
 
             <searchDescription>I need some feature classes</searchDescription>
+            <searchDescription>Are there any shapefiles in the project</searchDescription>
+            <searchDescription>Do I have any lyrx file or mapx file</searchDescription>
             <searchDescription>Are there some feature classes</searchDescription>
             <searchDescription>Find me some feature classes</searchDescription>
             <searchDescription>List all feature classes in a geodatabase</searchDescription>
 
             <searchDescription>Show the content of a Geodatabase.</searchDescription>
+
+            <searchDescription>Find me some feature layer in my content</searchDescription>
+            <searchDescription>Find plantation feature service in arcgisonline</searchDescription>
+            <searchDescription>Find Yellowstone image service in my organization</searchDescription>
+            <searchDescription>Find Yellowstone mapping service in my group</searchDescription>
+            <searchDescription>Find me some feature service in Living Atlas</searchDescription>
           </searchDescriptions>
           <aiAssistantFunction name="SearchOrBrowseChildren">
             <searchDescriptions>
@@ -550,23 +567,27 @@
 
       <component id="esri_portal_management_assistant_extension" className="ArcGIS.Desktop.Internal.Core.PortalManagementAssistantExtension">
         <content extensionCategoryRefID="ai_sharing_collaboration_category">
+          <uiText>
+            <title>Portal Connections</title>
+            <shortDescription>Adds, edits, refreshes, lists, and signs in to portal connections.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>Manage portal connections.</searchDescription>
-            <searchDescription>Add a new portal connection.</searchDescription>
-            <searchDescription>Remove an existing new portal connection.</searchDescription>
+            <searchDescription>Add new portal connections.</searchDescription>
+            <searchDescription>Remove existing portal connections.</searchDescription>
             <searchDescription>Modify an existing portal connection.</searchDescription>
             <searchDescription>Set a portal as the active portal connection.</searchDescription>
             <searchDescription>Provides a list of portal connections.</searchDescription>
 				    <searchDescription>Sign in to a portal connection.</searchDescription>
           </searchDescriptions>
-          <aiAssistantFunction name="AddPortalConnection">
+          <aiAssistantFunction name="AddPortalConnections">
 				  <searchDescriptions>
-					  <searchDescription>Adds a new portal with the specified URL to the list of portal connections.</searchDescription>
+					  <searchDescription>Adds a list of new portals with the specified URLs to the list of portal connections.</searchDescription>
 				  </searchDescriptions>
 			  </aiAssistantFunction>
-			  <aiAssistantFunction name="RemovePortalConnection">
+			  <aiAssistantFunction name="RemovePortalConnections">
 				  <searchDescriptions>
-					  <searchDescription>Removes an existing portal with the specified URL from the list of portal connections.</searchDescription>
+					  <searchDescription>Removes a list of existing portals with the specified URLs from the list of portal connections.</searchDescription>
 				  </searchDescriptions>
 			  </aiAssistantFunction>
 			  <aiAssistantFunction name="EditPortalConnection">
@@ -574,9 +595,9 @@
 					  <searchDescription>Modifies an existing portal in the list of portal connections with the specified URL.</searchDescription>
 				  </searchDescriptions>
 			  </aiAssistantFunction>
-			  <aiAssistantFunction name="RefreshPortalConnection">
+			  <aiAssistantFunction name="RefreshPortalConnections">
 			    <searchDescriptions>
-				  <searchDescription>Refreshes the status and availability of a portal with the specified URL in the portal connections list.</searchDescription>
+				  <searchDescription>Refreshes the status and availability of a list of portals with the specified URLs in the portal connections list.</searchDescription>
 			    </searchDescriptions>
 			  </aiAssistantFunction>
           <aiAssistantFunction name="GetActivePortalConnection">
@@ -607,28 +628,67 @@
 
     <insertCategory id="esri_core_ai_enterprise_skill_category" />
 
-    <insertCategory id="esri_core_assistant_extension_capability_category">  
-     <component id="assistant_extension_categories">  
-       <content>
-         <extensionCategory id="ai_mapping_category" displayName="Mapping" description="Functions related to map creation and management."/>
-         <extensionCategory id="ai_visualization_category" displayName="Visualization" description="Functions for rendering, symbolizing, and visualizing spatial data."/>
-         <extensionCategory id="ai_data_management_category" displayName="Data Management" description="Functions for managing, importing, and exporting data."/>
-         <extensionCategory id="ai_spatial_analysis_category" displayName="Spatial Analysis" description="Functions for spatial and statistical geoprocessing analysis."/>
-         <extensionCategory id="ai_geoprocessing_category" displayName="Geoprocessing" description="Functions for executing geoprocessing tasks and workflows."/>
-         <extensionCategory id="ai_3d_gis_category" displayName="3D GIS" description="Functions for working with 3D spatial data and scenes."/>
-         <extensionCategory id="ai_editing_category" displayName="Editing" description="Functions for editing spatial and attribute data."/>
-         <extensionCategory id="ai_data_creation_category" displayName="Data Creation" description="Functions for creating new spatial and attribute data."/>
-         <extensionCategory id="ai_geocoding_address_management_category" displayName="Geocoding and Address Management" description="Functions for geocoding and managing address data."/>
-         <extensionCategory id="ai_remote_sensing_category" displayName="Remote Sensing" description="Functions for organizing, processing, and displaying remotely sensed data."/>
-         <extensionCategory id="ai_raster_analysis_category" displayName="Raster Analysis" description="Functions for analyzing and modeling raster data."/>
-         <extensionCategory id="ai_cartography_map_production_category" displayName="Map Production" description="Functions for producing specification-driven maps."/>
-         <extensionCategory id="ai_network_transportation_analysis_category" displayName="Network and Transportation Analysis" description="Functions for analyzing, modeling, and optimizing networks and transportation systems."/>
-         <extensionCategory id="ai_survey_field_data_integration_category" displayName="Survey and Field Data Integration" description="Functions for collecting, managing, and integrating survey and field data."/>
-         <extensionCategory id="ai_geostatistics_interpolation_category" displayName="Geostatistics and Interpolation" description="Functions for predicting values at unsampled locations to model continuous spatial phenomena."/>
-         <extensionCategory id="ai_automation_scripting_category" displayName="Automation and Scripting" description="Functions for automating workflows and scripting tasks."/>
-         <extensionCategory id="ai_sharing_collaboration_category" displayName="Sharing and Collaboration" description="Functions for publishing and distributing spatial data and projects."/>
-       </content>
-     </component>
+    <insertCategory id="esri_core_assistant_extension_capability_category">
+      <component id="ai_mapping_category">
+        <content displayName="Map and Layer Management" description="Supports managing layers, maps, scenes, basemaps, labels, selections, navigation, definition queries, coordinate systems, 3D layer properties, and range filtering."/>
+      </component>
+      <component id="ai_visualization_category">
+        <content displayName="Symbology and Visualization" description="Supports creating and updating feature and raster symbology, visual variables, and style choices across common visualization workflows."/>
+      </component>
+      <component id="ai_data_management_category">
+        <content displayName="Data Search and Management" description="Supports finding project and portal items, opening data design and property views, managing parcel fabric records and tables, and adding data to maps."/>
+      </component>
+      <component id="ai_spatial_analysis_category">
+        <content displayName="Spatial Analysis" description="Functionality for spatial and statistical geoprocessing analysis."/>
+      </component>
+      <component id="ai_geoprocessing_category">
+        <content displayName="Geoprocessing Tools and Toolboxes" description="Supports opening geoprocessing tools, suggesting next tools, and creating toolboxes."/>
+      </component>
+      <component id="ai_3d_gis_category">
+        <content displayName="3D GIS" description="Functionality for working with 3D spatial data and scenes."/>
+      </component>
+      <component id="ai_editing_category">
+        <content displayName="Editing" description="Functionality for editing spatial and attribute data."/>
+      </component>
+      <component id="ai_data_creation_category">
+        <content displayName="Data Creation" description="Functionality for creating new spatial and attribute data."/>
+      </component>
+      <component id="ai_geocoding_address_management_category">
+        <content displayName="Geocoding" description="Supports converting between addresses, places, coordinates, and nearby points of interest."/>
+      </component>
+      <component id="ai_remote_sensing_category">
+        <content displayName="Remote Sensing" description="Functionality for organizing, processing, and displaying remotely sensed data."/>
+      </component>
+      <component id="ai_raster_analysis_category">
+        <content displayName="Hydrology Tool Guidance" description="Provides tool ID suggestions for conditioned DEM, flow direction, and flow accumulation workflows."/>
+      </component>
+      <component id="ai_cartography_map_production_category">
+        <content displayName="Map Production" description="Supports layout management for design, export, and printing."/>
+      </component>
+      <component id="ai_network_transportation_analysis_category">
+        <content displayName="Network and Transportation Analysis" description="Functionality for analyzing, modeling, and optimizing networks and transportation systems."/>
+      </component>
+      <component id="ai_survey_field_data_integration_category">
+        <content displayName="Survey and Field Data Integration" description="Functionality for collecting, managing, and integrating survey and field data."/>
+      </component>
+      <component id="ai_geostatistics_interpolation_category">
+        <content displayName="Geostatistics and Interpolation" description="Functionality for predicting values at unsampled locations to model continuous spatial phenomena."/>
+      </component>
+      <component id="ai_automation_scripting_category">
+        <content displayName="Automation and Scripting" description="Functionality for automating workflows and scripting tasks."/>
+      </component>
+      <component id="ai_sharing_collaboration_category">
+        <content displayName="Portal Connections" description="Supports adding, editing, refreshing, listing, and signing in to portal connections."/>
+      </component>
+      <component id="ai_data_validation_category">
+        <content displayName="Data Quality and Validation" description="Provides validation recommendations, evaluates network connectivity issues, and runs broad spatial and attribute quality checks."/>
+      </component>
+      <component id="ai_knowledge_graph_category">
+        <content displayName="Knowledge Graph" description="Supports creating investigations, exploring investigation results, and connecting related items in knowledge graph link charts."/>
+      </component>
+      <component id="ai_custom_category">
+        <content displayName="Custom Capabilities" description="Components that add custom functionality."/>
+      </component>
     </insertCategory>
   </categories>
 
@@ -674,7 +734,7 @@
             <keyCommand id="esri_core_ShowFilterMenu" caption="Filter Menu" tooltip="Show filter menu."/>
             <keyCommand id="esri_core_ShowPortal" caption="Go To Portal" tooltip="Go to Portal."/>
             <keyCommand id="esri_core_ShowComputer" caption="Go To Computer" tooltip="Go to Computer."/>
-            <keyCommand id="esri_core_ShowFavorites" caption="Go To Favorites" tooltip="Go to Favorites."/>
+            <keyCommand id="esri_core_ShowFavorites" caption="Go To My Favorites" tooltip="Go to My Favorites."/>
             <keyCommand id="esri_core_ShowProject" caption="Go To Project" tooltip="Go to Project."/>
             <keyCommand id="esri_core_ActivateCatalogPane" caption="Catalog Pane" tooltip="Go to the Catalog pane." />
           </keyCommands>
@@ -695,7 +755,7 @@
             <keyCommand id="esri_core_PortalDP" caption="Go To Portal" tooltip="Go to Portal."/>
             <keyCommand id="esri_core_ShowComputer" caption="Go To Computer" tooltip="Go to Computer."/>
             <keyCommand id="esri_core_ProjectDP" caption="Go To Project" tooltip="Go to Project."/>
-            <keyCommand id="esri_core_FavoritesDP" caption="Go To Favorites" tooltip="Go to Favorites."/>
+            <keyCommand id="esri_core_FavoritesDP" caption="Go To My Favorites" tooltip="Go to MyFavorites."/>
             <keyCommand id="esri_core_ActivateResourcesPane" caption="Catalog View" tooltip="Go to the Catalog view." />
           </keyCommands>
         </dockPane>
@@ -723,6 +783,7 @@
           <group refID="esri_core_create" />
           <group refID="esri_core_update" />
           <group refID="esri_metadata_metadataViewGroup" />
+          <group refID="esri_core_favoritesData"/>
           <group refID="esri_core_portalProject"/>
         </tab>
         <tab id="esri_core_insertTab" caption="Insert"  keytip="N">
@@ -742,7 +803,7 @@
           <group refID="esri_presentations_insertPagesGroup"/>
           <group refID="esri_presentations_insertElementsGroup"/>
           <group refID="esri_project_styles"/>
-          <group refID="esri_core_favoritesData"/>
+          <group refID="esri_core_favoritesDataForInsert"/>
         </tab>
         <tab id="esri_core_analysisTab" caption="Analysis"  keytip="A">
           <group refID="esri_geoprocessing_analysisTools" />
@@ -827,7 +888,11 @@
 
         </group>
 
-        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="GenericOptions16" condition="esri_core_projectItem_resourcesPane">
+        <group id="esri_core_favoritesDataForInsert" caption="My Favorites" sizePriorities="25,125,225" smallImage="FavoriteStar16">
+
+        </group>
+
+        <group id="esri_core_projectViewOptionsGroup" caption="Options" smallImage="GenericOptions16" condition="esri_core_projectItem_resourcesPane" launcherButtonID="esri_core_catalogBrowsing_openBackstageOptionsButton">
           <buttonPalette refID="esri_core_popupTooltipPalette" size="large" />
           <button refID="esri_core_projectViewLayoutCheckBoxOpen" size="middle" />
           <buttonPalette refID="esri_core_projectViewDisplayType" size="middle" />
@@ -954,6 +1019,10 @@
         <button id="esri_core_monitorBtn" caption="Diagnostic Monitor" keytip="M" helpContextID="120002882" disableIfBusy="false"
                 className="ArcGIS.Desktop.Framework.Help.MonitorCmd" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="DiagnosticsMonitor16" largeImage="DiagnosticsMonitor32">
+          <tooltip heading="Diagnostic Monitor">Identify the cause of application problems by monitoring the flow of status information, logs, and events.</tooltip>
+        </button>
+        <!--This button is for display purposes only in the shortcut window.-->
+        <button id="esri_core_monitorBtn_shortcut" caption="Diagnostic Monitor" smallImage="DiagnosticsMonitor16" largeImage="DiagnosticsMonitor32">
           <tooltip heading="Diagnostic Monitor">Identify the cause of application problems by monitoring the flow of status information, logs, and events.</tooltip>
         </button>
         <button id="esri_core_supportBtn" caption="Technical Support" keytip="T" disableIfBusy="false"
@@ -1199,11 +1268,16 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
             Redo the previous operation.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_core_redoButtonAlt" caption="Redo" extendedCaption="Redo the previous operation; on quick access toolbar" className="ArcGIS.Desktop.Framework.UndoRedo.RedoCommand" assembly="ArcGIS.Desktop.Framework.dll" flipImageRTL="true" largeImage="EditRedo_B_32" smallImage="EditRedo_B_16" loadOnClick="false">
+          <tooltip heading="">
+            Redo the previous operation.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_core_Shortcuts" caption="Shortcuts" extendedCaption="Show current shortcuts" keytip="S"
                 className="ArcGIS.Desktop.Internal.Framework.Shortcuts.ShortcutsCmd" assembly="ArcGIS.Desktop.Framework.dll"
                 largeImage="Keyboard32"
                 smallImage="Keyboard16"
-                helpContextID="120003886"
+                helpContextID="120001218#611"
                 loadOnClick="false">
           <tooltip heading="Keyboard Shortcuts">Review or modify current keyboard shortcuts and add new ones.</tooltip>
         </button>
@@ -1441,10 +1515,10 @@ Show information such as an item's thumbnail and tags as well as its location in
         </button>
 
         <button id="esri_addFavoriteButton" className="AddToFavoritesCmd" loadOnClick="false"
-                caption="Add To Favorites" keytip="FA" menuKeytip="F"
+                caption="Add To My Favorites" keytip="FA" menuKeytip="F"
                 extendedCaption="Add an item to project favorites; on context menu for folders, databases, and servers that have been added to the project"
                 condition="esri_projectItem_isValidAndOpenProjectCondition"
-                smallImage="FavoriteStar16" helpContextID="">
+                smallImage="FavoriteStarAdd16" helpContextID="">
           <tooltip heading="">
             Add the item to project favorites. Project favorites saves a reference to the existing item. If the item is not in a location that is accessible from other machines, it won't be available when using a different computer.<disabledText></disabledText>
           </tooltip>
@@ -1558,6 +1632,22 @@ Show information such as an item's thumbnail and tags as well as its location in
                 caption="Device Location Options" extendedCaption="Open location device options">
           <tooltip heading="Device Location Options">
             Set device location options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_catalogBrowsing_openBackstageOptionsButton"
+                className="ArcGIS.Desktop.Internal.Core.CatalogBrowsingOptionsButton"
+                caption="Catalog Browsing Options" extendedCaption="Open catalog browsing options">
+          <tooltip heading="Catalog Browsing Options">
+            Set catalog browsing options.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_core_metadata_openBackstageOptionsButton"
+                className="ArcGIS.Desktop.Internal.Core.MetadataOptionsButton"
+                caption="Metadata Options" extendedCaption="Open metadata options">
+          <tooltip heading="Metadata Options">
+            Set metadata options.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1712,38 +1802,26 @@ Show information such as an item's thumbnail and tags as well as its location in
 
       <menus>
         <menu id="esri_core_SpecialFolderMenu" caption="Default">
-          <button refID="FolderConnectionProjectNewItemMenu" separator="true"/>
-          <button refID="esri_core_addToProject"/>
+          <button refID="FolderConnectionProjectNewItemMenu" />
+          <button refID="esri_core_addToProject" separator="true"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_core_editCopyPaths" separator="true"/>
           <button refID="esri_core_openFileLocation"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata"/>
         </menu>
-        <menu id="esri_core_SpecialFolderMenuLimited" caption="Default">
-          <button refID="esri_core_addToProject"/>
-          <button refID="esri_addFavoriteButton" separator="true"/>
-          <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_core_refresh" separator="true"/>
-          <button refID="esri_core_editCopyPaths" separator="true"/>
-          <button refID="esri_core_openFileLocation"/>
-        </menu>        
         <menu id="esri_core_SpecialFolderRemoveMenu" caption="Default">
-          <button refID="FolderConnectionProjectNewItemMenu" separator="true"/>
-          <button refID="esri_folderConnectionRemoveButton"/>
+          <button refID="FolderConnectionProjectNewItemMenu" />
+          <button refID="esri_folderConnectionRemoveButton" separator="true"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true"/>
           <button refID="esri_core_editCopyPaths" separator="true"/>
           <button refID="esri_core_openFileLocation"/>
-        </menu>
-        <menu id="esri_core_SpecialFolderRemoveMenuLimited" caption="Default">
-          <button refID="esri_folderConnectionRemoveButton"/>
-          <button refID="esri_addFavoriteButton" separator="true"/>
-          <button refID="esri_addProjectItemToNewProjectsButton"/>
-          <button refID="esri_core_refresh" separator="true"/>
-          <button refID="esri_core_editCopyPaths" separator="true"/>
-          <button refID="esri_core_openFileLocation"/>
+          <button refID="esri_projectItemViewMetadata" separator="true"/>
+          <button refID="esri_projectItemEditMetadata"/>
         </menu>
         <menu id="esri_core_helpMenu" caption="Help" keytip="H" flipImageRTL="true" skipIfHebrew="true"
               smallImage="ArcGISProHelp16" largeImage="ArcGISProHelp32">
@@ -1832,7 +1910,6 @@ Show information such as an item's thumbnail and tags as well as its location in
           <dynamicMenu refID="esri_favoritesItemPersistDynamicMenu" inline="true"/>
           <button refID="esri_removeFavoriteButton" separator="true"/>
           <menu refID="AliasProjectItemMenu"/>
-          <!--<dynamicMenu refID="esri_favoritesGeodatabasePropertyMenu" inline="true"/>-->
         </menu>
       </menus>
 
@@ -1853,6 +1930,10 @@ Show information such as an item's thumbnail and tags as well as its location in
       </splitButtons>
 
     </insertModule>
+    
+    <insertModule id="esri_intel_intelCapabilitiesCheck_module" className="ArcGIS.Desktop.Internal.Core.IntelCapabilitiesCheckModule" caption="Intel Capabilities Check Module" description="Intel Capabilities Check Module" autoLoad="true">
+    </insertModule>
+
   </modules>
 
   <options>
