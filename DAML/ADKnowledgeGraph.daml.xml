@@ -55,11 +55,14 @@
     </insertCondition>
 
     <insertCondition id="esri_knowledgeGraph_CanCreateKnowledgeGraph">
-      <state id ="esri_core_isSignedIn"/>
+      <or>
+        <state id="esri_core_isSignedIn"/>
+        <state id="esri_license_hasAdvancedLicenseState" />
+      </or>
     </insertCondition>
 
     <insertCondition id="esri_knowledgeGraph_isSignedIn">
-      <state id ="esri_core_isSignedIn"/>
+      <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
     </insertCondition>
 
     <insertCondition id="esri_knowledgeGraph_CanOpenKnowledgeGraph">
@@ -278,7 +281,7 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canApplyDesignState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
       </and>
     </insertCondition>
 
@@ -286,7 +289,10 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canDeleteDataModelItemsState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <not>
+          <state id="esri_knowledgeGraph_isReadOnlyState" />
+        </not>
       </and>
     </insertCondition>
 
@@ -294,7 +300,10 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canUndoDeleteDataModelItemsState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <not>
+          <state id="esri_knowledgeGraph_isReadOnlyState" />
+        </not>
       </and>
     </insertCondition>
     
@@ -302,7 +311,10 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canAddRelationshipToEntityState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <not>
+          <state id="esri_knowledgeGraph_isReadOnlyState" />
+        </not>
       </and>
     </insertCondition>
 
@@ -310,7 +322,7 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canExpandGroupedRelationshipsState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
       </and>
     </insertCondition>
 
@@ -318,7 +330,50 @@
       <and>
         <state id="esri_knowledgeGraph_dataModelDesignerView"/>
         <state id="esri_knowledgeGraph_canCollapseGroupedRelationshipsState"/>
-        <state id="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_dmd_canAlignNodesCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <state id="esri_knowledgeGraph_dmd_hasEntitySelectedState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_dmd_canSaveDesignCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <state id="esri_knowledgeGraph_dmd_hasConfigurationInfoSelectedState" />
+        <state id="esri_knowledgeGraph_dmd_hasValidConfigurationState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_dmd_canSaveDesignAsCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <state id="esri_knowledgeGraph_dmd_hasConfigurationSelectedState" />
+        <state id="esri_knowledgeGraph_dmd_hasValidConfigurationState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_dmd_canReloadDesignCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <state id="esri_knowledgeGraph_dmd_hasConfigurationInfoSelectedState" />
+        <state id="esri_knowledgeGraph_dmd_hasConfigurationSelectedState" />
+        <state id="esri_knowledgeGraph_dmd_hasConfigurationChangesState" />
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_dmd_genericToolbarCondition">
+      <and>
+        <state id="esri_knowledgeGraph_dataModelDesignerView"/>
+        <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
       </and>
     </insertCondition>
     
@@ -508,6 +563,25 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_knowledgeGraph_signedInAndServerCompatibleAndNotReadOnly">
+      <and>
+        <state id ="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id ="esri_knowledgeGraph_serverCompatible"/>
+        <not>
+          <state id="esri_knowledgeGraph_isReadOnlyState" />
+        </not>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_canAccessKnowledgeGraphAndNotReadOnly">
+      <and>
+        <state id ="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
+        <not>
+          <state id="esri_knowledgeGraph_isReadOnlyState" />
+        </not>
+      </and>
+    </insertCondition>
+    
     <insertCondition id="esri_knowledgeGraph_symbologyCondition">
       <state id="esri_knowledgeGraph_CanSetSymbology"/>
     </insertCondition>
@@ -620,14 +694,30 @@
       <state id ="esri_knowledgeGraph_canAddDataModelDesignFileToInvestigation"/>
     </insertCondition>
 
+    <insertCondition id="esri_knowledgeGraph_centrality_genericToolbarCondition">
+       <state id="esri_knowledgeGraph_centralityViewState" />
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_community_genericToolbarCondition">
+       <state id="esri_knowledgeGraph_communityViewState" />
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_fileKnowledgeGraphLicensedCondition">
+      <state id="esri_knowledgeGraph_fileKnowledgeGraphLicensedState" />  
+    </insertCondition>
+    
   </conditions>
 
   <categories>
 	  <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_knowledgeGraph_investigation_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.InvestigationAssistantExtension">
-        <content condition="esri_knowledgeGraph_canUseInvestigationSkills">
+        <content condition="esri_knowledgeGraph_canUseInvestigationSkills" extensionCategoryRefID="ai_knowledge_graph_category">
+          <uiText>
+            <title>Investigation Query and Mapping</title>
+            <shortDescription>Queries, searches, selects, and maps investigation results.</shortDescription>
+          </uiText>
           <searchDescriptions>
-            <searchDescription>This skill class allows users to query and select data in Investigation view of a knowledge graph services.</searchDescription>
+            <searchDescription>This skill class allows users to query and select data in Investigation view of a knowledge graph.</searchDescription>
           </searchDescriptions>
           <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewMap">
             <searchDescriptions>
@@ -673,9 +763,13 @@
       </insertComponent>
 
       <insertComponent id="esri_knowledgeGraph_linkChart_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.LinkChartAssistantExtension">
-        <content condition="esri_knowledgeGraph_canUseLinkChartSkills">
+        <content condition="esri_knowledgeGraph_canUseLinkChartSkills" extensionCategoryRefID="ai_knowledge_graph_category">
+          <uiText>
+            <title>Knowledge Graph Link Charts</title>
+            <shortDescription>Connects related items in a knowledge graph link chart.</shortDescription>
+          </uiText>
           <searchDescriptions>
-            <searchDescription>This skill class allows users to perform actions in link chart of a knowledge graph services.</searchDescription>
+            <searchDescription>This skill class allows users to perform actions in link chart of a knowledge graph.</searchDescription>
           </searchDescriptions>
           <aiAssistantFunction name="ConnectLinkChart">
             <searchDescriptions>
@@ -686,7 +780,11 @@
       </insertComponent>
 
       <insertComponent id="esri_knowledgeGraph_knowledgeGraph_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphAssistantExtension">
-        <content>
+        <content extensionCategoryRefID="ai_knowledge_graph_category">
+          <uiText>
+            <title>Investigation Creation</title>
+            <shortDescription>Creates new investigations for a knowledge graph.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>This skill class allows users to perform knowledge graph actions.</searchDescription>
           </searchDescriptions>
@@ -745,6 +843,15 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <supportedTypeIDs>
             <type id="portal_knowledge_graph_service" contextMenuID="esri_knowledgeGraph_serviceMenu" contextMenuID_ProjectItem="knowledgeGraphServiceMenu" />
             <type id="portal_knowledge_graph_service_hosted" contextMenuID="esri_knowledgeGraph_serviceMenu" contextMenuID_ProjectItem="knowledgeGraphServiceMenu" />
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
+
+      <insertComponent id="esri_itemInfoType_FileKnowledgeGraphItem" className="ArcGIS.Desktop.Internal.KnowledgeGraph.FileKnowledgeGraphProjectItem"
+                 containerType="">
+        <content>
+          <supportedTypeIDs>
+            <type id="file_knowledgegraph" contextMenuID="esri_knowledgeGraph_FileKnowledgeGraphMenu" contextMenuID_ProjectItem="knowledgeGraphServiceMenu" />
           </supportedTypeIDs>
         </content>
       </insertComponent>
@@ -1142,7 +1249,345 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
 
       </subgroups>
 
+       <customToolbars>
+        <toolbar id="esri_knowledgeGraph_dataModelDesignerToolbar" caption="Data Model Designer Toolbar" helpContextID="69fd429c95">
+          <group>
+            <!--Alignment group-->
+            <labelControl refID="esri_knowledgeGraph_dmd_alignmentGroupLabel"  />
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentLeftButton" size="small"/>
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentRightButton" size="small"/>
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentBottomButton" size="small"/>
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentTopButton" size="small"/>
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentCenterButton" size="small"/>
+            <button refID="esri_knowledgeGraph_dmd_nodeAlignmentMiddleButton" size="small" />
+          </group>
+          <group>
+            <!--Design group-->
+            <labelControl refID="esri_knowledgeGraph_dmd_designGroupLabel" separator="true" />
+            <customControl refID="esri_knowledgeGraph_dmd_designSelectionControl" />
+            <button refID="esri_knowledgeGraph_dmd_saveDesignButton" size="small" />
+            <button refID="esri_knowledgeGraph_dmd_saveDesignAsButton" size="small" />
+            <button refID="esri_knowledgeGraph_dmd_reloadDesignButton" size="small" />
+            <button refID="esri_knowledgeGraph_dmd_newDesignButton" size="small" />
+            <button refID="esri_knowledgeGraph_dmd_importArrowsFileButton" size="small" />
+          </group>
+
+          <group>
+            <!--Misc group-->
+            <button refID="esri_knowledgeGraph_dataModel_toggleDetailsButton" size="small" separator="true" />
+          </group>
+        </toolbar>
+
+         <toolbar id="esri_knowledgeGraph_centralityToolbar" caption="Centrality Toolbar" helpContextID="120002877">
+           <group>
+             <!--Entities group-->
+             <labelControl refID="esri_knowledgeGraph_centrality_entitiesGroupLabel"  />
+             <checkBox refID="esri_knowledgeGraph_centrality_includeDocumentsCheckBox" />
+           </group>
+           <group>
+             <!--Relationships group-->
+             <labelControl refID="esri_knowledgeGraph_centrality_relationshipsGroupLabel" separator="true" />
+             <customControl refID="esri_knowledgeGraph_centrality_relationshipInterpretationControl" />
+           </group>
+           <group>
+             <!--Options group-->
+             <button refID="esri_knowledgeGraph_centrality_optionsToggleButton" separator="true" size="middle" />
+           </group>
+           <group>
+             <!--View group-->
+             <labelControl refID="esri_knowledgeGraph_centrality_viewGroupLabel" separator="true" />
+             <customControl refID="esri_knowledgeGraph_centrality_typeFilterControl" />
+           </group>
+         </toolbar>
+         <toolbar id="esri_knowledgeGraph_communityToolbar" caption="Community Toolbar" helpContextID="120003700"
+                  extendedMenu="esri_knowledgeGraph_community_externalTableBurgerMenu">
+           <group>
+             <!--Detection method group-->
+             <labelControl refID="esri_knowledgeGraph_community_detectionMethodGroupLabel"  />
+             <customControl refID="esri_knowledgeGraph_community_communityDetectionMethodControl" />
+           </group>
+           <group>
+             <!--Entities group-->
+             <labelControl refID="esri_knowledgeGraph_community_entitiesGroupLabel" separator="true" />
+             <checkBox refID="esri_knowledgeGraph_community_includeDocumentsCheckBox" />
+           </group>
+           <group>
+             <!--View group-->
+             <labelControl refID="esri_knowledgeGraph_community_viewGroupLabel" separator="true" />
+             <customControl id="esri_knowledgeGraph_community_searchControl" />
+             <customControl refID="esri_knowledgeGraph_community_typeFilterControl" />
+           </group>
+           <group>
+             <!--Options group-->
+             <button refID="esri_knowledgeGraph_community_optionsToggleButton" separator="true" size="middle" />
+           </group>
+         </toolbar>
+      </customToolbars>
+      
       <controls>
+        <!-- Data Model Designer Toolbar Labels -->
+        <labelControl id="esri_knowledgeGraph_dmd_alignmentGroupLabel" caption="Alignment"/>
+        <labelControl id="esri_knowledgeGraph_dmd_designGroupLabel" caption="Design"/>
+
+        <!-- Data Model Designer Toolbar Commands -->
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentLeftButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentLeft"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Left" extendedCaption="Align nodes left"
+                keytip="AL"
+                largeImage="ElementAlignLeft32"
+                smallImage="ElementAlignLeft16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Left.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentRightButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentRight"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Right" extendedCaption="Align nodes right"
+                keytip="AR"
+                largeImage="ElementAlignRight32"
+                smallImage="ElementAlignRight16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Right.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentBottomButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentBottom"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Bottom" extendedCaption="Align nodes bottom"
+                keytip="AB"
+                largeImage="ElementAlignBottom32"
+                smallImage="ElementAlignBottom16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Bottom.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentTopButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentTop"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Top" extendedCaption="Align nodes top"
+                keytip="AT"
+                largeImage="ElementAlignTop32"
+                smallImage="ElementAlignTop16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Top.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentCenterButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentCenter"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Center" extendedCaption="Align nodes center"
+                keytip="AC"
+                largeImage="ElementAlignCenter32"
+                smallImage="ElementAlignCenter16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Center.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_dmd_nodeAlignmentMiddleButton" className="esri_knowledgeGraph_module:DataModelDesignerNodeAlignmentMiddle"
+                condition="esri_knowledgeGraph_dmd_canAlignNodesCondition"
+                caption="Middle" extendedCaption="Align nodes middle"
+                keytip="AM"
+                largeImage="ElementAlignMiddle32"
+                smallImage="ElementAlignMiddle16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Align Nodes Middle.<disabledText>Requires multiple entity selection</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_saveDesignButton" className="esri_knowledgeGraph_module:DataModelDesignerSaveDesign"
+                condition="esri_knowledgeGraph_dmd_canSaveDesignCondition"
+                caption="Save" extendedCaption="Save data model design"
+                keytip="S"
+                largeImage="GenericSave32"
+                smallImage="GenericSave16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Save Data Model Design.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_saveDesignAsButton" className="esri_knowledgeGraph_module:DataModelDesignerSaveDesignAs"
+                condition="esri_knowledgeGraph_dmd_canSaveDesignAsCondition"
+                caption="Save As" extendedCaption="Save data model design as"
+                keytip="SA"
+                largeImage="GenericSaveAs32"
+                smallImage="GenericSaveAs16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Save Data Model Design As.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_reloadDesignButton" className="esri_knowledgeGraph_module:DataModelDesignerReloadDesign"
+                condition="esri_knowledgeGraph_dmd_canReloadDesignCondition"
+                caption="Reset" extendedCaption="Reset to current design"
+                keytip="RD"
+                largeImage="GenericReset32"
+                smallImage="GenericReset16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Reset to Current Design.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_newDesignButton" className="esri_knowledgeGraph_module:DataModelDesignerNewDesign"
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition"
+                caption="New Design" extendedCaption="Create new design"
+                keytip="ND"
+                largeImage="NewDataModelDesign32"
+                smallImage="NewDataModelDesign16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Create a new Data Model Design.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_importArrowsFileButton" className="esri_knowledgeGraph_module:DataModelDesignerImportArrowsFile"
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition"
+                caption="Import" extendedCaption="Import arrows file"
+                keytip="IA"
+                largeImage="LinkChartImport32"
+                smallImage="LinkChartImport16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Import Arrows File.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <customControl id="esri_knowledgeGraph_dmd_designSelectionControl"
+                       condition="esri_knowledgeGraph_dmd_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="DesignSelectionViewModel">
+          <content className="DesignSelectionView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+
+        <!-- Centrality Toolbar Labels -->
+        <labelControl id="esri_knowledgeGraph_centrality_entitiesGroupLabel" caption="Entities:"/>
+        <labelControl id="esri_knowledgeGraph_centrality_relationshipsGroupLabel" caption="Relationships:"/>
+        <labelControl id="esri_knowledgeGraph_centrality_viewGroupLabel" caption="View:"/>
+        
+        <!-- Centrality Toolbar Commands -->
+        <checkBox id="esri_knowledgeGraph_centrality_includeDocumentsCheckBox" className="Ribbon.CentralityIncludeDocumentsCheckBox"
+                  condition="esri_knowledgeGraph_centrality_genericToolbarCondition"
+                  caption="Include documents" extendedCaption="Include documents"
+                  loadOnClick="false" 
+                  keytip="ID">
+          <tooltip>
+            Whether to include document entities in centrality computations or ignore them (in this case, relationships to and from documents are ignored).<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+        <customControl id="esri_knowledgeGraph_centrality_relationshipInterpretationControl"
+                       condition="esri_knowledgeGraph_centrality_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="RelationshipInterpretationViewModel">
+          <content className="RelationshipInterpretationView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+        <button id="esri_knowledgeGraph_centrality_optionsToggleButton" className="Ribbon.CentralityOptionsToggleButton"
+                condition="esri_knowledgeGraph_centrality_genericToolbarCondition"
+                caption="Options" extendedCaption="Show/Hide centrality options"
+                largeImage="GenericOptionsSliders32" 
+                smallImage="GenericOptionsSliders16"
+                keytip="CO" 
+                loadOnClick="false">
+          <tooltip></tooltip>
+        </button>
+        <customControl id="esri_knowledgeGraph_centrality_typeFilterControl"
+                       condition="esri_knowledgeGraph_centrality_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="TypeFilterViewModel">
+          <content className="TypeFilterView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+
+        <!-- Community Toolbar Labels -->
+        <labelControl id="esri_knowledgeGraph_community_detectionMethodGroupLabel" caption="Detection Method:"/>
+        <labelControl id="esri_knowledgeGraph_community_entitiesGroupLabel" caption="Entities:"/>
+        <labelControl id="esri_knowledgeGraph_community_viewGroupLabel" caption="View:"/>
+
+        <!-- Community Toolbar Commands -->
+        <customControl id="esri_knowledgeGraph_community_communityDetectionMethodControl"
+                       condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="CommunityDetectionMethodViewModel">
+          <content className="CommunityDetectionMethodView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+        <checkBox id="esri_knowledgeGraph_community_includeDocumentsCheckBox" className="Ribbon.CommunityIncludeDocumentsCheckBox"
+                  condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                  caption="Include documents" extendedCaption="Include documents"
+                  loadOnClick="false" 
+                  keytip="ID">
+          <tooltip>
+            Whether to include document entities in community computations or ignore them (in this case, relationships to and from documents are ignored).<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+        <customControl id="esri_knowledgeGraph_community_searchControl"
+                       condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="SearchViewModel">
+          <content className="SearchView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+        <customControl id="esri_knowledgeGraph_community_typeFilterControl"
+                       condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="TypeFilterViewModel">
+          <content className="TypeFilterView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
+        <button id="esri_knowledgeGraph_community_optionsToggleButton" className="Ribbon.CommunityOptionsToggleButton"
+                condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                caption="Options" extendedCaption="Show/Hide community options"
+                largeImage="GenericOptionsSliders32"
+                smallImage="GenericOptionsSliders16"
+                keytip="CO"
+                loadOnClick="false">
+          <tooltip></tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_community_expandEntitiesMenuToggleButton" className="Ribbon.CommunityExpandEntitiesToggleButton"
+                condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                caption="Expand All Entities" extendedCaption="Expand all entities"
+                keytip="EE"
+                loadOnClick="false">
+          <tooltip>Expand All Entities.</tooltip>
+        </button>
+          
+        <button id="esri_knowledgeGraph_community_sortEntitiesAscendingButton" className="esri_knowledgeGraph_module:CommunitySortEntitiesAscending"
+                condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                caption="Sort Entities Ascending" extendedCaption="Sort entities ascending"
+                largeImage="GenericSortAscendingBars32"
+                smallImage="GenericSortAscendingBars16"
+                keytip="SA"
+                loadOnClick="false">
+          <tooltip heading="">
+            Sort Entities Ascending.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_community_sortEntitiesDescendingButton" className="esri_knowledgeGraph_module:CommunitySortEntitiesDescending"
+                condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                caption="Sort Entities Descending" extendedCaption="Sort entities descending"
+                largeImage="GenericSortDescendingBars32"
+                smallImage="GenericSortDescendingBars16"
+                keytip="SA"
+                loadOnClick="false">
+          <tooltip heading="">
+            Sort Entities Descending.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_community_optionsMenuToggleButton" className="Ribbon.CommunityOptionsToggleButton"
+                condition="esri_knowledgeGraph_community_genericToolbarCondition"
+                caption="Options" extendedCaption="Show/Hide community options"
+                keytip="CO"
+                loadOnClick="false">
+          <tooltip></tooltip>
+        </button>
+
         <button id="esri_knowledgeGraph_addToInvestigationQuery" className="esri_knowledgeGraph_module:AddToInvestigationQuery"
                 caption="Add to current investigation" extendedCaption=""
                 condition="esri_knowledgeGraph_canAddToInvestigationQueryCondition"
@@ -1180,7 +1625,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 smallImage="KnowledgeGraphEntityNew16"
                 loadOnClick="false">
           <tooltip heading="Add New Entity">
-            Create an entity. Select the type of entity to create in the list.<disabledText>Requires Portal connection</disabledText>
+            Create an entity. Select the type of entity to create in the list.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -1191,7 +1636,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 smallImage="KnowledgeGraphEntityNew16"
                 loadOnClick="false">
           <tooltip heading="">
-            Add New Entity Type.<disabledText>Requires Portal connection</disabledText>
+            Add New Entity Type.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -1202,7 +1647,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 smallImage="KnowledgeGraphRelationshipNew16"
                 loadOnClick="false">
           <tooltip heading="">
-            Add New Relationship Type.<disabledText>Requires Portal connection</disabledText>
+            Add New Relationship Type.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -1243,7 +1688,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 keytip="NI" condition="esri_knowledgeGraph_CanCreateKnowledgeGraph"
                 helpContextID="120004640">
           <tooltip heading="">
-            Create a new investigation.<disabledText></disabledText>
+            Create a new investigation.<disabledText>Available with advanced license.</disabledText>
           </tooltip>
         </button>
 
@@ -1264,7 +1709,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 smallImage="InvestigationNew16"
                 condition="esri_knowledgeGraph_CanCreateKnowledgeGraph">
           <tooltip heading="">
-            Add a Knowledge Graph<disabledText>Requires Portal connection and license</disabledText>
+            Add a Knowledge Graph<disabledText>Available with advanced license.</disabledText>
           </tooltip>
         </button>
 
@@ -1327,7 +1772,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 helpContextID=""
                 loadOnClick="false">
           <tooltip heading="">
-            Add new entity.<disabledText>Requires Portal connection</disabledText>
+            Add new entity.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -1460,7 +1905,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="KnowledgeGraphETL16"
                 loadOnClick="false">
           <tooltip heading="">
-            Open Load Table View.<disabledText>Requires Portal connection</disabledText>
+            Open Load Table View.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -1763,7 +2208,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="KnowledgeGraphETL16"
                 helpContextID="" loadOnClick="false">
           <tooltip heading="">
-            Load Data.<disabledText>Requires Portal connection</disabledText>
+            Load Data.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -2124,7 +2569,7 @@ Default display properties for symbology, display names, and labels can be appli
         <customControl id="esri_knowledgeGraph_AddNewEntityItemControl" className="ArcGIS.Desktop.Internal.KnowledgeGraph.AddNewEntityItemViewModel" caption="Add New Item" loadOnClick="true"
                        staysOpenOnClick="true" condition="esri_knowledgeGraph_signedInAndServerCompatible" keytip="NE">
           <tooltip heading="Add New Item">
-            Add new entity.<disabledText>Requires Portal connection</disabledText>
+            Add new entity.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
           <content className="ArcGIS.Desktop.Internal.KnowledgeGraph.AddNewItemView"/>
         </customControl>
@@ -2445,7 +2890,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="GenericRefresh16"
                 keytip="RD"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Refresh data model<disabledText></disabledText>
           </tooltip>
@@ -2455,7 +2900,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="KnowledgeGraphEntityNew32"
                 smallImage="KnowledgeGraphEntityNew16"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_canAccessKnowledgeGraphAndNotReadOnly">
           <tooltip heading="">
             Add New Entity Type.<disabledText></disabledText>
           </tooltip>
@@ -2466,7 +2911,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="KnowledgeGraphRelationshipNew32"
                 smallImage="KnowledgeGraphRelationshipNew16"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_canAccessKnowledgeGraphAndNotReadOnly">
           <tooltip heading="">
             Add New Relationship Type.<disabledText></disabledText>
           </tooltip>
@@ -2634,7 +3079,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphEntityNew32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphEntityNew16.png"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_canAccessKnowledgeGraphAndNotReadOnly">
           <tooltip heading="">
             Add New Entity Type.<disabledText></disabledText>
           </tooltip>
@@ -2645,7 +3090,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphRelationshipNew32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphRelationshipNew16.png"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_canAccessKnowledgeGraphAndNotReadOnly">
           <tooltip heading="">
             Add New Relationship Type.<disabledText></disabledText>
           </tooltip>
@@ -2656,7 +3101,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="LinkChartLayoutSelectTool16"
                 keytip="S" 
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Enable selection mode.<disabledText></disabledText>
           </tooltip>
@@ -2667,7 +3112,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="PanTool_B_16"
                 keytip="S"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Enable pan mode.<disabledText></disabledText>
           </tooltip>
@@ -2679,7 +3124,7 @@ Default display properties for symbology, display names, and labels can be appli
                 smallImage="ShowDetailsPanel32"
                 keytip="D"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Show details pane.<disabledText></disabledText>
           </tooltip>
@@ -2720,7 +3165,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="ZoomIn32"
                 smallImage="ZoomIn16"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Zoom In.<disabledText></disabledText>
           </tooltip>
@@ -2730,7 +3175,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="ZoomOut32"
                 smallImage="ZoomOut16"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Zoom Out.<disabledText></disabledText>
           </tooltip>
@@ -2740,7 +3185,7 @@ Default display properties for symbology, display names, and labels can be appli
                 largeImage="ModelBuilderFullExtent32"
                 smallImage="ModelBuilderFullExtent16"
                 loadOnClick="false"
-                condition="esri_knowledgeGraph_signedInAndServerCompatible">
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition">
           <tooltip heading="">
             Fit To Window.<disabledText></disabledText>
           </tooltip>
@@ -3129,6 +3574,7 @@ Default display properties for symbology, display names, and labels can be appli
       </galleries>
 
       <menus>
+
         <menu id="esri_knowledgeGraph_investigationContainerMenu" caption="Investigation Container" extendedCaption="Context menu for the Investigation container in the project">
           <button refID="esri_knowledgeGraph_newKnowledgeGraphInvestigation" />
           <button refID="esri_core_editPasteButton" separator="true"/>
@@ -3154,7 +3600,18 @@ Default display properties for symbology, display names, and labels can be appli
 
         <menu id="esri_knowledgeGraph_serviceMenu" caption="Knowledge Graph" extendedCaption="Context menu for Knowledge Graph">
           <button refID="esri_knowledgeGraph_CreateKnowledgeGraphInvestigation"/>
+          <dynamicMenu refID="esri_projectItemDeleteDynamicMenu" inline="true"/>
+        </menu>
+        
+        <menu id="esri_knowledgeGraph_FileKnowledgeGraphMenu" caption="Knowledge Graph" extendedCaption="Context menu for Knowledge Graph">
+          <button refID="esri_knowledgeGraph_CreateKnowledgeGraphInvestigation"/>
+          <button refID ="esri_core_editCutButton" separator="true"/>
+          <button refID="esri_core_editCopyButton"/>
+          <button refID ="esri_core_editPasteButton"/>
+          <button refID="esri_core_editCopyPaths"/>
           <button refID="esri_core_editDeleteButton" separator="true"/>
+          <button refID="esri_core_rename"/>
+          <button refID="esri_core_openFileLocation"/>
         </menu>
 
         <menu id="esri_knowledgeGraph_layerMenu" caption="Knowledge Graph Layer" extendedCaption="Context menu for knowledge graph layer">
@@ -3576,6 +4033,12 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_knowledgeGraph_selectBetweenLinkChart" />
           <button refID="esri_geoprocessing_selectByAttributeButton" />
         </menu>
+        <menu id="esri_knowledgeGraph_community_externalTableBurgerMenu" caption="Community Menu">
+          <button refID="esri_knowledgeGraph_community_expandEntitiesMenuToggleButton"/>
+          <button refID="esri_knowledgeGraph_community_sortEntitiesAscendingButton" separator="true"/>
+          <button refID="esri_knowledgeGraph_community_sortEntitiesDescendingButton"/>
+          <button refID="esri_knowledgeGraph_community_optionsMenuToggleButton" separator="true"/>
+        </menu>     
       </menus>
 
       <radialMenus>
@@ -3687,12 +4150,18 @@ Default display properties for symbology, display names, and labels can be appli
               smallImage="Centrality16"
               isClosable="true">
           <content className="ArcGIS.Desktop.Internal.KnowledgeGraph.CentralityView"/>
+          <toolbars>
+            <toolbar refID="esri_knowledgeGraph_centralityToolbar"/>
+          </toolbars>
         </pane>
         <pane id="esri_knowledgeGraph_communityView" isDropTarget="false"
               className="ArcGIS.Desktop.Internal.KnowledgeGraph.CommunityViewModel"
               smallImage="CommunityDetection16"
               isClosable="true">
           <content className="ArcGIS.Desktop.Internal.KnowledgeGraph.CommunityView"/>
+          <toolbars>
+            <toolbar refID="esri_knowledgeGraph_communityToolbar"/>
+          </toolbars>
         </pane>
         <pane id="esri_knowledgeGraph_dataModelDesignerView"
               className="ArcGIS.Desktop.Internal.KnowledgeGraph.DataModelDesigner.DataModelDesignerViewModel"
@@ -3700,6 +4169,9 @@ Default display properties for symbology, display names, and labels can be appli
               isClosable="true" defaultTab="esri_knowledgeGraph_investigation_homeTab"
               isDropTarget="false">
           <content className="ArcGIS.Desktop.Internal.KnowledgeGraph.DataModelDesigner.DataModelDesignerView"/>
+          <toolbars>
+            <toolbar refID="esri_knowledgeGraph_dataModelDesignerToolbar"/>
+          </toolbars>
         </pane>
       </panes>
 

@@ -113,6 +113,24 @@
         </or>
       </and>
     </insertCondition>
+    <insertCondition id="esri_editing_EditingMapWithLicensingCondition">
+      <and>
+        <not>
+          <state id="esri_editing_editorDisabled" />
+        </not>
+        <not>
+          <state id="esri_editing_editingNotAvailable"/>
+        </not>
+        <not>
+          <state id="esri_charts_chartsPane" />
+        </not>
+        <state id="esri_mapping_mapPane"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
+      </and>
+    </insertCondition>
     <insertCondition id="esri_editing_DelSelFeaturesShortcutCondition">
       <and>
         <not>
@@ -159,6 +177,10 @@
           <state id="esri_charts_chartsPane" />
         </not>
         <state id="esri_mapping_mapPane"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_TopologyMapCondition">
@@ -265,6 +287,10 @@
         </not>
         <state id="esri_editing_hasActiveParcelRecord"/>
         <state id="esri_editing_HasParcelFabric"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordTransparencyCondition">
@@ -280,6 +306,10 @@
         </not>
         <state id="esri_editing_hasActiveParcelRecord"/>
         <state id="esri_editing_HasParcelFabric"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordAndParcelPolygonsOrLinesOrPointsSelectedCondition">
@@ -296,6 +326,10 @@
           <state id="esri_editing_HasParcelLinesSelected"/>
           <state id="esri_editing_HasParcelFabricPointsSelected"/>
         </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordAndParcelPolygonsSelectedCondition">
@@ -308,6 +342,10 @@
         </not>
         <state id="esri_editing_hasActiveParcelRecord"/>
         <state id="esri_editing_HasParcelPolygonsSelected"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordAndParcelFabricFeaturesSelectedCondition">
@@ -325,6 +363,10 @@
           <state id="esri_editing_HasParcelFabricConnectionsSelected"/>
           <state id="esri_editing_HasParcelFabricPointsSelected"/>
         </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_activeRecordAndHasAttachmentsCondition">
@@ -337,6 +379,10 @@
         </not>
         <state id="esri_editing_hasActiveParcelRecord"/>
         <state id="esri_editing_HasParcelRecordAttachments" />
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_hasParcelRecordAttachmentsCondition">
@@ -348,6 +394,10 @@
           <state id="esri_editing_editingNotAvailable"/>
         </not>
         <state id="esri_editing_HasParcelRecordAttachments" />
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelPolygonsSelectedCondition">
@@ -359,6 +409,10 @@
           <state id="esri_editing_editingNotAvailable"/>
         </not>
         <state id="esri_editing_HasParcelPolygonsSelected"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelMinimalPolygonsSelectedCondition">
@@ -370,6 +424,10 @@
           <state id="esri_editing_editingNotAvailable"/>
         </not>
         <state id="esri_editing_HasMinimalParcelPolygonsSelected"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelLinesOrConnectionsSelectedCondition">
@@ -384,6 +442,10 @@
           <state id="esri_editing_HasParcelLinesSelected"/>
           <state id="esri_editing_HasParcelFabricConnectionsSelected" />
         </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelPolygonOrLinesSelectedCondition">
@@ -397,6 +459,10 @@
         <or>
           <state id="esri_editing_HasParcelPolygonsSelected"/>
           <state id="esri_editing_HasParcelLinesSelected"/>
+        </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
         </or>
       </and>
     </insertCondition>
@@ -413,6 +479,10 @@
           <state id="esri_editing_HasParcelLinesSelected"/>
           <state id="esri_editing_HasParcelFabricPointsSelected"/>
         </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelFabricFeaturesSelectedCondition">
@@ -428,6 +498,10 @@
           <state id="esri_editing_HasParcelLinesSelected"/>
           <state id="esri_editing_HasParcelFabricConnectionsSelected"/>
           <state id="esri_editing_HasParcelFabricPointsSelected"/>
+        </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
         </or>
       </and>
     </insertCondition>
@@ -446,13 +520,39 @@
           <state id="esri_editing_HasParcelFabricPointsSelected"/>
           <state id="esri_editing_HasParcelRecordsSelected"/>
         </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_hasRecentlyUsedRecords">
-      <state id="esri_editing_HasRecentlyUsedRecords"/>
+      <and>
+        <state id="esri_editing_HasRecentlyUsedRecords"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
+      </and>
     </insertCondition>
     <insertCondition id="esri_editing_parcelToolsVisibleCondition">
-      <state id="esri_editing_HasParcelFabric"/>
+      <and>
+        <state id="esri_editing_HasParcelFabric"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+        </or>
+      </and>
+    </insertCondition>
+    <!--is utility network licensed properly on the tab-->
+    <insertCondition id="esri_allowedToEditUtilityNetworkCondition">
+      <and>
+          <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+        </or>
+      </and>
     </insertCondition>
     <insertCondition id="esri_editing_sketchHasControlPointsCondition">
       <state id="esri_editing_SketchHasControlPointsState"/>
@@ -508,6 +608,10 @@
         <or>
           <state id="esri_editing_HasParcelPolygonsSelected"/>
           <state id="esri_editing_HasParcelCopyTo_LinesSelected"/>
+        </or>
+        <or>
+          <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
         </or>
       </and>
     </insertCondition>
@@ -616,7 +720,17 @@
           <state id="esri_mapping_mapMemberSelectedIsVersionableState"/>
           <state id="esri_mapping_mapHasVersionableDataSourceMembersState" />
         </or>
-        <state id="esri_license_hasStandardLicenseState"/>
+        <or>
+          <state id="esri_license_hasStandardLicenseState"/>
+          <and>
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState"/>
+            <or>
+              <state id="esri_mapping_dataSourceSelectedIsFeatureServiceState" />
+              <state id="esri_mapping_FeatureServiceLayerSelectedState" />
+              <state id="esri_mapping_FeatureServiceTableSelectedState" />
+            </or>
+          </and>
+        </or>
         <not>
           <or>
             <state id="esri_mapping_dataSourceSelectedIsHistoricalVersionState"/>
@@ -822,7 +936,16 @@
       <state id="esri_mapping_FeatureLayerRematchAddressesState"/>
     </insertCondition>
     <insertCondition id="esri_editing_HasParcelFabricCondition">
-      <state id="esri_editing_HasParcelFabric" />
+        <state id="esri_editing_HasParcelFabric" />
+    </insertCondition>
+    <insertCondition id="esri_editing_HasParcelFabricAndLicenseCondition">
+      <and>
+        <state id="esri_editing_HasParcelFabric" />
+        <or>
+          <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+        </or>
+      </and>
     </insertCondition>
     <insertCondition id="esri_editing_EditingParcelFabricMapCondition">
       <and>
@@ -837,6 +960,10 @@
         </not>
         <state id="esri_mapping_mapPane"/>
         <state id="esri_editing_HasParcelFabric" />
+        <or>
+          <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+        </or>
       </and>
     </insertCondition>
     <insertCondition id="esri_editing_FalseCondition">
@@ -1124,7 +1251,7 @@
         <content className="HostDialogEmbeddableControlView" relatedCommand="esri_editing_culDeSac" runLabel="Cul-de-sac" autoRunOnly="true"/>
       </insertComponent>
       <insertComponent id="esri_splitIntoCOGOLinesEmbedded" className="SplitIntoCOGOLinesEmbeddableControlViewModel">
-        <content className="HostDialogEmbeddableControlView" relatedCommand="esri_editing_splitIntoCOGOLines" runLabel="Split Into COGO Lines" autoRunOnly="true"/>
+        <content className="HostDialogEmbeddableControlView" relatedCommand="esri_editing_splitIntoCOGOLines" runLabel="Split Into COGO Lines"/>
       </insertComponent>
       <insertComponent id="esri_editing_ConstructGeodeticEmbedded" className="ConstructGeodeticEmbeddableControlViewModel">
         <content className="HostDialogEmbeddableControlView" relatedCommand="esri_editing_ConstructGeodeticCommand" runLabel="Create"/>
@@ -1391,7 +1518,11 @@
 
     <updateCategory refID="esri_core_ai_assistant_extension_category">
       <insertComponent id="esri_parcelfabric_assistant_extension" className="ArcGIS.Desktop.Internal.Editing.ParcelRecordManagementAssistantExtension">
-        <content condition="esri_mapping_mapPaneActive" extensionCategoryRefID="ai_editing_category">
+        <content condition="esri_mapping_mapPaneActive" extensionCategoryRefID="ai_data_management_category">
+          <uiText>
+            <title>Parcel Fabric Records</title>
+            <shortDescription>Creates, finds, and manages parcel fabric records.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>This skill class allows users to manage parcel fabric records in Pro. This includes creating parcel fabric records, searching for parcel fabric records, zooming to parcel fabric records, viewing parcel features associated with parcel fabric records and viewing the properties of parcel fabric records.</searchDescription>
           </searchDescriptions>
@@ -1411,6 +1542,10 @@
 
       <insertComponent id="esri_editing_tables_assistant_extension" className="ArcGIS.Desktop.Internal.Editing.TableAssistantExtension">
         <content extensionCategoryRefID="ai_data_management_category">
+          <uiText>
+            <title>Table Pane Editing</title>
+            <shortDescription>Opens and manages attribute tables, fields, sorting, highlighting, and selections.</shortDescription>
+          </uiText>
           <searchDescriptions>
             <searchDescription>Get all Standalone Tables in the active Map.</searchDescription>
             <searchDescription>Open the Table Pane for a specified Layer.</searchDescription>
@@ -1469,10 +1604,6 @@
             <searchDescription>Select specific rows in the active Table Pane.</searchDescription>
             <searchDescription>Select a field in the active Table Pane.</searchDescription>
           </searchDescriptions>
-          <dependencies>
-            <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
-            <dependency refID="esri_mapping_layer_assistant_extension|FindLayerFromLayerIndex"/>
-          </dependencies>
           <aiAssistantFunction name="GetAllStandaloneTables">
             <searchDescriptions>
               <searchDescription>Returns a list of all Standalone Tables in the active map.</searchDescription>
@@ -1480,33 +1611,21 @@
           </aiAssistantFunction>
           <aiAssistantFunction name="OpenAttributeTable">
             <searchDescriptions>
-              <searchDescription>Open the Table Pane for a specified Layer.</searchDescription>
-              <searchDescription>Open the Table for the Layer.</searchDescription>
-              <searchDescription>Opens the attribute table for a specified Layer.</searchDescription>
+              <searchDescription>Open the Table Pane for a specified Layer or Standalone Table.</searchDescription>
             </searchDescriptions>
             <dependencies>
               <dependency refID="esri_mapping_layer_assistant_extension|GetAllLayers"/>
               <dependency refID="esri_mapping_layer_assistant_extension|FindLayerFromLayerIndex"/>
             </dependencies>
           </aiAssistantFunction>
-          <aiAssistantFunction name="OpenTablePane">
-            <searchDescriptions>
-              <searchDescription>Opens the Table Pane for a specified Standalone Table.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
           <aiAssistantFunction name="CloseTablePane" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
-              <searchDescription>Closes the Table Pane for a specified layer or standalone table.</searchDescription>
+              <searchDescription>Closes the Table Pane for a specified Layer or Standalone Table.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="GetAllTablePanes" condition="esri_editing_anyTablePaneOpenCondition">
+          <aiAssistantFunction name="GetTablePanes" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
               <searchDescription>Gets all open Table Panes in the project.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="GetActiveTablePane" condition="esri_editing_anyTablePaneOpenCondition">
-            <searchDescriptions>
-              <searchDescription>Gets the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
           <aiAssistantFunction name="SetTableViewMode" condition="esri_editing_anyTablePaneOpenCondition">
@@ -1550,9 +1669,10 @@
               <searchDescription>Sets the active field in the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="SetShowFieldAlias" condition="esri_editing_anyTablePaneOpenCondition">
+          <aiAssistantFunction name="SetShowFieldAliasOrFieldName" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
-              <searchDescription>Sets the table to show the field alias or field name in the column headers.</searchDescription>
+              <searchDescription>Show the field aliases in the table.</searchDescription>
+              <searchDescription>Show the field names in the table.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
           <aiAssistantFunction name="OpenCustomSortDialog" condition="esri_editing_anyTablePaneOpenCondition">
@@ -1560,19 +1680,10 @@
               <searchDescription>Opens the custom field sort dialog.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="SortActiveFieldAscending" condition="esri_editing_anyTablePaneOpenCondition">
-            <searchDescriptions>
-              <searchDescription>Sorts the active field in ascending order.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="SortActiveFieldDescending" condition="esri_editing_anyTablePaneOpenCondition">
-            <searchDescriptions>
-              <searchDescription>Sorts the active field in descending order.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
           <aiAssistantFunction name="SortFields" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
-              <searchDescription>Sorts the fields in the active Table Pane based on the provided sort information.</searchDescription>
+              <searchDescription>Sort the fields in the active Table Pane based on the provided sort information.</searchDescription>
+              <searchDescription>Sort the active Table Pane by a specified field and sort order.</searchDescription>
               <searchDescription>Can be used to clear all field sorting.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
@@ -1591,14 +1702,9 @@
               <searchDescription>Hides the specified fields in the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="GetActiveRowIndex" condition="esri_editing_anyTablePaneOpenCondition">
+          <aiAssistantFunction name="GetActiveRow" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
-              <searchDescription>Gets the active row index in the active Table Pane.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="GetActiveObjectId" condition="esri_editing_anyTablePaneOpenCondition">
-            <searchDescriptions>
-              <searchDescription>Gets the ObjectID of the active row in the active Table Pane.</searchDescription>
+              <searchDescription>Gets the active row's index or Object ID in the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
           <aiAssistantFunction name="GetRowIndexOfObjectID" condition="esri_editing_anyTablePaneOpenCondition">
@@ -1606,14 +1712,9 @@
               <searchDescription>Gets the row index of a give Object ID in the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="GetSelectedRowIndexes" condition="esri_editing_anyTablePaneOpenCondition">
+          <aiAssistantFunction name="GetSelectedRows" condition="esri_editing_anyTablePaneOpenCondition">
             <searchDescriptions>
-              <searchDescription>Gets the row indexes of the selected rows in the active Table Pane.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="GetSelectedObjectIDs" condition="esri_editing_anyTablePaneOpenCondition">
-            <searchDescriptions>
-              <searchDescription>Gets the selected Object IDs in the active Table Pane.</searchDescription>
+              <searchDescription>Gets the row indices or Object IDs of the selected rows in the active Table Pane.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
           <aiAssistantFunction name="GoToRowAndField" condition="esri_editing_anyTablePaneOpenCondition">
@@ -2049,9 +2150,9 @@
           <insertButton refID="esri_mapping_panToSelectionButton"/>
           <insertButton refID="esri_mapping_clearSelectionButton"/>
           <insertButton refID="esri_editing_EditVerticesMove" separator="true"/>
-          <insertButton refID="esri_editing_EditVerticesRotate"/>
-          <insertButton refID="esri_editing_EditVerticesScale"/>
-          <insertButton refID="esri_editing_EditVerticesModifyFeature" separator="true"/>
+          <insertButton refID="esri_editing_EditVerticesModifyFeature"/>
+          <insertButton refID="esri_editing_ReshapeCommand"/>
+          <insertButton refID="esri_editing_SplitCommand"/>
           <insertButton refID="esri_editing_ShowAttributes" separator="true"/>
         </updateMenu>
         <updateMenu refID="esri_mapping_selection3DContextMenu">
@@ -2069,11 +2170,11 @@
           <insertButton refID="esri_mapping_panToSelectionButton"/>
           <insertButton refID="esri_mapping_clearSelectionButton"/>
           <insertButton refID="esri_editing_EditVerticesMove" separator="true"/>
-          <insertButton refID="esri_editing_EditVerticesRotate"/>
-          <insertButton refID="esri_editing_EditVerticesScale"/>
-          <insertButton refID="esri_editing_DuplicateVerticalContextMenuItem" separator="true"/>
-          <insertButton refID="esri_editing_ReplaceMultiPatchContextCommand"/>
           <insertButton refID="esri_editing_EditVerticesModifyFeature"/>
+          <insertButton refID="esri_editing_ReshapeCommand"/>
+          <insertButton refID="esri_editing_SplitCommand"/>
+          <insertButton refID="esri_editing_DuplicateVerticalContextMenuItem"/>
+          <insertButton refID="esri_editing_ReplaceMultiPatchContextCommand"/>
           <insertButton refID="esri_editing_ShowAttributes" separator="true"/>
         </updateMenu>
         
@@ -2357,7 +2458,7 @@
                   condition="esri_mapping_mapPaneOrLayoutPane"
                   delayLoadMessage="Open a map to get started."
                   hasHelp="true"
-                  helpContextID="120002593"
+                  helpContextID="120003947"
                   keytip="cf">
           <content className="CreateFeaturesView" />
         </dockPane>
@@ -2370,7 +2471,7 @@
                   condition="esri_mapping_mapPaneOrLayoutPane"
                   delayLoadMessage="Open a map to get started."
                   hasHelp="true"
-                  helpContextID="120002542"
+                  helpContextID="120003948"
                   keytip="ef">
           <content className="EditFeaturesView" />
         </dockPane>
@@ -4342,6 +4443,32 @@
           <content keywords="reverse;reverse direction;flip;digitized direction;line;polyline;orientation" HelpContextID="120004675"/>
         </button>
 
+        <tool id="esri_editing_ChangeLineLengthTool" hidden="true"
+              caption="Change Line Length"
+              largeImage="EditingTrimToLengthConstructor32"
+              smallImage="EditingTrimToLengthConstructor16"
+              className="ChangeLineLengthTool"
+              condition="esri_editing_EditingMapCondition">
+          <tooltip heading="Change Line Length">
+            Change the length of selected lines to a specific length or by a specific value.
+            <disabledText>Tool disabled.</disabledText>
+          </tooltip>
+        </tool>
+        <button id="esri_editing_ChangeLineLengthCommand"
+                caption="Change Line Length" extendedCaption="Change the length of selected lines."
+                largeImage="EditingTrimToLengthConstructor32"
+                smallImage="EditingTrimToLengthConstructor16"
+                className="ChangeLineLengthCommand"
+                condition="esri_editing_EditingMapCondition"
+                categoryRefID="esri_editing_CommandList"
+                loadOnClick="false">
+          <tooltip heading="Change Line Length">
+            Change the length of selected lines to a specific length or by a specific value.
+            <disabledText>Tool disabled.</disabledText>
+          </tooltip>
+          <content keywords="Change Length, length, Extend, Trim, line, polylines" HelpContextID="b8a789a593"/>
+        </button>
+
         <tool id="esri_editing_SliceMultipatchTool" hidden="true"
               caption="Slice Multipatch"
               largeImage="SliceMultipatchTool32"
@@ -4768,7 +4895,6 @@
         </customControl>
 
         <tool id="esri_editing_TopologyFixTool" hidden="true"
-                  licenseLevel="standard"
                   caption="Fix Error"
                   largeImage="FixError32"
                   smallImage="FixError16"
@@ -5053,7 +5179,6 @@
                 className="ArcGIS.Desktop.Editing.ChangeParcelTypeCommand"
                 largeImage="ChangeParcelType32"
                 smallImage="ChangeParcelType16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelPolygonsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5068,7 +5193,6 @@
                 className="ArcGIS.Desktop.Editing.DuplicateParcelsCommand"
                 largeImage="DuplicateParcel32"
                 smallImage="DuplicateParcel16"
-                licenseLevel="standard"
                 condition="esri_editing_activeRecordAndParcelPolygonsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5083,7 +5207,6 @@
                 className="ArcGIS.Desktop.Editing.SetParcelsAsHistoricCommand"
                 largeImage="SetParcelsAsHistoric32"
                 smallImage="SetParcelsAsHistoric16"
-                licenseLevel="standard"
                 condition="esri_editing_activeRecordAndParcelPolygonsOrLinesOrPointsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5098,7 +5221,6 @@
                 className="ArcGIS.Desktop.Editing.SetParcelsAsCurrentCommand"
                 largeImage="SetParcelsAsCurrent32"
                 smallImage="SetParcelsAsCurrent16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelPolygonOrLinesOrPointsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5113,7 +5235,6 @@
                 className="ArcGIS.Desktop.Editing.ShrinkParcelsToSeedsCommand"
                 largeImage="ShrinkToSeed32"
                 smallImage="ShrinkToSeed16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelPolygonsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5128,10 +5249,9 @@
                 className="ArcGIS.Desktop.Editing.ReconstructParcelsFromSeedsCommand"
                 largeImage="ReconstructFromSeeds32"
                 smallImage="ReconstructFromSeeds16"
-                licenseLevel="standard"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true"
-                condition="esri_editing_HasParcelFabricCondition">
+                condition="esri_editing_HasParcelFabricAndLicenseCondition">
           <tooltip heading="Reconstruct From Seeds">
             Reconstruct parcels from lines enclosing seeds in the map extent. An active record is not required to reconstruct parcels. Use the Reconstruct From Seeds tool with the Shrink To Seeds tool to replace parcels with seeds, modify parcel lines and rebuild parcels.<disabledText>Available only when there is a parcel fabric in the map.</disabledText>
           </tooltip>
@@ -5144,14 +5264,13 @@
                 largeImage="CopyLinesTo32"
                 smallImage="CopyLinesTo16"
                 keytip="CT"
-                licenseLevel="standard"
                 condition="esri_editing_parcel_activeRecordAndCopyToFeaturesSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
           <tooltip heading="Copy Lines To Active Record">
             Copy the selected lines to the active record and chosen parcel type. Use the copied lines to build parcels in the active record.<disabledText>Available only when there is an active record in the map and line features are selected.</disabledText>
           </tooltip>
-          <content L_group="Parcel" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric;Construct from parent" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
+          <content L_group="Parcel;Parcels;Fabric" gallery2d="false" gallery3d="false" keywords="Parcel;Parcels;Fabric;Construct from parent" visibilityCondition="esri_editing_parcelToolsVisibleCondition"/>
         </button>
 
         <button id="esri_editing_createParcelSeeds"
@@ -5160,7 +5279,6 @@
                 largeImage="CreateParcelSeeds32"
                 smallImage="CreateParcelSeeds16"
                 keytip="CS"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5176,7 +5294,6 @@
                 largeImage="ParcelFabricBuild32"
                 smallImage="ParcelFabricBuild16"
                 keytip="E"
-                licenseLevel="standard"
                 condition="esri_editing_EditingParcelFabricMapCondition"
                 categoryRefID="esri_editing_CommandList"
                 loadOnClick="false">
@@ -5192,7 +5309,6 @@
                 largeImage="BuildParcelsActive32"
                 smallImage="BuildParcelsActive16"
                 keytip="A"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 categoryRefID="esri_editing_CommandList"
                 loadOnClick="false">
@@ -5207,7 +5323,6 @@
                 className="ArcGIS.Desktop.Editing.DeleteParcelsCommand"
                 largeImage="DeleteParcels32"
                 smallImage="DeleteParcels16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelPolygonsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true">
@@ -5222,7 +5337,6 @@
             className="ArcGIS.Desktop.Editing.TransferParcelCommand"
             largeImage="TransferParcels32"
             smallImage="TransferParcels16"
-            licenseLevel="standard"
             condition="esri_editing_activeParcelRecordCondition"
             categoryRefID="esri_editing_CommandList"
             disableIfBusy="true">
@@ -5237,7 +5351,6 @@
             className="ArcGIS.Desktop.Editing.ReconstructParcelBoundariesCommand"
             largeImage="CreateBacklot32"
             smallImage="CreateBacklot16"
-            licenseLevel="standard"
             condition="esri_editing_parcelPolygonsSelectedCondition"
             categoryRefID="esri_editing_CommandList"
             disableIfBusy="true">
@@ -5252,7 +5365,6 @@
                 className="ArcGIS.Desktop.Editing.ZoomToActiveRecordCommand"
                 largeImage="ZoomToRecord32"
                 smallImage="ZoomToRecord16"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
           <tooltip heading="Zoom To Active Record">
@@ -5266,7 +5378,6 @@
                 className="ArcGIS.Desktop.Editing.RecordNewCommand"
                 largeImage="NewRecord32"
                 smallImage="NewRecord16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelToolsVisibleCondition"
                 disableIfBusy="true"
                 loadOnClick="false">
@@ -5281,7 +5392,6 @@
                 className="ArcGIS.Desktop.Editing.MergeCollinearParcelBoundariesCommand"
                 largeImage="editingtopologymergetolargest32"
                 smallImage="editingtopologymergetolargest16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelLinesOrConnectionsSelectedCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true"
@@ -5297,7 +5407,6 @@
                 className="ArcGIS.Desktop.Editing.MergeParcelPointsCommand"
                 largeImage="MergeParcelPoints32"
                 smallImage="MergeParcelPoints16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelToolsVisibleCondition"
                 categoryRefID="esri_editing_CommandList"
                 disableIfBusy="true"
@@ -5332,10 +5441,9 @@
                 className="ArcGIS.Desktop.Editing.ParcelLineageCommand"
                 largeImage="LinkChart32"
                 smallImage="LinkChart16"
-                licenseLevel="standard"
                 disableIfBusy="true"
                 loadOnClick="false"
-                condition="esri_editing_HasParcelFabricCondition">
+                condition="esri_editing_HasParcelFabricAndLicenseCondition">
           <tooltip heading="Parcel Lineage">
             Display parcel lineage for the selected record. Parcel lineage is displayed in a Link Chart.<disabledText>Available only when there is a parcel fabric in the map.</disabledText>
           </tooltip>
@@ -5363,7 +5471,6 @@
                 className="ArcGIS.Desktop.Editing.SelectParcelFeaturesCommand"
                 largeImage="SelectParcelFeatures32"
                 smallImage="SelectParcelFeatures16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelMinimalPolygonsSelectedCondition"
                 disableIfBusy="true"
                 loadOnClick="false">
@@ -5378,7 +5485,6 @@
                 className="ArcGIS.Desktop.Editing.ParcelFabric.OpenCogoReaderPaneButton"
                 largeImage="COGOReader32"
                 smallImage="COGOReader16"
-                licenseLevel="standard"
                 condition="esri_editing_EditingParcelFabricMapCondition"
                 categoryRefID="esri_editing_CommandList"
                 loadOnClick="false">
@@ -7783,12 +7889,12 @@
             Show field aliases instead of (database) field names for this table.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_table_fieldsViewButton" caption="Fields" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120003951">
+        <button id="esri_editing_table_fieldsViewButton" caption="Fields" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120004012">
           <tooltip heading="Fields View">
             Show the fields view for the current table.<disabledText></disabledText>
           </tooltip>
         </button>
-        <button id="esri_editing_table_fieldsViewBurgerButton" caption="Fields View" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120003951"
+        <button id="esri_editing_table_fieldsViewBurgerButton" caption="Fields View" extendedCaption="Shows the fields view for the table in the active table view." className="esri_editing_EditingModule:TableManager.FieldsView" smallImage="TableFieldsView16" loadOnClick="false" keytip="FF" helpContextID="120004012"
                 hidden="true">
           <tooltip heading="Fields View">
             Show the fields view for the current table.<disabledText></disabledText>
@@ -8258,6 +8364,16 @@
             <disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_editing_rematchMatchDetails"
+                caption="Show Details" hidden="true" 
+                className="ArcGIS.Desktop.Editing.RematchMatchDetailsButton"
+                smallImage="CatalogPopUpDetailed16"
+                largeImage="CatalogPopUpDetailed32"
+                loadOnClick="false">
+          <tooltip heading="">
+            View additional details for the candidate.
+          </tooltip>
+        </button>
 
         <button id="esri_editing_tableExportFeaturesButton" className="esri_editing_EditingModule:TableManager.ExportFeatures" caption="Export Features" extendedCaption="Active table view" smallImage="ExportFeatures16" largeImage="ExportFeatures32"
                 condition="esri_editing_tables_spatialCondition"
@@ -8470,7 +8586,7 @@
                 keytip="EI"
                 smallImage="ErrorInspector16"
                 largeImage="ErrorInspector32"
-                condition=""  disableIfBusy="true">
+                condition="esri_allowedToEditUtilityNetworkCondition"  disableIfBusy="true">
           <tooltip heading="">
             Show the Error Inspector. This enables you to find, sort and fix utility network errors.<disabledText></disabledText>
           </tooltip>
@@ -8480,7 +8596,6 @@
                     largeImage="ValidateAll32"
                     smallImage="ValidateAll16"
                     categoryRefID="esri_editing_CommandList"
-                    licenseLevel="standard"
                     condition="esri_editing_TopologyGDBCondition"  disableIfBusy="true">
           <tooltip heading="Validate All">
             Identify topology errors and symbolize them on layers in the current map.<disabledText>This tool is not available in 3D views.</disabledText>
@@ -8491,7 +8606,6 @@
             largeImage="ValidateExtent32"
             smallImage="ValidateExtent16"
             categoryRefID="esri_editing_CommandList"
-            licenseLevel="standard"
             condition="esri_editing_TopologyGDBCondition"  disableIfBusy="true">
           <tooltip heading="Validate Extent">
             Identify topology errors and symbolize them on layers in the current map extent.<disabledText>This tool is not available in 3D views.</disabledText>
@@ -8502,7 +8616,6 @@
               largeImage="ValidateArea32"
               smallImage="ValidateArea16"
               categoryRefID="esri_editing_CommandList"
-              licenseLevel="standard"              
               condition="esri_editing_TopologyGDBCondition" disableIfBusy="true">
           <tooltip heading="Validate Specified Extent">
             Identify topology errors and symbolize them on layers in a specified map extent.<disabledText>This tool is not available in 3D views.</disabledText>
@@ -8666,7 +8779,7 @@
         <button id="esri_editing_errorInspectorMarkAsExceptions" caption="Mark As Exception" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.MarkAsExceptionCommand"
                 largeImage="ErrorException32"
                 smallImage="ErrorException16"
-                licenseLevel="standard"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="false" disableIfBusy="true">
           <tooltip heading="Mark as Exception">
             Mark the selected errors as exceptions. <disabledText></disabledText>
@@ -8675,7 +8788,7 @@
         <button id="esri_editing_errorInspectorMarkAsErrors" caption="Clear Exception" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.MarkAsErrorCommand"
                 largeImage="ClearException32"
                 smallImage="ClearException16"
-                licenseLevel="standard"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="false" disableIfBusy="true">
           <tooltip heading="Mark as Error">
             Mark the selected errors as errors. <disabledText></disabledText>
@@ -8701,7 +8814,7 @@
         </button>
         <button id="esri_editing_errorInspectorValidateExtent" caption="Validate Extent" extendedCaption="" className="ArcGIS.Desktop.Internal.Editing.ErrorInspector.ValidateExtentCommand"
                 smallImage="ValidateExtent16"
-                licenseLevel="standard"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="true"  disableIfBusy="true">
           <tooltip heading="Validate Extent">
             Identify topology errors and symbolize them on layers in the current map extent. <disabledText></disabledText>
@@ -8797,7 +8910,6 @@
         <button id="esri_editing_topology_fix_RemoveOverlapContextMenuItem" caption="Remove Overlap" extendedCaption="Editing GDB Topology Remove Overlap Feature Fix Method"
                 largeImage="EditingTopologySubtract32"
                 smallImage="EditingTopologySubtract16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologySubtractFeaturesCommand">
@@ -8809,7 +8921,6 @@
         <button id="esri_editing_topology_fix_RemoveSegmentContextMenuItem" caption="Remove Segment" extendedCaption="Editing GDB Topology Remove Segment Feature Fix Method"
                 largeImage="EditingTopologySubtract32"
                 smallImage="EditingTopologySubtract16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologySubtractFeaturesCommand">
@@ -8821,7 +8932,6 @@
         <button id="esri_editing_topology_fix_CreateContextMenuItem" caption="Create Feature" extendedCaption="Editing GDB Topology Create Feature Fix Method"
                 largeImage="EditingCreateFeaturesWindowShow32"
                 smallImage="EditingCreateFeaturesWindowShow16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyCreateFeaturesCommand">
@@ -8833,7 +8943,6 @@
         <button id="esri_editing_topology_fix_MergeContextMenuItem" caption="Merge" extendedCaption="Editing GDB TopologyMerge Feature Fix Method"
                 largeImage="EditingFeatureMerge32"
                 smallImage="EditingFeatureMerge16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyMergeCommand">
@@ -8845,7 +8954,6 @@
         <button id="esri_editing_topology_fix_MergeToLargestContextMenuItem" caption="Merge to Largest" extendedCaption="Editing GDB Topology Merge to Largest Feature Fix Method"
                 largeImage="editingtopologymergetolargest32"
                 smallImage="editingtopologymergetolargest16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyMergeLargestCommand">
@@ -8857,7 +8965,6 @@
         <button id="esri_editing_topology_fix_DeleteContextMenuItem" caption="Delete Feature" extendedCaption="Editing GDB Topology Delete Feature Fix Method"
                 largeImage="GenericDeleteBlack32"
                 smallImage="GenericDeleteBlack16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyDeleteFeaturesCommand">
@@ -8869,7 +8976,6 @@
         <button id="esri_editing_topology_fix_SplitContextMenuItem" caption="Split" extendedCaption="Editing GDB Topology Split Feature Fix Method"
                 largeImage="EditingSplitLineTool32"
                 smallImage="EditingSplitLineTool16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologySplitFeaturesCommand">
@@ -8881,7 +8987,6 @@
         <button id="esri_editing_topology_fix_ExtendContextMenuItem" caption="Extend" extendedCaption="Editing GDB Topology Extend Feature Fix Method"
                 largeImage="EditingTopologyExtend32"
                 smallImage="EditingTopologyExtend16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyExtendFeaturesCommand">
@@ -8893,7 +8998,6 @@
         <button id="esri_editing_topology_fix_TrimContextMenuItem" caption="Trim" extendedCaption="Editing GDB Topology Trim Feature Fix Method"
                 largeImage="EditingTopologyTrim32"
                 smallImage="EditingTopologyTrim16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyTrimFeaturesCommand">
@@ -8905,7 +9009,6 @@
         <button id="esri_editing_topology_fix_SnapContextMenuItem" caption="Snap" extendedCaption="Editing GDB Topology Snap Feature Fix Method"
                 largeImage="SnappingToleranceTool32"
                 smallImage="SnappingToleranceTool16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologySnapCommand">
@@ -8917,7 +9020,6 @@
         <button id="esri_editing_topology_fix_SimplifyContextMenuItem" caption="Simplify" extendedCaption="Editing GDB Topology Simplify Feature Fix Method"
                 largeImage="editingtopologysimplify32"
                 smallImage="editingtopologysimplify16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologySimplifyFeaturesCommand">
@@ -8929,7 +9031,6 @@
         <button id="esri_editing_topology_fix_ExplodeContextMenuItem" caption="Explode" extendedCaption="Editing GDB Topology Explode Feature Fix Method"
                 largeImage="EditingExplode32"
                 smallImage="EditingExplode16"
-                licenseLevel="standard"
                 condition ="esri_editing_TopologyGDBCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyExplodeLineFeaturesCommand">
@@ -8939,8 +9040,7 @@
         </button>
 
         <button id="esri_editing_topology_fix_NoFixContextMenuItem" caption="No Fix Available" extendedCaption="Editing GDB Topology No Fix Method"
-                licenseLevel="standard"
-                condition ="esri_editing_EditingMapCondition"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="false" disableIfBusy="false">
           <tooltip heading="No Fix Available">
             A predefined topology solution is not available. Use other tools to fix the error.<disabledText></disabledText>
@@ -8950,8 +9050,7 @@
         <button id="esri_editing_topology_fix_MarkAsExceptionContextMenuItem" caption="Mark as Exception" extendedCaption="Editing GDB Topology Mark as Exception Method"
                 largeImage="ErrorException32"
                 smallImage="ErrorException16"
-                licenseLevel="standard"
-                condition ="esri_editing_EditingMapCondition"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyMarkAsExceptionCommand">
           <tooltip heading="Mark as Exception">
@@ -8962,8 +9061,7 @@
         <button id="esri_editing_topology_fix_MarkAsErrorContextMenuItem" caption="Clear Exception" extendedCaption="Editing GDB Topology Mark as Error Method"
                 largeImage="ClearException32"
                 smallImage="ClearException16"
-                licenseLevel="standard"
-                condition ="esri_editing_EditingMapCondition"
+                condition ="esri_editing_EditingMapWithLicensingCondition"
                 loadOnClick="false" disableIfBusy="false"
                 className="TopologyMarkAsErrorCommand">
           <tooltip heading="Clear Exception">
@@ -9259,7 +9357,7 @@
         </button>
 
         <button id="esri_editing_ShowParcelRecordSearch" caption="Manage" keytip="M" className="esri_editing_EditingModule:ShowParcelRecordSearchWindow"
-                  condition="esri_mapping_mapPane"
+                  condition="esri_editing_parcelToolsVisibleCondition"
                   largeImage="ManageRecords32"
                   smallImage="ManageRecords16" helpContextID="">
           <tooltip heading="Manage Records">
@@ -9291,7 +9389,6 @@
           largeImage="ParcelAlignSelectedParcels32"
           smallImage="ParcelAlignSelectedParcels16"
           className="AlignParcelFeaturesCommand"
-          licenseLevel="standard"
           categoryRefID="esri_editing_CommandList"
           condition="esri_editing_EditingParcelFabricMapCondition">
           <tooltip heading="Align Parcels">
@@ -9306,8 +9403,7 @@
           largeImage="ParcelAlignSelectedParcels32"
           smallImage="ParcelAlignSelectedParcels16"
           className="AlignParcelFeaturesCommand"
-          licenseLevel="standard"
-          condition="esri_editing_EditingMapCondition"
+          condition="esri_editing_EditingParcelFabricMapCondition"
           keytip="P">
           <tooltip heading="Align Parcels">
             Show the Align Parcels pane. This allows you to make adjacent parcels coincident using an alignment tolerance and links.<disabledText></disabledText>
@@ -9379,7 +9475,6 @@
 
         <button id="esri_editing_ParcelAlignFeatures" caption="Align Features" loadOnClick="false" className="ParcelAlignFeaturesCommand" keytip="F"
           condition="esri_editing_EditingMapCondition"
-          licenseLevel="standard"
           largeImage="EditingAlignToShape32"
           smallImage="EditingAlignToShape16" helpContextID="">
           <tooltip heading="Align Features">
@@ -9399,14 +9494,14 @@
         <customControl id="esri_editing_HighlightGapsAndOverlapsOptions" hidden="true"
                 loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
                 className="HighlightGapsAndOverlapsOptionsViewModel"
-                condition="esri_editing_HasParcelFabricCondition">
+                condition="esri_editing_HasParcelFabricAndLicenseCondition">
           <content className="HighlightGapsAndOverlapsOptionsView" />
         </customControl>
 
         <button id="esri_editing_ClearHighlightedGapsAndOverlaps" caption="Clear" loadOnClick="false" className="ClearHighlightedGapsAndOverlapsCommand" keytip="CH"
           largeImage="ClearHighlight32"
           smallImage="ClearHighlight16" helpContextID=""
-          condition="esri_editing_HasParcelFabricCondition">
+          condition="esri_editing_HasParcelFabricAndLicenseCondition">
           <tooltip heading="Clear highlight">
             Clear highlighted gaps and overlaps in the dashed-line extent boundary.<disabledText>Available only when there is a parcel fabric in the map.</disabledText>
           </tooltip>
@@ -9619,7 +9714,6 @@
                 className="esri_editing_EditingModule:ShowParcelRecordSearchWindow"
                 largeImage="ManageRecords32"
                 smallImage="ManageRecords16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelToolsVisibleCondition"
                 disableIfBusy="true">
           <tooltip heading="Manage Records">
@@ -9633,7 +9727,6 @@
                 className="ArcGIS.Desktop.Editing.ActivateRecordFromSelectedParcelCommand"
                 largeImage="ActivateRecordFromSelectedParcel32"
                 smallImage="ActivateRecordFromSelectedParcel16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelFabricFeaturesExtendedSelectedCondition"
                 disableIfBusy="true">
           <tooltip heading="Activate Record of Selected Feature">
@@ -9647,7 +9740,6 @@
                 className="ArcGIS.Desktop.Editing.ZoomToActiveRecordCommand"
                 largeImage="ZoomToRecord32"
                 smallImage="ZoomToRecord16"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
           <tooltip heading="Zoom To Record">
@@ -9661,7 +9753,6 @@
                 className="ArcGIS.Desktop.Editing.PanToActiveRecordCommand"
                 largeImage="PanToSelectedItems32"
                 smallImage="PanToSelectedItems16"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
           <tooltip heading="Pan To Record">
@@ -9675,7 +9766,6 @@
                 className="ArcGIS.Desktop.Editing.SelectActiveRecordCommand"
                 largeImage="SelectionSelectTool32"
                 smallImage="SelectionSelectTool16"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
           <tooltip heading="Select Record">
@@ -9686,7 +9776,6 @@
 
         <button id="esri_editing_parcel_HUD_SelectFeaturesInRecord" hidden="true"
                 caption="All" loadOnClick="false"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 className="ArcGIS.Desktop.Editing.SelectAllFeaturesInRecordCommand"
                 disableIfBusy="true">
@@ -9697,7 +9786,6 @@
 
         <button id="esri_editing_parcel_HUD_SelectPolygonFeaturesInRecord" hidden="true"
                 caption="Polygons" loadOnClick="false"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 className="ArcGIS.Desktop.Editing.SelectPolygonFeaturesInRecordCommand"
                 disableIfBusy="true">
@@ -9708,7 +9796,6 @@
 
         <button id="esri_editing_parcel_HUD_SelectLineFeaturesInRecord" hidden="true"
                 caption="Lines" loadOnClick="false"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 className="ArcGIS.Desktop.Editing.SelectLineFeaturesInRecordCommand"
                 disableIfBusy="true">
@@ -9719,7 +9806,6 @@
 
         <button id="esri_editing_parcel_HUD_SelectPointFeaturesInRecord" hidden="true"
                 caption="Points" loadOnClick="false"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 className="ArcGIS.Desktop.Editing.SelectPointFeaturesInRecordCommand"
                 disableIfBusy="true">
@@ -9730,7 +9816,6 @@
 
         <button id="esri_editing_parcel_HUD_SelectConnectionLineFeaturesInRecord" hidden="true"
                 caption="Connection Lines" loadOnClick="false"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 className="ArcGIS.Desktop.Editing.SelectConnectionLineFeaturesInRecordCommand"
                 disableIfBusy="true">
@@ -9744,7 +9829,6 @@
                      className="ArcGIS.Desktop.Editing.SelectFeaturesInActiveRecordDynamicMenu"
                      largeImage="SelectByRecord32"
                      smallImage="SelectByRecord16"
-                     licenseLevel="standard"
                      condition="esri_editing_activeParcelRecordCondition"
                      disableIfBusy="true">
           <content keywords="Parcel;Parcels;Fabric"/>
@@ -9755,7 +9839,6 @@
                 className="ArcGIS.Desktop.Editing.AssignFeaturesToActiveRecordHUDContextCommand"
                 largeImage="AssignSelectionToRecord32"
                 smallImage="AssignSelectionToRecord16"
-                licenseLevel="standard"
                 condition="esri_editing_activeRecordAndParcelFabricFeaturesSelectedCondition"
                 disableIfBusy="true">
           <tooltip heading="Assign Selection To Record">
@@ -9783,7 +9866,6 @@
                 className="ArcGIS.Desktop.Editing.ActiveRecordPropertiesCommand"
                 largeImage="GenericBlueRightArrowLongTail32"
                 smallImage="GenericBlueRightArrowLongTail16"
-                licenseLevel="standard"
                 condition="esri_editing_activeParcelRecordCondition"
                 disableIfBusy="true">
           <tooltip heading="Record Properties">
@@ -9797,7 +9879,6 @@
                 className="ArcGIS.Desktop.Editing.ParcelHUDOptionsCommand"
                 largeImage="CogWheel32"
                 smallImage="CogWheel16"
-                licenseLevel="standard"
                 condition="esri_editing_parcelToolsVisibleCondition"
                 disableIfBusy="true">
           <tooltip heading="Heads Up Display Options">
@@ -10998,6 +11079,7 @@
           <button refID="esri_editing_GeneralizeCommand"/>          
           <button refID="esri_editing_LineIntersection"/>
           <button refID="esri_editing_ReverseDirectionToolCommand"/>
+          <button refID="esri_editing_ChangeLineLengthCommand"/>
         </menu>
         <!--divide group-->
         <menu id="esri_editing_toolGroupDivide" caption="Divide" contextMenu="false">
@@ -11538,20 +11620,46 @@
           <button refID="esri_editing_FinishSketchPart" />
           <button refID="esri_editing_ClearSketch" />
         </menu>
-
-        <menu id="esri_editing_TracingSketchContextMenu" caption="Line/Polygon Tracing Sketch Context Menu" contextMenu="true">
+        
+        <menu id="esri_editing_TracingLineSketchContextMenu" caption="Line Tracing Sketch Context Menu" contextMenu="true">
           <button refID="esri_editing_TracingOptions"/>
           <button refID="esri_editing_AbsoluteXYZContextMenuItem" separator="true" />
           <button refID="esri_editing_DeltaXYZContextMenuItem" />
           <button refID="esri_editing_DirectionDistanceContextMenuItem" />
-          <button refID="esri_editing_ReplaceSketchContextMenuItem" separator="true" />
+          <button refID="esri_editing_ReverseDirectionContextMenuItem" separator="true" />
+          <button refID="esri_editing_ReplaceSketchContextMenuItem" />
           <button refID="esri_editing_FinishSketch" separator="true" />
           <button refID="esri_editing_SquareAndFinishCommand" />
           <button refID="esri_editing_FinishSketchPart" />
           <button refID="esri_editing_ClearSketch" />
         </menu>
 
-        <menu id="esri_editing_StreamingSketchContextMenu" caption="Line/Polygon Streaming Sketch Context Menu" contextMenu="true">
+        <menu id="esri_editing_TracingPolygonSketchContextMenu" caption="Polygon Tracing Sketch Context Menu" contextMenu="true">
+          <button refID="esri_editing_TracingOptions"/>
+          <button refID="esri_editing_AbsoluteXYZContextMenuItem" separator="true" />
+          <button refID="esri_editing_DeltaXYZContextMenuItem" />
+          <button refID="esri_editing_DirectionDistanceContextMenuItem" />
+          <button refID="esri_editing_ReplaceSketchContextMenuItem" separator="true"/>
+          <button refID="esri_editing_FinishSketch" separator="true" />
+          <button refID="esri_editing_SquareAndFinishCommand" />
+          <button refID="esri_editing_FinishSketchPart" />
+          <button refID="esri_editing_ClearSketch" />
+        </menu>
+
+        <menu id="esri_editing_StreamingLineSketchContextMenu" caption="Line Streaming Sketch Context Menu" contextMenu="true">
+          <button refID="esri_editing_StreamingOptions"/>
+          <button refID="esri_editing_AbsoluteXYZContextMenuItem" separator="true" />
+          <button refID="esri_editing_DeltaXYZContextMenuItem" />
+          <button refID="esri_editing_DirectionDistanceContextMenuItem" />
+          <button refID="esri_editing_ReverseDirectionContextMenuItem" separator="true" />
+          <button refID="esri_editing_ReplaceSketchContextMenuItem" />
+          <button refID="esri_editing_FinishSketch" separator="true" />
+          <button refID="esri_editing_SquareAndFinishCommand" />
+          <button refID="esri_editing_FinishSketchPart" />
+          <button refID="esri_editing_ClearSketch"  />
+        </menu>
+
+        <menu id="esri_editing_StreamingPolygonSketchContextMenu" caption="Polygon Streaming Sketch Context Menu" contextMenu="true">
           <button refID="esri_editing_StreamingOptions"/>
           <button refID="esri_editing_AbsoluteXYZContextMenuItem" separator="true" />
           <button refID="esri_editing_DeltaXYZContextMenuItem" />
@@ -11926,7 +12034,7 @@
           <button refID="esri_editing_tableRemoveJoinButton" />
           <button refID="esri_editing_tableRemoveAllJoinsButton"/>
         </menu>
-        <menu id="esri_editing_tableRelatesMenu" caption="Relates" largeImage="TableRelates32" smallImage="TableRelates16" keytip="RR" helpContextID="120003953">
+        <menu id="esri_editing_tableRelatesMenu" caption="Relates" largeImage="TableRelates32" smallImage="TableRelates16" keytip="RR" helpContextID="120003952">
           <tooltip heading="Relates">
             Menu to create, remove, or remove all relates.<disabledText></disabledText>
           </tooltip>
@@ -12308,7 +12416,7 @@
         <menu id="esri_editing_topology_RuleLineNoIntersectOrInteriorTouchLineContextMenu" caption="Editing GDB Topology Error Must Not Intersect Or Touch Interior With" contextMenu="true">
           <button refID="esri_editing_topology_fix_RemoveOverlapContextMenuItem"/>
           <button refID="esri_editing_topology_fix_SplitContextMenuItem"/>
-          <button refID="esri_editing_topology_fix_MarkAsExceptionContextMenuItem"/>
+          <button refID="esri_editing_topology_fix_MarkAsExceptionContextMenuItem" separator="true"/>
           <button refID="esri_editing_topology_fix_MarkAsErrorContextMenuItem"/>
         </menu>
 
@@ -12391,6 +12499,9 @@
           <button refID="esri_editing_zoomToSelectedTopologyElementsButton"/>
         </menu>
 
+        <menu id="esri_editing_RematchCandidateContextMenu">
+          <button refID="esri_editing_rematchMatchDetails"/>
+        </menu>
       </menus>
 
       <galleries>
@@ -12536,7 +12647,7 @@
   
   <propertySheets>
     <insertSheet id ="esri_editing_settingsPropertySheet" caption="Editor Settings"
-                 pageHeight="500" pageWidth="640" resizable="true">
+                 pageHeight="500" pageWidth="640" resizable="true" hideApply="false">
       <page id="esri_editing_SnappingPropertyPage" caption="Snapping"
                         className="ArcGIS.Desktop.Internal.Mapping.Controls.SnappingControl.SnappingOptionsViewModel"
                         assembly="Extensions\Mapping\ArcGIS.Desktop.Mapping.dll">

@@ -70,7 +70,7 @@
           <button refID="esri_networkanalysis_utility_DisplayFilterBtnPalette" size="middle" keytip="DC"/>
           <button refID="esri_networkanalysis_utility_View_Associations_Mode_Btn" size="large" />
         </group>
-        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png">
+        <group id="esri_networkanalysis_utility_SubnetworkManagement_Group" caption="Subnetwork" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/FindSubnetworks16.png" condition="esri_networkanalysis_hasTraditionalDomainNetwork_condition">
           <button refID="esri_networkanalysis_utility_FindSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ViewSubnetworks_Btn" size="large"/>
           <button refID="esri_networkanalysis_utility_ShowModifySourceBtn" size="large"/>
@@ -86,7 +86,7 @@
         </group>
 
         <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png">
-          <tool refID="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" size="large"/>
+          <tool refID="esri_networkanalysis_trace_SetTracingLocationsBtnPalette" size="large"/>
           <gallery refID="esri_networkanalysis_trace_ToolsGallery" inline="true"/>
         </group>
         <group id="esri_networkanalysis_trace_Validate_Group" caption="Network Topology" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ValidateCurrentExtent16.png">
@@ -175,7 +175,7 @@
         </buttonPalette>
          <toolPalette id="esri_networkanalysis_utility_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace" extendedCaption="Set Trace Locations, Select and Run Named Trace Configurations." keytip="TL">
            <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
-           <!--<tool refID="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"/>-->
+           <tool refID="esri_networkanalysis_trace_ShowSetStoppingPointsBtn"/>
            <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
            <tool refID="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"/>
            <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
@@ -193,6 +193,12 @@
            <tool refID="esri_networkanalysis_tn_validate_current_BuildTools_Btn"/>
            <tool refID="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"/>
          </toolPalette>
+         <toolPalette id="esri_networkanalysis_trace_SetTracingLocationsBtnPalette" itemsInRow="1" showItemCaption="true" caption="Trace" extendedCaption="Set Trace Locations, Select and Run Named Trace Configurations." keytip="TL">
+           <tool refID="esri_networkanalysis_trace_ShowSetStartingPointsBtn"/>
+           <tool refID="esri_networkanalysis_trace_ShowSetBarriersBtn"/>
+           <tool refID="esri_networkanalysis_trace_ShowNamedConfigurationsBtn"/>
+           <tool refID="esri_networkanalysis_trace_ClearAllBtn"/>
+         </toolPalette>
        </palettes>
 
       <controls>
@@ -206,7 +212,8 @@
                 helpContextID=""
                 keytip="C">
           <tooltip heading="Validate Network Topology">
-            Validate the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+            Validate the utility network topology in the current map extent.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_utility_RebuildNetworkBtn"
@@ -219,7 +226,8 @@
                 helpContextID=""
                 keytip="R">
           <tooltip heading="Rebuild Network Topology">
-            Rebuild the utility network topology in the current map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+            Rebuild the utility network topology in the current map extent.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_un_validate_entire_BuildTools_Btn"
@@ -232,7 +240,8 @@
                helpContextID=""
                keytip="E">
           <tooltip heading="Validate Network Topology">
-            Validate the utility network topology in the entire map extent.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+            Validate the utility network topology in the entire map extent.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_tn_validate_current_BuildTools_Btn"
@@ -245,7 +254,8 @@
                 helpContextID=""
                 keytip="C">
           <tooltip heading="Validate Network Topology">
-            Validate the trace network in the current map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+            Validate the trace network in the current map extent.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_tn_validate_entire_BuildTools_Btn"
@@ -258,7 +268,8 @@
                helpContextID=""
                keytip="E">
           <tooltip heading="Validate Network Topology">
-            Validate the trace network in the entire map extent.<disabledText>Select a trace network layer to enable the tool</disabledText>
+            Validate the trace network in the entire map extent.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_ShowModifyAssociationsBtn"
@@ -269,7 +280,8 @@
                 className="esri_networkanalysis_utility_module:ShowModifyAssociationsWindow"
                 keytip="MA">
           <tooltip heading="Modify Associations">
-            Show the Modify Associations pane.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+            Show the Modify Associations pane.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_ShowContentBtn"
@@ -307,7 +319,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select junction features">
-            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+            Select junctions for establishing connectivity associations.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectJunctionJunctionConnectionsTool"
@@ -318,7 +331,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select junction features">
-            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+            Select junctions for establishing connectivity associations.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectJunctionEdgeConnectionsTool"
@@ -329,7 +343,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select junction features">
-            Select junctions for establishing connectivity associations.<disabledText></disabledText>
+            Select junctions for establishing connectivity associations.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectContainersTool" 
@@ -340,7 +355,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select container features">
-            Select container features for establishing containment associations.<disabledText></disabledText>
+            Select container features for establishing containment associations.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectContentTool"
@@ -351,7 +367,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select content features for the container">
-            Select content features for establishing containment associations.<disabledText></disabledText>
+            Select content features for establishing containment associations.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectStructuresTool"
@@ -362,7 +379,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select structure features">
-            Select structure features for establishing structural attachment associations.<disabledText></disabledText>
+            Select structure features for establishing structural attachment associations.
+          <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <tool id="esri_networkanalysis_utility_associations_SelectAttachmentsTool"
@@ -373,8 +391,9 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select attachment features for the structure">
-            Select attachment features for establishing structural attachment associations.<disabledText></disabledText>
-          </tooltip>
+            Select attachment features for establishing structural attachment associations.
+          <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
+        </tooltip>
         </tool>
         <!-- End of association pane tools-->
 
@@ -387,7 +406,8 @@
           className="esri_networkanalysis_utility_module:ShowUnitIDOperationsWindow"
           keytip="UI">
           <tooltip heading="Manage Unit IDs">
-            Show the manage unit IDs pane.<disabledText>Select a utility network feature service layer to enable the tool</disabledText>
+            Show the manage unit IDs pane.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
 
@@ -399,7 +419,8 @@
               smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
               helpContextID="">
           <tooltip heading="Select features.">
-            Select a network source.<disabledText></disabledText>
+            Select a network source.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         <!--End of Unit ID Pane tools-->
@@ -412,7 +433,8 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select a subnetwork controller feature">
-            Select a network feature to set or remove it as a subnetwork controller.<disabledText></disabledText>
+            Select a network feature to set or remove it as a subnetwork controller.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         
@@ -424,7 +446,8 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select feature">
-            Select a network feature to modify its terminal configuration path.<disabledText></disabledText>
+            Select a network feature to modify its terminal configuration path.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
         
@@ -432,7 +455,8 @@
         <button id="esri_utilitynetwork_ShowCustomizeGallery" 
                 caption="Customize..." extendedCaption="Customize..."
                 className="Ribbon.UtilityNetworkGalleryCustomizeButton" >
-          <tooltip heading="Customize Data Gallery">Add groups, reorder, or remove the tools in the Data gallery.<disabledText></disabledText></tooltip>
+          <tooltip heading="Customize Data Gallery">Add groups, reorder, or remove the tools in the Data gallery.
+          <disabledText></disabledText></tooltip>
         </button>
         
         <!-- Select connection device feature tool-->
@@ -443,7 +467,8 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select feature">
-            Select a device feature to modify its terminal connections.<disabledText></disabledText>
+            Select a device feature to modify its terminal connections.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
 
@@ -455,7 +480,8 @@
                      smallImage="pack://application:,,,/ArcGIS.Desktop.Editing;component/Images/SelectionMethodAdd16.png"
                      helpContextID="">
           <tooltip heading="Select feature">
-            Select a network feature to modify its terminal connections.<disabledText></disabledText>
+            Select a network feature to modify its terminal connections.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </tool>
 
@@ -484,13 +510,14 @@
 
         <button id="esri_networkanalysis_utility_ShowModifySourceBtn"
                 caption="Modify Controller" extendedCaption="Show Modify Subnetwork Controller pane."
-                condition="esri_networkanalysis_utility_TraceTool_Condition"
+                condition="esri_networkanalysis_utility_ValidateTool_Condition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ModifySource16.png"
                 className="esri_networkanalysis_utility_module:ShowModifySourceWindow"
                 keytip="MC">
           <tooltip heading="Modify Control Device">
-            Open the Modify Subnetwork Controller pane to set or remove a feature as a network subnetwork controller.<disabledText></disabledText>
+            Open the Modify Subnetwork Controller pane to set or remove a feature as a network subnetwork controller.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
 
@@ -507,12 +534,14 @@
         </button>
         <button id="esri_networkanalysis_utility_CreateCircuitsBtn" className="esri_networkanalysis_utility_module:ShowCreateCircuitsWindow"
                 caption="Create Circuit" loadOnClick="false"
+                condition="esri_networkanalysis_utility_ValidateTool_Condition"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit32.png"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/CreateCircuit16.png"
                 helpContextID=""
                 keytip="CC">
           <tooltip heading="Create Circuit">
-            Create a circuit in a utility network.<disabledText></disabledText>
+            Create a circuit in a utility network.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
 
@@ -533,7 +562,8 @@
                 helpContextID=""
                 keytip="ENC">
           <tooltip heading="Select a Container to activate">
-            Select a container feature to enable container editing mode.<disabledText>Disable Edit Mode to enable this tool</disabledText>
+            Select a container feature to enable container editing mode.
+            <disabledText>Disable Edit Mode to enable this tool</disabledText>
           </tooltip>
         </tool>
 
@@ -732,7 +762,8 @@
                 className="esri_networkanalysis_utility_module:ShowModifyTerminalPathsWindow"
                 keytip="TP">
           <tooltip heading="Terminal Configuration Paths">
-            Show the Modify Terminal Paths pane.<disabledText></disabledText>
+            Show the Modify Terminal Paths pane.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
         <button id="esri_networkanalysis_ShowModifyConnectionBtn"
@@ -743,7 +774,8 @@
                  className="esri_networkanalysis_utility_module:ShowModifyTerminalConnectionsWindow"
                  keytip="TC">
           <tooltip heading="Terminal Connections">
-            Show the Modify Terminal Connections pane.<disabledText></disabledText>
+            Show the Modify Terminal Connections pane.
+            <disabledText>Available with Advanced Editing User Type Extension or Standard license.</disabledText>
           </tooltip>
         </button>
 
@@ -924,9 +956,17 @@
 
     <insertCondition id="esri_networkanalysis_utility_TerminalConnections_Condition" caption="Geographic map is active and utility network layer is selected">
       <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
+        <and>
+          <or>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+          </or>
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
         <and>
           <state id="esri_map_utilityNetworkEGDB" />
           <not>
@@ -937,41 +977,49 @@
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-        <state id="esri_map_traceNetworkFGDB"/>
-        <state id="esri_map_traceNetworkMGDB" />
-        <state id="esri_map_traceNetworkFeatureService" />
-      </or>
+        <and>
+          <or>
+            <state id="esri_map_utilityNetwork" />
+            <state id="esri_map_traceNetwork" />
+          </or>
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-        <state id="esri_map_traceNetworkFGDB"/>
-        <state id="esri_map_traceNetworkMGDB" />
-        <state id="esri_map_traceNetworkFeatureService" />
-      </or>
+      <and>
+          <or>
+            <state id="esri_map_utilityNetwork" />
+            <state id="esri_map_traceNetwork" />
+          </or>
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_not_trace_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </or>
+      <and>
+          <state id="esri_map_utilityNetwork" />
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </or>
+      <and>
+          <state id="esri_map_utilityNetwork" />
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
     <insertCondition id="esri_networkanalysis_utility_DisplayContent_Condition" caption="Geographic map is active and utility network layer is selected">
       <or>
@@ -997,30 +1045,36 @@
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkEGDB" />
-        <state id="esri_map_traceNetworkFGDB"/>
-        <state id="esri_map_traceNetworkMGDB" />
-        <state id="esri_map_traceNetworkEGDB" />
-      </or>
+      <and>
+          <or>
+            <state id="esri_map_utilityNetwork" />
+            <state id="esri_map_traceNetwork" />
+          </or>
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
-      <or>
-        <state id="esri_map_utilityNetworkFGDB" />
-        <state id="esri_map_utilityNetworkMGDB" />
-        <state id="esri_map_utilityNetworkFeatureService" />
-      </or>
+      <and>
+          <state id="esri_map_utilityNetwork" />
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
-      <or>
-        <state id="esri_map_traceNetworkFGDB" />
-        <state id="esri_map_traceNetworkMGDB" />
-        <state id="esri_map_traceNetworkFeatureService" />
-      </or>
+      <and>
+          <state id="esri_map_traceNetwork" />
+          <or>
+            <state id="esri_license_hasStandardLicenseState" />
+          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+          </or>
+        </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_TraceTool_Condition" caption="Geographic map is active and utility network layer is feature service">
@@ -1165,9 +1219,14 @@
       </or>
     </insertCondition>
 
-    <insertCondition id="esri_networkanalysis_hasTelecomDomainNetwork_condition" caption="A utility network layer has a telecom domain network">
+    <insertCondition id="esri_networkanalysis_hasTelecomDomainNetwork_condition" caption="The map contains a utility network layer with a telecom domain network">
       <and>
-        <state id="esri_map_utilityNetworkHasTelecomDomainNetwork" />
+        <state id="esri_map_utilityNetworkHasTelecomDomainNetworkState" />
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_networkanalysis_hasTraditionalDomainNetwork_condition" caption="The map contains a utility network layer with a traditional domain network">
+      <and>
+        <state id="esri_map_utilityNetworkHasTraditionalDomainNetworkState" />
       </and>
     </insertCondition>
 
