@@ -29,6 +29,7 @@
       <shortcut refID="esri_reports_selectAllButton" flags="Ctrl" key="A"/>
       <shortcut refID="esri_reports_clearSelectionButton" flags="Ctrl" key="BACKSPACE"/>
       <shortcut refID="esri_reports_editDeleteButton" flags="None" key="Delete"/>
+      <shortcut refID="esri_layouts_toggleLockSelectedElementsButton" flags="Ctrl" key="L"/>
       <!--<shortcut refID="esri_reports_pageOrientationGallery" flags="None" key="O"/>-->
       <!--<shortcut refID="esri_reports_pageSizeGallery" flags="None" key="S"/>-->
       <shortcut refID="esri_reports_showHideRulersCheck" flags="Alt" key="R"/>
@@ -50,6 +51,7 @@
       <shortcut refID="esri_sharing_SaveAsRptX" flags="Ctrl+Alt" key="R"/>
       <shortcut refID="esri_sharing_convertReportToTemplate" flags="Ctrl+Alt" key="T"/>
       <shortcut refID="esri_sharing_exportReportButton" flags="Ctrl" key="E"/>
+      <shortcut refID="esri_reports_findReplaceButton" flags="Ctrl" key="F"/>
     </insertShortcutTable>
 
     <insertShortcutTable id="esri_layouts_edit" category="Layout" caption="General"
@@ -72,7 +74,8 @@
       <shortcut refID="esri_layouts_selectAllButton" flags="Ctrl" key="A" />
       <shortcut refID="esri_layouts_clearSelectionButton" flags="Ctrl" key="Backspace" />
       <shortcut refID="esri_layouts_deleteSelectionButton" flags="None" key="Delete"/>
-            
+      <shortcut refID="esri_layouts_toggleLockSelectedElementsButton" flags="Ctrl" key="L"/>
+
       <shortcut refID="esri_layouts_nudgeLeft" flags="Shift" key="Left"/>
       <shortcut refID="esri_layouts_nudgeDown" flags="Shift" key="Down"/>
       <shortcut refID="esri_layouts_nudgeRight" flags="Shift" key="Right"/>
@@ -85,6 +88,7 @@
 
       <shortcut refID="esri_editing_table_openTablePaneButton" flags="Ctrl" key="T" />
       <shortcut refID="esri_layouts_hyperlinkButton" flags="Ctrl" key="K" />
+      <shortcut refID="esri_layouts_findReplaceButton" flags="Ctrl" key="F"/>
     </insertShortcutTable>
 
     <insertShortcutTable id="esri_layouts_mapActive" caption="Activated Map" category="Layout"
@@ -99,10 +103,13 @@
       <shortcut refID="esri_presentations_pasteItemsButton" flags="Ctrl" key="V"/>
       <shortcut refID="esri_presentations_deleteItemsButton" flags="Ctrl" key="D"/>
       <shortcut refID="esri_presentations_cutItemsButton" flags="Ctrl" key="X"/>
+      <shortcut refID="esri_presentations_lockUnlockItemsButton" flags="Ctrl" key="L"/>
       <shortcut refID="esri_layouts_nudgeLeft" flags="Shift" key="Left"/>
       <shortcut refID="esri_layouts_nudgeDown" flags="Shift" key="Down"/>
       <shortcut refID="esri_layouts_nudgeRight" flags="Shift" key="Right"/>
       <shortcut refID="esri_layouts_nudgeUp" flags="Shift" key="Up"/>
+      <shortcut refID="esri_presentations_findReplaceButton" flags="Ctrl" key="F"/>
+      <shortcut refID="esri_presentations_showSpeakerNotes" flags="Alt" key="N"/>
     </insertShortcutTable>
 
     <insertShortcutTable id="esri_presentations_FullScreenNavigation" category="Presentations" caption="Full Screen Navigation" targetID="esri_presentations_viewPane">
@@ -184,6 +191,11 @@
       <insertComponent id="esri_layout_tableFrameFieldStyleFileManagerProps"
                        className="ArcGIS.Desktop.Internal.Layouts.Styles.TableFrameFieldCatalogStyle"/>
     </updateCategory>
+
+    <insertCategory id="esri_layout_measureToolGroup" />
+
+    <!-- "Indicator" DAML category used by Drone2Map extension to hide run control. -->
+    <insertCategory id="esri_layouts_hideRunControl"/>
 
     <!-- TOC Views -->
     <insertCategory id="esri_layouts_tocViews">
@@ -277,104 +289,164 @@
       Layout Extension
     -->
     <updateCategory refID="esri_core_ai_assistant_extension_category">
-      <insertComponent id="esri_layout_assistant_extension" className="ArcGIS.Internal.Desktop.Layouts.AIAssistant.LayoutAssistantExtension">
+
+      <!-- ================================================================== -->
+      <!-- LAYOUT ASSISTANT EXTENSION                                          -->
+      <!-- Owns: layout lifetime, page properties, layout commands            -->
+      <!-- Does NOT own: element creation/properties/commands                 -->
+      <!-- ================================================================== -->
+      <insertComponent id="esri_layout_assistant_extension"
+                       className="ArcGIS.Internal.Desktop.Layouts.AIAssistant.LayoutAssistantExtension">
         <content extensionCategoryRefID="ai_cartography_map_production_category">
           <uiText>
-            <title>Layout Management</title>
-            <shortDescription>Creates layouts and manages layout properties, export, print, and other layout commands.</shortDescription>
+            <title>Layout Assistant</title>
+            <shortDescription>Creates and manages layouts, page settings, templates, export, and layout-level commands.</shortDescription>
           </uiText>
+          
           <overrides>
-            <!--<override refID="esri_get_capabilities_assistant_extension"/>
-            <override refID="esri_shapeFactory_assistant_extension"/>
-            <override refID="esri_search_assistant_extension"/>-->
             <override refID="esri_geoprocessing_server_GetLayoutTemplatesInfo"/>
             <override refID="esri_geoprocessing_server_ExportWebMap"/>
             <override refID="esri_geoprocessing_conversion_PDFToTIFF"/>
             <override refID="esri_geoprocessing_conversion_MapToKML"/>
             <override refID="esri_geoprocessing_nd_ApplyLinearDispatchLayout"/>
             <override refID="esri_geoprocessing_cartography_ConvertLabelsToAnnotation"/>
-            <override refID="esri_geoprocessing_cartography_ConvertLabelsToAnnotation"/>
             <override refID="esri_geoprocessing_management_Rename"/>
             <override refID="esri_geoprocessing_management_ExportLayouts"/>
             <override refID="esri_geoprocessing_management_ExportReportToPDF"/>
             <override refID="esri_geoprocessing_topographic_GenerateElevationGuideFeatures"/>
-            <!--<override refID="esri_mapping_layer_assistant_extension"/>
-            <override refID="esri_mapping_navigation_assistant_extension"/>-->
           </overrides>
 
-          <!-- ============================================================ -->
-          <!-- TOP-LEVEL: Category phrases to get the EXTENSION loaded.       -->
-          <!-- These should be broad, not duplicate function-level specifics. -->
-          <!-- ============================================================ -->
+          <!-- ============================================================
+               TOP-LEVEL: Extension ownership phrases for the planner.
+               Covers layout lifecycle, page properties, export,
+               and zoom. Scoped to blank/paper-size creation and page-level
+               operations only — element composition routes to
+               ElementAssistantExtension.
+          ============================================================ -->
           <searchDescriptions>
-            <!-- Creation -->
-            <searchDescription>Create a new layout</searchDescription>
-            <searchDescription>Create a layout with a specific paper size</searchDescription>
+
+            <!-- Layout creation — blank, paper size, template only -->
+            <searchDescription>Create a new blank layout</searchDescription>
+            <searchDescription>Create a layout with a specific paper size or dimensions</searchDescription>
             <searchDescription>Create a layout from a template</searchDescription>
             <searchDescription>Create layout using a specific template name</searchDescription>
+            <searchDescription>Turn this map into a layout</searchDescription>
+            <searchDescription>Turn this map into a layout with a legend</searchDescription>
+            <searchDescription>Turn the current map into a layout</searchDescription>
+            <searchDescription>Turn the current map into a layout with a legend</searchDescription>
+            <searchDescription>Turn the active map into a layout</searchDescription>
+            <searchDescription>Create a layout from the current map</searchDescription>
+            <searchDescription>Create a layout with the active map</searchDescription>
+            <searchDescription>Create a layout with the active map and a legend</searchDescription>
+            <searchDescription>Create a layout based on the current map</searchDescription>
+            <searchDescription>Make a new letter legal A4 tabloid landscape portrait layout</searchDescription>
+            <searchDescription>Create an ANSI A B C D E layout</searchDescription>
+            <searchDescription>Create an Arch paper size layout</searchDescription>
+            <searchDescription>Create a junior legal layout</searchDescription>
+            <searchDescription>Create a ledger tabloid layout</searchDescription>
 
-            <!-- Lifecycle -->
+            <!-- Layout lifecycle -->
             <searchDescription>List layouts in the project</searchDescription>
             <searchDescription>List available layout templates</searchDescription>
-            <searchDescription>Open or close a layout</searchDescription>
-            <searchDescription>Close or hide a specific layout</searchDescription>
+            <searchDescription>Open or switch to a named layout</searchDescription>
+            <searchDescription>Close or hide a specific layout by name</searchDescription>
+            <searchDescription>Close everything close all layouts</searchDescription>
             <searchDescription>Delete or rename a layout</searchDescription>
-            <searchDescription>Remove or delete a layout from the project</searchDescription>
-            <searchDescription>What layout is active</searchDescription>
+            <searchDescription>Remove a layout from the project</searchDescription>
+            <searchDescription>What layout is currently active or open</searchDescription>
+            <searchDescription>Which layout is currently open</searchDescription>
 
-            <!-- Properties -->
-            <searchDescription>Query or modify layout page properties</searchDescription>
-            <searchDescription>Change layout page size or dimensions</searchDescription>
-            <searchDescription>Set page units inches centimeters millimeters</searchDescription>
-            <searchDescription>Show or hide rulers guides margins</searchDescription>
-            <searchDescription>Set color model RGB CMYK</searchDescription>
-            <searchDescription>What color model is being used</searchDescription>
-            <searchDescription>Add or remove layout guides</searchDescription>
-            <searchDescription>Set layout margins</searchDescription>
-            <searchDescription>What is the left margin right margin top margin bottom margin</searchDescription>
-            <searchDescription>Ruler division ruler increment smallest ruler division</searchDescription>
-            <searchDescription>Color vision deficiency mode</searchDescription>
-            <searchDescription>Disable color vision deficiency mode</searchDescription>
-            <searchDescription>color vision deficiency mode</searchDescription>
-            <searchDescription>Overprint simulation</searchDescription>
+            <!-- Page properties — query -->
+            <searchDescription>Query layout page properties size units color model</searchDescription>
+            <searchDescription>What is the layout page width height size</searchDescription>
+            <searchDescription>What units is the page using</searchDescription>
+            <searchDescription>What color model is set RGB CMYK</searchDescription>
+            <searchDescription>Are rulers guides margin visible</searchDescription>
+            <searchDescription>What are the margin sizes left right top bottom</searchDescription>
+            <searchDescription>What is the right margin of the layout</searchDescription>
+            <searchDescription>What is the left top bottom margin</searchDescription>
+            <searchDescription>What is the smallest ruler division or increment</searchDescription>
+            <searchDescription>Smallest ruler division increment</searchDescription>
+            <searchDescription>Is overprint simulation enabled</searchDescription>
+            <searchDescription>What color vision deficiency mode is set</searchDescription>
+            <searchDescription>What color vision deficiency mode is being used</searchDescription>
+            <searchDescription>What are the current guide positions</searchDescription>
 
-            <!-- Operations -->
-            <searchDescription>Export layout to PDF PNG JPEG</searchDescription>
-            <searchDescription>Print a layout</searchDescription>
-            <searchDescription>Zoom layout view</searchDescription>
-            <searchDescription>Zoom to full extent fit page fit width</searchDescription>
-            <searchDescription>100 percent actual size one to one</searchDescription>
-            <searchDescription>Show everything show whole page</searchDescription>
-            <!-- TODO: "Change to A2" test case is failing -->
+            <!-- Page properties — modify -->
+            <searchDescription>Change layout page size dimensions orientation</searchDescription>
+            <searchDescription>Set page units to inches centimeters millimeters points</searchDescription>
+            <searchDescription>Show or hide rulers guides margins on the layout page</searchDescription>
+            <searchDescription>Show margin on layout page</searchDescription>
+            <searchDescription>Turn off rulers and margins</searchDescription>
+            <searchDescription>Set color model to RGB or CMYK</searchDescription>
+            <searchDescription>Add remove clear guides on the layout page</searchDescription>
+            <searchDescription>Set layout page margins</searchDescription>
+            <searchDescription>Enable disable overprint simulation</searchDescription>
+            <searchDescription>Set color vision deficiency mode protanopia deuteranopia</searchDescription>
+            <searchDescription>Change page to A0 A1 A2 A3 A4 A5 ISO paper size</searchDescription>
+            <searchDescription>Set page to ANSI A B C D E Arch paper size</searchDescription>
+
+            <!-- Layout commands -->
+            <searchDescription>Export layout to PDF PNG JPEG TIFF</searchDescription>
+            <searchDescription>Export layout as tif tiff jpg jpeg png pdf</searchDescription>
+            <searchDescription>Zoom layout view fit page width full extent 100 percent</searchDescription>
+            <searchDescription>Zoom to full extent fit all fit width fit page actual size</searchDescription>
+
           </searchDescriptions>
 
-          <!-- ============================================================ -->
-          <!-- CreateLayout                                                  -->
-          <!-- Focus: blank, paper-size, template, landscape/portrait        -->
-          <!-- ============================================================ -->
+
+          <!-- ============================================================
+               layout_create
+               Blank layouts, named paper sizes, landscape/portrait,
+               and template-based creation.
+          ============================================================ -->
           <aiAssistantFunction name="layout_create">
             <searchDescriptions>
+
               <!-- Blank -->
               <searchDescription>create a blank layout</searchDescription>
               <searchDescription>new empty layout</searchDescription>
               <searchDescription>create a new default layout</searchDescription>
+              <searchDescription>add a new blank layout</searchDescription>
+              <searchDescription>turn this map into a layout</searchDescription>
+              <searchDescription>turn this map into a layout with a legend</searchDescription>
+              <searchDescription>turn the current map into a layout</searchDescription>
+              <searchDescription>turn the current map into a layout with a legend</searchDescription>
+              <searchDescription>turn the active map into a layout</searchDescription>
+              <searchDescription>create a layout with the current map</searchDescription>
+              <searchDescription>create a layout with the active map</searchDescription>
+              <searchDescription>create a layout with the active map and a legend</searchDescription>
+              <searchDescription>create a layout from the current map</searchDescription>
+              <searchDescription>create a layout based on the current map</searchDescription>
 
-              <!-- Paper Sizes -->
+              <!-- ANSI paper sizes -->
               <searchDescription>create a letter size layout</searchDescription>
               <searchDescription>create a legal sized layout</searchDescription>
-              <searchDescription>create an A4 layout</searchDescription>
-              <searchDescription>create an A3 layout</searchDescription>
               <searchDescription>create a tabloid layout</searchDescription>
+              <searchDescription>create a ledger layout</searchDescription>
+              <searchDescription>create a junior legal layout</searchDescription>
               <searchDescription>make a letter layout</searchDescription>
               <searchDescription>new layout 8.5 by 11</searchDescription>
+              <searchDescription>create a layout 11 by 17 inches</searchDescription>
+              <searchDescription>new ANSI A layout</searchDescription>
+              <searchDescription>new ANSI B layout</searchDescription>
+              <searchDescription>new ANSI C layout</searchDescription>
+              <searchDescription>new ANSI D layout</searchDescription>
+              <searchDescription>new Arch E layout</searchDescription>
               <searchDescription>create layout with custom dimensions</searchDescription>
-              <searchDescription>create a layout with specific size</searchDescription>
 
-              <!-- Landscape / Portrait -->
+              <!-- ISO paper sizes -->
+              <searchDescription>create an A4 layout</searchDescription>
+              <searchDescription>create an A3 layout</searchDescription>
+              <searchDescription>create an A2 layout</searchDescription>
+              <searchDescription>create an A1 layout</searchDescription>
+
+              <!-- Orientation -->
               <searchDescription>create a landscape tabloid layout</searchDescription>
               <searchDescription>create a landscape letter layout</searchDescription>
-              <searchDescription>new layout in landscape</searchDescription>
+              <searchDescription>new layout in landscape orientation</searchDescription>
               <searchDescription>landscape A3 layout</searchDescription>
+              <searchDescription>portrait A4 layout</searchDescription>
 
               <!-- Template -->
               <searchDescription>create a layout from a template</searchDescription>
@@ -384,78 +456,120 @@
               <searchDescription>use a pre-made layout template</searchDescription>
               <searchDescription>create a layout using template Title Bar</searchDescription>
               <searchDescription>add a new layout with a template</searchDescription>
+
             </searchDescriptions>
           </aiAssistantFunction>
 
-          <!-- ============================================================ -->
-          <!-- DescribeLayout                                                -->
-          <!-- Focus: reading/querying properties, active layout identity    -->
-          <!-- ============================================================ -->
+
+          <!-- ============================================================
+               layout_get_property
+               Queries for page size, margins, units, color model,
+               guides, rulers, overprint, CVD mode, and active layout.
+               Must beat layout_run_command for "which layout is open"
+               and beat no-function routing for margin/CVD/ruler queries.
+          ============================================================ -->
           <aiAssistantFunction name="layout_get_property" condition="esri_layouts_layoutPane">
             <searchDescriptions>
-              <!-- Active Layout / Name -->
+
+              <!-- Active layout — must beat layout_run_command List routing -->
               <searchDescription>what is the active layout</searchDescription>
               <searchDescription>which layout is currently open</searchDescription>
               <searchDescription>what layout am I working on</searchDescription>
               <searchDescription>get the active layout name</searchDescription>
               <searchDescription>which layout pane is active</searchDescription>
               <searchDescription>tell me the current layout</searchDescription>
+              <searchDescription>what layout is currently open</searchDescription>
 
-              <!-- General Property Query -->
-              <searchDescription>show me the page width height or size</searchDescription>
-              <searchDescription>show me layout page properties</searchDescription>              <searchDescription>describe the layout properties</searchDescription>
-              <searchDescription>tell me about the layout settings</searchDescription>
-              <searchDescription>get layout property values</searchDescription>
-              <searchDescription>show layout page properties</searchDescription>
+              <!-- General property query -->
+              <searchDescription>show me layout page properties</searchDescription>
+              <searchDescription>describe the layout page settings</searchDescription>
+              <searchDescription>tell me about the layout page configuration</searchDescription>
+              <searchDescription>get layout page property values</searchDescription>
 
-              <!-- Specific Property Queries -->
+              <!-- Page size -->
               <searchDescription>what is the page width</searchDescription>
               <searchDescription>what is the page height</searchDescription>
               <searchDescription>what is the page size</searchDescription>
               <searchDescription>what units is the page using</searchDescription>
+
+              <!-- Color model -->
               <searchDescription>what color model is set</searchDescription>
               <searchDescription>what color model is being used</searchDescription>
+
+              <!-- Guides -->
               <searchDescription>what are the current guides</searchDescription>
               <searchDescription>show me the guide positions</searchDescription>
+              <searchDescription>list the guides</searchDescription>
+
+              <!-- Visibility state -->
               <searchDescription>are rulers visible</searchDescription>
               <searchDescription>are guides showing</searchDescription>
               <searchDescription>is the margin visible</searchDescription>
+
+              <!-- Margins -->
               <searchDescription>what are the margin sizes</searchDescription>
               <searchDescription>what is the left margin</searchDescription>
               <searchDescription>what is the right margin</searchDescription>
               <searchDescription>what is the top margin</searchDescription>
               <searchDescription>what is the bottom margin</searchDescription>
+              <searchDescription>what is the right margin of the layout</searchDescription>
+
+              <!-- Ruler division — must beat no-function routing for short queries -->
               <searchDescription>what is the smallest ruler division</searchDescription>
               <searchDescription>tell me the smallest ruler division</searchDescription>
               <searchDescription>what is the ruler increment</searchDescription>
               <searchDescription>what is the smallest ruler increment</searchDescription>
+              <searchDescription>smallest ruler division</searchDescription>
+              <searchDescription>ruler increment value</searchDescription>
+
+              <!-- Overprint — must beat no-function routing -->
               <searchDescription>is overprint enabled</searchDescription>
+              <searchDescription>is overprint simulation enabled</searchDescription>
+              <searchDescription>what is the overprint setting</searchDescription>
+
+              <!-- CVD mode — must beat no-function routing -->
               <searchDescription>what color vision deficiency mode is set</searchDescription>
+              <searchDescription>what color vision deficiency mode is being used</searchDescription>
+              <searchDescription>what CVD mode is active</searchDescription>
+              <searchDescription>is color vision deficiency mode enabled</searchDescription>
+
             </searchDescriptions>
           </aiAssistantFunction>
 
-          <!-- ============================================================ -->
-          <!-- ModifyLayout                                                  -->
-          <!-- Focus: changing/setting properties on the EXISTING layout     -->
-          <!-- ============================================================ -->
+
+          <!-- ============================================================
+               layout_set_property
+               Modifies page size, units, orientation, margins, guides,
+               visibility controls, color model, overprint, and CVD mode.
+               Must beat no-function routing for guide, overprint,
+               margin, and visibility operations.
+          ============================================================ -->
           <aiAssistantFunction name="layout_set_property" condition="esri_layouts_layoutPane">
             <searchDescriptions>
-              <!-- General Modify -->
-              <searchDescription>modify layout properties</searchDescription>
-              <searchDescription>change layout settings</searchDescription>
+
+              <!-- General modify -->
+              <searchDescription>modify layout page properties</searchDescription>
+              <searchDescription>change layout page settings</searchDescription>
               <searchDescription>update layout page configuration</searchDescription>
 
-              <!-- Paper Size (modify existing layout) -->
+              <!-- Paper size -->
               <searchDescription>set page size to letter</searchDescription>
               <searchDescription>set page size to A4</searchDescription>
               <searchDescription>change page to tabloid</searchDescription>
+              <searchDescription>change page to ledger</searchDescription>
               <searchDescription>change page to legal</searchDescription>
               <searchDescription>set to ANSI D</searchDescription>
+              <searchDescription>change to A2</searchDescription>
               <searchDescription>make page landscape</searchDescription>
               <searchDescription>make page portrait</searchDescription>
               <searchDescription>change paper size</searchDescription>
+              <searchDescription>change page to A0 A1 A2 A3 A4 A5 A6 ISO paper size</searchDescription>
+              <searchDescription>Set page to ANSI A B C D E paper size</searchDescription>
+              <searchDescription>set page to Arch A Arch B Arch C Arch D Arch E</searchDescription>
+              <searchDescription>set the page size to A3</searchDescription>
+              <searchDescription>change the page to tabloid</searchDescription>
 
-              <!-- Custom Dimensions -->
+              <!-- Custom dimensions -->
               <searchDescription>set page width to 11</searchDescription>
               <searchDescription>set page height to 17</searchDescription>
               <searchDescription>set page dimensions to 11 by 17</searchDescription>
@@ -467,78 +581,89 @@
               <searchDescription>change units to millimeters</searchDescription>
               <searchDescription>set measurement units</searchDescription>
 
-              <!-- Visibility Controls -->
-              <searchDescription>show rulers</searchDescription>
-              <searchDescription>hide rulers</searchDescription>
-              <searchDescription>turn on rulers</searchDescription>
-              <searchDescription>show guides</searchDescription>
-              <searchDescription>hide guides</searchDescription>
-              <searchDescription>turn off guides</searchDescription>
-              <searchDescription>show margin</searchDescription>
-              <searchDescription>hide margin</searchDescription>
-              <searchDescription>show rulers and guides</searchDescription>
+              <!-- Visibility controls — must beat layout_get_property for "show" -->
+              <searchDescription>show page rulers</searchDescription>
+              <searchDescription>hide page rulers</searchDescription>
+              <searchDescription>turn on page rulers</searchDescription>
+              <searchDescription>turn off page rulers</searchDescription>
+              <searchDescription>show page guides</searchDescription>
+              <searchDescription>hide page guides</searchDescription>
+              <searchDescription>turn off page guides</searchDescription>
+              <searchDescription>show page margin</searchDescription>
+              <searchDescription>hide page margin</searchDescription>
+              <searchDescription>show margin on the layout</searchDescription>
+              <searchDescription>show rulers and guides on the page</searchDescription>
+              <searchDescription>turn off rulers and margins</searchDescription>
+              <searchDescription>turn off rulers and guides</searchDescription>
+              <searchDescription>hide rulers and margins</searchDescription>
 
-              <!-- Color Model -->
+              <!-- Color model -->
               <searchDescription>set color model to RGB</searchDescription>
               <searchDescription>set color model to CMYK</searchDescription>
-              <searchDescription>change to RGB</searchDescription>
-              <searchDescription>change to CMYK</searchDescription>
+              <searchDescription>change to RGB color model</searchDescription>
+              <searchDescription>change to CMYK color model</searchDescription>
 
-              <!-- Overprint -->
+              <!-- Overprint — must beat no-function routing -->
               <searchDescription>enable overprint simulation</searchDescription>
               <searchDescription>disable overprint</searchDescription>
               <searchDescription>turn on overprint</searchDescription>
               <searchDescription>turn off overprint</searchDescription>
+              <searchDescription>enable overprint</searchDescription>
 
               <!-- CVD -->
               <searchDescription>set color vision deficiency mode</searchDescription>
               <searchDescription>enable protanopia mode</searchDescription>
               <searchDescription>set CVD to deuteranopia</searchDescription>
               <searchDescription>set color blindness mode</searchDescription>
+              <searchDescription>disable color vision deficiency mode</searchDescription>
 
-              <!-- Guides - Add/Remove -->
-              <searchDescription>add a vertical guide at 5</searchDescription>
-              <searchDescription>add a horizontal guide at 3</searchDescription>
-              <searchDescription>add guides at positions</searchDescription>
-              <searchDescription>remove all guides</searchDescription>
-              <searchDescription>clear guides</searchDescription>
+              <!-- Guides — must beat no-function routing -->
+              <searchDescription>add a vertical guide at 5 inches</searchDescription>
+              <searchDescription>add a horizontal guide at 3 inches</searchDescription>
+              <searchDescription>add a vertical guide at a position</searchDescription>
+              <searchDescription>add guides at specific positions</searchDescription>
+              <searchDescription>remove all guides from the page</searchDescription>
+              <searchDescription>clear all guides</searchDescription>
               <searchDescription>delete vertical guides</searchDescription>
+              <searchDescription>remove vertical guide at a position</searchDescription>
+              <searchDescription>remove guides at multiple positions</searchDescription>
+              <searchDescription>remove vertical guides at 1 2 3 4 5</searchDescription>
 
               <!-- Margins -->
-              <searchDescription>set margin to 0.5</searchDescription>
-              <searchDescription>change all margins</searchDescription>
+              <searchDescription>set page margin to 0.5 inches</searchDescription>
+              <searchDescription>change all page margins</searchDescription>
               <searchDescription>set left margin to 1 inch</searchDescription>
 
-              <!-- Ruler Division -->
+              <!-- Ruler division -->
               <searchDescription>set smallest ruler division</searchDescription>
               <searchDescription>change ruler increment</searchDescription>
 
-              <!-- Multi-Property -->
+              <!-- Multi-property -->
               <searchDescription>set to letter landscape and turn on rulers</searchDescription>
               <searchDescription>change to A4 and show guides</searchDescription>
-              <searchDescription>change page to A0 A1 A2 A3 A4 A5 A6 ISO paper size</searchDescription>
-              <searchDescription>change to A2</searchDescription>
-              <searchDescription>make a named layout letter legal A4 tabloid size</searchDescription>
               <searchDescription>set layout page size by layout name</searchDescription>
-              <searchDescription>Set page to ANSI A B C D E Arch paper size</searchDescription>
-              <searchDescription>set to ANSI A ANSI B ANSI C ANSI D ANSI E paper size</searchDescription>
-              <searchDescription>set page to Arch A Arch B Arch C Arch D Arch E</searchDescription>
+
             </searchDescriptions>
           </aiAssistantFunction>
 
-          <!-- ============================================================ -->
-          <!-- ExecuteLayout                                                 -->
-          <!-- Focus: lifecycle commands + export/print/zoom                 -->
-          <!-- ============================================================ -->
+
+          <!-- ============================================================
+               layout_run_command
+               Layout lifecycle commands (open, close, delete, rename,
+               list), export, and zoom operations.
+               Export must beat GP_ExportLayouts_management for tif/tiff.
+               Close must claim "close everything" and session-close phrases.
+          ============================================================ -->
           <aiAssistantFunction name="layout_run_command" condition="esri_layouts_layoutPane">
             <searchDescriptions>
-              <!-- List Layouts -->
+
+              <!-- List layouts -->
               <searchDescription>list the layouts in my project</searchDescription>
               <searchDescription>show me all layouts</searchDescription>
               <searchDescription>what layouts do I have</searchDescription>
               <searchDescription>which layouts exist in the project</searchDescription>
 
-              <!-- List Templates -->
+              <!-- List templates -->
               <searchDescription>what layout templates are available</searchDescription>
               <searchDescription>show me layout templates</searchDescription>
               <searchDescription>list available layout templates</searchDescription>
@@ -550,78 +675,1064 @@
               <searchDescription>activate layout MyLayout</searchDescription>
               <searchDescription>go to layout Report</searchDescription>
 
-              <!-- Close -->
+              <!-- Close — must claim "close everything" and general close phrases -->
               <searchDescription>close layout TestLayout</searchDescription>
-              <searchDescription>close the current layout</searchDescription>
-              <searchDescription>hide layout Fred</searchDescription>
-              <searchDescription>close TestLayout</searchDescription>
+              <searchDescription>hide layout Fred by name</searchDescription>
+              <searchDescription>close a named layout</searchDescription>
+              <searchDescription>close everything</searchDescription>
+              <searchDescription>close all layouts</searchDescription>
+              <searchDescription>close all open layouts</searchDescription>
 
               <!-- Delete -->
               <searchDescription>delete layout TestLayout</searchDescription>
               <searchDescription>remove layout from project</searchDescription>
               <searchDescription>get rid of layout Fred</searchDescription>
-              <searchDescription>remove TestLayout</searchDescription>
+              <searchDescription>delete a named layout from the project</searchDescription>
 
               <!-- Rename -->
               <searchDescription>rename layout TestLayout to MyLayout</searchDescription>
               <searchDescription>change layout name from old to new</searchDescription>
               <searchDescription>give layout a new name</searchDescription>
 
-              <!-- Export -->
-              <searchDescription>export as tif tiff</searchDescription>
-              <searchDescription>export to pdf png jpeg jpg tiff tif bmp emf eps gif svg svgz tga aix</searchDescription>
-              <searchDescription>save layout as pdf png jpeg jpg tiff tif bmp emf eps gif svg svgz tga aix</searchDescription>
+              <!-- Export — must beat GP_ExportLayouts_management for tif/tiff/jpg synonyms -->
+              <searchDescription>export layout as PDF</searchDescription>
+              <searchDescription>export layout as PNG JPEG TIFF BMP</searchDescription>
+              <searchDescription>save layout as pdf png jpeg jpg tiff tif bmp emf eps svg</searchDescription>
               <searchDescription>export layout to file</searchDescription>
-              <searchDescription>export this layout for sharing or review</searchDescription>
-              <searchDescription>export the current layout to a file</searchDescription>
-              <!-- Print -->
-              <searchDescription>print the layout</searchDescription>
-              <searchDescription>print layout to printer</searchDescription>
-              <searchDescription>print 3 copies of the layout</searchDescription>
+              <searchDescription>export the current layout to a file path</searchDescription>
+              <searchDescription>export as jpg jpeg</searchDescription>
+              <searchDescription>export as tif tiff</searchDescription>
+              <searchDescription>export as png</searchDescription>
+              <searchDescription>export layout as tif</searchDescription>
+              <searchDescription>export layout as jpg</searchDescription>
+              <searchDescription>save layout as tiff</searchDescription>
 
-              <!-- Zoom (full phrases) -->
-              <searchDescription>zoom to full extent</searchDescription>
-              <searchDescription>zoom to page width</searchDescription>
-              <searchDescription>zoom to whole page</searchDescription>
-              <searchDescription>zoom to actual size</searchDescription>
-              <searchDescription>fit page in view</searchDescription>
+              <!-- Zoom -->
+              <searchDescription>zoom to full extent of the layout page</searchDescription>
+              <searchDescription>zoom to page width of the layout</searchDescription>
+              <searchDescription>zoom to whole layout page</searchDescription>
+              <searchDescription>zoom to actual size 100 percent</searchDescription>
+              <searchDescription>fit page in layout view</searchDescription>
+              <searchDescription>fit all fit width fit page layout view</searchDescription>
+              <searchDescription>actual size one to one layout view</searchDescription>
+              <searchDescription>100 percent zoom layout</searchDescription>
+              <searchDescription>zoom to show the full layout page in the view</searchDescription>
+              <searchDescription>zoom the layout view to show the whole page</searchDescription>
 
-              <!-- Zoom (terse/shorthand — must beat Map extension) -->
-              <searchDescription>fit all</searchDescription>
-              <searchDescription>fit width</searchDescription>
-              <searchDescription>fit page</searchDescription>
-              <searchDescription>actual size</searchDescription>
-              <searchDescription>100 percent</searchDescription>
-              <searchDescription>one to one</searchDescription>
-              <searchDescription>show everything on the layout</searchDescription>
-              <searchDescription>show the whole layout page</searchDescription>
-              <searchDescription>zoom to width</searchDescription>
-              <searchDescription>zoom to 100 percent</searchDescription>
-
-              <!-- Strengthen query patterns -->
-              <searchDescription>Check if rulers guides margins are visible or displayed</searchDescription>
-              <searchDescription>What is the smallest ruler division or increment</searchDescription>
-              <searchDescription>What is the left margin right margin top margin bottom margin</searchDescription>
-
-              <!-- Bare-name lifecycle (no "layout" word) -->
-              <searchDescription>Remove or delete a named item from layouts</searchDescription>
-              <searchDescription>Delete a specific layout by name</searchDescription>
-
-              <!-- Export with paths -->
-              <searchDescription>Export layout to a file path as PDF PNG JPEG SVGZ</searchDescription>
-
-              <!-- Template creation (strengthen) -->
-              <searchDescription>Create make or add a layout using from with a template</searchDescription>
-
-              <!-- Terse zoom reinforcement at top level -->
-              <searchDescription>Fit all fit width fit page on a layout</searchDescription>
-              <searchDescription>Show everything on the layout zoom to full extent</searchDescription>
-              <searchDescription>One to one actual size 100 percent layout zoom</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
+
         </content>
       </insertComponent>
 
+
+      <insertComponent id="esri_element_assistant_extension"
+                       className="ArcGIS.Internal.Desktop.Layouts.AIAssistant.ElementAssistantExtension">
+        <content extensionCategoryRefID="ai_cartography_map_production_category">
+          <uiText>
+            <title>Layout Element Assistant</title>
+            <shortDescription>Creates, finds, arranges, styles, and edits layout elements including text, map frames, legends, scale bars and scale lines, north arrows, table frames, chart frames, pictures, point markers, lines, polygons and other shapes, and group elements.</shortDescription>
+          </uiText>
+          
+          <overrides>            
+            <override refID="esri_ba_GenerateGridsAndHexagons"/>
+
+            <override refID="esri_geoprocessing_3d_TinPolygonTag"/>
+            
+            <override refID="esri_geoprocessing_aviation_GenerateAviationChartLeads"/>
+
+            <override refID="esri_geoprocessing_cartography_ConvertLabelsToAnnotation"/>
+            <override refID="esri_geoprocessing_cartography_GridIndexFeatures"/>
+            <override refID="esri_geoprocessing_cartography_SmoothPolygon"/>
+
+            <override refID="esri_geoprocessing_analysis_Intersect"/>
+            <override refID="esri_geoprocessing_analysis_Union"/>
+            <override refID="esri_geoprocessing_analysis_PairwiseErase"/>
+
+            <override refID="esri_geoprocessing_conversion_PDFToTIFF"/>
+            <override refID="esri_geoprocessing_conversion_MapToKML"/>
+            <override refID="esri_geoprocessing_conversion_RasterToPolygon"/>
+            <override refID="esri_geoprocessing_conversion_GraphicsToFeatures"/>
+
+            <override refID="esri_geoprocessing_defense_CoordinateTableToPoint"/>
+            <override refID="esri_geoprocessing_defense_CoordinateTableToLine"/>
+            <override refID="esri_geoprocessing_defense_CoordinateTableToPolygon"/>
+
+            <override refID="esri_geoprocessing_edit_ExtendLine"/>
+            
+            <override refID="esri_geoprocessing_geocoding"/>
+            <override refID="esri_geoprocessing_geocoding_tableGeocodeAddresses"/>
+
+            <override refID="esri_geoprocessing_management_BuildBoundary"/>
+            <override refID="esri_geoprocessing_management_Rename"/>
+            <override refID="esri_geoprocessing_management_XYTableToPoint"/>
+            <override refID="esri_geoprocessing_management_ExportLayouts"/>
+            <override refID="esri_geoprocessing_management_ExportReportToPDF"/>
+            <override refID="esri_geoprocessing_management_CalculateGeometryAttributes"/>
+            <override refID="esri_geoprocessing_management_FeatureToPolygon"/>
+            <override refID="esri_geoprocessing_management_FeatureToLine"/>
+            <override refID="esri_geoprocessing_management_FeatureEnvelopeToPolygon"/>
+            <override refID="esri_geoprocessing_management_GenerateTessellation"/>
+            <override refID="esri_geoprocessing_management_MinimumBoundingGeometry"/>
+            <override refID="esri_geoprocessing_management_GenerateRectanglesAlongLines"/>
+            <override refID="esri_geoprocessing_management_AddField"/>
+            <override refID="esri_geoprocessing_management_CreateTable"/>
+            <override refID="esri_geoprocessing_management_DeleteField"/>
+            <override refID="esri_geoprocessing_management_XYToLine"/>
+            <override refID="esri_geoprocessing_management_CalculateGeometryFieldsAttributeRule"/>
+            <override refID="esri_geoprocessing_management_GeneratePointsAlongLines"/>
+            <override refID="esri_geoprocessing_management_PointsToLine"/>
+
+            <override refID="esri_geoprocessing_nd_ApplyLinearDispatchLayout"/>
+            <override refID="esri_geoprocessing_3d_TinTriangle"/>
+
+            <override refID="esri_geoprocessing_server_GetLayoutTemplatesInfo"/>
+            <override refID="esri_geoprocessing_server_ExportWebMap"/>
+            
+            <override refID="esri_geoprocessing_topographic_GenerateElevationGuideFeatures"/>
+            <override refID="esri_geoprocessing_topographic_GenerateProductLayout_topographic"/>
+            <override refID="esri_geoprocessing_edit_FlipLine"/>
+            <override refID="esri_geoprocessing_management_SetValueForRangeDomain"/>
+          </overrides>
+
+          <!-- ============================================================
+               TOP-LEVEL: Extension ownership phrases for the planner.
+               Covers all four element functions. Critical disambiguations
+               are marked inline — these are phrases that competing
+               extensions (LayoutAssistantExtension, VisualizationExtension,
+               GP tools) would otherwise claim.
+          ============================================================ -->
+          <searchDescriptions>
+
+            <!-- Element creation — cartographic and graphic element types -->
+            <searchDescription>add a title element</searchDescription>
+            <searchDescription>add a legend element</searchDescription>
+            <searchDescription>create a legend</searchDescription>
+            <searchDescription>create legend</searchDescription>
+            <searchDescription>add a north arrow element</searchDescription>
+            <searchDescription>create a north arrow</searchDescription>
+            <searchDescription>add a map frame element</searchDescription>
+            <searchDescription>create map frame</searchDescription>
+            <searchDescription>create a map frame on the layout</searchDescription>
+            <searchDescription>create a map frame element</searchDescription>
+            <searchDescription>add a scale bar element</searchDescription>
+            <searchDescription>add a scale line element</searchDescription>
+            <searchDescription>add a picture element</searchDescription>
+            <searchDescription>add a photo</searchDescription>
+            <searchDescription>create text</searchDescription>
+            <searchDescription>create a text element</searchDescription>
+            <searchDescription>create point text</searchDescription>
+            <searchDescription>create straight text</searchDescription>
+            <searchDescription>create line text</searchDescription>
+            <searchDescription>add a paragraph element</searchDescription>
+            <searchDescription>create paragraph text</searchDescription>
+            <searchDescription>create rectangle text</searchDescription>
+            <searchDescription>create rectangular text</searchDescription>
+            <searchDescription>create a text box</searchDescription>
+            <searchDescription>create boxed text</searchDescription>
+            <searchDescription>create wrapped text</searchDescription>
+            <searchDescription>add body text</searchDescription>
+            <searchDescription>add a table frame element</searchDescription>
+            <searchDescription>create table frame</searchDescription>
+            <searchDescription>create a table frame on the layout</searchDescription>
+            <searchDescription>create a table frame element</searchDescription>
+            <searchDescription>add a chart frame element</searchDescription>
+            <searchDescription>create a chart frame</searchDescription>
+            <searchDescription>create chart frame</searchDescription>
+            <searchDescription>create a chart frame on the layout</searchDescription>
+            <searchDescription>add a rectangle</searchDescription>
+            <searchDescription>add a shape</searchDescription>
+            <searchDescription>add a circle</searchDescription>
+            <searchDescription>add a polygon element</searchDescription>
+            <searchDescription>create a polygon named Polygon With Name</searchDescription>
+            <searchDescription>create a polygon named</searchDescription>
+            <searchDescription>create polygon named</searchDescription>
+            <searchDescription>create a named polygon element</searchDescription>
+            <searchDescription>add a line element</searchDescription>
+            <searchDescription>add a point marker</searchDescription>
+            <searchDescription>add a group element</searchDescription>
+            <searchDescription>insert a group element</searchDescription>
+            <searchDescription>create an empty group element</searchDescription>
+            <searchDescription>create a group container element</searchDescription>
+            <searchDescription>add a double fill scale bar</searchDescription>
+            <searchDescription>create a double fill scale bar</searchDescription>
+            <searchDescription>create double fill scale bar</searchDescription>
+            <searchDescription>create a double fill scale bar element</searchDescription>
+            <searchDescription>insert a double fill scale bar element</searchDescription>
+            <searchDescription>new double fill scale bar</searchDescription>
+            <searchDescription>create a single fill scale bar</searchDescription>
+            <searchDescription>create a single fill scale bar element</searchDescription>
+            <searchDescription>create a scale line</searchDescription>
+            <searchDescription>add scale and north arrow elements to the current layout</searchDescription>
+            <searchDescription>add all scale bar variants and a north arrow to the current layout</searchDescription>
+            <searchDescription>add scale line single fill double fill dual scale bar and north arrow to the current layout</searchDescription>
+            <searchDescription>add title legend and north arrow at once to the current layout</searchDescription>
+            <searchDescription>add a map frame legend table frame and chart frame to the current layout</searchDescription>
+            <searchDescription>add picture polygon line and point elements to the current layout</searchDescription>
+            <searchDescription>create a polygon with extent left 1 bottom 1 right 4 top 3</searchDescription>
+            <searchDescription>create a polygon named rounded box using roundedRectangle predefined shape with extent 2 2 6 5</searchDescription>
+            <searchDescription>create a picture element</searchDescription>
+            <searchDescription>create a group element</searchDescription>
+            <searchDescription>create a new group element</searchDescription>
+            <searchDescription>create a table frame</searchDescription>
+            <searchDescription>add a table frame</searchDescription>
+            <searchDescription>insert a compass</searchDescription>
+            <searchDescription>add a rectangle</searchDescription>
+            <searchDescription>are all elements visible</searchDescription>
+            <searchDescription>where are all map frames</searchDescription>
+            <searchDescription>get title symbol color and size</searchDescription>
+            <searchDescription>set legend title symbol color and size</searchDescription>
+            <searchDescription>set legend label symbol size to 10</searchDescription>
+
+            <!-- Map frame creation with gap/inset — must beat LayoutAssistantExtension
+                 which claims "margins" and "1 inch" for page margin operations -->
+            <searchDescription>add a map frame with 1 inch inset from the margins</searchDescription>
+            <searchDescription>add a map frame inset from the margins by 1 inch</searchDescription>
+            <searchDescription>add a map frame with a gap from the margins</searchDescription>
+            <searchDescription>add a map frame with inset gap from page borders</searchDescription>
+            <searchDescription>place a map frame element inset from margins</searchDescription>
+            <searchDescription>create a map frame element with margin offset</searchDescription>
+            <searchDescription>create a map frame sized as percentage of page width</searchDescription>
+            <searchDescription>add a map frame centered on the page</searchDescription>
+
+            <!-- Font style and color — must beat no-function routing -->
+            <searchDescription>make the Title bold and red</searchDescription>
+            <searchDescription>make the title bold and red</searchDescription>
+            <searchDescription>make an element bold and a color</searchDescription>
+            <searchDescription>make element bold italic blue red</searchDescription>
+            <searchDescription>change font style and color of element</searchDescription>
+            <searchDescription>set element to bold and change color</searchDescription>
+
+            <!-- Type-selector font operations — must beat no-function routing -->
+            <searchDescription>set all paragraph elements to 14pt</searchDescription>
+            <searchDescription>set all paragraph elements to a point size</searchDescription>
+            <searchDescription>set all text elements to a font or size</searchDescription>
+            <searchDescription>change font size of all paragraph elements</searchDescription>
+            <searchDescription>change font size of all text elements</searchDescription>
+            <searchDescription>set font size on all text</searchDescription>
+
+            <!-- Element property queries — must beat VisualizationExtension and
+                 LayoutAssistantExtension which claim color and property queries -->
+            <searchDescription>what is the fill color of an element</searchDescription>
+            <searchDescription>what is the border color of an element</searchDescription>
+            <searchDescription>what is the background color of an element</searchDescription>
+            <searchDescription>what font is an element using</searchDescription>
+            <searchDescription>what is the font size of a text element</searchDescription>
+            <searchDescription>what style is the font of an element</searchDescription>
+            <searchDescription>what is the text content of an element</searchDescription>
+            <searchDescription>what does the title text element say</searchDescription>
+            <searchDescription>what is the text of the title element</searchDescription>
+            <searchDescription>what font is the title using</searchDescription>
+            <searchDescription>where is the legend</searchDescription>
+            <searchDescription>what is the position of an element</searchDescription>
+            <searchDescription>what are the extents of all map frames</searchDescription>
+            <searchDescription>how wide is the legend</searchDescription>
+            <searchDescription>how tall is the map frame</searchDescription>
+            <searchDescription>is the north arrow visible</searchDescription>
+            <searchDescription>what elements are present</searchDescription>
+            <searchDescription>list all elements</searchDescription>
+            <searchDescription>what elements are on the layout</searchDescription>
+            <searchDescription>what type of element is this</searchDescription>
+            <searchDescription>find all elements of a specific type</searchDescription>
+            <searchDescription>how many columns does the legend have</searchDescription>
+
+            <!-- Element modification -->
+            <searchDescription>resize an element to specific dimensions in inches</searchDescription>
+            <searchDescription>resize map frame to 6 by 8 inches</searchDescription>
+            <searchDescription>make map frame 80 percent of the page width</searchDescription>
+            <searchDescription>center an element on the page</searchDescription>
+            <searchDescription>center the title on the page horizontally vertically</searchDescription>
+            <searchDescription>move an element to a new position</searchDescription>
+            <searchDescription>move the legend to the lower left</searchDescription>
+            <searchDescription>show hide make visible invisible an element</searchDescription>
+            <searchDescription>hide all elements</searchDescription>
+            <searchDescription>add graticule grid to map frame element</searchDescription>
+            <searchDescription>make scale bar half the width of map frame</searchDescription>
+
+            <!-- Element alignment — must beat LayoutAssistantExtension which claims
+                 "align" and "margin" for page-level operations -->
+            <searchDescription>align Map Frame to the left margin</searchDescription>
+            <searchDescription>align an element to the left right top bottom margin</searchDescription>
+            <searchDescription>align an element to the page margins</searchDescription>
+            <searchDescription>align a named element to the margin edge</searchDescription>
+            <searchDescription>align element edge to page margin</searchDescription>
+
+            <!-- FitToMargins — must beat layout_run_command and LayoutAssistantExtension
+                 which claim "fit to margins" for page-level operations.
+                 Key distinction: this fits a NAMED ELEMENT, not the page itself. -->
+            <searchDescription>fit Map Frame to the margins</searchDescription>
+            <searchDescription>fit an element to the page margins</searchDescription>
+            <searchDescription>fit a named element to the margins</searchDescription>
+            <searchDescription>fit map frame element width and height to margins</searchDescription>
+            <searchDescription>stretch element to fill the margins</searchDescription>
+            <searchDescription>resize named element to fit within the page margins</searchDescription>
+
+            <!-- Element commands -->
+            <searchDescription>align elements to the left right top bottom margin page</searchDescription>
+            <searchDescription>align all elements to the page center horizontally</searchDescription>
+            <searchDescription>vertically center elements</searchDescription>
+            <searchDescription>delete all elements of a type</searchDescription>
+            <searchDescription>make elements the same width height size</searchDescription>
+            <searchDescription>ungroup element group</searchDescription>
+            <searchDescription>group Text and Paragraph</searchDescription>
+            <searchDescription>send Text backward</searchDescription>
+            <searchDescription>rotate Polygon left</searchDescription>
+            <searchDescription>reshape Polygon to rounded rectangle</searchDescription>
+            <searchDescription>intersect selected polygon shapes</searchDescription>
+            <searchDescription>union selected polygon shapes</searchDescription>
+            <searchDescription>subtract selected polygon shapes</searchDescription>
+            <searchDescription>list supported predefined shapes</searchDescription>
+
+            <!-- Schema-driven property language and synonyms -->
+            <searchDescription>set left right top bottom width height of element</searchDescription>
+            <searchDescription>move element by left edge right edge center x edge</searchDescription>
+            <searchDescription>align element using top edge bottom edge center y edge</searchDescription>
+            <searchDescription>set anchor pivot rotation center for element</searchDescription>
+            <searchDescription>set lock aspect ratio keep proportions for element</searchDescription>
+            <searchDescription>get or set symbol keys title symbol label symbol point symbol</searchDescription>
+            <searchDescription>set symbol color size angle font style alignment</searchDescription>
+            <searchDescription>set point line polygon geometry by x y points rings</searchDescription>
+            <searchDescription>set line geometry on line to a diagonal from 1 1 to 5 5</searchDescription>
+            <searchDescription>set polygon geometry on polygon to a square from 1 1 to 4 4</searchDescription>
+            <searchDescription>set line geometry on line to a diagonal from 1,1 to 5,5</searchDescription>
+            <searchDescription>set polygon geometry on polygon to a square from 1,1 to 4,4</searchDescription>
+            <searchDescription>set predefined shape rectangle circle ellipse triangle cloud</searchDescription>
+            <searchDescription>set picture source url image url for picture element</searchDescription>
+            <searchDescription>set subject to generate text for text or paragraph element</searchDescription>
+            <searchDescription>set paragraph subject to a summary of the 2024 drought report</searchDescription>
+            <searchDescription>center all frame elements horizontally within margins</searchDescription>
+            <searchDescription>get element names for the group</searchDescription>
+            <searchDescription>get line geometry for line</searchDescription>
+            <searchDescription>get line geometry for Line</searchDescription>
+            <searchDescription>get the line geometry for the feature or layer named line</searchDescription>
+            <searchDescription>get line geometry for the feature or layer named line</searchDescription>
+            <searchDescription>get the line geometry for the feature or layer named Line</searchDescription>
+            <searchDescription>read geometry from a layout line element named line</searchDescription>
+            <searchDescription>get line geometry for a named line element</searchDescription>
+            <searchDescription>read line geometry from a layout line element</searchDescription>
+            <searchDescription>get location for point</searchDescription>
+            <searchDescription>get locked state for map*</searchDescription>
+            <searchDescription>get polygon symbol for polygon</searchDescription>
+            <searchDescription>get rotation for all *frame elements</searchDescription>
+            <searchDescription>get visibility for all *scale* elements</searchDescription>
+            <searchDescription>what is the hyphenation setting on the paragraph element</searchDescription>
+            <searchDescription>get or set map frame grids mgrs grids graticules extent indicators</searchDescription>
+            <searchDescription>add remove clear legend items table fields grids mgrs grids extent indicators</searchDescription>
+            <searchDescription>set grid action add remove clear</searchDescription>
+            <searchDescription>set extent indicator action add remove clear</searchDescription>
+            <searchDescription>modify the extent indicator for Overview Map Frame</searchDescription>
+            <searchDescription>modify an extent indicator for a map frame</searchDescription>
+            <searchDescription>set fields action add remove clear</searchDescription>
+            <searchDescription>set items action add remove clear</searchDescription>
+            <searchDescription>set leaders action add remove clear</searchDescription>
+            <searchDescription>get map name from map frame</searchDescription>
+            <searchDescription>set north type true north grid north magnetic north</searchDescription>
+
+            <!-- Extension ownership for set/edit asks on existing elements -->
+            <searchDescription>set or change element properties on the layout</searchDescription>
+            <searchDescription>align a single element edge to page margin or map frame</searchDescription>
+            <searchDescription>align legend left edge to margin left</searchDescription>
+            <searchDescription>align legend left edge flush to margin right</searchDescription>
+            <searchDescription>align legend bottom edge flush to margin top</searchDescription>
+            <searchDescription>align legend top edge to margin top</searchDescription>
+            <searchDescription>align legend top edge to margin bottom</searchDescription>
+            <searchDescription>align legend top edge to margin center</searchDescription>
+            <searchDescription>align legend bottom edge to margin bottom</searchDescription>
+            <searchDescription>align legend bottom edge to margin center</searchDescription>
+            <searchDescription>align legend center x to margin left</searchDescription>
+            <searchDescription>align legend center x to page right</searchDescription>
+            <searchDescription>align all text elements left edge to page left</searchDescription>
+            <searchDescription>align all text elements top edge to margin top</searchDescription>
+            <searchDescription>align legend top edge to page top with 0.25 gap</searchDescription>
+            <searchDescription>place legend bottom edge 0.5 above map frame top edge</searchDescription>
+            <searchDescription>position table frame below map frame flush left</searchDescription>
+            <searchDescription>center all frame elements horizontally within margins</searchDescription>
+            <searchDescription>align text and paragraph left edge to margin left</searchDescription>
+            <searchDescription>align legend and table frame right edge to map frame right</searchDescription>
+            <searchDescription>align legend top right corner to map frame top right</searchDescription>
+            <searchDescription>pin an element to a page or margin corner</searchDescription>
+            <searchDescription>center an element within the page margins</searchDescription>
+            <searchDescription>add remove or clear legend items in a legend</searchDescription>
+            <searchDescription>add remove or clear fields in a table frame</searchDescription>
+            <searchDescription>clear all fields from the table frame</searchDescription>
+            <searchDescription>add remove or clear grids mgrs grids graticules or extent indicators on a map frame</searchDescription>
+            <searchDescription>set point line polygon or text symbols on layout elements</searchDescription>
+            <searchDescription>set all line symbols on the scale line to width 1</searchDescription>
+            <searchDescription>set all polygon symbols on the table frame to white</searchDescription>
+            <searchDescription>set all polygon symbols on the table frame to white with a gray outline</searchDescription>
+            <searchDescription>set all text symbols on the legend to Arial 10</searchDescription>
+            <searchDescription>set labelsymbol on all scale elements to Arial 9</searchDescription>
+            <searchDescription>set labelsymbol on scale line to Arial 9 black</searchDescription>
+            <searchDescription>set polygon symbol to red fill with black outline</searchDescription>
+            <searchDescription>set paragraph subject to a summary of the 2024 drought report</searchDescription>
+            <searchDescription>set text anti aliasing to best on paragraph</searchDescription>
+            <searchDescription>set table row limit and headings behavior</searchDescription>
+            <searchDescription>show all frame elements</searchDescription>
+            <searchDescription>unlock all scale bar elements</searchDescription>
+            <searchDescription>set group element names to text and paragraph</searchDescription>
+            <searchDescription>lock or unlock existing layout elements</searchDescription>
+            <searchDescription>show or hide existing layout elements</searchDescription>
+
+          </searchDescriptions>
+
+
+          <!-- ============================================================
+               element_create
+               Creates new elements on the active layout. Covers all
+               canonical element types and synonyms, map frame sizing
+               variants, legend configuration, and multi-element
+               composition.
+          ============================================================ -->
+          <aiAssistantFunction name="element_create" condition="esri_layouts_layoutPane">
+            <searchDescriptions>
+
+              <!-- TextElement -->
+              <searchDescription>add a title</searchDescription>
+              <searchDescription>add a title text element</searchDescription>
+              <searchDescription>insert a title</searchDescription>
+              <searchDescription>create text</searchDescription>
+              <searchDescription>create a text element</searchDescription>
+              <searchDescription>create point text</searchDescription>
+              <searchDescription>create straight text</searchDescription>
+              <searchDescription>create a label element</searchDescription>
+              <searchDescription>add a red bold title at the top center</searchDescription>
+              <searchDescription>add a label at the bottom saying source</searchDescription>
+
+              <!-- LineTextElement -->
+              <searchDescription>create line text</searchDescription>
+              <searchDescription>create spline text</searchDescription>
+              <searchDescription>create path text</searchDescription>
+
+              <!-- ParagraphTextElement -->
+              <searchDescription>add a paragraph</searchDescription>
+              <searchDescription>create paragraph text</searchDescription>
+              <searchDescription>create rectangle text</searchDescription>
+              <searchDescription>create rectangular text</searchDescription>
+              <searchDescription>create a text box</searchDescription>
+              <searchDescription>create boxed text</searchDescription>
+              <searchDescription>create wrapped text</searchDescription>
+              <searchDescription>create a text element and a paragraph element</searchDescription>
+              <searchDescription>add body text</searchDescription>
+              <searchDescription>add a description element</searchDescription>
+              <searchDescription>create body text</searchDescription>
+              <searchDescription>add paragraph text about a topic</searchDescription>
+              <searchDescription>add body text about the history of the region</searchDescription>
+              <searchDescription>add a paragraph with the text county boundaries</searchDescription>
+              <searchDescription>add a paragraph titled overview about the history</searchDescription>
+              <searchDescription>add a paragraph in the lower left about</searchDescription>
+
+              <!-- MapFrame — inset/gap variants must beat LayoutAssistantExtension
+                   which claims "margins" and "1 inch" for page margin creation -->
+              <searchDescription>add a map frame</searchDescription>
+              <searchDescription>insert a map frame</searchDescription>
+              <searchDescription>create a map frame</searchDescription>
+              <searchDescription>create map frame</searchDescription>
+              <searchDescription>create a map frame on the layout</searchDescription>
+              <searchDescription>create a map frame element</searchDescription>
+              <searchDescription>add a map frame that fills the margins</searchDescription>
+              <searchDescription>add a map frame sized as a percentage of the page width</searchDescription>
+              <searchDescription>add a map frame 80 percent of the page width centered on the page</searchDescription>
+              <searchDescription>size a map frame relative to the page width</searchDescription>
+              <searchDescription>create or add a map frame using page width as a size reference</searchDescription>
+              <searchDescription>add a map frame with 1 inch inset from the margins</searchDescription>
+              <searchDescription>add a map frame with 0.5 inch inset from the margins</searchDescription>
+              <searchDescription>add a map frame inset from the margins by 1 inch</searchDescription>
+              <searchDescription>add a map frame with a gap from the margins</searchDescription>
+              <searchDescription>add a map frame with gap inset from page borders</searchDescription>
+              <searchDescription>place a map frame element inside the margins with offset</searchDescription>
+              <searchDescription>add a map frame 80 percent of the page width centered</searchDescription>
+
+              <!-- Legend -->
+              <searchDescription>add a legend</searchDescription>
+              <searchDescription>create a legend</searchDescription>
+              <searchDescription>insert a legend</searchDescription>
+              <searchDescription>insert a map key</searchDescription>
+              <searchDescription>add a legend with 2 columns</searchDescription>
+              <searchDescription>add a legend excluding basemap</searchDescription>
+              <searchDescription>add a legend to the right of map frame</searchDescription>
+              <searchDescription>add a legend same height as map frame</searchDescription>
+              <searchDescription>add a legend right of the map frame same height</searchDescription>
+              <searchDescription>add a legend for map frame 2</searchDescription>
+
+              <!-- ScaleLine / ScaleBar -->
+              <searchDescription>add a scale bar</searchDescription>
+              <searchDescription>add a scale line</searchDescription>
+              <searchDescription>insert a scale bar</searchDescription>
+              <searchDescription>insert a scale line below map frame</searchDescription>
+              <searchDescription>add a double fill scale bar</searchDescription>
+              <searchDescription>create a scale line</searchDescription>
+              <searchDescription>create a double fill scale bar</searchDescription>
+              <searchDescription>create double fill scale bar</searchDescription>
+              <searchDescription>create a double fill scale bar element</searchDescription>
+              <searchDescription>insert a double fill scale bar element</searchDescription>
+              <searchDescription>new double fill scale bar</searchDescription>
+              <searchDescription>create a single fill scale bar</searchDescription>
+
+              <!-- NorthArrow -->
+              <searchDescription>add a north arrow</searchDescription>
+              <searchDescription>insert a north arrow</searchDescription>
+              <searchDescription>add a compass</searchDescription>
+              <searchDescription>insert a compass in the upper right</searchDescription>
+              <searchDescription>insert a compass</searchDescription>
+
+              <!-- TableFrame / ChartFrame -->
+              <searchDescription>add a table frame</searchDescription>
+              <searchDescription>create a table element</searchDescription>
+              <searchDescription>add a table frame element</searchDescription>
+              <searchDescription>create a table frame</searchDescription>
+              <searchDescription>create table frame</searchDescription>
+              <searchDescription>create a table frame on the layout</searchDescription>
+              <searchDescription>create a table frame element</searchDescription>
+              <searchDescription>add a chart frame</searchDescription>
+              <searchDescription>add a chart</searchDescription>
+              <searchDescription>add a graph</searchDescription>
+
+              <!-- PictureElement -->
+              <searchDescription>add a picture</searchDescription>
+              <searchDescription>add a photo</searchDescription>
+              <searchDescription>add an image</searchDescription>
+              <searchDescription>insert a photo</searchDescription>
+              <searchDescription>insert a picture</searchDescription>
+              <searchDescription>create a picture element</searchDescription>
+              <searchDescription>add a picture from a file path centered on the page</searchDescription>
+              <searchDescription>add a picture from a url centered on the page</searchDescription>
+              <searchDescription>insert a picture centered on the page</searchDescription>
+              <searchDescription>add a picture in the lower left of the layout</searchDescription>
+
+              <!-- PointElement / LineElement -->
+              <searchDescription>add a point marker</searchDescription>
+              <searchDescription>add a marker</searchDescription>
+              <searchDescription>add a line element</searchDescription>
+              <searchDescription>create a line</searchDescription>
+              <searchDescription>draw a line</searchDescription>
+
+              <!-- PolygonElement — "shape" must beat SearchOrBrowseChildren -->
+              <searchDescription>add a rectangle</searchDescription>
+              <searchDescription>create a rectangle</searchDescription>
+              <searchDescription>add a shape</searchDescription>
+              <searchDescription>add a circle</searchDescription>
+              <searchDescription>add a polygon</searchDescription>
+              <searchDescription>create a polygon element</searchDescription>
+              <searchDescription>add a shape to the layout</searchDescription>
+              <searchDescription>draw a shape</searchDescription>
+              <searchDescription>add a 2 by 3 inch rectangle centered on the page</searchDescription>
+              <searchDescription>create a polygon with extent left 1 bottom 1 right 4 top 3</searchDescription>
+              <searchDescription>create a polygon named polygon with name</searchDescription>
+              <searchDescription>create a polygon using rectangle predefined shape</searchDescription>
+              <searchDescription>create a polygon named rounded box using roundedrectangle predefined shape with extent 2 2 6 5</searchDescription>
+
+              <!-- GroupElement -->
+              <searchDescription>create a group element</searchDescription>
+              <searchDescription>create a new group element</searchDescription>
+              <searchDescription>create an empty group element</searchDescription>
+              <searchDescription>insert a group element</searchDescription>
+
+              <!-- Multi-element composition on an existing layout -->
+              <searchDescription>add a title map legend and scale bar to the current layout</searchDescription>
+              <searchDescription>add all standard map elements to the current layout</searchDescription>
+              <searchDescription>add a title map frame legend north arrow and scale line to the current layout</searchDescription>
+              <searchDescription>add a full set of cartographic elements to the current layout</searchDescription>
+              <searchDescription>add title above map frame and legend to the right of map frame</searchDescription>
+              <searchDescription>add a map frame legend table frame and chart frame to the current layout</searchDescription>
+              <searchDescription>add picture polygon line and point elements to the current layout</searchDescription>
+              <searchDescription>add scale and north arrow elements to the current layout</searchDescription>
+              <searchDescription>add all scale bar variants and a north arrow to the current layout</searchDescription>
+              <searchDescription>add scale line single fill double fill dual scale bar and north arrow to the current layout</searchDescription>
+              <searchDescription>add title legend and north arrow at once to the current layout</searchDescription>
+
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+
+          <!-- ============================================================
+               element_get_property
+               Queries element properties: position, extent, font, color,
+               border, background, visibility, rotation, text content,
+               and map frame name. Must beat VisualizationExtension for
+               color queries and LayoutAssistantExtension for frame/border
+               queries.
+          ============================================================ -->
+          <aiAssistantFunction name="element_get_property" condition="esri_layouts_layoutPane">
+            <searchDescriptions>
+
+              <!-- Exact phrases from test suite -->
+              <searchDescription>what font is the title using</searchDescription>
+              <searchDescription>what font is the title using?</searchDescription>
+              <searchDescription>what is the fill color of Polygon 1</searchDescription>
+              <searchDescription>what is the border color of Legend 1</searchDescription>
+              <searchDescription>what is the text of the title</searchDescription>
+              <searchDescription>what are the extents of all map frames</searchDescription>
+              <searchDescription>where is the legend</searchDescription>
+              <searchDescription>what are the dimensions of the title</searchDescription>
+              <searchDescription>how wide is the legend</searchDescription>
+              <searchDescription>what style is the Title font</searchDescription>
+              <searchDescription>is the north arrow visible</searchDescription>
+              <searchDescription>are all elements visible</searchDescription>
+              <searchDescription>where are all map frames</searchDescription>
+              <searchDescription>get title symbol color and size</searchDescription>
+              <searchDescription>get legend title symbol color</searchDescription>
+              <searchDescription>get element names for the group</searchDescription>
+              <searchDescription>get line geometry for line</searchDescription>
+              <searchDescription>get frame polygon for map frame</searchDescription>
+              <searchDescription>get location for point</searchDescription>
+              <searchDescription>get leaders for text</searchDescription>
+              <searchDescription>get items from legend</searchDescription>
+              <searchDescription>get fields from table frame</searchDescription>
+              <searchDescription>get locked state for map</searchDescription>
+              <searchDescription>get locked state for map*</searchDescription>
+              <searchDescription>get polygon symbol for polygon</searchDescription>
+              <searchDescription>get LabelSymbol from Scale Line</searchDescription>
+              <searchDescription>get LabelSymbol from all scale elements</searchDescription>
+              <searchDescription>get LineSymbol from Scale Line</searchDescription>
+              <searchDescription>get TitleSymbol from Legend</searchDescription>
+              <searchDescription>get HeadingBackgroundSymbol from Table Frame</searchDescription>
+              <searchDescription>get all line symbols from Scale Line</searchDescription>
+              <searchDescription>get all point symbols from Point</searchDescription>
+              <searchDescription>get all polygon symbols from Table Frame</searchDescription>
+              <searchDescription>get all text symbols from Legend</searchDescription>
+              <searchDescription>get anti aliasing mode for Paragraph</searchDescription>
+              <searchDescription>get the text placement priority on Legend</searchDescription>
+              <searchDescription>get rotation for all frame elements</searchDescription>
+              <searchDescription>get rotation for all *frame elements</searchDescription>
+              <searchDescription>get visibility for all scale elements</searchDescription>
+              <searchDescription>get visibility for all *scale* elements</searchDescription>
+              <searchDescription>what is the hyphenation setting on the paragraph element</searchDescription>
+
+              <!-- Position / Extent -->
+              <searchDescription>where is the element positioned</searchDescription>
+              <searchDescription>what is the position of the element</searchDescription>
+              <searchDescription>get the extent coordinates of an element</searchDescription>
+              <searchDescription>how wide is the legend title north arrow element</searchDescription>
+              <searchDescription>how tall is the map frame element</searchDescription>
+              <searchDescription>what are the dimensions width height of the element</searchDescription>
+              <searchDescription>what are the extents of all text elements map frames legends</searchDescription>
+              <searchDescription>what are the extents of all map frames</searchDescription>
+
+              <!-- Text content -->
+              <searchDescription>what does the text element title say</searchDescription>
+              <searchDescription>what is the text content of the title label paragraph</searchDescription>
+              <searchDescription>get the text content of the text element</searchDescription>
+              <searchDescription>read the text from the title heading label element</searchDescription>
+
+              <!-- Font — must beat VisualizationExtension and no-function routing -->
+              <searchDescription>what font typeface is the text element using</searchDescription>
+              <searchDescription>what is the font family of the title label paragraph element</searchDescription>
+              <searchDescription>what is the font size of the title heading text element</searchDescription>
+              <searchDescription>is the title bold italic what style is the layout text element</searchDescription>
+              <searchDescription>what style is the font of the layout text element bold italic</searchDescription>
+              <searchDescription>what fonts are all the text elements using</searchDescription>
+
+              <!-- Fill / Outline / Color — must beat IdentifyVisualizationExtension -->
+              <searchDescription>what is the fill color of the element polygon rectangle</searchDescription>
+              <searchDescription>what color is the element polygon shape</searchDescription>
+              <searchDescription>what is the fill color of the polygon element</searchDescription>
+
+              <!-- Frame / Border / Background — must beat LayoutAssistantExtension -->
+              <searchDescription>what is the border color of the legend element</searchDescription>
+              <searchDescription>what is the background color of the map frame element</searchDescription>
+              <searchDescription>does the legend have a background color border</searchDescription>
+
+              <!-- Visibility / Rotation / MapFrameName -->
+              <searchDescription>is the north arrow legend element visible</searchDescription>
+              <searchDescription>what is the rotation of the north arrow element</searchDescription>
+              <searchDescription>which map frame does the legend scale bar belong to</searchDescription>
+
+              <!-- Advanced -->
+              <searchDescription>how many columns does the legend have</searchDescription>
+              <searchDescription>what fitting strategy does the legend use</searchDescription>
+              <searchDescription>does the map frame have a graticule</searchDescription>
+              <searchDescription>describe the legend scale bar map frame properties</searchDescription>
+
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+
+          <!-- ============================================================
+               element_set_property
+               Modifies element properties: font, color, border, size,
+               position, visibility, text content, and advanced options.
+               Must beat no-function routing for bold+color combinations
+               and type-selector font operations.
+          ============================================================ -->
+          <aiAssistantFunction name="element_set_property">
+            <searchDescriptions>
+
+              <!-- Font style + color combinations — must beat no-function routing -->
+              <searchDescription>make the Title bold and red</searchDescription>
+              <searchDescription>make an element bold and red</searchDescription>
+              <searchDescription>make an element bold italic and a color</searchDescription>
+              <searchDescription>change font style and color of a layout text element</searchDescription>
+              <searchDescription>set font bold and fill color red on title element</searchDescription>
+              <searchDescription>apply bold style and red color to element</searchDescription>
+
+              <!-- Type-selector font size — must beat no-function routing -->
+              <searchDescription>set all paragraph elements to 14pt</searchDescription>
+              <searchDescription>set all paragraph elements to 14 point</searchDescription>
+              <searchDescription>set all paragraph elements to 12pt 14pt 18pt font size</searchDescription>
+              <searchDescription>set all text elements to Arial 12 point</searchDescription>
+              <searchDescription>set all paragraph elements to a point size</searchDescription>
+              <searchDescription>change font size of all paragraph elements</searchDescription>
+              <searchDescription>change font size of all text elements</searchDescription>
+              <searchDescription>set font size on all elements of a type</searchDescription>
+              <searchDescription>apply font size to all paragraph text elements</searchDescription>
+              <searchDescription>set all body text paragraph elements to a font size</searchDescription>
+
+              <!-- Exact phrases from test suite -->
+              <searchDescription>center the Title on the page</searchDescription>
+              <searchDescription>center Map Frame horizontally on the page and make it 80 percent page width</searchDescription>
+              <searchDescription>add a 10 degree graticule to Map Frame</searchDescription>
+              <searchDescription>add a graticule to the map frame</searchDescription>
+              <searchDescription>set the border of Legend 1 to 1pt black</searchDescription>
+              <searchDescription>hide all elements</searchDescription>
+              <searchDescription>make the title bold and red</searchDescription>
+              <searchDescription>make Title and Subtitle bold</searchDescription>
+              <searchDescription>align title to top margin</searchDescription>
+              <searchDescription>set legend title symbol color and size</searchDescription>
+              <searchDescription>set legend label symbol size to 10</searchDescription>
+              <searchDescription>move legend to absolute position</searchDescription>
+
+              <!-- Position -->
+              <searchDescription>move reposition the title legend element</searchDescription>
+              <searchDescription>move the title to the upper right of the page</searchDescription>
+              <searchDescription>move legend to the lower left of the layout</searchDescription>
+              <searchDescription>center the title on the page horizontally vertically</searchDescription>
+              <searchDescription>center an element on the page</searchDescription>
+              <searchDescription>center map frame horizontally on the page</searchDescription>
+
+              <!-- Size -->
+              <searchDescription>resize an element to inches</searchDescription>
+              <searchDescription>resize map frame to specific dimensions in inches</searchDescription>
+              <searchDescription>set map frame to 6 by 8 inches</searchDescription>
+              <searchDescription>make map frame 80 percent of page width</searchDescription>
+              <searchDescription>make scale bar half the width of map frame</searchDescription>
+              <searchDescription>make scale bar same width as map frame</searchDescription>
+              <searchDescription>set element size relative to another element</searchDescription>
+
+              <!-- Visibility -->
+              <searchDescription>show the north arrow element make it visible</searchDescription>
+              <searchDescription>hide the north arrow element make it invisible</searchDescription>
+              <searchDescription>show hide make visible invisible an element</searchDescription>
+              <searchDescription>hide all elements make invisible</searchDescription>
+              <searchDescription>make all elements visible</searchDescription>
+
+              <!-- Font / Symbol -->
+              <searchDescription>change font to Arial Times New Roman on element</searchDescription>
+              <searchDescription>set font size to 24 18 14 12 points on element</searchDescription>
+              <searchDescription>set text alignment left center right on element</searchDescription>
+              <searchDescription>change text color to red blue green on element</searchDescription>
+              <searchDescription>set title to Arial 14pt bold centered</searchDescription>
+              <searchDescription>change font of all paragraph elements</searchDescription>
+
+              <!-- Frame -->
+              <searchDescription>add a white background to the legend element</searchDescription>
+              <searchDescription>add a 1 point black border to the legend paragraph element</searchDescription>
+              <searchDescription>make legend background transparent</searchDescription>
+
+              <!-- Text content -->
+              <searchDescription>set the title text to population map</searchDescription>
+              <searchDescription>change the title text content</searchDescription>
+
+              <!-- Advanced -->
+              <searchDescription>add a graticule with 10 degree intervals to map frame</searchDescription>
+              <searchDescription>add a grid to the map frame</searchDescription>
+              <searchDescription>change scale bar units to kilometers</searchDescription>
+              <searchDescription>set legend to 2 columns</searchDescription>
+
+              <!-- Advanced set/edit asks from real layout workflows -->
+              <searchDescription>unlock all scale elements</searchDescription>
+              <searchDescription>unlock all scale bar elements</searchDescription>
+              <searchDescription>lock all text elements</searchDescription>
+              <searchDescription>lock aspect ratio on all frame elements</searchDescription>
+              <searchDescription>show all frame elements</searchDescription>
+              <searchDescription>set visibility of all frame elements to true</searchDescription>
+              <searchDescription>show all *Frame elements</searchDescription>
+              <searchDescription>center all scale bar elements horizontally on the page</searchDescription>
+              <searchDescription>center all frame elements horizontally within margins</searchDescription>
+              <searchDescription>set text visibility to false</searchDescription>
+              <searchDescription>hide text and rotate it to 15 degrees</searchDescription>
+              <searchDescription>set Text and Paragraph anchor to center</searchDescription>
+              <searchDescription>set text color on Text to red</searchDescription>
+              <searchDescription>set paragraph subject to a summary</searchDescription>
+              <searchDescription>set Text subject to a descriptive caption about glacier retreat</searchDescription>
+              <searchDescription>set Text subject to the exact text a descriptive caption about glacier retreat</searchDescription>
+              <searchDescription>set Paragraph subject to the exact text a summary of the 2024 drought report</searchDescription>
+              <searchDescription>set paragraph text symbol centered horizontally and top vertically</searchDescription>
+              <searchDescription>set text anti aliasing to best on paragraph</searchDescription>
+              <searchDescription>set hyphenation to true on paragraph</searchDescription>
+              <searchDescription>set Paragraph to cloud shape</searchDescription>
+              <searchDescription>set heading background symbol on table frame</searchDescription>
+              <searchDescription>set HeadingBackgroundSymbol on Table Frame to light gray</searchDescription>
+              <searchDescription>set table row limit and headings behavior</searchDescription>
+              <searchDescription>add a legend item to Legend</searchDescription>
+              <searchDescription>set TitleSymbol on Legend to bold white size 18</searchDescription>
+              <searchDescription>set LabelSymbol on all scale elements to Arial 9</searchDescription>
+              <searchDescription>set LabelSymbol on Scale Line to Arial 9 black</searchDescription>
+              <searchDescription>remove a legend item from Legend</searchDescription>
+              <searchDescription>clear legend items from Legend</searchDescription>
+              <searchDescription>add table field to Table Frame</searchDescription>
+              <searchDescription>add a field to the table named frame</searchDescription>
+              <searchDescription>remove table field from Table Frame</searchDescription>
+              <searchDescription>clear table fields from Table Frame</searchDescription>
+              <searchDescription>add map frame grid or mgrs grid to Map Frame</searchDescription>
+              <searchDescription>remove map frame grid or mgrs grid from Map Frame</searchDescription>
+              <searchDescription>clear map frame grids or mgrs grids from Map Frame</searchDescription>
+              <searchDescription>add extent indicator to Map Frame</searchDescription>
+              <searchDescription>remove extent indicator from Map Frame</searchDescription>
+              <searchDescription>clear extent indicators from Map Frame</searchDescription>
+              <searchDescription>set all line symbols on scale line to black width 1</searchDescription>
+              <searchDescription>set all point symbols on point to blue size 10</searchDescription>
+              <searchDescription>set polygon symbol to red fill with black outline</searchDescription>
+              <searchDescription>set point symbol to red circle size 12 at 45 degrees</searchDescription>
+              <searchDescription>set line geometry on line from 1 1 to 5 5</searchDescription>
+              <searchDescription>set polygon geometry on polygon from 1 1 to 4 4</searchDescription>
+              <searchDescription>set line geometry on line to a diagonal from 1 1 to 5 5</searchDescription>
+              <searchDescription>set polygon geometry on polygon to a square from 1 1 to 4 4</searchDescription>
+              <searchDescription>align legend left edge to map frame left edge</searchDescription>
+              <searchDescription>align legend right edge to map frame right edge</searchDescription>
+              <searchDescription>align legend top edge to map frame top edge</searchDescription>
+              <searchDescription>align legend bottom edge to map frame bottom edge</searchDescription>
+              <searchDescription>align legend edge to page edge with gap</searchDescription>
+              <searchDescription>center legend horizontally within margins</searchDescription>
+              <searchDescription>center legend vertically within margins</searchDescription>
+              <searchDescription>pin legend to top right corner of margins</searchDescription>
+              <searchDescription>place legend above map frame centered horizontally with gap</searchDescription>
+              <searchDescription>position table frame below map frame flush left</searchDescription>
+              <searchDescription>pull legend right edge inside margin right</searchDescription>
+              <searchDescription>add an extent indicator to the map frame</searchDescription>
+              <searchDescription>add a graticule grid named graticule to the map frame</searchDescription>
+              <searchDescription>add leader to text</searchDescription>
+              <searchDescription>remove leader from text</searchDescription>
+              <searchDescription>clear leaders from text</searchDescription>
+              <searchDescription>add a legend item to the legend</searchDescription>
+              <searchDescription>add a legend item named mylayer to the legend</searchDescription>
+              <searchDescription>add a grid to the map frame</searchDescription>
+              <searchDescription>remove a grid from the map frame</searchDescription>
+              <searchDescription>add a field to the table frame</searchDescription>
+              <searchDescription>remove a field from the table frame</searchDescription>
+              <searchDescription>clear all fields from the table frame</searchDescription>
+              <searchDescription>add the population field to the table frame</searchDescription>
+              <searchDescription>change polygon to use circle predefined shape</searchDescription>
+              <searchDescription>set picture to use roundedrectangle predefined shape</searchDescription>
+              <searchDescription>set paragraph to cloud shape</searchDescription>
+              <searchDescription>move point to 3 3</searchDescription>
+              <searchDescription>set rotation center on text to 4 5</searchDescription>
+              <searchDescription>set picture frame background white border black offset 0.05</searchDescription>
+              <searchDescription>set picture frame to a rectangle 1 1 to 5 3</searchDescription>
+              <searchDescription>set shape on paragraph to a rectangle 2 2 to 6 4</searchDescription>
+              <searchDescription>set point symbol to red circle size 12 at 45 degrees</searchDescription>
+              <searchDescription>set line symbol to blue width 2</searchDescription>
+              <searchDescription>set polygon symbol to red fill with black outline</searchDescription>
+              <searchDescription>set text symbol font Arial bold size 14 color black</searchDescription>
+              <searchDescription>align all text elements left edge to page left</searchDescription>
+              <searchDescription>align legend and table frame right edge to map frame right</searchDescription>
+              <searchDescription>align legend bottom edge flush to margin top</searchDescription>
+              <searchDescription>align legend bottom edge to map frame center</searchDescription>
+              <searchDescription>align legend bottom edge to margin bottom</searchDescription>
+              <searchDescription>align legend bottom edge to margin center</searchDescription>
+              <searchDescription>align legend bottom edge to the vertical center of the margin</searchDescription>
+              <searchDescription>align legend bottom edge to page bottom with 0.25 gap</searchDescription>
+              <searchDescription>align legend center x to margin left</searchDescription>
+              <searchDescription>align legend center x to page right</searchDescription>
+              <searchDescription>align legend left edge flush to margin right</searchDescription>
+              <searchDescription>align legend left edge to map frame right</searchDescription>
+              <searchDescription>align legend left edge to margin left</searchDescription>
+              <searchDescription>align legend right edge to map frame left</searchDescription>
+              <searchDescription>align legend top edge to map frame bottom</searchDescription>
+              <searchDescription>align legend top edge to map frame center</searchDescription>
+              <searchDescription>align legend top edge to map frame top</searchDescription>
+              <searchDescription>align legend top edge to margin bottom</searchDescription>
+              <searchDescription>align legend top edge to margin center</searchDescription>
+              <searchDescription>align legend top edge to margin top</searchDescription>
+              <searchDescription>align legend top edge to page top with 0.25 gap</searchDescription>
+              <searchDescription>align legend top right corner to map frame top right</searchDescription>
+              <searchDescription>align text and paragraph left edge to margin left</searchDescription>
+              <searchDescription>align all text elements so their top edge matches the top margin</searchDescription>
+              <searchDescription>align all text elements top edge to margin top</searchDescription>
+              <searchDescription>set all line symbols on the scale line to width 1</searchDescription>
+              <searchDescription>set all line symbols on the scale line to black width 1</searchDescription>
+              <searchDescription>set Line symbol to blue width 2</searchDescription>
+              <searchDescription>set all polygon symbols on the table frame to white</searchDescription>
+              <searchDescription>set all polygon symbols on the table frame to white with a gray outline</searchDescription>
+              <searchDescription>set all text symbols on the legend to Arial 10</searchDescription>
+              <searchDescription>set the table frame heading background symbol to light gray</searchDescription>
+              <searchDescription>set the table frame heading background symbol to RGB 220 220 220</searchDescription>
+              <searchDescription>set HeadingBackgroundSymbol on Table Frame to RGB 211 211 211</searchDescription>
+              <searchDescription>set the legend title symbol to 14 point white</searchDescription>
+              <searchDescription>set LabelSymbol on all scale elements to Arial 9</searchDescription>
+              <searchDescription>center legend horizontally on page</searchDescription>
+              <searchDescription>center legend vertically on page</searchDescription>
+              <searchDescription>center legend on page both horizontally and vertically</searchDescription>
+              <searchDescription>align legend left edge to page left</searchDescription>
+              <searchDescription>align legend right edge to page right</searchDescription>
+              <searchDescription>align legend top edge to page top</searchDescription>
+              <searchDescription>align legend bottom edge to page bottom</searchDescription>
+              <searchDescription>align legend center x to map frame center</searchDescription>
+              <searchDescription>align legend center y to map frame center</searchDescription>
+              <searchDescription>dock legend to right of map frame aligned to map frame top</searchDescription>
+              <searchDescription>place legend bottom edge above map frame top edge</searchDescription>
+              <searchDescription>center all frame elements horizontally within margins</searchDescription>
+              <searchDescription>Center all frame elements horizontally within margins</searchDescription>
+              <searchDescription>clear all fields from the table frame</searchDescription>
+              <searchDescription>set line geometry on line to a diagonal from 1,1 to 5,5</searchDescription>
+              <searchDescription>Set line geometry on Line to a diagonal from 1,1 to 5,5</searchDescription>
+              <searchDescription>set polygon geometry on polygon to a square from 1,1 to 4,4</searchDescription>
+              <searchDescription>set paragraph subject to a summary of the 2024 drought report</searchDescription>
+              <searchDescription>Set Paragraph subject to a summary of the 2024 drought report</searchDescription>
+              <searchDescription>position table frame below map frame flush left</searchDescription>
+
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+
+          <!-- ============================================================
+               element_run_command
+               Alignment, distribution, make-same, fit-to-margins, nudge,
+               draw order, group/ungroup, delete, list, get type, and
+               find-by-type commands. Must beat LayoutAssistantExtension
+               for margin-based alignment and fit-to-margins, and beat
+               GP tools for ungroup.
+          ============================================================ -->
+          <aiAssistantFunction name="element_run_command">
+            <searchDescriptions>
+
+              <!-- Exact phrases from test suite -->
+              <searchDescription>what elements are present list elements</searchDescription>
+              <searchDescription>align all elements to the page center horizontally</searchDescription>
+              <searchDescription>vertically center Legend 1 and Scale Bar 1</searchDescription>
+              <searchDescription>make Legend 1 and Scale Bar 1 the same size</searchDescription>
+              <searchDescription>make the Title the same width as the Map Frame</searchDescription>
+              <searchDescription>delete all text elements</searchDescription>
+              <searchDescription>delete all elements of a type</searchDescription>
+              <searchDescription>fit Map Frame to the margins</searchDescription>
+              <searchDescription>fit Map Frame and Legend to margin width</searchDescription>
+              <searchDescription>fit map frame to both margins</searchDescription>
+              <searchDescription>fit map frame to margin width</searchDescription>
+              <searchDescription>fit map frame to margin height</searchDescription>
+
+              <!-- GetType — must beat element_get_property -->
+              <searchDescription>what type is MyText element</searchDescription>
+              <searchDescription>what type kind is this element</searchDescription>
+              <searchDescription>get the element type of a named element</searchDescription>
+
+              <!-- List / Enumerate -->
+              <searchDescription>list show display what elements are present</searchDescription>
+              <searchDescription>what elements are on the layout</searchDescription>
+              <searchDescription>show me all elements</searchDescription>
+              <searchDescription>list supported predefined shapes</searchDescription>
+              <searchDescription>display all elements on the page</searchDescription>
+              <searchDescription>find all legends</searchDescription>
+              <searchDescription>find all line elements</searchDescription>
+              <searchDescription>find all elements of a specific type</searchDescription>
+              <searchDescription>list all north arrows scale bars map frames</searchDescription>
+
+              <!-- Delete — one step with type selector -->
+              <searchDescription>delete remove get rid of an element</searchDescription>
+              <searchDescription>delete all point elements</searchDescription>
+              <searchDescription>delete all frame elements</searchDescription>
+              <searchDescription>delete all scale elements</searchDescription>
+              <searchDescription>delete frame elements</searchDescription>
+              <searchDescription>delete text</searchDescription>
+              <searchDescription>Delete Text</searchDescription>
+              <searchDescription>Delete Text and Paragraph</searchDescription>
+              <searchDescription>Delete *Frame elements</searchDescription>
+              <searchDescription>Delete all *Scale* elements</searchDescription>
+              <searchDescription>delete all text elements in one step</searchDescription>
+              <searchDescription>delete remove the north arrow legend scale bar title</searchDescription>
+              <searchDescription>remove all legends from the layout</searchDescription>
+
+              <!-- Group / Ungroup — must beat GP_DeleteFieldGroup and GetAllLayers -->
+              <searchDescription>ungroup element group</searchDescription>
+              <searchDescription>ungroup an element group break apart</searchDescription>
+              <searchDescription>group selected elements together</searchDescription>
+              <searchDescription>group existing selected elements together</searchDescription>
+              <searchDescription>group the title and subtitle</searchDescription>
+              <searchDescription>group the named existing elements together</searchDescription>
+              <searchDescription>Group Text and Paragraph</searchDescription>
+
+              <!-- Draw Order -->
+              <searchDescription>bring to front send to back draw order element</searchDescription>
+              <searchDescription>bring element forward one level</searchDescription>
+              <searchDescription>send element backward one level</searchDescription>
+              <searchDescription>Send Text backward</searchDescription>
+              <searchDescription>bring logo forward one step draw order</searchDescription>
+
+              <!-- Align — selection-style commands only; page/margin/map-frame positioning belongs to element_set_property -->
+              <searchDescription>align selected elements to the left right top bottom</searchDescription>
+              <searchDescription>align all selected frame elements bottom</searchDescription>
+              <searchDescription>align all selected frame elements right</searchDescription>
+              <searchDescription>align selected text elements center horizontally</searchDescription>
+              <searchDescription>align selected text elements center vertically</searchDescription>
+              <searchDescription>align selected text elements top</searchDescription>
+              <searchDescription>align selected text and paragraph center vertically</searchDescription>
+              <searchDescription>align Text Paragraph and Picture center horizontally</searchDescription>
+              <searchDescription>align selected text and paragraph left</searchDescription>
+              <searchDescription>align selected text and paragraph right</searchDescription>
+              <searchDescription>align selected text and paragraph top</searchDescription>
+              <searchDescription>Align Text and Paragraph left</searchDescription>
+              <searchDescription>Align Text and Paragraph top</searchDescription>
+              <searchDescription>Align *Frame elements center horizontally</searchDescription>
+              <searchDescription>Align *Frame elements top</searchDescription>
+              <searchDescription>align elements to the page margins selection</searchDescription>
+              <searchDescription>align all elements to the page center</searchDescription>
+              <searchDescription>align title and legend 1 to the right selection</searchDescription>
+              <searchDescription>vertically center legend 1 and scale bar 1</searchDescription>
+
+              <!-- Align to margin — must beat LayoutAssistantExtension -->
+              <!-- Distribute -->
+              <searchDescription>distribute elements evenly horizontally vertically</searchDescription>
+              <searchDescription>distribute title legend scale bar horizontally by edges</searchDescription>
+              <searchDescription>Distribute *Frame elements horizontally by centers</searchDescription>
+              <searchDescription>Distribute *Scale* elements vertically by edges</searchDescription>
+              <searchDescription>Distribute Legend Table Frame and Chart Frame vertically by centers</searchDescription>
+              <searchDescription>Distribute Text Paragraph and Picture horizontally by edges</searchDescription>
+              <searchDescription>Distribute Text Paragraph and Picture vertically by edges</searchDescription>
+
+              <!-- MakeSame — must beat element_get_property -->
+              <searchDescription>make legend and scale bar the same size width height</searchDescription>
+              <searchDescription>make title the same width as map frame</searchDescription>
+              <searchDescription>make all scale bars the same width height</searchDescription>
+              <searchDescription>make elements the same size</searchDescription>
+              <searchDescription>Make all *Frame the same width as Map Frame</searchDescription>
+              <searchDescription>Make *Scale* elements the same height as Scale Line</searchDescription>
+              <searchDescription>Make all text elements the same width as Text</searchDescription>
+              <searchDescription>Make Legend and Table Frame same height as Map Frame</searchDescription>
+              <searchDescription>Make Legend and Table Frame same width as Map Frame</searchDescription>
+              <searchDescription>Make Legend the same size as Map Frame</searchDescription>
+              <searchDescription>Make Text and Paragraph the same size as Text</searchDescription>
+
+              <!-- Nudge -->
+              <searchDescription>Nudge Text up by 0.1</searchDescription>
+              <searchDescription>Nudge Text right by 0.25</searchDescription>
+              <searchDescription>Nudge Text down by 1.0</searchDescription>
+              <searchDescription>Nudge Text left by 0.05</searchDescription>
+              <searchDescription>Nudge Text and Paragraph up by 0.5</searchDescription>
+              <searchDescription>Nudge all frame elements right by 0.1</searchDescription>
+
+              <!-- FitToMargins — must beat layout_run_command and LayoutAssistantExtension.
+                   Key distinction: targets a NAMED ELEMENT, not the page itself. -->
+              <searchDescription>fit map frame to the page margins both width height</searchDescription>
+              <searchDescription>fit title width to the page margins</searchDescription>
+              <searchDescription>fit an element to the page margins</searchDescription>
+              <searchDescription>fit element width height to page margins</searchDescription>
+              <searchDescription>resize named element to fit within the page margins</searchDescription>
+
+              <!-- Shape commands operate on layout graphic elements, never GP features. -->
+              <searchDescription>reshape Polygon to rounded rectangle</searchDescription>
+              <searchDescription>intersect selected polygon shapes</searchDescription>
+              <searchDescription>union selected polygon shapes</searchDescription>
+              <searchDescription>subtract selected polygon shapes</searchDescription>
+              <searchDescription>rotate Polygon left</searchDescription>
+
+              <!-- Nudge -->
+              <searchDescription>nudge move an element up down left right</searchDescription>
+              <searchDescription>nudge the title legend scale bar up down</searchDescription>
+              <searchDescription>nudge legend down a little slightly</searchDescription>
+
+            </searchDescriptions>
+          </aiAssistantFunction>
+
+        </content>
+      </insertComponent>
     </updateCategory>
   </categories>
 
@@ -718,7 +1829,9 @@
           <group refID="esri_layouts_selectionGroup"/>
           <group refID="esri_layouts_pageDesignGroup"/>
           <group refID="esri_layouts_pageShowGroup"/>
+          <group refID="esri_layouts_measureGroup"/>
           <group refID="esri_layouts_mapFrameGroup"/>
+          <group refID="esri_layouts_editGroup"/>
           <group refID="esri_layouts_reviewGroup"/>
         </tab>
 
@@ -838,6 +1951,11 @@
               defaultTab="esri_core_insertTab"
               defaultTool="esri_layouts_selectByRectangleTool">
           <content className="LayoutPaneView"/>
+
+          <toolbars>
+            <toolbar refID="esri_layouts_mapSeriesViewToolbar"/>
+            <toolbar refID="esri_layouts_viewToolbar"/>
+          </toolbars>
         </pane>
       </panes>
 
@@ -957,6 +2075,12 @@
           <checkBox refID="esri_reports_showHideGuidesCheck"
                     size="small"/>
         </group>
+        <group id="esri_layouts_measureGroup"
+               caption="Measure"
+               hidden="true"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Measure16.png">
+          <splitButton refID="esri_layout_measureSplitButton" />
+        </group>
         <group id="esri_layouts_pageNavigateGroup"
                caption="Navigate"
                hidden="true"
@@ -1020,7 +2144,7 @@
                   size="middle"/>
           <button refID="esri_layouts_clearSelectionButton"
                   size="middle"/>
-          <button refID="esri_core_editDeleteButton"
+          <button refID="esri_layouts_deleteSelectionButton"
                   size="middle"/>
         </group>
 
@@ -1032,6 +2156,10 @@
                launcherKeytip="PO">
           <button refID="esri_layouts_showSpellCheckPane"
                   size="large"/>
+        </group>
+
+        <group id="esri_layouts_editGroup" hidden="true" caption="Edit" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditMetadata32.png">
+          <button refID="esri_layouts_findReplaceButton" size="large"/>
         </group>
 
         <group id="esri_layouts_insertMapFrameGroup"
@@ -1679,7 +2807,7 @@
                hidden="true"
                caption="Arrange"
                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/ElementAlign32.png"
-               condition="esri_layouts_layoutPane">
+               condition="esri_layouts_layoutOrPresentationPane">
           <menu refID="esri_layouts_alignMenu"/>
           <menu refID="esri_layouts_distributeMenu"
                 size="middle"/>
@@ -3039,7 +4167,7 @@
             <customControl refID="esri_layouts_textSymbolHorizontalAlignmentControl"
                            size="small"/>
           </group>
-        </toolbar>
+        </toolbar>        
         <toolbar id="esri_layouts_navigationToolbar">
           <group>
             <button refID="esri_layouts_pageZoomFullButton"
@@ -3070,7 +4198,99 @@
         </toolbar>
       </toolbars>
 
+      <customToolbars>
+        <toolbar id="esri_layouts_viewToolbar" caption="Layout View Toolbar" isVisible="false">
+          <labelControl refID="esri_layouts_navigationLabel"
+                        size="middle"
+                        separator="true"/>
+          <tool refID="esri_layouts_pageNavigateTool"
+                size="small"/>
+          <toolPalette refID="esri_layouts_selectToolPalette"
+                       size="small"/>
+          <button refID="esri_layouts_pageZoomFullButton"
+                  size="small"/>
+          <button refID="esri_layouts_pageZoomPageWidthButton"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_pageZoomToSelected"
+                  isVisible="false"
+                  size="small"/>
+          <button insert="" refID="esri_layouts_pageZoom100PercentButton"
+                  size="small"/>
+
+          <labelControl refID="esri_layouts_mapFrameLabel"
+                        size="middle"
+                        separator="true"/>
+          <button refID="esri_layouts_activateMap"
+                  size="small"/>
+          <button refID="esri_layouts_deactivateMap"
+                  size="small"/>
+          <gallery refID="esri_mapping_bookmarksNavigateGallery"
+                   inline="false"
+                   size="small"/>
+
+          <labelControl refID="esri_layouts_alignmentLabel"
+                        isVisible="false"
+                        size="middle"
+                        separator="true"/>
+          <button refID="esri_layouts_alignLeft"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_alignCenter"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_alignRight"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_alignTop"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_alignMiddle"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_alignBottom"
+                  isVisible="false"
+                  size="small"/>
+          <button refID="esri_layouts_addGuides"
+                  isVisible="false"
+                  size="small"/>
+        </toolbar>
+        <toolbar id="esri_layouts_mapSeriesViewToolbar" caption="Map Series Toolbar" isVisible="false">
+          <labelControl refID="esri_layouts_mapSeriesLabel"
+                        size="middle"
+                        separator="true"/>
+          <button refID="esri_layouts_showFirstMapSeriesPageButton"
+                  size="small"/>
+          <button refID="esri_layouts_showPreviousMapSeriesPageButton"
+                  size="small"/>
+          <comboBox refID="esri_layouts_showMapSeriesPageComboBox"
+                    size="small"/>
+          <button refID="esri_layouts_showNextMapSeriesPageButton"
+                  size="small"/>
+          <button refID="esri_layouts_showLastMapSeriesPageButton"
+                  size="small"/>
+          <splitButton refID="esri_layouts_mapSeriesSplitButton"
+                       size="small"/>
+          <button refID="esri_layouts_mapSeriesRefreshButton"
+                  isVisible="false"
+                  size="small"/>
+         
+          <button refID="esri_mapping_showBookmarksWindow"
+                  isVisible="false"
+                  size="small"/>
+        </toolbar>
+      </customToolbars>
+
       <controls>
+        <labelControl id="esri_layouts_navigationLabel"
+                      caption="Navigation:"/>
+        <labelControl id="esri_layouts_mapFrameLabel"
+                      caption="Map Frame:"/>
+        <labelControl id="esri_layouts_alignmentLabel"
+                      caption="Alignment:"/>
+        <labelControl id="esri_layouts_mapSeriesLabel"
+                      caption="Map Series:"/>
+
         <button id="esri_layouts_dummyButton"
                 hidden="true"
                 className="esri_layouts:DummyButton"
@@ -3097,6 +4317,31 @@
           </tooltip>
         </button>
 
+        <!-- Measure Layouts-->
+        <button id="esri_layout_measureCurrentTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutMeasureRibbonCurrentTool"
+              condition="esri_layouts_layoutPaneCondition"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeasureDistance32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeasureDistance16.png"
+              caption="Measure" helpContextID=""
+              loadOnClick="false" />
+        <customControl id="esri_layout_measureToolsMenu"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutMeasureToolsViewModel"
+              condition="esri_layouts_layoutPaneCondition"
+              loadOnClick="false">
+          <content className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutMeasureToolsView" />
+        </customControl>
+        <tool id="esri_layout_measureDistanceTool"
+              className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutMeasureDistanceTool"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeasureDistance32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/MeasureDistance16.png"
+              caption="Measure Distance" condition="esri_layouts_layoutPaneCondition" keytip="MD"
+              categoryRefID="esri_layout_measureToolGroup">
+          <tooltip heading="Measure Distance">
+            Draw a line to measure the straight-line distance between two or more points on layout.<disabledText></disabledText>
+          </tooltip>
+        </tool>
+        
         <!--Home - Navigate-->
         <tool id="esri_layouts_pageNavigateTool"
               className="ArcGIS.Desktop.Internal.Layouts.Ribbon.LayoutNavigateTool"
@@ -3196,6 +4441,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_pageZoomPageWidthButton"
                 caption="Page Width"
+                extendedCaption="Layout"
                 keytip="PW"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomToPageWidth"
@@ -3207,8 +4453,8 @@ C = explore when using another tool
           </tooltip>
         </button>
         <button id="esri_layouts_pageZoom100PercentButton"
-                hidden="true"
-                caption="Zoom 100%"
+                caption="Zoom To 100%"
+                extendedCaption="Layout"
                 keytip="Z1"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomTo100Percent"
@@ -3234,7 +4480,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_pageZoomLeftButton"
                 caption="Page Left"
-                extendedCaption="Navigate Page"
+                extendedCaption="Layout"
                 keytip="ZL"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageLeft"
@@ -3247,7 +4493,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_pageZoomRightButton"
                 caption="Page Right"
-                extendedCaption="Navigate Page"
+                extendedCaption="Layout"
                 keytip="ZR"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageRight"
@@ -3260,7 +4506,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_pageZoomUpButton"
                 caption="Page Up"
-                extendedCaption="Navigate Page"
+                extendedCaption="Layout"
                 keytip="ZU"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageUp"
@@ -3273,7 +4519,7 @@ C = explore when using another tool
         </button>
         <button id="esri_layouts_pageZoomDownButton"
                 caption="Page Down"
-                extendedCaption="Navigate Page"
+                extendedCaption="Layout"
                 keytip="ZD"
                 flipImageRTL="false"
                 className="esri_layouts:ZoomPageDown"
@@ -3346,6 +4592,85 @@ C = explore when using another tool
             Print the selected Map Series.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <button id="esri_layouts_showFirstMapSeriesPageButton"
+                className="esri_layouts:ShowFirstMapSeriesPage"
+                caption="First Page"
+                extendedCaption="Map Series"
+                keytip="MF"
+                flipImageRTL="false"
+                condition="esri_layouts_condition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomPreviousExtent16.png"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="First Page">
+            Go to the first map series page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_showPreviousMapSeriesPageButton"
+                className="esri_layouts:ShowPreviousMapSeriesPage"
+                caption="Previous Page"
+                extendedCaption="Map Series"
+                keytip="MP"
+                flipImageRTL="false"
+                condition="esri_layouts_condition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowLeft16.png"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Previous Page">
+            Go to the previous map series page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <comboBox id="esri_layouts_showMapSeriesPageComboBox"
+                  className="ArcGIS.Desktop.Internal.Layouts.Ribbon.ShowMapSeriesPageComboBox"
+                  caption="Current Page"
+                  keytip="SP"
+                  extendedCaption="Map Series"
+                  itemWidth="75"
+                  rows="30"
+                  condition="esri_layouts_condition"
+                  loadOnClick="false"
+                  isTextSearchEnabled="true"
+                  isEditable="true"
+                  resizable="true"
+                  helpContextID="">
+          <tooltip heading="Show Map Series Page">
+            Show a map series page by page name.<disabledText></disabledText>
+          </tooltip>
+        </comboBox>
+
+        <button id="esri_layouts_showNextMapSeriesPageButton"
+                className="esri_layouts:ShowNextMapSeriesPage"
+                caption="Next Page"
+                extendedCaption="Map Series"
+                keytip="MN"
+                flipImageRTL="false"
+                condition="esri_layouts_condition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericBlackArrowRight16.png"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Next Page">
+            Go to the next map series page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_layouts_showLastMapSeriesPageButton"
+                className="esri_layouts:ShowLastMapSeriesPage"
+                caption="Last Page"
+                extendedCaption="Map Series"
+                keytip="ML"
+                flipImageRTL="false"
+                condition="esri_layouts_condition"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutZoomNextExtent16.png"
+                loadOnClick="false"
+                helpContextID="">
+          <tooltip heading="Last Page">
+            Go to the last map series page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <!--Home - Map Series-->
         <button id="esri_layouts_defineSeries"
                 className="esri_layouts:ShowSeriesProperties"
@@ -3740,7 +5065,7 @@ C = explore when using another tool
                 className="esri_layouts:DeleteElements"
                 caption="Delete"
                 extendedCaption="Layout selection"
-                keytip="D"
+                keytip="ED"
                 loadOnClick="false"
                 smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
                 largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png">
@@ -4007,6 +5332,20 @@ C = explore when using another tool
             Ungroup the selected elements.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_layouts_toggleLockSelectedElementsButton"
+                className="esri_layouts:ToggleLockSelectedElements"
+                caption="Lock/Unlock"
+                extendedCaption="Layout"
+                keytip="L"
+                menuKeytip="L"
+                loadOnClick="false"
+                smallImage="GenericLockYellow16"
+                largeImage="GenericLockYellow32"
+                helpContextID="">
+          <tooltip heading="">
+            Lock or unlock the selected elements.<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_layouts_ConvertToGraphicsButton"
                 className="esri_layouts:ConvertSelectedElementsToGraphicsAsync"
                 caption="Convert To Graphics"
@@ -4111,6 +5450,21 @@ C = explore when using another tool
                 helpContextID="">
           <tooltip heading="Spell Check">
             Spell check all the text elements on the layout.<disabledText>To enable Check Spelling click the Project tab and select Options. Select Proofing and check Enable spell checking.</disabledText>
+          </tooltip>
+        </button>
+
+        <!--Edit-->
+        <button id="esri_layouts_findReplaceButton"
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FindReplaceButton"
+                caption="Find and Replace"
+                extendedCaption="Find and Replace"
+                keytip="FR"
+                flipImageRTL="true"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText32.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Find and replace text on the layout view. Use search options such as Match Case or Match Whole Word.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -4301,19 +5655,29 @@ C = explore when using another tool
 
         <checkBox id="esri_layouts_autoTextTogglePosition"
                   hidden="true"
-                  caption="Use positioning from layer"
+                  caption="Use Positioning From Layer"
+                  extendedCaption="Switch between placing the text at the position clicked, or using the label properties that are set for the layer."
                   keytip="UP"
                   className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AutoTextToolUseLayerPositionCheckBox"
                   loadOnClick="false"
-                  helpContextID=""/>
+                  helpContextID="">
+          <tooltip heading="Use Positioning From Layer">
+            Switch between placing the text at the position clicked, or using the label properties that are set for the layer.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
 
         <checkBox id="esri_layouts_autoTextToggleSymbol"
                   hidden="true"
-                  caption="Use symbol from layer"
+                  caption="Use Symbol From Layer"
+                  extendedCaption="Switch between using the default text symbol for the project or the text symbol from the layer."
                   keytip="US"
                   className="ArcGIS.Desktop.Internal.Layouts.Ribbon.AutoTextToolUseLayerSymbolCheckBox"
                   loadOnClick="false"
-                  helpContextID=""/>
+                  helpContextID="">
+          <tooltip heading="Use Symbol From Layer">
+            Switch between using the default text symbol for the project or the text symbol from the layer.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
 
         <!--Elements-->
         <button id="esri_layouts_saveAsStyleButton"
@@ -4889,6 +6253,7 @@ C = explore when using another tool
           </tooltip>
         </customControl>
 
+        <!--Not currently supported
         <tool id="esri_layouts_cropPictureTool"
               className="ArcGIS.Desktop.Internal.Layouts.Ribbon.CropPictureTool"
               keytip="CP"
@@ -4901,7 +6266,7 @@ C = explore when using another tool
           <tooltip heading="Crop Picture">
             Interactively crop a picture.<disabledText></disabledText>
           </tooltip>
-        </tool>
+        </tool>-->
         
         <!--Insert Graphic-->
         <tool id="esri_layouts_newPointTool"
@@ -7674,6 +9039,8 @@ C = explore when using another tool
           <button refID="esri_layouts_selectAllButton"
                   separator="true"/>
           <button refID="esri_layouts_clearSelectionButton"/>
+          <button refID="esri_layouts_toggleLockSelectedElementsButton"
+                  separator="true"/>
           <button refID="esri_core_groupContext"
                   separator="true"/>
           <button refID="esri_core_ungroupContext"/>
@@ -7701,6 +9068,8 @@ C = explore when using another tool
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editPasteButton"/>
           <button refID="esri_core_editDeleteButton"/>
+          <button refID="esri_layouts_toggleLockSelectedElementsButton"
+                  separator="true"/>
           <button refID="esri_core_groupContext"
                   separator="true"/>
           <button refID="esri_core_ungroupContext"/>
@@ -8105,6 +9474,7 @@ C = explore when using another tool
           <group refID="esri_reports_pageDesignGroup"/>
           <group refID="esri_reports_pageShowGroup"/>
           <group refID="esri_reports_propertyGroup"/>
+          <group refID="esri_reports_editGroup"/>       
           <group refID="esri_reports_previewGroup"/>
         </tab>
 
@@ -8529,6 +9899,13 @@ C = explore when using another tool
           <button refID="esri_reports_editGroupingSortingButton"/>
         </group>
 
+        <group id="esri_reports_editGroup"
+               caption="Edit"
+               condition="esri_reports_reportPane"
+               smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText16.png">
+          <button refID="esri_reports_findReplaceButton" size="large"/>
+        </group>
+
         <group id="esri_reports_previewGroup"
                caption="Preview"
                condition="esri_reports_reportPane"
@@ -8632,7 +10009,7 @@ C = explore when using another tool
                  helpContextID="">
           <tooltip heading="New Chart Frame">
             Create a new chart frame on the report.
-            <disabledText>Activate a Report or Group Header or Footer subsection. The report data source must be a layer in a map or scene and contain a chart.</disabledText>
+            <disabledText>Activate a Report Header or Footer, Group Header or Footer, or Details subsection. The report data source must be a layer in a map or scene and contain a chart.</disabledText>
           </tooltip>
         </gallery>
 
@@ -9548,12 +10925,25 @@ C = explore when using another tool
         </button>
         <button id="esri_reports_editDeleteButton"
                 caption="Delete" extendedCaption="Delete selected report elements"
-                loadOnClick="false" keytip="D" menuKeytip="D"
+                loadOnClick="false" keytip="ED" menuKeytip="D"
                 className="ArcGIS.Desktop.Framework.DeleteCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="GenericDiscard16"
                 largeImage="GenericDiscard32">
           <tooltip heading="">
             Delete the selected items from the report.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_reports_findReplaceButton"
+                className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FindReplaceButton"
+                caption="Find and Replace"
+                extendedCaption="Find and Replace"
+                keytip="FR"
+                flipImageRTL="true"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText16.png"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText32.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Find and replace text on the report view. Use search options such as Match Case or Match Whole Word.<disabledText></disabledText>
           </tooltip>
         </button>
         <button id="esri_reports_previewButton"
@@ -10028,7 +11418,7 @@ C = explore when using another tool
               loadOnClick="false"
               helpContextID="">
           <tooltip heading="New Chart Frame">
-            Create new chart frame on the report.<disabledText></disabledText>
+            Create new chart frame on the report.<disabledText>Activate a Report Header or Footer, Group Header or Footer, or Details subsection.</disabledText>
           </tooltip>
         </tool>
 
@@ -10357,6 +11747,14 @@ C = explore when using another tool
       </controls>
 
       <splitButtons>
+        <splitButton id="esri_layout_measureSplitButton"
+                     condition="esri_layouts_layoutPaneCondition"
+                     extendedCaption="Expand menu of Measure Tools"
+                     loadOnClick="false" hideTooltip="true" keytip="ME">
+          <button refID="esri_layout_measureCurrentTool" />
+          <customControl refID="esri_layout_measureToolsMenu" />
+        </splitButton>
+        
         <splitButton id="esri_reports_newReportSplitButton"
                      keytip="NR"
                      extendedCaption="Create a new report."
@@ -10508,6 +11906,8 @@ C = explore when using another tool
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_reports_editDeleteButton"/>
           <button refID="esri_layouts_ConvertToGraphicsButton"
+                  separator="true"/>
+          <button refID="esri_layouts_toggleLockSelectedElementsButton"
                   separator="true"/>
           <button refID="esri_layouts_groupSelectedElementsButton"
                   separator="true"/>
@@ -10876,9 +12276,11 @@ C = explore when using another tool
           <group refID="esri_presentations_pageNavigationGroup"/>
           <group refID="esri_presentations_mapNavigationGroup"/>
           <group refID="esri_presentations_elementsGroup"/>
-          <group refID="esri_presentations_pageShowGroup"/>      
+          <group refID="esri_presentations_pageShowGroup"/>
+          <group refID="esri_presentations_notesGroup"/>
           <group refID="esri_presentations_pageSetupGroup"/>
-          <group refID="esri_presentations_playbackGroup"/>     
+          <group refID="esri_presentations_editGroup"/>
+          <group refID="esri_presentations_playbackGroup"/>
         </tab>
       </tabs>
 
@@ -10901,6 +12303,13 @@ C = explore when using another tool
           <gallery refID="esri_presentations_bookmarksNavigateGallery" inline="false" size="large" />
         </group>
 
+        <group id="esri_presentations_navigationOverlaysGroup" caption="Navigation" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/NavControl16.png" keytip="NO" condition="esri_presentations_isMapFrameActivatedCondition">
+          <button refID="esri_mapping_navigationControl" size="large"/>
+          <button refID="esri_mapping_cameraPropertiesControl" size="large"/>
+          <button refID="esri_mapping_gotoXYControl" size="large"/>
+          <button refID="esri_mapping_flyToControl" size="large"/>
+        </group>
+
         <group id="esri_presentations_pageNavigationGroup" caption="Navigate" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutNavigateTool16.png" keytip="PG">
           <button refID="esri_presentations_fullPageExtentButton" size="middle"/>
           <button refID="esri_presentations_prevPageExtentButton" size="middle"/>
@@ -10917,6 +12326,10 @@ C = explore when using another tool
           <customControl refID="esri_presentations_aspectRatioComboBox" size="large"/>
           <gallery refID="esri_presentations_pageSizeGallery" inline="false" size="middle"/>
           <gallery refID="esri_presentations_pageOrientationGallery" inline="false" size="middle"/>
+        </group>
+
+        <group id="esri_presentations_editGroup" hidden="true" caption="Edit" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditMetadata32.png">
+          <button refID="esri_presentations_findReplaceButton" size="large"/>
         </group>
 
         <group id="esri_presentations_elementsGroup" caption="Elements" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutSelectTool16.png" keytip="EL" condition="esri_layouts_canEditElementsCondition">
@@ -10960,11 +12373,16 @@ C = explore when using another tool
           <subgroup refID="esri_mapping_secondEffectsSubGroup"/>
         </group>
 
+        <group id="esri_presentations_notesGroup"
+          caption="Notes"
+          smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SpeakerNotes16.png">
+          <splitButton refID="esri_presentations_notesSplitButton" size="large"/>
+        </group>
+
         <group id="esri_presentations_pageShowGroup"
           hidden="true"
           caption="Show"
           smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/Rulers16.png">
-          <button refID="esri_presentations_showSpeakerNotes" size="large"/>
           <checkBox refID="esri_presentations_showHideRulersCheck"
                     size="small"/>
           <checkBox refID="esri_presentations_showHideGuidesCheck"
@@ -11060,6 +12478,14 @@ C = explore when using another tool
           </tooltip>
         </button>
 
+        <button id="esri_presentations_lockUnlockItemsButton" caption="Lock/Unlock" keytip="L"  menuKeytip="L" loadOnClick="false"
+            smallImage="GenericLockYellow16" largeImage="GenericLockYellow32"
+            className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCLockUnlockItemsButton">
+          <tooltip heading="">
+            Lock or unlock the selected items.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
         <button id="esri_presentations_hidePageItemsButton" caption="Hide" keytip="H"  menuKeytip="H" loadOnClick="false"
             className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCHideUnhidePageItemsButton">
           <tooltip heading="">
@@ -11143,6 +12569,12 @@ C = explore when using another tool
         <button id="esri_presentations_deactivateMapButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.DeactivateMapButton" caption="Close Activation" extendedCaption="Close the activated map" keytip="DAM" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LayoutUnfocusDataFrame32.png" loadOnClick="false">
           <tooltip heading="">
             Close activated map and return to the page.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_presentations_findReplaceButton" className="ArcGIS.Desktop.Internal.Layouts.Ribbon.FindReplaceButton" caption="Find and Replace" extendedCaption="Find and Replace" keytip="FR" flipImageRTL="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/EditingAnnoFindText32.png" loadOnClick="false">
+          <tooltip heading="">
+            Find and replace text on pages and in speaker notes. Use search options such as Match Case or Match Whole Word.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -11254,7 +12686,7 @@ C = explore when using another tool
 
         <button id="esri_presentations_editDeleteButton"
                 caption="Delete" extendedCaption="Delete the selection; on map editing context menu"
-                loadOnClick="false" keytip="D" menuKeytip="D"
+                loadOnClick="false" keytip="ED" menuKeytip="D"
                 className="ArcGIS.Desktop.Framework.DeleteCMD" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="GenericDiscard16"
                 largeImage="GenericDiscard32" condition="esri_layouts_canEditElementsCondition">
@@ -11268,7 +12700,29 @@ C = explore when using another tool
             Start presenting in full screen mode.<disabledText>Add at least one page to the presentation and ensure that the selected page is visible. Hidden pages cannot be displayed in full screen.</disabledText>
           </tooltip>
         </button>
-
+        
+        <!-- Command-only: real, searchable commands for page navigation that previously had no command ID. -->
+        <button id="esri_presentations_showNextPageButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ShowNextPageButton" caption="Show Next Page" extendedCaption="Presentation" keytip="SN" smallImage="MapSeriesNext24" largeImage="MapSeriesNext24" flipImageRTL="true" loadOnClick="false">
+          <tooltip heading="Show Next Page">
+            Display the next page in the presentation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_showPreviousPageButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ShowPreviousPageButton" caption="Show Previous Page" extendedCaption="Presentation" keytip="SP" smallImage="MapSeriesPrev24" largeImage="MapSeriesPrev24" flipImageRTL="true" loadOnClick="false">
+          <tooltip heading="Show Previous Page">
+            Display the previous page in the presentation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_ShowFirstPageButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ShowFirstPageButton" caption="Show First Page" extendedCaption="Presentation" keytip="SF" smallImage="MapSeriesFirst24" largeImage="MapSeriesFirst24" flipImageRTL="true" loadOnClick="false">
+          <tooltip heading="Show First Page">
+            Display the first page in the presentation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_presentations_ShowLastPageButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ShowLastPageButton" caption="Show Last Page" extendedCaption="Presentation" keytip="SL" smallImage="MapSeriesLast24" largeImage="MapSeriesLast24" flipImageRTL="true" loadOnClick="false">
+          <tooltip heading="Show Last Page">
+            Display the last page in the presentation.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <customControl id="esri_presentations_aspectRatioComboBox"
                        keytip="AR"
                        className="ArcGIS.Desktop.Internal.Presentations.Ribbon.AspectRatioDropdownViewModel"
@@ -11326,14 +12780,14 @@ C = explore when using another tool
         </button>
 
         <button id="esri_presentations_hopFlyTransitionButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCHopFlyTransitionButton" caption="Hop" loadOnClick="false"
-        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimHopTransition16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimHopTransition32.png">
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationHopTransition16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimHopTransition32.png">
           <tooltip heading="Fly Transition">
             Apply hop fly transition.<disabledText>The map page must have a preceding map page that contains the same map source. The page selection must not contain a non-map page.</disabledText>
           </tooltip>
         </button>
 
         <button id="esri_presentations_linearFlyTransitionButton" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.TOCLinearFlyTransitionButton" caption="Linear" loadOnClick="false"
-        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimLinearTransition16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimLinearTransition32.png">
+        smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/PresentationLinearTransition16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/AnimLinearTransition32.png">
           <tooltip heading="Fly Transition">
             Apply linear fly transition.<disabledText>The map page must have a preceding map page that contains the same map source. The page selection must not contain a non-map page.</disabledText>
           </tooltip>
@@ -11579,9 +13033,15 @@ C = explore when using another tool
           </tooltip>
         </button>
 
-        <button id="esri_presentations_SaveSpeakerNotes" caption="Save Speaker Notes" keytip="PF" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.SaveSpeakerNotesButton" smallImage="DownloadSpeakerNotes16" largeImage="DownloadSpeakerNotes32">
+        <button id="esri_presentations_SaveSpeakerNotes" caption="Save Speaker Notes" keytip="PF" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.SaveSpeakerNotesButton" condition="esri_presentations_hasSpeakerNotesCondition" smallImage="DownloadSpeakerNotes16" largeImage="DownloadSpeakerNotes32">
           <tooltip heading="Save Speaker Notes">
             Save the speaker notes of this presentation to a new text file.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_presentations_ImportSpeakerNotes" caption="Import Speaker Notes" keytip="IS" className="ArcGIS.Desktop.Internal.Presentations.Ribbon.ImportSpeakerNotesButton" condition="esri_presentations_hasPagesCondition" smallImage="ImportSpeakerNotes16" largeImage="ImportSpeakerNotes32">
+          <tooltip heading="Import Speaker Notes">
+            Import speaker notes from a text file (.txt, .json) into the active presentation.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -12219,7 +13679,6 @@ Ctrl+Alt+C = quick enable
           <!--<button refID="esri_core_editCopyButton"/>-->
           <button refID="esri_presentations_pasteItemsButton"/>
           <button refID="esri_sharing_SaveAsPresentationFile" separator="true"/>
-          <button refID="esri_presentations_SaveSpeakerNotes"/>      
           <button refID="esri_presentations_showHideRulers" separator="true"/>
           <button refID="esri_presentations_showHideGuides"/>
           <button refID="esri_presentations_showPresentationPropsButton" separator="true"/>
@@ -12278,6 +13737,10 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_fullMapExtentButton" separator="true"/>
           <button refID="esri_presentations_prevMapExtentButton"/>
           <button refID="esri_presentations_nextMapExtentButton"/>
+          <button refID="esri_mapping_navigationControl" separator="true"/>
+          <button refID="esri_mapping_cameraPropertiesControl"/>
+          <button refID="esri_mapping_gotoXYControl"/>
+          <button refID="esri_mapping_flyToControl"/>
         </menu>
 
         <menu id="esri_presentations_mapNavigaionFullScreenContextMenu" caption="Map Navigation" extendedCaption="Open Navigation context menu" contextMenu="true">
@@ -12297,9 +13760,9 @@ Ctrl+Alt+C = quick enable
           <button refID="esri_presentations_editCopyButton"/>
           <button refID="esri_presentations_editPasteButton"/>
           <button refID="esri_presentations_editDeleteButton"/>
-          <button refID="esri_layouts_groupSelectedElementsButton"
-                  separator="true"/>
-          <button refID="esri_layouts_ungroupSelectedElementsButton"/>
+          <button refID="esri_presentations_lockUnlockItemsButton" separator="true"/>
+          <button refID="esri_core_groupContext" separator="true"/>
+          <button refID="esri_core_ungroupContext"/>
           <submenu refID="esri_layouts_orderMenu"
                    separator="true"/>
           <submenu refID="esri_layouts_nudgeMenu"/>
@@ -12412,11 +13875,17 @@ Ctrl+Alt+C = quick enable
         </splitButton>
 
         <splitButton id="esri_presentations_exportPresentationSplitButton"
-             keytip="XP"
+             keytip="XP" autoDisablePopup="true"
              extendedCaption="Export Presentation">
           <!--<button refID="esri_mapping_exportMap"/>-->
           <button refID="esri_sharing_ExportPresentation"/>
           <gallery refID="esri_presentations_exportPresetsGallery"/>
+        </splitButton>
+
+        <splitButton id="esri_presentations_notesSplitButton" caption="Notes" keytip="N">
+          <button refID="esri_presentations_showSpeakerNotes"/>
+          <button refID="esri_presentations_SaveSpeakerNotes"/>
+          <button refID="esri_presentations_ImportSpeakerNotes"/>
         </splitButton>
       </splitButtons>
 
@@ -12908,6 +14377,13 @@ Ctrl+Alt+C = quick enable
         <state id="esri_layouts_layoutPane" />
         <state id="esri_reports_reportPane" />
         <state id="esri_reportTemplates_reportTemplatePane" />
+      </or>
+    </insertCondition>
+
+    <insertCondition id="esri_layouts_layoutOrPresentationPane">
+      <or>
+        <state id="esri_layouts_layoutPane"/>
+        <state id="esri_presentations_viewPane"/>
       </or>
     </insertCondition>
 
@@ -13790,10 +15266,7 @@ Ctrl+Alt+C = quick enable
       <and>
         <state id="esri_reports_reportPane"/>
         <or>
-          <state id="esri_report_reportHeaderActiveStateId"/>
-          <state id="esri_report_groupHeaderActiveStateId"/>
-          <state id="esri_report_groupFooterActiveStateId"/>
-          <state id="esri_report_reportFooterActiveStateId"/>
+          <state id="esri_report_chartFrameSupportedStateId"/>
         </or>
       </and>
     </insertCondition>
@@ -13804,10 +15277,7 @@ Ctrl+Alt+C = quick enable
           <state id="esri_reportTemplates_reportTemplatePane"/>
         </or>
         <or>
-          <state id="esri_report_reportHeaderActiveStateId"/>
-          <state id="esri_report_groupHeaderActiveStateId"/>
-          <state id="esri_report_groupFooterActiveStateId"/>
-          <state id="esri_report_reportFooterActiveStateId"/>
+          <state id="esri_report_chartFrameSupportedStateId"/>
         </or>
       </and>
     </insertCondition>
@@ -13928,6 +15398,20 @@ Ctrl+Alt+C = quick enable
         <not>
           <state id="esri_presentations_hasBrokenSources"/>
         </not>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_presentations_hasPagesCondition">
+      <and>
+        <state id="esri_presentations_viewPane"/>
+        <state id="esri_presentations_hasPages"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_presentations_hasSpeakerNotesCondition">
+      <and>
+        <state id="esri_presentations_viewPane"/>
+        <state id="esri_presentations_hasSpeakerNotes"/>
       </and>
     </insertCondition>
 

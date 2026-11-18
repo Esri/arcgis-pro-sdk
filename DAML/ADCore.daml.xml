@@ -188,28 +188,28 @@
       <component id="portalEnterprise">
         <content>
           <typeGroup displayName="Maps" type="maps">
-            <typeSubGroup displayName="Web Maps" type="webmaps"/>
-            <typeSubGroup displayName="Map Files" type="mapfiles"/>
+            <typeSubGroup displayName="Web maps" type="webmaps"/>
+            <typeSubGroup displayName="Map files" type="mapfiles"/>
           </typeGroup>
           <typeGroup displayName="Layers" type="layers">
-            <typeSubGroup displayName="Feature Layers" type="featurelayers"/>
-            <typeSubGroup displayName="Tile Layers" type="tilelayers"/>
-            <typeSubGroup displayName="Map Image Layers" type="mapimagelayers"/>
-            <typeSubGroup displayName="Imagery Layers" type="imagerylayers"/>
-            <typeSubGroup displayName="Tiled Imagery Layers" type="tiledimagerylayers"/>
-            <typeSubGroup displayName="Scene Layers" type="scenelayers"/>
-            <typeSubGroup displayName="Video Layers" type="videolayers"/>
-            <typeSubGroup displayName="Elevation Layers" type="elevationlayers"/>
-            <typeSubGroup displayName="Group Layers" type="grouplayers"/>
+            <typeSubGroup displayName="Feature layers" type="featurelayers"/>
+            <typeSubGroup displayName="Tile layers" type="tilelayers"/>
+            <typeSubGroup displayName="Map image layers" type="mapimagelayers"/>
+            <typeSubGroup displayName="Imagery layers" type="imagerylayers"/>
+            <typeSubGroup displayName="Tiled imagery layers" type="tiledimagerylayers"/>
+            <typeSubGroup displayName="Scene layers" type="scenelayers"/>
+            <typeSubGroup displayName="Video layers" type="videolayers"/>
+            <typeSubGroup displayName="Elevation layers" type="elevationlayers"/>
+            <typeSubGroup displayName="Group layers" type="grouplayers"/>
             <typeSubGroup displayName="Tables" type="tables"/>
-            <typeSubGroup displayName="Layer Files" type="layerfiles"/>
-            <typeSubGroup displayName="OGC Layers" type="ogclayers"/>
+            <typeSubGroup displayName="Layer files" type="layerfiles"/>
+            <typeSubGroup displayName="OGC layers" type="ogclayers"/>
           </typeGroup>
           <typeGroup displayName="Scenes" type="scenes"/>
           <typeGroup displayName="Tools" type="tools">
             <typeSubGroup displayName="Locators" type="locators"/>
-            <typeSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
-            <typeSubGroup displayName="Network Analysis" type="networkanalysis"/>
+            <typeSubGroup displayName="Geoprocessing tasks" type="geoprocessingtasks"/>
+            <!--<typeSubGroup displayName="Network analysis" type="networkanalysis"/>-->
           </typeGroup>
           <typeGroup displayName="Styles" type="styles">
             <typeSubGroup displayName="Web styles" type="webstyles"/>
@@ -221,41 +221,156 @@
       </component>
     </insertCategory>
 
-    <insertCategory id="portalTypesFilterAGOL">
-      <component id="portalAGOL">
+    <insertCategory id="portalTypesFilterEnterprise_2026_2">
+      <component id="portalEnterprise_2026_2">
         <content>
           <typeGroup displayName="Maps" type="maps">
-            <typeSubGroup displayName="Web Maps" type="webmaps"/>
-            <typeSubGroup displayName="Map Files" type="mapfiles"/>
+            <typeSubGroup displayName="Web maps" type="webmaps"/>
+            <typeSubGroup displayName="Map files" type="mapfiles"/>
           </typeGroup>
           <typeGroup displayName="Layers" type="layers">
-            <typeSubGroup displayName="Feature Layers" type="featurelayers"/>
-            <typeSubGroup displayName="Tile Layers" type="tilelayers"/>
-            <typeSubGroup displayName="Map Image Layers" type="mapimagelayers"/>
-            <typeSubGroup displayName="Imagery Layers" type="imagerylayers"/>
-            <typeSubGroup displayName="Tiled Imagery Layers" type="tiledimagerylayers"/>
+            <typeSubGroup displayName="Feature layers" type="featurelayers">
+              <typeSubGroup displayName="Catalog layers" type="cataloglayers"/>
+              <typeSubGroup displayName="Oriented imagery layers" type="orientedimagerylayers"/>
+              <typeSubGroup displayName="Parcel fabric layers" type="parcelfabriclayers"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Tile layers" type="tilelayers">
+              <typeSubGroup displayName="Raster" type="raster"/>
+              <typeSubGroup displayName="Vector" type="vector"/>
+              <typeSubGroup displayName="WMTS" type="wmts"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Map image layers" type="mapimagelayers"/>
+            <typeSubGroup displayName="Imagery layers" type="imagerylayers"/>
+            <typeSubGroup displayName="3D layers" type="3dlayers">
+              <typeSubGroup displayName="3D object layers" type="3dobjectlayers"/>
+              <typeSubGroup displayName="Building layers" type="buildinglayers"/>
+              <typeSubGroup displayName="Mesh layers" type="meshlayers"/>
+              <typeSubGroup displayName="Gaussian splat layers" type="gaussiansplatlayers"/>
+              <typeSubGroup displayName="Point cloud layers" type="pointcloudlayers"/>
+              <typeSubGroup displayName="3D point layers" type="3dpointlayers"/>
+              <typeSubGroup displayName="Voxel layers" type="voxellayers"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Video layers" type="videolayers"/>
+            <typeSubGroup displayName="Tiled imagery layers" type="tiledimagerylayers"/>            
+            <typeSubGroup displayName="Group layers" type="grouplayers"/>
+            <typeSubGroup displayName="Knowledge graph layers" type="knowledgegraphlayers"/>
             <typeSubGroup displayName="Elevation layers" type="elevationlayers"/>
-            <typeSubGroup displayName="Scene Layers" type="scenelayers"/>
-            <typeSubGroup displayName="Group Layers" type="grouplayers"/>
+            <typeSubGroup displayName="Stream layers" type="streamlayers">
+              <!--<typeSubGroup displayName="Feeds" type="feeds"/>-->
+            </typeSubGroup>
             <typeSubGroup displayName="Tables" type="tables"/>
-            <typeSubGroup displayName="Layer Files" type="layerfiles"/>
-            <typeSubGroup displayName="OGC Layers" type="ogclayers"/>
+            <typeSubGroup displayName="Layer files" type="layerfiles"/>
           </typeGroup>
           <typeGroup displayName="Scenes" type="scenes"/>
           <typeGroup displayName="Tools" type="tools">
             <typeSubGroup displayName="Locators" type="locators"/>
-            <typeSubGroup displayName="Geoprocessing Tasks" type="geoprocessingtasks"/>
-            <typeSubGroup displayName="Network Analysis" type="networkanalysis"/>
+            <!--<typeSubGroup displayName="Geodatabase access" type="geodatabaseaccess"/>-->
+            <!--<typeSubGroup displayName="Geometric operations" type="geometricoperations"/>-->
+            <typeSubGroup displayName="Geoprocessing tasks" type="geoprocessingtasks"/>
+            <!--<typeSubGroup displayName="Network analysis" type="networkanalysis"/>-->
+            <!--<typeSubGroup displayName="Analytics" type="analytics"/>-->
+            <!--<typeSubGroup displayName="Analysis models" type="analysismodels"/>-->
+            <typeSubGroup displayName="Deep learning packages" type="deeplearningpackages"/>
+          </typeGroup>
+          <typeGroup displayName="Files" type="files">
+            <typeSubGroup displayName="Documents" type="documents"/>
+            <!--<typeSubGroup displayName="Images" type="images"/>-->
+            <!--<typeSubGroup displayName="PDFs" type="pdfs"/>-->
+            <!--<typeSubGroup displayName="CSVs" type="csvs"/>-->
+            <!--<typeSubGroup displayName="Administrative reports" type="administrativereports"/>-->
+            <typeSubGroup displayName="Raster funtion templates" type="rasterfunctiontemplates"/>
           </typeGroup>
           <typeGroup displayName="Styles" type="styles">
-            <typeSubGroup displayName="Web styles" type="webstyles"/>
-            <typeSubGroup displayName="Desktop styles" type="desktopstyles"/>
+            <typeSubGroup displayName="Web styles" type="webstyles">
+              <typeSubGroup displayName="Dictionary styles" type="dictionarystyles"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Desktop styles" type="desktopstyles">
+              <typeSubGroup displayName="Desktop dictionary styles" type="desktopdictionarystyles"/>
+            </typeSubGroup>
           </typeGroup>
           <typeGroup displayName="Notebooks" type="notebooks"/>
+          <typeGroup displayName="Knowledge" type="knowledge">
+            <typeSubGroup displayName="Graphs" type="knowledgegraphs"/>
+            <typeSubGroup displayName="Graph layers" type="knowledgegraphlayers"/>
+            <typeSubGroup displayName="Link charts" type="knowledgelinkcharts"/>
+          </typeGroup>
         </content>
       </component>
     </insertCategory>
 
+    <insertCategory id="portalTypesFilterAGOL">
+      <component id="portalAGOL">
+        <content>
+          <typeGroup displayName="Maps" type="maps">
+            <typeSubGroup displayName="Web maps" type="webmaps"/>
+            <typeSubGroup displayName="Map files" type="mapfiles"/>
+          </typeGroup>
+          <typeGroup displayName="Layers" type="layers">
+            <typeSubGroup displayName="Feature layers" type="featurelayers">
+              <typeSubGroup displayName="Catalog layers" type="cataloglayers"/>
+              <typeSubGroup displayName="Oriented imagery layers" type="orientedimagerylayers"/>
+              <typeSubGroup displayName="Parcel fabric layers" type="parcelfabriclayers"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Tile layers" type="tilelayers">
+              <typeSubGroup displayName="Raster" type="raster"/>
+              <typeSubGroup displayName="Vector" type="vector"/>
+              <typeSubGroup displayName="WMTS" type="wmts"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Map image layers" type="mapimagelayers"/>
+            <typeSubGroup displayName="Imagery layers" type="imagerylayers"/>
+            <typeSubGroup displayName="3D layers" type="3dlayers">
+              <typeSubGroup displayName="3D object layers" type="3dobjectlayers"/>
+              <typeSubGroup displayName="Building layers" type="buildinglayers"/>
+              <typeSubGroup displayName="Mesh layers" type="meshlayers"/>
+              <typeSubGroup displayName="Gaussian splat layers" type="gaussiansplatlayers"/>
+              <typeSubGroup displayName="Point cloud layers" type="pointcloudlayers"/>
+              <typeSubGroup displayName="3D point layers" type="3dpointlayers"/>
+              <typeSubGroup displayName="Voxel layers" type="voxellayers"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Video layers" type="videolayers"/>
+            <typeSubGroup displayName="Tiled imagery layers" type="tiledimagerylayers"/>
+            <typeSubGroup displayName="Group layers" type="grouplayers"/>
+            <typeSubGroup displayName="Knowledge graph layers" type="knowledgegraphlayers"/>
+            <typeSubGroup displayName="Elevation layers" type="elevationlayers"/>
+            <typeSubGroup displayName="Stream layers" type="streamlayers">
+              <!--<typeSubGroup displayName="Feeds" type="feeds"/>-->
+            </typeSubGroup>
+            <typeSubGroup displayName="Tables" type="tables"/>
+            <typeSubGroup displayName="Layer files" type="layerfiles"/>
+          </typeGroup>
+          <typeGroup displayName="Scenes" type="scenes"/>
+          <typeGroup displayName="Tools" type="tools">
+            <typeSubGroup displayName="Locators" type="locators"/>
+            <!--<typeSubGroup displayName="Geodatabase access" type="geodatabaseaccess"/>-->
+            <!--<typeSubGroup displayName="Geometric operations" type="geometricoperations"/>-->
+            <typeSubGroup displayName="Geoprocessing tasks" type="geoprocessingtasks"/>
+            <!--<typeSubGroup displayName="Network analysis" type="networkanalysis"/>-->
+            <!--<typeSubGroup displayName="Analytics" type="analytics"/>-->
+            <!--<typeSubGroup displayName="Analysis models" type="analysismodels"/>-->
+            <typeSubGroup displayName="Deep learning packages" type="deeplearningpackages"/>
+          </typeGroup>
+          <typeGroup displayName="Files" type="files">
+            <typeSubGroup displayName="Documents" type="documents"/>
+            <!--<typeSubGroup displayName="Images" type="images"/>-->
+            <!--<typeSubGroup displayName="PDFs" type="pdfs"/>-->
+            <!--<typeSubGroup displayName="CSVs" type="csvs"/>-->
+            <!--<typeSubGroup displayName="Administrative reports" type="administrativereports"/>-->
+            <typeSubGroup displayName="Raster funtion templates" type="rasterfunctiontemplates"/>
+          </typeGroup>
+          <typeGroup displayName="Styles" type="styles">
+            <typeSubGroup displayName="Web styles" type="webstyles">
+              <typeSubGroup displayName="Dictionary styles" type="dictionarystyles"/>
+            </typeSubGroup>
+            <typeSubGroup displayName="Desktop styles" type="desktopstyles">
+              <typeSubGroup displayName="Desktop dictionary styles" type="desktopdictionarystyles"/>
+            </typeSubGroup>
+          </typeGroup>
+          <typeGroup displayName="Notebooks" type="notebooks"/>
+          <!--<typeGroup displayName="Data stores" type="datastores"/>-->
+        </content>
+      </component>
+    </insertCategory>
+    
     <insertCategory id="portalSharingFilter">
       <component id="portalSharing">
         <content>
@@ -477,89 +592,500 @@
         </content>
       </component>
 
-
-      <component id="esri_search_assistant_extension" className="ArcGIS.Desktop.Internal.Search.SearchAssistantExtension">
+      <component id="esri_search_assistant_extension" className="ArcGIS.Desktop.Internal.Core.Assistant.SearchAssistantExtension">
         <content extensionCategoryRefID="ai_data_management_category">
           <uiText>
             <title>Project and Portal Search</title>
             <shortDescription>Finds project or portal items by name, type, metadata, or location.</shortDescription>
           </uiText>
-          <searchDescriptions>
-            <searchDescription>Return a list of items in the project.</searchDescription>
-            <searchDescription>Find items in the project.</searchDescription>
-            <searchDescription>Find data items in the project.</searchDescription>
-            <searchDescription>Find resource items in the project.</searchDescription>
-            <searchDescription>Find feature classes in the project.</searchDescription>
-            <searchDescription>Find shapefiles within a folder.</searchDescription>
-            <searchDescription>Find feature classes in the project.</searchDescription>
-            <searchDescription>Find tables in the project.</searchDescription>
-            <searchDescription>Find maps in the project.</searchDescription>
-            <searchDescription>Find layouts in the project.</searchDescription>
-            <searchDescription>Find reports in the project.</searchDescription>
-            <searchDescription>Find presentations in the project.</searchDescription>
-            <searchDescription>Find tasks in the project.</searchDescription>
-            <searchDescription>Find toolboxes in the project.</searchDescription>
-            <searchDescription>Find models in the project.</searchDescription>
-            <searchDescription>Find scripts in the project.</searchDescription>
-            <searchDescription>Find connection items in the project.</searchDescription>
-
-            <searchDescription>Search for items in the project.</searchDescription>
-            <searchDescription>Search for data items in the project.</searchDescription>
-            <searchDescription>Search for resource items in the project.</searchDescription>
-            <searchDescription>Search for feature classes in the project.</searchDescription>
-            <searchDescription>Search for shapefiles within a folder.</searchDescription>
-            <searchDescription>Search for feature classes in the project.</searchDescription>
-            <searchDescription>Search for tables in the project.</searchDescription>
-            <searchDescription>Search for maps in the project.</searchDescription>
-            <searchDescription>Search for layouts in the project.</searchDescription>
-            <searchDescription>Search for reports in the project.</searchDescription>
-            <searchDescription>Search for presentations in the project.</searchDescription>
-            <searchDescription>Search for tasks in the project.</searchDescription>
-            <searchDescription>Search for toolboxes in the project.</searchDescription>
-            <searchDescription>Search for models in the project.</searchDescription>
-            <searchDescription>Search for scripts in the project.</searchDescription>
-            <searchDescription>Search for connection items in the project.</searchDescription>
-
-            <searchDescription>I need some feature classes</searchDescription>
-            <searchDescription>Are there any shapefiles in the project</searchDescription>
-            <searchDescription>Do I have any lyrx file or mapx file</searchDescription>
-            <searchDescription>Are there some feature classes</searchDescription>
-            <searchDescription>Find me some feature classes</searchDescription>
-            <searchDescription>List all feature classes in a geodatabase</searchDescription>
-
-            <searchDescription>Show the content of a Geodatabase.</searchDescription>
-
-            <searchDescription>Find me some feature layer in my content</searchDescription>
-            <searchDescription>Find plantation feature service in arcgisonline</searchDescription>
-            <searchDescription>Find Yellowstone image service in my organization</searchDescription>
-            <searchDescription>Find Yellowstone mapping service in my group</searchDescription>
-            <searchDescription>Find me some feature service in Living Atlas</searchDescription>
-          </searchDescriptions>
-          <aiAssistantFunction name="SearchOrBrowseChildren">
             <searchDescriptions>
-              <searchDescription>Find items with a specified name, of a specific type, in a specific container in a project.</searchDescription>
-              <searchDescription>Return a list of items in the project.</searchDescription>
-              <searchDescription>Find data items in a project.</searchDescription>
-              <searchDescription>Find resource items in a project.</searchDescription>
-              <searchDescription>Find feature classes in a project.</searchDescription>
-              <searchDescription>Find files in a project.</searchDescription>
-              <searchDescription>Find feature classes in a project.</searchDescription>
-              <searchDescription>Find tables in a project.</searchDescription>
-              <searchDescription>Find maps in a project.</searchDescription>
-              <searchDescription>Find layouts in a project.</searchDescription>
-              <searchDescription>Find reports in a project.</searchDescription>
-              <searchDescription>Find presentations in a project.</searchDescription>
-              <searchDescription>Find tasks in a project.</searchDescription>
-              <searchDescription>Find toolboxes in a project.</searchDescription>
-              <searchDescription>Find models in a project.</searchDescription>
-              <searchDescription>Find scripts in a project.</searchDescription>
-              <searchDescription>Find connection items in a project.</searchDescription>
-              <searchDescription>Show the contents of a Geodatabase.</searchDescription>
+              <searchDescription>Find an item before another tool acts on it.</searchDescription>
+              <searchDescription>Search project or portal content without modifying it.</searchDescription>
+              <searchDescription>Find feature classes in the file geodatabase.</searchDescription>
+              <searchDescription>Search for shapefiles in the folder.</searchDescription>
+              <searchDescription>Find me some feature layers in my content.</searchDescription>
+              <searchDescription>Show me the Yellowstone mapping service in my groups.</searchDescription>
+              <searchDescription>Is there a Yellowstone image service in my organization?</searchDescription>
+              <searchDescription>I need some feature services in Living Atlas.</searchDescription>
+              <searchDescription>Display the plantation feature service in arcgis online.</searchDescription>
+              <searchDescription>Search for all the Map Documents in the project.</searchDescription>
+              <searchDescription>Find some Globe Documents.</searchDescription>
+              <searchDescription>Find me a Scene Document in this project.</searchDescription>
+              <searchDescription>Can you find a Map Package item?</searchDescription>
+              <searchDescription>Help me find some Style items in the project.</searchDescription>
+              <searchDescription>Show me all the Base Map Package items.</searchDescription>
+              <searchDescription>List all the Locator Packages in the project.</searchDescription>
+              <searchDescription>Display some Geoprocessing Packages.</searchDescription>
+              <searchDescription>Show a Layer in this project.</searchDescription>
+              <searchDescription>Are there a Rule Package item?</searchDescription>
+              <searchDescription>Is there some Scene Layer Package items in the project?</searchDescription>
+              <searchDescription>Where are all the Vector Tile Package items?</searchDescription>
+              <searchDescription>Where is all the Maps in the project?</searchDescription>
+              <searchDescription>I need some Layouts.</searchDescription>
+              <searchDescription>Get me a Report in this project.</searchDescription>
+              <searchDescription>Locate a Presentation item.</searchDescription>
+              <searchDescription>Return some Layer Package items in the project.</searchDescription>
+              <searchDescription>Look for all the Tile Package items.</searchDescription>
+              <searchDescription>Bring up all the Shapefiles in the project.</searchDescription>
+              <searchDescription>Browse for some Feature Datasets.</searchDescription>
+              <searchDescription>Search for a File Geodatabase in this project.</searchDescription>
+              <searchDescription>Find a Multifile Feature Connection item.</searchDescription>
+              <searchDescription>Find me some Multifile Point Feature Class items in the project.</searchDescription>
+              <searchDescription>Can you find all the Multifile Polyline Feature Class items?</searchDescription>
+              <searchDescription>Help me find all the Multifile Polygon Feature Classes in the project.</searchDescription>
+              <searchDescription>Show me some Multifile Tables.</searchDescription>
+              <searchDescription>List a Multifile Feature Class in this project.</searchDescription>
+              <searchDescription>Display an Enterprise Database Connection item.</searchDescription>
+              <searchDescription>Show some SQLite Database items in the project.</searchDescription>
+              <searchDescription>Are there all the Mobile Geodatabase items?</searchDescription>
+              <searchDescription>Is there all the NoSQL Geodatabases in the project?</searchDescription>
+              <searchDescription>Where are some Excels?</searchDescription>
+              <searchDescription>Where is a Workspace in this project?</searchDescription>
+              <searchDescription>I need a File Geodatabase Feature Dataset item.</searchDescription>
+              <searchDescription>Get me some Enterprise Geodatabase Feature Dataset items in the project.</searchDescription>
+              <searchDescription>Locate all the Mobile Geodatabase Feature Dataset items.</searchDescription>
+              <searchDescription>Return all the File Geodatabase Feature Classes in the project.</searchDescription>
+              <searchDescription>Look for some File Geodatabase Catalog Datasets.</searchDescription>
+              <searchDescription>Bring up a File Geodatabase Oriented Imagery Dataset in this project.</searchDescription>
+              <searchDescription>Browse for an Enterprise Geodatabase Feature Class item.</searchDescription>
+              <searchDescription>Search for some Database Feature Class items in the project.</searchDescription>
+              <searchDescription>Find all the Enterprise Geodatabase Catalog Dataset items.</searchDescription>
+              <searchDescription>Find me all the Database Tables in the project.</searchDescription>
+              <searchDescription>Can you find some Enterprise Geodatabase Oriented Imagery Datasets?</searchDescription>
+              <searchDescription>Help me find a Mobile Geodatabase Feature Class in this project.</searchDescription>
+              <searchDescription>Show me a Mobile Geodatabase Catalog Dataset item.</searchDescription>
+              <searchDescription>List some Mobile Geodatabase Oriented Imagery Dataset items in the project.</searchDescription>
+              <searchDescription>Display all the SQLite Database Feature Class items.</searchDescription>
+              <searchDescription>Show all the Feature Classes in the project.</searchDescription>
+              <searchDescription>Are there some File Geodatabase Relationship Classes?</searchDescription>
+              <searchDescription>Is there a Mobile Geodatabase Relationship Class in this project?</searchDescription>
+              <searchDescription>Where are an Enterprise Geodatabase Relationship Class item?</searchDescription>
+              <searchDescription>Where is some Relationship Class items in the project?</searchDescription>
+              <searchDescription>I need all the File Geodatabase Geometric Network items.</searchDescription>
+              <searchDescription>Get me all the Enterprise Geodatabase Geometric Networks in the project.</searchDescription>
+              <searchDescription>Locate some Geometric Networks.</searchDescription>
+              <searchDescription>Return a Shapefile Network Dataset in this project.</searchDescription>
+              <searchDescription>Look for a File Geodatabase Network Dataset item.</searchDescription>
+              <searchDescription>Bring up some Enterprise Geodatabase Network Dataset items in the project.</searchDescription>
+              <searchDescription>Browse for all the Network Dataset items.</searchDescription>
+              <searchDescription>Search for all the File Geodatabase Topologies in the project.</searchDescription>
+              <searchDescription>Find some Enterprise Geodatabase Topologies.</searchDescription>
+              <searchDescription>Find me a Mobile Geodatabase Topology in this project.</searchDescription>
+              <searchDescription>Can you find a Topology item?</searchDescription>
+              <searchDescription>Help me find some File Geodatabase Parcel Fabric for ArcMap items in the project.</searchDescription>
+              <searchDescription>Show me all the Enterprise Geodatabase Parcel Fabric for ArcMap items.</searchDescription>
+              <searchDescription>List all the Cadastral Fabrics in the project.</searchDescription>
+              <searchDescription>Display some File Geodatabase Parcel Fabrics.</searchDescription>
+              <searchDescription>Show a Mobile Geodatabase Parcel Fabric in this project.</searchDescription>
+              <searchDescription>Are there an Enterprise Geodatabase Parcel Fabric item?</searchDescription>
+              <searchDescription>Is there some Parcel Dataset Fabric items in the project?</searchDescription>
+              <searchDescription>Where are all the Table items?</searchDescription>
+              <searchDescription>Where is all the File Geodatabase Tables in the project?</searchDescription>
+              <searchDescription>I need some SQLite Database Tables.</searchDescription>
+              <searchDescription>Get me a Mobile Geodatabase Table in this project.</searchDescription>
+              <searchDescription>Locate an Excel Table item.</searchDescription>
+              <searchDescription>Return some Parquet File items in the project.</searchDescription>
+              <searchDescription>Look for all the Enterprise Geodatabase Table items.</searchDescription>
+              <searchDescription>Bring up all the XML Documents in the project.</searchDescription>
+              <searchDescription>Browse for some dBASE Tables.</searchDescription>
+              <searchDescription>Search for a Text File in this project.</searchDescription>
+              <searchDescription>Find a CAD Feature Dataset item.</searchDescription>
+              <searchDescription>Find me some CAD Feature Class items in the project.</searchDescription>
+              <searchDescription>Can you find all the CAD Point Feature Class items?</searchDescription>
+              <searchDescription>Help me find all the CAD Polyline Feature Classes in the project.</searchDescription>
+              <searchDescription>Show me some CAD Polygon Feature Classes.</searchDescription>
+              <searchDescription>List a CAD MultiPatch Feature Class in this project.</searchDescription>
+              <searchDescription>Display a CAD Multipoint Feature Class item.</searchDescription>
+              <searchDescription>Show some CAD Annotation Feature Class items in the project.</searchDescription>
+              <searchDescription>Are there all the BIM Cloud Project items?</searchDescription>
+              <searchDescription>Is there all the BIM Cloud Accounts in the project?</searchDescription>
+              <searchDescription>Where are some BIM Cloud Folders?</searchDescription>
+              <searchDescription>Where is a Locator in this project?</searchDescription>
+              <searchDescription>I need a Raster Dataset item.</searchDescription>
+              <searchDescription>Get me some Raster Catalog items in the project.</searchDescription>
+              <searchDescription>Locate all the Mosaic Dataset items.</searchDescription>
+              <searchDescription>Return all the Trajectory Datasets in the project.</searchDescription>
+              <searchDescription>Look for some Raster Bands.</searchDescription>
+              <searchDescription>Bring up a NITF Dataset in this project.</searchDescription>
+              <searchDescription>Browse for a NITF Product item.</searchDescription>
+              <searchDescription>Search for some NITF Image Layer items in the project.</searchDescription>
+              <searchDescription>Find all the NITF Feature Layer items.</searchDescription>
+              <searchDescription>Find me all the NITF Group Layers in the project.</searchDescription>
+              <searchDescription>Can you find some NITF Tables?</searchDescription>
+              <searchDescription>Help me find a NITF Screen Overlay Layer in this project.</searchDescription>
+              <searchDescription>Show me a Raster Product item.</searchDescription>
+              <searchDescription>List some Terrain items in the project.</searchDescription>
+              <searchDescription>Display all the File Geodatabase Utility Network items.</searchDescription>
+              <searchDescription>Show all the Mobile Geodatabase Utility Networks in the project.</searchDescription>
+              <searchDescription>Are there some Enterprise Geodatabase Utility Networks?</searchDescription>
+              <searchDescription>Is there an Utility Network in this project?</searchDescription>
+              <searchDescription>Where are a File Geodatabase Trace Network item?</searchDescription>
+              <searchDescription>Where is some Mobile Geodatabase Trace Network items in the project?</searchDescription>
+              <searchDescription>I need all the Enterprise Geodatabase Trace Network items.</searchDescription>
+              <searchDescription>Get me all the Trace Networks in the project.</searchDescription>
+              <searchDescription>Locate some TIN Datasets.</searchDescription>
+              <searchDescription>Return a Map Service in this project.</searchDescription>
+              <searchDescription>Look for a Globe Service item.</searchDescription>
+              <searchDescription>Bring up some Geocoding Service items in the project.</searchDescription>
+              <searchDescription>Browse for all the Geoprocessing Service items.</searchDescription>
+              <searchDescription>Search for all the Geoprocessing Service Tasks in the project.</searchDescription>
+              <searchDescription>Find some Geodata Services.</searchDescription>
+              <searchDescription>Find me a Feature Service in this project.</searchDescription>
+              <searchDescription>Can you find a Scene Service item?</searchDescription>
+              <searchDescription>Help me find some Image Service items in the project.</searchDescription>
+              <searchDescription>Show me all the Image Service Item items.</searchDescription>
+              <searchDescription>List all the Network Analysis Services in the project.</searchDescription>
+              <searchDescription>Display some Mobile Services.</searchDescription>
+              <searchDescription>Show a KML Service in this project.</searchDescription>
+              <searchDescription>Are there a Geometry Service item?</searchDescription>
+              <searchDescription>Is there some Stream Service items in the project?</searchDescription>
+              <searchDescription>Where are all the Search Service items?</searchDescription>
+              <searchDescription>Where is all the WMS Services in the project?</searchDescription>
+              <searchDescription>I need some WMTS Services.</searchDescription>
+              <searchDescription>Get me a WCS Service in this project.</searchDescription>
+              <searchDescription>Locate a WFS Service item.</searchDescription>
+              <searchDescription>Return some OGC API Service items in the project.</searchDescription>
+              <searchDescription>Look for all the Workflow Manager Service items.</searchDescription>
+              <searchDescription>Bring up all the Map Layers in the project.</searchDescription>
+              <searchDescription>Browse for some Utility Network Layers.</searchDescription>
+              <searchDescription>Search for a Trace Network Layer in this project.</searchDescription>
+              <searchDescription>Find a Feature Layer item.</searchDescription>
+              <searchDescription>Find me some Scene Layer items in the project.</searchDescription>
+              <searchDescription>Can you find all the Image Layer items?</searchDescription>
+              <searchDescription>Help me find all the Catalog Layers in the project.</searchDescription>
+              <searchDescription>Show me some Toolboxes.</searchDescription>
+              <searchDescription>List a Python Toolbox in this project.</searchDescription>
+              <searchDescription>Display a Toolset item.</searchDescription>
+              <searchDescription>Show some Tool items in the project.</searchDescription>
+              <searchDescription>Are there all the Toolbox Tool items?</searchDescription>
+              <searchDescription>Is there all the Tool Histories in the project?</searchDescription>
+              <searchDescription>Where are some Models?</searchDescription>
+              <searchDescription>Where is a Script in this project?</searchDescription>
+              <searchDescription>I need a Notebook item.</searchDescription>
+              <searchDescription>Get me some Coordinate System items in the project.</searchDescription>
+              <searchDescription>Locate all the Vertical System items.</searchDescription>
+              <searchDescription>Return all the Files in the project.</searchDescription>
+              <searchDescription>Look for some Mosaic Dataset Items.</searchDescription>
+              <searchDescription>Bring up a Folder in this project.</searchDescription>
+              <searchDescription>Browse for a Globe item.</searchDescription>
+              <searchDescription>Search for some Scene items in the project.</searchDescription>
+              <searchDescription>Find all the Stereo Map items.</searchDescription>
+              <searchDescription>Find me all the Basemaps in the project.</searchDescription>
+              <searchDescription>Can you find some Link Charts?</searchDescription>
+              <searchDescription>Help me find a Network Diagram in this project.</searchDescription>
+              <searchDescription>Show me a Video item.</searchDescription>
+              <searchDescription>List some Task Item items in the project.</searchDescription>
+              <searchDescription>Display all the Investigation items.</searchDescription>
+              <searchDescription>Show all the WMS Group Layers in the project.</searchDescription>
+              <searchDescription>Are there some WMS Layers?</searchDescription>
+              <searchDescription>Is there a WFS Layer in this project?</searchDescription>
+              <searchDescription>Where are a WCS Coverage item?</searchDescription>
+              <searchDescription>Where is some WMTS Layer items in the project?</searchDescription>
+              <searchDescription>I need all the ArcGIS Server Connection items.</searchDescription>
+              <searchDescription>Get me all the WMS Server Connections in the project.</searchDescription>
+              <searchDescription>Locate some WFS Server Connections.</searchDescription>
+              <searchDescription>Return an OGC API Server Connection in this project.</searchDescription>
+              <searchDescription>Look for a WCS Server Connection item.</searchDescription>
+              <searchDescription>Bring up some WMTS Server Connection items in the project.</searchDescription>
+              <searchDescription>Browse for all the Drafts items.</searchDescription>
+              <searchDescription>Search for all the LAS Datasets in the project.</searchDescription>
+              <searchDescription>Find some Task Files.</searchDescription>
+              <searchDescription>Find me an Oriented Imagery Catalog in this project.</searchDescription>
+              <searchDescription>Can you find a KML item?</searchDescription>
+              <searchDescription>Help me find some KMZ items in the project.</searchDescription>
+              <searchDescription>Show me all the 3D Tiles Archive File items.</searchDescription>
+              <searchDescription>List all the S-57 Cells in the project.</searchDescription>
+              <searchDescription>Display some S-101 Cells.</searchDescription>
+              <searchDescription>Show a Mobile Map Package in this project.</searchDescription>
+              <searchDescription>Are there a Mobile Scene Package item?</searchDescription>
+              <searchDescription>Is there some Ortho Mapping Workspace items in the project?</searchDescription>
+              <searchDescription>Where are all the Reality Mapping Workspace items?</searchDescription>
+              <searchDescription>Where is all the ArcGIS Cloud Storage Connections in the project?</searchDescription>
+              <searchDescription>I need some Cloud Storage Folders.</searchDescription>
+              <searchDescription>Get me an ArcGIS Statistical Data Collection in this project.</searchDescription>
+              <searchDescription>Locate a BIM File Workspace item.</searchDescription>
+              <searchDescription>Return some BIM File Dataset items in the project.</searchDescription>
+              <searchDescription>Look for all the BIM File MultiPatch Feature Class items.</searchDescription>
+              <searchDescription>Bring up all the BIM File Point Feature Classes in the project.</searchDescription>
+              <searchDescription>Browse for some BIM File Polygon Feature Classes.</searchDescription>
+              <searchDescription>Search for a BIM File Polyline Feature Class in this project.</searchDescription>
+              <searchDescription>Find a BIM File Multipoint Feature Class item.</searchDescription>
+              <searchDescription>Find me some Industry Foundation Classes items in the project.</searchDescription>
+              <searchDescription>Can you find all the Deep Learning Package items?</searchDescription>
+              <searchDescription>Help me find all the Spatial Analyst Modelses in the project.</searchDescription>
+              <searchDescription>Show me some Spatial Analyst Comparison Modelses.</searchDescription>
+              <searchDescription>List a SQLite Database Raster in this project.</searchDescription>
+              <searchDescription>Display a SQLite Raster Band item.</searchDescription>
+              <searchDescription>Show some OLE Database Table items in the project.</searchDescription>
+              <searchDescription>Are there all the File Geodatabase Location Referencing Dataset items?</searchDescription>
+              <searchDescription>Is there all the Enterprise Geodatabase Location Referencing Datasets in the project?</searchDescription>
+              <searchDescription>Where are some Location Referencing Datasets?</searchDescription>
+              <searchDescription>Where is an OGC API Server List in this project?</searchDescription>
+              <searchDescription>I need an OGC API Server item.</searchDescription>
+              <searchDescription>Get me some OGC API Feature Collection items in the project.</searchDescription>
+              <searchDescription>Locate all the OGC API Map-tiles Collection items.</searchDescription>
+              <searchDescription>Return all the OGC API Vectors Collections in the project.</searchDescription>
+              <searchDescription>Look for some OGC API Features.</searchDescription>
+              <searchDescription>Bring up an OGC API Map-tiles in this project.</searchDescription>
+              <searchDescription>Browse for an OGC API Vectors item.</searchDescription>
+              <searchDescription>Search for some Cache Dataset items in the project.</searchDescription>
+              <searchDescription>Find all the Vector Cache Dataset items.</searchDescription>
+              <searchDescription>Find me all the Indexed 3D Scene Layer RESTs in the project.</searchDescription>
+              <searchDescription>Can you find some Missions?</searchDescription>
+              <searchDescription>Help me find an AI Service Connection File in this project.</searchDescription>
+            </searchDescriptions>
+          <aiAssistantFunction name="SearchForAction">
+            <searchDescriptions>
+              <searchDescription>Retrieve an item with a specified name, of a specific type, in a specific container to add to a map.</searchDescription>
+              <searchDescription>Find a list of candidate items for another action such as add to map, open, inspect, select, zoom to, or remove.</searchDescription>
+              <searchDescription>Find data items for downstream assistant functions.</searchDescription>
+              <searchDescription>Use when search is an intermediate step and another function needs AIItemInfo results.</searchDescription>
+              <searchDescription>Find a feature class to add to a map.</searchDescription>
+              <searchDescription>Find a feature class in a Geodatabase for further processing.</searchDescription>
+              <searchDescription>Find items with a specified name, of a specific type, in a portal container to add to a map.</searchDescription>
+              <searchDescription>Find wild fire feature layer in My Content to add to a map.</searchDescription>
+              <searchDescription>Search for Yellowstone imagery layer in arcgis online to add to a map.</searchDescription>
+              <searchDescription>Find stream webmap in My Groups to add to a map.</searchDescription>
+              <searchDescription>Find California feature layer in My Organization to add to a map.</searchDescription>
+              <searchDescription>Find plantation tile layer in Living Atlas to add to a map.</searchDescription>
+              <searchDescription>Find highway feature layer in ArcGIS Enterprise to add to a map.</searchDescription>
+              <searchDescription>Find buildings scene layer in My Favorite to add to a map.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="FormatResults">
+          <aiAssistantFunction name="SearchForDisplay">
             <searchDescriptions>
-              <searchDescription>Format the results from search or browse.</searchDescription>
+				      <searchDescription>Find feature classes in the file geodatabase.</searchDescription>
+				      <searchDescription>Search for shapefiles in the folder.</searchDescription>
+				      <searchDescription>Find me some feature layers in my content.</searchDescription>
+				      <searchDescription>Show me the Yellowstone mapping service in my groups.</searchDescription>
+				      <searchDescription>Is there a Yellowstone image service in my organization?</searchDescription>
+				      <searchDescription>I need some feature services in Living Atlas.</searchDescription>
+				      <searchDescription>Display the plantation feature service in arcgis online.</searchDescription>
+				      <searchDescription>Search for all the Map Documents in the project.</searchDescription>
+				      <searchDescription>Find some Globe Documents.</searchDescription>
+				      <searchDescription>Find me a Scene Document in this project.</searchDescription>
+				      <searchDescription>Can you find a Map Package item?</searchDescription>
+				      <searchDescription>Help me find some Style items in the project.</searchDescription>
+				      <searchDescription>Show me all the Base Map Package items.</searchDescription>
+				      <searchDescription>List all the Locator Packages in the project.</searchDescription>
+				      <searchDescription>Display some Geoprocessing Packages.</searchDescription>
+				      <searchDescription>Show a Layer in this project.</searchDescription>
+				      <searchDescription>Are there a Rule Package item?</searchDescription>
+				      <searchDescription>Is there some Scene Layer Package items in the project?</searchDescription>
+				      <searchDescription>Where are all the Vector Tile Package items?</searchDescription>
+				      <searchDescription>Where is all the Maps in the project?</searchDescription>
+				      <searchDescription>I need some Layouts.</searchDescription>
+				      <searchDescription>Get me a Report in this project.</searchDescription>
+				      <searchDescription>Locate a Presentation item.</searchDescription>
+				      <searchDescription>Return some Layer Package items in the project.</searchDescription>
+				      <searchDescription>Look for all the Tile Package items.</searchDescription>
+				      <searchDescription>Bring up all the Shapefiles in the project.</searchDescription>
+				      <searchDescription>Browse for some Feature Datasets.</searchDescription>
+				      <searchDescription>Search for a File Geodatabase in this project.</searchDescription>
+				      <searchDescription>Find a Multifile Feature Connection item.</searchDescription>
+				      <searchDescription>Find me some Multifile Point Feature Class items in the project.</searchDescription>
+				      <searchDescription>Can you find all the Multifile Polyline Feature Class items?</searchDescription>
+				      <searchDescription>Help me find all the Multifile Polygon Feature Classes in the project.</searchDescription>
+				      <searchDescription>Show me some Multifile Tables.</searchDescription>
+				      <searchDescription>List a Multifile Feature Class in this project.</searchDescription>
+				      <searchDescription>Display an Enterprise Database Connection item.</searchDescription>
+				      <searchDescription>Show some SQLite Database items in the project.</searchDescription>
+				      <searchDescription>Are there all the Mobile Geodatabase items?</searchDescription>
+				      <searchDescription>Is there all the NoSQL Geodatabases in the project?</searchDescription>
+				      <searchDescription>Where are some Excels?</searchDescription>
+				      <searchDescription>Where is a Workspace in this project?</searchDescription>
+				      <searchDescription>I need a File Geodatabase Feature Dataset item.</searchDescription>
+				      <searchDescription>Get me some Enterprise Geodatabase Feature Dataset items in the project.</searchDescription>
+				      <searchDescription>Locate all the Mobile Geodatabase Feature Dataset items.</searchDescription>
+				      <searchDescription>Return all the File Geodatabase Feature Classes in the project.</searchDescription>
+				      <searchDescription>Look for some File Geodatabase Catalog Datasets.</searchDescription>
+				      <searchDescription>Bring up a File Geodatabase Oriented Imagery Dataset in this project.</searchDescription>
+				      <searchDescription>Browse for an Enterprise Geodatabase Feature Class item.</searchDescription>
+				      <searchDescription>Search for some Database Feature Class items in the project.</searchDescription>
+				      <searchDescription>Find all the Enterprise Geodatabase Catalog Dataset items.</searchDescription>
+				      <searchDescription>Find me all the Database Tables in the project.</searchDescription>
+				      <searchDescription>Can you find some Enterprise Geodatabase Oriented Imagery Datasets?</searchDescription>
+				      <searchDescription>Help me find a Mobile Geodatabase Feature Class in this project.</searchDescription>
+				      <searchDescription>Show me a Mobile Geodatabase Catalog Dataset item.</searchDescription>
+				      <searchDescription>List some Mobile Geodatabase Oriented Imagery Dataset items in the project.</searchDescription>
+				      <searchDescription>Display all the SQLite Database Feature Class items.</searchDescription>
+				      <searchDescription>Show all the Feature Classes in the project.</searchDescription>
+				      <searchDescription>Are there some File Geodatabase Relationship Classes?</searchDescription>
+				      <searchDescription>Is there a Mobile Geodatabase Relationship Class in this project?</searchDescription>
+				      <searchDescription>Where are an Enterprise Geodatabase Relationship Class item?</searchDescription>
+				      <searchDescription>Where is some Relationship Class items in the project?</searchDescription>
+				      <searchDescription>I need all the File Geodatabase Geometric Network items.</searchDescription>
+				      <searchDescription>Get me all the Enterprise Geodatabase Geometric Networks in the project.</searchDescription>
+				      <searchDescription>Locate some Geometric Networks.</searchDescription>
+				      <searchDescription>Return a Shapefile Network Dataset in this project.</searchDescription>
+				      <searchDescription>Look for a File Geodatabase Network Dataset item.</searchDescription>
+				      <searchDescription>Bring up some Enterprise Geodatabase Network Dataset items in the project.</searchDescription>
+				      <searchDescription>Browse for all the Network Dataset items.</searchDescription>
+				      <searchDescription>Search for all the File Geodatabase Topologies in the project.</searchDescription>
+				      <searchDescription>Find some Enterprise Geodatabase Topologies.</searchDescription>
+				      <searchDescription>Find me a Mobile Geodatabase Topology in this project.</searchDescription>
+				      <searchDescription>Can you find a Topology item?</searchDescription>
+				      <searchDescription>Help me find some File Geodatabase Parcel Fabric for ArcMap items in the project.</searchDescription>
+				      <searchDescription>Show me all the Enterprise Geodatabase Parcel Fabric for ArcMap items.</searchDescription>
+				      <searchDescription>List all the Cadastral Fabrics in the project.</searchDescription>
+				      <searchDescription>Display some File Geodatabase Parcel Fabrics.</searchDescription>
+				      <searchDescription>Show a Mobile Geodatabase Parcel Fabric in this project.</searchDescription>
+				      <searchDescription>Are there an Enterprise Geodatabase Parcel Fabric item?</searchDescription>
+				      <searchDescription>Is there some Parcel Dataset Fabric items in the project?</searchDescription>
+				      <searchDescription>Where are all the Table items?</searchDescription>
+				      <searchDescription>Where is all the File Geodatabase Tables in the project?</searchDescription>
+				      <searchDescription>I need some SQLite Database Tables.</searchDescription>
+				      <searchDescription>Get me a Mobile Geodatabase Table in this project.</searchDescription>
+				      <searchDescription>Locate an Excel Table item.</searchDescription>
+				      <searchDescription>Return some Parquet File items in the project.</searchDescription>
+				      <searchDescription>Look for all the Enterprise Geodatabase Table items.</searchDescription>
+				      <searchDescription>Bring up all the XML Documents in the project.</searchDescription>
+				      <searchDescription>Browse for some dBASE Tables.</searchDescription>
+				      <searchDescription>Search for a Text File in this project.</searchDescription>
+				      <searchDescription>Find a CAD Feature Dataset item.</searchDescription>
+				      <searchDescription>Find me some CAD Feature Class items in the project.</searchDescription>
+				      <searchDescription>Can you find all the CAD Point Feature Class items?</searchDescription>
+				      <searchDescription>Help me find all the CAD Polyline Feature Classes in the project.</searchDescription>
+				      <searchDescription>Show me some CAD Polygon Feature Classes.</searchDescription>
+				      <searchDescription>List a CAD MultiPatch Feature Class in this project.</searchDescription>
+				      <searchDescription>Display a CAD Multipoint Feature Class item.</searchDescription>
+				      <searchDescription>Show some CAD Annotation Feature Class items in the project.</searchDescription>
+				      <searchDescription>Are there all the BIM Cloud Project items?</searchDescription>
+				      <searchDescription>Is there all the BIM Cloud Accounts in the project?</searchDescription>
+				      <searchDescription>Where are some BIM Cloud Folders?</searchDescription>
+				      <searchDescription>Where is a Locator in this project?</searchDescription>
+				      <searchDescription>I need a Raster Dataset item.</searchDescription>
+				      <searchDescription>Get me some Raster Catalog items in the project.</searchDescription>
+				      <searchDescription>Locate all the Mosaic Dataset items.</searchDescription>
+				      <searchDescription>Return all the Trajectory Datasets in the project.</searchDescription>
+				      <searchDescription>Look for some Raster Bands.</searchDescription>
+				      <searchDescription>Bring up a NITF Dataset in this project.</searchDescription>
+				      <searchDescription>Browse for a NITF Product item.</searchDescription>
+				      <searchDescription>Search for some NITF Image Layer items in the project.</searchDescription>
+				      <searchDescription>Find all the NITF Feature Layer items.</searchDescription>
+				      <searchDescription>Find me all the NITF Group Layers in the project.</searchDescription>
+				      <searchDescription>Can you find some NITF Tables?</searchDescription>
+				      <searchDescription>Help me find a NITF Screen Overlay Layer in this project.</searchDescription>
+				      <searchDescription>Show me a Raster Product item.</searchDescription>
+				      <searchDescription>List some Terrain items in the project.</searchDescription>
+				      <searchDescription>Display all the File Geodatabase Utility Network items.</searchDescription>
+				      <searchDescription>Show all the Mobile Geodatabase Utility Networks in the project.</searchDescription>
+				      <searchDescription>Are there some Enterprise Geodatabase Utility Networks?</searchDescription>
+				      <searchDescription>Is there an Utility Network in this project?</searchDescription>
+				      <searchDescription>Where are a File Geodatabase Trace Network item?</searchDescription>
+				      <searchDescription>Where is some Mobile Geodatabase Trace Network items in the project?</searchDescription>
+				      <searchDescription>I need all the Enterprise Geodatabase Trace Network items.</searchDescription>
+				      <searchDescription>Get me all the Trace Networks in the project.</searchDescription>
+				      <searchDescription>Locate some TIN Datasets.</searchDescription>
+				      <searchDescription>Return a Map Service in this project.</searchDescription>
+				      <searchDescription>Look for a Globe Service item.</searchDescription>
+				      <searchDescription>Bring up some Geocoding Service items in the project.</searchDescription>
+				      <searchDescription>Browse for all the Geoprocessing Service items.</searchDescription>
+				      <searchDescription>Search for all the Geoprocessing Service Tasks in the project.</searchDescription>
+				      <searchDescription>Find some Geodata Services.</searchDescription>
+				      <searchDescription>Find me a Feature Service in this project.</searchDescription>
+				      <searchDescription>Can you find a Scene Service item?</searchDescription>
+				      <searchDescription>Help me find some Image Service items in the project.</searchDescription>
+				      <searchDescription>Show me all the Image Service Item items.</searchDescription>
+				      <searchDescription>List all the Network Analysis Services in the project.</searchDescription>
+				      <searchDescription>Display some Mobile Services.</searchDescription>
+				      <searchDescription>Show a KML Service in this project.</searchDescription>
+				      <searchDescription>Are there a Geometry Service item?</searchDescription>
+				      <searchDescription>Is there some Stream Service items in the project?</searchDescription>
+				      <searchDescription>Where are all the Search Service items?</searchDescription>
+				      <searchDescription>Where is all the WMS Services in the project?</searchDescription>
+				      <searchDescription>I need some WMTS Services.</searchDescription>
+				      <searchDescription>Get me a WCS Service in this project.</searchDescription>
+				      <searchDescription>Locate a WFS Service item.</searchDescription>
+				      <searchDescription>Return some OGC API Service items in the project.</searchDescription>
+				      <searchDescription>Look for all the Workflow Manager Service items.</searchDescription>
+				      <searchDescription>Bring up all the Map Layers in the project.</searchDescription>
+				      <searchDescription>Browse for some Utility Network Layers.</searchDescription>
+				      <searchDescription>Search for a Trace Network Layer in this project.</searchDescription>
+				      <searchDescription>Find a Feature Layer item.</searchDescription>
+				      <searchDescription>Find me some Scene Layer items in the project.</searchDescription>
+				      <searchDescription>Can you find all the Image Layer items?</searchDescription>
+				      <searchDescription>Help me find all the Catalog Layers in the project.</searchDescription>
+				      <searchDescription>Show me some Toolboxes.</searchDescription>
+				      <searchDescription>List a Python Toolbox in this project.</searchDescription>
+				      <searchDescription>Display a Toolset item.</searchDescription>
+				      <searchDescription>Show some Tool items in the project.</searchDescription>
+				      <searchDescription>Are there all the Toolbox Tool items?</searchDescription>
+				      <searchDescription>Is there all the Tool Histories in the project?</searchDescription>
+				      <searchDescription>Where are some Models?</searchDescription>
+				      <searchDescription>Where is a Script in this project?</searchDescription>
+				      <searchDescription>I need a Notebook item.</searchDescription>
+				      <searchDescription>Get me some Coordinate System items in the project.</searchDescription>
+				      <searchDescription>Locate all the Vertical System items.</searchDescription>
+				      <searchDescription>Return all the Files in the project.</searchDescription>
+				      <searchDescription>Look for some Mosaic Dataset Items.</searchDescription>
+				      <searchDescription>Bring up a Folder in this project.</searchDescription>
+				      <searchDescription>Browse for a Globe item.</searchDescription>
+				      <searchDescription>Search for some Scene items in the project.</searchDescription>
+				      <searchDescription>Find all the Stereo Map items.</searchDescription>
+				      <searchDescription>Find me all the Basemaps in the project.</searchDescription>
+				      <searchDescription>Can you find some Link Charts?</searchDescription>
+				      <searchDescription>Help me find a Network Diagram in this project.</searchDescription>
+				      <searchDescription>Show me a Video item.</searchDescription>
+				      <searchDescription>List some Task Item items in the project.</searchDescription>
+				      <searchDescription>Display all the Investigation items.</searchDescription>
+				      <searchDescription>Show all the WMS Group Layers in the project.</searchDescription>
+				      <searchDescription>Are there some WMS Layers?</searchDescription>
+				      <searchDescription>Is there a WFS Layer in this project?</searchDescription>
+				      <searchDescription>Where are a WCS Coverage item?</searchDescription>
+				      <searchDescription>Where is some WMTS Layer items in the project?</searchDescription>
+				      <searchDescription>I need all the ArcGIS Server Connection items.</searchDescription>
+				      <searchDescription>Get me all the WMS Server Connections in the project.</searchDescription>
+				      <searchDescription>Locate some WFS Server Connections.</searchDescription>
+				      <searchDescription>Return an OGC API Server Connection in this project.</searchDescription>
+				      <searchDescription>Look for a WCS Server Connection item.</searchDescription>
+				      <searchDescription>Bring up some WMTS Server Connection items in the project.</searchDescription>
+				      <searchDescription>Browse for all the Drafts items.</searchDescription>
+				      <searchDescription>Search for all the LAS Datasets in the project.</searchDescription>
+				      <searchDescription>Find some Task Files.</searchDescription>
+				      <searchDescription>Find me an Oriented Imagery Catalog in this project.</searchDescription>
+				      <searchDescription>Can you find a KML item?</searchDescription>
+				      <searchDescription>Help me find some KMZ items in the project.</searchDescription>
+				      <searchDescription>Show me all the 3D Tiles Archive File items.</searchDescription>
+				      <searchDescription>List all the S-57 Cells in the project.</searchDescription>
+				      <searchDescription>Display some S-101 Cells.</searchDescription>
+				      <searchDescription>Show a Mobile Map Package in this project.</searchDescription>
+				      <searchDescription>Are there a Mobile Scene Package item?</searchDescription>
+				      <searchDescription>Is there some Ortho Mapping Workspace items in the project?</searchDescription>
+				      <searchDescription>Where are all the Reality Mapping Workspace items?</searchDescription>
+				      <searchDescription>Where is all the ArcGIS Cloud Storage Connections in the project?</searchDescription>
+				      <searchDescription>I need some Cloud Storage Folders.</searchDescription>
+				      <searchDescription>Get me an ArcGIS Statistical Data Collection in this project.</searchDescription>
+				      <searchDescription>Locate a BIM File Workspace item.</searchDescription>
+				      <searchDescription>Return some BIM File Dataset items in the project.</searchDescription>
+				      <searchDescription>Look for all the BIM File MultiPatch Feature Class items.</searchDescription>
+				      <searchDescription>Bring up all the BIM File Point Feature Classes in the project.</searchDescription>
+				      <searchDescription>Browse for some BIM File Polygon Feature Classes.</searchDescription>
+				      <searchDescription>Search for a BIM File Polyline Feature Class in this project.</searchDescription>
+				      <searchDescription>Find a BIM File Multipoint Feature Class item.</searchDescription>
+				      <searchDescription>Find me some Industry Foundation Classes items in the project.</searchDescription>
+				      <searchDescription>Can you find all the Deep Learning Package items?</searchDescription>
+				      <searchDescription>Help me find all the Spatial Analyst Modelses in the project.</searchDescription>
+				      <searchDescription>Show me some Spatial Analyst Comparison Modelses.</searchDescription>
+				      <searchDescription>List a SQLite Database Raster in this project.</searchDescription>
+				      <searchDescription>Display a SQLite Raster Band item.</searchDescription>
+				      <searchDescription>Show some OLE Database Table items in the project.</searchDescription>
+				      <searchDescription>Are there all the File Geodatabase Location Referencing Dataset items?</searchDescription>
+				      <searchDescription>Is there all the Enterprise Geodatabase Location Referencing Datasets in the project?</searchDescription>
+				      <searchDescription>Where are some Location Referencing Datasets?</searchDescription>
+				      <searchDescription>Where is an OGC API Server List in this project?</searchDescription>
+				      <searchDescription>I need an OGC API Server item.</searchDescription>
+				      <searchDescription>Get me some OGC API Feature Collection items in the project.</searchDescription>
+				      <searchDescription>Locate all the OGC API Map-tiles Collection items.</searchDescription>
+				      <searchDescription>Return all the OGC API Vectors Collections in the project.</searchDescription>
+				      <searchDescription>Look for some OGC API Features.</searchDescription>
+				      <searchDescription>Bring up an OGC API Map-tiles in this project.</searchDescription>
+				      <searchDescription>Browse for an OGC API Vectors item.</searchDescription>
+				      <searchDescription>Search for some Cache Dataset items in the project.</searchDescription>
+				      <searchDescription>Find all the Vector Cache Dataset items.</searchDescription>
+				      <searchDescription>Find me all the Indexed 3D Scene Layer RESTs in the project.</searchDescription>
+				      <searchDescription>Can you find some Missions?</searchDescription>
+				      <searchDescription>Help me find an AI Service Connection File in this project.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
         </content>
@@ -624,6 +1150,65 @@
 		    </content>
 		  </component>
 
+      <component id="esri_project_management_assistant_extension" className="ArcGIS.Desktop.Internal.Core.Assistant.ProjectManagementAssistantExtension">
+        <content extensionCategoryRefID="ai_data_management_category">
+          <uiText>
+            <title>Project Management</title>
+            <shortDescription>Creates, opens, saves projects, and imports supported items into ArcGIS Pro projects.</shortDescription>
+          </uiText>
+          <searchDescriptions>
+            <searchDescription>add a folder connection to the current project</searchDescription>
+            <searchDescription>add a database to the current project</searchDescription>
+            <searchDescription>add a map document to the current project and open it</searchDescription>
+            <searchDescription>import a map package to the current project and open it</searchDescription>
+            <searchDescription>add a server connection to the current project</searchDescription>
+            <searchDescription>save project</searchDescription>
+            <searchDescription>save the current project</searchDescription>
+            <searchDescription>save my work</searchDescription>
+          </searchDescriptions>
+          <aiAssistantFunction name="CreateNewProject">
+            <searchDescriptions>
+              <searchDescription>start a new project</searchDescription>
+              <searchDescription>start a new Map project</searchDescription>
+              <searchDescription>start a new Catalog project</searchDescription>
+              <searchDescription>start a new Global Scene project</searchDescription>
+              <searchDescription>start a new Local Scene project</searchDescription>
+              <searchDescription>start a new project without template</searchDescription>
+              <searchDescription>start a new project</searchDescription>
+              <searchDescription>create a new project</searchDescription>
+              <searchDescription>create a new Map project</searchDescription>
+              <searchDescription>create a new Catalog project</searchDescription>
+              <searchDescription>create a new Global Scene project</searchDescription>
+              <searchDescription>create a new Local Scene project</searchDescription>
+              <searchDescription>create a new project without template</searchDescription>
+              <searchDescription>create a new project</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="OpenExistingProject">
+            <searchDescriptions>
+              <searchDescription>open a project</searchDescription>
+              <searchDescription>open my project</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="SaveCurrentProject">
+            <searchDescriptions>
+              <searchDescription>save project</searchDescription>
+              <searchDescription>save current project</searchDescription>
+              <searchDescription>save my work</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="AddItemToCurrentProject">
+            <searchDescriptions>
+              <searchDescription>add folder connection</searchDescription>
+              <searchDescription>add database</searchDescription>
+              <searchDescription>import map document</searchDescription>
+              <searchDescription>import map package</searchDescription>
+              <searchDescription>add server connection</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+        </content>
+      </component>
+
     </insertCategory>
 
     <insertCategory id="esri_core_ai_enterprise_skill_category" />
@@ -681,13 +1266,16 @@
         <content displayName="Portal Connections" description="Supports adding, editing, refreshing, listing, and signing in to portal connections."/>
       </component>
       <component id="ai_data_validation_category">
-        <content displayName="Data Quality and Validation" description="Provides validation recommendations, evaluates network connectivity issues, and runs broad spatial and attribute quality checks."/>
+        <content displayName="Data Quality and Validation" description="Enhance and automate data quality workflows by improving spatial and attribute accuracy of datasets. The actions assist in predicting checks, providing data insights and aid in configuring data quality checks. The prediction of data validation checks is currently limited to water and electric network datasets, with additional support for indoor solutions."/>
       </component>
       <component id="ai_knowledge_graph_category">
         <content displayName="Knowledge Graph" description="Supports creating investigations, exploring investigation results, and connecting related items in knowledge graph link charts."/>
       </component>
       <component id="ai_custom_category">
         <content displayName="Custom Capabilities" description="Components that add custom functionality."/>
+      </component>
+      <component id="ai_sharing_packaging_category">
+        <content displayName="Packaging Capabilities" description="Packages maps, layers, and projects for sharing."/>
       </component>
     </insertCategory>
   </categories>
@@ -774,6 +1362,16 @@
                   dock="group" dockWith="esri_core_projectDockPane">
           <content className="ProjectHistoryDockPane" />
         </dockPane>
+
+        <dockPane id="esri_core_oneDriveFileStatusDockPane"
+                  smallImage="OneDriveStatusLog16"
+                  caption="Protected Access Status "
+                  className="OneDriveFileStatusDockPaneViewModel"
+                  dock="group"
+                  dockWith="esri_core_projectDockPane"
+                  hasHelp="true" helpContextID="dtiCAIgLC9#CQC">
+          <content className="OneDriveFileStatusDockPane" />
+        </dockPane>
       </dockPanes>
 
       <tabs>
@@ -826,6 +1424,7 @@
           <group refID="esri_mapping_viewClippingGroup"/>
           <group refID="esri_mapping_profileViewGroup"/>
           <group refID="esri_mapping_navigation"/>
+          <group refID="esri_presentations_navigationOverlaysGroup"/>
         </tab>
 
         <tab id="esri_core_previewTab" caption="Preview" condition="esri_core_previewActiveCondition" tabGroupID="esri_core_previewTabGroup" keytip="W" insert="after">
@@ -855,9 +1454,10 @@
           <button refID="esri_core_learningBtn" size="large" />
         </group>
         <group id="esri_core_customizeGroup" caption="Customize" keytip="C" smallImage="CogWheel16">
+          <button refID="esri_core_Shortcuts" size="large" />
           <button refID="esri_core_ribbonBtn" size="middle" />
           <button refID="esri_core_qatBtn" size="middle" />
-          <button refID="esri_core_Shortcuts" size="middle" />
+          <button refID="esri_core_globalToolbarsBtn" size="middle" />
         </group>
         <group id="esri_core_performanceGroup" caption="Performance" keytip="P" smallImage="DiagnosticsMonitor16">
           <button refID="esri_core_monitorBtn" size="large" />
@@ -922,6 +1522,7 @@
 
         <group id="esri_core_dockWindows" caption="Windows" smallImage="ArcGISProjectWindow16" >
           <dynamicMenu refID="esri_dockPaneSetDynamicMenu" size ="large"/>
+          <button refID="esri_core_showProjectDockPane" size="large" />
           <subgroup refID="esri_core_WindowControls"/>
           <subgroup refID="esri_core_WindowControlsGP"/>
           <subgroup refID="esri_core_WindowControlsExtensions"/>
@@ -937,7 +1538,7 @@
         </group>
 
         <group id="esri_core_previewPreviewGroup" caption="Preview" smallImage="Basemap16">
-          <button refID="esri_core_previewShowBasemap" size="middle" />
+          <button refID="esri_core_previewClearBasemap" size="middle"/>
         </group>
 
         <group id="esri_core_previewThumbnail" caption="Thumbnail" smallImage="ItemThumbnailCreate16">
@@ -1011,6 +1612,11 @@
                 smallImage="CustomizeRibbon16" largeImage="CustomizeRibbon32">
           <tooltip heading="Customize the Ribbon">Arrange commands on ribbon tabs to make your interaction more efficient.</tooltip>
         </button>
+        <button id="esri_core_globalToolbarsBtn" caption="Global Toolbars" keytip="G"
+                className="ArcGIS.Desktop.Framework.Help.GlobalToolbarsCmd" assembly="ArcGIS.Desktop.Framework.dll"
+                smallImage="GlobalToolbar16" largeImage="GlobalToolbar32">
+          <tooltip heading="Customize Global Toolbars">Create and manage your global toolbar.</tooltip>
+        </button>
         <button id="esri_core_qatBtn" caption="Quick Access Toolbar" keytip="Q" helpContextID="120001461"
                 className="ArcGIS.Desktop.Framework.Help.QatCmd" assembly="ArcGIS.Desktop.Framework.dll"
                 smallImage="QuickAccessToolbar16" largeImage="QuickAccessToolbar32">
@@ -1066,6 +1672,23 @@
 With the Catalog pane you can drag and drop items onto a map, a model, or a tool parameter. Access geoprocessing and raster function history, and add your favorite items to the project.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <!--One Drive file status-->
+        <button id="esri_core_oneDriveFileStatus"
+                caption="Protected Access"
+                extendedCaption="OneDrive file status"
+                keytip="OD"
+                className="esri_core_module:ShowOneDriveFileStatusPane"
+                smallImage="OneDriveStatusLog16"
+                largeImage="OneDriveStatusLog32"
+                condition="esri_oauth_onedrive_integration_enabled"
+                helpContextID="dtiCAIgLC9#CQC">
+          <tooltip heading="Protected Access Status">
+            View file activity and access status for protected Microsoft OneDrive files.
+            <disabledText>Protected access for Microsoft OneDrive files must be enabled by an administrator in application settings.</disabledText>
+          </tooltip>
+        </button>
+        
         <!-- show project view -->
         <button id="esri_core_showProjectView" className="esri_core_module:ShowProjectView"
                 caption="Catalog View" extendedCaption="Show the Catalog view; on ribbon"
@@ -1360,7 +1983,7 @@ With the Catalog view you can sort items, preview spatial data, edit an item’s
                   assembly="ArcGIS.Desktop.Framework.dll" smallImage="Search_Find16" largeImage="Search_Find32" loadOnClick="false" keytip="Q" hidden="true">
           <content className="ArcGIS.Desktop.Framework.TellMeControlView" assembly="ArcGIS.Desktop.Framework.dll"/>
           <tooltip heading="Command Search">
-            Search for and execute commands, tools, and help.<disabledText></disabledText>
+            Search for and run commands, tools, and help.<disabledText></disabledText>
           </tooltip>
         </customControl>
         <button id="esri_core_showContentsDockPane" className="esri_core_module:ShowContents" caption="Contents"
@@ -1466,12 +2089,13 @@ Show information such as an item's thumbnail and tags as well as its location in
             Go to the next extent.<disabledText></disabledText>
           </tooltip>
         </button>
-        <checkBox id="esri_core_previewShowBasemap" condition="esri_core_previewShowBasemapCondition" keytip="SB"
-                  caption="Show Basemap" extendedCaption="" className="CorePreviewItemShowBasemapCheckBox" loadOnClick="false">
+        
+        <button id="esri_core_previewClearBasemap" caption="Reset Basemap" keytip="CB"
+                extendedCaption="" className="CorePreviewItemResetPreviewButton" loadOnClick="false" smallImage="GenericReset16">
           <tooltip heading="">
-            Toggles visibility of the basemap in preview.<disabledText></disabledText>
+            Resets the display of the preview basemap to the value specified in the user settings.
           </tooltip>
-        </checkBox>
+        </button>
         <button id="esri_core_previewCaptureThumbnail" caption="Create" className="CorePreviewItemCaptureThumbnail"
                 condition="esri_core_previewCaptureThumbnail_condition" keytip="TC"
                 largeImage="ItemThumbnailCreate32"
@@ -1516,22 +2140,22 @@ Show information such as an item's thumbnail and tags as well as its location in
 
         <button id="esri_addFavoriteButton" className="AddToFavoritesCmd" loadOnClick="false"
                 caption="Add To My Favorites" keytip="FA" menuKeytip="F"
-                extendedCaption="Add an item to project favorites; on context menu for folders, databases, and servers that have been added to the project"
+                extendedCaption="Add an item to My Favorites; on context menu for folders, databases, and servers that have been added to the project"
                 condition="esri_projectItem_isValidAndOpenProjectCondition"
                 smallImage="FavoriteStarAdd16" helpContextID="">
           <tooltip heading="">
-            Add the item to project favorites. Project favorites saves a reference to the existing item. If the item is not in a location that is accessible from other machines, it won't be available when using a different computer.<disabledText></disabledText>
+            Add the item to My Favorites. My Favorites saves a reference to the existing item. If the item is not in a location that is accessible from other machines, it won't be available when using a different computer.<disabledText></disabledText>
           </tooltip>
         </button>
 
         <button id="esri_addProjectItemToNewProjectsButton" className="AddItemToNewProjectsCmd" loadOnClick="false"
-                caption="Add To New Projects" keytip="FP" extendedCaption="Add to new projects"
+                caption="Add To All New Projects" keytip="FP" extendedCaption="Add To All New Projects"
                 condition="esri_projectItem_isValidAndOpenProjectCondition"
-                smallImage="PinFavorite16"
-                largeImage="PinFavorite32"
+                smallImage="AddProjectFavorite16"
+                largeImage="AddProjectFavorite32"
                 helpContextID="" menuKeytip="J">
           <tooltip heading="">
-            Add the item to project favorites and to all new projects. Project favorites saves a reference to the existing item. When a new project is created, a reference to the item is automatically added.<disabledText></disabledText>
+            Add the item to My Favorites and to all new projects. My Favorites saves a reference to the existing item. When a new project is created, a reference to the item is automatically added.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1749,9 +2373,9 @@ Show information such as an item's thumbnail and tags as well as its location in
         </subgroup>-->
 
         <subgroup id="esri_core_WindowControls" size="Default">
-          <button refID="esri_core_showProjectDockPane"/>
           <tool refID="esri_core_showProjectView"/>
           <button refID="esri_core_showContentsDockPane"/>
+          <button refID="esri_core_oneDriveFileStatus" />
         </subgroup>
 
         <subgroup id="esri_core_WindowControlsGP" size="Default">
@@ -1766,8 +2390,7 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_indoors_indoorsViewPalette"/>
         </subgroup>
 
-
-        <subgroup id="esri_core_editBtns" size="MediumThenSmallWhenSmall">
+  <subgroup id="esri_core_editBtns" size="MediumThenSmallWhenSmall">
           <button refID="esri_core_editCutButton"/>
           <button refID="esri_core_editCopyButton"/>
           <button refID="esri_core_editCopyPaths"/>
@@ -1807,18 +2430,24 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true"/>
-          <button refID="esri_core_editCopyPaths" separator="true"/>
-          <button refID="esri_core_openFileLocation"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID ="esri_core_editPasteButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="esri_core_openFileLocation"  separator="true"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata"/>
         </menu>
         <menu id="esri_core_SpecialFolderRemoveMenu" caption="Default">
           <button refID="FolderConnectionProjectNewItemMenu" />
-          <button refID="esri_folderConnectionRemoveButton" separator="true"/>
+          <button refID="esri_folderConnectionMakeDefaultButton" separator="true"/>
+          <button refID="esri_folderConnectionRemoveButton"/>
           <button refID="esri_addFavoriteButton" separator="true"/>
           <button refID="esri_addProjectItemToNewProjectsButton"/>
           <button refID="esri_core_refresh" separator="true"/>
-          <button refID="esri_core_editCopyPaths" separator="true"/>
+          <button refID="esri_core_editCopyButton"  separator="true"/>
+          <button refID ="esri_core_editPasteButton"/>
+          <button refID="esri_core_editCopyPaths"/>
+          <button refID="AliasProjectItemMenu" separator="true"/>
           <button refID="esri_core_openFileLocation"/>
           <button refID="esri_projectItemViewMetadata" separator="true"/>
           <button refID="esri_projectItemEditMetadata"/>
@@ -1911,6 +2540,35 @@ Show information such as an item's thumbnail and tags as well as its location in
           <button refID="esri_removeFavoriteButton" separator="true"/>
           <menu refID="AliasProjectItemMenu"/>
         </menu>
+
+        <menu id="esri_AddItemMenu_BusinessAnalyst"
+              caption="Add Business Analyst Item"
+              keytip=""
+              extendedCaption="Add Business Analyst Items"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BusinessAnalystContainer32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BusinessAnalystContainer16.png">
+          <button refID="esri_projectItemAddExistingStatisticalDataCollection"/>
+          <button refID="esri_businessAnalyst_buttonAddCalculatedVariable"/>
+          <button refID="esri_businessAnalyst_buttonAddVariableList"/>
+          <button refID="esri_businessAnalyst_buttonAddTargetGroup" separator="true"/>
+          <button refID="esri_businessAnalyst_buttonAddSegmentationProfile"/>
+          <button refID="esri_businessAnalyst_buttonAddHuffModelCalibration" separator="true"/>
+        </menu>
+
+        <menu id="esri_NewItemMenu_BusinessAnalyst"
+              caption="New Business Analyst Item"
+              keytip=""
+              extendedCaption="Create New Business Analyst Items"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BusinessAnalystContainer32.png"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/BusinessAnalystContainer16.png">
+          <button refID="esri_projectItemCreateStatisticalDataCollectionButton"/>
+          <button refID="esri_businessAnalyst_buttonNewCalculatedVariable"/>
+          <button refID="esri_businessAnalyst_buttonNewVariableList"/>
+          <button refID="esri_businessAnalyst_buttonCreateTargetGroup" separator="true"/>
+          <button refID="esri_businessAnalyst_buttonCreateCustomerProfile"/>
+          <button refID="esri_businessAnalyst_buttonCreateAreaProfile"/>
+          <button refID="esri_businessAnalyst_buttonNewHuffModelCalibration" separator="true"/>
+        </menu>
       </menus>
 
       <splitButtons>
@@ -1985,10 +2643,6 @@ Show information such as an item's thumbnail and tags as well as its location in
                   insert="after" placeWith="esri_core_ApplicationOptionsPropertyPage" >
         <content className="ArcGIS.Desktop.Internal.Core.DeviceLocation.LocationSourcesView" />
       </page>
-      <page id="esri_core_AuthenticationPropertyPage" caption="Authentication" className="OAuthConnectionsViewModel" group="Application"
-                  insert="after" placeWith="esri_sharing_SharingPropertyPage">
-        <content className="OAuthConnectionsView"/>
-      </page>
       <page id="esri_core_SecurityPropertyPage" caption="Security" className="SecurityOptionsViewModel" group="Application"
             placeWith="esri_mapping_customizePropertyPage" insert="before">
         <content className="SecurityOptionsView"/>
@@ -1997,6 +2651,9 @@ Show information such as an item's thumbnail and tags as well as its location in
   </propertySheets>
 
   <conditions>
+    <insertCondition id="esri_oauth_onedrive_integration_enabled" caption="OneDrive Integration Enabled">
+      <state id="esri_oauth_onedrive_integration_enabled_state" />
+    </insertCondition>
     <insertCondition id="esri_core_search" caption="Search tab">
       <state id="esri_search_State" />
     </insertCondition>
@@ -2178,6 +2835,10 @@ Show information such as an item's thumbnail and tags as well as its location in
 
     <insertTab id="esri_core_LicensingTab" caption="Licensing" extendedCaption="Licensing page; on Project tab" className="LicensingBackstageViewModel" separator="false" keytip="L">
       <content className="ArcGIS.Desktop.Internal.Core.LicensingBackstage" />
+    </insertTab>
+
+    <insertTab id="esri_core_AuthenticationTab" caption="Authentication" extendedCaption="Authentication page; on Project tab" className="AuthenticationBackstageViewModel" separator="false" keytip="A">
+      <content className="ArcGIS.Desktop.Internal.Core.AuthenticationBackstage" />
     </insertTab>
 
     <!-- TODO: make the options a TAB -->

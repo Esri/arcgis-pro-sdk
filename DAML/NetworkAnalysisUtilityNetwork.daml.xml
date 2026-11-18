@@ -83,6 +83,7 @@
           <button refID="esri_networkanalysis_utility_FindCircuitsBtn" size="large"/>
           <button refID="esri_networkanalysis_utility_CreateCircuitsBtn" size="large"/>
           <button refID="esri_networkanalysis_utility_ShowUnitIDOperationsBtn" size="large" />
+          <splitButton refID="esri_networkdiagrams_newDiagramFromCircuitNameSplitButton" size="large"/>
         </group>
 
         <group id="esri_networkanalysis_trace_Tools_Group" caption="Tools" launcherButtonID="esri_networkanalysis_network_View_TN_Trace_Settings_Btn" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/SetStartingPoints16.png">
@@ -958,9 +959,9 @@
       <or>
         <and>
           <or>
-          <state id="esri_map_utilityNetworkFGDB" />
-          <state id="esri_map_utilityNetworkMGDB" />
-          <state id="esri_map_utilityNetworkFeatureService" />
+            <state id="esri_map_utilityNetworkFGDB" />
+            <state id="esri_map_utilityNetworkMGDB" />
+            <state id="esri_map_utilityNetworkFeatureService" />
           </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
@@ -979,22 +980,24 @@
     <insertCondition id="esri_networkanalysis_utility_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
         <and>
           <or>
-            <state id="esri_map_utilityNetwork" />
-            <state id="esri_map_traceNetwork" />
+            <state id="esri_map_utilityNetworkFGDB" />
+            <state id="esri_map_utilityNetworkMGDB" />
+            <state id="esri_map_utilityNetworkFeatureService" />
           </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
-          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
           </or>
         </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-          <or>
-            <state id="esri_map_utilityNetwork" />
-            <state id="esri_map_traceNetwork" />
-          </or>
+        <or>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
             <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
@@ -1004,7 +1007,11 @@
 
     <insertCondition id="esri_networkanalysis_utility_not_trace_Unit_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-          <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
           <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
@@ -1014,7 +1021,11 @@
 
     <insertCondition id="esri_networkanalysis_utility_not_trace_ModifyAssociations_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
-          <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
             <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
@@ -1047,29 +1058,42 @@
     <insertCondition id="esri_networkanalysis_utility_ConnectivityInfoTool_Condition" caption="Geographic map is active and utility network layer is selected">
       <and>
           <or>
-            <state id="esri_map_utilityNetwork" />
-            <state id="esri_map_traceNetwork" />
+            <state id="esri_map_utilityNetworkFGDB" />
+            <state id="esri_map_utilityNetworkMGDB" />
+            <state id="esri_map_utilityNetworkFeatureService" />
+
+            <state id="esri_map_traceNetworkFGDB" />
+            <state id="esri_map_traceNetworkMGDB" />
+            <state id="esri_map_traceNetworkFeatureService" />
           </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
-          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
           </or>
         </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_utility_ValidateTool_Condition" caption="Geographic map is active and utility network layer is feature service">
       <and>
-          <state id="esri_map_utilityNetwork" />
+        <or>
+          <state id="esri_map_utilityNetworkFGDB" />
+          <state id="esri_map_utilityNetworkMGDB" />
+          <state id="esri_map_utilityNetworkFeatureService" />
+        </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
-          <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
+            <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
           </or>
         </and>
     </insertCondition>
 
     <insertCondition id="esri_networkanalysis_trace_ValidateTool_Condition" caption="Geographic map is active and trace network layer is available">
       <and>
-          <state id="esri_map_traceNetwork" />
+        <or>
+          <state id="esri_map_traceNetworkFGDB" />
+          <state id="esri_map_traceNetworkMGDB" />
+          <state id="esri_map_traceNetworkFeatureService" />
+        </or>
           <or>
             <state id="esri_license_hasStandardLicenseState" />
           <state id="esri_mapping_hasAdvancedEditingExtensionLicenseState" />
@@ -1082,6 +1106,7 @@
         <state id="esri_map_utilityNetworkFGDB" />
         <state id="esri_map_utilityNetworkMGDB" />
         <state id="esri_map_utilityNetworkFeatureService" />
+        
         <state id="esri_map_traceNetworkFGDB" />
         <state id="esri_map_traceNetworkMGDB" />
         <state id="esri_map_traceNetworkFeatureService" />

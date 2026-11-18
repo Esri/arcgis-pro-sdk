@@ -159,6 +159,18 @@
     <insertCondition id="esri_geoprocessing_EnviromentsToolPropsCondition">
       <state id="esri_geoprocessing_ExtToolProps" />
     </insertCondition>
+    <insertCondition id="esri_modelbuilder_shareWebToolCondition">
+      <and>
+        <!--esri_geoprocessing_anyMBPane-->
+        <or>
+          <state id="esri_geoprocessing_modelBuilderPane"/>
+          <state id="esri_geoprocessing_MBReportPane"/>
+        </or>
+        <!--esri_sharing_SharingWebToolPaneCondition-->
+        <state id="esri_core_isSignedIn" />
+        <state id="esri_core_isPortal"/>
+      </and>
+    </insertCondition>
   </conditions>
 
   <categories>
@@ -589,7 +601,7 @@
         <content filter="esri_browseDialogFilters_gp_all" />
       </component>
       <component id="GPSceneServiceLayer">
-        <content filter="esri_browseDialogFilters_sceneServiceLayer" />
+        <content filter="esri_browseDialogFilters_3DWebLayers_all" />
       </component>
       <component id="GPUtilityNetworkLayer">
         <content filter="esri_browseDialogFilters_geodatabaseItems_facilityNetwork" />
@@ -769,6 +781,7 @@
           <tool group="Generalize" name="ra.Nibble"/>
           <tool group="Analyze Patterns" name="ra.InterpolatePoints"/>
           <tool group="Analyze Patterns" name="ra.CalculateDensity"/>
+          <tool group="Summarize Data" name="ra.ZonalStatistics"/>
           <tool group="Summarize Data" name="ra.ZonalStatisticsAsTable"/>
           <tool group="Summarize Data" name="ra.SummarizeRasterWithin"/>
         </content>
@@ -845,25 +858,33 @@
         <content extensionCategoryRefID="ai_geoprocessing_category">
           <uiText>
             <title>ModelBuilder Automation</title>
-            <shortDescription>Creates, opens, validates, and populates ModelBuilder workflows.</shortDescription>
+            <shortDescription>Creates, opens, validates, and populates ModelBuilder workflows; including adding map layers, catalog data, feature classes, database tables, or geoprocessing tools</shortDescription>
           </uiText>
           <searchDescriptions>
             <searchDescription>Open, edit, or create a new ModelBuilder model.</searchDescription>
             <searchDescription>Save a ModelBuilder model.</searchDescription>
-            <!--<searchDescription>Run a ModelBuilder model.</searchDescription>-->
+            <searchDescription>Run a ModelBuilder model.</searchDescription>
             <searchDescription>Add geoprocessing tools to a model.</searchDescription>
+            <searchDescription>Add geoprocessing tools.</searchDescription>
             <searchDescription>Add map layers to a model.</searchDescription>
+            <searchDescription>Add map layers.</searchDescription>
             <searchDescription>Add data to a model.</searchDescription>
+            <searchDescription>Add data.</searchDescription>
+            <searchDescription>Add Catlog items to a model.</searchDescription>
+            <searchDescription>Add Catlog items.</searchDescription>
             <searchDescription>Set geoprocessing tool parameters.</searchDescription>
             <searchDescription>Validate a ModelBuilder model.</searchDescription>
+            <searchDescription>Connect ModelBuilder elements within a model.</searchDescription>
+            <searchDescription>Connect ModelBuilder elements.</searchDescription>
             <searchDescription>Add a ModelBuilder tool to a model.</searchDescription>
             <searchDescription>Add a ModelBuilder iterator tool to a model.</searchDescription>
             <searchDescription>Add a ModelBuilder utility tool to a model.</searchDescription>
             <searchDescription>Add a ModelBuilder logical tool to a model.</searchDescription>
+            <searchDescription>Layout model elements in a model.</searchDescription>
           </searchDescriptions>
-          <dependencies>
-            <dependency refID="esri_search_assistant_extension|SearchOrBrowseChildren"/>
-          </dependencies>
+          <!--<dependencies>
+              <dependency refID="esri_search_assistant_extension|SearchForAction"/>
+          </dependencies>-->
           <aiAssistantFunction name="OpenEditCreateModel">
             <searchDescriptions>
               <searchDescription>Open a model.</searchDescription>
@@ -883,24 +904,34 @@
           </aiAssistantFunction>-->
           <aiAssistantFunction name="AddLayerOrTablesToModel" condition="">
             <searchDescriptions>
-              <searchDescription>Add map layers to a model.</searchDescription>
-              <searchDescription>Add map tables to a model.</searchDescription>
+              <searchDescription>Add map content layers to a model.</searchDescription>
+              <searchDescription>Add map content tables to a model.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="AddDataToModel" condition="">
+          <aiAssistantFunction name="AddCatalogItemsToModel" condition="">
             <searchDescriptions>
-              <searchDescription>Add data to a ModelBuilder model.</searchDescription>
-              <searchDescription>Add data to a model.</searchDescription>
+              <searchDescription>Add database tables to a model.</searchDescription>
+              <searchDescription>Add catalog items to a model.</searchDescription>
               <searchDescription>Add feature classes to a model.</searchDescription>
             </searchDescriptions>
-            <dependencies>
-              <dependency refID="esri_search_assistant_extension|SearchOrBrowseChildren"/>
-            </dependencies>
+            <!--<dependencies>
+              <dependency refID="esri_search_assistant_extension|SearchForAction"/>
+            </dependencies>-->
           </aiAssistantFunction>
           <aiAssistantFunction name="ValidateModel" condition="">
             <searchDescriptions>
               <searchDescription>Validate a ModelBuilder model.</searchDescription>
               <searchDescription>Validate a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="ConnectElements" condition="">
+            <searchDescriptions>
+             <searchDescription>Connect model elements in a model.</searchDescription>
+            </searchDescriptions>
+          </aiAssistantFunction>
+          <aiAssistantFunction name="LayoutModelElements" condition="">
+            <searchDescriptions>
+              <searchDescription>Layout model elements in a model.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
         </content>
@@ -1167,7 +1198,9 @@
         </tab>
 
         <tab id="esri_geoprocessing_ProNBTab" caption="Notebook" condition="esri_geoprocessing_proNotebookPane" insert="before" placeWith="esri_core_insertTab" keytip="B">
+          <group refID="esri_nb_python_clipboard"/>
           <group refID="esri_python_savegroup"/>
+          <group refID="esri_pnotebook_runGroup"/>
         </tab>
 
         <tab id="esri_geoprocessing_MBDiagramTab1" caption="Diagram" condition="esri_geoprocessing_modelBuilderPane" keytip="MD" tabGroupID="esri_geoprocessing_MBTabGroup">
@@ -1186,7 +1219,7 @@
           <group refID="esri_modelbuilder_runGroup"/>
           <group refID="esri_modelbuilder_insertGroup"/>
           <group refID="esri_modelbuilder_groupGroup"/>
-          <group refID="esri_modelbuilder_messagesGroup"/>
+          <!--<group refID="esri_modelbuilder_messagesGroup"/>-->
         </tab>
 
         <!--<tab id="esri_geoprocessing_MBInsertTab" caption="Insert" condition="esri_geoprocessing_anyGPPane" keytip="N">
@@ -1264,15 +1297,16 @@
         </group>
 
         <group id="esri_modelbuilder_newModelGroup" caption="Model" launcherButtonID="esri_geoprocessing_openMBOptionsButton" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" >
-          <button refID="esri_modelbuilder_NewModelButton" size="large" />
+          <button refID="esri_modelbuilder_NewModelButton" size="large" />     
           <button refID="esri_modelbuilder_saveSplitButton" size="large" />
           <button refID="esri_modelbuilder_autoSaveButton" size="middle" />
           <button refID="esri_modelBuilder_editToolProperties" size="middle" />
           <button refID="esri_modelbuilder_environmentsButton" size="middle" />
+          <button refID="esri_modelbuilder_OpenToolInGPPane" size="middle" />
           <button refID="esri_modelbuilder_exportSplitButton" size="middle" />
           <button refID="esri_modelbuilder_reportViewButton" size="middle" />
-          <button refID="esri_modelbuilder_OpenToolInGPPane" size="middle" />
           <button refID="esri_modelbuilder_findAndReplace" size="large" />
+          <button refID="esri_modelbuilder_shareWebToolBtn" size="large" />
         </group>
         <group id="esri_modelbuilder_viewGroup" caption="View" smallImage="ModelBuilderAutoLayout16" largeImage="ModelBuilderAutoLayout32">
           <button refID="esri_modelbuilder_autoLayoutDiagramButton" size="large" />
@@ -1281,9 +1315,12 @@
           <button refID="esri_modelbuilder_nextExtentButton" size="small" />
         </group>
         <group id="esri_modelbuilder_runGroup" caption="Run" smallImage="GenericRun16" largeImage="GenericRun32">
-          <button refID="esri_modelbuilder_validateButton" />
+          <button refID="esri_modelbuilder_validateSplitButton" />
           <button refID="esri_modelbuilder_runModelButton" />
-          <button refID="esri_modelbuilder_deleteIntermediateDataActualButton" />
+          <button refID="esri_modelbuilder_progressorOpen" size="middle" />
+          <button refID="esri_modelbuilder_deleteIntermediateDataActualButton" size="middle" />
+          <button refID="esri_modelbuilder_scheduleToolBtn" size="middle" />
+
         </group>
         <group id="esri_modelbuilder_modeGroup" caption="Mode" smallImage="ModelBuilderSelect16">
           <button refID="esri_modelbuilder_selectButton" size="middle" />
@@ -1305,12 +1342,10 @@
           <button refID="esri_modelbuilder_ungroupButton" />
         </group>
 
-        <group id="esri_modelbuilder_messagesGroup" caption="Messages" smallImage="GeoprocessingResultsFolderOpenState16" largeImage="GeoprocessingResultsFolderOpenState32">
+        <!--<group id="esri_modelbuilder_messagesGroup" caption="Messages" smallImage="GeoprocessingResultsFolderOpenState16" largeImage="GeoprocessingResultsFolderOpenState32">
           <button refID="esri_modelbuilder_progressorOpen" size="large" />
         </group>
-
-        <!--<group id="esri_geoprocessing_datainterop_group" caption="Interoperability" smallImage="FME_WB16" largeImage="FME_WB32">
-
+        <group id="esri_geoprocessing_datainterop_group" caption="Interoperability" smallImage="FME_WB16" largeImage="FME_WB32">
           </group>-->
         <group id="esri_modelbuilder_spacingGroup" caption="Spacing" sizePriorities="medium" largeImage="ModelBuilderNewModel32" smallImage="ModelBuilderNewModel16" condition="esri_geoprocessing_modelBuilderPane">
           <labelControl refID="esri_modelbuilder_elementLabel"  size="small"/>
@@ -1338,12 +1373,27 @@
         </group>
 
 
+        <group id="esri_nb_python_clipboard" caption="Clipboard" condition="esri_geoprocessing_proNotebookPane">
+          <button refID="esri_pnotebook_paste" size="large"/>
+          <button refID="esri_pnotebook_cut" size="medium"/>
+          <button refID="esri_pnotebook_copy" size="medium"/>
+        </group>
+
         <group id="esri_python_savegroup" caption="Notebook" condition="esri_geoprocessing_proNotebookPane">
           <button refID="esri_pnotebook_New" size="large"/>
-          <button refID="esri_pnotebook_Save" size="large"/>
-          <button refID="esri_pnotebook_Saveas" size="large"/>
-          <splitButton refID="esri_pnotebook_Export" size ="large"/>
-          <button refID="esri_pnotebook_Interrupt" size="large"/>
+          <splitButton refID="esri_pnotebook_SaveSplitButton" size ="large"/>
+          <!--<button refID="esri_pnotebook_autoSave" size="medium"/>-->
+          <splitButton refID="esri_pnotebook_Export" size ="medium"/>
+          <button refID="esri_pnotebook_packageManager" size="medium"/>
+          <button refID="esri_pnotebook_findReplace" size="large"/>
+        </group>
+
+        <group id="esri_pnotebook_runGroup" caption="Run" condition="esri_geoprocessing_proNotebookPane">
+          <button refID="esri_pnotebook_runCell" size="large"/>
+          <button refID="esri_pnotebook_runAllCells" size="large"/>
+          <button refID="esri_pnotebook_interruptKernel" size="medium"/>
+          <button refID="esri_pnotebook_restartKernel" size="medium"/>
+          <customControl refID="esri_pnotebook_kernelSelector" size="medium"/>
         </group>
 
         <group id="esri_geoprocessing_cadToolsGroup" caption="Tools" extendedCaption="Geoprocessing tools for CAD files" smallImage="GeoprocessingTool16">
@@ -1457,6 +1507,27 @@
           </tooltip>
         </customControl>
 
+        <labelControl id="esri_modelbuilder_autoSyncLabel" caption="AutoSync" hasTwoLines="false" />
+        <customControl id="esri_modelbuilder_autoSync_CustomControl" loadOnClick="false"
+                       caption="AutoSync" extendedCaption="Sync model edits" 
+                       hideTooltip="true" hidden="true" condition="anyMBPane"
+                       className="ArcGIS.Desktop.GeoProcessing.MBAutoSyncViewModel">
+          <content className="ArcGIS.Desktop.GeoProcessing.MBAutoSyncView" />
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </customControl>
+
+        <customControl id="esri_modelbuilder_reportRefresh_CustomControl" loadOnClick="false"
+                       caption="AutoSync" extendedCaption="Sync model edits" 
+                       hideTooltip="true" hidden="true" condition="anyMBPane"
+                       className="ArcGIS.Desktop.GeoProcessing.MBReportRefreshViewModel">
+          <content className="ArcGIS.Desktop.GeoProcessing.MBReportRefreshView" />
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </customControl>
+        
         <button id="esri_modelbuilder_bezierLinkTypeButton" hidden="true" caption="Bezier" keytip="B" extendedCaption="Link Type" className="MBLinkShapeStatusBezier" loadOnClick="false" helpContextID="" smallImage="ModelBuilderLinkBezier16" largeImage="ModelBuilderLinkBezier32" condition="esri_geoprocessing_modelBuilderPane" >
           <tooltip heading="Bezier" >
             The shape of the connector used while drawing, or after Auto Layout is applied. The connector segments will be Bezier curves.
@@ -1663,7 +1734,27 @@ You can search for a specific tool, see a list of favorite and recently run tool
             <disabledText></disabledText>
           </tooltip>
         </customControl>
+        <customControl id="esri_modelbuilder_searchFilter" keytip="ST" caption="Search Filter"
+                       className="ArcGIS.Desktop.GeoProcessing.ViewModels.SearchFilterViewModel"
+                       disableIfBusy="false" loadOnClick="true"  
+                       helpContextID="" condition="esri_geoprocessing_anyMBPane">
+          <content className="ArcGIS.Desktop.GeoProcessing.Controls.SearchFilterControl"/>
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </customControl>
 
+        <customControl id="esri_modelbuilder_filterObjectsList" keytip="FO" caption="Filters" isDropDown="true"
+                       smallImage="Filter16" largeImage="Filter32"
+                       className="ArcGIS.Desktop.GeoProcessing.Controls.FilterItemsVM"
+                       disableIfBusy="false" loadOnClick="false" staysOpenOnClick="true"
+                       helpContextID="" condition="esri_geoprocessing_anyMBPane">
+          <content className="ArcGIS.Desktop.GeoProcessing.Controls.FilterItems"/>
+          <tooltip heading="">
+            <disabledText></disabledText>
+          </tooltip>
+        </customControl>
+       
         <button id="esri_geoprocessing_toolsButtonFromGallery" hidden="true" className="esri_geoprocessing_module:Commands.ShowTools" caption="More Tools..." keytip="MT" extendedCaption="Open Geoprocessing pane" helpContextID="">
           <tooltip heading="Geoprocessing">
             Show the Geoprocessing pane.
@@ -2199,7 +2290,7 @@ Common environments include: extent, output coordinate system, cell size, and ra
           </tooltip>
         </button>
 
-        <button id="esri_modelbuilder_progressorOpen" caption="Open" disableIfBusy="false" extendedCaption="ModelBuilder" keytip="OP"
+        <button id="esri_modelbuilder_progressorOpen" caption="Messages" disableIfBusy="false" extendedCaption="ModelBuilder" keytip="OP"
                 className="esri_geoprocessing_module:Commands.OpenProgressor" loadOnClick="false"
                 smallImage="GeoprocessingResultsFolderOpenState16"
                 largeImage="GeoprocessingResultsFolderOpenState32"
@@ -2360,6 +2451,16 @@ Common environments include: extent, output coordinate system, cell size, and ra
             Find and Replace.<disabledText></disabledText>
           </tooltip>
         </button>
+        <button id="esri_modelbuilder_PreviousButton" caption="Previous" hidden="true" extendedCaption="ModelBuilder" keytip="MP" className="esri_geoprocessing_modelBuilderPane:DiagramNodeHelper.MBSearchPrevious" smallImage="GenericBlueLeftArrowLongTail16" largeImage="GenericBlueLeftArrowLongTail32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Previous">
+            Search previous<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_ForwardButton" caption="Forward" hidden="true" extendedCaption="ModelBuilder" keytip="MF" className="esri_geoprocessing_modelBuilderPane:DiagramNodeHelper.MBSearchForward" smallImage="GenericBlueRightArrowLongTail16" largeImage="GenericBlueRightArrowLongTail32" condition="esri_geoprocessing_anyMBPane" helpContextID="">
+          <tooltip heading="Next">
+            Search forward<disabledText></disabledText>
+          </tooltip>
+        </button>
         <button id="esri_modelbuilder_cutElementButton" caption="Cut" extendedCaption="ModelBuilder" keytip="X" className="esri_geoprocessing_module:Commands.CutElements" smallImage="EditCut16" largeImage="EditCut32" loadOnClick="false" helpContextID="" condition="esri_geoprocessing_modelBuilderPane">
           <tooltip heading="Cut">
             Cut selected model elements.<disabledText>Make a model the active view.</disabledText>
@@ -2404,6 +2505,16 @@ Common environments include: extent, output coordinate system, cell size, and ra
         <button id="esri_modelbuilder_validateButton" caption="Validate" extendedCaption="ModelBuilder" keytip="MV" className="esri_geoprocessing_module:Commands.ValidateModel" smallImage="GenericCheckMark16" largeImage="GenericCheckMark32" helpContextID="2b067b95f7" condition="esri_geoprocessing_anyMBPane">
           <tooltip heading="Validate">
             Verify all data elements and parameter values are valid.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_validateModelButton" caption="Validate" extendedCaption="ModelBuilder" keytip="MV" className="esri_geoprocessing_module:Commands.ValidateModel" smallImage="GenericCheckMark16" largeImage="GenericCheckMark32" helpContextID="2b067b95f7" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Validate">
+            Verify all data elements and parameter values are valid.<disabledText>Make a model the active view.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_modelbuilder_analyzeModeleButton" caption="Inspect Model" extendedCaption="ModelBuilder" keytip="MV" className="esri_geoprocessing_module:Commands.AnalyzeModel" smallImage="CheckBox16" largeImage="CheckBox32" helpContextID="2b067b95f7" condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Inspect Model">
+            Inspects all data elements, tools and parameter values in a model.<disabledText>Make a model the active view.</disabledText>
           </tooltip>
         </button>
         <button id="esri_modelbuilder_runModelButton" caption="Run" extendedCaption="ModelBuilder" keytip="RM" className="esri_geoprocessing_module:Commands.RunModel" smallImage="GenericRun16" largeImage="GenericRun32" helpContextID="b1b5087446" condition="esri_geoprocessing_anyMBPane">
@@ -2955,12 +3066,48 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           </tooltip>
         </button>
 
-        <button id="esri_pnotebook_Save" hidden="true" caption="Save" keytip="S" extendedCaption="Save" className="esri_geoprocessing_module:Commands.SavePythonNotebook"
+        <button id="esri_pnotebook_paste" hidden="true" caption="Paste" keytip="P" extendedCaption="Paste" className="esri_geoprocessing_module:Commands.PastePythonNotebook"
+                loadOnClick="false" helpContextID="" smallImage="EditPaste16"
+                largeImage="EditPaste32" condition="esri_geoprocessing_proNotebookPane">
+          <tooltip heading="Paste">
+            Paste this cell from clipboard<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_pnotebook_cut" hidden="true" caption="Cut" keytip="X" extendedCaption="Cut" className="esri_geoprocessing_module:Commands.CutPythonNotebook"
+                loadOnClick="false" helpContextID="" smallImage="EditCut16"
+                largeImage="EditCut32" condition="esri_geoprocessing_proNotebookPane">
+          <tooltip heading="Cut">
+            Cut this cell<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_pnotebook_copy" hidden="true" caption="Copy" keytip="C" extendedCaption="Copy" className="esri_geoprocessing_module:Commands.CopyPythonNotebook"
+                loadOnClick="false" helpContextID="" smallImage="EditCopy16"
+                largeImage="EditCopy32" condition="esri_geoprocessing_proNotebookPane">
+          <tooltip heading="Copy">
+            Copy this cell<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_Save" hidden="false" caption="Save" keytip="S" extendedCaption="Save" className="esri_geoprocessing_module:Commands.SavePythonNotebook"
                 loadOnClick="false" helpContextID="" smallImage="GenericSave16"
-                largeImage="GenericSave32">
-          <tooltip heading="Save (Ctrl+S)" >
-            Save Python Notebook.
-            <disabledText></disabledText>
+                largeImage="GenericSave32" condition="esri_geoprocessing_proNotebookPane">
+          <tooltip heading="Save">
+            Save Python Notebook.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_pnotebook_SaveFile" hidden="true" caption="SaveFile" extendedCaption="Save"
+                className="esri_geoprocessing_module:Commands.ExportNotebookToHtml" keytip="EH"
+                smallImage="GenericSave32"
+                largeImage="GenericSave32" helpContextID="">
+          <tooltip heading="Export To HTML">
+            Export notebook to HTML file.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_pnotebook_SaveAs" hidden="true" caption="Save As" keytip="A" extendedCaption="Save As" className="esri_geoprocessing_module:Commands.SavePythonNotebookAs"
+                loadOnClick="false" helpContextID="" smallImage="EditingSaveEdits_B_16"
+                largeImage="EditingSaveEdits_B_32" condition="esri_geoprocessing_proNotebookPane">
+          <tooltip heading="Save As">
+            Save Python Notebook with a new name.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2970,6 +3117,15 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
           <tooltip heading="Interrupt Kernel">
             Interrupts the notebook kernel.
             <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_exportMain" hidden="true" caption="Export" extendedCaption="Export"
+                className="esri_geoprocessing_module:Commands.ExportNotebookToPython"
+                smallImage="GenericExport16"
+                largeImage="GenericExport32" helpContextID="">
+          <tooltip heading="Export To Python">
+            Export Notebook to Python file.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -2998,6 +3154,71 @@ Additionally, use Raster Functions and the Raster Function Editor to build custo
             Export Notebook to Python file.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <button id="esri_pnotebook_autoSave" hidden="true" caption="Auto Save" extendedCaption="Auto Save"
+                className="esri_geoprocessing_module:Commands.AutoSavePythonNotebook"
+                smallImage="GenericAutoSave16" helpContextID="">
+          <tooltip heading="Auto Save">
+            Save the Python Notebook.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_findReplace" hidden="true" caption="Find and Replace" extendedCaption="Find and Replace"
+                className="esri_geoprocessing_module:Commands.FindReplacePythonNotebook"
+                smallImage="FindReplaceMenu16" largeImage="FindReplaceMenu32" helpContextID="">
+          <tooltip heading="Find and Replace">
+            Find and replace text in the Python Notebook.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_packageManager" hidden="true" caption="Package Manager" extendedCaption="Package Manager"
+                className="esri_geoprocessing_module:Commands.ShowPackageManager"
+                smallImage="Available-Packages16" helpContextID="">
+          <tooltip heading="Package Manager">
+            Open the Python Package Manager.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_runCell" hidden="true" caption="Run Cell" extendedCaption="Run Cell"
+                className="esri_geoprocessing_module:Commands.RunNotebookCell"
+                smallImage="GenericRun16" largeImage="GenericRun32" helpContextID="">
+          <tooltip heading="Run Cell">
+            Run the selected notebook cell.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_runAllCells" hidden="true" caption="Run All Cells" extendedCaption="Run All Cells"
+                className="esri_geoprocessing_module:Commands.RunAllNotebookCells"
+                smallImage="GenericStep32" largeImage="GenericStep32" helpContextID="">
+          <tooltip heading="Run All Cells">
+            Run all cells in the notebook.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_interruptKernel" hidden="true" caption="Interrupt Kernel" extendedCaption="Interrupt Kernel"
+                className="esri_geoprocessing_module:Commands.InterruptPythonNotebook"
+                smallImage="GenericStop16" helpContextID="">
+          <tooltip heading="Interrupt Kernel">
+            Interrupt the notebook kernel.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_pnotebook_restartKernel" hidden="true" caption="Restart Kernel" extendedCaption="Restart Kernel"
+                className="RestartNotebookKernelButton" loadOnClick="false" isEnabled="{Binding IsRestartKernelEnabled}"
+                smallImage="GenericReset16" helpContextID="">
+          <tooltip heading="Restart Kernel">
+            Restart the notebook kernel.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <customControl id="esri_pnotebook_kernelSelector" caption="" extendedCaption="Kernels" className="NotebookKernelSelectorViewModel"
+                       loadOnClick="false" disableIfBusy="false" smallImage="SwitchVariables16">
+          <content className="NotebookKernelSelector" />
+          <tooltip heading="Kernels">
+            Select the notebook kernel.<disabledText></disabledText>
+          </tooltip>
+        </customControl>
+
         <!--<button id="esri_pnotebook_Saveas" hidden="true" caption="Save as" keytip="A" extendedCaption="Save As" className="esri_geoprocessing_module:Commands.SavePythonNotebookAs" loadOnClick="false" helpContextID="" smallImage="EditingSaveEdits_B_16" largeImage="EditingSaveEdits_B_32">
           <tooltip heading="Save as" >
             Save Python notebook with a new name.
@@ -3078,10 +3299,38 @@ You can search for a specific tool, see a list of favorite and recently run tool
         <labelControl refID="esri_modelbuilder_OutputLabel"  caption="Outputs" hasTwoLines="false"/>
         <labelControl refID="esri_modelbuilder_AllLabel"  caption="All" hasTwoLines="false"/>
         <labelControl refID="esri_modelbuilder_ExportLabel"  caption="Export: " hasTwoLines="false"/>
+
+        <!--schedule command-->
+        <button id="esri_modelbuilder_scheduleToolBtn"
+          caption="Schedule"
+          extendedCaption="Schedule run for current model"
+          className="esri_geoprocessing_module:Commands.ShowScheduleModel"
+          smallImage="GenericCalendar16"
+          largeImage="GenericCalendar32"
+          helpContextID="" loadOnClick="false"
+          condition="esri_geoprocessing_anyMBPane">
+          <tooltip heading="Schedule Tool">
+            Schedule run for the current active model.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <!--sharing command-->
+        <button id="esri_modelbuilder_shareWebToolBtn"
+          caption="Share As Web Tool"
+          extendedCaption="Share the current model as web tool"
+          className="ArcGIS.Desktop.Sharing.ShowCurrentModelWebToolPane"
+          assembly="Extensions\Sharing\ArcGIS.Desktop.Sharing.dll"
+          smallImage="ShareModel16"
+          largeImage="ShareModel32"
+          helpContextID="120001202" loadOnClick="false"
+          condition="esri_modelbuilder_shareWebToolCondition">
+          <tooltip heading="Share As Web Tool">
+            Share the current active model to your ArcGIS Enterprise organization.<disabledText>You must be signed into an ArcGIS Enterprise organizational account that has web tool sharing privileges.</disabledText>
+          </tooltip>
+        </button>
       </controls>
 
-      <!-- Temporarily commented this out because not quite ready for 3.7 release -->
-      <!--<customToolbars>
+      <customToolbars>
         <toolbar id="esri_modelbuilder_toolbar" caption="ModelBuilder" >
           <labelControl refID="esri_modelbuilder_modelLabel"  size="small"/>
           <splitButton refID="esri_modelbuilder_saveSplitButtonToolbar" size="small"/>
@@ -3090,10 +3339,13 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_modelBuilder_editToolProperties" size="small"/>
           <button refID="esri_modelbuilder_OpenToolInGPPane2" size="small"/>
           <button refID="esri_modelbuilder_findAndReplace" size="small"/>
+          <customControl refID="esri_modelbuilder_filterObjectsList" size="small"/>
+          <customControl refID="esri_modelbuilder_searchFilter" size="small"/>
+          <button refID="esri_modelbuilder_PreviousButton" size="small"/>
+          <button refID="esri_modelbuilder_ForwardButton" size="small"/>
           <labelControl refID="esri_modelbuilder_runLabel"  size="small" separator="true"/>
-          <button refID="esri_modelbuilder_validateButton" size="small"/>
+          <button refID="esri_modelbuilder_validateSplitButton" size="small"/>
           <button refID="esri_modelbuilder_runModelButton" size="small"/>
-          <button refID="esri_modelbuilder_deleteIntermediateDataActualButton" size="middle"/>
           <labelControl refID="esri_modelbuilder_insertLabel"  size="small" separator="true"/>
           <splitButton refID="esri_geoprocessing_toolsSplitButton" size="middle"/>
           <button refID="esri_modelbuilder_createVariableButton" size="middle"/>
@@ -3124,8 +3376,10 @@ You can search for a specific tool, see a list of favorite and recently run tool
         <labelControl refID="esri_modelbuilder_ErrorLabel"  size="small" separator="true"/>
         <button refID="esri_modelbuilder_findAndReplace" size="middle"/>
         <labelControl refID="esri_modelbuilder_findAndReplaceLabel"  size="small" separator="true"/>
+        <customControl refID="esri_modelbuilder_autoSync_CustomControl"  size="small" separator="true" isSingleton="false" />
+        <customControl refID="esri_modelbuilder_reportRefresh_CustomControl"  size="small" isSingleton="false" />
         </toolbar>
-      </customToolbars>-->
+      </customToolbars>
 
       <panes>
         <pane id="esri_geoprocessing_modelBuilderPane" caption="ModelBuilder" className="ModelBuilderPaneViewModel" smallImage="GeoprocessingModel16" isClosable="true" defaultTab="esri_geoprocessing_MBHomeTab">
@@ -3978,10 +4232,14 @@ You can search for a specific tool, see a list of favorite and recently run tool
       </menus>
 
       <splitButtons>
-        <splitButton id="esri_pnotebook_Export" keytip="EF" extendedCaption="Export" caption="Export">
-          <button refID="esri_pnotebook_exportToPython" />
+        <splitButton id="esri_pnotebook_Export" keytip="EF" extendedCaption="Export" caption="Export" smallImage="GenericExport16" largeImage="GenericExport32">
+          <button refID="esri_pnotebook_exportMain" />
           <button refID="esri_pnotebook_exportToPythonFile" />
           <button refID="esri_pnotebook_exportToHTMLFile" />
+        </splitButton>
+        <splitButton id="esri_pnotebook_SaveSplitButton" keytip="SV" extendedCaption="Save" caption="Save">
+          <button refID="esri_pnotebook_Save" />
+          <button refID="esri_pnotebook_SaveAs" />
         </splitButton>
 
         <splitButton id="esri_geoprocessing_PythonSplitButton" keytip="PF" extendedCaption="Python" caption="Python">
@@ -4015,6 +4273,11 @@ You can search for a specific tool, see a list of favorite and recently run tool
           <button refID="esri_modelbuilder_saveModelButtonToolbar" />
           <button refID="esri_modelbuilder_saveButton" />
           <button refID="esri_modelbuilder_saveAsButton" />
+        </splitButton>
+        <splitButton id="esri_modelbuilder_validateSplitButton" hidden ="false" caption="Validate A Model" extendedCaption="ModelBuilder" keytip="SM">
+          <button refID="esri_modelbuilder_validateButton" />
+          <button refID="esri_modelbuilder_validateModelButton" />          
+          <button refID="esri_modelbuilder_analyzeModeleButton" />
         </splitButton>
         <splitButton id="esri_linearReferencing_toolsSplitButton" caption="Tools" extendedCaption="Open Geoprocessing pane" keytip="TS"
         largeImage="GeoprocessingToolbox32"

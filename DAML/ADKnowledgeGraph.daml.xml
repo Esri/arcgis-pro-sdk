@@ -376,6 +376,28 @@
         <state id="esri_knowledgeGraph_canAccessKnowledgeGraphState"/>
       </and>
     </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_CanShowLoadDataViewTabs">
+      <state id="esri_knowledgeGraph_loadDataView"/>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_loadData_CanAddTypeDefinitions">
+      <and>
+        <state id="esri_knowledgeGraph_loadDataView"/>
+        <state id ="esri_knowledgeGraph_loadData_hasPlanItemsState"/>
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_loadData_CanAddSourceTableCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadDataView"/>
+        <not>
+          <state id ="esri_knowledgeGraph_loadData_hasPlanItemsState"/>
+        </not>
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
     
     <insertCondition id="esri_knowledgeGraph_CanRenameInvestigationTocCondition">
       <state id="esri_knowledgeGraph_CanRenameInvestigationTocState"/>
@@ -417,12 +439,10 @@
         </not>
       </and>
     </insertCondition>
-    
+
+    <!--Show the contextual tab when the link chart is active-->    
     <insertCondition id="esri_knowledgeGraph_CanShowKGLayerLCContextualTab">
-      <and>
-        <state id="esri_mapping_knowledgeGraphLayerSelectedState"/>
         <state id="esri_mapping_mapTypeLinkChartState" />
-      </and>
     </insertCondition>
 
     <insertCondition id="esri_knowledgeGraph_CanRunLoadTableViewImport">
@@ -459,6 +479,7 @@
         <state id ="esri_knowledgeGraph_serverCompatible"/>
         <state id ="esri_knowledgeGraph_canDeleteEntityType"/>
         <state id ="esri_knowledgeGraph_userCanEditService"/>
+        <state id ="esri_knowledgeGraph_userCanEditSchema"/>
       </and>
     </insertCondition>
 
@@ -562,6 +583,15 @@
         <state id ="esri_knowledgeGraph_serverCompatible"/>
       </and>
     </insertCondition>
+
+    <insertCondition id="esri_knowledgeGraph_signedInAndCanEditServiceAndSchemaAndServerCompatible">
+      <and>
+        <state id ="esri_knowledgeGraph_CanAccessAssociatedPortal"/>
+        <state id ="esri_knowledgeGraph_userCanEditService"/>
+        <state id ="esri_knowledgeGraph_userCanEditSchema"/>
+        <state id ="esri_knowledgeGraph_serverCompatible"/>
+      </and>
+    </insertCondition>    
 
     <insertCondition id="esri_knowledgeGraph_signedInAndServerCompatibleAndNotReadOnly">
       <and>
@@ -686,6 +716,13 @@
       </and>
     </insertCondition>
 
+    <insertCondition id="esri_knowledgeGraph_CanEnableSaveDefaultPropertiesInKGLayerLCTab">
+      <and>
+        <state id="esri_mapping_knowledgeGraphLayerSelectedState"/>
+        <state id="esri_mapping_mapTypeLinkChartState" />
+      </and>
+    </insertCondition>
+
     <insertCondition id="esri_knowledgeGraph_canExportDataModelDesignCondition">
       <state id ="esri_knowledgeGraph_canExportDataModelDesign"/>
     </insertCondition>
@@ -705,7 +742,71 @@
     <insertCondition id ="esri_knowledgeGraph_fileKnowledgeGraphLicensedCondition">
       <state id="esri_knowledgeGraph_fileKnowledgeGraphLicensedState" />  
     </insertCondition>
-    
+
+    <insertCondition id="esri_knowledgeGraph_kgLayerCanDownloadCondition">
+      <and>
+        <state id="esri_knowledgeGraph_kgLayerCanDownloadState"/>
+        <not>
+          <state id="esri_mapping_mapIsInPortalProjectState"/>
+        </not>
+      </and>
+    </insertCondition>
+    <insertCondition id="esri_knowledgeGraph_kgLayerCanSyncCondition">
+      <and>
+        <state id="esri_knowledgeGraph_kgLayerCanSyncState"/>
+        <not>
+          <state id="esri_mapping_mapIsInPortalProjectState"/>
+        </not>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadDataPlanValidCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadData_hasPlanItemsState" />
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadDataPlanSelectionCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadData_hasPlanItemsState" />
+        <state id="esri_knowledgeGraph_loadData_hasPlanSelectionState" />
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadData_CanSavePlanAsCurrentCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadData_hasPlanItemsState" />
+        <state id="esri_knowledgeGraph_loadData_planHasChangesState" />
+        <not>
+          <state id="esri_knowledgeGraph_loadData_hasPlanErrorsState" />
+        </not>
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadData_CanSavePlanAsNewCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadData_hasPlanItemsState" />
+        <not>
+          <state id="esri_knowledgeGraph_loadData_hasPlanErrorsState" />
+        </not>
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadData_CanRunImportCondition">
+      <and>
+        <state id="esri_knowledgeGraph_loadData_hasPlanItemsState" />
+        <state id="esri_knowledgeGraph_loadData_canRunImportState" />
+        <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+      </and>
+    </insertCondition>
+
+    <insertCondition id ="esri_knowledgeGraph_loadData_CanAccessKnowledgeGraphCondition">
+       <state id ="esri_knowledgeGraph_loadData_canAccessKnowledgeGraphState"/>
+    </insertCondition>
   </conditions>
 
   <categories>
@@ -718,79 +819,91 @@
           </uiText>
           <searchDescriptions>
             <searchDescription>This skill class allows users to query and select data in Investigation view of a knowledge graph.</searchDescription>
+            <searchDescription>Use this skill when a user asks to search, query, or explore entities and relationships in a knowledge graph investigation.</searchDescription>
+            <searchDescription>Use this skill for investigation tasks such as finding connected entities, filtering graph results, and reviewing related records.</searchDescription>
+            <searchDescription>Use this skill when the request is specifically about Knowledge Graph Investigation view content, not general map authoring.</searchDescription>
+            <searchDescription>Use this skill for both text-based investigation lookup and graph-logic analysis in a knowledge graph context.</searchDescription>
+            <searchDescription>Use this skill when the user wants to inspect, refine, or select investigation results from a knowledge graph.</searchDescription>
+            
+            <searchDescription>search investigation</searchDescription>
+            <searchDescription>search knowledge graph</searchDescription>
+            <searchDescription>search graph data</searchDescription>
+            <searchDescription>search investigation data</searchDescription>
+            <searchDescription>search records in investigation</searchDescription>
+            <searchDescription>search entities in investigation</searchDescription>
+            <searchDescription>search relationships in investigation</searchDescription>
+            <searchDescription>find in investigation</searchDescription>
+            <searchDescription>find in knowledge graph</searchDescription>
+            <searchDescription>find graph data</searchDescription>
+            <searchDescription>find investigation data</searchDescription>
+            <searchDescription>find records</searchDescription>
+            <searchDescription>find entities</searchDescription>
+            <searchDescription>find relationships</searchDescription>
+            <searchDescription>find matching records</searchDescription>
+            <searchDescription>find matching entities</searchDescription>
+            <searchDescription>find matching relationships</searchDescription>
+            <searchDescription>look for data</searchDescription>
+            <searchDescription>look for records</searchDescription>
+            <searchDescription>look for entities</searchDescription>
+            <searchDescription>look for relationships</searchDescription>
+            <searchDescription>look for graph data</searchDescription>
+            <searchDescription>look for investigation data</searchDescription>
+            <searchDescription>look up investigation data</searchDescription>
+            <searchDescription>look up graph records</searchDescription>
+            <searchDescription>search and select data</searchDescription>
+            <searchDescription>search and select records</searchDescription>
+            <searchDescription>search and select entities</searchDescription>
+            <searchDescription>search and select relationships</searchDescription>
+            <searchDescription>find and select data</searchDescription>
+            <searchDescription>find and select records</searchDescription>
+            <searchDescription>find and select entities</searchDescription>
+            <searchDescription>find and select relationships</searchDescription>
+            <searchDescription>select search results</searchDescription>
+            <searchDescription>select matching records</searchDescription>
+            <searchDescription>select matching entities</searchDescription>
+            <searchDescription>select matching relationships</searchDescription>
+            <searchDescription>search graph records</searchDescription>
+            <searchDescription>search graph entities</searchDescription>
+            <searchDescription>search graph relationships</searchDescription>
+            <searchDescription>find graph records</searchDescription>
+            <searchDescription>find graph entities</searchDescription>
+            <searchDescription>find graph relationships</searchDescription>
+            <searchDescription>look for graph records</searchDescription>
+            <searchDescription>look for graph entities</searchDescription>
+            <searchDescription>look for graph relationships</searchDescription>
+            <searchDescription>search investigation results</searchDescription>
+            <searchDescription>find investigation results</searchDescription>
+            <searchDescription>look for investigation results</searchDescription>
+            <searchDescription>search selected data</searchDescription>
+            <searchDescription>find selected data</searchDescription>
+            <searchDescription>search current investigation</searchDescription>
+            <searchDescription>find in current investigation</searchDescription>
+            <searchDescription>look for items in investigation</searchDescription>
+            <searchDescription>search items in graph</searchDescription>
+            <searchDescription>find items in graph</searchDescription>
+            <searchDescription>look for items in graph</searchDescription>
           </searchDescriptions>
-          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewMap">
-            <searchDescriptions>
-              <searchDescription>Add the selected knowledge graph items to a new map.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToExistingMap">
-            <searchDescriptions>
-              <searchDescription>Add the selected knowledge graph items to an existing map.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="AddSelectedKnowledgeGraphItemsToNewLinkChart">
-            <searchDescriptions>
-              <searchDescription>Add the selected knowledge graph items to a new link chart.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="ExecuteSavedKnowledgeGraphQuery">
-            <searchDescriptions>
-              <searchDescription>Execute a saved query on the active investigation.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="SaveKnowledgeGraphQuery">
-            <searchDescriptions>
-              <searchDescription>Save the cypher query as a new saved query.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-          <aiAssistantFunction name="SelectAllKnowledgeGraphItemInvestigationView">
-            <searchDescriptions>
-              <searchDescription>Select all the knowledge graph items from the active investigation view.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
+          
           <aiAssistantFunction name="SearchInvestigation">
             <searchDescriptions>
-              <searchDescription>Search for an item using the user provided search string in the investigation view.</searchDescription>
+              <searchDescription>Search for something in the knowledge graph.</searchDescription>
+              <searchDescription>Search for something in the graph.</searchDescription>
+              <searchDescription>Search for something in the investigation.</searchDescription>
+              <searchDescription>Search for something in the knowledge graph or KG or investigation or graph.</searchDescription>
+              <searchDescription>Search for something in the knowledge graph.</searchDescription>
+              <searchDescription>Use this function for text based search only.</searchDescription>
+              <searchDescription>DO NOT USE THIS FUNCTION FOR QUERYING.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
-          <aiAssistantFunction name="CreateItemForKnowledgeGraphType">
+          <aiAssistantFunction name="QueryKnowledgeGraph">
             <searchDescriptions>
-              <searchDescription>Create a new item of knowledge graph type specified.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-        </content>
-      </insertComponent>
-
-      <insertComponent id="esri_knowledgeGraph_linkChart_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.LinkChartAssistantExtension">
-        <content condition="esri_knowledgeGraph_canUseLinkChartSkills" extensionCategoryRefID="ai_knowledge_graph_category">
-          <uiText>
-            <title>Knowledge Graph Link Charts</title>
-            <shortDescription>Connects related items in a knowledge graph link chart.</shortDescription>
-          </uiText>
-          <searchDescriptions>
-            <searchDescription>This skill class allows users to perform actions in link chart of a knowledge graph.</searchDescription>
-          </searchDescriptions>
-          <aiAssistantFunction name="ConnectLinkChart">
-            <searchDescriptions>
-              <searchDescription>Connect the related instances in the link chart.</searchDescription>
-            </searchDescriptions>
-          </aiAssistantFunction>
-        </content>
-      </insertComponent>
-
-      <insertComponent id="esri_knowledgeGraph_knowledgeGraph_assistant_extension" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphAssistantExtension">
-        <content extensionCategoryRefID="ai_knowledge_graph_category">
-          <uiText>
-            <title>Investigation Creation</title>
-            <shortDescription>Creates new investigations for a knowledge graph.</shortDescription>
-          </uiText>
-          <searchDescriptions>
-            <searchDescription>This skill class allows users to perform knowledge graph actions.</searchDescription>
-          </searchDescriptions>
-          <aiAssistantFunction name="CreateNewInvestigation">
-            <searchDescriptions>
-              <searchDescription>Create a new investigation.</searchDescription>
+              <searchDescription>Query the knowledge graph.</searchDescription>
+              <searchDescription>Find related items in the knowledge graph.</searchDescription>
+              <searchDescription>Read and summarize properties of items in the knowledge graph.</searchDescription>
+              <searchDescription>Generate and run a graph query to retrieve knowledge graph data.</searchDescription>
+              <searchDescription>Create a Cypher-style query from natural language.</searchDescription>
+              <searchDescription>Traverse relationships and return connected entities based on conditions.</searchDescription>
+              <searchDescription>Summarize or analyze graph properties using query logic, not keyword search.</searchDescription>
             </searchDescriptions>
           </aiAssistantFunction>
         </content>
@@ -875,7 +988,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         </content>
       </insertComponent>
 
-      <insertComponent id="esri_itemInfoType_KnowledgeGraphDataLoadingConfig" className="ArcGIS.Desktop.Internal.KnowledgeGrah.KnowledgeGraphDataLoadingConfigurationProjectItem">
+      <insertComponent id="esri_itemInfoType_KnowledgeGraphDataLoadingConfig" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphDataLoadingConfigurationProjectItem">
         <content>
           <supportedTypeIDs>
             <type id="portal_knowledge_graph_dataloading_configuration"/>
@@ -917,6 +1030,14 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           </supportedTypeIDs>
         </content>
       </insertComponent>
+
+      <insertComponent id="esri_itemInfoType_KnowledgeGraphLoadDataPlan" className="ArcGIS.Desktop.Internal.KnowledgeGraph.KnowledgeGraphLoadDataPlanProjectItem">
+        <content>
+          <supportedTypeIDs>
+            <type id="portal_knowledge_graph_loadDataPlan"/>
+          </supportedTypeIDs>
+        </content>
+      </insertComponent>
     
     </updateCategory>
 
@@ -952,6 +1073,12 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                          description="Use Data Model Designer view shortcuts to access Data Model Designer commands.">
       <shortcut refID="esri_knowledgeGraph_openDataModelDesignerRadialMenu" key="R" flags="None" onKeyUp="false" />
     </insertShortcutTable>
+    <insertShortcutTable id="esri_loadData_shortcutList" targetID="esri_knowledgeGraph_loadDataView"
+                         condition="esri_knowledgeGraph_loadDataPlanValidCondition"
+                         category="Knowledge Graph" caption="Load Knowledge Graph Data"
+                         description="Use Load Knowledge Graph Data view shortcuts to access Load Knowledge Graph Data commands.">
+      <shortcut refID="esri_knowledgeGraph_openLoadDataRadialMenu" key="R" flags="None" onKeyUp="false" />
+    </insertShortcutTable>
   </shortcutTables>
 
   <modules>
@@ -970,7 +1097,8 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         
         <tab id="esri_knowledgeGraph_KGLayer_LC_ContextualTab" caption="Knowledge Graph Layer" keytip="K" condition="esri_knowledgeGraph_CanShowKGLayerLCContextualTab"
              tabGroupID="esri_knowledgeGraph_ManageTabGroup" activationCategory="esri_Data" >
-          <group refID="esri_knowledgeGraph_manageGroup"/>
+          <group refID="esri_knowledgeGraph_manageGroup_kgl_linkChart"/>
+          <group refID="esri_knowledgeGraph_offlineGroup"/>
         </tab>
 
         <tab id="esri_knowledgeGraph_investigation_homeTab" caption="Investigation" keytip="K" condition="esri_knowledgeGraph_CanShowKnowledgeGraphViewTabs"
@@ -1014,6 +1142,18 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <group refID="esri_knowledgeGraph_dataModel_editingGroup"/>
           <group refID="esri_knowledgeGraph_dataModel_viewGroup"/>
           <group refID="esri_knowledgeGraph_dataModel_toolsGroup"/>
+        </tab>
+
+        <tab id="esri_knowledgeGraph_loadDataTab" caption="Load Knowledge Graph Data" keytip="L"
+             condition="esri_knowledgeGraph_CanShowLoadDataViewTabs"
+             insert="before" placeWith="esri_core_insertTab">
+          <group refID="esri_knowledgeGraph_loadData_planGroup" />
+          <group refID="esri_knowledgeGraph_loadData_InputGroup" />
+          <group refID="esri_knowledgeGraph_loadData_configurationGroup" />
+          <group refID="esri_knowledgeGraph_loadData_typesGroup" />
+          <group refID="esri_knowledgeGraph_loadData_modeGroup" />
+          <group refID="esri_knowledgeGraph_loadData_viewGroup" />
+          <group refID="esri_knowledgeGraph_loadData_runGroup" />
         </tab>
       </tabs>
 
@@ -1140,14 +1280,14 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         <group id="esri_knowledgeGraph_loadDataGroup" caption="Data" sizePriorities="25,125,225"
                smallImage="KnowledgeGraphETL16" keytip="d">
           <button refID="esri_knowledgeGraph_OpenDataModelDesignerButton" size="large" />
-          <button refID="esri_knowledgeGraph_OpenLoadTableButton" size="large"/>
+          <splitButton refID="esri_knowledgeGraph_OpenLoadDataSplitButton" size="large"/>
         </group>
 
         <group id="esri_knowledgeGraph_loadTableInputGroup" caption="Input" sizePriorities="25,125,225"
                smallImage="KnowledgeGraphETL16" keytip="i">
           <button refID="esri_knowledgeGraph_SelectSourceTableButton" size="large"/>
         </group>
-
+        
         <group id="esri_knowledgeGraph_loadTableConfigurationGroup" caption="Configuration" sizePriorities="25,125,225"
                smallImage="KnowledgeGraphETL16" keytip="t">
           <button refID="esri_knowledgeGraph_LoadTableConfigurationButton" size="large"/>
@@ -1158,6 +1298,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                smallImage="KnowledgeGraphETL16" keytip="r">
           <button refID="esri_knowledgeGraph_RunImportButton" size="large"/>
         </group>
+        
         <group id="esri_knowledgeGraph_toolGroup" caption="Tools" sizePriorities="25,125,225"
                smallImage="EditingEntityAndRelationshipMerge16" keytip="t">
           <button refID="esri_knowledgeGraph_MergeEntityRelationship" size="large"/>
@@ -1168,6 +1309,12 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         <group id="esri_knowledgeGraph_manageGroup" caption="Manage" sizePriorities="25,125,225"
                smallImage="GenericSave16" keytip="m">
           <button refID="esri_knowledgeGraph_SaveDefaultLayerProperties" size="large"/>
+          <button refID="esri_knowledgeGraph_ManageDefaultLayerProperties" size="large"/>
+        </group>
+
+        <group id="esri_knowledgeGraph_manageGroup_kgl_linkChart" caption="Manage" sizePriorities="25,125,225"
+               smallImage="GenericSave16" keytip="m">
+          <button refID="esri_knowledgeGraph_SaveDefaultProperties_kgl_linkChart" size="large"/>
           <button refID="esri_knowledgeGraph_ManageDefaultLayerProperties" size="large"/>
         </group>
 
@@ -1218,6 +1365,52 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           <button refID="esri_knowledgeGraph_SyncDataModelButton" size="middle"/>
           <button refID="esri_knowledgeGraph_RefreshAllButton" size="middle"/>
         </group>
+
+        <group id="esri_knowledgeGraph_loadData_planGroup" caption="Plan" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphETL16" keytip="P">
+          <button refID="esri_knowledgeGraph_loadData_NewPlanButton" size="large"/>
+          <button refID="esri_knowledgeGraph_loadData_LoadPlanButton" size="large"/>
+          <splitButton refID="esri_knowledgeGraph_loadData_SavePlanSplitButton" size="large"/>
+        </group>
+        
+        <group id="esri_knowledgeGraph_loadData_InputGroup" caption="Input" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphETL16" keytip="i">
+          <button refID="esri_knowledgeGraph_loadData_SelectSourceTableButton" size="large"/>
+        </group>
+
+        <group id="esri_knowledgeGraph_loadData_configurationGroup" caption="Configuration" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphETL16" keytip="C">
+          <button refID="esri_knowledgeGraph_loadData_ImportConfigurationButton" size="large"/>
+          <button refID="esri_knowledgeGraph_loadData_ExportConfigurationButton" size="large"/>
+        </group>
+        
+        <group id="esri_knowledgeGraph_loadData_typesGroup" caption="Definitions" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphETL16">
+          <menu refID="esri_knowledgeGraph_loadData_addNewTypeSubMenu" size="large"/>
+          <button refID="esri_knowledgeGraph_loadData_addDefaultTemplateButton" />
+          <customControl refID="esri_knowledgeGraph_loadData_dataModelSelectionControl" />
+          <button refID="esri_knowledgeGraph_loadData_deleteDefinitionsButton"/>
+        </group>
+        
+        <group id="esri_knowledgeGraph_loadData_modeGroup" caption="Mode" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphDataModel16">
+          <button refID="esri_knowledgeGraph_loadData_toggleSelectionButton" separator="False"/>
+          <button refID="esri_knowledgeGraph_loadData_togglePanButton"/>
+        </group>
+
+        <group id="esri_knowledgeGraph_loadData_viewGroup" caption="View" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphDataModel16">
+          <button refID="esri_knowledgeGraph_loadData_toggleDetailsButton" size="large"/>
+          <button refID="esri_knowledgeGraph_loadData_increaseZoomButton" size="small" />
+          <button refID="esri_knowledgeGraph_loadData_decreaseZoomButton" size="small" />
+          <button refID="esri_knowledgeGraph_loadData_fitToWindowButton" size="small" />
+        </group>
+
+        <group id="esri_knowledgeGraph_loadData_runGroup" caption="Load" sizePriorities="25,125,225"
+               smallImage="KnowledgeGraphETL16" keytip="L">
+          <splitButton refID="esri_knowledgeGraph_loadData_RunSplitButton" keytip="R" size="large" />
+        </group>
+        
         <group id="esri_knowledgeGraph_linkChart_KnowledgeGraphGroup" caption="Knowledge Graph" sizePriorities="25,125,225"
                smallImage="EditingEntityAndRelationshipMerge16" keytip="k">
           <button refID="esri_knowledgeGraph_CreateRelationshipOnLinkChart" size="large"/>
@@ -1226,6 +1419,12 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                smallImage="KnowledgeGraphDataModel16" keytip="d">
           <button refID="esri_knowledgeGraph_OpenDataModelDesignerButton" size="large"/>
         </group>
+        <group id="esri_knowledgeGraph_offlineGroup" caption="Offline" launcherButtonID="esri_knowledgeGraph_openLocationOptionsButton" smallImage="CreateOfflineMap16.png" launcherKeytip="SD">
+          <button refID="esri_knowledgeGraph_downloadKGLayer" size="large" />
+          <button refID="esri_knowledgeGraph_offlineSyncButton" size="middle" />
+          <button refID="esri_knowledgeGraph_offlineRemoveButton" size="middle" />
+        </group>
+
       </groups>
 
       <subgroups>
@@ -1269,7 +1468,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
             <button refID="esri_knowledgeGraph_dmd_saveDesignAsButton" size="small" />
             <button refID="esri_knowledgeGraph_dmd_reloadDesignButton" size="small" />
             <button refID="esri_knowledgeGraph_dmd_newDesignButton" size="small" />
-            <button refID="esri_knowledgeGraph_dmd_importArrowsFileButton" size="small" />
+            <button refID="esri_knowledgeGraph_dmd_importFileButton" size="small" />
           </group>
 
           <group>
@@ -1445,7 +1644,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
           </tooltip>
         </button>
 
-        <button id="esri_knowledgeGraph_dmd_importArrowsFileButton" className="esri_knowledgeGraph_module:DataModelDesignerImportArrowsFile"
+        <button id="esri_knowledgeGraph_dmd_importArrowsFileButton" className="esri_knowledgeGraph_module:DataModelDesignerImportFile"
                 condition="esri_knowledgeGraph_dmd_genericToolbarCondition"
                 caption="Import" extendedCaption="Import arrows file"
                 keytip="IA"
@@ -1454,6 +1653,18 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
                 loadOnClick="false">
           <tooltip heading="">
             Import Arrows File.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_dmd_importFileButton" className="esri_knowledgeGraph_module:DataModelDesignerImportFile"
+                condition="esri_knowledgeGraph_dmd_genericToolbarCondition"
+                caption="Import from" extendedCaption="Import from file"
+                keytip="IF"
+                largeImage="LinkChartImport32"
+                smallImage="LinkChartImport16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Import From File.<disabledText></disabledText>
           </tooltip>
         </button>
 
@@ -1630,7 +1841,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         </button>
 
         <button id="esri_knowledgeGraph_AddNewEntityTypeButton" className="esri_knowledgeGraph_module:AddNewEntityTypeCommand"
-                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible"
+                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndSchemaAndServerCompatible"
                 caption="New Entity Type" extendedCaption="Add New Entity Type"
                 largeImage="KnowledgeGraphEntityNew32"
                 smallImage="KnowledgeGraphEntityNew16"
@@ -1641,7 +1852,7 @@ Use Ctrl + Up or Down arrows to scroll previous questions.
         </button>
 
         <button id="esri_knowledgeGraph_AddNewRelationshipTypeButton" className="esri_knowledgeGraph_module:AddNewRelationshipTypeCommand"
-                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible"
+                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndSchemaAndServerCompatible"
                 caption="New Relationship Type" extendedCaption="Add New Relationship Type"
                 largeImage="KnowledgeGraphRelationshipNew32"
                 smallImage="KnowledgeGraphRelationshipNew16"
@@ -1880,6 +2091,21 @@ Default display properties for symbology, display names, and labels can be appli
 
 Default display properties for symbology, display names, and labels can be applied to investigations, maps, and link charts, and will be used when creating new ones. Default display properties are not shared between investigations, maps, or link charts.
             <disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_SaveDefaultProperties_kgl_linkChart" className="esri_knowledgeGraph_module:SaveDefaultPropertiesKglLinkChart"
+                caption="Save Default Properties" extendedCaption="Save Default Properties"
+                largeImage="GenericSave32"
+                smallImage="GenericSave16"
+                keytip="SL"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_CanEnableSaveDefaultPropertiesInKGLayerLCTab">
+          <tooltip heading="Save Default Properties">
+            Save the display properties of selected entity types and relationship types to the knowledge graph.
+
+            Default display properties for symbology, display names, and labels can be applied to investigations, maps, and link charts, and will be used when creating new ones. Default display properties are not shared between investigations, maps, or link charts.
+            <disabledText>Knowledge Graph Layer not selected</disabledText>
           </tooltip>
         </button>
        
@@ -2203,12 +2429,12 @@ Default display properties for symbology, display names, and labels can be appli
 
         <button id="esri_knowledgeGraph_LoadData" className="esri_knowledgeGraph_module:LoadDataFromLoadDataConfiguration"
                 condition="esri_knowledgeGraph_CanAccessAssociatedPortal"
-                caption="Load Data" extendedCaption="Load Data; on context menu"
+                caption="Load Table" extendedCaption="Load Table; on context menu"
                 largeImage="KnowledgeGraphETL32"
                 smallImage="KnowledgeGraphETL16"
                 helpContextID="" loadOnClick="false">
           <tooltip heading="">
-            Load Data.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
+            Load Table.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
           </tooltip>
         </button>
 
@@ -2233,6 +2459,56 @@ Default display properties for symbology, display names, and labels can be appli
           </tooltip>
         </button>
 
+        <button id="esri_knowledgeGraph_CreateLoadDataPlan" className="esri_knowledgeGraph_module:CreateLoadDataPlanFromCatalog"
+                caption="New Load Data Plan" extendedCaption="Create New Load Data Plan; on context menu"
+                largeImage="VersionCreate32"
+                smallImage="VersionCreate16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Create New Load Data Plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_DeleteLoadDataPlan" className="esri_knowledgeGraph_module:DeleteLoadDataPlanFromCatalog"
+                caption="Delete" extendedCaption="Delete Load Data Plan; on context menu"
+                largeImage="GenericDeleteRed32"
+                smallImage="GenericDeleteRed16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Delete Load Data Plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_OpenLoadDataPaneFromLoadDataPlan" className="esri_knowledgeGraph_module:OpenLoadDataPaneFromLoadDataPlanFromCatalog"
+                caption="Open Load Data Plan" extendedCaption="Open Load Data Plan; on context menu"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Open Load Data Plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_ImportLoadDataConfiguration" className="esri_knowledgeGraph_module:LoadDataImportLoadDataConfigurationFromCatalog"
+                caption="Import" extendedCaption="Import Data Loading Configuration; on context menu"
+                largeImage="KnowledgeGraphImport32"
+                smallImage="KnowledgeGraphImport16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Import Data Loading Configuration. The configuration in the plan item will be replaced with the imported configuration.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_ExportLoadDataConfiguration" className="esri_knowledgeGraph_module:LoadDataExportLoadDataConfigurationFromCatalog"
+                caption="Export" extendedCaption="Export Data Loading Configuration; on context menu"
+                largeImage="KnowledgeGraphExport32"
+                smallImage="KnowledgeGraphExport16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Export Data Loading Configuration.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
         <button id="esri_knowledgeGraph_increaseSymbolSizeLinkChart" className="esri_knowledgeGraph_module:IncreaseSymbolSizeLinkChartMapAsync"
                 caption="Increase Symbol" extendedCaption="Increase Link Chart symbol size"
                 largeImage="IncreaseLinkChartSymbolSize32"
@@ -3023,6 +3299,284 @@ Default display properties for symbology, display names, and labels can be appli
             Open the Data Model Designer radial menu.<disabledText></disabledText>
           </tooltip>
         </button>
+
+        <button id="esri_knowledgeGraph_openLoadDataRadialMenu" className="esri_knowledgeGraph_module:OpenLoadDataRadialMenu"
+                caption="Load Knowledge Graph Data Radial Menu" extendedCaption="Load Knowledge Graph Data Radial Menu; on context menu"
+                largeImage="GenericSearch32"
+                smallImage="GenericSearch16"
+                helpContextID="" loadOnClick="false">
+          <tooltip heading="">
+            Open the Load Knowledge Graph Data radial menu.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_OpenLoadDataButton" className="esri_knowledgeGraph_module:OpenLoadDataPane"
+                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible" caption="Load Data" extendedCaption="Load Data"
+                keytip="LD"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Open Load Data View.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_OpenLoadDataButton2" className="esri_knowledgeGraph_module:OpenLoadDataPane"
+                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible" caption="Load Data" extendedCaption="Load Data"
+                keytip="LD"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Open Load Data View.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_knowledgeGraph_OpenLoadDataPaneByCatalogButton" className="esri_knowledgeGraph_module:OpenLoadDataPaneByCatalog"
+                condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible" caption="Load Data" extendedCaption="Load Data"
+                keytip="LD"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Open Load Data View.<disabledText>Knowledge graph is read-only or unavailable</disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_SelectSourceTableButton" className="esri_knowledgeGraph_module:SelectLoadDataSourceTable"
+                caption="Add Source Data" extendedCaption="Add Source Data"
+                condition="esri_knowledgeGraph_loadData_CanAddSourceTableCondition"
+                largeImage="GenericAdd32"
+                smallImage="GenericAdd16"
+                loadOnClick="false" keytip="ST">
+          <tooltip heading="">
+            Add Source Data.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_addNewEntityDefinitionButton" className="esri_knowledgeGraph_module:AddNewEntityDefinition"
+                caption="New Entity Definition" extendedCaption="Add New Entity Definition"
+                condition="esri_knowledgeGraph_loadData_CanAddTypeDefinitions"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphEntityNew32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphEntityNew16.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Add New Entity Definition.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_addNewRelationshipDefinitionButton" className="esri_knowledgeGraph_module:AddNewRelationshipDefinition"
+                caption="New Relationship Definition" extendedCaption="Add New Relationship Definition"
+                condition="esri_knowledgeGraph_loadData_CanAddTypeDefinitions"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphRelationshipNew32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/KnowledgeGraphRelationshipNew16.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Add New Relationship Definition.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_deleteDefinitionsButton" className="esri_knowledgeGraph_module:DeleteSelectedItems"
+                caption="Delete Definitions" extendedCaption="Delete Definitions"
+                condition="esri_knowledgeGraph_loadDataPlanSelectionCondition"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericDeleteRed16.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Delete Definitions.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_addDefaultTemplateButton" className="esri_knowledgeGraph_module:AddDefaultTemplate"
+                caption="Add Default Template" extendedCaption="Add Default Template"
+                condition="esri_knowledgeGraph_loadData_CanAddTypeDefinitions"
+                largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LinkChartNew32.png"
+                smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/LinkChartNew16.png"
+                loadOnClick="false">
+          <tooltip heading="">
+            Add Default Template.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_knowledgeGraph_loadData_toggleSelectionButton" className="Ribbon.SetLoadDataSelectionMode"
+                caption="Selection" extendedCaption="Enable Selection Mode"
+                largeImage="LinkChartLayoutSelectTool32"
+                smallImage="LinkChartLayoutSelectTool16"
+                keytip="S"
+                loadOnClick="false">
+          <tooltip heading="">
+            Enable selection mode.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_loadData_togglePanButton" className="Ribbon.SetLoadDataPanMode"
+                caption="Pan" extendedCaption="Enable Pan Mode"
+                largeImage="PanTool_B_32"
+                smallImage="PanTool_B_16"
+                keytip="S"
+                loadOnClick="false">
+          <tooltip heading="">
+            Enable pan mode.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_toggleDetailsButton" className="Ribbon.ToggleLoadDataDetailsPane"
+                caption="Details" extendedCaption="Show details pane"
+                largeImage="ShowDetailsPanel32"
+                smallImage="ShowDetailsPanel32"
+                keytip="D"
+                loadOnClick="false">
+          <tooltip heading="">
+            Show details pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_radialMenu_toggleDetailsButton" className="Ribbon.ToggleLoadDataDetailsPane"
+                caption="Show/Hide Details" extendedCaption="Show/hide details pane"
+                largeImage="ShowDetailsPanel32"
+                smallImage="ShowDetailsPanel32"
+                keytip="D"
+                loadOnClick="false">
+          <tooltip heading="">
+            Show/hide details pane.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_increaseZoomButton" className="esri_knowledgeGraph_module:LoadDataIncreaseZoom"
+                caption="Increase Zoom" extendedCaption="Increase Zoom"
+                largeImage="ZoomIn32"
+                smallImage="ZoomIn16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Zoom In.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_loadData_decreaseZoomButton" className="esri_knowledgeGraph_module:LoadDataDecreaseZoom"
+                caption="Decrease Zoom" extendedCaption="Decrease Zoom"
+                largeImage="ZoomOut32"
+                smallImage="ZoomOut16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Zoom Out.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_loadData_fitToWindowButton" className="esri_knowledgeGraph_module:LoadDataFitToWindow"
+                caption="Fit To Window" extendedCaption="Fit To Window"
+                largeImage="ModelBuilderFullExtent32"
+                smallImage="ModelBuilderFullExtent16"
+                loadOnClick="false">
+          <tooltip heading="">
+            Fit To Window.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_NewPlanButton" className="esri_knowledgeGraph_module:LoadDataCreateNewPlan"
+                caption="New" extendedCaption="Create a new load data plan"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                condition="esri_knowledgeGraph_loadDataPlanValidCondition"
+                loadOnClick="false" keytip="NP">
+          <tooltip heading="">
+            Create a new load data plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <button id="esri_knowledgeGraph_loadData_LoadPlanButton" className="esri_knowledgeGraph_module:LoadDataLoadPlan"
+                caption="Open" extendedCaption="Use a load data plan"
+                largeImage="KnowledgeGraphETL32"
+                smallImage="KnowledgeGraphETL16"
+                condition="esri_knowledgeGraph_loadData_CanAccessKnowledgeGraphCondition"
+                loadOnClick="false" keytip="OP">
+          <tooltip heading="">
+            Use a load data plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_SavePlanAsCurrentButton" className="esri_knowledgeGraph_module:LoadDataSavePlanAsCurrent"
+                caption="Save" extendedCaption="Save changes to the current load data plan"
+                largeImage="GenericSave32"
+                smallImage="GenericSave16"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanSavePlanAsCurrentCondition" keytip="S">
+          <tooltip heading="">
+            Save changes to the current load data plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_SavePlanAsCurrentButton2" className="esri_knowledgeGraph_module:LoadDataSavePlanAsCurrent"
+                caption="Save" extendedCaption="Save changes to the current load data plan"
+                largeImage="GenericSave32"
+                smallImage="GenericSave16"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanSavePlanAsCurrentCondition" keytip="S">
+          <tooltip heading="">
+            Save changes to the current load data plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_SavePlanAsNewButton" className="esri_knowledgeGraph_module:LoadDataSavePlanAsNew"
+                caption="Save As" extendedCaption="Save as a new load data plan"
+                largeImage="GenericSaveAs32"
+                smallImage="GenericSaveAs16"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanSavePlanAsNewCondition" keytip="SA">
+          <tooltip heading="">
+            Save as a new load data plan.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_RunImportButton" className="esri_knowledgeGraph_module:LoadDataRunImport"
+                caption="Run" extendedCaption="Run"
+                largeImage="GenericRun32"
+                smallImage="GenericRun"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanRunImportCondition" keytip="R">
+          <tooltip heading="">
+            Run.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_RunImportButton2" className="esri_knowledgeGraph_module:LoadDataRunImport"
+                caption="Run" extendedCaption="Run"
+                largeImage="GenericRun32"
+                smallImage="GenericRun"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanRunImportCondition" keytip="R">
+          <tooltip heading="">
+            Run.<disabledText></disabledText>
+          </tooltip>
+        </button>
+        
+        <checkBox id="esri_knowledgeGraph_loadData_toggleCreateLinkChartOnRunCheckBox" className="Ribbon.ToggleLoadDataCreateLinkChartOnRun"
+                caption="Create Link Chart" extendedCaption="Create Link Chart"
+                keytip="LC"
+                loadOnClick="false">
+          <tooltip heading="">
+            Create Link Chart on run.<disabledText></disabledText>
+          </tooltip>
+        </checkBox>
+        
+        <button id="esri_knowledgeGraph_loadData_ImportConfigurationButton" className="esri_knowledgeGraph_module:LoadDataImportConfiguration"
+                caption="Import" extendedCaption="Import"
+                largeImage="KnowledgeGraphImport32"
+                smallImage="KnowledgeGraphImport16"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadDataPlanValidCondition" keytip="I">
+          <tooltip heading="">
+            Import Configuration.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_loadData_ExportConfigurationButton" className="esri_knowledgeGraph_module:LoadDataExportConfiguration"
+                caption="Export" extendedCaption="Export"
+                largeImage="KnowledgeGraphExport32"
+                smallImage="KnowledgeGraphExport16"
+                loadOnClick="false" condition="esri_knowledgeGraph_loadData_CanSavePlanAsNewCondition" keytip="E">
+          <tooltip heading="">
+            Export Configuration.<disabledText></disabledText>
+          </tooltip>
+        </button>
+
+        <customControl id="esri_knowledgeGraph_loadData_dataModelSelectionControl"
+                       condition="esri_knowledgeGraph_loadData_CanAddTypeDefinitions"
+                       loadOnClick="false" hideTooltip="true" staysOpenOnClick="true"
+                       className="LoadDataDataModelSelectionViewModel">
+          <content className="LoadDataDataModelSelectionView" />
+          <!--no tool tip and no caption - for some reason, these interfere with tooltips in the popup dialog-->
+        </customControl>
         
         <button id="esri_knowledgeGraph_InvestigationPropertyButton"
                 className="esri_knowledgeGraph_module:OpenInvestigationProperty"
@@ -3262,10 +3816,53 @@ Default display properties for symbology, display names, and labels can be appli
           </tooltip>
         </button>
 
+        <button id="esri_knowledgeGraph_downloadKGLayer"
+                caption="Download Knowledge Graph Layer"
+                className="ArcGIS.Desktop.Internal.KnowledgeGraph.Controls.Ribbon.DownloadKGLayerButton"
+                showHelp="true" 
+                helpContextID="" keytip="OL"
+                loadOnClick="false"
+                condition="esri_knowledgeGraph_kgLayerCanDownloadCondition"
+                smallImage="DownloadOfflineLinkChartLayer16"
+                largeImage="DownloadOfflineLinkChartLayer32">
+          <tooltip heading="Take Knowledge Graph Layer Offline">
+            Take the knowledge graph layer offline to complete your work without a network connection. Only the items in the knowledge graph layer will be downloaded. You cannot work with the knowledge graph layer while its data is downloading.
+            <disabledText>
+              This command is disabled if the knowledge graph layer is from a File Knowledge Graph or if working with Portal Projects.
+            </disabledText>
+          </tooltip>
+        </button>
+
+        <button id="esri_knowledgeGraph_offlineSyncButton"
+                caption="Sync" showHelp="true"
+                extendedCaption="Synchronize offline knowledge graph layer"
+                keytip="OS" helpContextID=""
+         className="ArcGIS.Desktop.Internal.KnowledgeGraph.Controls.Ribbon.SynchronizeOfflineKGLayerButton"
+         loadOnClick="false" condition="esri_knowledgeGraph_kgLayerCanSyncCondition"
+         smallImage="SyncOfflineLinkChartLayer16"
+         largeImage="SyncOfflineLinkChartLayer32">
+          <tooltip heading="Synchronize Offline Knowledge Graph Layer">
+            Synchronize edits for offline data.
+
+            This will upload your edits and download any changes made to the knowledge graph layer since it was taken offline. You cannot work with the knowledge graph layer while its data is synchronizing.
+            <disabledText>Enabled for knowledge graph layers that have been taken offline.</disabledText>
+          </tooltip>
+        </button>
+        <button id="esri_knowledgeGraph_offlineRemoveButton" caption="Remove" showHelp="true" extendedCaption="Remove offline knowledge graph layer" keytip="OR" helpContextID=""
+                 className="ArcGIS.Desktop.Internal.KnowledgeGraph.Controls.Ribbon.RemoveOfflineKGLayerButton" loadOnClick="false"
+                 condition="esri_knowledgeGraph_kgLayerCanSyncCondition"
+                 smallImage="RemoveOfflineLinkChartLayer16"
+                 largeImage="RemoveOfflineLinkChartLayer32">
+          <tooltip heading="Remove Offline Knowledge Graph Layer">
+            Removes data that has been taken offline.
+            <disabledText>Enabled for knowledge graph layers that have been taken offline.</disabledText>
+          </tooltip>
+        </button>
+
       </controls>
 
       <splitButtons>
-        <splitButton id="esri_knowledgeGraph_AddNewEntitySplitButton" keytip="NI">
+        <splitButton id="esri_knowledgeGraph_AddNewEntitySplitButton" keytip="NI" condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible">
           <button refID="esri_knowledgeGraph_AddNewEntityButton"/>
           <customControl refID="esri_knowledgeGraph_AddNewEntityItemControl"/>
         </splitButton>
@@ -3281,6 +3878,18 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_knowledgeGraph_SaveTableConfigurationAsNewButton"/>
         </splitButton>
 
+        <splitButton id="esri_knowledgeGraph_loadData_SavePlanSplitButton" extendedCaption="Save load data plan" keytip="SP">
+          <button refID="esri_knowledgeGraph_loadData_SavePlanAsCurrentButton"/>
+          <button refID="esri_knowledgeGraph_loadData_SavePlanAsCurrentButton2"/>
+          <button refID="esri_knowledgeGraph_loadData_SavePlanAsNewButton"/>
+        </splitButton>
+
+        <splitButton id="esri_knowledgeGraph_OpenLoadDataSplitButton" extendedCaption="Open load data" keytip="LD" condition="esri_knowledgeGraph_signedInAndCanEditServiceAndServerCompatible">
+          <button refID="esri_knowledgeGraph_OpenLoadDataButton"/>
+          <button refID="esri_knowledgeGraph_OpenLoadDataButton2"/>
+          <button refID="esri_knowledgeGraph_OpenLoadTableButton"/>
+        </splitButton>
+
         <splitButton id="esri_knowledgeGraph_LinkChartExpandSplitButton" extendedCaption="Expand LinkChart" keytip="EL">
           <button refID="esri_knowledgeGraph_expandLinkChart"/>
           <button refID="esri_knowledgeGraph_partialExpandLinkChart"/>
@@ -3294,6 +3903,15 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_knowledgeGraph_selectNonspatialButton" separator="true" />
           <button refID="esri_knowledgeGraph_selectSpatialButton" />
         </splitButton>
+
+        <splitButton id="esri_knowledgeGraph_loadData_RunSplitButton" keytip="R"
+                     extendedCaption="Run">
+          <button refID="esri_knowledgeGraph_loadData_RunImportButton" />
+          <button refID="esri_knowledgeGraph_loadData_RunImportButton2" />
+          <checkBox refID="esri_knowledgeGraph_loadData_toggleCreateLinkChartOnRunCheckBox" separator="true"/>
+        </splitButton>
+
+      
       </splitButtons>
 
       <palettes>
@@ -3781,6 +4399,33 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_core_openFileLocation" separator="false"/>
         </menu>
 
+        <!--Menu for Knowledge graph load data plans root folder in the Catalog View. -->
+        <menu id="esri_knowledgeGraph_loadData_loadDataPlanFolderMenu" caption="Load Data Plans"
+              extendedCaption="Context menu for Load Data Plans">
+          <button refID="esri_core_editPasteButton" separator="true"/>
+        </menu>
+
+        <!--Menu for Knowledge graph load data plan in the Catalog View. -->
+        <menu id="esri_knowledgeGraph_loadData_loadDataPlanMenu" caption="Load Data Plan"
+              extendedCaption="Context menu for Load Data Plan">
+          <button refID="esri_knowledgeGraph_OpenLoadDataPaneFromLoadDataPlan" separator="true"/>
+          <button refID="esri_core_editCopyButton" separator="true"/>
+          <button refID="esri_knowledgeGraph_DeleteLoadDataPlan" separator="true"/>
+          <button refID="esri_core_rename" separator="false"/>
+        </menu>
+
+        <!--Menu for Knowledge graph load data plan item in the Catalog View. -->
+        <menu id="esri_knowledgeGraph_loadData_loadDataPlanItemMenu" caption="Load Data Plan Item"
+              extendedCaption="Context menu for Load Data Plan Item">
+          <button refID="esri_knowledgeGraph_loadData_ImportLoadDataConfiguration" />
+          <button refID="esri_knowledgeGraph_loadData_ExportLoadDataConfiguration" />
+        </menu>
+
+        <menu id="esri_knowledgeGraph_loadData_loadDataPlanItemEmptyMenu" caption="Load Data Plan Item"
+              extendedCaption="Context menu for Load Data Plan Item">
+         
+        </menu>
+        
         <menu id="esri_knowledgeGraph_queryDefinition_folderMenu" caption="Queries"
               extendedCaption="Context menu for Queries">
           <button refID="esri_knowledgeGraph_CreateQueryDefinition"/>
@@ -4038,7 +4683,17 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_knowledgeGraph_community_sortEntitiesAscendingButton" separator="true"/>
           <button refID="esri_knowledgeGraph_community_sortEntitiesDescendingButton"/>
           <button refID="esri_knowledgeGraph_community_optionsMenuToggleButton" separator="true"/>
-        </menu>     
+        </menu>
+        <menu id="esri_knowledgeGraph_loadData_addNewTypeSubMenu" caption="New" extendedCaption="Add new definition"
+              smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge16.png"
+              largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericNewSparkleLarge32.png"
+              keytip="ND">
+          <tooltip heading="Add New Definition">
+            Choose definition to add
+          </tooltip>
+          <button refID="esri_knowledgeGraph_loadData_addNewEntityDefinitionButton"/>
+          <button refID="esri_knowledgeGraph_loadData_addNewRelationshipDefinitionButton"/>
+        </menu>
       </menus>
 
       <radialMenus>
@@ -4068,6 +4723,14 @@ Default display properties for symbology, display names, and labels can be appli
           <button refID="esri_knowledgeGraph_RadialMenu_AddRelationshipButton"/>
           <button refID="esri_knowledgeGraph_RadialMenu_ExpandGroupedRelationshipButton"/>
           <button refID="esri_knowledgeGraph_RadialMenu_CollapseGroupedRelationshipButton"/>
+        </radialMenu>
+        <radialMenu id="esri_knowledgeGraph_LoadDataRadialMenu" caption="Radial Menu">
+          <button refID="esri_knowledgeGraph_loadData_addNewEntityDefinitionButton"/>
+          <button refID="esri_knowledgeGraph_loadData_addNewRelationshipDefinitionButton"/>
+          <button refID="esri_knowledgeGraph_loadData_deleteDefinitionsButton"/>
+          <button refID="esri_knowledgeGraph_loadData_addDefaultTemplateButton"/>
+          <button refID="esri_knowledgeGraph_loadData_fitToWindowButton"/>
+          <button refID="esri_knowledgeGraph_loadData_radialMenu_toggleDetailsButton"/>
         </radialMenu>
       </radialMenus>
 
@@ -4173,6 +4836,12 @@ Default display properties for symbology, display names, and labels can be appli
             <toolbar refID="esri_knowledgeGraph_dataModelDesignerToolbar"/>
           </toolbars>
         </pane>
+        <pane id="esri_knowledgeGraph_loadDataView" 
+              className="ArcGIS.Desktop.Internal.KnowledgeGraph.LoadData.LoadDataViewModel"
+              smallImage="KnowledgeGraphETL16" isDropTarget="false"
+              isClosable="true" defaultTab="esri_knowledgeGraph_loadDataTab">
+          <content className="ArcGIS.Desktop.Internal.KnowledgeGraph.LoadData.LoadDataView"/>
+        </pane>
       </panes>
 
     </insertModule>
@@ -4186,6 +4855,7 @@ Default display properties for symbology, display names, and labels can be appli
         </updateTab>
       </tabs>
     </updateModule>
+    
     <updateModule refID="esri_editing_EditingModule">
       <tabs>
         <updateTab refID="esri_editing_EditingKGTab">
